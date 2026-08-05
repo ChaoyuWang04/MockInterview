@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { Question, SectionName } from '@/lib/types'
 import Markdown from './Markdown'
 import NoteEditor from './NoteEditor'
+import QuestionNav from './QuestionNav'
 
 const ANSWER_SECTIONS: { name: SectionName; label: string }[] = [
   { name: '要点', label: 'KEY POINTS' },
@@ -107,6 +108,14 @@ export default function QuestionView({ category, initialQuestions }: Props) {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
+      <QuestionNav
+        questions={questions}
+        index={index}
+        onSelect={(i) => {
+          setIndex(i)
+          setExpanded(false)
+        }}
+      />
       <div className="mb-8 flex items-start justify-between">
         <Link href="/" className="text-sm text-gray-500 hover:text-gray-900">
           ← 返回主页
