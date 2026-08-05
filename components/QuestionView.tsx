@@ -46,7 +46,7 @@ export default function QuestionView({ category, initialQuestions }: Props) {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement | null
       if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'INPUT' || t.isContentEditable)) return
-      if (e.code === 'Space') {
+      if (e.code === 'Space' || e.key === ' ') {
         e.preventDefault()
         setExpanded((v) => !v)
       } else if (e.key === 'ArrowRight') go(1)

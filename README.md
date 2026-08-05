@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 本地大模型面试刷题系统
 
-## Getting Started
+本地、单人、极简的刷题系统:**markdown 文件即数据库**。题目、答案、笔记、掌握状态全部存在 `questions/` 下的纯文本文件里,可以用 git 管理、随意备份迁移。
 
-First, run the development server:
+## 启动
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+浏览器打开 <http://localhost:3000>。首次使用需先 `npm install`(要求 Node.js 20+)。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使用
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **主页**:已掌握 / 总题数 + 分类卡片,点卡片进入刷题
+- **刷题页**:
+  - `空格` 或点击「展开答案」:展开/收起答案
+  - `←` / `→`:上一题 / 下一题
+  - 「标记已掌握」:写回题目文件 frontmatter 的 `mastered` 字段
+  - NOTE 区「编辑」:写笔记,保存后写回文件的 `## Note` 分区
 
-## Learn More
+## 加题三步
 
-To learn more about Next.js, take a look at the following resources:
+1. 复制 `questions/_template.md` 到分类文件夹,如 `questions/RAG/003-新题.md`(新分类 = 新建文件夹)
+2. 按模板写内容(格式规范见 [docs/question-authoring.md](docs/question-authoring.md))
+3. 刷新页面即生效
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 目录结构
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+questions/     题库(纯内容,与代码完全分离)
+  _template.md   新题模板
+  <分类>/<序号>-<简称>.md
+app/           Next.js 页面 + PATCH API
+components/    Markdown 渲染器 / 刷题视图等组件
+lib/           核心模块:扫描、解析、定点写回
+tests/         Vitest 单元测试(npm test)
+docs/          文档与设计资料
+```
 
-## Deploy on Vercel
+## 技术栈
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next.js 15(App Router)· React 19 · TypeScript · Tailwind CSS 4 · react-markdown(GFM 表格 + KaTeX 公式 + 代码高亮)· Mermaid · gray-matter · Vitest
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+维护指南见 [docs/maintenance.md](docs/maintenance.md)。
