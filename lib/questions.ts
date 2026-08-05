@@ -113,6 +113,8 @@ export function loadQuestion(category: string, file: string, root = questionsRoo
       difficulty: typeof data.difficulty === 'string' ? data.difficulty : undefined,
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       company: typeof data.company === 'string' ? data.company : undefined,
+      topic: typeof data.topic === 'string' ? data.topic : undefined,
+      summary: typeof data.summary === 'string' ? data.summary : undefined,
       mastered: data.mastered === true,
     },
     sections: splitSections(content),

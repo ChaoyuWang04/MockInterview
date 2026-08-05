@@ -1,5 +1,7 @@
 ---
 difficulty: 中等
+topic: Embedding/模型选型
+summary: 选 Embedding 模型的考察维度与中文场景注意点
 tags: [RAG, Embedding]
 mastered: true
 ---

@@ -5,6 +5,8 @@ export interface QuestionMeta {
   difficulty?: string
   tags: string[]
   company?: string
+  topic?: string
+  summary?: string
   mastered: boolean
 }
 

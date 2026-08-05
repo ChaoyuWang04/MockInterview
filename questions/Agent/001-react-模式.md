@@ -1,5 +1,7 @@
 ---
 difficulty: 中等
+topic: 规划模式/ReAct
+summary: ReAct 循环的原理、优势与代价
 tags: [Agent, ReAct, 工具调用]
 mastered: false
 ---

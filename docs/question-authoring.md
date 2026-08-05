@@ -10,14 +10,26 @@
 
 ```yaml
 ---
-difficulty: 中等        # 可选:简单 | 中等 | 困难
-tags: [RAG, 重排序]     # 可选:知识点标签
-company: 字节           # 可选:出题公司
-mastered: false         # 程序写回,新题保持 false
+difficulty: 中等             # 可选:简单 | 中等 | 困难
+topic: GRPO/KL散度           # 必填:去重索引,1-2 段
+summary: GRPO 的 KL 惩罚为何放 reward   # 必填:一句话题干,≤50 字
+tags: [RL, GRPO]             # 可选:知识点标签
+company: 字节、美团           # 可选:出题公司,多家用、分隔
+mastered: false              # 程序写回,新题保持 false
 ---
 ```
 
-只有 `mastered` 是程序管理的;缺省字段页面上不显示对应元素。
+### topic:三层主题定位(去重的核心)
+
+完整层级 = `分类文件夹 / topic 第一段 / topic 第二段`,例如 `RL → GRPO → KL散度` 写成:文件放在 `questions/RL/`,frontmatter 写 `topic: GRPO/KL散度`。综述型题目可以只有一段(如 `topic: 解码策略/综述`)。
+
+`npm run topics` 会打印全库主题树——**加题前先看树,同一考点不重复建题**;问法角度确实不同才新增,并用不同的叶子名区分。
+
+`topic` 与 `summary` 有测试守护(`tests/samples.test.ts`):缺失、超过 2 段、summary 超 50 字都会让 `npm test` 报错并指出文件名。
+
+### 「待校对」标签约定
+
+答案由 AI 代写(截图无答案)的题,tags 里加 `待校对`,页面上会显示 chip;复核确认后手动删掉该标签。
 
 ## 六个分区(关键约定)
 
@@ -34,13 +46,26 @@ mastered: false         # 程序写回,新题保持 false
 
 **`## ` 只保留给这六个分区名**,题目/答案内部的小标题请用 `###` 及以下。围栏代码块里的 `## ` 不受影响(程序做了围栏感知)。
 
+## 长度红线
+
+- 题干 ≤ 3 句;summary ≤ 50 字
+- 答案 ≤ 约 500 字或等价条目(一张对比表 + 几组要点)
+- 超限**不要硬塞**:拆成更细的 topic 叶子另建一题,把关联问法放进「追问」分区
+
 ## 支持的 markdown 能力
 
 - **表格**(GFM):正常 `| a | b |` 语法
-- **数学公式**(KaTeX):行内 `$E=mc^2$`,块级 `$$...$$`
+- **数学公式**(KaTeX):行内 `$E=mc^2$`;**块级公式的 `$$` 必须独占一行**,写在同一行会被当成行内公式(不居中、字号小):
+
+  ```markdown
+  $$
+  P(w_i) = \frac{\exp(z_i/T)}{\sum_j \exp(z_j/T)}
+  $$
+  ```
+
 - **Mermaid 图**:语言标注为 `mermaid` 的代码块自动渲染成图
 - **代码高亮**:标注语言的代码块(`python`、`ts` 等)
 
 ## 批量出题
 
-把本规范和 `questions/_template.md` 一起交给 AI,让它按模板批量生成题目文件放进分类文件夹即可,刷新页面就能看到。写完后跑 `npm test`——`tests/samples.test.ts` 会自动检查全部题目可解析。
+把本规范和 `questions/_template.md` 一起交给 AI 批量生成即可;截图批量导入的协作流程见 [import-workflow.md](import-workflow.md)。写完跑 `npm test` 验证全部可解析、索引字段合规。
