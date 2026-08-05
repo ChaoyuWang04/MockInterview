@@ -26,15 +26,17 @@
 
 ```bash
 cd /Users/samwong/Desktop/1Project/interviewprep
-npx --yes create-next-app@15 . --typescript --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm
+npx --yes create-next-app@15 . --typescript --tailwind --eslint --app --no-src-dir --import-alias "@/*" --use-npm --turbopack --yes
 ```
+
+(`--turbopack --yes` 保证完全非交互,避免 create-next-app 的 Turbopack 询问挂起 shell)
 
 若报目录非空:在 `/tmp/ip-scaffold` 脚手架后 `rsync -a --exclude node_modules /tmp/ip-scaffold/ ./`,再 `npm install`。
 
 - [ ] **Step 2: 安装运行依赖与测试依赖**
 
 ```bash
-npm i gray-matter react-markdown remark-gfm remark-math rehype-katex katex rehype-highlight mermaid @tailwindcss/typography
+npm i gray-matter react-markdown remark-gfm remark-math rehype-katex katex rehype-highlight highlight.js mermaid @tailwindcss/typography
 npm i -D vitest
 ```
 
@@ -595,7 +597,7 @@ mastered: false         # 程序写回,新题保持 false
 ````
 
 - [ ] **Step 2: 创建四道示例题**(内容按上述文件清单,分别覆盖表格 / mermaid / KaTeX+代码;`RAG/002` 设 `mastered: true`。执行时按 `_template.md` 结构撰写原创内容,不照抄老师平台文本)
-- [ ] **Step 3: 验证解析** — 临时脚本或 `npx tsx` 调 `getStats()`,预期 total=4, mastered=1,无 error
+- [ ] **Step 3: 验证解析** — 临时脚本用 `npx -y tsx` 调 `getStats()`,预期 total=4, mastered=1,无 error
 - [ ] **Step 4: Commit** `feat: 题目模板与示例题库`
 
 ---
@@ -714,7 +716,7 @@ export default function Markdown({ children }: { children: string }) {
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeKatex, [rehypeHighlight, { plainText: ['mermaid'] }]]}
       components={{
-        code({ className, children: code, ...props }) {
+        code({ node: _node, className, children: code, ...props }) {
           if (className?.includes('language-mermaid')) return <Mermaid chart={String(code ?? '')} />
           return (
             <code className={className} {...props}>
@@ -755,7 +757,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 - [ ] **Step 4: 改 `app/globals.css`**(覆盖模板内容)
 
 ```css
-@import 'tailwindcss'
+@import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
 body {
@@ -776,8 +778,6 @@ body {
   height: auto;
 }
 ```
-
-(注意第一行 `@import 'tailwindcss';` 要带分号——执行时以正确语法为准)
 
 - [ ] **Step 5: `npx tsc --noEmit` 通过;Commit** `feat: markdown 渲染管线(GFM/KaTeX/高亮/Mermaid)`
 
