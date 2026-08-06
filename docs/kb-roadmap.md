@@ -40,32 +40,32 @@
 | Hybrid注意力 | 预训练 | ✅ | 混合比例、MiniMax 反例、三路线对照 |
 | 注意力配件 | 预训练 | 🖼️ | QK-Norm/门控/attention sink/跨层KV共享/逐层预算 |
 | RoPE | 预训练 | 🖼️ | 含 NoPE/partial RoPE/YaRN、层间分工规律 |
-| MoE基础 | 预训练 | 🚧 | 专家粒度趋势、共享专家、dense 前缀 |
-| MoE路由 | 预训练 | 🚧 | softmax/sigmoid/ReLU/哈希/分位数、负载均衡、aux-loss-free |
+| MoE基础 | 预训练 | ✅ | 专家粒度趋势、共享专家、dense 前缀 |
+| MoE路由 | 预训练 | ✅ | softmax/sigmoid/ReLU/哈希/分位数、负载均衡、aux-loss-free |
 | LatentMoE | 预训练 | ✅ | 已并入「MoE路由」一篇(压缩空间专家、通信动机) |
-| Norm位置 | 预训练 | 🚧 | PreNorm/PostNorm/Sandwich、RMSNorm 统一史 |
-| FFN与激活 | 预训练 | 🚧 | SwiGLU/GELU/ReLU²、维度设计 |
-| 残差流 | 预训练 | 🚧 | 超连接/mHC/AttnRes |
-| MTP | 预训练 | 🚧 | 训练信号 + 投机解码双用途 |
-| 优化器 | 预训练 | 🚧 | AdamW/Muon/MuonClip、优化器不匹配问题 |
+| Norm位置 | 预训练 | ✅ | PreNorm/PostNorm/Sandwich、RMSNorm 统一史 |
+| FFN与激活 | 预训练 | 🖼️ | SwiGLU/GELU/ReLU²、维度设计 |
+| 残差流 | 预训练 | ✅ | 超连接/mHC/AttnRes |
+| MTP | 预训练 | ✅ | 训练信号 + 投机解码双用途 |
+| 优化器 | 预训练 | 🖼️ | AdamW/Muon/MuonClip、优化器不匹配问题 |
 
 ## 批次 3:预训练大主题 / 推理加速 / 量化 / 多模态
 
 | 文章(=topic 头) | 分类 | 状态 | 说明 |
 |---|---|---|---|
-| 预训练流程 | 预训练 | ⬜ | 数据→tokenizer→课程→退火→评估全景 |
-| ScalingLaws | 预训练 | ⬜ | Kaplan/Chinchilla、算力最优、数据受限 |
-| 数据工程 | 预训练 | ⬜ | 清洗/去重/配比/合成数据 |
-| 推理加速 | AI Infra | ⬜ | 总览:投机解码/KV 优化/batch 策略/编译 |
-| 量化 | AI Infra | ⬜ | 参数量化:GPTQ/AWQ/FP8/INT4/MXFP4、QAT vs PTQ |
-| 并行策略 | AI Infra | ⬜ | DP/TP/PP/EP/SP、Megatron、与 ZeRO 的关系 |
-| Diffusion | 多模态 | ⬜ | DDPM/DDIM/噪声调度/引导 |
-| FlowMatching | 多模态 | ⬜ | 与 diffusion 的关系、rectified flow |
-| VLM结构 | 多模态 | ⬜ | ViT/CLIP/连接器(线性/Q-Former)/原生多模态 |
-| 后训练总览 | RL | ⬜ | SFT→RLHF→DPO→RLVR 全景对比串联 |
-| RLHF与RM | RL | ⬜ | 偏好数据、BT 训练、reward hacking |
-| KL散度 | RL | ⬜ | k1/k2/k3 估计器、前向/反向 KL |
-| 解码策略 | SFT | ⬜ | 已有题目(SFT/001),文章补全景 |
+| 预训练流程 | 预训练 | 🚧 | 数据→tokenizer→课程→退火→评估全景 |
+| ScalingLaws | 预训练 | 🚧 | Kaplan/Chinchilla、算力最优、数据受限 |
+| 数据工程 | 预训练 | 🚧 | 清洗/去重/配比/合成数据 |
+| 推理加速 | AI Infra | 🚧 | 总览:投机解码/KV 优化/batch 策略/编译 |
+| 量化 | AI Infra | 🚧 | 参数量化:GPTQ/AWQ/FP8/INT4/MXFP4、QAT vs PTQ |
+| 并行策略 | AI Infra | 🚧 | DP/TP/PP/EP/SP、Megatron、与 ZeRO 的关系 |
+| Diffusion | 多模态 | 🚧 | DDPM/DDIM/噪声调度/引导 |
+| FlowMatching | 多模态 | 🚧 | 与 diffusion 的关系、rectified flow |
+| VLM结构 | 多模态 | 🚧 | ViT/CLIP/连接器(线性/Q-Former)/原生多模态 |
+| 后训练总览 | RL | 🚧 | SFT→RLHF→DPO→RLVR 全景对比串联 |
+| RLHF与RM | RL | 🚧 | 偏好数据、BT 训练、reward hacking |
+| KL散度 | RL | 🚧 | k1/k2/k3 估计器、前向/反向 KL |
+| 解码策略 | SFT | 🚧 | 已有题目(SFT/001),文章补全景 |
 
 ## 待议(出现对应题目再排期)
 
