@@ -31,23 +31,23 @@
 
 | 文章(=topic 头) | 分类 | 状态 | 说明 |
 |---|---|---|---|
-| 架构总览 | 预训练 | ⬜ | 三条路线之争、KV cache 主战场、判断框架 |
-| GQA | 预训练 | ⬜ | MHA→MQA→GQA 谱系 |
-| MLA | 预训练 | ⬜ | 潜在压缩,含 CCA 延伸 |
-| SWA | 预训练 | ⬜ | 滑动窗口、局部:全局比例、窗口大小谱 |
-| 稀疏注意力 | 预训练 | ⬜ | DSA/CSA/HCA |
-| 线性注意力 | 预训练 | ⬜ | Mamba-2/GDN/KDA、O(1) 状态 |
-| Hybrid注意力 | 预训练 | ⬜ | 混合比例、MiniMax 反例、三路线对照 |
-| 注意力配件 | 预训练 | ⬜ | QK-Norm/门控/attention sink/跨层KV共享/逐层预算 |
-| RoPE | 预训练 | ⬜ | 含 NoPE/partial RoPE/YaRN、层间分工规律 |
-| MoE基础 | 预训练 | ⬜ | 专家粒度趋势、共享专家、dense 前缀 |
-| MoE路由 | 预训练 | ⬜ | softmax/sigmoid/ReLU/哈希/分位数、负载均衡、aux-loss-free |
-| LatentMoE | 预训练 | ⬜ | 压缩空间专家、通信动机(可并入 MoE路由,施工时定) |
-| Norm位置 | 预训练 | ⬜ | PreNorm/PostNorm/Sandwich、RMSNorm 统一史 |
-| FFN与激活 | 预训练 | ⬜ | SwiGLU/GELU/ReLU²、维度设计 |
-| 残差流 | 预训练 | ⬜ | 超连接/mHC/AttnRes |
-| MTP | 预训练 | ⬜ | 训练信号 + 投机解码双用途 |
-| 优化器 | 预训练 | ⬜ | AdamW/Muon/MuonClip、优化器不匹配问题 |
+| 架构总览 | 预训练 | ✅ | 三条路线之争、KV cache 主战场、判断框架 |
+| GQA | 预训练 | ✅ | MHA→MQA→GQA 谱系 |
+| MLA | 预训练 | 🖼️ | 潜在压缩,含 CCA 延伸 |
+| SWA | 预训练 | 🖼️ | 滑动窗口、局部:全局比例、窗口大小谱 |
+| 稀疏注意力 | 预训练 | 🖼️ | DSA/CSA/HCA |
+| 线性注意力 | 预训练 | 🖼️ | Mamba-2/GDN/KDA、O(1) 状态 |
+| Hybrid注意力 | 预训练 | ✅ | 混合比例、MiniMax 反例、三路线对照 |
+| 注意力配件 | 预训练 | 🖼️ | QK-Norm/门控/attention sink/跨层KV共享/逐层预算 |
+| RoPE | 预训练 | 🖼️ | 含 NoPE/partial RoPE/YaRN、层间分工规律 |
+| MoE基础 | 预训练 | 🚧 | 专家粒度趋势、共享专家、dense 前缀 |
+| MoE路由 | 预训练 | 🚧 | softmax/sigmoid/ReLU/哈希/分位数、负载均衡、aux-loss-free |
+| LatentMoE | 预训练 | ✅ | 已并入「MoE路由」一篇(压缩空间专家、通信动机) |
+| Norm位置 | 预训练 | 🚧 | PreNorm/PostNorm/Sandwich、RMSNorm 统一史 |
+| FFN与激活 | 预训练 | 🚧 | SwiGLU/GELU/ReLU²、维度设计 |
+| 残差流 | 预训练 | 🚧 | 超连接/mHC/AttnRes |
+| MTP | 预训练 | 🚧 | 训练信号 + 投机解码双用途 |
+| 优化器 | 预训练 | 🚧 | AdamW/Muon/MuonClip、优化器不匹配问题 |
 
 ## 批次 3:预训练大主题 / 推理加速 / 量化 / 多模态
 
