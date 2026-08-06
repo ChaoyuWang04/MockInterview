@@ -6,7 +6,7 @@ markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库
 
 - `npm run dev` — 启动应用(localhost:3000)
 - `npm run topics` — 打印主题树(批量导入前的去重索引)
-- `npm test` — 全部验证(全库可解析 + topic/summary 合规),秒级
+- `npm test` — 全部验证(题库可解析 + topic/summary 合规 + 知识库文章非空),秒级
 
 ## 关键文档(按任务查)
 

@@ -75,6 +75,8 @@ mastered: false              # 程序写回,新题保持 false
 - 无 frontmatter,正文以 `# 标题` 开头;markdown 能力与题目一致(表格/KaTeX/mermaid,块级公式 `$$` 独行)
 - **完整性优先**:覆盖该知识点的全部细节与公式,同时每个术语/公式都配通俗直白的类比或解释(风格样板:`knowledge/RL/GRPO.md` 与 `docs/references/frontier-llm-architecture-handbook-2026.md`)
 - **可视化**:流程/结构优先用 mermaid;mermaid 表达不了的(如几何示意、论文截图)留占位符独立一行:`> 🖼️ 占位:<想要的图的描述>`,用户后期替换为图片
+- **占位符换图**:图片文件放 `public/kb-images/<分类>/<描述性文件名>.png`,然后把整行占位符替换为 `![图片描述](/kb-images/<分类>/<文件名>.png)`;全库待补图清单用 `grep -rn "🖼️ 占位" knowledge/` 列出
+- **篇幅基准**:正文约 120–260 行;总览/hub 型文章取下限,机制推导型取上限;不足 100 行通常意味着细节没铺开,超 300 行考虑拆篇
 - **文末必须有 `## 相关文献`**:该主题的核心论文列表,格式 `- 论文名 — [arXiv:xxxx.xxxxx](https://arxiv.org/abs/xxxx.xxxxx)`;不确定的编号必须联网核实,**严禁凭记忆编造链接**;无 arxiv 的资源(博客/文档)给原始 URL
 - 建议骨架:是什么(一句话)→ 动机 → 核心机制(公式)→ 细节与常见坑 → 与近亲方法对比 → 面试考点串联 → 相关文献
 - 导入新题发现文章未覆盖的点,**增量补进对应小节**(规则见 [import-workflow.md](import-workflow.md))
