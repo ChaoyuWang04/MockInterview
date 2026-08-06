@@ -23,9 +23,10 @@ const DIFFICULTY_STYLE: Record<string, string> = {
 interface Props {
   category: string
   initialQuestions: Question[]
+  kbTopics?: string[]
 }
 
-export default function QuestionView({ category, initialQuestions }: Props) {
+export default function QuestionView({ category, initialQuestions, kbTopics = [] }: Props) {
   const [questions, setQuestions] = useState(initialQuestions)
   const [index, setIndex] = useState(0)
   const [expanded, setExpanded] = useState(false)
@@ -34,6 +35,8 @@ export default function QuestionView({ category, initialQuestions }: Props) {
   const total = questions.length
   const masteredCount = questions.filter((q) => q.meta.mastered).length
   const q = questions[index]
+  const topicHead = q?.meta.topic?.split('/')[0]?.trim()
+  const kbTopic = topicHead && kbTopics.includes(topicHead) ? topicHead : null
 
   const go = useCallback(
     (delta: number) => {
@@ -160,7 +163,7 @@ export default function QuestionView({ category, initialQuestions }: Props) {
               <Markdown>{q.sections['题目'] ?? ''}</Markdown>
             </div>
 
-            {(q.meta.tags.length > 0 || q.meta.company) && (
+            {(q.meta.tags.length > 0 || q.meta.company || kbTopic) && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {q.meta.tags.map((t) => (
                   <span key={t} className="border border-gray-200 px-2 py-0.5 text-xs text-gray-600">
@@ -171,6 +174,14 @@ export default function QuestionView({ category, initialQuestions }: Props) {
                   <span className="border border-gray-100 bg-gray-50 px-2 py-0.5 text-xs text-gray-400">
                     {q.meta.company}
                   </span>
+                )}
+                {kbTopic && (
+                  <Link
+                    href={`/kb/${encodeURIComponent(category)}/${encodeURIComponent(kbTopic)}`}
+                    className="border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs text-blue-600 hover:border-blue-400"
+                  >
+                    📚 知识库:{kbTopic}
+                  </Link>
                 )}
               </div>
             )}

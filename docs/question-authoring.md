@@ -66,6 +66,15 @@ mastered: false              # 程序写回,新题保持 false
 - **Mermaid 图**:语言标注为 `mermaid` 的代码块自动渲染成图
 - **代码高亮**:标注语言的代码块(`python`、`ts` 等)
 
+## 知识库文章
+
+`knowledge/<分类>/<topic第一段>.md`,一篇文章 = 一个 topic 主题的整体讲解(题目是切片,文章是全景)。
+
+- **文件名必须与题目 frontmatter `topic` 的第一段完全一致**(如 `knowledge/RL/GRPO.md` 对应 `topic: GRPO/...`)——刷题页的「📚 知识库」入口和文章页的关联题目列表都靠这个字符串匹配
+- 无 frontmatter,正文以 `# 标题` 开头;markdown 能力与题目一致(表格/KaTeX/mermaid,块级公式 `$$` 独行)
+- 建议骨架:是什么(一句话)→ 动机 → 核心机制(公式)→ 训练细节与常见坑 → 数据构建 → 工程/rollout 细节 → 面试考点串联(样板见 `knowledge/RL/GRPO.md`)
+- 文章可以比题目长,但仍要结构化、每节聚焦;导入新题发现文章未覆盖的点,**增量补进对应小节**(规则见 [import-workflow.md](import-workflow.md))
+
 ## 批量出题
 
 把本规范和 `questions/_template.md` 一起交给 AI 批量生成即可;截图批量导入的协作流程见 [import-workflow.md](import-workflow.md)。写完跑 `npm test` 验证全部可解析、索引字段合规。

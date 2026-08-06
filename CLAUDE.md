@@ -1,6 +1,6 @@
 # 本地大模型面试刷题系统
 
-markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库在 `questions/`,一题一文件,分类即文件夹。
+markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库在 `questions/`,一题一文件,分类即文件夹;知识库在 `knowledge/`,一篇文章 = 一个 topic 主题的整体讲解(文件名 = topic 第一段,页面路由 `/kb`)。
 
 ## 常用命令
 
