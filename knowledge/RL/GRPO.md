@@ -89,3 +89,12 @@ flowchart LR
 5. GRPO 有哪些已知偏置与改进(DAPO、Dr. GRPO)→「训练细节」
 6. RL 数据怎么造、难度怎么控 →「数据构建」
 7. rollout 温度、截断、引擎同步 →「rollout 细节」
+
+## 相关文献
+
+- DeepSeekMath(GRPO 首次提出,§4)— [arXiv:2402.03300](https://arxiv.org/abs/2402.03300)
+- DeepSeek-R1(GRPO 大规模实战与 R1-Zero 配方)— [arXiv:2501.12948](https://arxiv.org/abs/2501.12948)
+- DAPO(clip-higher / 动态采样 / overlong 处理)— [arXiv:2503.14476](https://arxiv.org/abs/2503.14476)
+- Dr. GRPO / Understanding R1-Zero-Like Training(长度偏置修正)— [arXiv:2503.20783](https://arxiv.org/abs/2503.20783)
+- GSPO(序列级重要性采样,Qwen 后续改进)— [arXiv:2507.18071](https://arxiv.org/abs/2507.18071)
+- KL 估计器 k1/k2/k3 — John Schulman, *Approximating KL Divergence*:http://joschu.net/blog/kl-approx.html

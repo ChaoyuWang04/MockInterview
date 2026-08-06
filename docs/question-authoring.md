@@ -70,10 +70,14 @@ mastered: false              # 程序写回,新题保持 false
 
 `knowledge/<分类>/<topic第一段>.md`,一篇文章 = 一个 topic 主题的整体讲解(题目是切片,文章是全景)。
 
-- **文件名必须与题目 frontmatter `topic` 的第一段完全一致**(如 `knowledge/RL/GRPO.md` 对应 `topic: GRPO/...`)——刷题页的「📚 知识库」入口和文章页的关联题目列表都靠这个字符串匹配
+- **文件名必须与题目 frontmatter `topic` 的第一段完全一致**(如 `knowledge/RL/GRPO.md` 对应 `topic: GRPO/...`)——刷题页的「📚 知识库」入口和文章页的关联题目列表都靠这个字符串匹配;文章名的受控词表与施工进度见 [kb-roadmap.md](kb-roadmap.md)
+- **粒度:尽量细碎**,一篇只讲一个可独立成文的知识点(GQA、RoPE、ZeRO 各一篇);同主题再单开一篇「XX总览」做横向对比与串联
 - 无 frontmatter,正文以 `# 标题` 开头;markdown 能力与题目一致(表格/KaTeX/mermaid,块级公式 `$$` 独行)
-- 建议骨架:是什么(一句话)→ 动机 → 核心机制(公式)→ 训练细节与常见坑 → 数据构建 → 工程/rollout 细节 → 面试考点串联(样板见 `knowledge/RL/GRPO.md`)
-- 文章可以比题目长,但仍要结构化、每节聚焦;导入新题发现文章未覆盖的点,**增量补进对应小节**(规则见 [import-workflow.md](import-workflow.md))
+- **完整性优先**:覆盖该知识点的全部细节与公式,同时每个术语/公式都配通俗直白的类比或解释(风格样板:`knowledge/RL/GRPO.md` 与 `docs/references/frontier-llm-architecture-handbook-2026.md`)
+- **可视化**:流程/结构优先用 mermaid;mermaid 表达不了的(如几何示意、论文截图)留占位符独立一行:`> 🖼️ 占位:<想要的图的描述>`,用户后期替换为图片
+- **文末必须有 `## 相关文献`**:该主题的核心论文列表,格式 `- 论文名 — [arXiv:xxxx.xxxxx](https://arxiv.org/abs/xxxx.xxxxx)`;不确定的编号必须联网核实,**严禁凭记忆编造链接**;无 arxiv 的资源(博客/文档)给原始 URL
+- 建议骨架:是什么(一句话)→ 动机 → 核心机制(公式)→ 细节与常见坑 → 与近亲方法对比 → 面试考点串联 → 相关文献
+- 导入新题发现文章未覆盖的点,**增量补进对应小节**(规则见 [import-workflow.md](import-workflow.md))
 
 ## 批量出题
 

@@ -12,6 +12,7 @@ markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库
 
 - **用户发题目截图要求入库**:严格按 [docs/import-workflow.md](docs/import-workflow.md) 执行(去重判定、分类映射、汇总表;验证只跑 `npm test`,不开浏览器)
 - **出题/改题格式**:[docs/question-authoring.md](docs/question-authoring.md)(六分区、topic/summary、长度红线、块级公式 `$$` 独行)
+- **知识库扩建/续建**:[docs/kb-roadmap.md](docs/kb-roadmap.md)(需求清单、进度状态、文章标准摘要;架构类参考 docs/references/ 下的架构手册)
 - **日常维护**:[docs/maintenance.md](docs/maintenance.md)
 - 设计与实现背景:`docs/superpowers/` 下的 spec 与 plan
 
