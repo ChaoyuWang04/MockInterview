@@ -53,19 +53,19 @@
 
 | 文章(=topic 头) | 分类 | 状态 | 说明 |
 |---|---|---|---|
-| 预训练流程 | 预训练 | 🚧 | 数据→tokenizer→课程→退火→评估全景 |
-| ScalingLaws | 预训练 | 🚧 | Kaplan/Chinchilla、算力最优、数据受限 |
-| 数据工程 | 预训练 | 🚧 | 清洗/去重/配比/合成数据 |
-| 推理加速 | AI Infra | 🚧 | 总览:投机解码/KV 优化/batch 策略/编译 |
-| 量化 | AI Infra | 🚧 | 参数量化:GPTQ/AWQ/FP8/INT4/MXFP4、QAT vs PTQ |
-| 并行策略 | AI Infra | 🚧 | DP/TP/PP/EP/SP、Megatron、与 ZeRO 的关系 |
-| Diffusion | 多模态 | 🚧 | DDPM/DDIM/噪声调度/引导 |
-| FlowMatching | 多模态 | 🚧 | 与 diffusion 的关系、rectified flow |
-| VLM结构 | 多模态 | 🚧 | ViT/CLIP/连接器(线性/Q-Former)/原生多模态 |
-| 后训练总览 | RL | 🚧 | SFT→RLHF→DPO→RLVR 全景对比串联 |
-| RLHF与RM | RL | 🚧 | 偏好数据、BT 训练、reward hacking |
-| KL散度 | RL | 🚧 | k1/k2/k3 估计器、前向/反向 KL |
-| 解码策略 | SFT | 🚧 | 已有题目(SFT/001),文章补全景 |
+| 预训练流程 | 预训练 | ✅ | 数据→tokenizer→课程→退火→评估全景 |
+| ScalingLaws | 预训练 | 🖼️ | Kaplan/Chinchilla、算力最优、数据受限 |
+| 数据工程 | 预训练 | 🖼️ | 清洗/去重/配比/合成数据 |
+| 推理加速 | AI Infra | 🖼️ | 总览:投机解码/KV 优化/batch 策略/编译 |
+| 量化 | AI Infra | 🖼️ | 参数量化:GPTQ/AWQ/FP8/INT4/MXFP4、QAT vs PTQ |
+| 并行策略 | AI Infra | ✅ | DP/TP/PP/EP/SP、Megatron、与 ZeRO 的关系 |
+| Diffusion | 多模态 | 🖼️ | DDPM/DDIM/噪声调度/引导 |
+| FlowMatching | 多模态 | 🖼️ | 与 diffusion 的关系、rectified flow |
+| VLM结构 | 多模态 | 🖼️ | ViT/CLIP/连接器(线性/Q-Former)/原生多模态 |
+| 后训练总览 | RL | ✅ | SFT→RLHF→DPO→RLVR 全景对比串联 |
+| RLHF与RM | RL | 🖼️ | 偏好数据、BT 训练、reward hacking |
+| KL散度 | RL | 🖼️ | k1/k2/k3 估计器、前向/反向 KL |
+| 解码策略 | SFT | ✅ | 已有题目(SFT/001),文章补全景 |
 
 ## 待议(出现对应题目再排期)
 
