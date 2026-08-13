@@ -1,0 +1,86 @@
+# 开源项目解读:规范与排期
+
+定位:用户**不读源码**,读的是 AI 阅读真实代码后产出的「总览 + 分子系统」解读文档。魔改实验在服务器上做,本机只负责理解。
+
+## 目录结构(两层分离)
+
+- `projects/<主题>/<项目>/` —— 源码仓原样存放(**git 不追踪**,.gitignore 已排除;是 AI 撰写解读时的阅读材料)
+- `opensource/<主题>/<项目>/NN-<小节名>.md` —— 解读文档(**git 追踪**,页面数据源;路由 `/opensource`)
+
+两边的 `<主题>/<项目>` 目录名保持一致。主页入口「🔍 开源项目解读」→ 按主题分组的项目卡片 → 阅读器(右侧章节导航,←/→ 翻节)。
+
+## 解读的撰写标准
+
+- **必须读真实代码后写作**,以仓库现状为准;组件不存在就不要写,严禁按"通常这类项目会有"编造
+- 分页:`00-总览.md` + 每个子系统一页(`01-…` 起);一个项目 5–9 节为宜
+- **00-总览 硬性要求**:开篇一句话定位 → **全景架构 mermaid**(用户进入项目看到的第一屏)→ 仓库目录导览表(顶层目录→职责)→ 一次请求/一次训练的完整数据流走读 → 文末「相关链接」(GitHub/官方文档/核心论文;arxiv 编号拿不准必须联网核实,严禁编造)
+- **子系统页骨架**:职责一句话 → 流程/结构 mermaid → 关键数据结构与代码路径(引用格式:`lmcache/v1/cache_engine.py` 这样的仓库相对路径,重要处带行号)→ 设计取舍(为什么这么设计、代价是什么)→ 与同类实现对比(如有)→ 面试考点串联
+- 每页 80–200 行;公式 KaTeX(块级 `$$` 独行);图片占位符规则与知识库一致(`> 🖼️ 占位:...`)
+- 语言:通俗直白,术语首次出现给类比;风格样板 `knowledge/RL/GRPO.md` 与 `opensource/推理服务/LMCache/`
+
+## 维护流程
+
+- 新解读 = 用户点名;先在下方状态表把该项目标 🚧,写完标 ✅(有占位符标 🖼️)
+- 新收藏项目:repo 放进 `projects/<主题>/`(没有合适主题就新建),状态表加一行 ⬜
+- 验证一律 `npm test`(解读页非空 + 序号前缀 + LMCache 样板守护),不开浏览器
+- 刷题/知识库遇到与某项目强相关的考点,可在解读页的「面试考点串联」补一行,反向链接用纯文本
+
+## 项目清单与解读状态
+
+状态:⬜ 未解读 · 🚧 施工中 · ✅ 完成 · 🖼️ 完成待补图
+
+### 推理服务
+
+| 项目 | 状态 | 一句话 |
+|---|---|---|
+| LMCache | ✅ | vLLM 生态的 KV cache 分层存储/复用层(样板解读,7 节) |
+| vllm | ⬜ | 主流推理引擎,PagedAttention |
+| sglang | ⬜ | RadixAttention 与结构化输出 |
+| nano-vllm | ⬜ | 迷你 vLLM 教学实现,入门首选 |
+| Mooncake | ⬜ | Kimi 的 PD 分离 + KVCache 池化服务架构 |
+| TensorRT | ⬜ | NVIDIA 推理优化 SDK |
+
+### RL训练框架
+
+| 项目 | 状态 | 一句话 |
+|---|---|---|
+| verl | ⬜ | 字节 HybridFlow,RLVR 主流框架 |
+| OpenRLHF | ⬜ | Ray + vLLM + ZeRO 的 RLHF 框架 |
+| slime | ⬜ | 智谱系 RL 框架(SGLang 原生) |
+| ROLL | ⬜ | 阿里 RL 框架 |
+
+### 分布式训练
+
+| 项目 | 状态 | 一句话 |
+|---|---|---|
+| Megatron-LM | ⬜ | TP/PP/SP 并行策略的源头实现 |
+| DeepSpeed | ⬜ | ZeRO 工程化全家桶 |
+| TransformerEngine | ⬜ | NVIDIA FP8 训练库 |
+| apex | ⬜ | 混合精度与融合算子(历史地位) |
+| nccl | ⬜ | 集合通信库,AllReduce 的底层 |
+| ray | ⬜ | 分布式计算底座(RL 框架的调度层) |
+
+### Kernel与GPU编程
+
+| 项目 | 状态 | 一句话 |
+|---|---|---|
+| triton | ⬜ | Python 写 GPU kernel 的 DSL |
+| Triton-distributed | ⬜ | 通信-计算融合的分布式 Triton |
+| tilelang | ⬜ | tile 级 kernel DSL |
+| cutlass | ⬜ | NVIDIA 模板库,GEMM 的正统实现 |
+| Liger-Kernel | ⬜ | LLM 训练的 Triton 融合算子集 |
+| cuda-samples | ⬜ | CUDA 官方示例 |
+| cudaLearning | ⬜ | 个人 CUDA 练习 |
+| GEMM | ⬜ | 手写 GEMM 优化练习 |
+
+### 框架内核 / 多模态生成 / 模型架构
+
+| 项目 | 主题 | 状态 | 一句话 |
+|---|---|---|---|
+| pytorch | 框架内核 | ⬜ | autograd/dispatcher/编译栈 |
+| DiffSynth-Studio | 多模态生成 | ⬜ | 图像视频扩散生成工作台 |
+| Engram | 模型架构 | ⬜ | DeepSeek 记忆层论文仓库(paper+demo) |
+
+### _archive(存档,不排期)
+
+Awesome-RL-for-LRMs-TripleR、Search-R1-Repo、TinyZero-260417

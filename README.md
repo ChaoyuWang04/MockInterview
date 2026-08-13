@@ -20,6 +20,7 @@ npm run dev
   - NOTE 区「编辑」:写笔记,保存后写回文件的 `## Note` 分区
   - 右侧题目导航栏(宽屏显示):题号按 topic 主题分组,绿色 = 已掌握,点击直达;方便按主题集中复习
 - **知识库**(主页入口或 `/kb`):每篇文章对应一个 topic 主题的整体讲解,题目页遇到有文章的主题会出现「📚 知识库」入口;文章放 `knowledge/<分类>/<topic>.md`
+- **开源项目解读**(主页入口或 `/opensource`):按主题分组的项目解读,阅读器第 0 节是全景总览、之后每节一个子系统,←/→ 翻节;解读文档在 `opensource/`,对应源码仓在 `projects/`(git 不追踪),规范见 [docs/opensource-workflow.md](docs/opensource-workflow.md)
 
 ## 加题三步
 

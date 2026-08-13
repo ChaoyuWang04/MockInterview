@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CategoryCard from '@/components/CategoryCard'
 import { listArticleTopics, listKbCategories } from '@/lib/knowledge'
+import { listOsProjects, listOsTopics } from '@/lib/opensource'
 import { getStats } from '@/lib/questions'
 
 export const dynamic = 'force-dynamic'
@@ -8,6 +9,7 @@ export const dynamic = 'force-dynamic'
 export default function Home() {
   const stats = getStats()
   const kbCount = listKbCategories().reduce((s, c) => s + listArticleTopics(c).length, 0)
+  const osCount = listOsTopics().reduce((s, t) => s + listOsProjects(t).length, 0)
   return (
     <main className="mx-auto max-w-5xl px-6 py-16">
       <h1 className="text-2xl font-bold">大模型面试刷题</h1>
@@ -16,12 +18,20 @@ export default function Home() {
           {stats.mastered} <span className="text-gray-300">/</span> {stats.total}
         </div>
         <p className="mt-2 text-sm text-gray-500">已掌握 / 总题数</p>
-        <Link
-          href="/kb"
-          className="mt-4 inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
-        >
-          📚 知识库 · {kbCount} 篇 →
-        </Link>
+        <div className="mt-4 flex gap-3">
+          <Link
+            href="/kb"
+            className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
+          >
+            📚 知识库 · {kbCount} 篇 →
+          </Link>
+          <Link
+            href="/opensource"
+            className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
+          >
+            🔍 开源项目解读 · {osCount} 个 →
+          </Link>
+        </div>
       </div>
       <div className="mt-16 mb-6 flex items-baseline justify-between">
         <h2 className="text-lg font-semibold">题库分类</h2>
