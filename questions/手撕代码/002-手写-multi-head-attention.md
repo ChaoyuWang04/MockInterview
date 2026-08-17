@@ -1,0 +1,85 @@
+---
+difficulty: 中等
+topic: Attention/多头注意力
+summary: 手写 MHA,说清多头比单头多了什么、参数量怎么算
+tags: [Transformer, Attention, 手撕代码, 待校对]
+mastered: false
+highfreq: true
+---
+
+## 题目
+
+手写多头注意力(Multi-Head Attention),并说明:多头相比单头多了什么?参数量怎么算,和头数有关系吗?
+
+## 要点
+
+- 能写对拆头/合头的维度变换(reshape + transpose,顺序不能反)
+- 缩放用的是每个头的维度 $d_h$,不是总维度 $d$
+- 参数量 $\approx 4d^2$,与头数**无关**
+- 知道 mask 加在 softmax 之前
+
+## 答案
+
+**一句话理解**:单头注意力是"一个人从一个角度读句子";多头是"派 8 个人各读一个角度"——有人盯语法搭配,有人盯指代关系,有人盯远距离依赖,最后把每个人的结论拼起来再融合一次。
+
+### 流程
+
+输入 $x$ 形状 $(B, L, d)$:
+
+1. 三个线性层得到 Q、K、V,形状仍是 $(B, L, d)$
+2. **拆头**:$(B, L, d) \to (B, L, h, d_h) \to$ transpose 成 $(B, h, L, d_h)$,其中 $d_h = d/h$
+3. 每个头独立做缩放点积注意力
+4. **合头**:$(B, h, L, d_h) \to$ transpose 回 $(B, L, h, d_h) \to$ reshape 成 $(B, L, d)$
+5. 再过一个输出线性层 $W^O$
+
+$$
+\mathrm{MHA}(x) = \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h)\, W^O, \quad
+\mathrm{head}_i = \mathrm{Attention}(QW_i^Q,\, KW_i^K,\, VW_i^V)
+$$
+
+```python
+import torch, torch.nn as nn, torch.nn.functional as F
+
+class MHA(nn.Module):
+    def __init__(self, d, h):
+        super().__init__()
+        assert d % h == 0
+        self.h, self.dh = h, d // h
+        self.wq, self.wk, self.wv, self.wo = (nn.Linear(d, d) for _ in range(4))
+
+    def forward(self, x, mask=None):          # x: (B, L, d)
+        B, L, d = x.shape
+        def split(t):                          # (B,L,d) -> (B,h,L,dh)
+            return t.view(B, L, self.h, self.dh).transpose(1, 2)
+        q, k, v = split(self.wq(x)), split(self.wk(x)), split(self.wv(x))
+
+        scores = q @ k.transpose(-2, -1) / self.dh ** 0.5      # (B,h,L,L)
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, float('-inf'))
+        out = F.softmax(scores, dim=-1) @ v                    # (B,h,L,dh)
+
+        out = out.transpose(1, 2).contiguous().view(B, L, d)   # 合头
+        return self.wo(out)
+```
+
+### 参数量
+
+四个 $d \times d$ 的线性层 → $4d^2$(加 bias 再 $+4d$)。**和头数无关**:头数只决定怎么把 $d$ 切开,总宽度没变。所以"多头不增加参数量,只改变信息的组织方式"。
+
+### 常见坑
+
+- `view(B, L, h, dh)` 之后**必须** transpose,直接 `view(B, h, L, dh)` 会把序列和头维度搅乱
+- 合头前要 `.contiguous()`,否则 view 报错
+- 缩放除的是 $\sqrt{d_h}$;写成 $\sqrt{d}$ 会让注意力过于平滑
+
+## 知识点
+
+多头注意力、拆头/合头的维度变换、参数量估算、注意力 mask;GQA/MQA 是在这个基础上共享 K/V 头(见知识库 GQA 篇)。
+
+## 追问
+
+- 为什么多头有效?(不同子空间学不同关系,类似 CNN 多个卷积核)
+- 头数怎么选?$d_h$ 太小会怎样?
+- KV cache 存的是哪一部分?为什么 GQA 能省显存?
+
+## Note
