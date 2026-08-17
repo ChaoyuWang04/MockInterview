@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import CategoryCard from '@/components/CategoryCard'
 import { listArticleTopics, listKbCategories } from '@/lib/knowledge'
+import { listHot100 } from '@/lib/leetcode'
 import { listOsProjects, listOsTopics } from '@/lib/opensource'
 import { getStats } from '@/lib/questions'
 
@@ -10,6 +11,7 @@ export default function Home() {
   const stats = getStats()
   const kbCount = listKbCategories().reduce((s, c) => s + listArticleTopics(c).length, 0)
   const osCount = listOsTopics().reduce((s, t) => s + listOsProjects(t).length, 0)
+  const lcCount = listHot100().reduce((s, g) => s + g.problems.length, 0)
   return (
     <main className="mx-auto max-w-5xl px-6 py-16">
       <h1 className="text-2xl font-bold">大模型面试刷题</h1>
@@ -30,6 +32,12 @@ export default function Home() {
             className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
           >
             🔍 开源项目解读 · {osCount} 个 →
+          </Link>
+          <Link
+            href="/leetcode"
+            className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
+          >
+            💯 LeetCode 热题 · {lcCount} 题 →
           </Link>
         </div>
       </div>

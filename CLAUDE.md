@@ -14,6 +14,7 @@ markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库
 - **出题/改题格式**:[docs/question-authoring.md](docs/question-authoring.md)(六分区、topic/summary、长度红线、块级公式 `$$` 独行)
 - **知识库扩建/续建**:[docs/kb-roadmap.md](docs/kb-roadmap.md)(需求清单、进度状态、文章标准摘要;架构类参考 docs/references/ 下的架构手册)
 - **开源项目解读(新写/续写/加项目)**:[docs/opensource-workflow.md](docs/opensource-workflow.md)(必须读 projects/ 下真实代码后写作、分页标准、项目清单与状态)
+- **LeetCode 热题 100**:[docs/leetcode-hot100.md](docs/leetcode-hot100.md)(清单数据格式与官方同步脚本、笔记存储、页面行为)
 - **日常维护**:[docs/maintenance.md](docs/maintenance.md)
 - 设计与实现背景:`docs/superpowers/` 下的 spec 与 plan
 

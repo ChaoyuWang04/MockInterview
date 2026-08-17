@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "topics": "node scripts/topics.mjs"
+    "topics": "node scripts/topics.mjs",
+    "hot100:sync": "node scripts/hot100-sync.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
