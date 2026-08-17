@@ -7,12 +7,21 @@
 | 内容 | 位置 |
 |---|---|
 | 题目清单(数据源) | `leetcode/hot100.md` —— `## 分组` + 四列表格 `题号 \| 标题 \| slug \| 难度` |
+| 补充题 | `leetcode/extra.md` —— 面经里出现但不在官方 100 内的题;格式与 hot100.md 相同 |
 | 高频标记 | `leetcode/high-freq.md` —— 每行 `- <slug>`;**与清单分开存放**,重新同步清单不丢标记 |
 | 笔记 | `leetcode/notes/<slug>.md` —— 一题一文件,按需创建 |
 | 页面 | `/leetcode`(主页入口「💯 LeetCode 热题」) |
 | 写接口 | `PATCH /api/leetcode-note` `{ slug, note }`、`PATCH /api/leetcode-hot` `{ slug, hot }`,slug 均须在清单内 |
 
 `slug` 是主键,leetcode.com 与 leetcode.cn 共用同一个 slug,两个跳转按钮各自拼 `https://leetcode.com/problems/<slug>/` 与 `https://leetcode.cn/problems/<slug>/`。
+
+## 补充题怎么加
+
+面经里遇到 hot100 之外的题:加一行到 `leetcode/extra.md`。**不要写进 hot100.md**——那个文件会被 `npm run hot100:sync` 整体覆盖。
+
+- 分组名与 hot100 相同 → 自动并入该组(如「链表」);
+- 分组名不存在 → 作为新分组追加在列表末尾(如「排序与字符串」);
+- 页面上补充题带灰色「补」标记,其余行为(笔记、高频、排序)与官方题完全一致。
 
 ## 页面行为
 

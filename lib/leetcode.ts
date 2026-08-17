@@ -6,6 +6,8 @@ export interface LcProblem {
   title: string
   slug: string
   difficulty: string
+  /** true = 来自 extra.md 的补充题(非官方热题 100) */
+  extra?: boolean
 }
 
 export interface LcGroup {
@@ -21,9 +23,8 @@ function notesDir(root = leetcodeRoot()): string {
   return path.join(root, 'notes')
 }
 
-/** 解析 hot100.md:`## 分组` + 四列表格(题号|标题|slug|难度) */
-export function listHot100(root = leetcodeRoot()): LcGroup[] {
-  const file = path.join(root, 'hot100.md')
+/** 解析清单文件:`## 分组` + 四列表格(题号|标题|slug|难度) */
+function parseListFile(file: string): LcGroup[] {
   if (!fs.existsSync(file)) return []
   const groups: LcGroup[] = []
   let current: LcGroup | null = null
@@ -44,8 +45,32 @@ export function listHot100(root = leetcodeRoot()): LcGroup[] {
   return groups.filter((g) => g.problems.length > 0)
 }
 
+/** 官方热题 100 清单(会被 npm run hot100:sync 整体覆盖) */
+export function listHot100(root = leetcodeRoot()): LcGroup[] {
+  return parseListFile(path.join(root, 'hot100.md'))
+}
+
+/** 补充题清单(面经高频但不在官方 100 里;单独存放,同步官方清单时不受影响) */
+export function listExtra(root = leetcodeRoot()): LcGroup[] {
+  return parseListFile(path.join(root, 'extra.md')).map((g) => ({
+    ...g,
+    problems: g.problems.map((p) => ({ ...p, extra: true })),
+  }))
+}
+
+/** 页面用的完整清单:补充题并入同名分组;分组不存在则作为新分组追加在末尾 */
+export function listAllProblems(root = leetcodeRoot()): LcGroup[] {
+  const merged = listHot100(root).map((g) => ({ ...g, problems: [...g.problems] }))
+  for (const eg of listExtra(root)) {
+    const hit = merged.find((g) => g.name === eg.name)
+    if (hit) hit.problems.push(...eg.problems)
+    else merged.push({ ...eg, problems: [...eg.problems] })
+  }
+  return merged
+}
+
 export function isValidSlug(slug: string, root = leetcodeRoot()): boolean {
-  return listHot100(root).some((g) => g.problems.some((p) => p.slug === slug))
+  return listAllProblems(root).some((g) => g.problems.some((p) => p.slug === slug))
 }
 
 /** 高频标记:每行 `- <slug>`,与 hot100.md 分开存放,重新同步清单不丢标记 */
@@ -65,7 +90,7 @@ export function setHighFreq(slug: string, hot: boolean, root = leetcodeRoot()): 
   else current.delete(slug)
 
   // 按清单顺序写回,便于人工浏览与 diff
-  const order = listHot100(root).flatMap((g) => g.problems.map((p) => p.slug))
+  const order = listAllProblems(root).flatMap((g) => g.problems.map((p) => p.slug))
   const sorted = order.filter((s) => current.has(s))
 
   const file = path.join(root, 'high-freq.md')

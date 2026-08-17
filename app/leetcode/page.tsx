@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import Hot100List from '@/components/Hot100List'
-import { getAllNotes, listHighFreq, listHot100 } from '@/lib/leetcode'
+import { getAllNotes, listAllProblems, listHighFreq } from '@/lib/leetcode'
 
 export const dynamic = 'force-dynamic'
 
 export default function LeetcodePage() {
-  const groups = listHot100()
+  const groups = listAllProblems()
   return (
     <main className="mx-auto max-w-3xl px-6 py-16">
       <div className="flex items-baseline justify-between">
