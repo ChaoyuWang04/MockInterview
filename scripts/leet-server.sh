@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
-# 刷题系统常驻服务(生产模式)管理脚本
+# 刷题系统常驻服务(生产模式)
 #
 # 用法:在 ~/.zshrc 里 source 本文件,即可使用:
 #   leet-start    启动常驻服务(必要时自动构建)
 #   leet-stop     停止
 #   leet-restart  重启
-#   leet-status   查看状态(端口/PID/内存占用)
+#   leet-status   查看状态(PID/内存/CPU/是否已脱离终端)
 #   leet-rebuild  改过代码后重新构建并重启
 #   leet-logs     跟踪日志
-#   leet-open     用浏览器打开
+#   leet-open     浏览器打开
+#
+# 关键:服务由 scripts/leet-daemon.py 以 double-fork + setsid 启动,
+#      进程无控制终端、父进程为 init —— 关掉终端窗口或退出 Terminal.app 都不受影响。
 #
 # 说明:改 markdown 内容(题目/笔记/知识库/解读)无需重启,刷新页面即可;
 #      只有改 app/ components/ lib/ 等代码才需要 leet-rebuild。
@@ -27,7 +30,7 @@ _leet_pid() {
   _leet_paths
   [ -f "$LEET_PID_FILE" ] || return 1
   local pid
-  pid=$(cat "$LEET_PID_FILE" 2>/dev/null)
+  pid=$(tr -dc '0-9' <"$LEET_PID_FILE" 2>/dev/null)
   [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null && echo "$pid"
 }
 
@@ -45,20 +48,21 @@ leet-start() {
   fi
 
   cd "$LEETPREP_DIR" || { echo "✗ 找不到目录 $LEETPREP_DIR"; return 1; }
-  # 生产构建独立放在 .next-prod,不会被 npm run dev 冲掉
+  # 生产构建独立放在 .next-prod,不会被 npm run dev(端口 3001)冲掉
   if [ ! -f "$LEETPREP_DIR/.next-prod/BUILD_ID" ]; then
     echo "· 没有生产构建,先构建(约 30-60 秒)…"
     npm run build >"$LEET_LOG_FILE" 2>&1 || { echo "✗ 构建失败,看日志:leet-logs"; return 1; }
   fi
 
-  NEXT_DIST_DIR=.next-prod nohup "$LEETPREP_DIR/node_modules/.bin/next" start -p "$LEETPREP_PORT" \
-    >>"$LEET_LOG_FILE" 2>&1 &
-  echo $! >"$LEET_PID_FILE"
+  LEET_NODE_BIN="$(command -v node)" python3 "$LEETPREP_DIR/scripts/leet-daemon.py" \
+    "$LEETPREP_DIR" "$LEETPREP_PORT" "$LEET_LOG_FILE" "$LEET_PID_FILE" || {
+      echo "✗ 启动失败,看日志:leet-logs"; return 1; }
 
   local i
   for i in $(seq 1 40); do
     if curl -fsS -o /dev/null "http://localhost:$LEETPREP_PORT" 2>/dev/null; then
-      echo "✓ 已启动(PID $(cat "$LEET_PID_FILE"))→ http://localhost:$LEETPREP_PORT"
+      echo "✓ 已启动(PID $(_leet_pid))→ http://localhost:$LEETPREP_PORT"
+      echo "  已脱离终端:可以直接关窗口/退出 Terminal,服务照常运行;停止用 leet-stop"
       return 0
     fi
     sleep 0.5
@@ -100,11 +104,12 @@ leet-status() {
   _leet_paths
   local pid
   if pid=$(_leet_pid); then
-    local mem
+    local mem cpu tty
     mem=$(ps -o rss= -p "$pid" 2>/dev/null | awk '{printf "%.0f MB", $1/1024}')
-    local cpu
     cpu=$(ps -o %cpu= -p "$pid" 2>/dev/null | tr -d ' ')
-    echo "✓ 运行中 · PID $pid · 内存 ${mem:-?} · CPU ${cpu:-?}% · http://localhost:$LEETPREP_PORT"
+    tty=$(ps -o tty= -p "$pid" 2>/dev/null | tr -d ' ')
+    echo "✓ 运行中 · PID $pid · 内存 ${mem:-?} · CPU ${cpu:-?}%"
+    echo "  http://localhost:$LEETPREP_PORT · 控制终端:${tty:-??}(?? = 已脱离终端)"
   else
     echo "· 未运行(leet-start 启动)"
   fi

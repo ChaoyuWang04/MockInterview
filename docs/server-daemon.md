@@ -2,7 +2,7 @@
 
 ## 一句话
 
-日常用**生产模式常驻**在 `localhost:3000`(`leet-start` 启停);开发调试用 `npm run dev` 跑在 `localhost:3001`。两者**构建目录、端口、进程全部分离**,可以同时开着互不干扰。
+日常用**生产模式常驻**在 `localhost:3000`(`leet-start` 启停);开发调试用 `npm run dev` 跑在 `localhost:3001`。两者**构建目录、端口、进程全部分离**,可以同时开着互不干扰。服务**完全脱离终端**,关窗口/退出 Terminal 都不受影响。
 
 ## 终端命令(已装进 ~/.zshrc)
 
@@ -28,6 +28,27 @@
 
 原因:所有页面都是 `export const dynamic = 'force-dynamic'`,每次请求实时读磁盘上的 markdown。
 
+## 为什么能脱离终端(踩过的两个坑)
+
+**坑一:`nohup cmd &` 不够。** 这样起的进程仍留在终端的会话里,关闭 Terminal 窗口时会被一起收走。
+
+**现在的做法**:`scripts/leet-daemon.py` 用标准的 **double-fork + setsid** 把服务放进一个全新会话——父进程变成 init(PPID=1)、**没有控制终端**(`ps` 里 TTY 显示 `??`)。终端关闭时 SIGHUP 只发给该终端会话里的进程,与它无关。用 `leet-status` 可以看到这两个指标。
+
+> 补充事实:不要指望用「忽略 SIGHUP」来保命——Node 启动时会重置该信号的处理方式,连 `nohup node` 都挡不住直接发来的 SIGHUP(实测如此)。真正起作用的是会话隔离。
+
+**坑二:launchd 在这里用不了。** macOS 原生的后台服务方案是 LaunchAgent,但本项目位于 `~/Desktop` —— 属于系统隐私保护(TCC)目录,launchd 拉起的进程**读不到里面的文件**,实测直接报:
+
+```
+/bin/zsh: can't open input file: /Users/…/Desktop/…/scripts/leet-run.sh
+```
+
+表现为 `launchctl print` 里 `last exit code = 78: EX_CONFIG` 且日志 0 字节。想用 launchd(顺带获得开机自启)有两条路,都需要你决定:
+
+1. 把项目移出 `~/Desktop`(如 `~/Projects/interviewprep`),TCC 不管这些目录;
+2. 或在「系统设置 → 隐私与安全性 → 完全磁盘访问权限」里给 `/bin/zsh` 授权(权限过宽,不推荐)。
+
+当前方案不依赖 launchd,也就不需要上面任何一步。
+
 ## 为什么 dev 和 prod 要分开构建目录
 
 `npm run dev` 会持续改写构建目录,如果和生产共用 `.next`,常驻服务的产物会被冲掉,再次启动时报
@@ -49,6 +70,6 @@
 
 页面响应 5–40 ms。常年挂着的代价基本只是那 200 MB 内存;不想挂就 `leet-stop`,下次 `leet-start` 秒起(已有构建时不再重新构建)。
 
-## 开机自启(可选,默认没做)
+## 开机自启(当前没做)
 
-需要的话可以加一个 launchd 用户级 agent(`~/Library/LaunchAgents/`)在登录时自动 `leet-start`。当前是**手动启停**,符合"要用时再开"的习惯。
+需要开机自动启动的话,得先解决上面「坑二」的 TCC 限制(移出 Desktop 或授予完全磁盘访问权限),再加 LaunchAgent。当前是**手动启停**,符合"要用时再开"的习惯:一次 `leet-start` 之后可以连续挂几天,关终端、关窗口都不影响,只有重启电脑才需要重新 `leet-start`。
