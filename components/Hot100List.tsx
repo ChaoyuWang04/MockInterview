@@ -104,7 +104,7 @@ export default function Hot100List({ groups, initialNotes, initialHighFreq }: Pr
   return (
     <>
       <p className="mt-2 text-sm text-gray-500">
-        力扣官方「热题 100」+ 面经补充 {extraCount} 题(标「补」),按 {groups.length} 个专题组织,共 {total} 题;已标高频 {highFreq.length} 题、笔记 {noteCount} 条。点「高」标记高频(自动排到组内最前),点 📝 写解题小技巧。
+        力扣官方「热题 100」+ 面经补充 {extraCount} 题(标「补」),按 {groups.length} 个专题组织,共 {total} 题;已标高频 {highFreq.length} 题、笔记 {noteCount} 条。点标题去力扣中国、点「US」去 leetcode.com,点「高」标记高频(自动排到组内最前),点 📝 写解题小技巧。
       </p>
 
       {sortedGroups.map((g) => (
@@ -135,9 +135,20 @@ export default function Hot100List({ groups, initialNotes, initialHighFreq }: Pr
                   href={`https://leetcode.cn/problems/${p.slug}/`}
                   target="_blank"
                   rel="noreferrer"
+                  title="在力扣中国(.cn)打开"
                   className="flex-1 truncate text-sm text-gray-900 hover:text-blue-600 hover:underline"
                 >
                   {p.title}
+                </a>
+                <a
+                  href={`https://leetcode.com/problems/${p.slug}/`}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  title="在 LeetCode US(.com)打开;点标题去力扣中国(.cn)"
+                  className="shrink-0 border border-gray-200 px-1.5 py-0.5 font-mono text-[10px] text-gray-400 transition-colors hover:border-gray-400 hover:text-gray-700"
+                >
+                  US
                 </a>
                 <button
                   onClick={() => openPanel(p)}
