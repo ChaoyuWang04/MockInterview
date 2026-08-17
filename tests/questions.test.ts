@@ -4,8 +4,9 @@ import os from 'node:os'
 import path from 'node:path'
 import {
   splitSections, loadQuestion, loadCategory, listCategories,
-  getStats, isValidRef, setMastered, saveNote,
+  getStats, isValidRef, setMastered, setHighFreq, saveNote,
 } from '../lib/questions'
+import { groupByTopic, sortQuestions } from '../lib/sorting'
 
 let root: string
 
@@ -94,7 +95,15 @@ describe('loadQuestion', () => {
     write('RAG', '001-hyde.md', SAMPLE)
     const q = loadQuestion('RAG', '001-hyde.md', root)
     expect(q.error).toBeUndefined()
-    expect(q.meta).toEqual({ difficulty: '简单', tags: ['RAG', '查询扩展'], company: '字节', mastered: false })
+    expect(q.meta).toEqual({
+      difficulty: '简单',
+      tags: ['RAG', '查询扩展'],
+      company: '字节',
+      mastered: false,
+      highfreq: false,
+      topic: undefined,
+      summary: undefined,
+    })
   })
 
   it('缺少必填分区报错但不抛异常', () => {
@@ -132,6 +141,59 @@ describe('setMastered', () => {
     write('RAG', 'nofm.md', '## 题目\n\nQ\n\n## 答案\n\nA\n')
     setMastered('RAG', 'nofm.md', true, root)
     expect(read('RAG', 'nofm.md').startsWith('---\nmastered: true\n---\n')).toBe(true)
+  })
+})
+
+describe('setHighFreq', () => {
+  it('定点写入 highfreq,不动其他任何字节', () => {
+    write('RAG', '001.md', SAMPLE)
+    setHighFreq('RAG', '001.md', true, root)
+    // SAMPLE 里没有 highfreq 键 → 追加到 frontmatter 末尾,正文一字不改
+    const raw = read('RAG', '001.md')
+    expect(raw).toContain('mastered: false         # 程序写回\nhighfreq: true\n---')
+    expect(raw).toContain('## 题目\n\n什么是 HyDE?')
+    expect(loadQuestion('RAG', '001.md', root).meta.highfreq).toBe(true)
+  })
+
+  it('已有 highfreq 键时定点替换值并保留行内注释', () => {
+    write('RAG', 'hf.md', '---\nhighfreq: false   # 高频标记\nmastered: false\n---\n\n## 题目\n\nQ\n\n## 答案\n\nA\n')
+    setHighFreq('RAG', 'hf.md', true, root)
+    expect(read('RAG', 'hf.md')).toContain('highfreq: true   # 高频标记')
+  })
+
+  it('与 mastered 互不干扰', () => {
+    write('RAG', '001.md', SAMPLE)
+    setHighFreq('RAG', '001.md', true, root)
+    setMastered('RAG', '001.md', true, root)
+    const meta = loadQuestion('RAG', '001.md', root).meta
+    expect([meta.highfreq, meta.mastered]).toEqual([true, true])
+  })
+})
+
+describe('题库列表排序与分组', () => {
+  const q = (file: string, difficulty: string, highfreq: boolean, topic: string) =>
+    ({ category: 'RL', file, meta: { tags: [], mastered: false, highfreq, difficulty, topic }, sections: {} })
+  const list = [
+    q('a.md', '中等', false, 'GRPO/优势'),
+    q('b.md', '困难', true, 'GRPO/KL'),
+    q('c.md', '简单', false, 'PPO/clip'),
+    q('d.md', '中等', true, 'GRPO/采样'),
+  ]
+
+  it('高频前置,桶内按 简单→中等→困难', () => {
+    expect(sortQuestions(list).map((x) => x.file)).toEqual(['d.md', 'b.md', 'c.md', 'a.md'])
+  })
+
+  it('按 topic 第一段分组,保留传入顺序与原下标', () => {
+    const groups = groupByTopic(sortQuestions(list), (x) => x.meta.topic)
+    expect(groups.map((g) => g.name)).toEqual(['GRPO', 'PPO'])
+    expect(groups[0].items.map((x) => x.item.file)).toEqual(['d.md', 'b.md', 'a.md'])
+    expect(groups[1].items[0].index).toBe(2) // c.md 在排序后数组里的下标
+  })
+
+  it('无 topic 的题归入「未分层」', () => {
+    const groups = groupByTopic([q('x.md', '简单', false, '')], (x) => x.meta.topic)
+    expect(groups[0].name).toBe('未分层')
   })
 })
 

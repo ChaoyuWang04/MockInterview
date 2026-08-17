@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { LcGroup, LcProblem } from '@/lib/leetcode'
-import { sortProblems } from '@/lib/leetcode-sort'
+import { sortProblems } from '@/lib/sorting'
 
 const DIFFICULTY_STYLE: Record<string, string> = {
   简单: 'text-green-600',

@@ -41,8 +41,8 @@ leet-start() {
     echo "✓ 已在运行(PID $pid)→ http://localhost:$LEETPREP_PORT"
     return 0
   fi
-  if lsof -ti:"$LEETPREP_PORT" >/dev/null 2>&1; then
-    echo "✗ 端口 $LEETPREP_PORT 被别的进程占用:$(lsof -ti:"$LEETPREP_PORT" | tr '\n' ' ')"
+  if lsof -ti:"$LEETPREP_PORT" -sTCP:LISTEN >/dev/null 2>&1; then
+    echo "✗ 端口 $LEETPREP_PORT 被别的进程占用:$(lsof -ti:"$LEETPREP_PORT" -sTCP:LISTEN | tr '\n' ' ')"
     echo "  换端口:LEETPREP_PORT=3002 leet-start"
     return 1
   fi
@@ -88,7 +88,7 @@ leet-stop() {
     rm -f "$LEET_PID_FILE"
     # 兜底:PID 文件丢了但端口还占着
     local orphan
-    orphan=$(lsof -ti:"$LEETPREP_PORT" 2>/dev/null)
+    orphan=$(lsof -ti:"$LEETPREP_PORT" -sTCP:LISTEN 2>/dev/null)
     if [ -n "$orphan" ]; then
       echo "$orphan" | xargs kill 2>/dev/null
       echo "✓ 已清理端口 $LEETPREP_PORT 上的残留进程"

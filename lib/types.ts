@@ -8,6 +8,8 @@ export interface QuestionMeta {
   topic?: string
   summary?: string
   mastered: boolean
+  /** 高频题标记,页面上可切换,写回 frontmatter */
+  highfreq: boolean
 }
 
 export interface Question {

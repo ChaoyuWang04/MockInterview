@@ -16,8 +16,11 @@ summary: GRPO 的 KL 惩罚为何放 reward   # 必填:一句话题干,≤50 字
 tags: [RL, GRPO]             # 可选:知识点标签
 company: 字节、美团           # 可选:出题公司,多家用、分隔
 mastered: false              # 程序写回,新题保持 false
+highfreq: false              # 程序写回,页面点「高」标记高频题
 ---
 ```
+
+`mastered` 与 `highfreq` 都由页面点击写回,采用**定点字符串替换**(只改那一行,保留手写格式与行内注释)。
 
 ### topic:三层主题定位(去重的核心)
 

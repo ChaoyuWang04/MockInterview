@@ -90,7 +90,7 @@ export function splitSections(body: string): Partial<Record<SectionName, string>
 }
 
 export function loadQuestion(category: string, file: string, root = questionsRoot()): Question {
-  const base: Question = { category, file, meta: { tags: [], mastered: false }, sections: {} }
+  const base: Question = { category, file, meta: { tags: [], mastered: false, highfreq: false }, sections: {} }
   let raw: string
   try {
     raw = fs.readFileSync(path.join(root, category, file), 'utf8')
@@ -116,6 +116,7 @@ export function loadQuestion(category: string, file: string, root = questionsRoo
       topic: typeof data.topic === 'string' ? data.topic : undefined,
       summary: typeof data.summary === 'string' ? data.summary : undefined,
       mastered: data.mastered === true,
+      highfreq: data.highfreq === true,
     },
     sections: splitSections(content),
   }
@@ -148,25 +149,42 @@ function atomicWrite(filePath: string, content: string): void {
 
 const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---/
 // 三组:键与空白 / 现值 / 行尾(空白+注释),定点替换保注释
-const MASTERED_LINE_RE = /^(mastered:[ \t]*)([^\s#]*)([ \t]*(?:#[^\n]*)?)$/m
+function flagLineRe(key: string): RegExp {
+  return new RegExp(`^(${key}:[ \\t]*)([^\\s#]*)([ \\t]*(?:#[^\\n]*)?)$`, 'm')
+}
 
-/** 定点改写 frontmatter 的 mastered 行,绝不整体重新序列化 */
-export function setMastered(category: string, file: string, mastered: boolean, root = questionsRoot()): void {
+/** 定点改写 frontmatter 里的某个布尔字段,绝不整体重新序列化(会破坏手写格式与行内注释) */
+function setFrontmatterFlag(
+  category: string,
+  file: string,
+  key: string,
+  value: boolean,
+  root = questionsRoot(),
+): void {
   const filePath = path.join(root, category, file)
   const raw = fs.readFileSync(filePath, 'utf8')
-  const value = String(mastered)
+  const literal = String(value)
+  const lineRe = flagLineRe(key)
   const m = raw.match(FRONTMATTER_RE)
   let next: string
   if (m) {
     const fm = m[1]
-    const updated = MASTERED_LINE_RE.test(fm)
-      ? fm.replace(MASTERED_LINE_RE, `$1${value}$3`)
-      : `${fm}\nmastered: ${value}`
+    const updated = lineRe.test(fm)
+      ? fm.replace(lineRe, `$1${literal}$3`)
+      : `${fm}\n${key}: ${literal}`
     next = `---\n${updated}\n---` + raw.slice(m[0].length)
   } else {
-    next = `---\nmastered: ${value}\n---\n\n${raw}`
+    next = `---\n${key}: ${literal}\n---\n\n${raw}`
   }
   atomicWrite(filePath, next)
+}
+
+export function setMastered(category: string, file: string, mastered: boolean, root = questionsRoot()): void {
+  setFrontmatterFlag(category, file, 'mastered', mastered, root)
+}
+
+export function setHighFreq(category: string, file: string, highfreq: boolean, root = questionsRoot()): void {
+  setFrontmatterFlag(category, file, 'highfreq', highfreq, root)
 }
 
 /** 替换 ## Note 分区正文;无该分区则追加;空内容清空正文保留标题 */

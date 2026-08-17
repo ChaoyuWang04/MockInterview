@@ -6,7 +6,7 @@ import {
   getAllNotes, getNote, isValidSlug, listAllProblems, listExtra, listHighFreq, listHot100,
   saveNote, setHighFreq,
 } from '../lib/leetcode'
-import { sortProblems } from '../lib/leetcode-sort'
+import { sortProblems } from '../lib/sorting'
 
 describe('真实清单 leetcode/hot100.md', () => {
   const groups = listHot100()
