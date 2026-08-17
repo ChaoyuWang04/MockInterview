@@ -4,11 +4,21 @@
 
 ## 启动
 
+**日常使用**(生产模式常驻,终端任意目录可用):
+
+```bash
+leet-start
+```
+
+打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/server-daemon.md](docs/server-daemon.md)。
+
+**开发调试**(热更新,端口 3001,与常驻服务互不干扰):
+
 ```bash
 npm run dev
 ```
 
-浏览器打开 <http://localhost:3000>。首次使用需先 `npm install`(要求 Node.js 20+)。
+首次使用需先 `npm install`(要求 Node.js 20+)。
 
 ## 使用
 

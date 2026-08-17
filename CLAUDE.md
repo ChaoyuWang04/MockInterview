@@ -4,7 +4,7 @@ markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库
 
 ## 常用命令
 
-- `npm run dev` — 启动应用(localhost:3000)
+- `npm run dev` — 开发服务(localhost:**3001**);日常访问用常驻生产服务(localhost:3000,终端 `leet-start`/`leet-stop`,见 docs/server-daemon.md)
 - `npm run topics` — 打印主题树(批量导入前的去重索引)
 - `npm test` — 全部验证(题库可解析 + topic/summary 合规 + 知识库文章非空),秒级
 
