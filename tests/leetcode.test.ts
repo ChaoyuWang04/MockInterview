@@ -2,7 +2,10 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { getAllNotes, getNote, isValidSlug, listHot100, saveNote } from '../lib/leetcode'
+import {
+  getAllNotes, getNote, isValidSlug, listHighFreq, listHot100, saveNote, setHighFreq,
+} from '../lib/leetcode'
+import { sortProblems } from '../lib/leetcode-sort'
 
 describe('真实清单 leetcode/hot100.md', () => {
   const groups = listHot100()
@@ -68,5 +71,34 @@ describe('笔记读写', () => {
   it('无笔记时读取返回空串,不抛异常', () => {
     expect(getNote('3sum', root)).toBe('')
     expect(getAllNotes(root)).toEqual({})
+  })
+
+  it('高频标记增删可读回,按清单顺序写盘', () => {
+    expect(listHighFreq(root)).toEqual([])
+    setHighFreq('3sum', true, root) // 双指针组,清单里排在 two-sum 之后
+    setHighFreq('two-sum', true, root)
+    expect(listHighFreq(root)).toEqual(['two-sum', '3sum'])
+    setHighFreq('two-sum', false, root)
+    expect(listHighFreq(root)).toEqual(['3sum'])
+  })
+})
+
+describe('排序规则', () => {
+  const p = (slug: string, difficulty: string) => ({ id: '1', title: slug, slug, difficulty })
+  const list = [p('a', '中等'), p('b', '困难'), p('c', '简单'), p('d', '中等')]
+
+  it('无高频时按 简单→中等→困难,同难度保持原序', () => {
+    expect(sortProblems(list, new Set()).map((x) => x.slug)).toEqual(['c', 'a', 'd', 'b'])
+  })
+
+  it('全部高频时同样按难度排序', () => {
+    expect(sortProblems(list, new Set(['a', 'b', 'c', 'd'])).map((x) => x.slug)).toEqual([
+      'c', 'a', 'd', 'b',
+    ])
+  })
+
+  it('高频整体前置,两桶内部各自按难度排序', () => {
+    // 高频:b(困难) d(中等) → d,b;非高频:a(中等) c(简单) → c,a
+    expect(sortProblems(list, new Set(['b', 'd'])).map((x) => x.slug)).toEqual(['d', 'b', 'c', 'a'])
   })
 })

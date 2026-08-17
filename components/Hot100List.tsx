@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { LcGroup, LcProblem } from '@/lib/leetcode'
+import { sortProblems } from '@/lib/leetcode-sort'
 
 const DIFFICULTY_STYLE: Record<string, string> = {
   简单: 'text-green-600',
@@ -12,10 +13,12 @@ const DIFFICULTY_STYLE: Record<string, string> = {
 interface Props {
   groups: LcGroup[]
   initialNotes: Record<string, string>
+  initialHighFreq: string[]
 }
 
-export default function Hot100List({ groups, initialNotes }: Props) {
+export default function Hot100List({ groups, initialNotes, initialHighFreq }: Props) {
   const [notes, setNotes] = useState(initialNotes)
+  const [highFreq, setHighFreq] = useState<string[]>(initialHighFreq)
   const [open, setOpen] = useState<LcProblem | null>(null)
   const [draft, setDraft] = useState('')
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
@@ -23,6 +26,28 @@ export default function Hot100List({ groups, initialNotes }: Props) {
 
   const total = groups.reduce((s, g) => s + g.problems.length, 0)
   const noteCount = Object.keys(notes).length
+
+  const hotSet = useMemo(() => new Set(highFreq), [highFreq])
+  const sortedGroups = useMemo(
+    () => groups.map((g) => ({ ...g, problems: sortProblems(g.problems, hotSet) })),
+    [groups, hotSet],
+  )
+
+  const toggleHot = async (slug: string) => {
+    const next = !hotSet.has(slug)
+    setHighFreq((cur) => (next ? [...cur, slug] : cur.filter((s) => s !== slug)))
+    try {
+      const res = await fetch('/api/leetcode-hot', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug, hot: next }),
+      })
+      if (!res.ok) throw new Error('failed')
+    } catch {
+      // 写回失败则回滚,保持页面与文件一致
+      setHighFreq((cur) => (next ? cur.filter((s) => s !== slug) : [...cur, slug]))
+    }
+  }
 
   const openPanel = (p: LcProblem) => {
     setOpen(p)
@@ -78,10 +103,10 @@ export default function Hot100List({ groups, initialNotes }: Props) {
   return (
     <>
       <p className="mt-2 text-sm text-gray-500">
-        力扣官方「热题 100」清单,按 {groups.length} 个专题组织,共 {total} 题;已记录 {noteCount} 条笔记。点 📝 写解题小技巧,面板内可直达 LeetCode / 力扣。
+        力扣官方「热题 100」清单,按 {groups.length} 个专题组织,共 {total} 题;已标高频 {highFreq.length} 题、笔记 {noteCount} 条。点「高」标记高频(自动排到组内最前),点 📝 写解题小技巧。
       </p>
 
-      {groups.map((g) => (
+      {sortedGroups.map((g) => (
         <section key={g.name} className="mt-8">
           <h2 className="mb-2 flex items-baseline gap-2 font-mono text-xs tracking-widest text-gray-400">
             {g.name}
@@ -122,6 +147,18 @@ export default function Hot100List({ groups, initialNotes }: Props) {
                 >
                   {p.difficulty}
                 </span>
+                <button
+                  onClick={() => toggleHot(p.slug)}
+                  title={hotSet.has(p.slug) ? '取消高频标记' : '标记为高频题'}
+                  className={[
+                    'w-6 shrink-0 border text-xs transition-colors',
+                    hotSet.has(p.slug)
+                      ? 'border-red-500 bg-red-500 font-semibold text-white'
+                      : 'border-gray-200 text-gray-300 hover:border-red-300 hover:text-red-400',
+                  ].join(' ')}
+                >
+                  高
+                </button>
               </div>
             ))}
           </div>

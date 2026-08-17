@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Hot100List from '@/components/Hot100List'
-import { getAllNotes, listHot100 } from '@/lib/leetcode'
+import { getAllNotes, listHighFreq, listHot100 } from '@/lib/leetcode'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,7 +19,7 @@ export default function LeetcodePage() {
           清单为空。数据文件是 leetcode/hot100.md,格式与校准方式见 docs/leetcode-hot100.md。
         </p>
       ) : (
-        <Hot100List groups={groups} initialNotes={getAllNotes()} />
+        <Hot100List groups={groups} initialNotes={getAllNotes()} initialHighFreq={listHighFreq()} />
       )}
     </main>
   )

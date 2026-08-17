@@ -48,6 +48,40 @@ export function isValidSlug(slug: string, root = leetcodeRoot()): boolean {
   return listHot100(root).some((g) => g.problems.some((p) => p.slug === slug))
 }
 
+/** 高频标记:每行 `- <slug>`,与 hot100.md 分开存放,重新同步清单不丢标记 */
+export function listHighFreq(root = leetcodeRoot()): string[] {
+  const file = path.join(root, 'high-freq.md')
+  if (!fs.existsSync(file)) return []
+  return fs
+    .readFileSync(file, 'utf8')
+    .split('\n')
+    .map((l) => l.match(/^-\s+([a-z0-9-]+)\s*$/)?.[1])
+    .filter((s): s is string => !!s)
+}
+
+export function setHighFreq(slug: string, hot: boolean, root = leetcodeRoot()): void {
+  const current = new Set(listHighFreq(root))
+  if (hot) current.add(slug)
+  else current.delete(slug)
+
+  // 按清单顺序写回,便于人工浏览与 diff
+  const order = listHot100(root).flatMap((g) => g.problems.map((p) => p.slug))
+  const sorted = order.filter((s) => current.has(s))
+
+  const file = path.join(root, 'high-freq.md')
+  const header = [
+    '# 高频题标记',
+    '',
+    '页面上点题目右侧的「高」按钮即可增删,程序写回本文件。每行一个 slug(`- ` 开头),顺序不重要。',
+    '与 `hot100.md` 分开存放,所以用官方数据重新同步清单不会丢失这些标记。',
+    '',
+  ]
+  const body = sorted.map((s) => `- ${s}`)
+  const tmp = `${file}.${process.pid}.tmp`
+  fs.writeFileSync(tmp, [...header, ...body].join('\n') + '\n', 'utf8')
+  fs.renameSync(tmp, file)
+}
+
 export function getNote(slug: string, root = leetcodeRoot()): string {
   const file = path.join(notesDir(root), `${slug}.md`)
   if (!fs.existsSync(file)) return ''
