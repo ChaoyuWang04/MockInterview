@@ -10,7 +10,8 @@
 - **文章名全局唯一**(各章的 `00-总览` 除外,它们是 hub 页不参与匹配),有测试守护
 - **占位稿**:正文含 `> 🚧 占位:` 标记,页面显示为虚线灰框;写完删掉该行即可
 
-新增文章:在对应章节建文件 → 写正文 → 删掉占位标记 → `npm test`。撰写标准(粒度、公式、mermaid、相关文献)见 [question-authoring.md](question-authoring.md);架构类参考 [references/frontier-llm-architecture-handbook-2026.md](references/frontier-llm-architecture-handbook-2026.md)。
+新增文章:在对应章节建文件 → 写正文 → 删掉占位标记 → `npm test`。
+**写作契约(语言/公式/图表/mermaid 规模/代码/真实性)见 [kb-writing-guide.md](kb-writing-guide.md)**,标杆样板是 `04-Infra/01-原理/GPU架构与执行模型.md`;架构类参考 [references/frontier-llm-architecture-handbook-2026.md](references/frontier-llm-architecture-handbook-2026.md)。
 
 ## 现状
 
