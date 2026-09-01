@@ -1,76 +1,72 @@
-# 知识库施工路线图(需求清单 + 进度)
+# 知识库结构与施工进度
 
-维护规则:
-- 每完成/开工一篇就更新状态列;新会话续建前先读本文件 + `docs/question-authoring.md` 的知识库规范(含占位符换图、篇幅基准)
-- 用户点名要新文章时:先查「待议」与各批次表避免重名,在**批次 3 的表尾加一行**(分类按待议清单标注的归属;清单没标注且拿不准时问用户——分类错了会连带影响题目 topic 与入口匹配)再按标准施工;写完更新状态
-- 🖼️ 状态的消除:用户提供图片后按 question-authoring.md 的换图规则替换占位符;**该篇占位符全部清零**(`grep -n "🖼️ 占位" <文件>` 复核)才改 ✅
-- 任何知识库文章的新增/修改,验证一律 = `npm test`(文章非空守护),不开浏览器;仅用到从未用过的语法才抽查渲染
-架构类文章的**权威参考源**:[references/frontier-llm-architecture-handbook-2026.md](references/frontier-llm-architecture-handbook-2026.md)(截至 2026-08 的前沿架构对比,含 arxiv 清单)。
+页面 `/kb`。**按训练流程编排**:模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用。
 
-状态:⬜ 待写 · 🚧 施工中 · ✅ 完成 · 🖼️ 完成但待补图
+## 结构约定(2026-08 重构)
 
-## 文章标准(摘要,全文见 question-authoring.md)
+- **顺序**:文件夹用 `NN-` 数字前缀控制顺序,页面显示时剥掉前缀;目录内 `00-总览.md` 自然排第一
+- **层级**:支持任意层嵌套(如 `05-多模态/03-视频生成/视频VAE.md`)
+- **与题库的联动**:题目 frontmatter `topic` 第一段 → **按文章名全库匹配**(不再要求同名分类文件夹),因为分章已不与题库分类一一对应
+- **文章名全局唯一**(各章的 `00-总览` 除外,它们是 hub 页不参与匹配),有测试守护
+- **占位稿**:正文含 `> 🚧 占位:` 标记,页面显示为虚线灰框;写完删掉该行即可
 
-- 一篇 = 一个可独立成文的知识点,**尽量细碎**;同主题另开一篇「XX总览」做对比串联
-- 覆盖细节与公式(块级 `$$` 独行)+ 通俗直白的类比讲解
-- 适当 mermaid 可视化;mermaid 表达不了的画面留占位符:`> 🖼️ 占位:<想要的图的描述>`(用户后期换图)
-- 文末必须有 `## 相关文献`,附 arxiv 链接;**不确定的编号必须联网核实,严禁编造**
-- 文件名 = 题目 frontmatter `topic` 第一段(受控词表,新增题目定 topic 时先对齐本清单)
+新增文章:在对应章节建文件 → 写正文 → 删掉占位标记 → `npm test`。撰写标准(粒度、公式、mermaid、相关文献)见 [question-authoring.md](question-authoring.md);架构类参考 [references/frontier-llm-architecture-handbook-2026.md](references/frontier-llm-architecture-handbook-2026.md)。
 
-## 批次 1:点名主题(后训练 + Infra 核心)
+## 现状
 
-| 文章(=topic 头) | 分类 | 状态 | 说明 |
-|---|---|---|---|
-| GRPO | RL | ✅ | 样板,已按新标准补相关文献 |
-| PPO | RL | ✅ | clip 目标、GAE、RLHF 四模型工程 |
-| DPO | RL | ✅ | BT 模型推导、隐式奖励、IPO/KTO/SimPO |
-| SFT | SFT | ✅ | 全流程:数据→模板→loss mask→packing→评估 |
-| LoRA | SFT | ✅ | 低秩分解、rank/alpha、QLoRA、DoRA/rsLoRA |
-| ZeRO | AI Infra | ✅ | 显存解剖、Stage 1/2/3、通信代价、Offload |
-| DeepSpeed | AI Infra | ✅ | 引擎全景、与 FSDP 对比、配置实务 |
-| RL训练框架 | AI Infra | ✅ | verl(HybridFlow)/OpenRLHF/TRL 对比与选型 |
-| rollout引擎 | AI Infra | ✅ | vLLM(PagedAttention)/SGLang(RadixAttention)、RL 场景集成 |
+共 113 篇:**38 篇已成文**,75 篇占位待写。占位篇里都写了「计划覆盖」提纲,续写时照着展开即可。
 
-## 批次 2:模型架构系列(参考架构手册拆分)
+列出所有待写篇目:
 
-| 文章(=topic 头) | 分类 | 状态 | 说明 |
-|---|---|---|---|
-| 架构总览 | 预训练 | ✅ | 三条路线之争、KV cache 主战场、判断框架 |
-| GQA | 预训练 | ✅ | MHA→MQA→GQA 谱系 |
-| MLA | 预训练 | 🖼️ | 潜在压缩,含 CCA 延伸 |
-| SWA | 预训练 | 🖼️ | 滑动窗口、局部:全局比例、窗口大小谱 |
-| 稀疏注意力 | 预训练 | 🖼️ | DSA/CSA/HCA |
-| 线性注意力 | 预训练 | 🖼️ | Mamba-2/GDN/KDA、O(1) 状态 |
-| Hybrid注意力 | 预训练 | ✅ | 混合比例、MiniMax 反例、三路线对照 |
-| 注意力配件 | 预训练 | 🖼️ | QK-Norm/门控/attention sink/跨层KV共享/逐层预算 |
-| RoPE | 预训练 | 🖼️ | 含 NoPE/partial RoPE/YaRN、层间分工规律 |
-| MoE基础 | 预训练 | ✅ | 专家粒度趋势、共享专家、dense 前缀 |
-| MoE路由 | 预训练 | ✅ | softmax/sigmoid/ReLU/哈希/分位数、负载均衡、aux-loss-free |
-| LatentMoE | 预训练 | ✅ | 已并入「MoE路由」一篇(压缩空间专家、通信动机) |
-| Norm位置 | 预训练 | ✅ | PreNorm/PostNorm/Sandwich、RMSNorm 统一史 |
-| FFN与激活 | 预训练 | 🖼️ | SwiGLU/GELU/ReLU²、维度设计 |
-| 残差流 | 预训练 | ✅ | 超连接/mHC/AttnRes |
-| MTP | 预训练 | ✅ | 训练信号 + 投机解码双用途 |
-| 优化器 | 预训练 | 🖼️ | AdamW/Muon/MuonClip、优化器不匹配问题 |
+```bash
+grep -rl "🚧 占位" knowledge/ | sort
+```
 
-## 批次 3:预训练大主题 / 推理加速 / 量化 / 多模态
+## 章节地图
 
-| 文章(=topic 头) | 分类 | 状态 | 说明 |
-|---|---|---|---|
-| 预训练流程 | 预训练 | ✅ | 数据→tokenizer→课程→退火→评估全景 |
-| ScalingLaws | 预训练 | 🖼️ | Kaplan/Chinchilla、算力最优、数据受限 |
-| 数据工程 | 预训练 | 🖼️ | 清洗/去重/配比/合成数据 |
-| 推理加速 | AI Infra | 🖼️ | 总览:投机解码/KV 优化/batch 策略/编译 |
-| 量化 | AI Infra | 🖼️ | 参数量化:GPTQ/AWQ/FP8/INT4/MXFP4、QAT vs PTQ |
-| 并行策略 | AI Infra | ✅ | DP/TP/PP/EP/SP、Megatron、与 ZeRO 的关系 |
-| Diffusion | 多模态 | 🖼️ | DDPM/DDIM/噪声调度/引导 |
-| FlowMatching | 多模态 | 🖼️ | 与 diffusion 的关系、rectified flow |
-| VLM结构 | 多模态 | 🖼️ | ViT/CLIP/连接器(线性/Q-Former)/原生多模态 |
-| 后训练总览 | RL | ✅ | SFT→RLHF→DPO→RLVR 全景对比串联 |
-| RLHF与RM | RL | 🖼️ | 偏好数据、BT 训练、reward hacking |
-| KL散度 | RL | 🖼️ | k1/k2/k3 估计器、前向/反向 KL |
-| 解码策略 | SFT | ✅ | 已有题目(SFT/001),文章补全景 |
+### 01-模型结构(18 篇 · 15 已成文)
 
-## 待议(出现对应题目或用户点名再排期;括号内为归属分类)
+总览 · KV共享注意力(MHA/MQA/GQA)· MLA · 稀疏注意力 · 线性注意力 · SWA · Hybrid注意力 · 注意力配件 · RoPE · MoE基础 · MoE路由 · Norm位置 · FFN与激活 · 残差流 · MTP · 🚧MagiAttention · 🚧Tokenizer · 🚧新架构追踪
 
-RAG 系列(RAG;检索优化/Embedding 已有题)、Agent 系列(Agent)、蒸馏(SFT)、长上下文训练(预训练)、Tokenizer 单篇(预训练)。
+> 新出现的注意力变体各开一篇;还不够成篇的先记进「新架构追踪」。
+
+### 02-预训练与微调(9 篇 · 6 已成文)
+
+🚧总览 · 预训练流程 · ScalingLaws · 数据工程 · 优化器 · SFT · LoRA · 🚧蒸馏 · 🚧长上下文训练
+
+### 03-强化学习(9 篇 · 6 已成文)
+
+总览 · RLHF与RM · PPO · GRPO · 🚧**GRPO变体**(DAPO/Dr.GRPO/GSPO 各修了什么问题,一篇讲透)· DPO · KL散度 · 🚧**多模态RL**(Flow-GRPO/Diffusion-DPO)· 🚧**AgenticRL**(多轮轨迹、工具环境、信用分配、rollout 系统变化)
+
+### 04-Infra(33 篇 · 8 已成文)
+
+**01-原理(20 篇)**——先概述后细节:
+总览🚧 · 并行策略 · ZeRO · 量化 · 推理加速 · 解码策略 · 🚧集合通信 · 🚧Roofline与Bound分析 · 🚧访存与算子优化 · 🚧GEMM优化 · 🚧KVCache · 🚧FlashAttention · 🚧PagedAttention · 🚧RadixAttention · 🚧连续批处理 · 🚧投机解码 · 🚧PD分离 · 🚧Prefill与Decode的矩阵形状 · 🚧CudaGraph · 🚧TorchCompile
+
+**02-框架与引擎(13 篇)**——**只讲架构与用法,原理一律引到 01-原理**:
+🚧总览 · RL框架对比 · 🚧verl · 🚧slime · 🚧ROLL · 🚧OpenRLHF · 🚧Megatron · DeepSpeed · 🚧FSDP · 推理引擎对比 · 🚧vLLM · 🚧SGLang · 🚧NCCL
+
+### 05-多模态(33 篇 · 3 已成文)
+
+**根目录(共用范式)**:🚧总览 · 🚧VAE · Diffusion · FlowMatching · 🚧DiT
+**子领域**(每个含 00-总览):01-视觉理解(VLM结构 + 视觉编码器/任意分辨率)· 02-图像生成(SD架构/条件控制/图像编辑/图像Tokenizer)· 03-视频生成(视频扩散架构/时空注意力/视频VAE/长视频一致性)· 04-音频(语音识别/TTS/音频编解码/音乐生成)· 05-3D生成(NeRF/3DGS/多视角扩散/网格生成)· 06-世界模型(世界模型范式/视频世界模型/动作条件与交互)
+
+### 06-应用(11 篇 · 全部占位)
+
+🚧总览 · **01-RAG**:总览/检索优化/Embedding/切块与索引/RAG评测 · **02-Agent**:总览/规划模式/工具调用/记忆与上下文/多智能体
+
+> 与 AgenticRL 的分工:**这里讲系统怎么搭,强化学习章讲怎么训**。
+
+## 重构时的改名对照(2026-08)
+
+| 原路径 | 新路径 | 说明 |
+|---|---|---|
+| 预训练/架构总览.md | 01-模型结构/00-总览.md | 章节 hub 页 |
+| 预训练/GQA.md | 01-模型结构/KV共享注意力.md | 内容本就是 MHA/MQA/GQA 对比 |
+| RL/后训练总览.md | 03-强化学习/00-总览.md | 章节 hub 页 |
+| AI Infra/RL训练框架.md | 04-Infra/02-框架与引擎/RL框架对比.md | 单个框架另有独立篇 |
+| AI Infra/rollout引擎.md | 04-Infra/02-框架与引擎/推理引擎对比.md | vLLM/SGLang 另有独立篇 |
+| SFT/解码策略.md | 04-Infra/01-原理/解码策略.md | 属推理侧 |
+| 多模态/VLM结构.md | 05-多模态/01-视觉理解/VLM结构.md | 理解与生成并列 |
+
+其余 31 篇仅移动位置、文件名不变;题目 topic 词表因此**只需改 `GQA` → `KV共享注意力`**(当前题库无题使用该 topic,无需改动)。

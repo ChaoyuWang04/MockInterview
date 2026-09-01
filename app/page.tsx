@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import CategoryCard from '@/components/CategoryCard'
-import { listArticleTopics, listKbCategories } from '@/lib/knowledge'
+import { countArticles, listKbTree } from '@/lib/knowledge'
 import { listHot100 } from '@/lib/leetcode'
 import { listOsProjects, listOsTopics } from '@/lib/opensource'
 import { getStats } from '@/lib/questions'
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export default function Home() {
   const stats = getStats()
-  const kbCount = listKbCategories().reduce((s, c) => s + listArticleTopics(c).length, 0)
+  const kbCount = countArticles(listKbTree())
   const osCount = listOsTopics().reduce((s, t) => s + listOsProjects(t).length, 0)
   const lcCount = listHot100().reduce((s, g) => s + g.problems.length, 0)
   return (

@@ -73,7 +73,8 @@ highfreq: false              # 程序写回,页面点「高」标记高频题
 
 `knowledge/<分类>/<topic第一段>.md`,一篇文章 = 一个 topic 主题的整体讲解(题目是切片,文章是全景)。
 
-- **文件名必须与题目 frontmatter `topic` 的第一段完全一致**(如 `knowledge/RL/GRPO.md` 对应 `topic: GRPO/...`)——刷题页的「📚 知识库」入口和文章页的关联题目列表都靠这个字符串匹配;文章名的受控词表与施工进度见 [kb-roadmap.md](kb-roadmap.md)
+- **文件名必须与题目 frontmatter `topic` 的第一段完全一致**(如 `GRPO.md` 对应 `topic: GRPO/...`)——刷题页的「📚 知识库」入口和文章页的关联题目列表都靠这个字符串匹配。**匹配只认文件名、不认所在文件夹**,所以文章名必须全局唯一(各章 `00-总览` 除外);文章名词表与章节地图见 [kb-roadmap.md](kb-roadmap.md)
+- 目录结构:`knowledge/NN-章节/[NN-子领域/]文章.md`,`NN-` 前缀只用于排序,页面显示时剥掉;新写完的文章要删掉正文里的 `> 🚧 占位:` 那一行
 - **粒度:尽量细碎**,一篇只讲一个可独立成文的知识点(GQA、RoPE、ZeRO 各一篇);同主题再单开一篇「XX总览」做横向对比与串联
 - 无 frontmatter,正文以 `# 标题` 开头;markdown 能力与题目一致(表格/KaTeX/mermaid,块级公式 `$$` 独行)
 - **完整性优先**:覆盖该知识点的全部细节与公式,同时每个术语/公式都配通俗直白的类比或解释(风格样板:`knowledge/RL/GRPO.md` 与 `docs/references/frontier-llm-architecture-handbook-2026.md`)

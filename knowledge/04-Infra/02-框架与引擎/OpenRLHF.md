@@ -1,0 +1,14 @@
+# OpenRLHF
+
+> 🚧 占位:本篇待撰写。撰写标准见 docs/kb-roadmap.md 与 docs/question-authoring.md。
+
+## 计划覆盖
+
+- Ray + vLLM + DeepSpeed 的组合方式
+- 架构与训练流程
+- 易用性与可扩展性评价
+- 与 verl 的差异
+
+## 相关文献
+
+- 待补(arxiv 编号必须联网核实,严禁编造)

@@ -24,10 +24,11 @@ const DIFFICULTY_STYLE: Record<string, string> = {
 interface Props {
   category: string
   initialQuestions: Question[]
-  kbTopics?: string[]
+  /** topic 第一段 → 知识库文章链接 */
+  kbLinks?: Record<string, string>
 }
 
-export default function QuestionView({ category, initialQuestions, kbTopics = [] }: Props) {
+export default function QuestionView({ category, initialQuestions, kbLinks = {} }: Props) {
   // 原始数组只用于承载数据;列表与刷题都走排序后的 questions(高频前置 + 桶内按难度)
   const [raw, setRaw] = useState(initialQuestions)
   const [mode, setMode] = useState<'list' | 'drill'>('list')
@@ -54,7 +55,7 @@ export default function QuestionView({ category, initialQuestions, kbTopics = []
   const highFreqCount = questions.filter((q) => q.meta.highfreq).length
   const q = questions[index]
   const topicHead = q?.meta.topic?.split('/')[0]?.trim()
-  const kbTopic = topicHead && kbTopics.includes(topicHead) ? topicHead : null
+  const kbHref = topicHead ? kbLinks[topicHead] : undefined
 
   const go = useCallback(
     (delta: number) => {
@@ -303,7 +304,7 @@ export default function QuestionView({ category, initialQuestions, kbTopics = []
               <Markdown>{q.sections['题目'] ?? ''}</Markdown>
             </div>
 
-            {(q.meta.tags.length > 0 || q.meta.company || kbTopic) && (
+            {(q.meta.tags.length > 0 || q.meta.company || kbHref) && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {q.meta.tags.map((t) => (
                   <span key={t} className="border border-gray-200 px-2 py-0.5 text-xs text-gray-600">
@@ -315,12 +316,12 @@ export default function QuestionView({ category, initialQuestions, kbTopics = []
                     {q.meta.company}
                   </span>
                 )}
-                {kbTopic && (
+                {kbHref && (
                   <Link
-                    href={`/kb/${encodeURIComponent(category)}/${encodeURIComponent(kbTopic)}`}
+                    href={kbHref}
                     className="border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs text-blue-600 hover:border-blue-400"
                   >
-                    📚 知识库:{kbTopic}
+                    📚 知识库:{topicHead}
                   </Link>
                 )}
               </div>
