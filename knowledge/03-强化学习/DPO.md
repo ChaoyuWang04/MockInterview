@@ -1,5 +1,7 @@
 # DPO(Direct Preference Optimization)
 
+> ⚠️ 旧版:本篇写于写作契约确立之前,尚未按新标准审查重写。标准见 docs/04-知识库写作契约.md,样板见「GPU架构与执行模型」。
+
 一句话:**把 RLHF 的「先训奖励模型、再跑 PPO」两步折叠成一个监督式对比损失**——直接在偏好数据上做类似二分类的微调,数学上等价于原 RLHF 目标的最优解。论文标题的后半句就是全部精髓:Your Language Model is Secretly a Reward Model——你的语言模型悄悄就是个奖励模型。
 
 ## 一、动机:PPO 流水线太重

@@ -1,25 +1,22 @@
 # 本地大模型面试刷题系统
 
-markdown 文件即数据库的本地刷题应用(Next.js 15 App Router)。题库在 `questions/`,一题一文件,分类即文件夹;知识库在 `knowledge/`,一篇文章 = 一个 topic 主题的整体讲解(文件名 = topic 第一段,页面路由 `/kb`);开源项目解读在 `opensource/<主题>/<项目>/NN-*.md`(路由 `/opensource`),对应源码仓在 `projects/`(git 不追踪,仅作阅读材料)。
+markdown 文件即数据库的本地学习系统(Next.js 15 App Router),五个模块:题库 `questions/` · 知识库 `knowledge/` · 开源解读 `opensource/`(源码仓在 `projects/`,git 不追踪)· LeetCode 清单 `leetcode/` · 常驻服务 `scripts/leet-*`。
+
+## 先读这个
+
+**[docs/00-START.md](docs/00-START.md)** —— 守则 + 文档地图,按任务查该看哪份手册。任何工作开始前先看它。
 
 ## 常用命令
 
-- `npm run dev` — 开发服务(localhost:**3001**);日常访问用常驻生产服务(localhost:3000,终端 `leet-start`/`leet-stop`,见 docs/server-daemon.md)
-- `npm run topics` — 打印主题树(批量导入前的去重索引)
-- `npm test` — 全部验证(题库可解析 + topic/summary 合规 + 知识库文章非空),秒级
-
-## 关键文档(按任务查)
-
-- **用户发题目截图要求入库**:严格按 [docs/import-workflow.md](docs/import-workflow.md) 执行(去重判定、分类映射、汇总表;验证只跑 `npm test`,不开浏览器)
-- **出题/改题格式**:[docs/question-authoring.md](docs/question-authoring.md)(六分区、topic/summary、长度红线、块级公式 `$$` 独行)
-- **知识库扩建/续建**:[docs/kb-roadmap.md](docs/kb-roadmap.md)(需求清单、进度状态、文章标准摘要;架构类参考 docs/references/ 下的架构手册)
-- **开源项目解读(新写/续写/加项目)**:[docs/opensource-workflow.md](docs/opensource-workflow.md)(必须读 projects/ 下真实代码后写作、分页标准、项目清单与状态)
-- **LeetCode 热题 100**:[docs/leetcode-hot100.md](docs/leetcode-hot100.md)(清单数据格式与官方同步脚本、笔记存储、页面行为)
-- **日常维护**:[docs/maintenance.md](docs/maintenance.md)
-- 设计与实现背景:`docs/superpowers/` 下的 spec 与 plan
+- `leet-start` / `leet-stop` / `leet-rebuild` — 常驻生产服务(localhost:**3000**,改代码后要 rebuild)
+- `npm run dev` — 开发服务(localhost:**3001**,与常驻服务互不干扰)
+- `npm run topics` — 打印题库主题树(去重索引)
+- `npm test` — 全量验证,秒级
 
 ## 硬约束
 
 - 题目正文的 `## ` 二级标题只保留给六分区名(题目/要点/答案/知识点/追问/Note),内部小标题用 `###` 及以下
-- 修改 `lib/questions.ts` 写回逻辑时:mastered/Note 必须定点字符串替换,**禁止**用 gray-matter 整体重新序列化 frontmatter(会破坏用户手写格式与行内注释)
+- 修改 `lib/questions.ts` 写回逻辑时:mastered/highfreq/Note 必须定点字符串替换,**禁止**用 gray-matter 整体重新序列化 frontmatter(会破坏用户手写格式与行内注释)
+- 知识库文章名全局唯一(它是题目 `topic` 第一段的匹配键)
+- 不编造:论文编号联网核实,项目实现去 `projects/` 下确认
 - 不要主动添加:刷题计划/待复习队列/搜索/网页内题目编辑器/URL 位置参数(用户明确排除的功能)

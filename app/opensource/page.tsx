@@ -18,11 +18,11 @@ export default function OsIndexPage() {
         </Link>
       </div>
       <p className="mt-2 text-sm text-gray-500">
-        每个项目 = 一组按子系统分页的解读文档:第 0 节是全景总览,之后每节拆一个子系统。共 {total} 个项目已解读;完整项目清单与排期见 docs/opensource-workflow.md。
+        每个项目 = 一组按子系统分页的解读文档:第 0 节是全景总览,之后每节拆一个子系统。共 {total} 个项目已解读;完整项目清单与排期见 docs/05-开源解读流程.md。
       </p>
       {total === 0 ? (
         <p className="mt-10 text-gray-500">
-          还没有解读。源码仓在 projects/&lt;主题&gt;/,解读写到 opensource/&lt;主题&gt;/&lt;项目&gt;/,规范见 docs/opensource-workflow.md。
+          还没有解读。源码仓在 projects/&lt;主题&gt;/,解读写到 opensource/&lt;主题&gt;/&lt;项目&gt;/,规范见 docs/05-开源解读流程.md。
         </p>
       ) : (
         topics

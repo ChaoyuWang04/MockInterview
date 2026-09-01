@@ -2,6 +2,8 @@
 
 本地、单人、极简的刷题系统:**markdown 文件即数据库**。题目、答案、笔记、掌握状态全部存在 `questions/` 下的纯文本文件里,可以用 git 管理、随意备份迁移。
 
+> 接手维护?先读 [docs/00-START.md](docs/00-START.md)(守则 + 文档地图)。
+
 ## 启动
 
 **日常使用**(生产模式常驻,终端任意目录可用):
@@ -10,7 +12,7 @@
 leet-start
 ```
 
-打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/server-daemon.md](docs/server-daemon.md)。
+打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/07-常驻服务.md](docs/07-常驻服务.md)。
 
 **开发调试**(热更新,端口 3001,与常驻服务互不干扰):
 
@@ -30,14 +32,14 @@ npm run dev
   - 「标记已掌握」:写回题目文件 frontmatter 的 `mastered` 字段
   - NOTE 区「编辑」:写笔记,保存后写回文件的 `## Note` 分区
   - 右侧题目导航栏(宽屏显示):题号按 topic 主题分组,绿色 = 已掌握、右上红点 = 高频,点击直达;顺序与列表视图一致
-- **知识库**(主页入口或 `/kb`):每篇文章对应一个 topic 主题的整体讲解,题目页遇到有文章的主题会出现「📚 知识库」入口;文章放 `knowledge/<分类>/<topic>.md`
-- **LeetCode 热题 100**(主页入口或 `/leetcode`):官方 17 专题清单;点「高」标记高频题(自动排到组内最前,同桶内按简单→困难),点 📝 开悬浮小窗记解题技巧(纯文本自动保存),窗内可直达 LeetCode US / 力扣中国;数据在 `leetcode/`,说明见 [docs/leetcode-hot100.md](docs/leetcode-hot100.md)
-- **开源项目解读**(主页入口或 `/opensource`):按主题分组的项目解读,阅读器第 0 节是全景总览、之后每节一个子系统,←/→ 翻节;解读文档在 `opensource/`,对应源码仓在 `projects/`(git 不追踪),规范见 [docs/opensource-workflow.md](docs/opensource-workflow.md)
+- **知识库**(主页入口或 `/kb`):按训练流程编排的六章(模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用),支持子领域嵌套;题目页遇到有文章的 topic 会出现「📚 知识库」入口;写作标准见 [docs/04-知识库写作契约.md](docs/04-知识库写作契约.md)
+- **LeetCode 热题 100**(主页入口或 `/leetcode`):官方 17 专题清单;点「高」标记高频题(自动排到组内最前,同桶内按简单→困难),点 📝 开悬浮小窗记解题技巧(纯文本自动保存),窗内可直达 LeetCode US / 力扣中国;数据在 `leetcode/`,说明见 [docs/06-LeetCode清单.md](docs/06-LeetCode清单.md)
+- **开源项目解读**(主页入口或 `/opensource`):按主题分组的项目解读,阅读器第 0 节是全景总览、之后每节一个子系统,←/→ 翻节;解读文档在 `opensource/`,对应源码仓在 `projects/`(git 不追踪),规范见 [docs/05-开源解读流程.md](docs/05-开源解读流程.md)
 
 ## 加题三步
 
 1. 复制 `questions/_template.md` 到分类文件夹,如 `questions/RAG/003-新题.md`(新分类 = 新建文件夹)
-2. 按模板写内容(格式规范见 [docs/question-authoring.md](docs/question-authoring.md))
+2. 按模板写内容(格式规范见 [docs/02-题目写作规范.md](docs/02-题目写作规范.md))
 3. 刷新页面即生效
 
 ## 目录结构
@@ -50,11 +52,11 @@ app/           Next.js 页面 + PATCH API
 components/    Markdown 渲染器 / 刷题视图等组件
 lib/           核心模块:扫描、解析、定点写回
 tests/         Vitest 单元测试(npm test)
-docs/          文档与设计资料
+docs/          手册(从 00-START.md 开始)与设计存档
 ```
 
 ## 技术栈
 
 Next.js 15(App Router)· React 19 · TypeScript · Tailwind CSS 4 · react-markdown(GFM 表格 + KaTeX 公式 + 代码高亮)· Mermaid · gray-matter · Vitest
 
-维护指南见 [docs/maintenance.md](docs/maintenance.md)。
+维护指南见 [docs/08-日常维护.md](docs/08-日常维护.md)。
