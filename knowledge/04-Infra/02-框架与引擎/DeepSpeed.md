@@ -98,7 +98,7 @@ FSDP 是 PyTorch 原生的「ZeRO-3 同款思想」实现,与 DeepSpeed 是最�
 
 - **DeepSpeed-Chat**:官方 RLHF 方案,SFT → 奖励模型 → PPO 三阶段流水线;亮点是 Hybrid Engine,同一份权重在「训练态」与「生成态」间切换,rollout 走推理优化、更新走 ZeRO。如今活跃度下降,更多是教学与参考价值;
 - **OpenRLHF**:当下更常用的组合——**训练侧 DeepSpeed ZeRO + rollout 侧 vLLM**,Ray 负责调度,是「DS 只管训练、生成外包给推理引擎」这一分工的代表;
-- **verl**:训练后端反而选 FSDP 或 Megatron,不走 DS——说明 DS 在 RLHF 训练侧并非唯一解(框架横向对照见 RL训练框架篇)。
+- **verl**:训练后端反而选 FSDP 或 Megatron,不走 DS——说明 DS 在 RLHF 训练侧并非唯一解(框架横向对照见 RL框架对比篇)。
 
 ## 六、实战坑
 
