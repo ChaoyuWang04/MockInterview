@@ -18,14 +18,6 @@ function ArticleGrid({ folder }: { folder: KbFolder }) {
               : 'border-gray-200 font-semibold hover:border-gray-400',
           ].join(' ')}
         >
-          {a.keypoint && (
-            <span
-              title="有真实面经考点支撑,文末有「面试考点串联」"
-              className="shrink-0 bg-red-600 px-1 font-mono text-[10px] font-bold text-white"
-            >
-              重
-            </span>
-          )}
           <span className="truncate">{a.title}</span>
           {a.placeholder && <span className="shrink-0 font-mono text-[10px]">占位</span>}
           {a.legacy && (
@@ -34,6 +26,14 @@ function ArticleGrid({ folder }: { folder: KbFolder }) {
               className="shrink-0 border border-amber-300 bg-amber-50 px-1 font-mono text-[10px] font-normal text-amber-600"
             >
               旧
+            </span>
+          )}
+          {a.keypoint && (
+            <span
+              title="有真实面经考点支撑,文末有「面试考点串联」"
+              className="shrink-0 bg-red-600 px-1 font-mono text-[10px] font-bold text-white"
+            >
+              重
             </span>
           )}
         </Link>
