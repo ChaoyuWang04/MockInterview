@@ -1,4 +1,4 @@
-// 知识库写作契约的自动检查(docs/04-知识库写作契约.md §九 自检表)
+// 知识库写作契约的自动检查(docs/05-知识库写作契约.md §九 自检表)
 // 用法:npm run kb:lint        有硬性违规时退出码为 1
 import fs from 'node:fs'
 import path from 'node:path'

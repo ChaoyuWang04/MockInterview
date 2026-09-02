@@ -12,7 +12,7 @@
 leet-start
 ```
 
-打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/07-常驻服务.md](docs/07-常驻服务.md)。
+打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/08-常驻服务.md](docs/08-常驻服务.md)。
 
 **开发调试**(热更新,端口 3001,与常驻服务互不干扰):
 
@@ -32,14 +32,14 @@ npm run dev
   - 「标记已掌握」:写回题目文件 frontmatter 的 `mastered` 字段
   - NOTE 区「编辑」:写笔记,保存后写回文件的 `## Note` 分区
   - 右侧题目导航栏(宽屏显示):题号按 topic 主题分组,绿色 = 已掌握、右上红点 = 高频,点击直达;顺序与列表视图一致
-- **知识库**(主页入口或 `/kb`):按训练流程编排的六章(模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用),支持子领域嵌套;题目页遇到有文章的 topic 会出现「📚 知识库」入口;写作标准见 [docs/04-知识库写作契约.md](docs/04-知识库写作契约.md)
-- **LeetCode 热题 100**(主页入口或 `/leetcode`):官方 17 专题清单;点「高」标记高频题(自动排到组内最前,同桶内按简单→困难),点 📝 开悬浮小窗记解题技巧(纯文本自动保存),窗内可直达 LeetCode US / 力扣中国;数据在 `leetcode/`,说明见 [docs/06-LeetCode清单.md](docs/06-LeetCode清单.md)
-- **开源项目解读**(主页入口或 `/opensource`):按主题分组的项目解读,阅读器第 0 节是全景总览、之后每节一个子系统,←/→ 翻节;解读文档在 `opensource/`,对应源码仓在 `projects/`(git 不追踪),规范见 [docs/05-开源解读流程.md](docs/05-开源解读流程.md)
+- **知识库**(主页入口或 `/kb`):按训练流程编排的六章(模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用),支持子领域嵌套;题目页遇到有文章的 topic 会出现「📚 知识库」入口;写作标准见 [docs/05-知识库写作契约.md](docs/05-知识库写作契约.md)
+- **LeetCode 热题 100**(主页入口或 `/leetcode`):官方 17 专题清单;点「高」标记高频题(自动排到组内最前,同桶内按简单→困难),点 📝 开悬浮小窗记解题技巧(纯文本自动保存),窗内可直达 LeetCode US / 力扣中国;数据在 `leetcode/`,说明见 [docs/07-LeetCode清单.md](docs/07-LeetCode清单.md)
+- **开源项目解读**(主页入口或 `/opensource`):按主题分组的项目解读,阅读器第 0 节是全景总览、之后每节一个子系统,←/→ 翻节;解读文档在 `opensource/`,对应源码仓在 `projects/`(git 不追踪),规范见 [docs/06-开源解读流程.md](docs/06-开源解读流程.md)
 
 ## 加题三步
 
 1. 复制 `questions/_template.md` 到分类文件夹,如 `questions/RAG/003-新题.md`(新分类 = 新建文件夹)
-2. 按模板写内容(格式规范见 [docs/02-题目写作规范.md](docs/02-题目写作规范.md))
+2. 按模板写内容(格式规范见 [docs/03-题目写作规范.md](docs/03-题目写作规范.md))
 3. 刷新页面即生效
 
 ## 目录结构
@@ -59,4 +59,4 @@ docs/          手册(从 00-START.md 开始)与设计存档
 
 Next.js 15(App Router)· React 19 · TypeScript · Tailwind CSS 4 · react-markdown(GFM 表格 + KaTeX 公式 + 代码高亮)· Mermaid · gray-matter · Vitest
 
-维护指南见 [docs/08-日常维护.md](docs/08-日常维护.md)。
+维护指南见 [docs/09-日常维护.md](docs/09-日常维护.md)。

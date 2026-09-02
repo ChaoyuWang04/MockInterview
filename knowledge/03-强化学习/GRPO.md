@@ -1,6 +1,6 @@
 # GRPO(Group Relative Policy Optimization)
 
-> ⚠️ 旧版:本篇写于写作契约确立之前,尚未按新标准审查重写。标准见 docs/04-知识库写作契约.md,样板见「GPU架构与执行模型」。
+> ⚠️ 旧版:本篇写于写作契约确立之前,尚未按新标准审查重写。标准见 docs/05-知识库写作契约.md,样板见「GPU架构与执行模型」。
 
 一句话:**去掉 critic 的 PPO 变体**——对同一个 prompt 采样一组回答,用组内相对得分代替价值网络来估计优势。出自 DeepSeekMath,后成为 DeepSeek-R1 及大量推理模型 RL 训练的默认起点。
 

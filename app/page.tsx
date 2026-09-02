@@ -49,7 +49,7 @@ export default function Home() {
       </div>
       {stats.categories.length === 0 ? (
         <p className="text-gray-500">
-          questions/ 下还没有题目。复制 questions/_template.md 到新建的分类文件夹开始出题,规范见 docs/02-题目写作规范.md。
+          questions/ 下还没有题目。复制 questions/_template.md 到新建的分类文件夹开始出题,规范见 docs/03-题目写作规范.md。
         </p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

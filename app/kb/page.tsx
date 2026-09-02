@@ -89,7 +89,7 @@ export default function KbIndexPage() {
         <span className="text-red-600">红「重」= 有真实面经考点支撑({keypoints} 篇)</span>。
       </p>
       {total === 0 ? (
-        <p className="mt-10 text-gray-500">还没有文章。规范见 docs/03-知识库地图.md。</p>
+        <p className="mt-10 text-gray-500">还没有文章。规范见 docs/04-知识库地图.md。</p>
       ) : (
         <>
           <ArticleGrid folder={tree} />

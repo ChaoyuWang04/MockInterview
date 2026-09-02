@@ -16,7 +16,7 @@ export default function LeetcodePage() {
       </div>
       {groups.length === 0 ? (
         <p className="mt-10 text-gray-500">
-          清单为空。数据文件是 leetcode/hot100.md,格式与校准方式见 docs/06-LeetCode清单.md。
+          清单为空。数据文件是 leetcode/hot100.md,格式与校准方式见 docs/07-LeetCode清单.md。
         </p>
       ) : (
         <Hot100List groups={groups} initialNotes={getAllNotes()} initialHighFreq={listHighFreq()} />
