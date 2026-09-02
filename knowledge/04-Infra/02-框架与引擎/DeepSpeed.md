@@ -1,132 +1,199 @@
 # DeepSpeed
 
-> ⚠️ 旧版:本篇写于写作契约确立之前,尚未按新标准审查重写。标准见 docs/05-知识库写作契约.md,样板见「GPU架构与执行模型」。
+一句话:DeepSpeed 是微软的**训练加速库**——它不替换 PyTorch,而是从外面把你**已有的训练脚本整个包起来**:改三行代码、写一份 JSON,ZeRO 那套显存优化就生效了。本篇讲的是"这是一个什么形状的工程"——它接管了什么、配置文件怎么当用户界面、非侵入的边界在哪;ZeRO 本身的原理见 ZeRO 篇,本篇不重复。
 
-一句话:**微软的大模型训练全家桶**——显存优化、offload、混合精度、流水线并行、MoE 训练一站式打包,核心竞争力不是发明了多少新算法,而是**把 ZeRO 系列论文做成了开箱即用的工程**:训练代码几乎不动,改一份 JSON 配置,单卡放不下的模型就能训起来。类比:PyTorch 给了你发动机,DeepSpeed 是整车厂,底盘、变速箱、涡轮增压都预装好,你只负责在配置单上打勾。
+## 一、它是什么:一个把训练脚本包起来的引擎
 
-## 一、能力全景
+类比:PyTorch 给你的是一台裸发动机,油路、变速箱得自己接;DeepSpeed 是把发动机连同变速箱、涡轮、油泵封成一个总成塞进车里——**对外只留三个接口,里面怎么转它自己管**。这个"非侵入式接入"是它的产品定位,也是它当年迅速普及的原因:一个团队已经有跑通的训练脚本,不想为了省显存去重写模型,DeepSpeed 让他们**不动模型定义**就能上 ZeRO。落到代码上只有三行:
 
-DeepSpeed 的功能像自助餐,按需勾选,大多数能力可以互相叠加:
+1. `deepspeed.initialize(model=..., model_parameters=...)` —— 把模型换成一个引擎对象,顺手按配置把优化器、LR 调度器(以及可选的 dataloader)一起造好;
+2. `loss.backward()` → `engine.backward(loss)`,`optimizer.step()` → `engine.step()`。
 
-| 能力 | 解决什么问题 | 一句话说明 |
-| --- | --- | --- |
-| ZeRO Stage 1/2/3 | 数据并行时每卡都存全套训练状态,太浪费 | 把优化器状态 → 梯度 → 参数逐级切碎、像合租平摊房租一样分摊到各卡;原理详见 ZeRO 篇 |
-| ZeRO-Offload | 显存不够,内存来凑 | 优化器状态与参数更新卸到 CPU,单卡也能训 10B 级模型 |
-| ZeRO-Infinity | 内存也不够,硬盘来凑 | Stage 3 专属,进一步卸到 NVMe,把"显存墙"推到 TB 级 |
-| 混合精度 | 算得快、存得省 | fp16(带 loss scaling)/ bf16(当前默认)/ fp8(需新硬件支持) |
-| Activation checkpointing | 激活值吃掉大量显存 | 前向不存、反向重算,用约三分之一的额外前向计算换显存大头 |
-| 流水线并行 | 单卡放不下一个完整副本 | `PipelineModule` 把层切段接力,需要改模型代码,实际用得比 ZeRO 少 |
-| DeepSpeed-MoE | MoE 模型专家多、单卡装不下 | 专家并行 + 门控与通信优化,早期 MoE 训练的主力方案 |
-| DeepSpeed-Inference / FastGen | 推理加速 | 存在但非主流,推理侧生态如今以 vLLM/SGLang 为主,一句带过 |
+分布式初始化也一并接管:原来的 `torch.distributed.init_process_group` 必须删掉,换成 `deepspeed.init_distributed()`(默认 NCCL 后端),或者干脆不写——`initialize` 会自己起。
 
-记忆锚点:**DeepSpeed 的主战场是训练侧显存工程**,ZeRO 数据并行是绝对主力,流水线与推理是配角。
+```mermaid
+flowchart TD
+    A["已有训练脚本"] --> C["initialize"]
+    B["配置 JSON"] --> C
+    C --> D["训练引擎"]
+    D --> E["backward"]
+    D --> F["step"]
+```
 
-## 二、使用形态:一份 JSON + 一个启动器
+图读法:两个输入(你的脚本 + 一份配置)进 `initialize`,出来一个引擎;之后所有能力开关都在配置里改,脚本那三行再也不动——**这就是"非侵入"的全部含义**。
 
-DeepSpeed 的哲学是「配置即能力」:能力全写在 `ds_config.json` 里,一段典型配置:
+### 引擎接管了什么:接管的那部分,你的旧代码必须删
+
+这是接入时最容易翻车的地方。`backward` / `step` 里已经做了下面几件事,脚本里再做一遍就是**做了两遍**:
+
+| 你原来手写的 | 现在归引擎 | 不删会怎样 |
+|---|---|---|
+| `optimizer.zero_grad()` | 引擎更新完自动清梯度 | 多清一次通常无害,但会掩盖累积逻辑写错 |
+| fp16 的 `GradScaler` + 手动缩放 loss | 引擎自带 loss scaling(fp16 才有,bf16 没有) | 两层缩放叠在一起,梯度尺度失控 |
+| "攒够 k 步才 step" 的 if 分支 | 按 `gradient_accumulation_steps` 自己判断累积边界,只在边界规约梯度并更新 | 等效 batch 变成配置值的 k 倍,学习率相当于全错 |
+| 每步 `scheduler.step()` | 配置里写的调度器,引擎每个训练 step 自动推一次 | LR 双倍速衰减 |
+
+一句话记法:**`engine.step()` 不等于 `optimizer.step()`**,它是"判断是不是累积边界 → 规约梯度 → 更新 → 清梯度 → 推 LR"一整套。所以接完 DeepSpeed 的训练循环里只剩前向、`backward`、`step` 三行,干净得反常——那不是简化过的示例,本来就该这么写。
+
+### 非侵入是分档的:一半能力真零侵入,另一半必须改模型
+
+但别把"非侵入"理解成"什么都不用改"。它的能力按侵入程度分成清清楚楚的两档:
+
+| 档 | 包含哪些能力 | 要动什么 |
+|---|---|---|
+| **配置即可** | ZeRO 1/2/3 与 offload、混合精度、梯度累积与裁剪、优化器与调度器、日志与 checkpoint、AutoTP | 只改 JSON,模型定义一个字不动 |
+| **必须改模型** | 流水线并行、MoE、稀疏注意力 | 模型要重写成框架要求的形状 |
+
+第二档为什么躲不掉:**这几样切的是模型结构本身**。流水线并行得知道"层的顺序"才能按层切段,所以模型要重写成可枚举的层序列;MoE 要把某个 FFN 换成框架提供的 MoE 层,并显式给出专家数 `num_experts` 与专家并行度 `ep_size`;稀疏注意力要整个替换注意力模块。而 ZeRO 只切**存储**、不改计算图(为什么,见 ZeRO 篇),它才能躲在 hook 里悄悄干活。这条分界线也解释了实际使用比例:**绝大多数人只用第一档**——第一档是白拿的,第二档要付出改模型的代价,那还不如去用本来就以模型切分为主业的框架(见 Megatron 篇)。
+
+## 二、配置文件是它的用户界面
+
+设计哲学是"能力全部下沉到配置":一份 `ds_config.json`,启动时用自带启动器带上。
+
+```bash
+deepspeed --num_gpus=8 train.py --deepspeed ds_config.json
+```
+
+多机时用 hostfile 描述资源(每行 `主机名 slots=8`),`--include` / `--exclude` 可以精确到某台机的某几张卡;不指定 hostfile 就默认找 `/job/hostfile`,再找不到就按本机 GPU 数当单机跑。
+
+### 主要板块:配置项 → 影响什么 → 常见坑
+
+| 板块 | 代表配置项 | 影响什么 | 常见坑 |
+|---|---|---|---|
+| batch 三件套 | `train_batch_size` / `train_micro_batch_size_per_gpu` / `gradient_accumulation_steps` | 显存占用与等效 batch | 三者与卡数对不上当场报错;只给两项会自动推第三项 |
+| ZeRO 档位 | `zero_optimization.stage`(0–3) | 三大件切到什么程度 | 越高越省显存、通信越多(取舍见 ZeRO 篇) |
+| offload | `offload_optimizer` / `offload_param` 的 `device`(`cpu` 或 `nvme`)、`pin_memory` | 把状态挪去内存或硬盘 | 优化器 offload 到 CPU 在 Stage 1/2/3 都行,但 `offload_param` 与 NVMe **只有 Stage 3 支持** |
+| 混合精度 | `bf16.enabled` / `fp16.enabled` | 计算与存储精度 | fp16 多一套 loss scaling,数值上更娇气 |
+| 优化器与调度器 | `optimizer.type` / `scheduler.type` | 用哪个优化器、LR 怎么走 | 代码里传了就以代码为准(见下) |
+| 梯度处理 | `gradient_clipping`、`overlap_comm`、`reduce_bucket_size` | 稳定性,以及通信与显存的折中 | bucket 调大通信摊得开,但峰值显存跟着涨 |
+| 日志 | `steps_per_print`、`wall_clock_breakdown` | 能看到什么 | 默认**不打**前反向耗时拆解,查性能前先打开 |
+| checkpoint | `checkpoint.load_universal`、`stage3_gather_16bit_weights_on_model_save` | 存成什么格式、能不能直接加载 | 见第六节 |
+
+一段够用的起手配置:
 
 ```json
 {
   "train_micro_batch_size_per_gpu": 4,
   "gradient_accumulation_steps": 8,
   "bf16": { "enabled": true },
+  "gradient_clipping": 1.0,
   "zero_optimization": {
     "stage": 2,
+    "overlap_comm": true,
+    "contiguous_gradients": true,
     "offload_optimizer": { "device": "cpu", "pin_memory": true }
   },
-  "gradient_clipping": 1.0
+  "steps_per_print": 10
 }
 ```
 
-逐项拆解:
-
-- **train_micro_batch_size_per_gpu**:每卡一次前反向吃的样本数,显存占用主要由它决定;
-- **gradient_accumulation_steps**:攒够几次 micro step 才更新一次参数,用时间换等效大 batch。三者关系 DS 会严格校验,对不上直接报错:
+### batch 三件套:唯一一条会当场报错的约束
 
 $$
-\text{总 batch} = \text{每卡 micro batch} \times \text{梯度累积步数} \times \text{GPU 数}
+\text{train\_batch\_size} = \text{train\_micro\_batch\_size\_per\_gpu} \times \text{gradient\_accumulation\_steps} \times \text{卡数}
 $$
 
-- **bf16.enabled**:启用 bf16 混合精度;若换 fp16 则多一套 loss scaling 机制,数值上更娇气;
-- **zero_optimization.stage**:0=关、1=切优化器状态、2=再切梯度、3=再切参数,数字越大越省显存、通信越多(取舍详见 ZeRO 篇);
-- **offload_optimizer.device**:优化器状态搬去 CPU 内存(`"cpu"`)或 NVMe(`"nvme"`),`pin_memory` 用锁页内存加速搬运;
-- **gradient_clipping**:全局梯度范数裁剪,防梯度爆炸的保险丝。
+意思是:全局 batch = 每卡一次前反向吃几条 × 攒几次才更新 × 多少张卡。DeepSpeed 启动时**硬校验**这个等式,对不上直接抛异常——新手撞的第一个错基本都是它。省事的写法是只填其中两项、让框架推出第三项;三项都填就必须自洽。
 
-启动方式用自带启动器替代 torchrun:
+三者的分工别混:**显存主要由 `train_micro_batch_size_per_gpu` 决定**,因为它决定一次前反向要留住多少激活;`gradient_accumulation_steps` 是**拿时间换等效大 batch**,几乎不额外吃显存(完整的显存账见 显存管理与OOM 篇)。
 
-```bash
-deepspeed --num_gpus=8 train.py --deepspeed ds_config.json
-```
+### 配置和代码冲突时以谁为准
 
-代码侧只有一处结构变化:`deepspeed.initialize` 把模型包成 engine,前反向与更新都改走它:
+这个问题的答案不是"配置优先"一句话,而是分两层:
 
-```mermaid
-flowchart LR
-    A[PyTorch 模型] --> C["deepspeed.initialize()"]
-    B[ds_config.json] --> C
-    C --> D[DeepSpeedEngine]
-    D --> E["engine.backward(loss)<br/>engine.step()"]
-```
+- **优化器与 LR 调度器:代码优先。** 传给 `initialize` 的实例(或工厂函数)会**覆盖**配置里的 `optimizer` / `scheduler` 段;什么都不传,才去读配置造一个。而**其余一切(batch、ZeRO、精度、裁剪、checkpoint)配置是唯一入口**,代码里根本没地方设,谈不上冲突。
+- **接了 HuggingFace Trainer 就多一层。** Trainer 通过 `TrainingArguments(deepspeed=...)` 接入,配置里写 `"auto"` 的字段由它按命令行参数自动填。危险的是把这些字段写死成和命令行不一致的值——**这种情况不报错,训练会安静地按配置里那份跑下去**。所以 HF 集成下的铁律是:**能写 `"auto"` 的一律写 `"auto"`**,只在确实要用框架原生优化器时才写死。
 
-**与 HuggingFace 的集成**是它普及的最大功臣:
+## 三、能力全景
 
-- **Trainer**:`TrainingArguments(deepspeed="ds_config.json")` 一行接入;配置里可写 `"auto"` 的字段(batch size、学习率、精度等)由 Trainer 按命令行参数自动填,避免两处配置打架;
-- **Accelerate**:`accelerate config` 向导里选 DeepSpeed 插件,普通训练循环无感切换后端。
+按"这条线现在还活着吗"排,比按功能分类有用(配置项名以 0.18 版官方文档为准,随版本演进):
 
-## 三、与 FSDP 怎么选
+| 能力 | 干什么 | 现状 |
+|---|---|---|
+| **ZeRO 1/2/3** | 把参数、梯度、优化器状态切碎摊到各卡 | **绝对主力**,框架的核心卖点(原理见 ZeRO 篇) |
+| **ZeRO-Offload / Infinity** | 状态与更新下放到 CPU 内存或 NVMe | 活跃;NVMe 这一档至今仍是它独有(判据见 ZeRO 篇) |
+| **ZeRO++** | 量化通信 + 节点内二级分片 | 活跃,跨节点场景用(见 ZeRO 篇) |
+| 流水线并行 | 按层切段接力 | 存在但要改模型,实际用得远少于 ZeRO;与 Stage 2/3 不兼容(见 ZeRO 篇) |
+| MoE 训练 | 专家并行 + 门控与通信优化 | 早期 MoE 训练的主力,现在多被专用实现取代(见 MoE并行与DeepEP 篇) |
+| 长序列(Ulysses) | 输入沿序列维切开,进注意力时用 all-to-all 换成按头切 | 活跃(序列并行见 并行策略 篇,算子语义见 集合通信 篇) |
+| AutoTP | 按内置规则自动做张量并行 | 较新,只支持 ZeRO 0/1/2 |
+| 稀疏注意力 | block-sparse 注意力 kernel | **基本停滞**——文档至今仍写明只能跑在 V100/A100、CUDA 不高于 11.1(思路见 稀疏注意力 篇) |
+| DeepSpeed-Inference / FastGen | 推理加速 | 非主流,推理侧生态已由别的引擎主导,一句带过 |
+| DeepSpeed-Chat | RLHF 三阶段流水线与 Hybrid Engine | 教学与历史价值为主(流程本身见 RLHF与RM 篇,框架选型见 RL框架对比 篇) |
 
-FSDP 是 PyTorch 原生的「ZeRO-3 同款思想」实现,与 DeepSpeed 是最高频的选型对比:
+看这张表要抓的不是功能数量,而是**它的重心从来没变过:训练侧的显存工程**。推理那条线开得早、也认真做过,但没跟上后来的推理引擎;RLHF 那条线开创了"训练态与生成态共享一份权重来回切"的思路,后来者沿用了思路、换掉了实现。
 
-| 维度 | DeepSpeed | FSDP |
-| --- | --- | --- |
-| 出身 | 微软第三方库 | PyTorch 亲儿子(torch.distributed) |
-| 成熟度 | 久经战阵(BLOOM、GLM-130B 等大模型用过) | FSDP2 已成熟,官方长期投入 |
-| 易用性 | JSON 全家桶,字段多但文档全 | 纯 PyTorch API,与 torch.compile/DTensor 原生亲和 |
-| HF 生态集成 | Trainer/Accelerate 一等公民 | 同为一等公民,新项目示例常以它为默认 |
-| Offload 能力 | CPU + NVMe(Infinity),业界最强 | 只有 CPU offload,无 NVMe 级 |
-| 调试体验 | 封装深、报错栈长、魔改成本高 | 贴近原生 tensor 语义,单步调试更透明 |
+## 四、和 Megatron 的关系:一个出切法,一个出省法
 
-**经验法则**:纯 PyTorch 技术栈、想吃 torch 新特性,优先 FSDP;需要 **Infinity 级 offload(小显存硬训大模型)或 DeepSpeed-MoE 训练**,用 DeepSpeed;两边都被 HF 良好支持,迁移成本主要在配置而非代码。
+Megatron-DeepSpeed 这类组合经常被误解成"两个框架打架",其实是**各出一半**:
 
-## 四、与 Megatron 的关系:互补而非竞争
+| 谁 | 出什么 |
+|---|---|
+| Megatron-LM | Transformer 实现、张量并行、数据加载 |
+| DeepSpeed | ZeRO、流水线并行、其余分布式训练组件 |
 
-分工很清晰:**Megatron-LM 管「一个模型副本内部怎么切」**——TP 切算子、PP 切层,附送高效 fused kernel;**DeepSpeed 管「众多副本之间怎么省」**——ZeRO-DP 切训练状态。两者拼装成 Megatron-DeepSpeed 的 3D 并行:节点内跑 TP(通信最密,走 NVLink)、跨节点跑 PP、最外层套 ZeRO-DP,BLOOM-176B 就是这套配方训出来的。
+最有名的落地是 BLOOM-176B:384 张 A100 80GB,TP=4 × PP=12 × DP=8 恰好乘出 384。TP 来自 Megatron、留在机内,PP 与 ZeRO 来自 DeepSpeed(rank 为什么这么排,见 并行策略 篇)。顺带一个能体现规模的数字:那份带 fp32 优化器状态的完整 checkpoint 约 2.3 TB,单是 bf16 权重就有 329 GB——下一节讲的 checkpoint 麻烦,在这个尺度上不是小事。近几个版本 DeepSpeed 自己也长出了 AutoTP,分工的边界在往中间靠,但这**不是"谁替代谁"**。Megatron 自身的架构见 Megatron 篇,本篇不做优劣对比。
 
-一句话记忆:TP/PP 解决「放得下」,ZeRO 解决「放得省」,数据并行解决「训得快」(并行策略的横向细节另见并行策略篇)。
+## 五、和 FSDP 的关系:同一个思路的两个实现
 
-## 五、在 RLHF 生态中的位置
+FSDP 是 PyTorch 把 ZeRO 思路原生化的产物,**分片档位与 ZeRO 的 Stage 一一对得上**(完整对应表在 ZeRO 篇,这里不重复)。所以选型的问题**不是"哪个省得多"**——同一档省的是同一笔账——而是这三问:
 
-- **DeepSpeed-Chat**:官方 RLHF 方案,SFT → 奖励模型 → PPO 三阶段流水线;亮点是 Hybrid Engine,同一份权重在「训练态」与「生成态」间切换,rollout 走推理优化、更新走 ZeRO。如今活跃度下降,更多是教学与参考价值;
-- **OpenRLHF**:当下更常用的组合——**训练侧 DeepSpeed ZeRO + rollout 侧 vLLM**,Ray 负责调度,是「DS 只管训练、生成外包给推理引擎」这一分工的代表;
-- **verl**:训练后端反而选 FSDP 或 Megatron,不走 DS——说明 DS 在 RLHF 训练侧并非唯一解(框架横向对照见 RL框架对比篇)。
+1. **要不要 NVMe 级 offload?** 要,就只能选 DeepSpeed。
+2. **想不想留在 PyTorch 原生语义里?** 想(比如要吃编译、要能单步调试),FSDP 更顺;DeepSpeed 封装深、报错栈长。
+3. **已有脚本是什么形状?** 已经在 HF Trainer 里,两边都是一行接入;是手写训练循环,DeepSpeed 那三行改动更小。FSDP 自身的架构与配置见 FSDP 篇。
 
-## 六、实战坑
+## 六、真实的坑
 
-- **Stage 3 的 checkpoint 是碎片**:每卡只存自己那份参数分片,直接拿去 HF/vLLM 加载会缺斤短两。两条路:训完跑 checkpoint 目录里自带的 `zero_to_fp32.py` 把分片拼回完整权重(像拼拼图);或配置 `stage3_gather_16bit_weights_on_model_save: true` 让保存时自动收拢到 rank 0(模型很大时慢且有 OOM 风险);
-- **batch 三件套对不上就崩**:`train_batch_size ≠ micro × accum × world_size` 是新手第一报错;用 HF Trainer 时相关字段写 `"auto"` 最省心;
-- **版本矩阵敏感**:DS 的 fused kernel 走 JIT 编译,要求本机 CUDA toolkit 与 torch 的编译版本匹配;DS/torch/transformers 三者升级要小步走,团队实践里锁版本是标配;
-- **与 LoRA/量化组合**:LoRA 下可训参数极少,优化器状态本来就小,Stage 2/3 的边际收益主要剩「冻结参数的分片」;QLoRA(bitsandbytes 4bit)与 ZeRO-3 长期不兼容——量化权重没法按 ZeRO-3 的方式切分聚合,经典解法是 QLoRA 配 Stage 2,或改走 FSDP+QLoRA 路线;PEFT + Stage 3 保存时注意只导出 adapter;
-- **日志里该盯的指标**:显存(DS 打印的 MA/CA,即 allocated/cached)是否贴近上限;吞吐(samples/s 或 TFLOPS)是否达标;fp16 下的 loss scale——一路下探说明频繁 overflow 跳步、数值不稳(bf16 无此项);外加 grad norm 有没有尖刺。
+### checkpoint:存出来的不是你以为的那个格式
 
-## 七、面试考点串联
+**Stage 3 存出来的是分片**,每张卡只写自己那份参数,直接当普通权重加载会缺斤短两。三条出路:
 
-高频问法(与题库联动的切片点):
+- 保存时目录里会自动生成一个离线转换脚本(`zero_to_fp32.py`),把分片拼回完整 fp32 权重,**不需要 GPU**;代价是要吃**约两倍于最终权重大小的 CPU 内存**,大模型上得先看内存够不够;
+- 配 `stage3_gather_16bit_weights_on_model_save: true`,保存时自动收拢成完整 16 bit 权重——省事,但保存那一刻显存峰值会抬高;
+- 想**换一套并行度接着训**(比如从 TP=4 换成 TP=8),前两条都不管用,要走 universal checkpoint:先离线转成"通用格式",再在配置里开 `checkpoint.load_universal` 加载。
 
-1. DeepSpeed 是什么、核心卖点 →「一句话 + 能力全景」
-2. ZeRO 三个 stage 各切什么、通信代价 → 详见 ZeRO 篇(本篇记住全景表即可)
-3. ds_config 关键字段、batch 三件套关系 →「使用形态」
-4. DeepSpeed vs FSDP 怎么选、各自强项 →「与 FSDP 怎么选」
-5. 3D 并行里 DS 与 Megatron 各贡献什么 →「与 Megatron 的关系」
-6. OpenRLHF/verl 等 RLHF 框架的训练后端差异 →「RLHF 生态」
-7. Stage 3 checkpoint 为什么不能直接加载、怎么办 →「实战坑」
-8. 训练日志怎么发现显存/数值问题 →「实战坑」
+还有一条更隐蔽的:**保存必须所有 rank 一起调,不能只让 rank 0 调**。因为每张卡都要写自己那份优化器状态和主权重,只让 rank 0 调用会**卡在等其他进程同步上**——现象是训练无声无息挂住、不报错,很难查。
+
+### ZeRO-3 必须在建模型之前就生效
+
+Stage 3 是在**参数被创建的那一刻**就分片的。要是先把完整模型加载到每张卡、之后才配 DeepSpeed,"每卡一份全量参数"这个峰值已经发生过了,**一分显存都没省下**,模型再大点直接就加载不进去。正确顺序是让 ZeRO-3 配置先生效(HF 里表现为先构造 `TrainingArguments` 再加载模型),或者在框架提供的分片初始化上下文里建模型。
+
+### 版本耦合比想象中硬
+
+DeepSpeed 带一批 C++/CUDA 编译算子(CPU Adam、各类融合算子)。**预编译进来的算子在加载时会校验:编译时与运行时的 torch 版本必须 major.minor 一致,CUDA 版本同样要 major.minor 一致**,对不上直接抛异常要求重装;走 JIT 现编的那条路则要求本机 CUDA toolkit 与 torch 的 CUDA 版本对得上。所以升 torch 往往意味着要重装 DeepSpeed——团队实践里锁版本、连镜像一起固化是标配。
+
+### 其余几条
+
+- **流水线并行与 ZeRO-2/3 不兼容**,框架会直接断言拒绝(为什么冲突,见 ZeRO 篇);
+- **和 LoRA / 量化组合时收益骤减**:可训参数少了,优化器状态那个大头本就不存在(见 LoRA 篇);QLoRA 那类量化权重与 Stage 3 的分片聚合长期不兼容,常见做法是退回 Stage 2;
+- **日志盯四个数**:显存的 allocated / cached 是否贴着上限、吞吐(samples/s 或 TFLOPS)有没有掉、fp16 下的 loss scale 是不是一路下探(下探就是在频繁溢出跳步,bf16 无此项)、grad norm 有没有尖刺。前两个要先打开耗时拆解才看得全;这些机制的具体实现见开源解读模块。
+
+## 面试考点串联
+
+| 高频问法 | 本文哪一节 |
+|---|---|
+| DeepSpeed 怎么接进一个已有训练脚本?它的"非侵入"具体非侵入在哪? | 一(三行接入 + 引擎接管清单) |
+| 接完 DeepSpeed,原来训练循环里哪些代码必须删?不删会怎样? | 一(zero_grad / GradScaler / 累积分支 / scheduler) |
+| 它是不是所有能力都不用改模型?哪些必须改,为什么? | 一(两档表;ZeRO 只切存储,所以能躲在 hook 里) |
+| config 里设的和代码里设的冲突了,以谁为准? | 二(优化器与调度器代码优先;HF 下写死不报错、会静默跑错) |
+| batch 那三个参数是什么关系?写错会怎样?哪一个决定显存? | 二(乘积等式与硬校验;micro batch 决定激活) |
+| Megatron-DeepSpeed 是怎么回事?两边各出什么? | 四(切法 vs 省法;BLOOM 的 TP×PP×DP) |
+| ZeRO-3 训完的 checkpoint 为什么不能直接加载?怎么处理? | 六(分片 + 三条出路;还有"必须全 rank 调保存") |
+| 同样是 ZeRO 的思路,DeepSpeed 和 FSDP 你怎么选? | 五(三问:NVMe / 原生语义 / 已有脚本形状) |
+
+> 本表按出题标准自拟,非面经原题。
 
 ## 相关文献
 
-- ZeRO(Stage 1/2/3 显存切分)— [arXiv:1910.02054](https://arxiv.org/abs/1910.02054)
-- ZeRO-Offload(优化器卸载到 CPU)— [arXiv:2101.06840](https://arxiv.org/abs/2101.06840)
-- ZeRO-Infinity(NVMe 级 offload)— [arXiv:2104.07857](https://arxiv.org/abs/2104.07857)
-- DeepSpeed-MoE(MoE 训练与推理)— [arXiv:2201.05596](https://arxiv.org/abs/2201.05596)
-- DeepSpeed-Chat(RLHF 三阶段流水线)— [arXiv:2308.01320](https://arxiv.org/abs/2308.01320)
-- PyTorch FSDP(选型对照方案)— [arXiv:2304.11277](https://arxiv.org/abs/2304.11277)
-- DeepSpeed 官方文档:https://www.deepspeed.ai
+- ZeRO 系列论文(ZeRO / Offload / Infinity / ZeRO++)集中列在 ZeRO 篇,本篇不重复
+- DeepSpeed-MoE: Advancing Mixture-of-Experts Inference and Training to Power Next-Generation AI Scale — [arXiv:2201.05596](https://arxiv.org/abs/2201.05596)
+- DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models — [arXiv:2309.14509](https://arxiv.org/abs/2309.14509)
+- Universal Checkpointing: A Flexible and Efficient Distributed Checkpointing System for Large-Scale DNN Training with Reconfigurable Parallelism — [arXiv:2406.18820](https://arxiv.org/abs/2406.18820)
+- DeepSpeed Inference: Enabling Efficient Inference of Transformer Models at Unprecedented Scale — [arXiv:2207.00032](https://arxiv.org/abs/2207.00032)
+- DeepSpeed-FastGen: High-throughput Text Generation for LLMs via MII and DeepSpeed-Inference — [arXiv:2401.08671](https://arxiv.org/abs/2401.08671)
+- DeepSpeed-Chat: Easy, Fast and Affordable RLHF Training of ChatGPT-like Models at All Scales — [arXiv:2308.01320](https://arxiv.org/abs/2308.01320)
+- BLOOM: A 176B-Parameter Open-Access Multilingual Language Model(Megatron-DeepSpeed 的旗舰落地)— [arXiv:2211.05100](https://arxiv.org/abs/2211.05100)
+- DeepSpeed 文档 — Getting Started(三处改动、引擎接管清单、hostfile 与启动器)与 Configuration JSON(全部配置项与默认值)— https://www.deepspeed.ai/getting-started/ 、https://www.deepspeed.ai/docs/config-json/
+- DeepSpeed 文档 — ZeRO 教程(`zero_to_fp32.py` 与约 2 倍 CPU 内存的口径)与 Universal Checkpointing(换并行度续训的三步流程)— https://www.deepspeed.ai/tutorials/zero/ 、https://www.deepspeed.ai/tutorials/universal-checkpointing/
+- HuggingFace Transformers 文档 — DeepSpeed 集成(`"auto"` 字段与写死后静默跑错)— https://huggingface.co/docs/transformers/deepspeed
+- HuggingFace 博客 — The Technology Behind BLOOM Training(TP=4 × PP=12 × DP=8、2.3 TB checkpoint 的出处)— https://huggingface.co/blog/bloom-megatron-deepspeed
