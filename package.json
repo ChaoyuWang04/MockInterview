@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "topics": "node scripts/topics.mjs",
-    "hot100:sync": "node scripts/hot100-sync.mjs"
+    "hot100:sync": "node scripts/hot100-sync.mjs",
+    "kb:lint": "node scripts/kb-lint.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
