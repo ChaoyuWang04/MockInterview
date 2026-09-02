@@ -10,7 +10,11 @@
     "test": "vitest run",
     "topics": "node scripts/topics.mjs",
     "hot100:sync": "node scripts/hot100-sync.mjs",
-    "kb:lint": "node scripts/kb-lint.mjs"
+    "kb:lint": "node scripts/kb-lint.mjs",
+    "interview:index": "node scripts/interview-index.mjs",
+    "interview:live": "INTERVIEW_LIVE=1 vitest run tests/interview-live.test.ts",
+    "interview:profile": "node scripts/interview-profile.mjs",
+    "interview:tts": "node scripts/interview-prerender.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",

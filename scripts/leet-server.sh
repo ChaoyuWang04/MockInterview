@@ -16,7 +16,7 @@
 # 说明:改 markdown 内容(题目/笔记/知识库/解读)无需重启,刷新页面即可;
 #      只有改 app/ components/ lib/ 等代码才需要 leet-rebuild。
 
-LEETPREP_DIR="${LEETPREP_DIR:-$HOME/Desktop/1Project/interviewprep}"
+LEETPREP_DIR="${LEETPREP_DIR:-$HOME/1Project/interviewprep}"
 LEETPREP_PORT="${LEETPREP_PORT:-3000}"
 
 _leet_paths() {

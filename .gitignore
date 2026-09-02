@@ -42,3 +42,10 @@ next-env.d.ts
 projects/
 .leet/
 /.next-prod/
+interview/cache/
+
+# 模拟面试:语音环境与音频缓存(体积大,可重建)
+.venv-voice/   # 语音服务的 Python 环境(441M),用 uv 重建
+__pycache__/
+*.pyc
+/.mlx-models/   # 模型默认放 ~/.mlx-models,这条只防误放进仓库

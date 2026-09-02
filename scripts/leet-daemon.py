@@ -8,9 +8,10 @@
 时会被一起收走。这里用标准的 double-fork + setsid 把进程放进**新的会话**,
 父进程变成 init(PPID=1)、无控制终端(TTY=??),终端怎么关都影响不到它。
 
-为什么不用 launchd:项目位于 ~/Desktop,属于 macOS 隐私保护(TCC)目录,
-launchd 拉起的进程读不到里面的文件(实测报 `can't open input file`),
-除非把项目移出 Desktop 或在系统设置里授予完全磁盘访问权限。
+历史备注:项目原先放在 ~/Desktop(macOS 隐私保护 TCC 目录),launchd 拉起的
+进程读不到里面的文件(实测报 `can't open input file`),所以只能用这套方案。
+2026-09-02 已迁到 ~/1Project,TCC 限制不再存在;这套 double-fork 方案照常可用,
+若要改用 LaunchAgent(顺带获得开机自启)现在也没有障碍了。
 """
 
 import os

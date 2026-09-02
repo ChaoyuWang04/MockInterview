@@ -1,0 +1,130 @@
+{
+  "resume": "02-infra",
+  "resumeHash": "sha256:d9a2f7dbe119acd7",
+  "topic亲和": {
+    "Hybrid注意力": 2,
+    "KV共享注意力": 2,
+    "MLA": 2,
+    "MTP": 2,
+    "MoE基础": 2,
+    "MoE路由": 2,
+    "Norm位置": 2,
+    "RoPE": 2,
+    "SWA": 2,
+    "残差流": 2,
+    "注意力配件": 2,
+    "稀疏注意力": 2,
+    "线性注意力": 2,
+    "ScalingLaws": 2,
+    "优化器": 2,
+    "数据工程": 2,
+    "预训练流程": 2,
+    "DPO": 2,
+    "GRPO": 2,
+    "KL散度": 2,
+    "RLHF与RM": 2,
+    "MoE并行与DeepEP": 2,
+    "ZeRO": 2,
+    "并行策略": 2,
+    "推理加速": 3,
+    "访存与算子优化": 2,
+    "DeepSpeed": 2,
+    "Megatron": 2,
+    "OpenRLHF": 2,
+    "RL框架对比": 2,
+    "ROLL": 2,
+    "SGLang": 2,
+    "slime": 2,
+    "LoRA": 3,
+    "SFT": 3,
+    "PPO": 3,
+    "CUDA流与异步执行": 3,
+    "CudaGraph": 3,
+    "FlashAttention": 3,
+    "GEMM优化": 3,
+    "GPU互联与组网": 3,
+    "GPU架构与执行模型": 3,
+    "KVCache": 3,
+    "KVCache量化": 3,
+    "PD分离": 3,
+    "PagedAttention": 3,
+    "Prefill与Decode的矩阵形状": 3,
+    "RadixAttention": 3,
+    "Roofline与Bound分析": 3,
+    "TorchCompile": 3,
+    "性能分析与Profiling": 3,
+    "投机解码": 3,
+    "推理服务指标": 3,
+    "显存管理与OOM": 3,
+    "权重与激活量化": 3,
+    "算子融合": 3,
+    "解码策略": 3,
+    "连续批处理": 3,
+    "量化": 3,
+    "集合通信": 3,
+    "FSDP": 3,
+    "NCCL": 3,
+    "vLLM": 3,
+    "verl": 3
+  },
+  "项目深挖点": [
+    {
+      "项目": "Agentic RL 训练框架优化(verl / FSDP)",
+      "可问": "如何确保 LoRA 权重下发的正确性与效率？",
+      "关联topic": [
+        "LoRA",
+        "CUDA流与异步执行",
+        "GPU架构与执行模型",
+        "KVCache",
+        "性能分析与Profiling",
+        "显存管理与OOM"
+      ]
+    },
+    {
+      "项目": "Agentic RL 训练框架优化(verl / FSDP)",
+      "可问": "在训推分离场景下，如何优化同步频率与陈旧度的配置？",
+      "关联topic": [
+        "PPO",
+        "性能分析与Profiling",
+        "FSDP"
+      ]
+    },
+    {
+      "项目": "Agentic 负载推理服务优化(vLLM)",
+      "可问": "如何通过前缀亲和路由提升缓存命中率？",
+      "关联topic": [
+        "KVCache",
+        "PagedAttention",
+        "性能分析与Profiling"
+      ]
+    },
+    {
+      "项目": "Agentic 负载推理服务优化(vLLM)",
+      "可问": "FP8 KV cache 的实现对吞吐和延迟有何影响？",
+      "关联topic": [
+        "KVCache",
+        "KVCache量化",
+        "性能分析与Profiling",
+        "推理加速"
+      ]
+    },
+    {
+      "项目": "GPU 通信、算子与低精度训推 · 模型 + Harness + Infra Codesign",
+      "可问": "如何解决 NCCL Simple kernel 的对齐问题？",
+      "关联topic": [
+        "集合通信",
+        "NCCL"
+      ]
+    },
+    {
+      "项目": "GPU 通信、算子与低精度训推 · 模型 + Harness + Infra Codesign",
+      "可问": "如何实现 MXFP8 块缩放 GEMM 算子？",
+      "关联topic": [
+        "GEMM优化",
+        "GPU架构与执行模型",
+        "NCCL"
+      ]
+    }
+  ],
+  "摘要": "候选人具备丰富的 Infra 架构优化经验，涵盖训练框架(verl/FSDP)、推理服务(vLLM)与低精度训推统一。擅长 GPU 通信排障、算子实现及性能调优，熟悉 LoRA、FP8/FP4 量化与显存管理。"
+}
