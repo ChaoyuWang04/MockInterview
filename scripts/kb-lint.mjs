@@ -1,4 +1,4 @@
-// 知识库写作契约的自动检查(docs/05-知识库写作契约.md §九 自检表)
+// 知识库写作契约的自动检查(docs/05-知识库写作契约.md §十 自检表)
 // 用法:npm run kb:lint        有硬性违规时退出码为 1
 import fs from 'node:fs'
 import path from 'node:path'
@@ -90,6 +90,17 @@ for (const file of files) {
   // 收尾
   if (!text.includes('## 相关文献')) E('缺少「## 相关文献」')
   if (isKey && !text.includes('面试考点串联')) E('带 🔴 标记但缺少「面试考点串联」')
+
+  // 考点表(契约 §九):面经原题不设上限,自拟题 5–8 且要标注来源。旧稿写于本节确立之前,豁免
+  if (!isLegacy && !isKey) {
+    const sec = text.match(/##[^\n]*面试考点串联[^\n]*\n([\s\S]*?)(?=\n## |$)/)
+    if (sec) {
+      const rows = sec[1].split('\n').filter((l) => l.trim().startsWith('|')).length
+      const q = Math.max(0, rows - 2) // 减去表头与分隔行
+      if (q > 8) W(`自拟考点 ${q} 题,契约建议 5–8 题(只有面经原题不设上限)`)
+      if (!/自拟/.test(sec[1])) W('自拟考点表缺少「非面经原题」的标注行')
+    }
+  }
 
   // 跨篇引用的目标必须存在(只查「见/引/参见 XX 篇」这种全名写法)
   for (const m of text.matchAll(/(?:见|引|参见)\s*[「『]?([A-Za-z0-9一-龥]{3,20}?)[」』]?\s*篇/g)) {
