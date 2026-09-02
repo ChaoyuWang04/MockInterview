@@ -100,7 +100,7 @@ Scaling Laws for Reward Model Overoptimization 用合成实验(一个大"金标�
 | rule-based verifier | 可机判的结果 | 规则:答案匹配 / 单元测试 | 不可 hack;只覆盖可验证域 |
 
 - **PRM(过程奖励模型)**:Let's Verify Step by Step 请人给数学解答的**每一步**标 对/错/存疑(PRM800K 数据集),PRM 逐步打分,能揪出"过程错但答案蒙对"的解;MATH 上做 best-of-N 挑答案,PRM 显著优于 ORM(约 78% vs 72%)。人标过程分极贵,后续工作(如 Math-Shepherd)用 MC 估计自动化:从某一步出发采多条后续,按最终答对率给这一步打分;
-- **rule-based verifier**:数学答案精确匹配、代码跑单元测试——机器阅卷,相当于**不可 hack 的 RM 替身**,Goodhart 缝隙趋近于零。这是 RLVR(可验证奖励 RL)路线的根基,也是 GRPO 在数学/代码上大放异彩的前提(见 GRPO 篇、后训练总览篇);
+- **rule-based verifier**:数学答案精确匹配、代码跑单元测试——机器阅卷,相当于**不可 hack 的 RM 替身**,Goodhart 缝隙趋近于零。这是 RLVR(可验证奖励 RL)路线的根基,也是 GRPO 在数学/代码上大放异彩的前提(见 GRPO 篇、本章总览);
 - **LLM-as-judge 当 RM**:让强 LLM 按评分细则生成打分,免训练、换标准只需改 prompt;但自带位置/长度/自我偏好等偏置,被当 reward 持续优化时同样会被钻空子,需搭配 verifier 或人评抽检。
 
 ## 六、全流程闭环
