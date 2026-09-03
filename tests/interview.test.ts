@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { describe, it, expect } from 'vitest'
 import {
   buildCorpus,
@@ -52,11 +53,40 @@ describe('语料索引 corpus', () => {
     expect(corpus.questions.every((q) => q.id.includes('/'))).toBe(true)
   })
 
-  it('手撕代码整类排除,且排除后没有匹配不到文章的题', () => {
+  it('手撕代码整类排除,未关联文章的普通题必须已登记待写', () => {
     expect(EXCLUDED_CATEGORIES).toContain('手撕代码')
     expect(corpus.candidates.some((c) => c.id.startsWith('q:手撕代码/'))).toBe(false)
-    // 匹配不到文章的题会静默消失,必须归零——否则是索引漏了
-    expect(corpus.stats.匹配不到文章的题目).toBe(0)
+    const unmatched = corpus.questions.filter(
+      (q) => !EXCLUDED_CATEGORIES.includes(q.category) && !q.chapter,
+    )
+    const referenceIndex = fs.readFileSync(
+      new URL('../docs/references/写作参考索引.md', import.meta.url), 'utf8',
+    )
+    const plannedRows = referenceIndex.split('\n')
+      .filter((line) => line.startsWith('|'))
+      .map((line) => line.split('|').slice(1, -1).map((cell) => cell.trim()))
+      .filter((cells) => cells[4] === '待写')
+    const articleMap = fs.readFileSync(
+      new URL('../docs/04-知识库地图.md', import.meta.url), 'utf8',
+    )
+    for (const q of unmatched) {
+      // 不放过意外拼错的 topic;只允许已登记来源、题目和计划文章的缺口。
+      expect(plannedRows.some((cells) => cells[3] === q.article
+        && decodeURI(cells[2]).includes(`../../questions/${q.id})`)), q.id).toBe(true)
+      expect(articleMap, q.id).toContain(`\`${q.article}\``)
+      expect(corpus.candidates.some((c) => c.id === `q:${q.id}`)).toBe(false)
+    }
+    expect(corpus.stats.匹配不到文章的题目).toBe(unmatched.length)
+  })
+
+  it('新增 SFT 的 LoRA 题进入预训练与微调章,保留平台来源属性', () => {
+    const id = 'q:SFT/002-lora-原理与秩选择.md'
+    expect(corpus.candidates.find((c) => c.id === id)).toMatchObject({
+      kind: 'question', chapter: '02-预训练与微调', article: 'LoRA', fromInterview: false,
+    })
+    const pool = eligible(corpus.candidates, { chapters: ['02-预训练与微调'], affinity: {} })
+    expect(pool.some((c) => c.id === id)).toBe(true)
+    expect(pool.every((c) => c.chapter === '02-预训练与微调')).toBe(true)
   })
 
   it('占位稿不进出题池(没有正文=没有答案,拿它出题就是编造)', () => {
