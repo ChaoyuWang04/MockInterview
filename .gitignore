@@ -49,3 +49,6 @@ interview/cache/
 __pycache__/
 *.pyc
 /.mlx-models/   # 模型默认放 ~/.mlx-models,这条只防误放进仓库
+
+# 平台题原始截图及本地识别缓存；文字来源归档在 docs/references/平台题
+/inbox/
