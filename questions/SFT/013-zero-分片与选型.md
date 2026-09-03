@@ -3,7 +3,7 @@ difficulty: 简单
 topic: ZeRO/分片与选型
 summary: ZeRO 三阶段如何节省显存,训练时怎样选型
 tags: [待校对, ZeRO, 分布式训练, 显存优化]
-company: 快手、字节
+company: 快手、字节、美团
 mastered: false
 highfreq: false
 ---
@@ -11,6 +11,8 @@ highfreq: false
 ## 题目
 
 请详细解释 Zero Redundancy Optimizer(ZeRO)的工作原理,包括其如何通过分解优化器状态、梯度和模型参数来实现显存优化,并说明它在大规模模型分布式训练中的作用、不同阶段(ZeRO-1、ZeRO-2、ZeRO-3)的演进及其对训练效率的影响。
+
+重点比较 ZeRO-2 与 ZeRO-3 的状态分片、通信开销、可扩展性及适用场景。
 
 ## 要点
 
@@ -32,24 +34,33 @@ highfreq: false
 | ZeRO-2 | 再分梯度 | $2P+14P/d$ |
 | ZeRO-3 | 再分参数 | $16P/d$ |
 
-这不含激活、临时参数收集和通信缓冲,也不适用于所有精度配置。更新时各卡处理自己的状态分片;第 3 阶段还要在计算前收集所需参数,用完可释放,因此省容量也可能增加等待。
+这不含激活、临时参数收集和通信缓冲,也不适用于所有精度配置。标准阶段只有 1–3,来源 P002-Q043 所称“Stage 4”不是标准阶段,Offload/Infinity 是容量扩展机制。
+
+### 参数如何取回,通信多在哪里
+
+Stage 1/2 的简化流程是归约并分发梯度,各卡更新分片,再 all-gather 更新后的参数。Stage 3 还在计算前 all-gather 所需层的参数;若前向后已释放,反向前要再次收集。预取与参数缓存会改变实际次数,不能把每层两次当成固定实现。
+
+按 ZeRO 论文、不计缓存和梯度累积的简化口径,以一份低精度全模型参数的字节量为 $M$,DDP 与 Stage 1/2 每步通信约 $2M$,Stage 3 约 $3M$,即相对 1.5 倍,不是 3 倍。实际耗时还受消息粒度、互联和重叠影响。
 
 ### 来源追问补充
 
-- **与模型并行的区别**:张量并行拆一层的运算,流水线并行拆层;ZeRO 主要拆数据并行组的状态。三者可以组合,通信组与拓扑须匹配。
-- **Offload 与 Infinity**:ZeRO-Offload 将部分状态及优化器计算移到 CPU;ZeRO-Infinity 进一步利用 CPU/NVMe 的分层容量。代价是传输和预取调度,容量增加不保证训练更快。
+- **与模型并行的区别**:张量并行拆一层的运算,流水线并行拆层;ZeRO 主要拆数据并行组的状态。算法上可组合,但要检查框架支持。与 PP 配合时,按流水线阶段估参数收集和激活峰值,评估微批调度、缓存、DP 通信组及重叠。约 2026-04 的 DeepSpeed 本地源码快照中,其流水线引擎明确排除 ZeRO-2/3,不能直接照搬任意组合。
+- **Offload 与 Infinity**:ZeRO-Offload 将部分状态及优化器计算移到 CPU,原论文结合 Stage 1/2;ZeRO-Infinity 在 Stage 3 上进一步利用 CPU/NVMe 的分层容量。NVMe 负责存储,不执行优化器计算。代价是传输和预取调度,容量增加不保证训练更快。
 - **如何选**:先估峰值显存。ZeRO-2 已容纳参数、激活和缓冲且吞吐满足需求,就不必为了阶段更高改用 3;参数副本仍放不下时再考虑 3。不存在按模型参数量一刀切的门槛。
 
 ## 知识点
 
 状态分片、reduce-scatter、all-gather、数据并行、卸载。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
+来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015、P002-Q043、P002-Q045。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
 
 ## 追问
 
 - ZeRO-3 和模型并行(MP)的区别是什么,能否结合使用?
 - ZeRO-Infinity 和 Offload 机制解决了什么问题?
 - 实际训练中如何选择 ZeRO 阶段,什么情况下用 ZeRO-2 就够了?
+- ZeRO-3 与流水线并行结合时要注意什么,如何选择与其他并行的组合?
+- ZeRO-3 在反向传播时如何获取参数,额外通信在哪里?
+- ZeRO-Offload 和 ZeRO-Infinity 与 ZeRO-2/3 分别是什么关系?
 
 ## Note

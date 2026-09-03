@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-CatBoost 在处理类别型特征时采用了哪些关键技术机制使其优于传统方法?请详细解释有序目标编码(Ordered Target Encoding)的实现原理,以及它是如何有效缓解目标泄漏和过拟合问题的。
+CatBoost 在处理类别型特征时采用了哪些关键技术机制?请详细解释有序目标编码(Ordered Target Encoding)的实现原理,以及它如何缓解目标泄漏和过拟合,并从有序提升(Ordered Boosting)、预测偏移和正则化设计比较其与 XGBoost、LightGBM 的优势及适用边界。
 
 ## 要点
 
@@ -40,13 +40,19 @@ $y_j$ 是历史标签,$\mu$ 是先验均值,$a>0$ 控制平滑强度。没有同
 
 **Plain 是普通梯度提升,仍可使用有序目标统计。** Ordered Boosting 更复杂,常对小数据有帮助;Plain 常更快,不是“生产必须用 Ordered”。当前官方参数说明也支持按数据、设备和损失选择。
 
+### 工程实现与选择
+
+原论文的实现让辅助模型共享每轮的树结构、使用不同前缀的叶值,并仅维护几何增长的前缀及所需预测,避免朴素地训练全部前缀模型。这样仍尽量用未见当前标签的历史预测计算梯度,但有额外常数开销。**辅助模型服务于训练,预测不是把全部前缀模型求平均**;最终树的叶值按标准梯度提升流程求取。
+
+默认对称树同层用相同分裂条件,约束结构并利于预测执行;叶值 L2、采样和早停进一步控制复杂度。纯数值数据没有类别编码收益,但有序提升与树结构仍可能有用,不保证胜过 LightGBM。业务上固定划分和调参预算,比较留出指标、训练时间、内存及预测延迟,再选择 Ordered/Plain 和树规模;框架比较见 [梯度提升树对比](035-梯度提升树对比.md)。
+
 高基数特征可以用目标统计和特征组合,避免完整 one-hot 的维度膨胀;但近乎唯一的 ID 缺少可迁移统计,平滑不能凭空补出规律,应按用户或时间留出评估。LightGBM 的 EFB 将互斥稀疏特征捆绑以减少计算,不是目标编码,也不直接解决标签泄漏;其原生类别分裂是另一个机制,不能只拿 EFB 判断两套模型的类别处理优劣。
 
 ## 知识点
 
 目标统计、先验平滑、随机排列、预测偏移、Ordered Boosting、稀疏特征捆绑。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q024。
+- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q024、P002-Q052。
 - 依据:[CatBoost 原论文 §3–5](https://papers.neurips.cc/paper/7898-catboost-unbiased-boosting-with-categorical-features.pdf)、[boosting_type 官方说明](https://catboost.ai/docs/en/references/training-parameters/common#boosting_type)、[LightGBM 官方特性](https://lightgbm.readthedocs.io/en/latest/Features.html)。
 
 ## 追问
@@ -54,5 +60,8 @@ $y_j$ 是历史标签,$\mu$ 是先验均值,$a>0$ 控制平滑强度。没有同
 - CatBoost 的 Ordered 模式与 Plain 模式有什么区别,各自适用什么场景?
 - CatBoost 如何处理高基数类别特征(如用户 ID)?
 - 与 LightGBM 的 EFB(互斥特征捆绑)相比,CatBoost 的类别特征处理有何优劣?
+- Ordered Boosting 在工程实现上如何平衡计算效率与减少偏移?
+- 在业务中如何权衡 CatBoost 的训练速度与精度?
+- 没有类别特征时,CatBoost 相比 LightGBM 是否还有优势?
 
 ## Note
