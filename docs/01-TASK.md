@@ -57,5 +57,5 @@
 - [ ] 校对 `questions/AI Infra/` 下仍带 `待校对` 的真题答案,确认一道就删掉该题 `tags` 里的 `待校对`(页面上有 chip 可辨认)
 - [ ] 提供 `🖼️ 占位` 的配图(`rg -n "🖼️ 占位" knowledge` 查看实时清单)
 - [ ] 提供尚未收录的真题(截图、网页或原文均可),统一按 `02-题库导入流程.md` 入库
-- [ ] 审阅 `reports/DeepSeek/_DeepSeek-V4.md`;逐轮指出难懂、缺失或不够有启发的部分,验收通过后发布为第一篇基模报告标杆
+- [ ] 在网页审阅 `reports/DeepSeek/DeepSeek-V4.md`;逐轮指出难懂、缺失或不够有启发的部分,验收通过后将其确认为第一篇基模报告标杆
 - [ ] (可选)用官方数据校准 LeetCode 清单:见 `07-LeetCode清单.md` 的 curl + `npm run hot100:sync`
