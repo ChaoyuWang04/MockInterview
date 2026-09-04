@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PagedAttention/固定分块与VLM
 summary: PagedAttention怎样用固定块和块表管理VLM变长KV缓存
-tags: [面经, 待校对, PagedAttention, VLM, KVCache, 连续批处理]
+tags: [真题, 待校对, PagedAttention, VLM, KVCache, 连续批处理]
 company: 蚂蚁金服
 mastered: false
 highfreq: false
@@ -69,13 +69,11 @@ VLM 的图像预处理会产生数量不同的视觉 token，再与文本 prompt
 
 固定物理块、逻辑块表、slot mapping、按需分配、前缀共享、写时复制、连续批处理与 VLM 变长序列。
 
-- 真实面经：[B002-G01-Q093](../../docs/references/面经原题.md#b002-g01-q093)
-- 老师参考：[P005-Q093](../../docs/references/平台题/P005-Infra-091-120.md#p005-q093)
 
 ## 追问
 
-- 参考追问：PagedAttention 如何处理图像 token 与文本 token 混合的变长序列？
-- 参考追问：与 Continuous Batching 结合时，怎样处理不同序列长度的调度？
-- 参考追问：固定分块过大或过小分别有什么代价？
+- PagedAttention 如何处理图像 token 与文本 token 混合的变长序列？
+- 与 Continuous Batching 结合时，怎样处理不同序列长度的调度？
+- 固定分块过大或过小分别有什么代价？
 
 ## Note

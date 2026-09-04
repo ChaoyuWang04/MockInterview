@@ -104,7 +104,7 @@ export default function Hot100List({ groups, initialNotes, initialHighFreq }: Pr
   return (
     <>
       <p className="mt-2 text-sm text-gray-500">
-        力扣官方「热题 100」+ 面经补充 {extraCount} 题(标「补」),按 {groups.length} 个专题组织,共 {total} 题;已标高频 {highFreq.length} 题、笔记 {noteCount} 条。点标题去力扣中国、点「US」去 leetcode.com,点「高」标记高频(自动排到组内最前),点 📝 写解题小技巧。
+        力扣官方「热题 100」+ 真题补充 {extraCount} 题(标「补」),按 {groups.length} 个专题组织,共 {total} 题;已标高频 {highFreq.length} 题、笔记 {noteCount} 条。点标题去力扣中国、点「US」去 leetcode.com,点「高」标记高频(自动排到组内最前),点 📝 写解题小技巧。
       </p>
 
       {sortedGroups.map((g) => (
@@ -125,7 +125,7 @@ export default function Hot100List({ groups, initialNotes, initialHighFreq }: Pr
                 <span className="w-12 shrink-0 font-mono text-xs text-gray-400">{p.id}</span>
                 {p.extra && (
                   <span
-                    title="面经补充题(不在官方热题 100 内)"
+                    title="真题补充(不在官方热题 100 内)"
                     className="shrink-0 border border-gray-200 bg-gray-50 px-1 text-[10px] text-gray-400"
                   >
                     补

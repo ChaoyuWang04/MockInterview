@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 推荐模型/长行为序列兴趣建模
 summary: 比较DIN候选感知激活与SIM两阶段长序列检索
-tags: [待校对, SFT, 推荐模型]
+tags: [真题, 待校对, SFT, 推荐模型]
 company: 阿里
 mastered: false
 highfreq: false
@@ -34,7 +34,6 @@ SIM 相比 DIN 的关键改进是两阶段搜索带来的长序列可扩展性;�
 
 DIN 解决候选感知兴趣聚合,SIM 在此之前加入长序列粗检索;GSU 的 hard/soft search 需按论文定义区分。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q080、P004-Q081。
 
 一手依据:[Deep Interest Network](https://arxiv.org/abs/1706.06978)、[Search-based User Interest Modeling](https://arxiv.org/abs/2006.05639)。
 

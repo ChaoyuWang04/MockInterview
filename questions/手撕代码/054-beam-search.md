@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 解码算法/Beam Search
 summary: 手写束搜索并解释剪枝、终止、长度归一化与适用边界
-tags: [面经, 待校对, 手撕代码, Beam Search, 文本生成]
+tags: [真题, 待校对, 手撕代码, Beam Search, 文本生成]
 company: 蚂蚁金服、蚂蚁集团
 mastered: false
 highfreq: false
@@ -86,12 +86,10 @@ def beam_search(model, prompt, beam_size, max_new_tokens, eos_id,
 
 Beam Search、累计 log 概率、全局剪枝、EOS、长度惩罚、重复约束、随机采样。
 
-- 面经原题：[B006-G01-Q164](../../docs/references/面经原题.md#b006-g01-q164)、[B006-G01-Q214](../../docs/references/面经原题.md#b006-g01-q214)、[B006-G01-Q225](../../docs/references/面经原题.md#b006-g01-q225)。
-- 老师答案参考：[P009-Q164](../../docs/references/平台题/P009-LC-161-241.md#p009-q164)、[P009-Q214](../../docs/references/平台题/P009-LC-161-241.md#p009-q214)、[P009-Q225](../../docs/references/平台题/P009-LC-161-241.md#p009-q225)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 重复生成怎样用 repetition penalty、n-gram blocking 或 Diverse Beam Search 缓解？
 - Beam Search、贪心和 temperature/top-p 采样分别适合什么任务？

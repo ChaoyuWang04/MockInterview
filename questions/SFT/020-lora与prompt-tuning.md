@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/与PromptTuning比较
 summary: LoRA 与 Prompt Tuning 如何选,多任务存储与推理成本怎么比
-tags: [SFT, LoRA, Prompt Tuning, PEFT, 待校对]
+tags: [真题, SFT, LoRA, Prompt Tuning, PEFT, 待校对]
 company: 快手
 mastered: false
 highfreq: false
@@ -43,7 +43,6 @@ highfreq: false
 
 低秩适配、连续提示、Prefix-tuning、共享基座、任务参数存储。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q023。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[Prompt Tuning 原论文](https://aclanthology.org/2021.emnlp-main.243/)。
 
 ## 追问

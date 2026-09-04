@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Transformer整体架构/Teacher Forcing与自回归推理的输入是什么
 summary: 训练真值前缀与推理离散token输入为何不同
-tags: [Teacher Forcing, 自回归生成, Decoder-only, 暴露偏差, 待校对]
+tags: [真题, Teacher Forcing, 自回归生成, Decoder-only, 暴露偏差, 待校对]
 company: 字节、抖音
 mastered: false
 highfreq: false
@@ -41,7 +41,6 @@ Teacher Forcing 训练看到真实前缀，推理看到自己的生成前缀，�
 
 输入链路是“token ID → Embedding → Transformer → logits → 概率 → 选 token ID”。one-hot 只是查表的数学写法，概率用于选择和计分，不是标准下一步的直接输入表示。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q224、P004-Q309。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[Scheduled Sampling](https://arxiv.org/abs/1506.03099)。
 
 ## 追问

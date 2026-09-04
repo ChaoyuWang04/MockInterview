@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 注意力配件/Self-Attention原理、公式与复杂度
 summary: 从QKV推导Self-Attention并计算时间空间复杂度
-tags: [SelfAttention, QKV, 复杂度, 待校对]
+tags: [真题, SelfAttention, QKV, 复杂度, 待校对]
 company: 字节、美团、小红书、海天、哔哩哔哩、阿里云、阿里、淘天、京东、滴滴
 mastered: false
 highfreq: false
@@ -46,7 +46,6 @@ $$
 
 Self-Attention 是内容相关的加权读取；复杂度账本要同时保留 $n$ 与 $d$，并分开投影成本和两次注意力矩阵乘。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，采集编号 P004-Q024、P004-Q032、P004-Q042、P004-Q066、P004-Q108、P004-Q118、P004-Q119、P004-Q123、P004-Q130、P004-Q131、P004-Q138、P004-Q139、P004-Q145、P004-Q152、P004-Q179、P004-Q183、P004-Q203、P004-Q223、P004-Q259、P004-Q261。
 - 依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)。
 
 ## 追问

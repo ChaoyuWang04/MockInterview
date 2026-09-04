@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 泛化与正则化/Dropout
 summary: Dropout如何缩放激活,训练推理及归一化顺序有何区别
-tags: [泛化与正则化, 待校对]
+tags: [真题, 泛化与正则化, 待校对]
 company: 小红书、美团
 mastered: false
 highfreq: false
@@ -57,7 +57,6 @@ def dropout(x, p, training=True):
 
 泛化与正则化、Dropout。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q096、P002-Q120、P002-Q145、P002-Q196、P002-Q208、P002-Q227、P002-Q258。
 
 - 补充依据:[PyTorch Dropout](https://docs.pytorch.org/docs/2.14/generated/torch.nn.Dropout.html)、[MC Dropout 原论文](https://proceedings.mlr.press/v48/gal16.html)、[Stochastic Depth 原论文](https://arxiv.org/abs/1603.09382)。
 

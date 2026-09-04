@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: SFT/参数高效微调与遗忘
 summary: PEFT 为什么可能少遗忘,四种方法如何权衡成本与效果
-tags: [SFT, PEFT, LoRA, Adapter, 灾难性遗忘, 待校对]
+tags: [真题, SFT, PEFT, LoRA, Adapter, 灾难性遗忘, 待校对]
 company: 字节、淘天
 mastered: false
 highfreq: false
@@ -52,7 +52,6 @@ BitFit 不等于训练整个 LayerNorm。四者的参数比例、效果与延迟
 
 参数高效微调、功能性遗忘、模块切换、原有能力回归评测。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q008、P002-Q089、P002-Q189。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[Adapter 原论文](https://proceedings.mlr.press/v97/houlsby19a.html)、[Prefix-tuning 原论文](https://aclanthology.org/2021.acl-long.353/)、[BitFit 原论文](https://aclanthology.org/2022.acl-short.1/)、[LoRA 的学习与遗忘对比](https://arxiv.org/abs/2405.09673)。
 
 ## 追问

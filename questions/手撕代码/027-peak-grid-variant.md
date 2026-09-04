@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 二分查找/二维严格峰值变体
 summary: 二分列并扫描列最大值寻找二维峰值同时澄清缺失的存在性约束
-tags: [面经, 待校对, 二分查找, 矩阵, 题意澄清]
+tags: [真题, 待校对, 二分查找, 矩阵, 题意澄清]
 company: 小米
 mastered: false
 highfreq: false
@@ -78,11 +78,10 @@ def find_peak_2d(matrix: list[list[int]]) -> tuple[int, int] | None:
 
 - 二维二分、上坡不变量、边界哨兵、存在性前提、LC 1901 变体。
 
-- 面经原题：[B006-G01-Q057](../../docs/references/面经原题.md#b006-g01-q057)；老师答案参考：[P009-Q057](../../docs/references/平台题/P009-LC-001-080.md#p009-q057)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 如果要求全局最大峰值，算法会怎样变化？
 - 非矩形或稀疏矩阵怎样定义边界？

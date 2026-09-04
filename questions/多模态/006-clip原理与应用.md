@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 视觉编码器/CLIP与图文对齐
 summary: 解释CLIP双编码器、双向对比目标、零样本迁移及工程边界
-tags: [面经, 待校对, 多模态, CLIP, 对比学习, 零样本]
+tags: [真题, 待校对, 多模态, CLIP, 对比学习, 零样本]
 company: 淘天、快手
 mastered: false
 highfreq: false
@@ -48,8 +48,6 @@ $v_i$ 和 $t_j$ 是归一化后的图像、文本向量，$\tau$ 控制分布尖
 
 双编码器、图文对比学习、双向候选分类、温度、零样本迁移、向量检索与细粒度对齐边界。
 
-- 真实面经：[B004-Q001](../../docs/references/面经原题.md#b004-g01-q001)、[Q012](../../docs/references/面经原题.md#b004-g01-q012)、[Q019](../../docs/references/面经原题.md#b004-g01-q019)
-- 老师参考：[P007-Q001](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q001)、[Q012](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q012)、[Q019](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q019)
 - 一手依据：[CLIP](https://arxiv.org/abs/2103.00020)
 
 ## 追问

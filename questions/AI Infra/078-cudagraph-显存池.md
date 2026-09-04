@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: CudaGraph/图私有显存池
 summary: CUDA Graph 的显存能和常规 PyTorch 显存池共用吗,为什么
-tags: [面经, 待校对, 显存管理, CUDA Graph]
+tags: [真题, 待校对, 显存管理, CUDA Graph]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-cudagraph 的存储和常规的 pytorch 管理的显存池是能共用的吗?为什么?
+CUDA Graph 的存储和常规的 PyTorch 管理的显存池是能共用的吗?为什么?
 
 ## 要点
 

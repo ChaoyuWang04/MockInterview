@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 分类损失/类别不平衡
 summary: Focal Loss如何压低易样本贡献,参数和适用边界是什么
-tags: [Focal Loss, 类别不平衡, 目标检测, 难样本挖掘, 待校对]
+tags: [真题, Focal Loss, 类别不平衡, 目标检测, 难样本挖掘, 待校对]
 company: 小红书
 mastered: false
 highfreq: false
@@ -34,7 +34,7 @@ $\alpha_t$ 平衡类别贡献,$\gamma$ 控制压低易样本的强度。举例:$
 
 RetinaNet 用它减轻易背景主导的问题;收益取决于正负样本构成和噪声,并非所有分类任务都优于交叉熵。
 
-### 来源追问
+### 相关真题追问
 
 - **与 OHEM 有何不同?** OHEM 按损失等规则挑选难样本子集,涉及筛选数量与排序;Focal Loss 用可微权重连续调节,仍计算易样本。两者都可能过度关注错标样本。
 - **Transformer 检测器还有效吗?** 关键是分类目标和样本不平衡,与是否用 Transformer 没有直接等价关系。原始 DETR 用类别负对数似然并降低空目标权重;Deformable DETR 使用 Focal Loss,是可用实例,不是任意替换都提升的保证。
@@ -44,7 +44,6 @@ RetinaNet 用它减轻易背景主导的问题;收益取决于正负样本构成
 
 类别权重、聚焦因子、易负例、OHEM、标签噪声。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q019。
 - 依据:[Focal Loss 原论文 §3](https://arxiv.org/abs/1708.02002)、[DETR 原论文 §3](https://arxiv.org/abs/2005.12872)、[Deformable DETR 原论文 §5](https://arxiv.org/abs/2010.04159)。
 
 ## 追问

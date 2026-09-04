@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: SFT/记忆重放
 summary: Replay 如何缓解微调遗忘,怎样选择重放数据和比例
-tags: [待校对, SFT, 灾难性遗忘, 持续学习, Replay]
+tags: [真题, 待校对, SFT, 灾难性遗忘, 持续学习, Replay]
 company: 字节
 mastered: false
 highfreq: false
@@ -37,7 +37,7 @@ $$
 | 生成重放 | 用旧模型生成伪样本再训练 | 生成开销、错误累积,也可能复现敏感内容 |
 | GEM / A-GEM | 用记忆样本梯度约束新梯度;分别约束各任务或平均记忆目标 | 多算梯度;局部约束不保证总体测试性能不降 |
 
-### 来源追问补充
+### 相关真题追问
 
 - **比例怎么定**:固定一组新旧验证集,扫几个候选比例,比较新任务收益与旧任务掉点。旧样本太少保护不足,太多则占用学习新任务的预算;缓冲区按任务、难度分层保留。
 - **与 EWC/LwF 比较**:EWC 存参数重要性并惩罚移动,LwF 模仿旧模型输出;Replay 直接再见旧分布,但要承担保存和重算数据的成本,不普遍优于前两者。
@@ -47,7 +47,7 @@ $$
 
 稳定性与可塑性、经验重放、生成重放、缓冲区采样、梯度约束。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q017。参考:[经验重放研究](https://arxiv.org/abs/1902.10486)、[生成重放](https://arxiv.org/abs/1705.08690)、[GEM](https://arxiv.org/abs/1706.08840)、[A-GEM](https://arxiv.org/abs/1812.00420)。
+参考:[经验重放研究](https://arxiv.org/abs/1902.10486)、[生成重放](https://arxiv.org/abs/1705.08690)、[GEM](https://arxiv.org/abs/1706.08840)、[A-GEM](https://arxiv.org/abs/1812.00420)。
 
 ## 追问
 

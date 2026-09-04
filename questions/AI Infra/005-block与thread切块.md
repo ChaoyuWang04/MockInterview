@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 访存与算子优化/切块方法论
 summary: block 与 thread 的切块方法论,block 开多大合适
-tags: [面经, 待校对, CUDA, 切块, occupancy]
+tags: [真题, 待校对, CUDA, 切块, occupancy]
 company:
 mastered: false
 highfreq: false

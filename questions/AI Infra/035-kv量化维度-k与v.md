@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/K与V的量化维度
 summary: 为什么 K 按 channel 量化、V 按 token 量化,维度怎么判断
-tags: [面经, 待校对, KVCache量化, 量化粒度]
+tags: [真题, 待校对, KVCache量化, 量化粒度]
 company:
 mastered: false
 highfreq: false

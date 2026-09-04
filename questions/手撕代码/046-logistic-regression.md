@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 逻辑回归/从零训练
 summary: 推导逻辑回归的概率、损失、梯度与决策边界并手写训练步骤
-tags: [面经, 待校对, 手撕代码, 逻辑回归, 梯度下降]
+tags: [真题, 待校对, 手撕代码, 逻辑回归, 梯度下降]
 company: 字节、得物、百度
 mastered: false
 highfreq: false
@@ -89,12 +89,10 @@ def logistic_train_step(X, y, w, b, lr=1e-2):
 ## 知识点
 
 - Bernoulli 最大似然、sigmoid、BCE-with-logits、解析梯度、决策边界、线性可分。
-- 面经原题：[B006-G01-Q144](../../docs/references/面经原题.md#b006-g01-q144)、[B006-G01-Q148](../../docs/references/面经原题.md#b006-g01-q148)、[B006-G01-Q190](../../docs/references/面经原题.md#b006-g01-q190)、[B006-G01-Q207](../../docs/references/面经原题.md#b006-g01-q207)。
-- 老师答案参考：[P009-Q144](../../docs/references/平台题/P009-LC-081-160.md#p009-q144)、[P009-Q148](../../docs/references/平台题/P009-LC-081-160.md#p009-q148)、[P009-Q190](../../docs/references/平台题/P009-LC-161-241.md#p009-q190)、[P009-Q207](../../docs/references/平台题/P009-LC-161-241.md#p009-q207)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 逻辑回归与线性回归有什么联系和区别？
 - 为什么分类通常不用 MSE？

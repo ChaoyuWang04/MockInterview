@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 缓存系统/Redis数据结构
 summary: Redis MGET与ZSET怎样实现并处理高并发
-tags: [面经, 待校对, Redis, 缓存系统, ZSET]
+tags: [真题, 待校对, Redis, 缓存系统, ZSET]
 company: 百度
 mastered: false
 highfreq: false
@@ -45,16 +45,13 @@ B+树分支因子大、节点适合页式存储，磁盘/SSD范围扫描更友�
 
 Redis逻辑类型与底层编码、MGET、Cluster hash slot、listpack、dict、skiplist、范围查询复杂度。
 
-真实面经：[B002-G01-Q025](../../docs/references/面经原题.md#b002-g01-q025)。
-
-老师参考：[P005-Q025](../../docs/references/平台题/P005-Infra-001-030.md#p005-q025)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
-- 参考追问：Redis Cluster中跨slot的MGET能否保证原子性？
-- 参考追问：Redis 7中listpack何时转换为skiplist+dict？
-- 参考追问：ZSET与B+树在内存更新和磁盘范围扫描上怎样取舍？
+- Redis Cluster中跨slot的MGET能否保证原子性？
+- Redis 7中listpack何时转换为skiplist+dict？
+- ZSET与B+树在内存更新和磁盘范围扫描上怎样取舍？
 
 ## Note

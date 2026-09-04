@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 反向传播/多层感知机
 summary: 从链式法则推导多层感知机的权重梯度并手写反传
-tags: [面经, 待校对, 手撕代码, 反向传播, 链式法则]
+tags: [真题, 待校对, 手撕代码, 反向传播, 链式法则]
 company: 腾讯
 mastered: false
 highfreq: false
@@ -86,12 +86,10 @@ def train_step(X, y, W1, b1, W2, b2, lr=1e-2):
 ## 知识点
 
 - 计算图、链式法则、误差项、矩阵微积分、BCE-with-logits、梯度消失。
-- 面经原题：[B006-G01-Q087](../../docs/references/面经原题.md#b006-g01-q087)、[B006-G01-Q088](../../docs/references/面经原题.md#b006-g01-q088)。
-- 老师答案参考：[P009-Q087](../../docs/references/平台题/P009-LC-081-160.md#p009-q087)、[P009-Q088](../../docs/references/平台题/P009-LC-081-160.md#p009-q088)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 隐藏层改成 ReLU 时反传公式怎样变化？
 - 怎样缓解梯度消失、爆炸和数值不稳定？

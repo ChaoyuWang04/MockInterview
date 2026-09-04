@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 量化/PTQ与QAT
 summary: PTQ 与 QAT 的做法、成本与适用,STE 解决什么问题
-tags: [面经, 待校对, 量化, PTQ, QAT]
+tags: [真题, 待校对, 量化, PTQ, QAT]
 company: 蚂蚁金服
 mastered: false
 highfreq: false
@@ -52,8 +52,6 @@ $$
 
 PTQ / QAT 的成本-精度权衡、伪量化节点、STE 直通估计器、LLM 时代的选型现状、原生低精度发布。
 
-- 真实面经来源：[B002-G01-Q146](../../docs/references/面经原题.md#b002-g01-q146)、[B002-G01-Q147](../../docs/references/面经原题.md#b002-g01-q147)、[B002-G01-Q177](../../docs/references/面经原题.md#b002-g01-q177)。
-- 老师答案参考：[P005-Q146](../../docs/references/平台题/P005-Infra-121-150.md#p005-q146)、[P005-Q147](../../docs/references/平台题/P005-Infra-121-150.md#p005-q147)、[P005-Q177](../../docs/references/平台题/P005-Infra-151-180.md#p005-q177)。
 
 ## 追问
 

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: SFT/提示与微调选型
 summary: Few-shot 与微调如何按效果、成本和任务变化速度选型
-tags: [面经, 待校对, SFT, Few-shot, Prompt, LoRA]
+tags: [真题, 待校对, SFT, Few-shot, Prompt, LoRA]
 company: 抖音、华为
 mastered: false
 highfreq: false
@@ -48,10 +48,8 @@ Few-Shot Prompting 与模型微调是两种常见的大模型适应下游任务�
 
 上下文学习、参数更新、训练成本摊销、Self-Consistency、多任务适配器。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q060。参考:[GPT-3](https://arxiv.org/abs/2005.14165)、[Self-Consistency](https://arxiv.org/abs/2203.11171)。
+参考:[GPT-3](https://arxiv.org/abs/2005.14165)、[Self-Consistency](https://arxiv.org/abs/2203.11171)。
 
-- 本批真实面经：[B003-G01-Q049](../../docs/references/面经原题.md#b003-g01-q049)
-- 本批老师参考：[P006-Q049](../../docs/references/平台题/P006-RAG-034-066.md#p006-q049)
 
 ## 追问
 

@@ -186,7 +186,7 @@ FlashAttention 快,不是因为"把四个 kernel 合成了一个",而是因为�
 ## 九、面试考点串联
 
 | 高频问法 | 本文哪一节 |
-|---|---|
+| --- | --- |
 | torch.compile 到底做了什么?分几段? | 二(Dynamo 抓图 / AOTAutograd 拆算子 / Inductor 生成代码) |
 | Dynamo 怎么从 Python 里把图抓出来的?为什么比 TorchScript 好使? | 二(挂 PEP 523 帧求值接口逐条符号执行字节码;99% vs 不到 50%) |
 | graph break 是什么?什么代码会导致它?为什么它会吃掉收益? | 三 |
@@ -196,7 +196,6 @@ FlashAttention 快,不是因为"把四个 kernel 合成了一个",而是因为�
 | 它和 CUDA Graph 是一回事吗?能一起用吗? | 七(一个改 kernel、一个改提交方式;`reduce-overhead` 叠加) |
 | 既然有 torch.compile,为什么 FlashAttention 还要手写? | 八(编译器做循环重排,不改算法) |
 
-> 本表按出题标准自拟,非面经原题。
 
 延伸阅读顺序:算子融合(收益原理)→ 本篇(怎么自动做到)→ CudaGraph(消提交开销)→ 性能分析与Profiling(怎么验证真的变快了)。
 

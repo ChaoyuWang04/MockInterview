@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 解码策略/重复惩罚与ngram约束
 summary: no-repeat n-gram和重复惩罚怎样改logits,各自会误伤什么
-tags: [面经, 待校对, 解码策略, Repetition Penalty, n-gram, 文本生成]
+tags: [真题, 待校对, 解码策略, Repetition Penalty, n-gram, 文本生成]
 company: 快手、腾讯
 mastered: false
 highfreq: false
@@ -71,16 +71,14 @@ Beam Search 中也可以在每条 beam 自己的历史上应用 n-gram blocking 
 
 n-gram blocking、logit 硬掩码、Hugging Face repetition penalty、presence/frequency penalty、Beam Search 多样性。
 
-- 真实面经：[B002-G01-Q104](../../docs/references/面经原题.md#b002-g01-q104)、[B002-G01-Q185](../../docs/references/面经原题.md#b002-g01-q185)
-- 老师参考：[P005-Q104](../../docs/references/平台题/P005-Infra-091-120.md#p005-q104)、[P005-Q185](../../docs/references/平台题/P005-Infra-181-199.md#p005-q185)
 
 ## 追问
 
-- 参考追问：如果 $n$ 设置得太大，会有什么负面影响？
-- 参考追问：no-repeat n-gram 与 Diverse Beam Search 有什么区别，能否组合？
-- 参考追问：除了 n-gram 去重，还有哪些方法能缓解文本重复？
-- 参考追问：Repetition、Frequency 和 Presence Penalty 有什么区别？
-- 参考追问：Repetition Penalty 怎样与 Beam Search 配合？
-- 参考追问：怎样避免误伤关键词的合理重复？
+- 如果 $n$ 设置得太大，会有什么负面影响？
+- no-repeat n-gram 与 Diverse Beam Search 有什么区别，能否组合？
+- 除了 n-gram 去重，还有哪些方法能缓解文本重复？
+- Repetition、Frequency 和 Presence Penalty 有什么区别？
+- Repetition Penalty 怎样与 Beam Search 配合？
+- 怎样避免误伤关键词的合理重复？
 
 ## Note

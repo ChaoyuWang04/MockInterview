@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 新架构追踪/Transformer与RNN、GRU、CNN的序列建模比较
 summary: Transformer与循环卷积结构如何权衡依赖路径和并行成本
-tags: [Transformer, RNN, GRU, CNN, 序列建模, 待校对]
+tags: [真题, Transformer, RNN, GRU, CNN, 序列建模, 待校对]
 company: 小红书、哔哩哔哩、美团、华为、腾讯
 mastered: false
 highfreq: false
@@ -47,7 +47,6 @@ Mamba 是选择性状态空间模型，不是 GRU/RNN 的同义词；RWKV 可按
 
 比较序列架构要同时看总计算、关键路径和硬件并行度。Transformer 的同层位置并行不等于全训练图或自回归生成并行，任意位置一步交互也不等于超长序列免费。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q073、P004-Q088、P004-Q104、P004-Q125、P004-Q126、P004-Q136、P004-Q137、P004-Q142、P004-Q149、P004-Q150、P004-Q199、P004-Q206、P004-Q287、P004-Q320。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[Learning Phrase Representations using RNN Encoder-Decoder](https://arxiv.org/abs/1406.1078)、[Convolutional Sequence to Sequence Learning](https://arxiv.org/abs/1705.03122)、[Mamba](https://arxiv.org/abs/2312.00752)、[RWKV](https://arxiv.org/abs/2305.13048)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: MoE并行与DeepEP/精度问题排查
 summary: 换用自研 all-to-all 后模型出现精度问题,怎么查
-tags: [面经, 待校对, MoE, 集合通信, 调试]
+tags: [真题, 待校对, MoE, 集合通信, 调试]
 company:
 mastered: false
 highfreq: false

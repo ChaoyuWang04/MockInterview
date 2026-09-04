@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/全量微调对比
 summary: 同一基座下比较 LoRA 与全参的计算、显存、效果及部署取舍
-tags: [SFT, LoRA, 全参数微调, 训练效率, 模型部署, 待校对]
+tags: [真题, SFT, LoRA, 全参数微调, 训练效率, 模型部署, 待校对]
 company: 百度、滴滴、抖音、字节
 mastered: false
 highfreq: false
@@ -49,7 +49,6 @@ LoRA 的分支有额外前向计算,冻结主干仍为较早适配器传播梯�
 
 LoRA、全参数微调、训练效率、模型部署。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q126、P002-Q129、P002-Q139、P002-Q140、P002-Q229、P002-Q230、P002-Q247。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[QLoRA](https://arxiv.org/abs/2305.14314)、[LoRA Learns Less and Forgets Less](https://arxiv.org/abs/2405.09673)。
 
 ## 追问

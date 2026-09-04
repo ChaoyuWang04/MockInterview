@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/attention算子改造
 summary: KV 量化后 attention 的计算流程怎么改,反量化放在哪
-tags: [面经, 待校对, KVCache量化, 算子优化]
+tags: [真题, 待校对, KVCache量化, 算子优化]
 company:
 mastered: false
 highfreq: false

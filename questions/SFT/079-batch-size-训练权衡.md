@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 优化器/批量大小
 summary: 微批与有效 batch 如何影响显存、梯度、吞吐和收敛
-tags: [待校对, 优化器]
+tags: [真题, 待校对, 优化器]
 company: 科大讯飞、阿里、快手、腾讯
 mastered: false
 highfreq: false
@@ -43,7 +43,7 @@ LoRA 节约可训练状态,可能容纳更大微批,但激活仍受长度影响�
 
 优化器/批量大小。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q179、P002-Q235、P002-Q236、P002-Q252。参考:[大批量 SGD 与缩放条件](https://arxiv.org/abs/1706.02677)、[大批训练的经验模型](https://arxiv.org/abs/1812.06162)。
+参考:[大批量 SGD 与缩放条件](https://arxiv.org/abs/1706.02677)、[大批训练的经验模型](https://arxiv.org/abs/1812.06162)。
 
 ## 追问
 

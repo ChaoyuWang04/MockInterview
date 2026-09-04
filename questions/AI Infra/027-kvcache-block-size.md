@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache/block-size选择
 summary: KV cache 的 block_size 大了小了各有什么影响,一般取多少
-tags: [面经, 待校对, KVCache, PagedAttention]
+tags: [真题, 待校对, KVCache, PagedAttention]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: CudaGraph/动态性边界
 summary: CUDA Graph 里能有哪些动态性,KV cache 一直变还能生效吗
-tags: [面经, 待校对, CUDA Graph, 同步点]
+tags: [真题, 待校对, CUDA Graph, 同步点]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-cudagraph 时可以有动态性吗?重放之间哪些东西能变、哪些不能?
+CUDA Graph 时可以有动态性吗?重放之间哪些东西能变、哪些不能?
 
 ## 要点
 

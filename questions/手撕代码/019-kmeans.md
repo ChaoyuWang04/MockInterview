@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 聚类/K-means
 summary: 从零实现含 K-means++、空簇处理和可靠收敛判断的聚类
-tags: [面经, 待校对, 手撕代码, K-means, 聚类]
+tags: [真题, 待校对, 手撕代码, K-means, 聚类]
 company: 百度、蚂蚁金服
 mastered: false
 highfreq: false
@@ -101,12 +101,10 @@ def kmeans(X, k, max_iter=300, tol=1e-4, seed=None):
 ## 知识点
 
 - Lloyd 迭代、簇内平方和、K-means++、空簇、局部最优、Mini-Batch。
-- 面经原题：[B006-G01-Q041](../../docs/references/面经原题.md#b006-g01-q041)、[B006-G01-Q130](../../docs/references/面经原题.md#b006-g01-q130)。
-- 老师答案参考：[P009-Q041](../../docs/references/平台题/P009-LC-001-080.md#p009-q041)、[P009-Q130](../../docs/references/平台题/P009-LC-081-160.md#p009-q130)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - K-means++ 为什么通常比随机初始化稳定？
 - 除多次重启外，怎样缓解初值敏感？

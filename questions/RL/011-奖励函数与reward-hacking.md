@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: RLHF与RM/奖励设计与Reward Hacking
 summary: 多目标奖励怎样组合,如何发现并缓解 Reward Hacking
-tags: [RL, RLHF, Reward Model, Reward Hacking, 多目标优化, 待校对]
+tags: [真题, RL, RLHF, Reward Model, Reward Hacking, 多目标优化, 待校对]
 company: 美团、字节、阿里、蚂蚁金服
 mastered: false
 highfreq: false
@@ -67,7 +67,6 @@ PPO 的 clip 系数控制本批新旧概率比越界后何时停止继续获益,
 
 Reward Function、多目标奖励、Bradley–Terry 模型、ORM、PRM、Reward Hacking、奖励过优化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q021、Q035、Q048、Q078、Q105、Q106、Q118、Q119。
 - 依据:[InstructGPT](https://arxiv.org/abs/2203.02155)、[奖励模型过优化](https://arxiv.org/abs/2210.10760)、[过程监督](https://arxiv.org/abs/2305.20050)。
 
 ## 追问

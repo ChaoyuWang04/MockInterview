@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Embedding/对比与三元组损失
 summary: Embedding对比损失和三元组损失怎样选,负样本与温度怎样影响训练
-tags: [Embedding, InfoNCE, Triplet, 难负例, 待校对]
+tags: [真题, Embedding, InfoNCE, Triplet, 难负例, 待校对]
 company: 阿里
 mastered: false
 highfreq: false
@@ -57,7 +57,6 @@ $m>0$ 是要求的间隔。若正例距离 0.2、负例距离 0.8、间隔 0.3,�
 
 候选分类、相对间隔、距离与相似度、批内负例、假负例、温度。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q231。
 - 依据:[SimCSE](https://arxiv.org/abs/2104.08821)、[PyTorch TripletMarginLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.TripletMarginLoss.html)。
 
 ## 追问

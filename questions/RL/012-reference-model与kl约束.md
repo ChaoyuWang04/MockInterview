@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KL散度/Reference Model约束
 summary: Reference Model 为何固定,KL 怎样约束 PPO 与 GRPO
-tags: [RL, RLHF, PPO, GRPO, Reference Model, KL散度, 待校对]
+tags: [真题, RL, RLHF, PPO, GRPO, Reference Model, KL散度, 待校对]
 company: 字节、抖音、百度
 mastered: false
 highfreq: false
@@ -56,7 +56,6 @@ Reference 通常不参与梯度更新。`no_grad` 省激活,不省模型权重�
 
 Reference Model、反向 KL、PPO clip、old policy、TRPO、PPO-penalty、GRPO。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q063、Q064、Q088、Q089。
 - 依据:[PPO](https://arxiv.org/abs/1707.06347)、[TRPO](https://arxiv.org/abs/1502.05477)、[InstructGPT](https://arxiv.org/abs/2203.02155)、[DeepSeekMath/GRPO](https://arxiv.org/abs/2402.03300)、[DPO](https://arxiv.org/abs/2305.18290)。
 
 ## 追问

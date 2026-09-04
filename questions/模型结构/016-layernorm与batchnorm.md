@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Norm位置/计算轴与适用场景
 summary: BN与LN统计哪些维度，为什么Transformer更常用LN
-tags: [归一化, LayerNorm, BatchNorm, Transformer, 待校对]
+tags: [真题, 归一化, LayerNorm, BatchNorm, Transformer, 待校对]
 company: 美团、快手、字节、小红书、滴滴、腾讯
 mastered: false
 highfreq: false
@@ -45,7 +45,6 @@ $\gamma$、$\beta$ 让归一化后的各维重新学习尺度和偏移；是否�
 
 归一化方法的本质差别是“哪些元素共享统计量”。先写清 B/T/D 或 N/C/H/W，再谈优缺点；LN 与 RMSNorm 不需要运行均值，BN 需要区分训练统计和推理统计。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q003、P004-Q050、P004-Q077、P004-Q189、P004-Q227、P004-Q256、P004-Q257、P004-Q311、P004-Q319。
 - 一手依据：[Batch Normalization](https://arxiv.org/abs/1502.03167)、[Layer Normalization](https://arxiv.org/abs/1607.06450)、[Group Normalization](https://arxiv.org/abs/1803.08494)、[RMSNorm](https://arxiv.org/abs/1910.07467)。
 
 ## 追问

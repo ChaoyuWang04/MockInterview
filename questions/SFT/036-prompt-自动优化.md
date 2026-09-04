@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Prompt优化/流程与评估
 summary: 从人工基线到自动搜索系统迭代Prompt
-tags: [面经, 待校对, Prompt优化, Few-shot, 自动评估, 多轮对话]
+tags: [真题, 待校对, Prompt优化, Few-shot, 自动评估, 多轮对话]
 company: 蚂蚁、脉脉、华为、科大讯飞、阿里
 mastered: false
 highfreq: false
@@ -34,19 +34,11 @@ Prompt、示例、模型、生成参数和检索配置一起版本化。模型�
 
 人工基线、Few-shot、Bad Case、候选搜索、评审校准、独立测试、Prompt版本管理。
 
-- 原平台来源：[P002-Q054](https://course.terminiai.com/interview)
-- 现有真实面经：[B003-G01-Q032](../../docs/references/面经原题.md#b003-g01-q032)
-- 现有老师参考：[P006-Q032](../../docs/references/平台题/P006-RAG-001-033.md#p006-q032)
 - 依据：[AutoPrompt](https://aclanthology.org/2020.emnlp-main.346/)、[ProTeGi](https://aclanthology.org/2023.emnlp-main.494/)。
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q054。
-- 本批真实面经：[B003-G01-Q032](../../docs/references/面经原题.md#b003-g01-q032)
-- 本批老师参考：[P006-Q032](../../docs/references/平台题/P006-RAG-001-033.md#p006-q032)
-- 本批真实面经：[B005-Q042](../../docs/references/面经原题.md#b005-g01-q042)、[B005-Q047](../../docs/references/面经原题.md#b005-g01-q047)、[B005-Q048](../../docs/references/面经原题.md#b005-g01-q048)。
-- 本批老师参考：[P008-Q042](../../docs/references/平台题/P008-Agent-031-059.md#p008-q042)、[P008-Q047](../../docs/references/平台题/P008-Agent-031-059.md#p008-q047)、[P008-Q048](../../docs/references/平台题/P008-Agent-031-059.md#p008-q048)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - Prompt 接近上下文上限时，怎样决定删除、压缩或检索什么？
 - Prompt 优化与 RAG、SFT/RLHF 的边界是什么？

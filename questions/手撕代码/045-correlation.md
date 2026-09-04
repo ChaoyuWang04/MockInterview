@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 统计指标/相关系数
 summary: 从零实现 Pearson 相关系数并处理常数序列
-tags: [面经, 待校对, 手撕代码, Pearson, 统计]
+tags: [真题, 待校对, 手撕代码, Pearson, 统计]
 company: 哔哩哔哩
 mastered: false
 highfreq: false
@@ -55,12 +55,10 @@ Pearson 对离群点敏感且只描述线性关系，也不能证明因果关系
 ## 知识点
 
 - 均值、协方差、方差、零方差、数值稳定求和。
-- 面经原题：[B006-G01-Q135](../../docs/references/面经原题.md#b006-g01-q135)。
-- 老师答案参考：[P009-Q135](../../docs/references/平台题/P009-LC-081-160.md#p009-q135)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - Pearson 对异常值敏感时可用哪些稳健指标？
 - 实际项目中何时用 PLCC，何时用 SRCC？

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache量化/fp8与int8选型
 summary: vLLM 和 SGLang 的 fp8 KV 量化怎么做,和 int8 差异在哪
-tags: [面经, 待校对, KVCache量化, fp8]
+tags: [真题, 待校对, KVCache量化, fp8]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PD分离/decode阶段OOM
 summary: decode 阶段在哪些场景下会 OOM
-tags: [面经, 待校对, PD分离, 显存管理]
+tags: [真题, 待校对, PD分离, 显存管理]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 线性注意力/长序列Attention方案比较
 summary: 稀疏线性滑窗与FlashAttention怎样权衡长序列成本
-tags: [长序列, 稀疏注意力, 线性注意力, FlashAttention, 待校对]
+tags: [真题, 长序列, 稀疏注意力, 线性注意力, FlashAttention, 待校对]
 company: 字节、快手、阿里淘天、淘天、哔哩哔哩
 mastered: false
 highfreq: false
@@ -41,7 +41,6 @@ Ring Attention 属于分布式序列并行：让 K/V 块在设备间传递以完
 
 长序列优化要明确它降低的是 FLOPs、中间激活、HBM IO、KV Cache 还是单卡长度。FlashAttention 是精确 IO 优化；Mamba 是选择性 SSM，不属于线性 Attention。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q040、P004-Q071、P004-Q120、P004-Q175、P004-Q193、P004-Q253、P004-Q279。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[Longformer](https://arxiv.org/abs/2004.05150)、[BigBird](https://arxiv.org/abs/2007.14062)、[Performer](https://arxiv.org/abs/2009.14794)、[FlashAttention](https://arxiv.org/abs/2205.14135)、[Ring Attention](https://arxiv.org/abs/2310.01889)。
 
 ## 追问

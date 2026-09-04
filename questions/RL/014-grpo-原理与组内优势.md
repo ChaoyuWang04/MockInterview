@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: GRPO/组内相对优势
 summary: GRPO怎样用组内奖励替代critic并与PPO、DPO比较
-tags: [待校对, GRPO, RLHF]
+tags: [真题, 待校对, GRPO, RLHF]
 company: 快手、字节、滴滴
 mastered: false
 highfreq: false
@@ -52,7 +52,6 @@ GRPO **不是在线 DPO**。它仍需奖励：数学答案匹配、代码单测�
 
 GRPO、组内相对优势、PPO、DPO、奖励来源、KL 正则。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P003-Q012、P003-Q013、P003-Q032。
 - 一手依据：[DeepSeekMath](https://arxiv.org/abs/2402.03300)、[PPO](https://arxiv.org/abs/1707.06347)、[DPO](https://arxiv.org/abs/2305.18290)。
 
 ## 追问

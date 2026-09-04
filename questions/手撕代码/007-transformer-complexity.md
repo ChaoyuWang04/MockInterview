@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Transformer/计算复杂度
 summary: 分解 Transformer 各组件在训练与自回归推理中的计算和显存开销
-tags: [面经, 待校对, Transformer, 复杂度, KVCache]
+tags: [真题, 待校对, Transformer, 复杂度, KVCache]
 company: 滴滴、快手、字节、哔哩哔哩
 mastered: false
 highfreq: false
@@ -40,11 +40,10 @@ highfreq: false
 
 - 参数量与 FLOPs、训练激活、密集注意力的二次项、KV Cache 的时间—空间权衡、FlashAttention、GQA/MQA。
 
-- 面经原题：[B006-G01-Q003](../../docs/references/面经原题.md#b006-g01-q003)；老师答案参考：[P009-Q003](../../docs/references/平台题/P009-LC-001-080.md#p009-q003)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 线性注意力、稀疏注意力和滑动窗口分别改变了哪一项复杂度？
 - batch size 与序列长度如何共同影响吞吐和显存？

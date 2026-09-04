@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CUDA流与异步执行/pinned memory
 summary: 异步传输是否必须 pinned memory,不用会有什么后果
-tags: [面经, 待校对, pinnedmemory, 异步传输, DMA]
+tags: [真题, 待校对, pinnedmemory, 异步传输, DMA]
 company:
 mastered: false
 highfreq: false

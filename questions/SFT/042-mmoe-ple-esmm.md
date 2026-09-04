@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 多任务学习/模型结构比较
 summary: MMoE与PLE如何共享专家,ESMM如何联合学习点击和转化
-tags: [多任务学习, 待校对]
+tags: [真题, 多任务学习, 待校对]
 company: 哔哩哔哩、网易、快手、小红书、阿里、淘天、支付宝
 mastered: false
 highfreq: false
@@ -43,7 +43,6 @@ ESMM 在全曝光样本上优化点击 BCE 和“点击且转化”BCE,后者通
 
 多任务学习、模型结构比较。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q066、P004-Q008/Q044/Q060/Q070/Q082/Q083/Q186/Q219/Q278。
 
 - 补充依据:[MMoE 原论文](https://research.google/pubs/modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-of-experts/)、[PLE 原论文](https://datawhalechina.github.io/torch-rechub/file/PDF/2020%20%28Tencent%29%20%28Recsys%29%20%5BPLE%5D%20Progressive%20Layered%20.pdf)、[ESMM 原论文](https://arxiv.org/abs/1804.07931)。
 

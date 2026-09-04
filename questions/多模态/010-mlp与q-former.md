@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: VLM结构/MLP与Q-Former连接器
 summary: 比较逐token投影与查询压缩连接视觉编码器和语言模型的取舍
-tags: [面经, 待校对, 多模态, VLM, MLP, Q-Former, LLaVA, BLIP-2]
+tags: [真题, 待校对, 多模态, VLM, MLP, Q-Former, LLaVA, BLIP-2]
 company: 淘天、美团
 mastered: false
 highfreq: false
@@ -42,8 +42,6 @@ BLIP-2 冻结图像编码器和 LLM，训练一个 Q-Former。可学习 Query �
 
 视觉语言连接器、逐token投影、可学习Query、Cross-Attention、视觉token压缩、信息瓶颈与分阶段训练。
 
-- 真实面经：[B004-Q007](../../docs/references/面经原题.md#b004-g01-q007)、[Q008](../../docs/references/面经原题.md#b004-g01-q008)、[Q011](../../docs/references/面经原题.md#b004-g01-q011)
-- 老师参考：[P007-Q007](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q007)、[Q008](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q008)、[Q011](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q011)
 - 一手依据：[BLIP-2](https://arxiv.org/abs/2301.12597)、[LLaVA](https://arxiv.org/abs/2304.08485)
 
 ## 追问

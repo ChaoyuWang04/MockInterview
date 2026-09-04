@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/参数量估算
 summary: 从矩阵形状推导 LoRA 参数量,估算 LLaMA 7B 与多卡训练显存
-tags: [SFT, LoRA, 参数量, 显存估算, 待校对]
+tags: [真题, SFT, LoRA, 参数量, 显存估算, 待校对]
 company: 淘天
 mastered: false
 highfreq: false
@@ -55,7 +55,6 @@ $$
 
 LoRA、参数量、显存估算。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q087、P002-Q088、P002-Q104。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[LLaMA 表2](https://arxiv.org/html/2302.13971v1)、[QLoRA](https://arxiv.org/abs/2305.14314)。
 
 ## 追问

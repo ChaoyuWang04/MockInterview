@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Transformer整体架构/Transformer中有哪些可学习参数
 summary: Transformer各组件有哪些参数及冻结策略如何影响更新
-tags: [Transformer, 参数量, Embedding, 反向传播, 待校对]
+tags: [真题, Transformer, 参数量, Embedding, 反向传播, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -44,7 +44,6 @@ highfreq: false
 
 参数清单要与具体架构配置一起读：头数决定 Q/K/V 形状，FFN 类型决定矩阵数，Norm 类型决定仿射项，位置方法与权重绑定决定是否新增参数。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q169。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[Grouped-Query Attention](https://arxiv.org/abs/2305.13245)、[RMSNorm](https://arxiv.org/abs/1910.07467)、[LLaMA](https://arxiv.org/abs/2302.13971)。
 
 ## 追问

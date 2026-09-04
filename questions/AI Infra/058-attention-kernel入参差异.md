@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: FlashAttention/kernel入参差异
 summary: 三种形态下 attention kernel 的入参差异与 causal 对齐坑
-tags: [面经, 待校对, FlashAttention, chunked-prefill]
+tags: [真题, 待校对, FlashAttention, chunked-prefill]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 多智能体/任务分解与协作
 summary: 设计旅行规划多 Agent 系统并接入动态旅游信息
-tags: [面经, 待校对, Agent, 多智能体, RAG, 系统设计]
+tags: [真题, 待校对, Agent, 多智能体, RAG, 系统设计]
 company: 高德
 mastered: false
 highfreq: false
@@ -33,12 +33,10 @@ highfreq: false
 ## 知识点
 
 任务分解、多智能体编排、共享状态、依赖图、动态数据工具、证据新鲜度、幂等确认。
-- 本批真实面经：[B005-Q024](../../docs/references/面经原题.md#b005-g01-q024)。
-- 本批老师参考：[P008-Q024](../../docs/references/平台题/P008-Agent-001-030.md#p008-q024)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 用户中途更换城市时，如何最小化重算成本？
 - RAG 检索到的景点开放时间相互冲突时，如何决策？

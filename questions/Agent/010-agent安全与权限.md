@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Agent架构/安全与权限
 summary: 从算法与系统架构设计 Agent 的隐私和越权防线
-tags: [面经, 待校对, Agent, 安全, 权限控制, 隐私保护]
+tags: [真题, 待校对, Agent, 安全, 权限控制, 隐私保护]
 company: 高德
 mastered: false
 highfreq: false
@@ -33,12 +33,10 @@ highfreq: false
 ## 知识点
 
 最小权限、策略执行点、短期凭证、敏感信息检测、Prompt Injection、DLP、审计追踪。
-- 本批真实面经：[B005-Q021](../../docs/references/面经原题.md#b005-g01-q021)。
-- 本批老师参考：[P008-Q021](../../docs/references/平台题/P008-Agent-001-030.md#p008-q021)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 如果 Agent 调用第三方 API，如何防止 Prompt Injection 导致敏感信息外泄？
 - Agent 执行链较长时，如何设计细粒度的权限回收？

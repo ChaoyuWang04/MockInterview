@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 集成学习/Stacking
 summary: Stacking如何生成折外元特征并避免训练和评估泄漏
-tags: [集成学习, 待校对]
+tags: [真题, 集成学习, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -51,7 +51,6 @@ OOF 防止直接把训练拟合结果当泛化预测，**不保证整套调参�
 
 集成学习、Stacking。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q119、P002-Q167。
 
 - 补充依据:[StackingClassifier 的折外元训练与全数据基模型](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.StackingClassifier.html)。
 

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: vLLM/PagedAttention 与连续批处理
 summary: vLLM 怎样联合管理 KV、调度请求和优化执行
-tags: [面经, 待校对, vLLM, PagedAttention, 连续批处理]
+tags: [真题, 待校对, vLLM, PagedAttention, 连续批处理]
 company: 美团、蚂蚁
 mastered: false
 highfreq: false
@@ -33,20 +33,18 @@ PagedAttention把每条序列的逻辑 KV 块映射到显存池中的物理块�
 
 PagedAttention、逻辑/物理块、连续批处理、token budget、TTFT、TPOT、CUDA Graph、Prefix Caching。
 
-- 真实面经：[B002-G01-Q040](../../docs/references/面经原题.md#b002-g01-q040)、[B002-G01-Q057](../../docs/references/面经原题.md#b002-g01-q057)、[B002-G01-Q067](../../docs/references/面经原题.md#b002-g01-q067)、[B002-G01-Q115](../../docs/references/面经原题.md#b002-g01-q115)、[B002-G01-Q174](../../docs/references/面经原题.md#b002-g01-q174)
-- 老师答案参考：[P005-Q040](../../docs/references/平台题/P005-Infra-031-060.md#p005-q040)、[P005-Q057](../../docs/references/平台题/P005-Infra-031-060.md#p005-q057)、[P005-Q067](../../docs/references/平台题/P005-Infra-061-090.md#p005-q067)、[P005-Q115](../../docs/references/平台题/P005-Infra-091-120.md#p005-q115)、[P005-Q174](../../docs/references/平台题/P005-Infra-151-180.md#p005-q174)
 
 ## 追问
 
-- 页面参考追问：如果压测达不到每秒 2000 token，排查顺序是什么？
-- 页面参考追问：vLLM 的调度器与 TGI、TensorRT-LLM 如何比较？
-- 页面参考追问：长文本占满显存时，PagedAttention 和连续批怎样调度？
-- 页面参考追问：PagedAttention 的块大小如何影响浪费和执行开销？
-- 页面参考追问：PagedAttention 相比静态分配节省多少显存，何时收益最大？
-- 页面参考追问：vLLM 还有哪些优化手段，如投机解码和 Prefix Caching？
-- 页面参考追问：vLLM 多卡 TP/PP 的通信代价是什么？
-- 页面参考追问：实际部署中怎样排查 OOM 和长尾延迟？
-- 页面参考追问：PagedAttention 与 FlashAttention 有什么区别和关系？
-- 页面参考追问：怎样共同优化 TTFT 和 TPOT？
+- 如果压测达不到每秒 2000 token，排查顺序是什么？
+- vLLM 的调度器与 TGI、TensorRT-LLM 如何比较？
+- 长文本占满显存时，PagedAttention 和连续批怎样调度？
+- PagedAttention 的块大小如何影响浪费和执行开销？
+- PagedAttention 相比静态分配节省多少显存，何时收益最大？
+- vLLM 还有哪些优化手段，如投机解码和 Prefix Caching？
+- vLLM 多卡 TP/PP 的通信代价是什么？
+- 实际部署中怎样排查 OOM 和长尾延迟？
+- PagedAttention 与 FlashAttention 有什么区别和关系？
+- 怎样共同优化 TTFT 和 TPOT？
 
 ## Note

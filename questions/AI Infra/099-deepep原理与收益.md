@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: MoE并行与DeepEP/DeepEP原理
 summary: DeepEP 的原理,为什么 MoE 下比朴素 all2all 快
-tags: [面经, 待校对, MoE, DeepEP, 集合通信]
+tags: [真题, 待校对, MoE, DeepEP, 集合通信]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-deepep 了解吗?大概说下原理?为啥在 moe 下用 deepep 更快?
+DeepEP 了解吗?大概说下原理?为啥在 MoE 下用 DeepEP 更快?
 
 ## 要点
 

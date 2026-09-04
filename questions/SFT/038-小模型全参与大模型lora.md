@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/模型规模与微调选型
 summary: 小模型全参和大模型 LoRA 如何按效果、训练资源与部署成本选择
-tags: [SFT, LoRA, 全参数微调, 模型选型, 待校对]
+tags: [真题, SFT, LoRA, 全参数微调, 模型选型, 待校对]
 company: 百度
 mastered: false
 highfreq: false
@@ -51,7 +51,6 @@ highfreq: false
 
 基座能力、更新容量、训练显存账本、部署约束、DoRA、AdaLoRA。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q058。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[QLoRA](https://arxiv.org/abs/2305.14314)、[DoRA](https://arxiv.org/abs/2402.09353)、[AdaLoRA](https://arxiv.org/abs/2303.10512)、[LoRA Learns Less and Forgets Less](https://arxiv.org/abs/2405.09673)。
 
 ## 追问

@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 路径规划/Astar与Dijkstra
-tags: [面经, 待校对, 路径规划, A*, Dijkstra, 机器人导航]
+tags: [真题, 待校对, 路径规划, A*, Dijkstra, 机器人导航]
 summary: 比较 A* 与 Dijkstra 的代价、启发式、最优性和部署边界
 company: VIVO
 mastered: false
@@ -39,12 +39,10 @@ $$
 
 最短路、启发式搜索、可采纳性、一致性、代价地图、增量重规划、全局与局部规划。
 
-- 面经原题：[B006-G01-Q170](../../docs/references/面经原题.md#b006-g01-q170)。
-- 老师答案参考：[P009-Q170](../../docs/references/平台题/P009-LC-161-241.md#p009-q170)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 大地图中 A* 的 open list 占用过大，怎样从地图和算法两侧压缩？
 - 动态障碍出现时，全局规划器与局部规划器怎样分工？

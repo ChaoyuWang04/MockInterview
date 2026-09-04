@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 损失函数/分类回归与度量学习
-tags: [面经, 待校对, 损失函数, Triplet Loss, Focal Loss, 对抗训练]
+tags: [真题, 待校对, 损失函数, Triplet Loss, Focal Loss, 对抗训练]
 summary: 比较交叉熵、MSE、对比、Triplet、Focal 和对抗损失
 company: 小红书
 mastered: false
@@ -44,12 +44,10 @@ GAN 的“对抗损失”至少包含判别器区分真假的目标和生成器�
 
 交叉熵、MSE、对比损失、Triplet Loss、难样本挖掘、Focal Loss、GAN 对抗目标。
 
-- 面经原题：[B006-G01-Q217](../../docs/references/面经原题.md#b006-g01-q217)。
-- 老师答案参考：[P009-Q217](../../docs/references/平台题/P009-LC-161-241.md#p009-q217)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - Focal Loss 的 $\alpha$ 与 $\gamma$ 分别控制什么，怎样联合调节？
 - Triplet margin 太大或太小会怎样改变有效三元组比例？

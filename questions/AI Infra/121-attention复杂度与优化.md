@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 稀疏注意力/Attention复杂度与优化
 summary: Attention平方复杂度可用哪些精确或近似路线优化
-tags: [面经, 待校对, Attention, 稀疏注意力, 线性注意力, FlashAttention]
+tags: [真题, 待校对, Attention, 稀疏注意力, 线性注意力, FlashAttention]
 company: 阿里、小红书、字节、阿里云
 mastered: false
 highfreq: false
@@ -43,20 +43,17 @@ Longformer属于“局部窗口+全局token”；滑窗是稀疏注意力的一�
 
 标准Attention复杂度、FlashAttention、局部/全局与块稀疏、低秩近似、Reformer、Performer、线性Attention。
 
-真实面经：[B002-G01-Q022](../../docs/references/面经原题.md#b002-g01-q022)、[B002-G01-Q032](../../docs/references/面经原题.md#b002-g01-q032)、[B002-G01-Q120](../../docs/references/面经原题.md#b002-g01-q120)、[B002-G01-Q122](../../docs/references/面经原题.md#b002-g01-q122)、[B002-G01-Q155](../../docs/references/面经原题.md#b002-g01-q155)、[B002-G01-Q156](../../docs/references/面经原题.md#b002-g01-q156)、[B002-G01-Q158](../../docs/references/面经原题.md#b002-g01-q158)、[B002-G01-Q159](../../docs/references/面经原题.md#b002-g01-q159)。
-
-老师参考：[P005-Q022](../../docs/references/平台题/P005-Infra-001-030.md#p005-q022)、[P005-Q032](../../docs/references/平台题/P005-Infra-031-060.md#p005-q032)、[P005-Q120](../../docs/references/平台题/P005-Infra-091-120.md#p005-q120)、[P005-Q122](../../docs/references/平台题/P005-Infra-121-150.md#p005-q122)、[P005-Q155](../../docs/references/平台题/P005-Infra-151-180.md#p005-q155)、[P005-Q156](../../docs/references/平台题/P005-Infra-151-180.md#p005-q156)、[P005-Q158](../../docs/references/平台题/P005-Infra-151-180.md#p005-q158)、[P005-Q159](../../docs/references/平台题/P005-Infra-151-180.md#p005-q159)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
-- 参考追问：稀疏模式怎样兼顾效率和跨段信息？
-- 参考追问：线性Attention牺牲什么能力，什么场景不适合？
-- 参考追问：FlashAttention与稀疏Attention能否结合？
-- 参考追问：strided与fixed sparse attention的连接模式有何不同？
-- 参考追问：为什么主流LLM仍常用标准Attention加FlashAttention？
-- 参考追问：100K到1M上下文怎样选择精确、稀疏或线性方案？
-- 参考追问：稀疏Attention怎样与KV分页和量化配合？
+- 稀疏模式怎样兼顾效率和跨段信息？
+- 线性Attention牺牲什么能力，什么场景不适合？
+- FlashAttention与稀疏Attention能否结合？
+- strided与fixed sparse attention的连接模式有何不同？
+- 为什么主流LLM仍常用标准Attention加FlashAttention？
+- 100K到1M上下文怎样选择精确、稀疏或线性方案？
+- 稀疏Attention怎样与KV分页和量化配合？
 
 ## Note

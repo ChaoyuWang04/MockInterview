@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CudaGraph/捕获与重放原理
 summary: CUDA Graph 的 warmup 到 replay 四步各做了什么,捕获出来的是什么
-tags: [面经, 待校对, CUDA Graph, kernel launch]
+tags: [真题, 待校对, CUDA Graph, kernel launch]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-cudagraph 的原理是什么,具体是怎么做的?捕获出来的到底是个什么东西?
+CUDA Graph 的原理是什么,具体是怎么做的?捕获出来的到底是个什么东西?
 
 ## 要点
 

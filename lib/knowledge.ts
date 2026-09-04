@@ -10,7 +10,7 @@ export interface KbArticle {
   placeholder: boolean
   /** 是否为写作契约确立之前的旧稿,待按新标准重写(正文含 ⚠️ 旧版 标记) */
   legacy: boolean
-  /** 是否有真实面经考点支撑(正文含 🔴 重点考点 标记);纯介绍性文章没有 */
+  /** 是否标为重点考点(正文含 🔴 重点考点 标记) */
   keypoint: boolean
 }
 

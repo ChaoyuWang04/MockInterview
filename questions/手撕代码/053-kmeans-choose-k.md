@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 聚类/K值选择
-tags: [面经, 待校对, K-Means, 聚类评估, 轮廓系数]
+tags: [真题, 待校对, K-Means, 聚类评估, 轮廓系数]
 summary: 用肘部、轮廓、稳定性和业务约束选择 K-Means 的 k
 company: 蚂蚁金服
 mastered: false
@@ -48,12 +48,10 @@ K-Means 对初始中心敏感，应对每个 k 使用相同重启预算，并报
 
 簇内平方和、肘部法、轮廓系数、Gap Statistic、重采样稳定性、Mini-Batch K-Means。
 
-- 面经原题：[B006-G01-Q163](../../docs/references/面经原题.md#b006-g01-q163)。
-- 老师答案参考：[P009-Q163](../../docs/references/平台题/P009-LC-161-241.md#p009-q163)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 百万样本下怎样近似计算轮廓系数并给出误差置信度？
 - K-Means 对初始化敏感时，怎样公平比较不同 k 的稳定性？

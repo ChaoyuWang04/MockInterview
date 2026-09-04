@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 显存管理与OOM/Offload
 summary: CPU 与 NVMe Offload 如何用带宽换取 GPU 显存容量
-tags: [面经, 待校对, Offload, ZeRO, 显存优化, DeepSpeed]
+tags: [真题, 待校对, Offload, ZeRO, 显存优化, DeepSpeed]
 company: 字节
 mastered: false
 highfreq: false
@@ -38,15 +38,13 @@ ZeRO先在数据并行组分片状态，Offload再把本卡持有的分片移到
 
 分层存储、状态分片、pinned memory、异步预取、双缓冲、NUMA、I/O重叠。
 
-- 真实面经：[B002-G01-Q078](../../docs/references/面经原题.md#b002-g01-q078)、[B002-G01-Q096](../../docs/references/面经原题.md#b002-g01-q096)
-- 老师答案参考：[P005-Q078](../../docs/references/平台题/P005-Infra-061-090.md#p005-q078)、[P005-Q096](../../docs/references/平台题/P005-Infra-091-120.md#p005-q096)
 
 ## 追问
 
-- 页面参考追问：ZeRO-Offload怎样降低显存，为什么不能无条件称为near-zero显存？
-- 页面参考追问：Offload如何与张量并行、流水线并行组合并选型？
-- 页面参考追问：怎样判断Offload是否值得使用？
-- 页面参考追问：百亿/千亿参数场景下怎样缓解NVMe I/O瓶颈？
-- 页面参考追问：Offload与混合精度一起使用时，数值稳定性由什么决定？
+- ZeRO-Offload怎样降低显存，为什么不能无条件称为near-zero显存？
+- Offload如何与张量并行、流水线并行组合并选型？
+- 怎样判断Offload是否值得使用？
+- 百亿/千亿参数场景下怎样缓解NVMe I/O瓶颈？
+- Offload与混合精度一起使用时，数值稳定性由什么决定？
 
 ## Note

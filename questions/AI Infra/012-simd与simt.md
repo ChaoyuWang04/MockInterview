@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: GPU架构与执行模型/SIMD与SIMT
 summary: SIMD 与 SIMT 的差异,以及 warp divergence
-tags: [面经, 待校对, SIMT, warp, GPU架构]
+tags: [真题, 待校对, SIMT, warp, GPU架构]
 company:
 mastered: false
 highfreq: false

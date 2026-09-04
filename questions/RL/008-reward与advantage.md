@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: PPO/Reward与Advantage
 summary: 区分即时奖励、累计回报、价值与优势函数
-tags: [RL, PPO, Reward, Advantage, 待校对]
+tags: [真题, RL, PPO, Reward, Advantage, 待校对]
 company: 字节
 mastered: false
 highfreq: false
@@ -54,7 +54,6 @@ $$
 
 Reward、return、$V(s)$、$Q(s,a)$、advantage、TD 残差。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q075（简单；字节）。
 - 依据:[GAE](https://arxiv.org/abs/1506.02438)、[PPO](https://arxiv.org/abs/1707.06347)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 残差流/为何能训练深层网络
 summary: 残差连接如何提供信息与梯度通路及其能力边界
-tags: [残差连接, Transformer, ResNet, 梯度传播, 待校对]
+tags: [真题, 残差连接, Transformer, ResNet, 梯度传播, 待校对]
 company: 快手、腾讯
 mastered: false
 highfreq: false
@@ -45,7 +45,6 @@ Norm 在分支内，$x_l$ 到加号的主路保持恒等，梯度更直接；Pos
 
 残差连接的两个核心作用是保留表示和提供恒等梯度项。它缓解优化困难，但网络退化、过拟合、梯度消失是不同概念，不能混为一个因果解释。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q055、P004-Q192。
 - 一手依据：[Deep Residual Learning](https://arxiv.org/abs/1512.03385)、[Identity Mappings in Deep Residual Networks](https://arxiv.org/abs/1603.05027)、[On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745)、[ReZero](https://arxiv.org/abs/2003.04887)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache/原理与形状
 summary: KV cache 为什么能缓存 K/V 不缓存 Q,形状与显存怎么算
-tags: [面经, 待校对, KVCache, 推理优化]
+tags: [真题, 待校对, KVCache, 推理优化]
 company: 字节、蚂蚁、快手
 mastered: false
 highfreq: false
@@ -57,8 +57,6 @@ $$
 
 因果掩码与可缓存性、KV cache 六维形状、每 token 字节公式、GQA 对 $H_{kv}$ 的削减、分页后的物理布局。
 
-- 真实面经来源：[B002-G01-Q079](../../docs/references/面经原题.md#b002-g01-q079)、[B002-G01-Q080](../../docs/references/面经原题.md#b002-g01-q080)、[B002-G01-Q081](../../docs/references/面经原题.md#b002-g01-q081)、[B002-G01-Q092](../../docs/references/面经原题.md#b002-g01-q092)、[B002-G01-Q097](../../docs/references/面经原题.md#b002-g01-q097)、[B002-G01-Q108](../../docs/references/面经原题.md#b002-g01-q108)、[B002-G01-Q109](../../docs/references/面经原题.md#b002-g01-q109)、[B002-G01-Q113](../../docs/references/面经原题.md#b002-g01-q113)、[B002-G01-Q135](../../docs/references/面经原题.md#b002-g01-q135)、[B002-G01-Q196](../../docs/references/面经原题.md#b002-g01-q196)、[B002-G01-Q197](../../docs/references/面经原题.md#b002-g01-q197)。
-- 老师答案参考：[P005-Q079](../../docs/references/平台题/P005-Infra-061-090.md#p005-q079)、[P005-Q080](../../docs/references/平台题/P005-Infra-061-090.md#p005-q080)、[P005-Q081](../../docs/references/平台题/P005-Infra-061-090.md#p005-q081)、[P005-Q092](../../docs/references/平台题/P005-Infra-091-120.md#p005-q092)、[P005-Q097](../../docs/references/平台题/P005-Infra-091-120.md#p005-q097)、[P005-Q108](../../docs/references/平台题/P005-Infra-091-120.md#p005-q108)、[P005-Q109](../../docs/references/平台题/P005-Infra-091-120.md#p005-q109)、[P005-Q113](../../docs/references/平台题/P005-Infra-091-120.md#p005-q113)、[P005-Q135](../../docs/references/平台题/P005-Infra-121-150.md#p005-q135)、[P005-Q196](../../docs/references/平台题/P005-Infra-181-199.md#p005-q196)、[P005-Q197](../../docs/references/平台题/P005-Infra-181-199.md#p005-q197)。
 
 ## 追问
 

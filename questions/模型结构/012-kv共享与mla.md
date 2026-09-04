@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KV共享注意力/MHA MQA GQA MLA
 summary: MHA、MQA、GQA与MLA如何压缩KV Cache
-tags: [MHA, MQA, GQA, MLA, KVCache, 待校对]
+tags: [真题, MHA, MQA, GQA, MLA, KVCache, 待校对]
 company: 快手、字节、阿里云、蚂蚁集团
 mastered: false
 highfreq: false
@@ -49,7 +49,6 @@ $$
 
 MQA/GQA 压缩 KV 头数量，MLA 压缩 KV 表示本身；端到端显存与速度不能只用一个理论比例代替实测。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，采集编号 P004-Q002、P004-Q022、P004-Q039、P004-Q167、P004-Q291、P004-Q306、P004-Q327。
 - 依据：[MQA](https://arxiv.org/abs/1911.02150)、[GQA](https://arxiv.org/abs/2305.13245)、[DeepSeek-V2 / MLA](https://arxiv.org/abs/2405.04434)、[Llama 2](https://arxiv.org/abs/2307.09288)。
 
 ## 追问

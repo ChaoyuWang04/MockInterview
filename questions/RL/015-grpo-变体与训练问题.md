@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: GRPO变体/训练问题与方法选择
 summary: GRPO和PPO常见故障及DAPO、Dr.GRPO、GSPO的取舍
-tags: [待校对, GRPO, PPO, DAPO]
+tags: [真题, 待校对, GRPO, PPO, DAPO]
 company: 联通、快手、蚂蚁
 mastered: false
 highfreq: false
@@ -42,7 +42,6 @@ PPO 与 DPO 的选择先看数据：有高质量固定偏好对、无需在线�
 
 GRPO 训练问题、DAPO、Dr. GRPO、GSPO、PPO/DPO 选择、奖励过优化。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P003-Q024、P003-Q102、P003-Q104、P003-Q115。
 - 一手依据：[DeepSeek-R1](https://arxiv.org/abs/2501.12948)、[DAPO](https://arxiv.org/abs/2503.14476)、[Dr. GRPO](https://arxiv.org/abs/2503.20783)、[GSPO](https://arxiv.org/abs/2507.18071)、[奖励模型过优化](https://arxiv.org/abs/2210.10760)。
 
 ## 追问

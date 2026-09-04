@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 检索优化/Reranker原理与训练数据
 summary: 重排为何比初始召回更准，以及训练样本怎样贴近线上候选
-tags: [面经, 待校对, RAG, Reranker, Cross-Encoder, 难负样本]
+tags: [真题, 待校对, RAG, Reranker, Cross-Encoder, 难负样本]
 company: 字节、美团
 mastered: false
 highfreq: false
@@ -32,16 +32,14 @@ RAG为什么需要Reranker，它怎样提高候选排序质量？训练Reranker�
 
 两阶段检索、Bi-Encoder、Cross-Encoder、late interaction、难负样本、假负例、pointwise、pairwise、listwise。
 
-- 真实面经：[B003-Q037](../../docs/references/面经原题.md#b003-g01-q037)、[B003-Q042](../../docs/references/面经原题.md#b003-g01-q042)、[B003-Q075](../../docs/references/面经原题.md#b003-g01-q075)、[B003-Q084](../../docs/references/面经原题.md#b003-g01-q084)、[B003-Q094](../../docs/references/面经原题.md#b003-g01-q094)
-- 老师参考：[P006-Q037](../../docs/references/平台题/P006-RAG-034-066.md#p006-q037)、[P006-Q042](../../docs/references/平台题/P006-RAG-034-066.md#p006-q042)、[P006-Q075](../../docs/references/平台题/P006-RAG-067-097.md#p006-q075)、[P006-Q084](../../docs/references/平台题/P006-RAG-067-097.md#p006-q084)、[P006-Q094](../../docs/references/平台题/P006-RAG-067-097.md#p006-q094)
 
 ## 追问
 
-- 参考追问：重排模型与精排模型有什么区别，能否直接用LLM重排？
-- 参考追问：候选集大小怎样确定，线上延迟怎样优化？
-- 参考追问：重排后效果仍不好，应从哪些环节继续定位？
-- 参考追问：难负样本怎样挖掘，如何避免把假负例学进去？
-- 参考追问：怎样评估训练数据质量？
-- 参考追问：Reranker与Embedding模型联合训练有什么利弊？
+- 重排模型与精排模型有什么区别，能否直接用LLM重排？
+- 候选集大小怎样确定，线上延迟怎样优化？
+- 重排后效果仍不好，应从哪些环节继续定位？
+- 难负样本怎样挖掘，如何避免把假负例学进去？
+- 怎样评估训练数据质量？
+- Reranker与Embedding模型联合训练有什么利弊？
 
 ## Note

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/DP与TP下的量化参数
 summary: TP 与 DP 下 KV 量化参数怎么获取,要不要 all-reduce
-tags: [面经, 待校对, KVCache量化, 并行策略]
+tags: [真题, 待校对, KVCache量化, 并行策略]
 company:
 mastered: false
 highfreq: false

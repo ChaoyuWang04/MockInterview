@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 集成学习/有序目标编码
 summary: CatBoost如何用有序目标统计减少泄漏,与有序Boosting有何区别
-tags: [CatBoost, 类别特征, 目标编码, 梯度提升, 待校对]
+tags: [真题, CatBoost, 类别特征, 目标编码, 梯度提升, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -52,7 +52,6 @@ $y_j$ 是历史标签,$\mu$ 是先验均值,$a>0$ 控制平滑强度。没有同
 
 目标统计、先验平滑、随机排列、预测偏移、Ordered Boosting、稀疏特征捆绑。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q024、P002-Q052。
 - 依据:[CatBoost 原论文 §3–5](https://papers.neurips.cc/paper/7898-catboost-unbiased-boosting-with-categorical-features.pdf)、[boosting_type 官方说明](https://catboost.ai/docs/en/references/training-parameters/common#boosting_type)、[LightGBM 官方特性](https://lightgbm.readthedocs.io/en/latest/Features.html)。
 
 ## 追问

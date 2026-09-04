@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 业务算法/多目标排序TopK
 summary: 把电商候选排序建模为可配置打分和稳定TopK并补充多样性重排
-tags: [面经, 待校对, TopK, 推荐系统, 堆]
+tags: [真题, 待校对, TopK, 推荐系统, 堆]
 company: 美团
 mastered: false
 highfreq: false
@@ -81,11 +81,10 @@ def top_k_items(
 
 - 多目标排序、Top-K 小根堆、同分键、缺失值、冷启动、多样性重排、A/B 测试。
 
-- 面经原题：[B006-G01-Q077](../../docs/references/面经原题.md#b006-g01-q077)；老师答案参考：[P009-Q077](../../docs/references/平台题/P009-LC-001-080.md#p009-q077)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 候选达到百万级时怎样分层、分片和归并？
 - 如何实现实时个性化权重调整？

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 网络性能/Linux 调优
 summary: 从队列、缓冲、IO 模型和 CPU 路径调优 Linux 网络
-tags: [面经, 待校对, Linux, 网络性能, 系统调优]
+tags: [真题, 待校对, Linux, 网络性能, 系统调优]
 company: 百度
 mastered: false
 highfreq: false
@@ -38,11 +38,9 @@ highfreq: false
 
 listen backlog、socket buffer、epoll、SO_REUSEPORT、拥塞控制、RSS/RPS、IRQ affinity、基线压测。
 
-- 真实面经：[B002-G01-Q027](../../docs/references/面经原题.md#b002-g01-q027)
-- 老师答案参考：[P005-Q027](../../docs/references/平台题/P005-Infra-001-030.md#p005-q027)
 
 ## 追问
 
-- 页面参考追问：当 GPU 推理成为瓶颈时，网络优化是否还有意义，如何取舍？
+- 当 GPU 推理成为瓶颈时，网络优化是否还有意义，如何取舍？
 
 ## Note

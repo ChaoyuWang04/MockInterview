@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: MoE基础/结构 容量与部署权衡
 summary: MoE如何用稀疏专家扩容量及为何部署不一定更快
-tags: [MoE, Dense, 路由, 专家并行, 待校对]
+tags: [真题, MoE, Dense, 路由, 专家并行, 待校对]
 company: 蚂蚁集团、字节、小红书、美团、腾讯、蚂蚁
 mastered: false
 highfreq: false
@@ -45,7 +45,6 @@ MoE 在相近专家 FLOPs 下可提供更大的总参数容量，但不会自动
 
 MoE 的核心是“总参数多、每 token 只激活少数专家”。激活参数、FLOPs、端到端显存和延迟是四种不同口径，任何固定倍数都必须绑定具体模型和系统。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q010、P004-Q059、P004-Q086、P004-Q089、P004-Q103、P004-Q235、P004-Q322。
 - 一手依据：[Switch Transformer](https://arxiv.org/abs/2101.03961)、[GShard](https://arxiv.org/abs/2006.16668)、[MegaBlocks](https://arxiv.org/abs/2211.15841)、[DeepSeek-V2 / DeepSeekMoE](https://arxiv.org/html/2405.04434)、[GPT-4 Technical Report](https://arxiv.org/abs/2303.08774)。
 
 ## 追问

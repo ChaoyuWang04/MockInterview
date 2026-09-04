@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Transformer整体架构/手写Decoder-only Transformer
 summary: 用PyTorch实现训练前向完整的Decoder-only Transformer
-tags: [待校对, 手撕代码, Transformer, 面经]
+tags: [待校对, 手撕代码, Transformer, 真题]
 company: 字节、腾讯
 mastered: false
 highfreq: false
@@ -126,7 +126,6 @@ class DecoderOnlyTransformer(nn.Module):
 
 完整数据流是 token/位置 Embedding → N 个 Pre-Norm 注意力与 FFN 残差块 → Final Norm → 词表头;训练 mask 与推理 KV Cache 是两条不同执行路径。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q015；本批真实面经 [B006-Q053](../../docs/references/面经原题.md#b006-g01-q053)，老师答案与逐图纠错见 [P009-Q053](../../docs/references/平台题/P009-LC-001-080.md#p009-q053)。
 
 一手依据:[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)、[Layer Normalization](https://arxiv.org/abs/1607.06450)。
 

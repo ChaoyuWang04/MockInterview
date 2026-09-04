@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Agent架构/可观测性
 summary: 设计 Agent 分层监控、调用追踪与故障诊断体系
-tags: [面经, 待校对, Agent, 可观测性, 故障诊断, 监控]
+tags: [真题, 待校对, Agent, 可观测性, 故障诊断, 监控]
 company: 蚂蚁
 mastered: false
 highfreq: false
@@ -33,12 +33,10 @@ highfreq: false
 ## 知识点
 
 分层监控、分布式追踪、SLO、循环熔断、故障注入、日志脱敏、责任归因。
-- 本批真实面经：[B005-Q028](../../docs/references/面经原题.md#b005-g01-q028)。
-- 本批老师参考：[P008-Q028](../../docs/references/平台题/P008-Agent-001-030.md#p008-q028)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - Agent 陷入“思考—行动”循环时，如何熔断并自愈？
 - 如何评估监控体系是否有盲区？

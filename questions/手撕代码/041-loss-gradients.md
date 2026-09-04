@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 反向传播/常见损失梯度
-tags: [面经, 待校对, 手撕代码, MSE, 交叉熵, 反向传播]
+tags: [真题, 待校对, 手撕代码, MSE, 交叉熵, 反向传播]
 summary: 推导 MSE 与交叉熵对输出和 logits 的梯度并解释反传
 company: 网易
 mastered: false
@@ -65,12 +65,10 @@ $$
 
 MSE 归约、BCE、sigmoid、softmax、logits、链式法则、误差信号、Jacobian 连乘。
 
-- 面经原题：[B006-G01-Q121](../../docs/references/面经原题.md#b006-g01-q121)、[B006-G01-Q200](../../docs/references/面经原题.md#b006-g01-q200)。
-- 老师答案参考：[P009-Q121](../../docs/references/平台题/P009-LC-081-160.md#p009-q121)、[P009-Q200](../../docs/references/平台题/P009-LC-161-241.md#p009-q200)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 为什么 $p-y$ 是对 logit 的梯度，而不是对概率的梯度？
 - 分类使用 MSE 时，sigmoid 饱和怎样削弱梯度？

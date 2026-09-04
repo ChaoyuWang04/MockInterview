@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 图像Tokenizer/VQ RQ FSQ与语义ID
 summary: 比较VQ、RQ、FSQ、LFQ和推荐语义ID的离散化目标
-tags: [待校对, 多模态, 图像Tokenizer]
+tags: [真题, 待校对, 多模态, 图像Tokenizer]
 company: 快手
 mastered: false
 highfreq: false
@@ -40,7 +40,6 @@ FSQ 论文报告它不易出现传统 codebook collapse,但这不表示任何数
 
 “码本是否显式存在”“一个向量用几个码表示”“离散表示服务什么任务”是三条独立比较维度。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q090。
 
 一手依据:[VQ-VAE](https://arxiv.org/abs/1711.00937)、[RQ-VAE](https://arxiv.org/abs/2203.01941)、[Finite Scalar Quantization](https://arxiv.org/abs/2309.15505)、[MAGVIT-v2](https://arxiv.org/abs/2310.05737)、[TIGER](https://arxiv.org/abs/2305.05065)。
 

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 对比学习/InfoNCE与BCE
 summary: InfoNCE与BCE如何归一化和分配梯度,为何都能用于图文对齐
-tags: [对比学习, 待校对]
+tags: [真题, 对比学习, 待校对]
 company: 阿里
 mastered: false
 highfreq: false
@@ -49,7 +49,6 @@ CLIP 采用双向候选分类,让每幅图像找对应文本、每段文本找�
 
 对比学习、InfoNCE与BCE。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q067。
 
 - 补充依据:[InfoNCE 与互信息下界](https://arxiv.org/abs/1807.03748)、[SigLIP](https://arxiv.org/abs/2303.15343)、[CLIP](https://proceedings.mlr.press/v139/radford21a/radford21a.pdf)。
 

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 集合通信/stream与多流并行
 summary: 什么是 stream,stream 间怎么并行,通信为什么要单独一条流
-tags: [面经, 待校对, 集合通信, CUDA Stream]
+tags: [真题, 待校对, 集合通信, CUDA Stream]
 company:
 mastered: false
 highfreq: false

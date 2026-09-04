@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 位运算/前缀比特计数
-tags: [面经, 待校对, 手撕代码, 位运算, 动态规划, popcount]
+tags: [真题, 待校对, 手撕代码, 位运算, 动态规划, popcount]
 summary: 统计零到 n 所有整数二进制中 1 的总数并比较复杂度
 company: 得物
 mastered: false
@@ -50,12 +50,10 @@ def total_set_bits(n: int) -> int:
 
 位周期、完整周期与尾段、Kernighan 位计数、DP 比特计数、复杂度模型。
 
-- 面经原题：[B006-G01-Q052](../../docs/references/面经原题.md#b006-g01-q052)、[B006-G01-Q172](../../docs/references/面经原题.md#b006-g01-q172)、[B006-G01-Q173](../../docs/references/面经原题.md#b006-g01-q173)、[B006-G01-Q206](../../docs/references/面经原题.md#b006-g01-q206)、[B006-G01-Q208](../../docs/references/面经原题.md#b006-g01-q208)。
-- 老师答案参考：[P009-Q052](../../docs/references/平台题/P009-LC-001-080.md#p009-q052)、[P009-Q172](../../docs/references/平台题/P009-LC-161-241.md#p009-q172)、[P009-Q173](../../docs/references/平台题/P009-LC-161-241.md#p009-q173)、[P009-Q206](../../docs/references/平台题/P009-LC-161-241.md#p009-q206)、[P009-Q208](../../docs/references/平台题/P009-LC-161-241.md#p009-q208)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 不保存 DP 数组时，怎样做到 $O(1)$ 额外空间？
 - 若要返回每个数字的 popcount，为什么输出本身就需要 $O(n)$ 空间？

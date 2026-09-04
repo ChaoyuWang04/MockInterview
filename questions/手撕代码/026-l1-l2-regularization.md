@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 正则化/L1与L2
 summary: 比较 L1 与 L2 的形式、优化影响和适用场景
-tags: [面经, 待校对, 手撕代码, L1, L2, 正则化]
+tags: [真题, 待校对, 手撕代码, L1, L2, 正则化]
 company: 哔哩哔哩、美团、支付宝
 mastered: false
 highfreq: false
@@ -78,12 +78,10 @@ def regularized_linear_step(X, y, w, b, lr, lam, penalty):
 ## 知识点
 
 - Lasso、Ridge、软阈值、近端梯度、稀疏性、共线性、Elastic Net、AdamW。
-- 面经原题：[B006-G01-Q056](../../docs/references/面经原题.md#b006-g01-q056)、[B006-G01-Q158](../../docs/references/面经原题.md#b006-g01-q158)、[B006-G01-Q167](../../docs/references/面经原题.md#b006-g01-q167)、[B006-G01-Q192](../../docs/references/面经原题.md#b006-g01-q192)。
-- 老师答案参考：[P009-Q056](../../docs/references/平台题/P009-LC-001-080.md#p009-q056)、[P009-Q158](../../docs/references/平台题/P009-LC-081-160.md#p009-q158)、[P009-Q167](../../docs/references/平台题/P009-LC-161-241.md#p009-q167)、[P009-Q192](../../docs/references/平台题/P009-LC-161-241.md#p009-q192)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - L1/L2 怎样用于 LoRA 等参数高效微调？
 - 为什么深度学习中 L1 通常少于 L2/weight decay？

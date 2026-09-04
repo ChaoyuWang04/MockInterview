@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 数据结构/B树与B加树
-tags: [面经, 待校对, 数据结构, B树, B+树, 数据库索引]
+tags: [真题, 待校对, 数据结构, B树, B+树, 数据库索引]
 summary: 比较 B 树与 B+ 树的节点、点查、范围查和磁盘访问
 company: 蚂蚁金服、蚂蚁集团
 mastered: false
@@ -38,12 +38,10 @@ highfreq: false
 
 多路平衡树、扇出、页、分隔键、叶链、范围扫描、页分裂、数据库索引。
 
-- 面经原题：[B006-G01-Q059](../../docs/references/面经原题.md#b006-g01-q059)、[B006-G01-Q213](../../docs/references/面经原题.md#b006-g01-q213)。
-- 老师答案参考：[P009-Q059](../../docs/references/平台题/P009-LC-001-080.md#p009-q059)、[P009-Q213](../../docs/references/平台题/P009-LC-161-241.md#p009-q213)。
 
 ## 追问
 
-以下为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 时序数据库怎样用 `(series_id,timestamp)`、分区和压缩改造 B+ 树？
 - 写放大很高时，为什么需要比较 LSM Tree？

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: 访存与算子优化/分块大小与occupancy
 summary: 分块开大开小、shared memory 占用多少分别有什么影响
-tags: [面经, 待校对, occupancy, 分块, 寄存器]
+tags: [真题, 待校对, occupancy, 分块, 寄存器]
 company:
 mastered: false
 highfreq: false

@@ -163,7 +163,7 @@ flowchart TD
 - 长期接近零时检查 β、学习率、梯度与实现，也可能是任务无需明显偏离参考分布;
 - PPO 的 mini-epoch 内还会用 approx-KL 超阈值提前停掉本批更新(PPO 篇的「超速断油」)。
 
-平台 P002-Q026 关于 KL 阈值、TRPO/PPO 约束区别及其他更新控制手段的三项追问,见 PPO 篇。
+相关真题的 关于 KL 阈值、TRPO/PPO 约束区别及其他更新控制手段的三项追问,见 PPO 篇。
 
 ### Reference Model 与 rollout 旧策略不是一个角色
 
@@ -201,28 +201,26 @@ $$
 
 ## 六、面试考点串联
 
-| 问法 | 来源 | 本文回答位置 |
-|---|---|---|
-| KL 怎样定义,为什么非负、为什么不是距离? | 旧稿问法;平台 P002-Q125/Q133/Q172/Q203/Q204 | 一、定义与三条性质 |
-| KL 与交叉熵有什么区别,独热、软标签和多标签时能否互换? | 平台 P001-Q03、P002-Q003/Q005/Q020/Q026/Q030/Q032/Q035/Q057/Q172/Q203/Q204/Q210/Q212 | 一、定义与三条性质;分类损失:独热和软标签都能等价 |
-| 冻结或更新教师时哪些熵项能忽略,前向/反向 KL 与 MiniLLM 怎样取舍? | 平台 P002-Q057/Q125/Q172/Q204 | 蒸馏:软目标与可学习目标的区别;二、前向与反向 |
-| RLHF 用哪个方向的 KL,reference 与 rollout 旧策略有何区别,能否用交叉熵或参数距离替代? | 平台 P002-Q026/Q057/Q125/Q133/Q172/Q203/Q204;P003-Q063 | RLHF 的 KL 惩罚是哪个方向?;策略更新:谁固定决定能不能换成交叉熵;Reference Model 与 rollout 旧策略不是一个角色 |
-| k1/k2/k3 在估什么,各有什么偏差与方差特点? | 旧稿问法,来源待核对 | 三、蒙特卡洛估计:测同一段路的三种仪器 |
-| PPO 与 GRPO 为什么加 reference KL,放在哪里,β 怎样读与调,去掉会怎样? | 平台 P002-Q026;P003-Q064/Q088/Q089 | 四、工程放法:同一根缰绳的两种系法;Reference Model 与 rollout 旧策略不是一个角色 |
-| KL 无穷大时怎样处理,与 JS/Wasserstein 有何取舍,只有样本时怎样估计? | 平台 P002-Q125/Q133/Q203/Q204 | 支持集与稳定计算;KL、JS 与 Wasserstein 的取舍;只有样本时怎样估计 |
-| 行为克隆和 VAE 中的 KL 各是什么,替换度量后 ELBO 还成立吗? | 平台 P002-Q172/Q203 | 行为克隆与 VAE |
+| 问法 | 本文回答位置 |
+| --- | --- |
+| KL 怎样定义,为什么非负、为什么不是距离? | 一、定义与三条性质 |
+| KL 与交叉熵有什么区别,独热、软标签和多标签时能否互换? | 一、定义与三条性质;分类损失:独热和软标签都能等价 |
+| 冻结或更新教师时哪些熵项能忽略,前向/反向 KL 与 MiniLLM 怎样取舍? | 蒸馏:软目标与可学习目标的区别;二、前向与反向 |
+| RLHF 用哪个方向的 KL,reference 与 rollout 旧策略有何区别,能否用交叉熵或参数距离替代? | RLHF 的 KL 惩罚是哪个方向?;策略更新:谁固定决定能不能换成交叉熵;Reference Model 与 rollout 旧策略不是一个角色 |
+| k1/k2/k3 在估什么,各有什么偏差与方差特点? | 三、蒙特卡洛估计:测同一段路的三种仪器 |
+| PPO 与 GRPO 为什么加 reference KL,放在哪里,β 怎样读与调,去掉会怎样? | 四、工程放法:同一根缰绳的两种系法;Reference Model 与 rollout 旧策略不是一个角色 |
+| KL 无穷大时怎样处理,与 JS/Wasserstein 有何取舍,只有样本时怎样估计? | 支持集与稳定计算;KL、JS 与 Wasserstein 的取舍;只有样本时怎样估计 |
+| 行为克隆和 VAE 中的 KL 各是什么,替换度量后 ELBO 还成立吗? | 行为克隆与 VAE |
 
-> 本表含平台整理题与旧稿问法,非面经原题;本次只增补这些来源的覆盖,全文仍待按新契约重写。
+> 本篇仍保留旧稿重写状态。
 
 ## 相关文献
 
 - Approximating KL Divergence(k1/k2/k3 估计器)— John Schulman 博客:http://joschu.net/blog/kl-approx.html
 - PPO — [arXiv:1707.06347](https://arxiv.org/abs/1707.06347)
-- 平台整理题 — [老师平台](https://course.terminiai.com/interview),P001-Q03、P002-Q003/Q005/Q020/Q026/Q030/Q032/Q035/Q057、P002-Q125/Q133/Q172/Q203/Q204/Q210/Q212。
 - Distilling the Knowledge in a Neural Network(固定教师软目标)— [arXiv:1503.02531](https://arxiv.org/abs/1503.02531)。
 - DeepSeekMath(GRPO 的 k3 实践)— [arXiv:2402.03300](https://arxiv.org/abs/2402.03300)
 - MiniLLM(反向 KL 蒸馏)— [arXiv:2306.08543](https://arxiv.org/abs/2306.08543)
 - Auto-Encoding Variational Bayes（ELBO 与后验 KL）— [arXiv:1312.6114](https://arxiv.org/abs/1312.6114)。
 - [SciPy：Jensen–Shannon 距离](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.jensenshannon.html)、[Wasserstein 距离](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wasserstein_distance.html)。
 - TRPO — [arXiv:1502.05477](https://arxiv.org/abs/1502.05477)
-- 平台整理题 — [老师平台](https://course.terminiai.com/interview),P003-Q063/Q064/Q088/Q089。

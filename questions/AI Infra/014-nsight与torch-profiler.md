@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 性能分析与Profiling/工具分工
 summary: Nsight 是什么、能干什么,和 torch.profiler 的区别
-tags: [面经, 待校对, Nsight, profiling, 性能分析]
+tags: [真题, 待校对, Nsight, profiling, 性能分析]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-nsight 工具是什么?能用来干什么?和 torch.profiler 的区别是什么?
+Nsight 工具是什么?能用来干什么?和 torch.profiler 的区别是什么?
 
 ## 要点
 

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Norm位置/梯度 稳定性与收敛
 summary: Pre-LN与Post-LN的计算图如何影响梯度和训练稳定性
-tags: [Transformer, LayerNorm, Pre-LN, Post-LN, 待校对]
+tags: [真题, Transformer, LayerNorm, Pre-LN, Post-LN, 待校对]
 company: 小米、滴滴
 mastered: false
 highfreq: false
@@ -39,7 +39,6 @@ $$
 
 判断 Pre/Post-LN 的诀窍是看“加号之后还有没有 Norm”。Pre-LN 给梯度留下恒等主路，但极深训练仍是归一化、初始化、残差尺度、优化器与学习率共同作用的结果。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q231、P004-Q232、P004-Q258。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745)、[DeepNet / DeepNorm](https://arxiv.org/abs/2203.00555)。
 
 ## 追问

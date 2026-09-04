@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Roofline与Bound分析/模型与bound判定
 summary: Roofline 是什么,怎么判断算子是带宽 bound 还是算力 bound
-tags: [面经, 待校对, Roofline, 算术强度, bound分析]
+tags: [真题, 待校对, Roofline, 算术强度, bound分析]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-什么是 roofline 模型?怎么判断一个算子是带宽 bound 还是算力 bound?
+什么是 Roofline 模型?怎么判断一个算子是带宽 bound 还是算力 bound?
 
 ## 要点
 

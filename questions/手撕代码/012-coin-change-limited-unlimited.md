@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 动态规划/硬币组合计数
 summary: 分别计算无限和有限硬币凑额组合数并避免排列重复
-tags: [面经, 待校对, 动态规划, 完全背包, 多重背包, 组合计数]
+tags: [真题, 待校对, 动态规划, 完全背包, 多重背包, 组合计数]
 company: 未标
 mastered: false
 highfreq: false
@@ -65,11 +65,10 @@ def count_bounded_combinations(coins, limits, amount):
 
 - 组合与排列、完全背包、多重背包、金额正序/倒序、同余类滑动窗口、有界计数。
 
-- 面经原题：[B006-G01-Q022](../../docs/references/面经原题.md#b006-g01-q022)；老师答案参考：[P009-Q022](../../docs/references/平台题/P009-LC-001-080.md#p009-q022)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 怎样输出实际硬币组合而不只计数？
 - 为什么有界组合计数不能直接用二进制拆分？

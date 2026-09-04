@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 排序系统/多目标融合
-tags: [面经, 待校对, 搜索排序, 推荐系统, 多目标优化, Learning to Rank]
+tags: [真题, 待校对, 搜索排序, 推荐系统, 多目标优化, Learning to Rank]
 summary: 融合相关性、点击转化、商业价值和长期体验的排序目标
 company: OPPO
 mastered: false
@@ -47,12 +47,10 @@ $$
 
 多任务学习、分数校准、Learning to Rank、约束重排、Pareto 权衡、长期价值、A/B 测试。
 
-- 面经原题：[B006-G01-Q216](../../docs/references/面经原题.md#b006-g01-q216)。
-- 老师答案参考：[P009-Q216](../../docs/references/平台题/P009-LC-161-241.md#p009-q216)。
 
 ## 追问
 
-以下均为自拟追问；页面未提供可稳定识别的参考追问：
+相关真题追问：
 
 - 相关性底线与商业价值冲突时，哪些应设成硬约束？
 - CTR、CVR 和金额量纲不同，怎样校准后再组合？

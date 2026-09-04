@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Agent架构/核心组件与闭环
 summary: 从零设计 Agent 的核心组件、控制闭环与工程边界
-tags: [面经, 待校对, Agent, 系统架构, ReAct, 工具调用, 记忆]
+tags: [真题, 待校对, Agent, 系统架构, ReAct, 工具调用, 记忆]
 company: 百度
 mastered: false
 highfreq: false
@@ -31,12 +31,10 @@ highfreq: false
 ## 知识点
 
 Agent 控制平面、状态机、规划、记忆、RAG、工具契约、Observation、验证器、人机协同。
-- 本批真实面经：[B005-Q013](../../docs/references/面经原题.md#b005-g01-q013)、[B005-Q014](../../docs/references/面经原题.md#b005-g01-q014)、[B005-Q030](../../docs/references/面经原题.md#b005-g01-q030)、[B005-Q034](../../docs/references/面经原题.md#b005-g01-q034)、[B005-Q039](../../docs/references/面经原题.md#b005-g01-q039)、[B005-Q058](../../docs/references/面经原题.md#b005-g01-q058)。
-- 本批老师参考：[P008-Q013](../../docs/references/平台题/P008-Agent-001-030.md#p008-q013)、[P008-Q014](../../docs/references/平台题/P008-Agent-001-030.md#p008-q014)、[P008-Q030](../../docs/references/平台题/P008-Agent-001-030.md#p008-q030)、[P008-Q034](../../docs/references/平台题/P008-Agent-031-059.md#p008-q034)、[P008-Q039](../../docs/references/平台题/P008-Agent-031-059.md#p008-q039)、[P008-Q058](../../docs/references/平台题/P008-Agent-031-059.md#p008-q058)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 工具失败、返回异常或格式错误时，怎样重试、降级和恢复？
 - 长期记忆如何与 RAG 结合并控制膨胀？

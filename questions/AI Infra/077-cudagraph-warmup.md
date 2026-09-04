@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CudaGraph/warmup
 summary: 推理为什么要 warmup,warmup 在干什么,不做会有什么后果
-tags: [面经, 待校对, warmup, CUDA Graph]
+tags: [真题, 待校对, warmup, CUDA Graph]
 company:
 mastered: false
 highfreq: false

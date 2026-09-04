@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CudaGraph/好处与生效条件
 summary: CUDA Graph 省的是什么开销,一定奏效吗,哪些场景优势明显
-tags: [面经, 待校对, CUDA Graph, 推理优化]
+tags: [真题, 待校对, CUDA Graph, 推理优化]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-cudagraph 的好处是什么?cudagraph 一定能奏效吗?什么场景下 cudagraph 的优势比较明显?
+CUDA Graph 的好处是什么?CUDA Graph 一定能奏效吗?什么场景下 CUDA Graph 的优势比较明显?
 
 ## 要点
 

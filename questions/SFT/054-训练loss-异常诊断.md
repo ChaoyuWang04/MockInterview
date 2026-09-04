@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 预训练流程/损失异常诊断
 summary: loss 尖峰、周期震荡和NaN怎样逐层定位并可靠恢复
-tags: [待校对, 预训练流程]
+tags: [真题, 待校对, 预训练流程]
 company: 快手、腾讯、字节
 mastered: false
 highfreq: false
@@ -48,7 +48,7 @@ highfreq: false
 
 预训练流程/损失异常诊断。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q086、P002-Q100、P002-Q141、P002-Q228。参考:[混合精度训练](https://arxiv.org/abs/1710.03740)、[Adam](https://arxiv.org/abs/1412.6980)。
+参考:[混合精度训练](https://arxiv.org/abs/1710.03740)、[Adam](https://arxiv.org/abs/1412.6980)。
 
 ## 追问
 

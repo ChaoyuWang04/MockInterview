@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: DeepSpeed/功能与并行组合
 summary: DeepSpeed怎样省显存,怎样选分片卸载和并行组合
-tags: [DeepSpeed, ZeRO, Offload, 分布式训练, 待校对]
+tags: [真题, DeepSpeed, ZeRO, Offload, 分布式训练, 待校对]
 company: 字节
 mastered: false
 highfreq: false
@@ -55,7 +55,6 @@ FSDP 与 ZeRO 有相近的状态分片思路,实际选择还要比较卸载能�
 
 DeepSpeed 引擎、状态分片、分级存储、预取、并行兼容性、性能分解。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q192/Q193/Q225/Q243/Q257。
 - 依据:[ZeRO-Offload 官方教程](https://www.deepspeed.ai/tutorials/zero-offload/)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)、[NCCL 排障指南](https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/troubleshooting.html);实现边界核对本地 2026-04 快照。
 
 ## 追问

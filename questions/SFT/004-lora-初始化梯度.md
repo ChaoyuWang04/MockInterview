@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/初始化梯度
 summary: LoRA 反向初始化会怎样,两种零增量起点的梯度有何差别
-tags: [SFT, LoRA, 初始化, 梯度, 待校对]
+tags: [真题, SFT, LoRA, 初始化, 梯度, 待校对]
 company: 字节、快手、百度
 mastered: false
 highfreq: false
@@ -57,8 +57,6 @@ $$
 
 链式法则、零增量初始化、任务梯度、初始化尺度。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q025、P002-Q034;承接 P002-Q004 的初始化追问。
-- 本批同题来源:[老师平台](https://course.terminiai.com/interview),P002-Q110、P002-Q154、P002-Q176。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[初始化对 LoRA 训练动态的影响](https://arxiv.org/abs/2406.08447)、[He 初始化论文](https://arxiv.org/abs/1502.01852)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/NF4与计算精度
 summary: NF4 怎样压缩冻结基座,BF16计算、双重量化与块大小如何权衡
-tags: [SFT, QLoRA, NF4, 量化, 混合精度, 待校对]
+tags: [真题, SFT, QLoRA, NF4, 量化, 混合精度, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -43,7 +43,6 @@ BF16 与 FP32 指数范围相近,较不易溢出;FP16 有更细的尾数但范�
 
 QLoRA、NF4、量化、混合精度。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q219、P002-Q220。
 - 依据:[QLoRA §3–4 与附录](https://arxiv.org/html/2305.14314v1)。
 
 ## 追问

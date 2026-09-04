@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 检索优化/Agent集成的延迟与正确率
 summary: 诊断RAG接入Agent后的质量与延迟瓶颈
-tags: [面经, 待校对, RAG, Agent, 检索优化, 工具编排, 延迟优化]
+tags: [真题, 待校对, RAG, Agent, 检索优化, 工具编排, 延迟优化]
 company: 阿里云
 mastered: false
 highfreq: false
@@ -33,12 +33,10 @@ highfreq: false
 ## 知识点
 
 分层诊断、Query Rewrite、Hybrid Search、RRF、Reranker、证据忠实度、Agent deadline、可版本化缓存。
-- 本批真实面经：[B005-Q015](../../docs/references/面经原题.md#b005-g01-q015)、[B005-Q059](../../docs/references/面经原题.md#b005-g01-q059)。
-- 本批老师参考：[P008-Q015](../../docs/references/平台题/P008-Agent-001-030.md#p008-q015)、[P008-Q059](../../docs/references/平台题/P008-Agent-031-059.md#p008-q059)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 多级索引应如何设计，哪些层负责过滤、粗召回和精排？
 - Agent 多轮对话如何兼顾缓存命中率与知识新鲜度？

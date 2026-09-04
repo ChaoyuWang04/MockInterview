@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 工具调用/工具学习范式
 summary: 比较 Function Calling 与 Toolformer 的机制和选型
-tags: [面经, 待校对, Agent, Function Calling, Toolformer, 工具调用]
+tags: [真题, 待校对, Agent, Function Calling, Toolformer, 工具调用]
 company: 高德
 mastered: false
 highfreq: false
@@ -36,12 +36,10 @@ highfreq: false
 
 Function Calling、Toolformer、自监督工具调用数据、JSON Schema、外部执行器、幂等与权限。
 - 论文：[Toolformer](https://arxiv.org/abs/2302.04761)。
-- 本批真实面经：[B005-Q001](../../docs/references/面经原题.md#b005-g01-q001)。
-- 本批老师参考：[P008-Q001](../../docs/references/平台题/P008-Agent-001-030.md#p008-q001)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 高德导航场景下，实时路况 API 用哪种方案更合适？为什么？
 - Toolformer 如果工具 API 升级或下线，模型如何适应？

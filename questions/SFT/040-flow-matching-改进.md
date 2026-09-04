@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: FlowMatching/局限与改进
 summary: 扩散采样器与Flow Matching是什么关系,各自怎样提速
-tags: [FlowMatching, RectifiedFlow, 最优传输, ODE, 待校对]
+tags: [真题, FlowMatching, RectifiedFlow, 最优传输, ODE, 待校对]
 company: 腾讯
 mastered: false
 highfreq: false
@@ -37,7 +37,7 @@ Flow Matching 降低了训练速度场的成本,但没有自动解决少步生�
 
 例如把图像生成压到少量步骤时,先画出**质量随网络求值次数(NFE)的变化**。一次高阶积分步可能调用网络多次,不能只比较“步数”;蒸馏也要同时报告新增训练成本和画质损失,不能保证一步无损。
 
-### 三个来源追问
+### 相关真题追问
 
 **与 DDPM 怎样统一理解?** 都可以研究从噪声到数据的概率路径。对可相互转换的高斯路径,预测噪声、score 或速度是不同参数化,训练权重也要相应变换。扩散既可随机采样,也有保持相同时间边际分布的 probability-flow ODE;不能把两者简化成“随机对确定”。
 
@@ -49,7 +49,6 @@ Flow Matching 降低了训练速度场的成本,但没有自动解决少步生�
 
 条件流匹配、边际速度场、数值积分、网络求值次数、配对、潜空间压缩。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q062、P004-Q009。
 - 依据:[Flow Matching](https://arxiv.org/abs/2210.02747)、[Rectified Flow](https://arxiv.org/abs/2209.03003)、[DPM-Solver++](https://arxiv.org/abs/2211.01095)、[minibatch OT](https://arxiv.org/abs/2302.00482)、[扩散的 probability-flow ODE](https://arxiv.org/abs/2011.13456)、[RULER](https://arxiv.org/abs/2404.06654)。
 
 ## 追问

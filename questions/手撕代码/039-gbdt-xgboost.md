@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 集成学习/GBDT与XGBoost
 summary: 解释 GBDT 负梯度提升、节点分裂及 XGBoost 的二阶扩展
-tags: [面经, 待校对, 手撕代码, GBDT, XGBoost, 决策树]
+tags: [真题, 待校对, 手撕代码, GBDT, XGBoost, 决策树]
 company: 哔哩哔哩、小红书
 mastered: false
 highfreq: false
@@ -74,12 +74,10 @@ GBDT 很适合结构化表格数据：树能直接表达阈值和特征交互，
 ## 知识点
 
 - 加法模型、前向分步、伪残差、CART 分裂、二阶泰勒、正则化增益、直方图算法。
-- 面经原题：[B006-G01-Q116](../../docs/references/面经原题.md#b006-g01-q116)、[B006-G01-Q143](../../docs/references/面经原题.md#b006-g01-q143)、[B006-G01-Q156](../../docs/references/面经原题.md#b006-g01-q156)、[B006-G01-Q193](../../docs/references/面经原题.md#b006-g01-q193)、[B006-G01-Q194](../../docs/references/面经原题.md#b006-g01-q194)。
-- 老师答案参考：[P009-Q116](../../docs/references/平台题/P009-LC-081-160.md#p009-q116)、[P009-Q143](../../docs/references/平台题/P009-LC-081-160.md#p009-q143)、[P009-Q156](../../docs/references/平台题/P009-LC-081-160.md#p009-q156)、[P009-Q193](../../docs/references/平台题/P009-LC-161-241.md#p009-q193)、[P009-Q194](../../docs/references/平台题/P009-LC-161-241.md#p009-q194)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - XGBoost 与 LightGBM 的候选切分搜索有什么不同？
 - GBDT 怎样处理高基数类别特征和高维稀疏特征？

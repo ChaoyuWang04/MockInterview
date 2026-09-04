@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KV共享注意力/MHA、GQA、MQA与MLA
 summary: 比较四种注意力的KV头共享、潜变量压缩及推理质量取舍
-tags: [面经, 待校对, MHA, GQA, MQA, MLA, KV Cache]
+tags: [真题, 待校对, MHA, GQA, MQA, MLA, KV Cache]
 company: 小米
 mastered: false
 highfreq: false
@@ -80,15 +80,13 @@ MLA 的低秩压缩也不要与 LoRA 混淆：MLA 的低秩表示是注意力前
 
 MHA、GQA、MQA、Multi-head Latent Attention、KV头共享、低秩潜变量、矩阵吸收、解耦RoPE、Prefill与Decode。
 
-- 真实面经：[B002-G01-Q160](../../docs/references/面经原题.md#b002-g01-q160)、[B002-G01-Q161](../../docs/references/面经原题.md#b002-g01-q161)
-- 老师参考：[P005-Q160](../../docs/references/平台题/P005-Infra-151-180.md#p005-q160)、[P005-Q161](../../docs/references/平台题/P005-Infra-151-180.md#p005-q161)
 
 ## 追问
 
-- 参考追问：MLA相比MQA为什么能兼顾表达能力和低KV Cache？
-- 参考追问：GQA的分组数如何影响精度和速度？
-- 参考追问：DeepSeek MLA如何处理RoPE与低秩压缩的冲突？
-- 参考追问：MLA中的低秩压缩与LoRA有什么本质区别？
-- 参考追问：这些机制在Prefill和Decode阶段分别有什么性能特点？
+- MLA相比MQA为什么能兼顾表达能力和低KV Cache？
+- GQA的分组数如何影响精度和速度？
+- DeepSeek MLA如何处理RoPE与低秩压缩的冲突？
+- MLA中的低秩压缩与LoRA有什么本质区别？
+- 这些机制在Prefill和Decode阶段分别有什么性能特点？
 
 ## Note

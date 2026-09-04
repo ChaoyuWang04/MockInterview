@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 卷积与池化/池化算子
 summary: 比较最大、平均、全局与自适应池化的计算和使用场景
-tags: [面经, 待校对, 手撕代码, Pooling, CNN]
+tags: [真题, 待校对, 手撕代码, Pooling, CNN]
 company: 网易
 mastered: false
 highfreq: false
@@ -74,12 +74,10 @@ MaxPool 强调最强响应，适合“是否出现某局部模式”；它对噪
 ## 知识点
 
 - 下采样、局部平移鲁棒性、梯度路由、全局平均池化、自适应输出、stride convolution。
-- 面经原题：[B006-G01-Q122](../../docs/references/面经原题.md#b006-g01-q122)。
-- 老师答案参考：[P009-Q122](../../docs/references/平台题/P009-LC-081-160.md#p009-q122)。
 
 ## 追问
 
-以下为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - Vision Transformer 没有传统 MaxPool 时怎样改变 token/空间分辨率？
 
