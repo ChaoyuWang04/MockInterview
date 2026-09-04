@@ -40,6 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 projects/
+# 基模 Technical Report PDF 原件默认不追踪;需要时可 git add -f 单篇加入
+/papers/**/*.pdf
 .leet/
 /.next-prod/
 interview/cache/

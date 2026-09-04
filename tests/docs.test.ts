@@ -51,14 +51,14 @@ describe('活动文档', () => {
     expect(agents).toContain('docs/00-START.md')
   })
 
-  it('入口统一为五个功能模块,运行设施不算模块', () => {
+  it('入口统一为六个功能模块,运行设施不算模块', () => {
     const entryFiles = ['README.md', 'AGENTS.md', 'CLAUDE.md', 'docs/00-START.md']
     const entry = entryFiles
       .map((file) => fs.readFileSync(path.join(projectRoot, file), 'utf8'))
       .join('\n')
 
-    expect(entry).toContain('五个功能模块')
-    expect(entry).not.toMatch(/六个模块|第六个模块/)
+    expect(entry).toContain('六个功能模块')
+    expect(entry).not.toContain('五个功能模块')
   })
 
   it('入口地图覆盖全部现行手册', () => {
@@ -73,10 +73,31 @@ describe('活动文档', () => {
       '07-LeetCode清单.md',
       '08-常驻服务.md',
       '09-日常维护.md',
+      '10-基模报告流程.md',
       '11-模拟面试系统.md',
     ]) {
       expect(start, `00-START 缺少 ${manual}`).toContain(manual)
     }
+  })
+
+  it('主页把基模报告作为开源项目旁边的独立入口', () => {
+    const home = fs.readFileSync(path.join(projectRoot, 'app/page.tsx'), 'utf8')
+    const opensourceAt = home.indexOf('href="/opensource"')
+    const reportsAt = home.indexOf('href="/reports"')
+
+    expect(opensourceAt).toBeGreaterThanOrEqual(0)
+    expect(reportsAt).toBeGreaterThan(opensourceAt)
+    expect(home.slice(opensourceAt, reportsAt)).not.toContain('href="/leetcode"')
+    expect(home).toContain('基模报告')
+  })
+
+  it('基模报告动态路由不对 Next 参数重复解码', () => {
+    const route = fs.readFileSync(
+      path.join(projectRoot, 'app/reports/[company]/[report]/page.tsx'),
+      'utf8',
+    )
+
+    expect(route).not.toContain('decodeURIComponent')
   })
 
   it('不再恢复已废弃的静态面试池说明', () => {
