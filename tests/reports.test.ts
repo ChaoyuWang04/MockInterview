@@ -86,4 +86,13 @@ describe('基模报告 reports/', () => {
       }
     }
   })
+
+  it('基模报告使用渲染器支持的行内数学边界', () => {
+    for (const company of listReportCompanies()) {
+      for (const summary of listReports(company)) {
+        const content = getReport(company, summary.slug)?.content
+        expect(content, `${company}/${summary.slug} 仍使用 \\(...\\)`).not.toMatch(/\\\(|\\\)/)
+      }
+    }
+  })
 })
