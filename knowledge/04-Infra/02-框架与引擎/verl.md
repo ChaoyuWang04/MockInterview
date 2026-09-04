@@ -134,6 +134,23 @@ flowchart TD
 6. **更新**:critic 先更(如果有),再 actor 反向 + 优化器一步。
 7. **权重同步**:把新权重推回生成引擎,下一步采的才算"最新策略"。
 
+### 四种 batch 参数不要混算
+
+下面口径以本地 verl 快照 `3c5f6e0`(2026-04-29)为准,版本变化时应先查当前配置定义。设每步取 $B$ 个 prompt,每个 prompt 生成 $n$ 条回答,actor 配置的 PPO mini-batch 为 $M$,数据并行度为 $D$,每卡 micro-batch 为 $m$:
+
+- `data.train_batch_size = B`:一轮先取多少个不同 prompt;
+- `actor_rollout_ref.rollout.n = n`:每个 prompt 生成多少条 trajectory,常规路径共得到 $B n$ 条;
+- `actor_rollout_ref.actor.ppo_mini_batch_size = M`:代码会按 prompt 口径取一个 mini-batch,实际进入 actor 更新的是 $M n$ 条 trajectory;
+- `actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu = m`:每个数据并行 rank 一次处理多少条 trajectory。
+
+固定样本数 micro-batch 时,每个 rank 完成一个 actor mini-batch 需要的梯度累积次数是:
+
+$$
+N_{\text{acc}}=\frac{M n}{D m}.
+$$
+
+这里不再额外乘 `world_size`:数据并行度已经表示样本如何分卡;TP/PP 是切一份模型,也不能重复当成样本并行。`rollout_batch_size`、`global_batch_size` 和 `micro_batch_size_per_device_for_update` 不是该快照下 PPO 配方的正式用户参数名。动态批处理打开后,真正的 micro-batch 还会按 token 数重排,上式只说明固定样本口径。
+
 ## 七、上手门槛与常见坑
 
 ### 给推理引擎留多少显存
@@ -167,11 +184,11 @@ RL 的回答动辄几千上万 token,而且**长度极不均匀**。对应旋钮
 | 在 verl 上换一个 RL 算法,要改什么、不用改什么?为什么能这么省? | 三(控制流那一层) |
 | 生成引擎和训练侧的权重怎么同步?为什么这件事不简单? | 五(改摆法 + 每步一次 + 显存峰值) |
 | actor / critic / reference / reward 默认怎么放卡?什么时候该拆池? | 四 |
-| rollout 时给推理引擎留多少显存?留多了、留少了各会怎样? | 七(第一小节) |
+| rollout、mini-batch、micro-batch 分别数什么,梯度累积次数怎样算? | 六(四种 batch 参数);平台 P003-Q011 |
 | 同一个 token,推理引擎和训练侧算出的 logprob 对不上,有什么后果?怎么处理? | 七 + 六(第 4 步) |
 | 同步式 RL 里 rollout 的长尾为什么会拖垮利用率?能怎么办? | 七(最后两小节) |
 
-> 本表按出题标准自拟,非面经原题。
+> 本表含平台整理题 P003-Q011,其余按出题标准自拟;均非面经原题。
 
 ## 相关文献
 

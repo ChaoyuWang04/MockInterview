@@ -70,6 +70,14 @@ $$
 
 DPO 的改进思路是把偏好建模改写为策略与 reference 的概率比,直接优化成对损失,省去独立 RM 训练和在线 actor-critic 耦合。它减少这部分误差与工程环节,但偏好噪声和覆盖不足仍在,详见 DPO 篇。
 
+### Reward Model 与 Critic:一个定终点,一个估路程
+
+RM 通常回答“这整段回答有多符合偏好”,Critic 则估计当前策略从 token 前缀 $s_t$ 出发的未来回报 $V(s_t)$。PPO rollout 先由 RM 给终局分,再叠加逐 token KL 等训练奖励;Critic 用这些奖励拟合回报,并通过 TD 残差与 GAE 构造优势。Actor 使用优势做策略梯度更新,不会把 Critic 梯度沿离散 token 采样反传。
+
+不用 Critic 仍可把蒙特卡洛终局回报用于 REINFORCE,但信用分配粗、方差通常更大。Critic 是随当前策略数据更新的基线,RM 是偏好代理,因此 RM 分不能直接当作每个前缀的 $V(s_t)$。二者可共享语言模型主干,也可独立部署;共享省参数但会引入目标间梯度干扰。用 RM 主干初始化 Critic 只是初始化选择,value head 仍须按当前策略回报重训。
+
+Critic 失准时,优势的符号或尺度会错,应联合检查 value loss、explained variance、回报方差、KL、clip fraction 和实际生成。先排查 terminal/padding mask、奖励尺度与 bootstrap,再比较 value 学习率、GAE 参数、value clipping 和更新轮数,没有固定的 Actor/Critic 更新比例。RM 与 Critic 也可共用冻结底座或从同一 checkpoint 初始化,但 PPO 中 RM 常保持稳定而 Critic 要跟随策略更新;若联合共享可训练参数,必须隔离两个目标的梯度并分别验收评分和价值估计。
+
 ## 四、reward hacking 与过优化:评委被钻空子
 
 ### Goodhart 定律
@@ -96,6 +104,14 @@ Scaling Laws for Reward Model Overoptimization 用合成实验(一个大"金标�
 - **定期刷新偏好数据**:拿当前策略的新 rollout 重新送标、迭代重训 RM(InstructGPT、Llama 2 都做多轮),让评委见识过学生的最新套路;
 - **针对性去偏**:已知偏置显式处理,如对 RM 分做长度去相关、训练数据里平衡长短与格式;
 - **评测盯真实指标**:训练面板上的 RM 分只是代理,定期用人评抽检 / held-out 评委 / 下游真实任务给 checkpoint 体检。
+
+### 多目标 Reward Function:先定底线,再加权优化
+
+完整训练奖励不等于 RM 分。它可以组合偏好 RM、事实或代码验证器、格式规则、过程/结果奖励以及 reference KL。组合前先按训练分布校准各分量的尺度;线性加权适合可交换的软目标,合规和安全底线更适合门控、词典序优先级或约束优化。否则一个很大的有用性分可能抵消安全违规,而给所有拒答加分又会诱发过度拒答。
+
+PRM 只有在步骤标签或验证器可信时才提供更细信用分配,不是稀疏奖励的免费修复。多个 RM 可在训练时批量打分、共享主干、蒸馏或先经规则筛选,不要求部署推理时全部常驻。RM 通常在一段策略优化期间冻结;当当前策略跑出训练分布、独立评测与 RM 分背离时,再收集新回答、复标并刷新 RM。是否刷新及频率由漂移和评测决定,没有统一比例。
+
+多目标验收要同时看每个奖励分量、长度/格式分桶、held-out 人评、红队和真实任务指标。总奖励上涨而这些指标下降,才是代理过优化的直接警报;不能让训练用的同一个 RM 兼任唯一裁判。
 
 ## 五、RM 的谱系:ORM、PRM 与 verifier
 
@@ -175,8 +191,8 @@ flowchart TD
 |---|---|---|
 | SFT、RM、PPO各用什么数据,与DPO及拒绝采样怎样衔接? | SFT、RM 与 PPO 的目标和数据;三、RM 训练:给 SFT 模型换一个打分头 | P002-Q012、Q061、Q069、Q071、Q081、Q115、Q161、Q187、Q188、Q209、Q248 |
 | 为什么不能只增加SFT轮次,怎样决定数据质量、来源和阶段比例? | 为什么不只增加 SFT 轮次;后训练数据与算法选择 | P002-Q012、Q061、Q115、Q161、Q188、Q209 |
-| RM训练不稳、过拟合与分布外失效怎样区分,DPO改进哪些环节? | RM 训练不稳与偏好泛化;为什么不只增加 SFT 轮次 | P002-Q009、Q012、Q061、Q071、Q093、Q115、Q187 |
-| 如何识别和缓解reward hacking,能彻底杜绝吗? | 四、reward hacking 与过优化:评委被钻空子;对齐税与评测闭环 | P002-Q012、Q071、Q115、Q209 |
+| RM 与 Critic 各负责什么,RM 训练不稳、分布外失效或 Critic 失准怎样处理? | RM 训练不稳与偏好泛化;Reward Model 与 Critic:一个定终点,一个估路程 | P002-Q009/Q012/Q061/Q071/Q093/Q115/Q187;P003-Q004/Q044/Q058/Q070/Q087/Q120 |
+| 多目标奖励怎样组合,如何识别和缓解 reward hacking? | 多目标 Reward Function:先定底线,再加权优化;四、reward hacking 与过优化;对齐税与评测闭环 | P002-Q012/Q071/Q115/Q209;P003-Q021/Q035/Q048/Q078/Q105/Q106/Q118/Q119 |
 | 什么是对齐税,怎样迭代而不只追RM分数? | 对齐税与评测闭环 | P002-Q009、Q012;P002-Q240涉及的边界 |
 | RM为何学同prompt相对分,如何控制采集偏置与重复pair泄漏? | 二、偏好数据:评委的教材;Bradley-Terry 损失;训练细节与常见坑;RM 训练不稳与偏好泛化 | P002-Q071、Q209 |
 | PPO、DPO、GRPO怎样选,PPO裁剪和GRPO组大小影响什么? | 后训练数据与算法选择 | P002-Q061、Q071、Q115、Q161、Q187、Q188、Q209、Q214、Q240 |
@@ -194,3 +210,4 @@ flowchart TD
 - DPO — [arXiv:2305.18290](https://arxiv.org/abs/2305.18290)
 - PPO — [arXiv:1707.06347](https://arxiv.org/abs/1707.06347)
 - DeepSeekMath(GRPO) — [arXiv:2402.03300](https://arxiv.org/abs/2402.03300)
+- 平台整理题 — [老师平台](https://course.terminiai.com/interview),P003-Q004/Q021/Q035/Q044/Q048/Q058/Q070/Q078/Q087/Q105/Q106/Q118/Q119/Q120。

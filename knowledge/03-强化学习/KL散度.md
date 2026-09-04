@@ -165,6 +165,14 @@ flowchart TD
 
 平台 P002-Q026 关于 KL 阈值、TRPO/PPO 约束区别及其他更新控制手段的三项追问,见 PPO 篇。
 
+### Reference Model 与 rollout 旧策略不是一个角色
+
+Reference Model 通常冻结在 SFT 或阶段起点,控制策略经历多批更新后的**累计行为漂移**。rollout 旧策略只在当前批次冻结,为 PPO/GRPO 的概率比与 clip 提供采样基线,下一批会随采样策略更新。把两者混用,会把“限制单步变化”和“别忘掉原有行为”写成同一件事。
+
+Reference 不参与梯度。`no_grad` 省激活,但权重仍占显存;可用量化、低精度、卸载或并行降低驻留成本。LoRA 场景可共享冻结基座,只区分适配器。DPO 的固定离线样本可预计算 reference logp;PPO/GRPO 持续产生的新 rollout 则无法提前穷举。
+
+不用固定 reference 时,旧策略 trust region、较小学习率、目标 KL 早停、SFT 混合目标或规则约束仍可限制某些风险,但约束对象不同,不能宣称等价。KL 惩罚过弱容易漂移和奖励投机,过强会压住任务学习;可围绕目标 KL 自适应调 β,同时看真实任务与人评。KL 数值受方向、token/序列聚合、长度和 prompt 分布影响,不存在跨实现通用阈值。
+
 ## 五、其他出场:一条 KL 串起半个后训练
 
 - **DPO**:带 KL 约束的 reward 最大化存在闭式解
@@ -198,13 +206,13 @@ $$
 | KL 怎样定义,为什么非负、为什么不是距离? | 旧稿问法;平台 P002-Q125/Q133/Q172/Q203/Q204 | 一、定义与三条性质 |
 | KL 与交叉熵有什么区别,独热、软标签和多标签时能否互换? | 平台 P001-Q03、P002-Q003/Q005/Q020/Q026/Q030/Q032/Q035/Q057/Q172/Q203/Q204/Q210/Q212 | 一、定义与三条性质;分类损失:独热和软标签都能等价 |
 | 冻结或更新教师时哪些熵项能忽略,前向/反向 KL 与 MiniLLM 怎样取舍? | 平台 P002-Q057/Q125/Q172/Q204 | 蒸馏:软目标与可学习目标的区别;二、前向与反向 |
-| RLHF 用哪个方向的 KL,能否换成交叉熵,参数距离为何不能代替行为变化? | 平台 P002-Q026/Q057/Q125/Q133/Q172/Q203/Q204 | RLHF 的 KL 惩罚是哪个方向?;策略更新:谁固定决定能不能换成交叉熵 |
+| RLHF 用哪个方向的 KL,reference 与 rollout 旧策略有何区别,能否用交叉熵或参数距离替代? | 平台 P002-Q026/Q057/Q125/Q133/Q172/Q203/Q204;P003-Q063 | RLHF 的 KL 惩罚是哪个方向?;策略更新:谁固定决定能不能换成交叉熵;Reference Model 与 rollout 旧策略不是一个角色 |
 | k1/k2/k3 在估什么,各有什么偏差与方差特点? | 旧稿问法,来源待核对 | 三、蒙特卡洛估计:测同一段路的三种仪器 |
-| PPO 与 GRPO 的 KL 放在哪里,曲线和 β 怎样读与调? | 平台 P002-Q026;其余旧稿问法待核对 | 四、工程放法:同一根缰绳的两种系法 |
+| PPO 与 GRPO 为什么加 reference KL,放在哪里,β 怎样读与调,去掉会怎样? | 平台 P002-Q026;P003-Q064/Q088/Q089 | 四、工程放法:同一根缰绳的两种系法;Reference Model 与 rollout 旧策略不是一个角色 |
 | KL 无穷大时怎样处理,与 JS/Wasserstein 有何取舍,只有样本时怎样估计? | 平台 P002-Q125/Q133/Q203/Q204 | 支持集与稳定计算;KL、JS 与 Wasserstein 的取舍;只有样本时怎样估计 |
 | 行为克隆和 VAE 中的 KL 各是什么,替换度量后 ELBO 还成立吗? | 平台 P002-Q172/Q203 | 行为克隆与 VAE |
 
-> 本表含平台整理题与旧稿问法,非面经原题。平台来源不适用 🔴;本次只增补这些来源的覆盖,全文仍待按新契约重写。
+> 本表含平台整理题与旧稿问法,非面经原题;本次只增补这些来源的覆盖,全文仍待按新契约重写。
 
 ## 相关文献
 
@@ -216,3 +224,5 @@ $$
 - MiniLLM(反向 KL 蒸馏)— [arXiv:2306.08543](https://arxiv.org/abs/2306.08543)
 - Auto-Encoding Variational Bayes（ELBO 与后验 KL）— [arXiv:1312.6114](https://arxiv.org/abs/1312.6114)。
 - [SciPy：Jensen–Shannon 距离](https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.jensenshannon.html)、[Wasserstein 距离](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wasserstein_distance.html)。
+- TRPO — [arXiv:1502.05477](https://arxiv.org/abs/1502.05477)
+- 平台整理题 — [老师平台](https://course.terminiai.com/interview),P003-Q063/Q064/Q088/Q089。

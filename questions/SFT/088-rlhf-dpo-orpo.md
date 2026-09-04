@@ -3,7 +3,7 @@ difficulty: 中等
 topic: DPO/偏好优化方法比较
 summary: RLHF、DPO、ORPO 如何利用反馈,ORPO 的赔率比与数据边界是什么
 tags: [SFT, DPO, ORPO, RLHF, 偏好优化, 待校对]
-company: 淘天
+company: 淘天、字节、快手
 mastered: false
 highfreq: false
 ---
@@ -46,17 +46,35 @@ DPO 的 Bradley-Terry 模型用单一标量效用差解释成对偏好,难以完
 
 只有高质量正例时可以做 SFT,但标准 DPO、ORPO 和成对RM缺少比较信号。可另采候选并可靠标注成对数据;不能随便把随机文本当负例。若有单条好/坏反馈可考虑 KTO;若另有可验证奖励,PPO/GRPO仍可训练,但反馈条件已改变。ORPO 不保证极少数据就能对齐,任何方法都须评测目标收益和原能力回退。
 
+### “离线偏好优化”不是唯一算法名
+
+`offline preference optimization` 通常指“用固定偏好数据优化策略”的一类方法,不能仅凭 `OPO` 缩写确定一个公式。DPO、IPO、SLiC 等都可以放进离线偏好优化框架,但理论目标、损失形状和是否依赖参考模型不同。
+
+本批平台 P003-Q037 把 `OPO` 解释成 `Offline Preference Optimization`,并给 DPO 式目标增加一个未定义的参考偏移项;页面没有论文、作者或估计方式。按一手论文无法把名称、公式和动机对应到同一个公认算法,因此正式答案不沿用该公式。若讨论带偏移的 DPO,应明确写出具名的 ODPO,其偏移表示偏好强度,也不是页面声称的参考策略偏差。P003-Q114 除题干误写 OPO 外,要点和公式都是标准 DPO,已按 DPO 归并。
+
+| 方法 | 解决的反馈条件 | 关键边界 |
+|---|---|---|
+| IPO | 用有限的目标间隔避免偏好分差被无限推大 | 仍依赖偏好质量与离线覆盖 |
+| KTO | 可使用单条好/坏反馈,不要求每条成对 | 需要定义可靠的好坏基准 |
+| GRPO | 同题多次在线采样,用组内相对奖励估计优势 | 需要可比较奖励,采样成本高 |
+| ODPO | 在 DPO 分差上加入由评分差得到的偏好强度间隔 | 需要额外强度信息,不能写成通用 OPO |
+
+快速迭代时,DPO 或其他离线方法可复用已标注数据、训练环简单;它们不会自动解决新策略走出数据覆盖的问题。监控当前策略新回答的人评、分桶胜率、长度和任务分布,必要时刷新数据或切换在线方法。
+
 ## 知识点
 
 DPO、ORPO、RLHF、偏好优化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q240。
-- 依据:[ORPO §4](https://arxiv.org/html/2403.07691v2)、[DPO](https://arxiv.org/abs/2305.18290)、[InstructGPT](https://arxiv.org/abs/2203.02155)、[KTO](https://arxiv.org/abs/2402.01306)。
+- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q240;P003-Q014、P003-Q037。
+- 依据:[ORPO §4](https://arxiv.org/html/2403.07691v2)、[DPO](https://arxiv.org/abs/2305.18290)、[InstructGPT](https://arxiv.org/abs/2203.02155)、[KTO](https://arxiv.org/abs/2402.01306)、[GPO](https://proceedings.mlr.press/v235/tang24b.html)、[ODPO](https://aclanthology.org/2024.findings-acl.592/)。
 
 ## 追问
 
 - DPO 的 BT 假设有哪些局限,怎样处理?
 - ORPO 相比 DPO 的计算开销一定更高吗?
 - 只有正例没有负例时,这些方法还能怎样使用?
+- “离线偏好优化”是一个算法还是方法类别,为什么不能只写 OPO?
+- IPO、KTO、GRPO 和 ODPO 分别适合什么反馈条件?
+- 离线方法怎样发现分布外退化,何时需要刷新数据或改用在线 RL?
 
 ## Note
