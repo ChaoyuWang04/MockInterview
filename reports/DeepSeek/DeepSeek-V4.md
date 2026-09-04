@@ -2,18 +2,35 @@
 
 > 本文依据 DeepSeek-AI 发布的 **DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence**，即 arXiv:2606.19348v1、2026-04-26 的预览版。页码均指 PDF 本身的页码。文中会明确区分“报告写了什么”和“我们从中得到什么启发”。
 
+## 阅读前先搭一张最小地图
+
+先认识四个底层概念：
+
+- **Token（词元）**：模型读写文本时使用的基本小块，一个汉字、单词或标点都可能被切成一个或多个 Token。
+- **Attention（注意力）**：模型判断“当前这个 Token 应该重点参考前文哪些位置”的机制。
+- **KV Cache（Key-Value Cache，键值缓存）**：把已经读过的内容留下中间结果，生成下一个 Token 时不必从头重算。
+- **残差流与优化器**：残差流是信息穿过一层层网络的主干道；优化器则根据训练误差决定每一步怎样修改模型参数。
+
+这篇报告最常出现的五个名字是：
+
+- **压缩稀疏注意力（Compressed Sparse Attention，CSA）**：先把较远的历史压成更少的条目，再只精读其中最相关的一小部分。
+- **高度压缩注意力（Heavily Compressed Attention，HCA）**：把历史压得更粗，但会快速扫过全部摘要，避免完全漏掉远处信息。
+- **滑动窗口注意力（Sliding Window Attention，SWA）**：只细看当前位置附近的一小段原文，负责保住眼前的词序和语法细节。
+- **流形约束超连接（Manifold-Constrained Hyper-Connections，mHC）**：把层与层之间的一条残差通道扩成多条，同时限制混合方式，避免信号越传越大或互相抵消。
+- **Muon（MomentUm Orthogonalized by Newton-Schulz，动量经 Newton-Schulz 迭代正交化）**：一种训练优化器；它先累积动量，再把二维权重矩阵的更新方向整理得更均匀。
+
 ## 一句话先说清
 
 DeepSeek-V4 不是靠“把上下文长度参数改成 1M”得到的一百万 Token 模型。
 
 它真正做的事情，是重新设计了一整条长上下文流水线：
 
-- 用 **CSA** 把细节先压缩，再只找少数相关历史；
-- 用 **HCA** 做更粗、更便宜的全局回看；
-- 用一小段 **SWA** 补回眼前细节；
-- 用 **mHC** 扩宽层与层之间的信息高速公路，同时给它装上护栏；
-- 用 **Muon** 改善大矩阵的更新方向；
-- 再用通信—计算融合、上下文并行、混合 KV Cache、FP4 QAT 和可恢复 rollout，把这些想法变成能训练、能服务的系统。
+- 用 **压缩稀疏注意力（CSA）** 把细节先压缩，再只找少数相关历史；
+- 用 **高度压缩注意力（HCA）** 做更粗、更便宜的全局回看；
+- 用一小段 **滑动窗口注意力（SWA）** 补回眼前细节；
+- 用 **流形约束超连接（mHC）** 扩宽层与层之间的信息高速公路，同时给它装上护栏；
+- 用 **Muon 优化器** 改善大矩阵的更新方向；
+- 再用通信—计算融合、上下文并行、混合 KV Cache、FP4 量化感知训练（Quantization-Aware Training，QAT）和可恢复 rollout（强化学习中模型实际生成的轨迹），把这些想法变成能训练、能服务的系统。
 
 因此，V4 最值得记住的并不是某个孤立名词，而是一种工程思路：
 
@@ -27,18 +44,18 @@ DeepSeek-V4 不是靠“把上下文长度参数改成 1M”得到的一百万 T
 flowchart TB
     A[超过 32T Token 的预训练数据] --> B[DeepSeek-V4 基座]
     B --> C[混合注意力<br/>CSA + HCA + SWA]
-    B --> D[DeepSeekMoE<br/>每个 Token 只激活少数专家]
-    B --> E[mHC<br/>扩宽并约束残差流]
-    B --> F[MTP<br/>沿用 V3 的多 Token 预测]
-    G[Muon + AdamW] --> B
-    C --> H[1M 原生上下文]
-    I[MegaMoE / TileLang / 确定性 Kernel] --> B
-    J[上下文并行 / 细粒度重计算] --> B
-    B --> K[数学、代码、Agent、指令等领域专家]
-    K --> L[GRPO 强化各领域能力]
-    L --> M[多教师 On-Policy Distillation]
-    M --> N[V4-Flash / V4-Pro<br/>Non-think / High / Max]
-    O[FP4 QAT / WAL / DSec] --> M
+    B --> D[混合专家<br/>每个 Token 只激活少数专家]
+    B --> E[mHC<br/>多路受控残差]
+    B --> F[多 Token 预测]
+    G[Muon + AdamW<br/>两类优化器] --> B
+    C --> H[一百万 Token 原生上下文]
+    I[融合算子 / 确定性 Kernel] --> B
+    J[上下文并行<br/>细粒度重计算] --> B
+    B --> K[多个领域专家]
+    K --> L[领域强化学习]
+    L --> M[多教师在线策略蒸馏]
+    M --> N[V4-Flash / V4-Pro<br/>三档推理强度]
+    O[FP4 量化训练 / 可恢复生成 / Agent 沙箱] --> M
 ```
 
 两种规模是：
@@ -48,9 +65,9 @@ flowchart TB
 | DeepSeek-V4-Flash | 284B | 13B | 43 | 用更小的激活规模换成本效率 |
 | DeepSeek-V4-Pro | 1.6T | 49B | 61 | 更强知识容量与复杂任务能力 |
 
-这两个模型都不是每次把全部参数跑一遍。它们是 MoE 模型，只让与当前 Token 相关的一小部分专家工作。具体配置见后面的训练 recipe。（PDF p.24–25）
+这两个模型都不是每次把全部参数跑一遍。它们是 Mixture-of-Experts（MoE，混合专家）模型，只让与当前 Token 相关的一小部分专家工作。具体配置见后面的训练 recipe。（PDF p.24–25）
 
-在一百万 Token 场景下，报告估算 V4-Pro 的单 Token 推理 FLOPs 只有 V3.2 的 27%，KV Cache 只有 10%；V4-Flash 更低，分别约为 10% 和 7%。这些是报告按其模型与精度配置得到的估算，不应直接理解为所有机器上的端到端延迟也同比下降。（PDF p.5）
+在一百万 Token 场景下，报告估算 V4-Pro 的单 Token 推理 FLOPs（浮点运算量）只有 V3.2 的 27%，KV Cache 只有 10%；V4-Flash 更低，分别约为 10% 和 7%。这些是报告按其模型与精度配置得到的估算，不应直接理解为所有机器上的端到端延迟也同比下降。（PDF p.5）
 
 ## 第一层问题：一百万 Token 为什么难
 
@@ -93,13 +110,13 @@ $$
 
 一种注意力模式很难同时经济地满足三件事。V4 的核心答案，就是按时间尺度分工。
 
-## 核心设计一：CSA、HCA、SWA 组成三档记忆
+## 核心设计一：三种注意力组成三档记忆
 
 先用一个人类记笔记的比喻：
 
-- **SWA** 像眼前摊开的最近两页，细节完整；
-- **CSA** 像带索引的章节笔记，先压缩，再只翻最相关的几页；
-- **HCA** 像全书目录，每个大章节只有一条摘要，但每次都会扫一遍。
+- **滑动窗口注意力（SWA）** 像眼前摊开的最近两页，细节完整；
+- **压缩稀疏注意力（CSA）** 像带索引的章节笔记，先压缩，再只翻最相关的几页；
+- **高度压缩注意力（HCA）** 像全书目录，每个大章节只有一条摘要，但每次都会扫一遍。
 
 ```mermaid
 flowchart LR
@@ -114,9 +131,9 @@ flowchart LR
 
 注意：图表达的是三种作用，不表示每一层同时跑三个完整分支。V4 会在层间交错使用 CSA 与 HCA，而两者都带小型滑动窗口分支。（PDF p.9–13、24–25）
 
-### CSA：先把历史折叠，再做稀疏检索
+### 压缩稀疏注意力（Compressed Sparse Attention，CSA）：先把历史折叠，再做稀疏检索
 
-CSA 是 **Compressed Sparse Attention**，直译是“压缩稀疏注意力”。它分两步：
+它分两步：
 
 1. 每 \(m\) 个历史 Token 压成一个 KV 条目；
 2. 当前 Query 用轻量索引器打分，只选 Top-k 个压缩条目做真正注意力。
@@ -165,9 +182,9 @@ $$
 
 真正的注意力随后只在选中的压缩 KV 上运行。这里使用共享 Key-Value 的 MQA：很多 Query 头共用一套压缩 KV，从而继续节省缓存。由于全部注意力头拼接后很宽，V4 又先分组降维，再投影回隐藏维度，避免输出投影本身成为新瓶颈。（PDF p.11，式 18–19）
 
-### HCA：压得更狠，但把全局都扫一遍
+### 高度压缩注意力（Heavily Compressed Attention，HCA）：压得更狠，但把全局都扫一遍
 
-HCA 是 **Heavily Compressed Attention**。它把每 \(m'\) 个 Token 压成一个条目，且 \(m'\gg m\)。V4 中 \(m'=128\)。（PDF p.11–12、24–25）
+它把每 \(m'\) 个 Token 压成一个条目，且 \(m'\gg m\)。V4 中 \(m'=128\)。（PDF p.11–12、24–25）
 
 这意味着一百万 Token 会变成大约 7813 个“超级摘要”。HCA 不再做 Top-k，而是对这些摘要做密集注意力。
 
@@ -183,7 +200,7 @@ $$
 
 与 CSA 相比，它不使用相邻块重叠，压缩率更高，也不再运行稀疏选择器。（PDF p.12，式 20–26）
 
-### SWA：为什么已经压缩了，还要保留最近 128 个 Token
+### 滑动窗口注意力（Sliding Window Attention，SWA）：为什么还要保留最近 128 个 Token
 
 CSA/HCA 都只允许当前 Query 看已经完成的压缩块。当前 Token 所在的块还没凑满，不能生成最终压缩条目。若不补救，模型会看不到近在眼前的几个词。
 
@@ -245,7 +262,7 @@ RoPE 相关维度保留 BF16，其余 KV 使用 FP8；Lightning Indexer 的注�
 
 所以更准确的结论是：V4 把一百万 Token 做到了**可用且相对经济**，不是让一百万 Token 与八千 Token 一样简单可靠。
 
-## 核心设计二：mHC 给残差流扩路，但不让信号失控
+## 核心设计二：流形约束超连接（Manifold-Constrained Hyper-Connections，mHC）给残差流扩路
 
 ### 先回忆普通残差连接
 
@@ -286,7 +303,7 @@ flowchart LR
 
 这个思路很诱人：残差宽度成为参数量、层数、隐藏维度之外的新扩展轴。但朴素 HC 有一个问题——每层都乘一个自由的 \(B_l\)，几十层叠起来后，信号可能越来越大，也可能互相抵消到几乎消失。论文报告它在深层堆叠时经常出现数值不稳定。（PDF p.8）
 
-### mHC 的关键：把 \(B_l\) 限制成“双随机矩阵”
+### 流形约束超连接的关键：把 \(B_l\) 限制成“双随机矩阵”
 
 DeepSeek 没有放弃多车道，而是给车道调度矩阵加约束：
 
@@ -349,7 +366,7 @@ V4 实际迭代 20 次。可以想象一张不断调平的表格：列刚调好�
 
 当然，mHC 仍有成本：四路残差增加激活内存和流水线阶段间通信。DeepSeek 用融合 Kernel、选择性重计算和修改后的 DualPipe 重叠来控制成本，最终报告的流水线 wall-time 开销仍为 6.7%。（PDF p.20）
 
-## 核心设计三：Muon 不只缩放梯度，还整理大矩阵的方向
+## 核心设计三：Muon（MomentUm Orthogonalized by Newton-Schulz）整理大矩阵更新
 
 ### 为什么大矩阵更新可能“挤在同一个方向”
 
@@ -1129,4 +1146,5 @@ CSA/HCA 负责少看但别瞎看，SWA 负责别丢眼前细节；mHC 让残差�
 - 官方发布说明：[DeepSeek-V4 Release](https://api-docs.deepseek.com/news/news260424/)。
 - 报告给出的注意力实现：[DeepSeek-V4-Pro inference](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/tree/main/inference)。阅读源码时应以具体 commit 为准；本文没有把源码中未写入报告的细节冒充论文结论。
 - 报告给出的 MegaMoE 实现：[DeepGEMM PR #304](https://github.com/deepseek-ai/DeepGEMM/pull/304)。
+- Muon 名称与基础定义补充：[Muon: An optimizer for hidden layers in neural networks](https://kellerjordan.github.io/posts/muon/)。这是 Muon 作者的说明，不是 DeepSeek-V4 报告新增的结论。
 - 外部实现补充：[vLLM 的 DeepSeek-V4 支持说明](https://github.com/vllm-project/vllm-project.github.io/blob/main/_posts/2026-04-24-deepseek-v4.md)。这只帮助理解部署接入，不是报告原文证据。
