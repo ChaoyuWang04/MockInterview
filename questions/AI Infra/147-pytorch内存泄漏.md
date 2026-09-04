@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 显存管理与OOM/内存泄漏诊断
 summary: 怎样区分活跃张量、CUDA缓存与真正泄漏并定位持续引用
-tags: [面经, 待校对, PyTorch, 显存, 内存泄漏, Profiling]
+tags: [真题, 待校对, PyTorch, 显存, 内存泄漏, Profiling]
 company: 科大讯飞、阿里
 mastered: false
 highfreq: false
@@ -66,13 +66,11 @@ CPU 对象可用 `tracemalloc`、对象计数和引用检查辅助定位，但 `
 
 活跃显存、缓存池、进程 RSS、引用链、计算图、memory snapshot、短窗口 profiler 与逐 rank 排查。
 
-- 真实面经：[B002-G01-Q103](../../docs/references/面经原题.md#b002-g01-q103)
-- 老师参考：[P005-Q103](../../docs/references/平台题/P005-Infra-091-120.md#p005-q103)
 
 ## 追问
 
-- 参考追问：怎样区分真正泄漏和 PyTorch CUDA 缓存池的正常行为？
-- 参考追问：多卡训练时怎样定位是哪张卡泄漏？
-- 参考追问：`pin_memory` 等“伪泄漏”通常怎样产生？
+- 怎样区分真正泄漏和 PyTorch CUDA 缓存池的正常行为？
+- 多卡训练时怎样定位是哪张卡泄漏？
+- `pin_memory` 等“伪泄漏”通常怎样产生？
 
 ## Note

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 图算法/最小生成树
 summary: 手写 Kruskal 与并查集，并比较 Prim 的复杂度和适用图
-tags: [面经, 待校对, 手撕代码, 图算法, 最小生成树, 并查集]
+tags: [真题, 待校对, 手撕代码, 图算法, 最小生成树, 并查集]
 company: 蚂蚁金服
 mastered: false
 highfreq: false
@@ -70,12 +70,10 @@ def kruskal(n, edges):
 ## 知识点
 
 - 贪心、割性质、环性质、并查集、路径压缩、按大小合并、连通图。
-- 面经原题：[B006-G01-Q060](../../docs/references/面经原题.md#b006-g01-q060)、[B006-G01-Q103](../../docs/references/面经原题.md#b006-g01-q103)。
-- 老师答案参考：[P009-Q060](../../docs/references/平台题/P009-LC-001-080.md#p009-q060)、[P009-Q103](../../docs/references/平台题/P009-LC-081-160.md#p009-q103)。
 
 ## 追问
 
-以下为 Q060 平台页面追问，Q103 页面没有附加追问；均不计入面经原题：
+相关真题追问：
 
 - 图中有负权边时，Kruskal 和 Prim 是否仍然适用？
 - 路径压缩与按秩/大小合并怎样改善并查集复杂度？

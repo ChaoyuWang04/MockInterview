@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 规划模式/CoT、ToT与GoT
 summary: 比较 CoT、ToT 与 GoT 的搜索结构和适用边界
-tags: [面经, 待校对, Agent, CoT, ToT, GoT, 规划]
+tags: [真题, 待校对, Agent, CoT, ToT, GoT, 规划]
 company: 高德
 mastered: false
 highfreq: false
@@ -38,12 +38,10 @@ ToT 用 BFS 时覆盖更均匀但内存和调用开销大；DFS 占用较小，�
 CoT、Tree of Thoughts、Graph of Thoughts、BFS/DFS、外部验证器、搜索预算。
 
 参考：[Tree of Thoughts（arXiv:2305.10601）](https://arxiv.org/abs/2305.10601)、[Graph of Thoughts（arXiv:2308.09687）](https://arxiv.org/abs/2308.09687)。
-- 本批真实面经：[B005-Q025](../../docs/references/面经原题.md#b005-g01-q025)。
-- 本批老师参考：[P008-Q025](../../docs/references/平台题/P008-Agent-001-030.md#p008-q025)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - ToT 的 BFS 和 DFS 如何选择，还有哪些剪枝方法？
 - GoT 的图结构怎样构建和维护，如何控制复杂度？

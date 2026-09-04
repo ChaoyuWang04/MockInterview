@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PD分离/KV传输
 summary: PD 分离下 KV cache 怎么传、走什么硬件、怎么做异步
-tags: [面经, 待校对, PD分离, RDMA]
+tags: [真题, 待校对, PD分离, RDMA]
 company:
 mastered: false
 highfreq: false

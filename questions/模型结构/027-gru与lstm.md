@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: RNN与门控循环网络/门控结构和选型
 summary: GRU与LSTM如何用不同门控保留和更新序列状态
-tags: [GRU, LSTM, RNN, 门控机制, 待校对]
+tags: [真题, GRU, LSTM, RNN, 门控机制, 待校对]
 company: 小红书
 mastered: false
 highfreq: false
@@ -51,7 +51,6 @@ $c_t$ 是较直接的记忆通路，遗忘门保留旧记忆，输入门写新�
 
 GRU 的“更新/重置”和 LSTM 的“输入/遗忘/输出”都是数据依赖的软门。参数多少由实际矩阵形状决定，任务性能必须在相同预算下实测。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q072、P004-Q221。
 - 一手依据：[Learning Phrase Representations using RNN Encoder-Decoder](https://arxiv.org/abs/1406.1078)、[Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf)。
 
 ## 追问

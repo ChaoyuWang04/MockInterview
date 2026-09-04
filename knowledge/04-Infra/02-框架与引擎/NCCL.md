@@ -169,7 +169,7 @@ mpirun -np 64 -N 8 ./build/all_reduce_perf -b 8 -e 8G -f 2 -g 1
 ## 面试考点串联
 
 | 高频问法 | 本文哪一节 |
-|---|---|
+| --- | --- |
 | NCCL 到底替你做了什么?如果自己写一个 all-reduce,会缺哪几块? | 一(拓扑 / 算法 / 通道三件自动决策) |
 | 通信器是怎么建起来的?为什么初始化这一步特别容易卡住? | 二(rank + world size + 唯一 ID;隐式全员同步 + 带外通路) |
 | 多机训练一启动就卡在初始化,你怎么查? | 二 + 六(看初始化开始/完成行、bootstrap 耗时、选中了哪块网卡) |
@@ -179,7 +179,6 @@ mpirun -np 64 -N 8 ./build/all_reduce_perf -b 8 -e 8G -f 2 -g 1
 | 训练跑了几小时突然 hang 住,日志什么都没有,你有哪些手段? | 六 + 七(desync debug、Flight Recorder、`ncclras`、straggler) |
 | 用 nccl 后端为什么一定要一个进程绑一张卡?不绑会怎样? | 七(独占 GPU 否则 deadlock;不 `set_device` 会 hang) |
 
-> 本表按出题标准自拟,非面经原题。
 
 延伸阅读顺序:集合通信(算子与算法原理)→ GPU互联与组网(链路与拓扑)→ 本篇(库怎么用、怎么调、怎么排障)→ 性能分析与Profiling(怎么量出通信开销)。
 

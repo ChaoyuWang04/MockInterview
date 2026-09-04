@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache/量化的收益
 summary: 对 KV cache 做量化的好处是什么,收益怎么一层层传导
-tags: [面经, 待校对, KVCache, 量化]
+tags: [真题, 待校对, KVCache, 量化]
 company:
 mastered: false
 highfreq: false

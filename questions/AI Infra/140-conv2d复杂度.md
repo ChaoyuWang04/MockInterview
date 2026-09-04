@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 模型算子/Conv2D 复杂度
 summary: 从输出尺寸推导普通、分组和深度可分离卷积计算量
-tags: [面经, 待校对, Conv2D, 计算复杂度, FLOPs]
+tags: [真题, 待校对, Conv2D, 计算复杂度, FLOPs]
 company: 小红书
 mastered: false
 highfreq: false
@@ -49,15 +49,13 @@ stride增大通常让输出变小；padding、dilation通过输出尺寸和有�
 
 输出尺寸、MACs与FLOPs、分组卷积、深度可分离卷积、算术强度、kernel效率。
 
-- 真实面经：[B002-G01-Q084](../../docs/references/面经原题.md#b002-g01-q084)、[B002-G01-Q157](../../docs/references/面经原题.md#b002-g01-q157)
-- 老师答案参考：[P005-Q084](../../docs/references/平台题/P005-Infra-061-090.md#p005-q084)、[P005-Q157](../../docs/references/平台题/P005-Infra-151-180.md#p005-q157)
 
 ## 追问
 
-- 页面参考追问：组卷积的复杂度怎样变化？
-- 页面参考追问：stride、padding和dilation怎样影响输出尺寸和计算量？
-- 页面参考追问：深度可分离卷积为何能降低计算量？
-- 页面参考追问：除了理论FLOPs，哪些因素会影响卷积层实际延迟？
-- 页面参考追问：怎样优化卷积执行以逼近理论加速比？
+- 组卷积的复杂度怎样变化？
+- stride、padding和dilation怎样影响输出尺寸和计算量？
+- 深度可分离卷积为何能降低计算量？
+- 除了理论FLOPs，哪些因素会影响卷积层实际延迟？
+- 怎样优化卷积执行以逼近理论加速比？
 
 ## Note

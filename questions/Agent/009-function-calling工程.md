@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 工具调用/Function Calling与工程集成
 summary: 解释 Function Calling 全流程及生产工具治理
-tags: [面经, 待校对, Agent, Function Calling, Tool Use, 工具编排, 安全]
+tags: [真题, 待校对, Agent, Function Calling, Tool Use, 工具编排, 安全]
 company: 阿里云、百度
 mastered: false
 highfreq: false
@@ -32,12 +32,10 @@ highfreq: false
 ## 知识点
 
 Function Calling、Tool Use、JSON Schema、工具执行器、DAG 调度、幂等、最小权限、提示注入。
-- 本批真实面经：[B005-Q016](../../docs/references/面经原题.md#b005-g01-q016)、[B005-Q029](../../docs/references/面经原题.md#b005-g01-q029)、[B005-Q038](../../docs/references/面经原题.md#b005-g01-q038)。
-- 本批老师参考：[P008-Q016](../../docs/references/平台题/P008-Agent-001-030.md#p008-q016)、[P008-Q029](../../docs/references/平台题/P008-Agent-001-030.md#p008-q029)、[P008-Q038](../../docs/references/平台题/P008-Agent-031-059.md#p008-q038)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 工具失败时，如何决定重试、换工具还是直接回答？
 - 多工具并行调用如何设计依赖图和结果合并？

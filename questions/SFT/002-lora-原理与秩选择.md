@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/原理与秩选择
 summary: LoRA 如何微调、为何这样初始化、秩 r 怎么选
-tags: [SFT, LoRA, 参数高效微调, 低秩分解, 微调策略, 模型压缩, 待校对]
+tags: [真题, SFT, LoRA, 参数高效微调, 低秩分解, 微调策略, 模型压缩, 待校对]
 company: 字节、蚂蚁、快手、阿里云、腾讯、阿里、淘天、百度
 mastered: false
 highfreq: false
@@ -65,14 +65,12 @@ flowchart TD
 - **Q/K/V/FFN 中挂哪一层最好,有理论保证吗?** 没有通用最优层。原论文在特定实验中发现 Q/V 组合有效,不能推广到所有模型。应在相近参数预算下比较目标层组合与秩。
 - **权重怎么合并,为什么推理没有新增分支?** 在部署前算好 $W'=W_0+(\alpha/r)BA$,推理只做 $W'x$。合并后的矩阵形状不变,大小秩都能合并;收益是省去独立 LoRA 路径,不保证比原基座更快。多任务共用一个基座时也可保留分支,换取切换方便。
 
-进一步的来源追问按角度展开:秩与数据诊断见 [超参数调优](031-lora-超参数调优.md);自适应秩、Embedding/LM Head、FFN 与长上下文选层见 [适用层与非线性](078-lora-非线性层扩展.md);非零起点与其他零门控方法见 [改进初始化](046-lora-改进初始化.md);量化与遗忘见 [LoRA 与 QLoRA](051-lora与qlora.md);全参差距及多适配器组合见 [LoRA 与全参数微调](066-lora与全参数微调.md)。
+进一步的真题追问按角度展开:秩与数据诊断见 [超参数调优](031-lora-超参数调优.md);自适应秩、Embedding/LM Head、FFN 与长上下文选层见 [适用层与非线性](078-lora-非线性层扩展.md);非零起点与其他零门控方法见 [改进初始化](046-lora-改进初始化.md);量化与遗忘见 [LoRA 与 QLoRA](051-lora与qlora.md);全参差距及多适配器组合见 [LoRA 与全参数微调](066-lora与全参数微调.md)。
 
 ## 知识点
 
 低秩权重增量、参数高效微调、冻结基座、零增量初始化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),采集编号 P001-Q02、P002-Q002、P002-Q004、P002-Q021、P002-Q056;承接 P002-Q034 的秩与方法对比追问。
-- 本批同题来源:[老师平台](https://course.terminiai.com/interview),P002-Q092、P002-Q094、P002-Q095、P002-Q097、P002-Q101、P002-Q102、P002-Q142、P002-Q147、P002-Q152、P002-Q175、P002-Q177、P002-Q206。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[Adapter 原论文](https://proceedings.mlr.press/v97/houlsby19a.html)、[Prefix-tuning 原论文](https://aclanthology.org/2021.acl-long.353/)。
 
 ## 追问

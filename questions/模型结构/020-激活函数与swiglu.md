@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: FFN与激活/常见激活函数与LLM中的GELU SwiGLU
 summary: 常见激活怎样影响梯度，GELU和SwiGLU为何用于LLM
-tags: [激活函数, GELU, SiLU, SwiGLU, 待校对]
+tags: [真题, 激活函数, GELU, SiLU, SwiGLU, 待校对]
 company: 美团、小红书、网易
 mastered: false
 highfreq: false
@@ -44,7 +44,6 @@ sin/cos 当然是非线性，也能用于隐藏层；问题是周期性会把相
 
 激活函数的选型看表达、梯度、数值分布和内核；不要求全局单调或可逆。SwiGLU 属于门控拓扑，不能和 GELU 当成同层级的单函数直接比较。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q014、P004-Q064、P004-Q096、P004-Q159、P004-Q170、P004-Q177、P004-Q178、P004-Q210、P004-Q211、P004-Q217、P004-Q220、P004-Q242。
 - 一手依据：[GELU](https://arxiv.org/abs/1606.08415)、[Swish](https://arxiv.org/abs/1710.05941)、[GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202)、[SIREN](https://arxiv.org/abs/2006.09661)、[LLaMA](https://arxiv.org/abs/2302.13971)。
 
 ## 追问

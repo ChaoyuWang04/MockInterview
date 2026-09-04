@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 选择算法/Quickselect
 summary: 用随机 Quickselect 在线性期望时间求第 k 小或第 k 大
-tags: [面经, 待校对, 手撕代码, Quickselect, TopK, 分区]
+tags: [真题, 待校对, 手撕代码, Quickselect, TopK, 分区]
 company: 脉脉
 mastered: false
 highfreq: false
@@ -72,12 +72,10 @@ def kth_largest(nums, k, seed=None):
 ## 知识点
 
 - 选择问题、顺序统计量、三路分区、随机化期望、Top K、堆。
-- 面经原题：[B006-G01-Q120](../../docs/references/面经原题.md#b006-g01-q120)。
-- 老师答案参考：[P009-Q120](../../docs/references/平台题/P009-LC-081-160.md#p009-q120)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 固定选第一个元素时，什么输入会触发最坏情况？
 - Quickselect 和大小为 k 的堆怎样选？

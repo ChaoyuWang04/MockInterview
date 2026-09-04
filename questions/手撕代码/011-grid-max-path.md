@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 动态规划/网格最大路径和
 summary: 用一维动态规划求只向右或向下的网格最大得分
-tags: [面经, 待校对, 动态规划, 网格, 路径规划]
+tags: [真题, 待校对, 动态规划, 网格, 路径规划]
 company: 拼多多
 mastered: false
 highfreq: false
@@ -48,11 +48,10 @@ def max_path_score(grid):
 
 - 网格 DP、滚动数组、最大路径、边界初始化、空间复杂度统计口径。
 
-- 面经原题：[B006-G01-Q020](../../docs/references/面经原题.md#b006-g01-q020)、[B006-G01-Q230](../../docs/references/面经原题.md#b006-g01-q230)；老师答案参考：[P009-Q020](../../docs/references/平台题/P009-LC-001-080.md#p009-q020)、[P009-Q230](../../docs/references/平台题/P009-LC-161-241.md#p009-q230)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 允许上下左右且不能重复访问时为何不再是同一 DP？
 - 网格边长很大但稀疏时怎样存储？

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: RoPE/原理与长度外推
 summary: RoPE怎样表示相对位置以及如何扩展上下文
-tags: [RoPE, 长上下文, 位置插值, YaRN, 待校对]
+tags: [真题, RoPE, 长上下文, 位置插值, YaRN, 待校对]
 company: 字节、小红书、百度
 mastered: false
 highfreq: false
@@ -53,7 +53,6 @@ $$
 
 RoPE 的可靠结论是 Q/K 内积显式依赖相对位移；“天然无限外推、自然远程衰减、显式保存绝对位置”都属于过强表述。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，采集编号 P004-Q017、P004-Q018、P004-Q035、P004-Q036、P004-Q063、P004-Q099、P004-Q166、P004-Q240、P004-Q283、P004-Q284、P004-Q292、P004-Q293、P004-Q296、P004-Q326。
 - 依据：[RoFormer / RoPE](https://arxiv.org/abs/2104.09864)、[Position Interpolation](https://arxiv.org/abs/2306.15595)、[YaRN](https://arxiv.org/abs/2309.00071)。
 
 ## 追问

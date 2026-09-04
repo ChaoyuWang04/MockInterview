@@ -8,6 +8,15 @@ export interface SamplerProfile {
    * 漏写一个章节最多少考几道题,LLM 多推一个章节就是问你完全没做过的东西。
    */
   chapters: string[]
+  /**
+   * 章节权重,同样来自简历 frontmatter。**决定「这场面试有多少比例问这个方向」**。
+   *
+   * 存在的理由:权重若逐个候选计算,章节的中签率会正比于它有多少语料,
+   * 使内容多的章节压过简历真正关注的方向。
+   * 现在改成两级采样:**先按这里的权重选章节,再在章节内部选题** —— 章节有多少题
+   * 不再影响它被选中的概率。缺省(简历只写了章节列表)时全部按 1,即各章均等。
+   */
+  chapterWeights?: Record<string, number>
   /** 第二级(软权重):文章名 → 0–3 亲和度,由画像脚本产出。**0 是硬否决,不是降权** */
   affinity: Record<string, number>
   /** 画像里没提到的文章按几分算(没有画像时全部走这个),默认 1 = 岗位常识 */
@@ -25,7 +34,6 @@ export const WEIGHTS = {
   /** 下标 = 亲和度;0 分权重为 0 → 直接出局 */
   affinity: [0, 1, 2, 3] as const,
   highfreq: 2,
-  fromInterview: 1.5,
   mastered: 0.2,
   /** 已问过不是永久出局:池子过完一轮后还能再抽到 */
   asked: 0.05,
@@ -61,7 +69,6 @@ export function weightOf(
   if (tier === 0) return 0
   let w = tier
   if (c.highfreq) w *= WEIGHTS.highfreq
-  if (c.fromInterview) w *= WEIGHTS.fromInterview
   if (c.mastered) w *= WEIGHTS.mastered
   if (session.asked.has(c.id)) w *= WEIGHTS.asked
   if (session.lastArticle && c.article === session.lastArticle) w *= WEIGHTS.sameArticle
@@ -69,8 +76,31 @@ export function weightOf(
   return w
 }
 
+/** 从一组候选里按权重抽一个;全零返回 null */
+function weightedPick(
+  cands: readonly Candidate[],
+  weights: readonly number[],
+  rnd: () => number,
+): Candidate | null {
+  const total = weights.reduce((s, w) => s + w, 0)
+  if (total <= 0) return null
+  let r = rnd() * total
+  for (let i = 0; i < cands.length; i++) {
+    r -= weights[i]
+    if (r < 0) return cands[i]
+  }
+  return cands[cands.length - 1]
+}
+
 /**
- * 加权随机抽一道。`rnd` 注入是为了单测可复现。
+ * 抽一道。**两级采样:先选章节,再在章节内选题。**`rnd` 注入是为了单测可复现。
+ *
+ * 为什么必须分两级见 `SamplerProfile.chapterWeights` 的注释 —— 一级采样下
+ * 章节的中签率正比于语料量,简历权重会被语料分布淹没。
+ *
+ * 章节的实际权重 = 简历给的权重 × (该章还有没有能抽的题)。乘上后者是为了
+ * 让「本章的题在这场里问完了」自然降权到几乎不选,而不是空转。
+ *
  * 池子空(章节全不在册,或亲和度全 0)时返回 null,**绝不退化成随机乱抽**。
  */
 export function pick(
@@ -81,15 +111,50 @@ export function pick(
 ): Candidate | null {
   const cands = eligible(pool, profile)
   if (cands.length === 0) return null
-  const weights = cands.map((c) => weightOf(c, profile, session))
-  const total = weights.reduce((s, w) => s + w, 0)
-  if (total <= 0) return null
-  let r = rnd() * total
-  for (let i = 0; i < cands.length; i++) {
-    r -= weights[i]
-    if (r < 0) return cands[i]
+
+  // 按章节分桶,顺带算出每桶内部的权重
+  const buckets = new Map<string, { cands: Candidate[]; weights: number[]; sum: number }>()
+  for (const c of cands) {
+    const w = weightOf(c, profile, session)
+    if (w <= 0) continue
+    const b = buckets.get(c.chapter) ?? { cands: [], weights: [], sum: 0 }
+    b.cands.push(c)
+    b.weights.push(w)
+    b.sum += w
+    buckets.set(c.chapter, b)
   }
-  return cands[cands.length - 1]
+  if (buckets.size === 0) return null
+
+  const chapters = [...buckets.keys()]
+  const cw = profile.chapterWeights
+  const chapterWeights = chapters.map((ch) => {
+    const base = cw?.[ch] ?? 1
+    if (base <= 0) return 0
+    // 桶内权重和只用来判「这章还剩多少可问的」:已问过的题权重被压到 0.05,
+    // 一章问光了它的和会趋近 0,自然让位给别的章。不直接用和本身,
+    // 否则又变回「语料多的章赢」——所以做归一化,封顶 1。
+    const remaining = Math.min(1, b_sum(buckets, ch) / Math.max(1, buckets.get(ch)!.cands.length))
+    return base * Math.max(0.05, remaining)
+  })
+
+  const chapter = chapters[pickIndex(chapterWeights, rnd)] ?? chapters[0]
+  const b = buckets.get(chapter)!
+  return weightedPick(b.cands, b.weights, rnd)
+}
+
+function b_sum(buckets: Map<string, { sum: number }>, ch: string): number {
+  return buckets.get(ch)?.sum ?? 0
+}
+
+function pickIndex(weights: readonly number[], rnd: () => number): number {
+  const total = weights.reduce((s, w) => s + w, 0)
+  if (total <= 0) return 0
+  let r = rnd() * total
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i]
+    if (r < 0) return i
+  }
+  return weights.length - 1
 }
 
 /** 可复现的伪随机源(单测与「重放某场面试」都用它) */

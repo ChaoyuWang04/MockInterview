@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/与chunked-prefill的兼容
 summary: KV cache 静态量化怎么和 chunked prefill 兼容,为什么
-tags: [面经, 待校对, KVCache量化, ChunkedPrefill]
+tags: [真题, 待校对, KVCache量化, ChunkedPrefill]
 company:
 mastered: false
 highfreq: false

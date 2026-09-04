@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/权重融合
 summary: 解释LoRA增量合并、推理收益、量化基座和多适配器边界
-tags: [面经, 待校对, LoRA, 权重融合, QLoRA, 量化]
+tags: [真题, 待校对, LoRA, 权重融合, QLoRA, 量化]
 company: 美团、阿里
 mastered: false
 highfreq: false
@@ -97,13 +97,11 @@ QLoRA训练时，冻结的低比特基座在计算中会按实现反量化，而
 
 LoRA、低秩增量、权重融合、缩放系数、checkpoint可逆性、多适配器服务、量化重校准和QLoRA。
 
-- 真实面经：[B002-G01-Q145](../../docs/references/面经原题.md#b002-g01-q145)、[B002-G01-Q191](../../docs/references/面经原题.md#b002-g01-q191)
-- 老师参考：[P005-Q145](../../docs/references/平台题/P005-Infra-121-150.md#p005-q145)、[P005-Q191](../../docs/references/平台题/P005-Infra-181-199.md#p005-q191)
 
 ## 追问
 
-- 参考追问：如果我有多个LoRA适配器需要动态切换，融合方案还适用吗？有什么优化策略？
-- 参考追问：LoRA融合后量化（如INT8/INT4）会有什么问题，如何解决？
-- 参考追问：LoRA与QLoRA在推理融合上有什么区别？
+- 如果我有多个LoRA适配器需要动态切换，融合方案还适用吗？有什么优化策略？
+- LoRA融合后量化（如INT8/INT4）会有什么问题，如何解决？
+- LoRA与QLoRA在推理融合上有什么区别？
 
 ## Note

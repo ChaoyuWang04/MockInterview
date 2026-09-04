@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: FlashAttention/训练推理数值一致性
 summary: 分块、精度和内核差异为何会造成训推数值偏差
-tags: [面经, 待校对, FlashAttention, 数值稳定性, 训练推理一致性]
+tags: [真题, 待校对, FlashAttention, 数值稳定性, 训练推理一致性]
 company: 蚂蚁金服
 mastered: false
 highfreq: false
@@ -40,13 +40,11 @@ FlashAttention各版本主要在并行划分、工作分配和硬件利用上演
 
 online softmax、浮点结合律、归约顺序、累加精度、确定性算法、逐层误差定位。
 
-- 真实面经：[B002-G01-Q043](../../docs/references/面经原题.md#b002-g01-q043)
-- 老师答案参考：[P005-Q043](../../docs/references/平台题/P005-Infra-031-060.md#p005-q043)
 
 ## 追问
 
-- 页面参考追问：FlashAttention 1/2/3 在数值稳定性上有何改进？
-- 页面参考追问：如果必须固定分块，如何在推理阶段复现训练的数值行为？
-- 页面参考追问：除了 softmax，Attention 中还有哪些算子可能引入训推不一致？
+- FlashAttention 1/2/3 在数值稳定性上有何改进？
+- 如果必须固定分块，如何在推理阶段复现训练的数值行为？
+- 除了 softmax，Attention 中还有哪些算子可能引入训推不一致？
 
 ## Note

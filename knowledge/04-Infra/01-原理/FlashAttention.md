@@ -1,6 +1,6 @@
 # FlashAttention
 
-> 🔴 重点考点:本篇直接对应真实面经高频问法,文末「面试考点串联」给出问法对照。
+> 🔴 重点考点:本篇是当前复习重点,文末「面试考点串联」给出问法对照。
 
 一句话:FlashAttention 是**精确**注意力(不是近似、不丢任何一项),它唯一做的事情是**不让那张 $L \times L$ 的注意力矩阵落进显存**——靠分块 + 在线 softmax,把四个算子融成一个 kernel,算的还是同一个结果,搬的数据少了好几倍。
 
@@ -207,11 +207,11 @@ chunked prefill 把一条长 prompt 切成若干 chunk 分批送进模型(**为�
 ## 七、面试考点串联
 
 | 高频问法 | 本文哪一节 |
-|---|---|
+| --- | --- |
 | FlashAttention 解决什么问题?为什么标准注意力慢? | 一(四趟 HBM;$L^2$ 中间量) |
 | 注意力是计算受限还是访存受限?给个数 | 一(强度 64 vs A100 拐点 153;判定见 Roofline与Bound分析 篇) |
-| FlashAttention 的核心机制讲一下<br>真题来源:[B002-Q016](../../../docs/references/面经原题.md#b002-g01-q016)、[B002-Q018](../../../docs/references/面经原题.md#b002-g01-q018)、[B002-Q049](../../../docs/references/面经原题.md#b002-g01-q049)、[B002-Q050](../../../docs/references/面经原题.md#b002-g01-q050)、[B002-Q074](../../../docs/references/面经原题.md#b002-g01-q074)、[B002-Q075](../../../docs/references/面经原题.md#b002-g01-q075)、[B002-Q106](../../../docs/references/面经原题.md#b002-g01-q106)、[B002-Q149](../../../docs/references/面经原题.md#b002-g01-q149)、[B002-Q176](../../../docs/references/面经原题.md#b002-g01-q176)、[B002-Q179](../../../docs/references/面经原题.md#b002-g01-q179)、[B002-Q180](../../../docs/references/面经原题.md#b002-g01-q180)、[B002-Q198](../../../docs/references/面经原题.md#b002-g01-q198)、[B002-Q199](../../../docs/references/面经原题.md#b002-g01-q199) | 二(tiling + online softmax) |
-| online softmax 的递推公式?为什么和标准 softmax 等价?<br>真题来源:[B002-Q051](../../../docs/references/面经原题.md#b002-g01-q051)、[B002-Q069](../../../docs/references/面经原题.md#b002-g01-q069)、[B002-Q070](../../../docs/references/面经原题.md#b002-g01-q070)、[B002-Q125](../../../docs/references/面经原题.md#b002-g01-q125)、[B002-Q126](../../../docs/references/面经原题.md#b002-g01-q126)、[B002-Q150](../../../docs/references/面经原题.md#b002-g01-q150) | 二(三组公式 + 重定标恒等式) |
+| FlashAttention 的核心机制讲一下 | 二(tiling + online softmax) |
+| online softmax 的递推公式?为什么和标准 softmax 等价? | 二(三组公式 + 重定标恒等式) |
 | 它是近似算法吗? | 二(exact,只差浮点舍入) |
 | 减最大值是为了什么? | 二(数值稳定,fp16 防溢出) |
 | 反向为什么重算而不是把 $S/P$ 存下来? | 三(存了就违背初衷;只存 $O$ 和 logsumexp) |
@@ -222,7 +222,7 @@ chunked prefill 把一条长 prompt 切成若干 chunk 分批送进模型(**为�
 | 两者 kernel 入参差在哪? | 五(`cu_seqlens` vs block table) |
 | chunked prefill 用的 attention 有什么差异? | 六(变长 q/kv + 右下对齐 + 两套 cu_seqlens) |
 | 为什么说它是算子融合的典范? | 二末尾(四算子一 kernel;见 算子融合 篇) |
-| 在使用Flash Attention进行大模型训练和推理时，若采用固定的分块策略，是否会导致训练与推理阶段出现数值不一致问题？请分析其根本原因、潜在影响，并结合实际场景说明可能的解决方案及其权衡。<br>真题来源:[B002-Q043](../../../docs/references/面经原题.md#b002-g01-q043) | 二（exact attention 与浮点舍入边界） |
+| 在使用Flash Attention进行大模型训练和推理时，若采用固定的分块策略，是否会导致训练与推理阶段出现数值不一致问题？请分析其根本原因、潜在影响，并结合实际场景说明可能的解决方案及其权衡。 | 二（exact attention 与浮点舍入边界） |
 
 延伸阅读顺序:GPU架构与执行模型 → Roofline与Bound分析 → 算子融合 → 本篇 → PagedAttention / 连续批处理。
 

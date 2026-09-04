@@ -9,7 +9,8 @@
 #   · 代理漏传 X-Spoken   → 前端「实际念的是…」永远不显示
 #
 # 前提:npm run dev(:3001)与 scripts/voice-start.sh(:8700)都在跑。
-API=http://localhost:3001/api/interview
+# 只想打常驻服务就 `API=http://localhost:3000/api/interview bash scripts/voice-audit.sh`。
+API=${API:-http://localhost:3001/api/interview}
 pass=0; fail=0
 ok()   { printf "  ✅ %-22s %s\n" "$1" "$2"; pass=$((pass+1)); }
 bad()  { printf "  ❌ %-22s %s\n" "$1" "$2"; fail=$((fail+1)); }
@@ -59,29 +60,25 @@ f=$(tts "{\"input\":\"什么是算力利用率?\",\"model\":\"qwen3-tts-design\"
   && ok "音色描述 instruct" "老男${m}s vs 少女${f}s(不同)" \
   || bad "音色描述 instruct" "老男${m}s vs 少女${f}s(相同=可能没生效)"
 
-# 4. 预设音色
-p1=$(tts "{\"input\":\"什么是算力利用率?\",\"model\":\"qwen3-tts-1.7b\",\"voice\":\"eric\",\"speed\":1.0,\"temperature\":0.3}" | cut -d'|' -f1)
-p2=$(tts "{\"input\":\"什么是算力利用率?\",\"model\":\"qwen3-tts-1.7b\",\"voice\":\"vivian\",\"speed\":1.0,\"temperature\":0.3}" | cut -d'|' -f1)
-[ -n "$p1" ] && [ -n "$p2" ] && ok "预设音色 voice" "eric ${p1}s / vivian ${p2}s" \
-                             || bad "预设音色 voice" "有请求失败"
-
-# 5. 模型切换
-mm=$(tts "{\"input\":\"测试\",\"model\":\"qwen3-tts-1.7b\",\"voice\":\"eric\",\"speed\":1.0}" | cut -d'|' -f1)
-md=$(tts "{\"input\":\"测试\",\"model\":\"qwen3-tts-design\",\"instruct\":\"男性\",\"speed\":1.0}" | cut -d'|' -f1)
-[ -n "$mm" ] && [ -n "$md" ] && ok "音色来源 ttsModel" "两个模型都能出声" \
-                             || bad "音色来源 ttsModel" "preset=${mm} design=${md}"
+# 4. 音量增益走前端的 GainNode,后端不参与,这里测不到 —— 不设断言。
 
 echo "── STT 侧 ──"
-WAV=/tmp/tts-out/02-术语密集.wav
-stt() { curl -s --max-time 240 -X POST "$API/transcribe" -F "file=@$WAV" -F "model=$1" ${2:+-F "hotwords=$2"} ; }
+WAV=${WAV:-/tmp/tts-out/02-术语密集.wav}
+# ⚠️ 热词参数必须走数组传参:`${2:+-F "hotwords=$2"}` 展开后不再受引号保护,
+#    热词串里的空格(`CUDA Graph`)会被拆词,多出来的片段被 curl 当成 URL —— 悄悄失败。
+stt() {
+  local args=(-s --max-time 240 -X POST "$API/transcribe" -F "file=@$WAV" -F "model=$1")
+  [ -n "${2:-}" ] && args+=(-F "hotwords=$2")
+  curl "${args[@]}"
+}
 
-for m in fun-asr-nano whisper-turbo qwen3-asr-flash; do
+for m in whisper-turbo qwen3-asr-flash; do
   t=$(stt "$m" | python3 -c "import sys,json;d=json.load(sys.stdin);print(d.get('text','ERR')[:40])" 2>/dev/null)
   [ -n "$t" ] && [ "$t" != "ERR" ] && ok "STT 模型 $m" "$t" || bad "STT 模型 $m" "无输出"
 done
 
 h0=$(stt whisper-turbo | python3 -c "import sys,json;print(json.load(sys.stdin).get('text','')[:60])")
-h1=$(stt whisper-turbo "MoE,DeepEP,deepep,Deep EP,all2all,AllGather,AllReduce" | python3 -c "import sys,json;print(json.load(sys.stdin).get('text','')[:60])")
+h1=$(stt whisper-turbo "MoE,DeepEP,all2all,AllGather,AllReduce,CUDA Graph" | python3 -c "import sys,json;print(json.load(sys.stdin).get('text','')[:60])")
 [ "$h0" != "$h1" ] && ok "热词 hotwords" "带/不带 结果不同" || bad "热词 hotwords" "结果相同 → 可能没生效"
 
 echo

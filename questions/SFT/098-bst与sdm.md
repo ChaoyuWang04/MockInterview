@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 推荐模型/推荐系统中的行为序列建模
 summary: 比较BST排序建模与SDM长短期兴趣融合的结构和目标
-tags: [待校对, SFT, 推荐模型]
+tags: [真题, 待校对, SFT, 推荐模型]
 company: 小红书
 mastered: false
 highfreq: false
@@ -34,7 +34,6 @@ SDM 先从当前 session 建模短期兴趣:原论文使用 multi-head self-atte
 
 BST 是排序侧行为 Transformer,SDM 是匹配侧短期注意力与长期兴趣门控融合;两者结构与损失不可混写。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q176。
 
 一手依据:[Behavior Sequence Transformer](https://arxiv.org/abs/1905.06874)、[SDM](https://arxiv.org/abs/1909.00385)。
 

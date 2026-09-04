@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 检索优化/Retriever工作机制
 summary: Retriever如何把查询转换成带来源的证据候选并交给生成器
-tags: [面经, 待校对, RAG, Retriever, 稀疏检索, 稠密检索]
+tags: [真题, 待校对, RAG, Retriever, 稀疏检索, 稠密检索]
 company: 字节
 mastered: false
 highfreq: false
@@ -34,13 +34,11 @@ Retriever输出的不应只有文本，还要有分数、来源、文档ID和必
 
 Retriever、稀疏检索、稠密检索、混合检索、元数据过滤、Reranker、多跳检索。
 
-- 真实面经：[B003-Q006](../../docs/references/面经原题.md#b003-g01-q006)、[B003-Q035](../../docs/references/面经原题.md#b003-g01-q035)
-- 老师参考：[P006-Q006](../../docs/references/平台题/P006-RAG-001-033.md#p006-q006)、[P006-Q035](../../docs/references/平台题/P006-RAG-034-066.md#p006-q035)
 
 ## 追问
 
-- 参考追问：稠密检索的Embedding模型怎样选，领域不匹配时怎么办？
-- 参考追问：检索结果过多或过少时，怎样控制生成质量？
-- 参考追问：多跳检索在复杂问答中怎样实现？
+- 稠密检索的Embedding模型怎样选，领域不匹配时怎么办？
+- 检索结果过多或过少时，怎样控制生成质量？
+- 多跳检索在复杂问答中怎样实现？
 
 ## Note

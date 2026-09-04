@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PD分离/阶段bound分析
 summary: prefill 与 decode 分别是什么 bound,从算术强度上解释
-tags: [面经, 待校对, PD分离, Roofline]
+tags: [真题, 待校对, PD分离, Roofline]
 company:
 mastered: false
 highfreq: false

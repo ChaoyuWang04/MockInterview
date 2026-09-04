@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: LoRA/改进初始化
 summary: PiSSA、OLoRA 如何改变 LoRA 起点,零初始化与 LoRA-FA 有何区别
-tags: [SFT, LoRA, 初始化, PiSSA, OLoRA, 待校对]
+tags: [真题, SFT, LoRA, 初始化, PiSSA, OLoRA, 待校对]
 company: 腾讯、快手
 mastered: false
 highfreq: false
@@ -46,7 +46,6 @@ PiSSA 可用随机化截断 SVD 和少量子空间迭代近似主方向;迭代�
 
 LoRA、初始化、PiSSA、OLoRA。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q070、P002-Q174。
 - 变体初始化依据:[AdaLoRA §3.1](https://arxiv.org/pdf/2303.10512)、[DoRA §4.1](https://arxiv.org/html/2402.09353v2)。
 - 依据:[PiSSA](https://arxiv.org/abs/2404.02948)、[OLoRA](https://arxiv.org/abs/2406.01775)、[LoRA-FA](https://arxiv.org/abs/2308.03303)、[LLaMA-Adapter](https://arxiv.org/abs/2303.16199)。
 

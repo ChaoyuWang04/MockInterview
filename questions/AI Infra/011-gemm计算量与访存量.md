@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: GEMM优化/计算量与访存量
 summary: GEMM 的计算量、访存量与算术强度怎么推
-tags: [面经, 待校对, GEMM, 算术强度, GEMV]
+tags: [真题, 待校对, GEMM, 算术强度, GEMV]
 company:
 mastered: false
 highfreq: false

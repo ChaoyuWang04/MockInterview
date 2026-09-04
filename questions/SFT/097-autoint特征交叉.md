@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 推荐模型/用自注意力建模特征交叉
 summary: 说明AutoInt如何用多头自注意力组合字段交互及其边界
-tags: [待校对, SFT, 推荐模型]
+tags: [真题, 待校对, SFT, 推荐模型]
 company: 网易
 mastered: false
 highfreq: false
@@ -34,7 +34,6 @@ FM 固定做二阶内积,DeepFM 结合 FM 与 DNN,DCN 用递推乘法显式交�
 
 AutoInt 是字段级自注意力交叉网络;交互阶数、复杂度和解释性都需要明确边界。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q162、P004-Q213。
 
 一手依据:[AutoInt](https://arxiv.org/abs/1810.11921)。
 

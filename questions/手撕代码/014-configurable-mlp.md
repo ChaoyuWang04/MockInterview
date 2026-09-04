@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 神经网络/可配置MLP
 summary: 用 PyTorch 动态构建隐藏层、激活函数并正确初始化
-tags: [面经, 待校对, PyTorch, MLP, 参数初始化]
+tags: [真题, 待校对, PyTorch, MLP, 参数初始化]
 company: 网易
 mastered: false
 highfreq: false
@@ -63,11 +63,10 @@ class ConfigurableMLP(nn.Module):
 
 - 动态网络构建、ModuleList/Sequential、激活函数、Xavier/He 初始化、配置校验、参数量。
 
-- 面经原题：[B006-G01-Q030](../../docs/references/面经原题.md#b006-g01-q030)；老师答案参考：[P009-Q030](../../docs/references/平台题/P009-LC-001-080.md#p009-q030)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 怎样加入多个输出 head？
 - 何时加 BatchNorm、LayerNorm 或残差？

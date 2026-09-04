@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Transformer整体架构/整体架构
 summary: Transformer各模块怎样分工并协同处理序列
-tags: [Transformer, 模型结构, 注意力, 待校对]
+tags: [真题, Transformer, 模型结构, 注意力, 待校对]
 company: 快手、搜狐、美团、滴滴、海天、阿里、网易、哔哩哔哩、腾讯、字节、阿里淘天、阿里云
 mastered: false
 highfreq: false
@@ -45,7 +45,6 @@ flowchart LR
 
 Transformer = 表示输入 + 位置信息 + 注意力通信 + FFN 变换 + 残差/归一化；“层内并行”不等于总复杂度 $O(1)$。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，采集编号 P004-Q001、P004-Q041、P004-Q052、P004-Q079、P004-Q095、P004-Q097、P004-Q114、P004-Q128、P004-Q148、P004-Q154、P004-Q168、P004-Q173、P004-Q313。
 - 依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)。
 
 ## 追问

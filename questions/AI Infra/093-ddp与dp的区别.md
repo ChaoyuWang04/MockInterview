@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 并行策略/DDP与DP
 summary: DDP 与 DP 的差异,以及 DP 为什么被废弃
-tags: [面经, 待校对, 并行策略, PyTorch]
+tags: [真题, 待校对, 并行策略, PyTorch]
 company: 腾讯
 mastered: false
 highfreq: false
@@ -50,8 +50,6 @@ DP 是"主卡当管家"的中心化实现,DDP 是"人人平等"的集合通信�
 
 单进程多线程 vs 多进程、GIL 争用、主卡显存不均、梯度分桶按反向逆序、桶大小的跷跷板、最后一个桶必然裸露。
 
-- 真实面经来源：[B002-G01-Q055](../../docs/references/面经原题.md#b002-g01-q055)。
-- 老师答案参考：[P005-Q055](../../docs/references/平台题/P005-Infra-031-060.md#p005-q055)。
 
 ## 追问
 

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: CudaGraph/分档变量选择
 summary: capture 时为什么以 batch 分档而不是 seq,变长序列怎么绕开
-tags: [面经, 待校对, CUDA Graph, decode]
+tags: [真题, 待校对, CUDA Graph, decode]
 company:
 mastered: false
 highfreq: false

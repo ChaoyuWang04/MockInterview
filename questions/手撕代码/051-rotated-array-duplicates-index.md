@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 二分查找/旋转数组
 summary: 在含重复元素的旋转有序数组中查找目标并返回一个索引
-tags: [面经, 待校对, 手撕代码, 二分查找, 旋转数组]
+tags: [真题, 待校对, 手撕代码, 二分查找, 旋转数组]
 company: 阿里云
 mastered: false
 highfreq: false
@@ -59,12 +59,10 @@ def search_rotated_with_duplicates(nums, target):
 ## 知识点
 
 - 旋转有序数组、二分不变量、重复元素、信息论下界、平均与最坏复杂度。
-- 面经原题：[B006-G01-Q154](../../docs/references/面经原题.md#b006-g01-q154)。
-- 老师答案参考：[P009-Q154](../../docs/references/平台题/P009-LC-081-160.md#p009-q154)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 没有重复元素时怎样简化？
 - 怎样找到旋转点，也就是最小元素索引？

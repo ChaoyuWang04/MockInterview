@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Embedding/模型选型
 summary: Embedding如何学习、构建和评估,模型与维度怎样选择
-tags: [面经, 待校对, RAG, Embedding, 对比学习]
+tags: [真题, 待校对, RAG, Embedding, 对比学习]
 company: 小红书、美团、字节、淘天
 mastered: false
 highfreq: false
@@ -55,9 +55,6 @@ DPR 在训练分布接近目标问答任务时通常更直接，但对标注、�
 
 分布式表示、上下文表示、句向量、InfoNCE、pooling、ANN、离线与线上评测。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P004-Q121/Q122/Q194/Q216/Q222。
-- 真实面经：[B003-G01-Q009](../../docs/references/面经原题.md#b003-g01-q009)、[Q036](../../docs/references/面经原题.md#b003-g01-q036)、[Q051](../../docs/references/面经原题.md#b003-g01-q051)、[Q052](../../docs/references/面经原题.md#b003-g01-q052)、[Q082](../../docs/references/面经原题.md#b003-g01-q082)、[Q093](../../docs/references/面经原题.md#b003-g01-q093)
-- 老师参考：[P006-Q009](../../docs/references/平台题/P006-RAG-001-033.md#p006-q009)、[Q036](../../docs/references/平台题/P006-RAG-034-066.md#p006-q036)、[Q051](../../docs/references/平台题/P006-RAG-034-066.md#p006-q051)、[Q052](../../docs/references/平台题/P006-RAG-034-066.md#p006-q052)、[Q082](../../docs/references/平台题/P006-RAG-067-097.md#p006-q082)、[Q093](../../docs/references/平台题/P006-RAG-067-097.md#p006-q093)
 - 依据:[Sentence-BERT](https://arxiv.org/abs/1908.10084)、[SimCSE](https://arxiv.org/abs/2104.08821)、[InfoNCE](https://arxiv.org/abs/1807.03748)、[CLIP](https://arxiv.org/abs/2103.00020)、[DPR](https://arxiv.org/abs/2004.04906)、[Contriever](https://arxiv.org/abs/2112.09118)。
 
 ## 追问

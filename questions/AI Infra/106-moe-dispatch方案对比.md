@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: MoE并行与DeepEP/dispatch方案对比
 summary: MoE dispatch 的四种方案、通信量与各自优劣
-tags: [面经, 待校对, MoE, EP, 集合通信]
+tags: [真题, 待校对, MoE, EP, 集合通信]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-moe 的 dispatch 有哪些方案?流程是咋样?分别有哪些优势和劣势?通信量是多少?(allgather、allreduce、all2all、deepep)
+MoE 的 dispatch 有哪些方案?流程是咋样?分别有哪些优势和劣势?通信量是多少?(AllGather、AllReduce、all2all、DeepEP)
 
 ## 要点
 

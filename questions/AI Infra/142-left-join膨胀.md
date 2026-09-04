@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 数据系统/LEFT JOIN数据膨胀
 summary: 多对多LEFT JOIN为什么会乘法膨胀,以及怎样按业务粒度预防和排查
-tags: [面经, 待校对, SQL, LEFT JOIN, 数据膨胀, 数据倾斜]
+tags: [真题, 待校对, SQL, LEFT JOIN, 数据膨胀, 数据倾斜]
 company: 哔哩哔哩
 mastered: false
 highfreq: false
@@ -87,15 +87,13 @@ LEFT JOIN 与 INNER JOIN 对**已经匹配的键**有相同的乘法效应；区
 
 JOIN 基数、业务粒度、键唯一性、确定性去重、半连接、数据倾斜与实时维表一致性。
 
-- 真实面经：[B002-G01-Q087](../../docs/references/面经原题.md#b002-g01-q087)、[B002-G01-Q088](../../docs/references/面经原题.md#b002-g01-q088)
-- 老师参考：[P005-Q087](../../docs/references/平台题/P005-Infra-061-090.md#p005-q087)、[P005-Q088](../../docs/references/平台题/P005-Infra-061-090.md#p005-q088)
 
 ## 追问
 
-- 参考追问：如果业务需要保留左表唯一性，如何改写 SQL 避免膨胀？
-- 参考追问：在大数据场景下，Spark/Hive 中如何处理这种数据倾斜问题？
-- 参考追问：如果已经发生了数据膨胀，如何快速定位和修复？
-- 参考追问：在实时特征工程中，JOIN 操作有什么额外挑战？
-- 参考追问：LEFT JOIN 和 INNER JOIN 在数据膨胀场景下有什么差异？
+- 如果业务需要保留左表唯一性，如何改写 SQL 避免膨胀？
+- 在大数据场景下，Spark/Hive 中如何处理这种数据倾斜问题？
+- 如果已经发生了数据膨胀，如何快速定位和修复？
+- 在实时特征工程中，JOIN 操作有什么额外挑战？
+- LEFT JOIN 和 INNER JOIN 在数据膨胀场景下有什么差异？
 
 ## Note

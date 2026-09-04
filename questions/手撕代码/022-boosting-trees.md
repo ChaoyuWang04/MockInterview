@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 机器学习/GBDT与XGBoost及LightGBM
 summary: 比较三类提升树的目标近似分裂策略训练效率内存机制和适用场景
-tags: [面经, 待校对, GBDT, XGBoost, LightGBM]
+tags: [真题, 待校对, GBDT, XGBoost, LightGBM]
 company: 哔哩哔哩
 mastered: false
 highfreq: false
@@ -39,11 +39,10 @@ XGBoost 的目标中显式使用二阶项和正则项，可直接计算候选分
 
 - 梯度提升、二阶近似、分裂增益、直方图、leaf-wise、GOSS、EFB、正则化。
 
-- 面经原题：[B006-G01-Q050](../../docs/references/面经原题.md#b006-g01-q050)；老师答案参考：[P009-Q050](../../docs/references/平台题/P009-LC-001-080.md#p009-q050)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 直方图分箱会怎样影响精度和速度？
 - 行采样与列采样分别影响什么？

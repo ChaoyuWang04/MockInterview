@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: 投机解码/draft的KV量化
 summary: 投机解码里 draft 的 KV cache 要不要量化,做了会有什么后果
-tags: [面经, 待校对, 投机解码, KVCache量化]
+tags: [真题, 待校对, 投机解码, KVCache量化]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-推测解码场景下,draft 的 kvcache 做量化吗?如果做了量化会有什么后果?
+推测解码场景下,draft 的 KV cache 做量化吗?如果做了量化会有什么后果?
 
 ## 要点
 

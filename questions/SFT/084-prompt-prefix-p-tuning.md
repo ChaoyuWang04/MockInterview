@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 提示微调/注入位置与实现
 summary: Prompt、Prefix、P-Tuning 在 LLaMA 哪里注入,怎样处理位置与缓存
-tags: [SFT, 提示微调, Prompt Tuning, Prefix Tuning, P-Tuning, 待校对]
+tags: [真题, SFT, 提示微调, Prompt Tuning, Prefix Tuning, P-Tuning, 待校对]
 company: 通义实验室
 mastered: false
 highfreq: false
@@ -50,7 +50,6 @@ v2 的深层注入让高层直接得到可调信号,也增加适配容量;原论
 
 提示微调、Prompt Tuning、Prefix Tuning、P-Tuning。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q221。
 - 依据:[Prompt Tuning](https://aclanthology.org/2021.emnlp-main.243/)、[Prefix-tuning](https://aclanthology.org/2021.acl-long.353/)、[P-Tuning](https://arxiv.org/abs/2103.10385)、[P-Tuning v2](https://arxiv.org/abs/2110.07602)。
 - 源码定位:projects/推理服务/vllm/vllm/model_executor/models/llama.py 的 LlamaModel、LlamaDecoderLayer 与 LlamaAttention;只核对架构接口。知识库「提示微调」正文待写。
 

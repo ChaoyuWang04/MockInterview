@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 目标检测/One-stage与Two-stage
-tags: [面经, 待校对, 目标检测, One-stage, Two-stage, YOLO]
+tags: [真题, 待校对, 目标检测, One-stage, Two-stage, YOLO]
 summary: 比较单阶段与双阶段检测器的结构、性能和部署取舍
 company: 大疆
 mastered: false
@@ -41,12 +41,10 @@ Anchor-free 省去人工 anchor 尺寸设计，但仍需中心/关键点或距�
 
 候选区域、密集检测、RoI、FPN、标签分配、Anchor-free、小目标、边缘部署。
 
-- 面经原题：[B006-G01-Q175](../../docs/references/面经原题.md#b006-g01-q175)、[B006-G01-Q176](../../docs/references/面经原题.md#b006-g01-q176)、[B006-G01-Q231](../../docs/references/面经原题.md#b006-g01-q231)。
-- 老师答案参考：[P009-Q175](../../docs/references/平台题/P009-LC-161-241.md#p009-q175)、[P009-Q176](../../docs/references/平台题/P009-LC-161-241.md#p009-q176)、[P009-Q231](../../docs/references/平台题/P009-LC-161-241.md#p009-q231)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - YOLO 的哪些训练和结构改进缩小了与 Two-stage 的历史差距？
 - 无人机小目标、运动模糊和边缘功耗分别怎样处理？

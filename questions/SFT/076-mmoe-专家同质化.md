@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 多任务学习/专家同质化
 summary: 怎样区分MMoE专家同质化与门控塌缩,如何诊断和缓解
-tags: [多任务学习, 待校对]
+tags: [真题, 多任务学习, 待校对]
 company: 字节
 mastered: false
 highfreq: false
@@ -43,7 +43,6 @@ highfreq: false
 
 多任务学习、专家同质化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q153。
 
 - 补充依据:[MMoE 原论文](https://research.google/pubs/modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-of-experts/)、[稀疏门控 MoE 原论文](https://research.google/pubs/outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer/)。
 

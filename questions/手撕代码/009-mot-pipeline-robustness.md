@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 多目标跟踪/鲁棒性
 summary: 比较 MOT 框架并解释遮挡、外观变化与 ID 切换的处理
-tags: [面经, 待校对, MOT, DeepSORT, ByteTrack, 数据关联]
+tags: [真题, 待校对, MOT, DeepSORT, ByteTrack, 数据关联]
 company: 大疆
 mastered: false
 highfreq: false
@@ -41,12 +41,10 @@ ByteTrack 先把高分检测与轨迹关联，再用低分检测恢复剩余轨�
 
 - tracking-by-detection、卡尔曼滤波、匈牙利算法、马氏门控、余弦距离、级联匹配、ReID、生命周期、HOTA/IDF1。
 
-- 面经原题：[B006-G01-Q016](../../docs/references/面经原题.md#b006-g01-q016)；老师答案参考：[P009-Q016](../../docs/references/平台题/P009-LC-001-080.md#p009-q016)。
-- 面经原题：[B006-G01-Q065](../../docs/references/面经原题.md#b006-g01-q065)；老师答案参考：[P009-Q065](../../docs/references/平台题/P009-LC-001-080.md#p009-q065)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - RRT 或 DWA 机器人系统中的感知延迟会怎样影响跟踪与规划级联？
 - DeepSORT 的 gallery 怎样更新，为什么不应简单取所有特征均值？

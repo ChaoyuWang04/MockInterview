@@ -182,18 +182,18 @@ On/off-policy 描述行为策略与目标策略的关系;online/offline 描述�
 
 ## 六、面试考点串联
 
-| 问法 | 本文哪一节 | 来源 |
-|---|---|---|
-| PPO 的 clip、完整 loss、四个模型和 RLHF 流程怎样串起来? | 二、核心机制;三、RLHF 工程形态;四、训练细节 | P003-Q001/P003-Q009/P003-Q049/P003-Q053/P003-Q057/P003-Q081/P003-Q101/P003-Q103 |
-| GAE 的公式、$\lambda$ 两个极端与长轨迹处理是什么? | 二、核心机制 / GAE | P003-Q015/P003-Q123 |
-| LLM 中 action、state、trajectory 怎样定义,奖励不可微时为什么仍能更新策略? | 二、奖励为什么不必可微;三、RLHF 工程形态 | P003-Q018/P003-Q027 |
-| PPO、GRPO 为什么是近似 on-policy,DPO 又该怎样定位? | 四、训练细节 / On-policy 与有限数据复用 | P003-Q025/P003-Q028/P003-Q056/P003-Q068/P003-Q069/P003-Q072/P003-Q073/P003-Q110/P003-Q112/P003-Q113 |
-| 重要性采样怎样修正分布,裁剪为何会引入偏差? | 二、核心机制 / 重要性采样比;四、On-policy 与有限数据复用 | P003-Q077 |
-| 策略熵、SAC 温度与参考策略 KL 有什么区别? | 二、完整 loss;四、策略熵与塌缩诊断 | P003-Q045/P003-Q067 |
-| reward、return、value 与 advantage 怎样区分? | 二、reward、return、value 与 advantage | P003-Q075 |
-| KL 阈值、PPO-clip 与 TRPO 各自约束什么? | 一、动机;二、clip 代理目标;四、KL 阈值 | P002-Q026 |
+| 问法 | 本文哪一节 |
+| --- | --- |
+| PPO 的 clip、完整 loss、四个模型和 RLHF 流程怎样串起来? | 二、核心机制;三、RLHF 工程形态;四、训练细节 |
+| GAE 的公式、$\lambda$ 两个极端与长轨迹处理是什么? | 二、核心机制 / GAE |
+| LLM 中 action、state、trajectory 怎样定义,奖励不可微时为什么仍能更新策略? | 二、奖励为什么不必可微;三、RLHF 工程形态 |
+| PPO、GRPO 为什么是近似 on-policy,DPO 又该怎样定位? | 四、训练细节 / On-policy 与有限数据复用 |
+| 重要性采样怎样修正分布,裁剪为何会引入偏差? | 二、核心机制 / 重要性采样比;四、On-policy 与有限数据复用 |
+| 策略熵、SAC 温度与参考策略 KL 有什么区别? | 二、完整 loss;四、策略熵与塌缩诊断 |
+| reward、return、value 与 advantage 怎样区分? | 二、reward、return、value 与 advantage |
+| KL 阈值、PPO-clip 与 TRPO 各自约束什么? | 一、动机;二、clip 代理目标;四、KL 阈值 |
 
-> 本表含平台整理题 P002-Q026 与 P003 所列编号,非面经原题。仅本轮关联内容做增补,全文仍为待重写旧稿。
+> 本篇仍保留旧稿重写状态。
 
 ## 相关文献
 

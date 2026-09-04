@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: DPO/偏好优化方法比较
 summary: RLHF、DPO、ORPO 如何利用反馈,ORPO 的赔率比与数据边界是什么
-tags: [SFT, DPO, ORPO, RLHF, 偏好优化, 待校对]
+tags: [真题, SFT, DPO, ORPO, RLHF, 偏好优化, 待校对]
 company: 淘天、字节、快手
 mastered: false
 highfreq: false
@@ -50,7 +50,7 @@ DPO 的 Bradley-Terry 模型用单一标量效用差解释成对偏好,难以完
 
 `offline preference optimization` 通常指“用固定偏好数据优化策略”的一类方法,不能仅凭 `OPO` 缩写确定一个公式。DPO、IPO、SLiC 等都可以放进离线偏好优化框架,但理论目标、损失形状和是否依赖参考模型不同。
 
-本批平台 P003-Q037 把 `OPO` 解释成 `Offline Preference Optimization`,并给 DPO 式目标增加一个未定义的参考偏移项;页面没有论文、作者或估计方式。按一手论文无法把名称、公式和动机对应到同一个公认算法,因此正式答案不沿用该公式。若讨论带偏移的 DPO,应明确写出具名的 ODPO,其偏移表示偏好强度,也不是页面声称的参考策略偏差。P003-Q114 除题干误写 OPO 外,要点和公式都是标准 DPO,已按 DPO 归并。
+原题题干误写 OPO 外,要点和公式都是标准 DPO,已按 DPO 归并。
 
 | 方法 | 解决的反馈条件 | 关键边界 |
 |---|---|---|
@@ -65,7 +65,6 @@ DPO 的 Bradley-Terry 模型用单一标量效用差解释成对偏好,难以完
 
 DPO、ORPO、RLHF、偏好优化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q240;P003-Q014、P003-Q037。
 - 依据:[ORPO §4](https://arxiv.org/html/2403.07691v2)、[DPO](https://arxiv.org/abs/2305.18290)、[InstructGPT](https://arxiv.org/abs/2203.02155)、[KTO](https://arxiv.org/abs/2402.01306)、[GPO](https://proceedings.mlr.press/v235/tang24b.html)、[ODPO](https://aclanthology.org/2024.findings-acl.592/)。
 
 ## 追问

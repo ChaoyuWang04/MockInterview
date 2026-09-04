@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 规划模式/ReAct
 summary: ReAct如何用工具反馈推进任务并控制循环风险
-tags: [面经, 待校对, Agent, ReAct, 工具调用, 规划]
+tags: [真题, 待校对, Agent, ReAct, 工具调用, 规划]
 company: 高德
 mastered: false
 highfreq: false
@@ -43,12 +43,10 @@ flowchart LR
 
 ReAct、Action、Observation、Function Calling、CoT、ToT、循环护栏。
 - 论文：[ReAct](https://arxiv.org/abs/2210.03629)。
-- 本批真实面经：[B005-Q049](../../docs/references/面经原题.md#b005-g01-q049)、[B005-Q050](../../docs/references/面经原题.md#b005-g01-q050)、[B005-Q051](../../docs/references/面经原题.md#b005-g01-q051)、[B005-Q052](../../docs/references/面经原题.md#b005-g01-q052)、[B005-Q056](../../docs/references/面经原题.md#b005-g01-q056)。
-- 本批老师参考：[P008-Q049](../../docs/references/平台题/P008-Agent-031-059.md#p008-q049)、[P008-Q050](../../docs/references/平台题/P008-Agent-031-059.md#p008-q050)、[P008-Q051](../../docs/references/平台题/P008-Agent-031-059.md#p008-q051)、[P008-Q052](../../docs/references/平台题/P008-Agent-031-059.md#p008-q052)、[P008-Q056](../../docs/references/平台题/P008-Agent-031-059.md#p008-q056)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - ReAct 与 Function Calling 如何组合？
 - ReAct、CoT、ToT 和 Self-Consistency 的区别与成本是什么？

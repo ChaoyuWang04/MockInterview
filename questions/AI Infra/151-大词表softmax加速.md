@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Softmax优化/大词表计算
 summary: 区分输出投影与归一化瓶颈，并比较分层、自适应、采样和并行方案
-tags: [面经, 待校对, Softmax, 大词表, Adaptive Softmax, Sampled Softmax]
+tags: [真题, 待校对, Softmax, 大词表, Adaptive Softmax, Sampled Softmax]
 company: 快手
 mastered: false
 highfreq: false
@@ -76,15 +76,13 @@ Top-k 和 Top-p 的作用是限制**采样候选集**。常规流程仍是：
 
 输出投影、Softmax、Hierarchical Softmax、Adaptive Softmax、Sampled Softmax、NCE、词表并行、融合交叉熵、Top-k 与 Top-p。
 
-- 真实面经：[B002-G01-Q151](../../docs/references/面经原题.md#b002-g01-q151)、[B002-G01-Q153](../../docs/references/面经原题.md#b002-g01-q153)
-- 老师参考：[P005-Q151](../../docs/references/平台题/P005-Infra-151-180.md#p005-q151)、[P005-Q153](../../docs/references/平台题/P005-Infra-151-180.md#p005-q153)
 
 ## 追问
 
-- 参考追问：训练阶段和推理阶段分别适合哪些Softmax加速方法？
-- 参考追问：Top-K/Top-p采样如何与Softmax加速结合？
-- 参考追问：如果词表扩大到百万级，还有哪些进一步优化思路？
-- 参考追问：如何在保证生成质量的前提下组合使用这些技术？
-- 参考追问：Hierarchical Softmax和Adaptive Softmax的优缺点是什么？
+- 训练阶段和推理阶段分别适合哪些Softmax加速方法？
+- Top-K/Top-p采样如何与Softmax加速结合？
+- 如果词表扩大到百万级，还有哪些进一步优化思路？
+- 如何在保证生成质量的前提下组合使用这些技术？
+- Hierarchical Softmax和Adaptive Softmax的优缺点是什么？
 
 ## Note

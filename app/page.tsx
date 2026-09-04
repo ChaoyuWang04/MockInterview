@@ -2,6 +2,7 @@ import Link from 'next/link'
 import CategoryCard from '@/components/CategoryCard'
 import { countArticles, listKbTree } from '@/lib/knowledge'
 import { listHot100 } from '@/lib/leetcode'
+import { listSessions } from '@/lib/interview/session'
 import { listOsProjects, listOsTopics } from '@/lib/opensource'
 import { getStats } from '@/lib/questions'
 
@@ -12,6 +13,7 @@ export default function Home() {
   const kbCount = countArticles(listKbTree())
   const osCount = listOsTopics().reduce((s, t) => s + listOsProjects(t).length, 0)
   const lcCount = listHot100().reduce((s, g) => s + g.problems.length, 0)
+  const sessionCount = listSessions().length
   return (
     <main className="mx-auto max-w-5xl px-6 py-16">
       <h1 className="text-2xl font-bold">大模型面试刷题</h1>
@@ -20,7 +22,13 @@ export default function Home() {
           {stats.mastered} <span className="text-gray-300">/</span> {stats.total}
         </div>
         <p className="mt-2 text-sm text-gray-500">已掌握 / 总题数</p>
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link
+            href="/interview"
+            className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
+          >
+            🎤 模拟面试{sessionCount > 0 ? ` · ${sessionCount} 场` : ''} →
+          </Link>
           <Link
             href="/kb"
             className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"

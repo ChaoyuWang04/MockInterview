@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 数据系统/Spark广播Join
 summary: Spark什么时候广播小表,怎样避免大表shuffle并控制内存风险
-tags: [面经, 待校对, Spark, SQL, Broadcast Join, AQE]
+tags: [真题, 待校对, Spark, SQL, Broadcast Join, AQE]
 company: 哔哩哔哩
 mastered: false
 highfreq: false
@@ -62,13 +62,11 @@ AQE 在运行时拿到 shuffle 分区统计后，可以合并小分区、处理�
 
 Broadcast Hash Join、build/probe、BroadcastExchange、shuffle、数据倾斜、AQE 与物理计划。
 
-- 真实面经：[B002-G01-Q090](../../docs/references/面经原题.md#b002-g01-q090)
-- 老师参考：[P005-Q090](../../docs/references/平台题/P005-Infra-061-090.md#p005-q090)
 
 ## 追问
 
-- 参考追问：小表略超广播阈值但内存充足时，如何强制触发广播 JOIN？
-- 参考追问：广播 JOIN 与 Sort-Merge JOIN 在数据倾斜场景下如何选择？
-- 参考追问：Spark 3.0 的自适应查询执行（AQE）如何动态优化 JOIN 策略？
+- 小表略超广播阈值但内存充足时，如何强制触发广播 JOIN？
+- 广播 JOIN 与 Sort-Merge JOIN 在数据倾斜场景下如何选择？
+- Spark 3.0 的自适应查询执行（AQE）如何动态优化 JOIN 策略？
 
 ## Note

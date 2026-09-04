@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: FFN与激活/维度扩展 激活与门控
 summary: Transformer FFN怎样逐token变换及为何先升维再降维
-tags: [Transformer, FFN, MLP, SwiGLU, 待校对]
+tags: [真题, Transformer, FFN, MLP, SwiGLU, 待校对]
 company: 快手、腾讯、网易、抖音、阿里云
 mastered: false
 highfreq: false
@@ -43,7 +43,6 @@ $$
 
 Attention 负责 token mixing，FFN 负责 channel mixing。经典 FFN 是“升维—激活—降维”，门控 FFN 要重新核算宽度、参数与计算，不能照搬 $4d$。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q016、P004-Q045、P004-Q180、P004-Q190、P004-Q191。
 - 一手依据：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)、[GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202)。
 
 ## 追问

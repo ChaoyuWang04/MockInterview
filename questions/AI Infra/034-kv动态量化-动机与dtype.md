@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache量化/动机与dtype选择
 summary: KV cache 动态量化的动机是什么,量化的 dtype 怎么选
-tags: [面经, 待校对, KVCache量化, fp8]
+tags: [真题, 待校对, KVCache量化, fp8]
 company:
 mastered: false
 highfreq: false

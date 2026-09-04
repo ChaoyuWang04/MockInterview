@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 序列模型/Transformer 与 RNN 效率
 summary: 比较两类序列模型的并行路径、内存和推理状态
-tags: [面经, 待校对, Transformer, RNN, 序列模型]
+tags: [真题, 待校对, Transformer, RNN, 序列模型]
 company: 小红书
 mastered: false
 highfreq: false
@@ -38,15 +38,13 @@ RNN适合严格流式、低延迟、状态很小的任务，但固定状态也�
 
 时间依赖关键路径、矩阵并行、注意力复杂度、训练激活、KV Cache、递归状态。
 
-- 真实面经：[B002-G01-Q054](../../docs/references/面经原题.md#b002-g01-q054)、[B002-G01-Q136](../../docs/references/面经原题.md#b002-g01-q136)、[B002-G01-Q137](../../docs/references/面经原题.md#b002-g01-q137)、[B002-G01-Q183](../../docs/references/面经原题.md#b002-g01-q183)
-- 老师答案参考：[P005-Q054](../../docs/references/平台题/P005-Infra-031-060.md#p005-q054)、[P005-Q136](../../docs/references/平台题/P005-Infra-121-150.md#p005-q136)、[P005-Q137](../../docs/references/平台题/P005-Infra-121-150.md#p005-q137)、[P005-Q183](../../docs/references/平台题/P005-Infra-181-199.md#p005-q183)
 
 ## 追问
 
-- 页面参考追问：为什么 Transformer 有 $O(n^2)$ 注意力，训练仍可能比 RNN 快？
-- 页面参考追问：长序列下怎样缓解 Transformer 的计算与内存压力？
-- 页面参考追问：RNN、Mamba、RWKV 在哪些场景仍有优势？
-- 页面参考追问：现代递归式模型怎样兼顾并行训练？
-- 页面参考追问：资源受限部署时怎样权衡上下文长度、吞吐和延迟？
+- 为什么 Transformer 有 $O(n^2)$ 注意力，训练仍可能比 RNN 快？
+- 长序列下怎样缓解 Transformer 的计算与内存压力？
+- RNN、Mamba、RWKV 在哪些场景仍有优势？
+- 现代递归式模型怎样兼顾并行训练？
+- 资源受限部署时怎样权衡上下文长度、吞吐和延迟？
 
 ## Note

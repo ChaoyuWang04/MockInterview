@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: ZeRO/分片与选型
 summary: ZeRO 三阶段如何节省显存,训练时怎样选型
-tags: [面经, 待校对, ZeRO, 分布式训练, 显存优化]
+tags: [真题, 待校对, ZeRO, 分布式训练, 显存优化]
 company: 快手、字节、美团、阿里云、阿里、腾讯、阿里夸克
 mastered: false
 highfreq: false
@@ -34,7 +34,6 @@ highfreq: false
 | ZeRO-2 | 再分梯度 | $2P+14P/d$ |
 | ZeRO-3 | 再分参数 | $16P/d$ |
 
-这不含激活、临时参数收集和通信缓冲,也不适用于所有精度配置。标准阶段只有 1–3,来源 P002-Q043 所称“Stage 4”不是标准阶段,Offload/Infinity 是容量扩展机制。
 
 ### 参数如何取回,通信多在哪里
 
@@ -42,7 +41,7 @@ Stage 1/2 的简化流程是归约并分发梯度,各卡更新分片,再 all-gat
 
 按 ZeRO 论文、不计缓存和梯度累积的简化口径,以一份低精度全模型参数的字节量为 $M$,DDP 与 Stage 1/2 每步通信约 $2M$,Stage 3 约 $3M$,即相对 1.5 倍,不是 3 倍。实际耗时还受消息粒度、互联和重叠影响。
 
-### 来源追问补充
+### 相关真题追问
 
 - **与模型并行的区别**:张量并行拆一层的运算,流水线并行拆层;ZeRO 主要拆数据并行组的状态。算法上可组合,但要检查框架支持。与 PP 配合时,按流水线阶段估参数收集和激活峰值,评估微批调度、缓存、DP 通信组及重叠。约 2026-04 的 DeepSpeed 本地源码快照中,其流水线引擎明确排除 ZeRO-2/3,不能直接照搬任意组合。
 - **Offload 与 Infinity**:ZeRO-Offload 将部分状态及优化器计算移到 CPU,原论文结合 Stage 1/2;ZeRO-Infinity 在 Stage 3 上进一步利用 CPU/NVMe 的分层容量。NVMe 负责存储,不执行优化器计算。代价是传输和预取调度,容量增加不保证训练更快。
@@ -52,10 +51,8 @@ Stage 1/2 的简化流程是归约并分发梯度,各卡更新分片,再 all-gat
 
 状态分片、reduce-scatter、all-gather、数据并行、卸载。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015、P002-Q043、P002-Q045、P002-Q109。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
+参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
 
-- 真实面经来源：[B002-G01-Q001](../../docs/references/面经原题.md#b002-g01-q001)、[B002-G01-Q006](../../docs/references/面经原题.md#b002-g01-q006)、[B002-G01-Q023](../../docs/references/面经原题.md#b002-g01-q023)、[B002-G01-Q037](../../docs/references/面经原题.md#b002-g01-q037)、[B002-G01-Q059](../../docs/references/面经原题.md#b002-g01-q059)、[B002-G01-Q060](../../docs/references/面经原题.md#b002-g01-q060)、[B002-G01-Q072](../../docs/references/面经原题.md#b002-g01-q072)、[B002-G01-Q138](../../docs/references/面经原题.md#b002-g01-q138)、[B002-G01-Q141](../../docs/references/面经原题.md#b002-g01-q141)、[B002-G01-Q143](../../docs/references/面经原题.md#b002-g01-q143)、[B002-G01-Q144](../../docs/references/面经原题.md#b002-g01-q144)、[B002-G01-Q168](../../docs/references/面经原题.md#b002-g01-q168)、[B002-G01-Q192](../../docs/references/面经原题.md#b002-g01-q192)。
-- 老师答案参考：[P005-Q001](../../docs/references/平台题/P005-Infra-001-030.md#p005-q001)、[P005-Q006](../../docs/references/平台题/P005-Infra-001-030.md#p005-q006)、[P005-Q023](../../docs/references/平台题/P005-Infra-001-030.md#p005-q023)、[P005-Q037](../../docs/references/平台题/P005-Infra-031-060.md#p005-q037)、[P005-Q059](../../docs/references/平台题/P005-Infra-031-060.md#p005-q059)、[P005-Q060](../../docs/references/平台题/P005-Infra-031-060.md#p005-q060)、[P005-Q072](../../docs/references/平台题/P005-Infra-061-090.md#p005-q072)、[P005-Q138](../../docs/references/平台题/P005-Infra-121-150.md#p005-q138)、[P005-Q141](../../docs/references/平台题/P005-Infra-121-150.md#p005-q141)、[P005-Q143](../../docs/references/平台题/P005-Infra-121-150.md#p005-q143)、[P005-Q144](../../docs/references/平台题/P005-Infra-121-150.md#p005-q144)、[P005-Q168](../../docs/references/平台题/P005-Infra-151-180.md#p005-q168)、[P005-Q192](../../docs/references/平台题/P005-Infra-181-199.md#p005-q192)。
 
 ## 追问
 

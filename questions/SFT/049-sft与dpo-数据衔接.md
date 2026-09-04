@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: DPO/SFT与偏好数据衔接
 summary: SFT 与 DPO 怎样组织数据、衔接采样标注并权衡自建与公开来源
-tags: [SFT, DPO, SFT, 偏好数据, 数据工程, 待校对]
+tags: [真题, SFT, DPO, SFT, 偏好数据, 数据工程, 待校对]
 company: 美团、字节、蚂蚁
 mastered: false
 highfreq: false
@@ -56,7 +56,6 @@ Agent 长程任务的成败常由多步决策共同造成,只给完整轨迹一�
 
 DPO、SFT、偏好数据、数据工程。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q075、P002-Q158;P003-Q007、P003-Q043、P003-Q085、P003-Q086。
 - 依据:[DPO](https://arxiv.org/abs/2305.18290)、[InstructGPT](https://arxiv.org/abs/2203.02155)。
 
 ## 追问

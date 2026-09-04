@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/能否走int8算力
 summary: KV 量化后能不能吃到 int8 算力,QK 与 PV 怎么走整数矩阵乘
-tags: [面经, 待校对, KVCache量化, TensorCore]
+tags: [真题, 待校对, KVCache量化, TensorCore]
 company:
 mastered: false
 highfreq: false

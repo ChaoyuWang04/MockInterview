@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: RLHF与RM/对齐算法比较
 summary: 用目标函数和训练信号区分 PPO、DPO、GRPO,解释裁剪与组大小
-tags: [SFT, PPO, DPO, GRPO, 偏好优化, 待校对]
+tags: [真题, SFT, PPO, DPO, GRPO, 偏好优化, 待校对]
 company: 美团、字节、阿里、百度、华为、京东、抖音、小红书、海天、淘天、淘宝、滴滴、蔚来、蚂蚁金服、通义实验室
 mastered: false
 highfreq: false
@@ -62,7 +62,6 @@ GRPO 省掉独立 critic,但显存能省多少取决于模型共享、优化器�
 
 PPO、DPO、GRPO、偏好优化。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q214;P003-Q003、P003-Q008、P003-Q017、P003-Q019、P003-Q022、P003-Q023、P003-Q031、P003-Q033、P003-Q034、P003-Q042、P003-Q054、P003-Q079、P003-Q080、P003-Q082、P003-Q084、P003-Q090、P003-Q091、P003-Q093、P003-Q095、P003-Q096、P003-Q097、P003-Q098、P003-Q099、P003-Q100、P003-Q107、P003-Q116、P003-Q117、P003-Q121、P003-Q124。
 - 依据:[DPO](https://arxiv.org/abs/2305.18290)、[PPO](https://arxiv.org/abs/1707.06347)、[DeepSeekMath §4](https://arxiv.org/pdf/2402.03300)。
 
 ## 追问

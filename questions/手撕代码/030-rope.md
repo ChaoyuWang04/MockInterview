@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Transformer/旋转位置编码
 summary: 推导并用相邻偶奇维配对正确实现RoPE作用于查询和键
-tags: [面经, 待校对, Transformer, RoPE, 位置编码]
+tags: [真题, 待校对, Transformer, RoPE, 位置编码]
 company: 得物
 mastered: false
 highfreq: false
@@ -67,11 +67,10 @@ def rope_qk(q: torch.Tensor, k: torch.Tensor, positions: torch.Tensor) -> tuple[
 
 - 二维旋转矩阵、复数表示、相对位置、频率谱、偶数维配对、张量广播。
 
-- 面经原题：[B006-G01-Q061](../../docs/references/面经原题.md#b006-g01-q061)；老师答案参考：[P009-Q061](../../docs/references/平台题/P009-LC-001-080.md#p009-q061)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - RoPE 相比绝对位置编码和其他相对位置编码有什么优势？
 - RoPE 长度外推为何会退化，NTK-aware 和 YaRN 怎样调整频率？

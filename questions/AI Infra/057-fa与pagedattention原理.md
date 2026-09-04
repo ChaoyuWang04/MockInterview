@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: FlashAttention/与PagedAttention关系
 summary: FlashAttention 与 PagedAttention 各自的原理,以及两者的关系
-tags: [面经, 待校对, FlashAttention, PagedAttention]
+tags: [真题, 待校对, FlashAttention, PagedAttention]
 company: 字节、蚂蚁金服
 mastered: false
 highfreq: false
@@ -57,8 +57,6 @@ $$
 
 exact attention、tiling、online softmax 与重定标、块表 / 页表类比、按需分配、正交叠加。
 
-- 真实面经来源：[B002-G01-Q016](../../docs/references/面经原题.md#b002-g01-q016)、[B002-G01-Q018](../../docs/references/面经原题.md#b002-g01-q018)、[B002-G01-Q049](../../docs/references/面经原题.md#b002-g01-q049)、[B002-G01-Q050](../../docs/references/面经原题.md#b002-g01-q050)、[B002-G01-Q074](../../docs/references/面经原题.md#b002-g01-q074)、[B002-G01-Q075](../../docs/references/面经原题.md#b002-g01-q075)、[B002-G01-Q106](../../docs/references/面经原题.md#b002-g01-q106)、[B002-G01-Q149](../../docs/references/面经原题.md#b002-g01-q149)、[B002-G01-Q176](../../docs/references/面经原题.md#b002-g01-q176)、[B002-G01-Q179](../../docs/references/面经原题.md#b002-g01-q179)、[B002-G01-Q180](../../docs/references/面经原题.md#b002-g01-q180)、[B002-G01-Q198](../../docs/references/面经原题.md#b002-g01-q198)、[B002-G01-Q199](../../docs/references/面经原题.md#b002-g01-q199)。
-- 老师答案参考：[P005-Q016](../../docs/references/平台题/P005-Infra-001-030.md#p005-q016)、[P005-Q018](../../docs/references/平台题/P005-Infra-001-030.md#p005-q018)、[P005-Q049](../../docs/references/平台题/P005-Infra-031-060.md#p005-q049)、[P005-Q050](../../docs/references/平台题/P005-Infra-031-060.md#p005-q050)、[P005-Q074](../../docs/references/平台题/P005-Infra-061-090.md#p005-q074)、[P005-Q075](../../docs/references/平台题/P005-Infra-061-090.md#p005-q075)、[P005-Q106](../../docs/references/平台题/P005-Infra-091-120.md#p005-q106)、[P005-Q149](../../docs/references/平台题/P005-Infra-121-150.md#p005-q149)、[P005-Q176](../../docs/references/平台题/P005-Infra-151-180.md#p005-q176)、[P005-Q179](../../docs/references/平台题/P005-Infra-151-180.md#p005-q179)、[P005-Q180](../../docs/references/平台题/P005-Infra-151-180.md#p005-q180)、[P005-Q198](../../docs/references/平台题/P005-Infra-181-199.md#p005-q198)、[P005-Q199](../../docs/references/平台题/P005-Infra-181-199.md#p005-q199)。
 
 ## 追问
 

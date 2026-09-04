@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: GraphRAG/原理与选型
 summary: GraphRAG怎样建立图索引并处理实体、多跳和全局问题
-tags: [RAG, GraphRAG, 知识图谱, 面经, 待校对]
+tags: [RAG, GraphRAG, 知识图谱, 真题, 待校对]
 company: 字节、百度、美团
 mastered: false
 highfreq: false
@@ -42,14 +42,12 @@ flowchart LR
 
 实体关系抽取、实体消歧、社区检测、局部检索、全局检索、多跳证据和来源追踪。
 
-- 真实面经：[B003-Q010](../../docs/references/面经原题.md#b003-g01-q010)、[B003-Q015](../../docs/references/面经原题.md#b003-g01-q015)、[B003-Q018](../../docs/references/面经原题.md#b003-g01-q018)
-- 老师参考：[P006-Q010](../../docs/references/平台题/P006-RAG-001-033.md#p006-q010)、[P006-Q015](../../docs/references/平台题/P006-RAG-001-033.md#p006-q015)、[P006-Q018](../../docs/references/平台题/P006-RAG-001-033.md#p006-q018)
 - 当前实现参考：[Microsoft GraphRAG](https://microsoft.github.io/graphrag/)
 
 ## 追问
 
-- 页面参考：GraphRAG 的 Local Search 与 Global Search 分别适合什么问题？
-- 页面参考：实体或关系抽取错误怎样发现并修复？
-- 页面参考：知识持续更新时，图、社区和摘要怎样保持一致？
+- GraphRAG 的 Local Search 与 Global Search 分别适合什么问题？
+- 实体或关系抽取错误怎样发现并修复？
+- 知识持续更新时，图、社区和摘要怎样保持一致？
 
 ## Note

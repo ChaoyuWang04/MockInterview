@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useRef, useState } from 'react'
-import { expandHotwords } from '@/components/interview/useVoice'
+import { collectHotwords } from '@/components/interview/useVoice'
 
 interface SttOption {
   id: string
@@ -24,8 +24,8 @@ const SCRIPTS = [
   'PD 分离、chunked prefill、ngram 投机解码,这几个在 vLLM 里怎么配合?',
 ]
 
-/** 系统真实能拿到的热词:题目所属文章名 + 要点里的术语 */
-const HOTWORDS = expandHotwords([
+/** 系统真实能拿到的热词:题目所属文章名 + 题干里的术语。只给规范写法,不展开变体。 */
+const HOTWORDS = collectHotwords([
   'MoE', 'DeepEP', 'all2all', 'AllGather', 'AllReduce', 'dispatch', 'combine',
   'CUDA Graph', 'KV cache', 'vLLM', 'chunked prefill', 'ngram', 'PD 分离',
   'prefill', 'decode', 'kernel', 'shared memory', 'tiling', 'FlashAttention',

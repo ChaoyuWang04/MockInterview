@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 投机解码/KVCache管理
 summary: draft 和 target 的 KV cache 共享吗,拒绝的 token 怎么回滚
-tags: [面经, 待校对, 投机解码, KVCache]
+tags: [真题, 待校对, 投机解码, KVCache]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-draft kvcache 和 target kvcache 是共享的吗?如果推测的 token 没被接受,draft 和 target 的 kvcache 分别怎么处理?
+draft KV cache 和 target KV cache 是共享的吗?如果推测的 token 没被接受,draft 和 target 的 KV cache 分别怎么处理?
 
 ## 要点
 

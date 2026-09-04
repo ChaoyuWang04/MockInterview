@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 优化器/自适应更新与衰减
 summary: Adam 的矩估计与偏差修正如何工作,AdamW 在哪里解耦衰减
-tags: [待校对, 优化器]
+tags: [真题, 待校对, 优化器]
 company: 阿里云、小红书、抖音
 mastered: false
 highfreq: false
@@ -58,7 +58,7 @@ AdamW 对不同梯度尺度适应方便,可作 Transformer 基线;调好的 SGD+
 
 优化器/自适应更新与衰减。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q068、P002-Q112、P002-Q137、P002-Q173。参考:[Adam](https://arxiv.org/abs/1412.6980)、[AdamW](https://arxiv.org/abs/1711.05101)。
+参考:[Adam](https://arxiv.org/abs/1412.6980)、[AdamW](https://arxiv.org/abs/1711.05101)。
 
 ## 追问
 

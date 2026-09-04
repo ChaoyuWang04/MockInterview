@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/适用层与非线性
 summary: LoRA 能否适配嵌入、卷积和非线性网络,怎样选目标层与分配秩
-tags: [SFT, LoRA, 目标层, AdaLoRA, 待校对]
+tags: [真题, SFT, LoRA, 目标层, AdaLoRA, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -50,7 +50,6 @@ DoRA 改变幅度/方向参数化,QLoRA 量化冻结基座,LoRA-FA 固定 A 节�
 
 LoRA、目标层、AdaLoRA。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q159。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[AdaLoRA](https://arxiv.org/abs/2303.10512)、[QLoRA](https://arxiv.org/abs/2305.14314)、[LoRA-FA](https://arxiv.org/abs/2308.03303)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 随机算法/Fisher-Yates洗牌
 summary: 手写等概率 Fisher-Yates 洗牌并证明每个排列概率相同
-tags: [面经, 待校对, 手撕代码, Fisher-Yates, 随机算法]
+tags: [真题, 待校对, 手撕代码, Fisher-Yates, 随机算法]
 company: 百度
 mastered: false
 highfreq: false
@@ -45,12 +45,10 @@ $$
 ## 知识点
 
 - 随机置换、循环不变量、概率乘法、无偏随机整数、原地算法。
-- 面经原题：[B006-G01-Q131](../../docs/references/面经原题.md#b006-g01-q131)。
-- 老师答案参考：[P009-Q131](../../docs/references/平台题/P009-LC-081-160.md#p009-q131)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 高并发场景怎样管理独立随机状态？
 - 怎样用统计检验检查 shuffle 是否均匀？

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Agent框架/开发框架选型
 summary: 比较主流 Agent 框架的定位和选型依据
-tags: [面经, 待校对, Agent, LangGraph, LlamaIndex, AutoGPT, AutoGen, CrewAI]
+tags: [真题, 待校对, Agent, LangGraph, LlamaIndex, AutoGPT, AutoGen, CrewAI]
 company: 淘天、字节、阿里云
 mastered: false
 highfreq: false
@@ -36,14 +36,10 @@ highfreq: false
 
 Agent 框架、有状态工作流、RAG 数据链、自主任务循环、多 Agent 运行时、检查点、可观测性。
 - 官方资料（截至 2026-09）：[LangChain Agents](https://docs.langchain.com/oss/python/langchain/agents)、[LlamaIndex 文档](https://docs.llamaindex.ai/)、[AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)。
-- 真实面经：[B003-G01-Q066](../../docs/references/面经原题.md#b003-g01-q066)
-- 老师参考：[P006-Q066](../../docs/references/平台题/P006-RAG-034-066.md#p006-q066)
-- 本批真实面经：[B005-Q003](../../docs/references/面经原题.md#b005-g01-q003)、[B005-Q040](../../docs/references/面经原题.md#b005-g01-q040)。
-- 本批老师参考：[P008-Q003](../../docs/references/平台题/P008-Agent-001-030.md#p008-q003)、[P008-Q040](../../docs/references/平台题/P008-Agent-031-059.md#p008-q040)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - 如果从零设计电商客服 Agent，会选择哪个框架，如何改造？
 - 这些框架在工具调用失败时的容错机制有何不同？

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 数组/合并两个有序去重数组
 summary: 用双指针在线性时间内合并两个有序数组并消除重复元素
-tags: [面经, 待校对, 数组, 双指针, 去重]
+tags: [真题, 待校对, 数组, 双指针, 去重]
 company: 未标公司
 mastered: false
 highfreq: false
@@ -57,11 +57,10 @@ def merge_sorted_unique(a: list[int], b: list[int]) -> list[int]:
 
 - 有序性、双指针、在线去重、输出敏感的空间复杂度、边界条件。
 
-- 面经原题：[B006-G01-Q035](../../docs/references/面经原题.md#b006-g01-q035)；老师答案参考：[P009-Q035](../../docs/references/平台题/P009-LC-001-080.md#p009-q035)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 如果数组很大，无法一次性加载到内存，怎么处理？
 - 如果要求原地修改其中一个数组，空间复杂度如何优化？

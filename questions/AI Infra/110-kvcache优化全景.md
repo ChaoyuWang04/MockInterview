@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache/优化方法综述
 summary: KV cache 的容量、布局、量化、复用和调度怎样优化
-tags: [面经, 待校对, KVCache, PagedAttention, 推理优化]
+tags: [真题, 待校对, KVCache, PagedAttention, 推理优化]
 company: 联通、美团、快手
 mastered: false
 highfreq: false
@@ -49,20 +49,17 @@ PagedAttention像页表：请求只维护逻辑块表，物理块不要求连续
 
 KV cache 显存公式、GQA/MQA、KV 量化、PagedAttention、前缀缓存、滑窗与淘汰、连续批处理。
 
-真实面经：[B002-G01-Q005](../../docs/references/面经原题.md#b002-g01-q005)、[B002-G01-Q015](../../docs/references/面经原题.md#b002-g01-q015)、[B002-G01-Q105](../../docs/references/面经原题.md#b002-g01-q105)、[B002-G01-Q148](../../docs/references/面经原题.md#b002-g01-q148)、[B002-G01-Q166](../../docs/references/面经原题.md#b002-g01-q166)、[B002-G01-Q167](../../docs/references/面经原题.md#b002-g01-q167)、[B002-G01-Q178](../../docs/references/面经原题.md#b002-g01-q178)。
-
-老师参考：[P005-Q005](../../docs/references/平台题/P005-Infra-001-030.md#p005-q005)、[P005-Q015](../../docs/references/平台题/P005-Infra-001-030.md#p005-q015)、[P005-Q105](../../docs/references/平台题/P005-Infra-091-120.md#p005-q105)、[P005-Q148](../../docs/references/平台题/P005-Infra-121-150.md#p005-q148)、[P005-Q166](../../docs/references/平台题/P005-Infra-151-180.md#p005-q166)、[P005-Q167](../../docs/references/平台题/P005-Infra-151-180.md#p005-q167)、[P005-Q178](../../docs/references/平台题/P005-Infra-151-180.md#p005-q178)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
-- 参考追问：PagedAttention怎样减少碎片，block size怎样调？
-- 参考追问：KV量化怎样校准并评估精度？
-- 参考追问：100K以上上下文发生KV OOM时怎样组合方案？
-- 参考追问：GQA与MQA怎样选择KV头数并控制质量损失？
-- 参考追问：动态批处理怎样权衡延迟、吞吐和抢占？
-- 参考追问：显存不足时KV逐出、卸载和重算怎样选？
-- 参考追问：StreamingLLM与H2O分别怎样减少保留的历史？
+- PagedAttention怎样减少碎片，block size怎样调？
+- KV量化怎样校准并评估精度？
+- 100K以上上下文发生KV OOM时怎样组合方案？
+- GQA与MQA怎样选择KV头数并控制质量损失？
+- 动态批处理怎样权衡延迟、吞吐和抢占？
+- 显存不足时KV逐出、卸载和重算怎样选？
+- StreamingLLM与H2O分别怎样减少保留的历史？
 
 ## Note

@@ -1,7 +1,7 @@
 ---
 difficulty: 简单
 topic: 二叉树/基础操作
-tags: [面经, 待校对, 手撕代码, 二叉树, DFS, BFS]
+tags: [真题, 待校对, 手撕代码, 二叉树, DFS, BFS]
 summary: 手写二叉树遍历、重建、路径和、深度、平衡与最近公共祖先
 company: 小红书
 mastered: false
@@ -99,12 +99,10 @@ def lowest_common_ancestor(root, p, q):
 ## 知识点
 
 - 树遍历、递归与显式栈、层序队列、后序信息汇总、分治、输入前提。
-- 面经原题：[B006-G01-Q095](../../docs/references/面经原题.md#b006-g01-q095)、[B006-G01-Q142](../../docs/references/面经原题.md#b006-g01-q142)。
-- 老师答案参考：[P009-Q095](../../docs/references/平台题/P009-LC-081-160.md#p009-q095)、[P009-Q142](../../docs/references/平台题/P009-LC-081-160.md#p009-q142)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - Morris 遍历怎样做到 $O(1)$ 额外空间？
 - 序列化到文件时选前序还是层序？

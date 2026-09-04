@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: RLHF与RM/Reward Model与Critic
 summary: Reward Model 与 Critic 各自预测什么,为何 PPO 两者都需要
-tags: [RL, RLHF, PPO, Reward Model, Critic, 待校对]
+tags: [真题, RL, RLHF, PPO, Reward Model, Critic, 待校对]
 company: 华为、蔚来、蚂蚁、蚂蚁金服
 mastered: false
 highfreq: false
@@ -57,7 +57,6 @@ RM 本身会受标注偏差、分布外失效和 reward hacking 影响。DPO 直
 
 Reward Model、Critic、状态价值、TD 残差、GAE、策略梯度基线、价值回归。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q004、Q044、Q058、Q070、Q087、Q120。
 - 依据:[InstructGPT](https://arxiv.org/abs/2203.02155)、[PPO](https://arxiv.org/abs/1707.06347)、[GAE](https://arxiv.org/abs/1506.02438)、[DPO](https://arxiv.org/abs/2305.18290)。
 
 ## 追问

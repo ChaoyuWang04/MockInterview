@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 回归损失/损失选型
 summary: MSE、MAE与Huber如何按预测目标和异常值选择
-tags: [回归损失, 待校对]
+tags: [真题, 回归损失, 待校对]
 company: 快手
 mastered: false
 highfreq: false
@@ -49,7 +49,6 @@ Huber 对残差的梯度为 $\operatorname{clip}(e,-\delta,\delta)$。$\delta$ �
 
 回归损失、损失选型。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q131。
 
 - 补充依据:[HuberLoss](https://docs.pytorch.org/docs/2.14/generated/torch.nn.HuberLoss.html)、[奖励模型成对偏好训练](https://arxiv.org/abs/2203.02155)。
 

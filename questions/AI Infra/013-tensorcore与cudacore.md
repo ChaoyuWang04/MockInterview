@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: GPU架构与执行模型/计算单元
 summary: Tensor Core 与 CUDA Core 是什么,能不能并行、怎么并行
-tags: [面经, 待校对, TensorCore, CUDACore, GPU架构]
+tags: [真题, 待校对, TensorCore, CUDACore, GPU架构]
 company:
 mastered: false
 highfreq: false

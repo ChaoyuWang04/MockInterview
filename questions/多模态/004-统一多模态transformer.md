@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: VLM结构/表示 对齐与融合
 summary: 比较多模态模型的表示、对齐和融合架构
-tags: [待校对, 面经, 多模态, VLM]
+tags: [待校对, 真题, 多模态, VLM]
 company: 百度
 mastered: false
 highfreq: false
@@ -40,9 +40,6 @@ CLIP 是独立图文编码器加对比对齐;Flamingo 用视觉编码、Perceive
 
 多模态系统应分别说明前端表示、对齐目标、融合位置、生成目标和模态预算。
 
-- 真实面经：[B004-Q005](../../docs/references/面经原题.md#b004-g01-q005)、[Q010](../../docs/references/面经原题.md#b004-g01-q010)
-- 老师参考：[P007-Q005](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q005)、[Q010](../../docs/references/平台题/P007-MultiModal-001-020.md#p007-q010)
-- 既有平台来源：[P004-Q101](../../docs/references/平台题/P004-PT-091-120.md#p004-q101)
 
 一手依据:[CLIP](https://arxiv.org/abs/2103.00020)、[Flamingo](https://arxiv.org/abs/2204.14198)、[Chameleon](https://arxiv.org/abs/2405.09818)。
 

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: FlashAttention/Online Softmax
 summary: 分块注意力怎样递推最大值、分母和输出而保持等价
-tags: [面经, 待校对, FlashAttention, Online Softmax, 数值稳定性]
+tags: [真题, 待校对, FlashAttention, Online Softmax, 数值稳定性]
 company: 字节、阿里淘天
 mastered: false
 highfreq: false
@@ -44,17 +44,15 @@ FlashAttention-2延续同一等价公式，主要改进工作划分、减少非�
 
 running max、归一化分母、输出重缩放、边界 mask、前向分块与反向重算。
 
-- 真实面经：[B002-G01-Q051](../../docs/references/面经原题.md#b002-g01-q051)、[B002-G01-Q069](../../docs/references/面经原题.md#b002-g01-q069)、[B002-G01-Q070](../../docs/references/面经原题.md#b002-g01-q070)、[B002-G01-Q125](../../docs/references/面经原题.md#b002-g01-q125)、[B002-G01-Q126](../../docs/references/面经原题.md#b002-g01-q126)、[B002-G01-Q150](../../docs/references/面经原题.md#b002-g01-q150)
-- 老师答案参考：[P005-Q051](../../docs/references/平台题/P005-Infra-031-060.md#p005-q051)、[P005-Q069](../../docs/references/平台题/P005-Infra-061-090.md#p005-q069)、[P005-Q070](../../docs/references/平台题/P005-Infra-061-090.md#p005-q070)、[P005-Q125](../../docs/references/平台题/P005-Infra-121-150.md#p005-q125)、[P005-Q126](../../docs/references/平台题/P005-Infra-121-150.md#p005-q126)、[P005-Q150](../../docs/references/平台题/P005-Infra-121-150.md#p005-q150)
 
 ## 追问
 
-- 页面参考追问：FlashAttention-2 相比第一版在 online softmax、算法和 warp 并行上改进了什么？
-- 页面参考追问：online softmax 与标准 softmax 的反向传播有什么差异？
-- 页面参考追问：为什么增量更新不会不断积累显著误差？
-- 页面参考追问：序列超过 SRAM 容量或不能整除块大小时怎样处理？
-- 页面参考追问：FlashAttention 的 IO 复杂度怎样分析？
-- 页面参考追问：为什么短序列可能没有明显收益甚至变慢？
-- 页面参考追问：FlashAttention 是否会带来精度差异，原因是什么？
+- FlashAttention-2 相比第一版在 online softmax、算法和 warp 并行上改进了什么？
+- online softmax 与标准 softmax 的反向传播有什么差异？
+- 为什么增量更新不会不断积累显著误差？
+- 序列超过 SRAM 容量或不能整除块大小时怎样处理？
+- FlashAttention 的 IO 复杂度怎样分析？
+- 为什么短序列可能没有明显收益甚至变慢？
+- FlashAttention 是否会带来精度差异，原因是什么？
 
 ## Note

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 模型可解释性/树特征重要性
 summary: 比较不纯度、排列与增益类特征重要性的含义和偏差
-tags: [面经, 待校对, 手撕代码, 特征重要性, 随机森林, GBDT]
+tags: [真题, 待校对, 手撕代码, 特征重要性, 随机森林, GBDT]
 company: 哔哩哔哩
 mastered: false
 highfreq: false
@@ -66,12 +66,10 @@ MDI/Gain 适合快速模型内部诊断；Permutation 适合回答“模型在�
 ## 知识点
 
 - MDI、Gini/MSE、Permutation Importance、Gain/Cover/Frequency、SHAP、相关特征、数据泄露。
-- 面经原题：[B006-G01-Q157](../../docs/references/面经原题.md#b006-g01-q157)。
-- 老师答案参考：[P009-Q157](../../docs/references/平台题/P009-LC-081-160.md#p009-q157)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - Permutation Importance 和 SHAP 什么时候各自更合适？
 - 某特征全局重要性高，但一个样本的 SHAP 为负，怎样解释？

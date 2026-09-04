@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 预训练流程/掩码语言建模
 summary: BERT 的 Encoder 架构、MLM与NSP怎样学习双向表示
-tags: [待校对, BERT, MLM, 预训练]
+tags: [真题, 待校对, BERT, MLM, 预训练]
 company: 小红书、字节
 mastered: false
 highfreq: false
@@ -38,7 +38,6 @@ GPT 式因果模型只看左侧并预测下一个 token,训练信息流与逐 to
 
 BERT、Encoder-only、MLM、NSP、双向注意力、自回归语言建模。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q031/Q202、P004-Q019/Q026/Q124。
 - 依据:[BERT](https://arxiv.org/abs/1810.04805)、[RoBERTa](https://arxiv.org/abs/1907.11692)、[用 BERT checkpoint 初始化生成模型](https://arxiv.org/abs/1907.12461)。
 
 ## 追问

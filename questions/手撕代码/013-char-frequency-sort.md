@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 字符串/字符频率排序
 summary: 统计字符频率并按频率降序和字典序稳定输出
-tags: [面经, 待校对, 字符串, 哈希表, 排序]
+tags: [真题, 待校对, 字符串, 哈希表, 排序]
 company: 通义实验室
 mastered: false
 highfreq: false
@@ -38,11 +38,10 @@ def frequency_order(s: str):
 
 - 频率哈希、复合排序键、不同字符数 k、Unicode 排序口径、输出空间。
 
-- 面经原题：[B006-G01-Q024](../../docs/references/面经原题.md#b006-g01-q024)；老师答案参考：[P009-Q024](../../docs/references/平台题/P009-LC-001-080.md#p009-q024)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 十亿字符无法一次装内存时怎样分块归并计数？
 - 频率范围不大时怎样用桶排序？

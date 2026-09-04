@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CudaGraph/推理中的使用阶段
 summary: 大模型推理里哪个阶段、哪部分操作会用 CUDA Graph
-tags: [面经, 待校对, CUDA Graph, decode]
+tags: [真题, 待校对, CUDA Graph, decode]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-大模型推理时,一般哪个阶段、哪部分操作会使用 cudagraph?
+大模型推理时,一般哪个阶段、哪部分操作会使用 CUDA Graph?
 
 ## 要点
 

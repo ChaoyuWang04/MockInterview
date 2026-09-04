@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 集成学习/LightGBM原理
-tags: [面经, 待校对, LightGBM, GBDT, 直方图, Leaf-wise]
+tags: [真题, 待校对, LightGBM, GBDT, 直方图, Leaf-wise]
 summary: 解释 LightGBM 的直方图、叶优先生长与工程边界
 company: 拼多多
 mastered: false
@@ -42,14 +42,12 @@ GOSS 保留大梯度样本并抽样小梯度样本，再校正统计；EFB 将�
 
 梯度提升树、直方图、直方图相减、Leaf-wise、GOSS、EFB、类别特征分裂。
 
-- 面经原题：[B006-G01-Q236](../../docs/references/面经原题.md#b006-g01-q236)。
-- 老师答案参考：[P009-Q236](../../docs/references/平台题/P009-LC-161-241.md#p009-q236)。
 
 ## 追问
 
-- 平台页面追问（不计入面经原题）：LightGBM 与现代 XGBoost 都用直方图时，应怎样公平比较？
-- 平台页面追问（不计入面经原题）：分桶为什么加速，在哪些数据上可能损失有效切分精度？
-- 平台页面追问（不计入面经原题）：LightGBM 原生类别处理怎样避免简单 one-hot 的高维问题？
-- 自拟：Leaf-wise 为什么更容易过拟合，哪些参数直接控制它？
+- LightGBM 与现代 XGBoost 都用直方图时，应怎样公平比较？
+- 分桶为什么加速，在哪些数据上可能损失有效切分精度？
+- LightGBM 原生类别处理怎样避免简单 one-hot 的高维问题？
+- Leaf-wise 为什么更容易过拟合，哪些参数直接控制它？
 
 ## Note

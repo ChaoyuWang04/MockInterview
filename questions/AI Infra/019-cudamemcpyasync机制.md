@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: CUDA流与异步执行/异步拷贝机制
 summary: cudaMemcpyAsync 背后的 copy engine 与 stream 语义
-tags: [面经, 待校对, CUDA流, DMA, 异步传输]
+tags: [真题, 待校对, CUDA流, DMA, 异步传输]
 company:
 mastered: false
 highfreq: false

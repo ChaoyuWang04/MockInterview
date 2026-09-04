@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 多任务学习/GradNorm
 summary: GradNorm怎样按训练速度调权,实现与稳定性有哪些边界
-tags: [多任务学习, 待校对]
+tags: [真题, 多任务学习, 待校对]
 company: 快手
 mastered: false
 highfreq: false
@@ -48,7 +48,6 @@ GradNorm 改幅度,PCGrad 投影冲突方向,CAGrad 在平均目标周围兼顾�
 
 多任务学习、GradNorm。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q074。
 
 - 补充依据:[GradNorm 原论文 §3](https://proceedings.mlr.press/v80/chen18a/chen18a.pdf)、[PCGrad 原论文](https://arxiv.org/abs/2001.06782)、[CAGrad 原论文](https://arxiv.org/abs/2110.14048)。
 

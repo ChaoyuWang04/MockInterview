@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 排序算法/快速排序
 summary: 手写快排，解释分区、复杂度、退化条件与工程优化
-tags: [面经, 待校对, 手撕代码, 快速排序, 分治]
+tags: [真题, 待校对, 手撕代码, 快速排序, 分治]
 company: 小红书
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-同一考点的十二条面经来源可归并成五个要求：
+同一考点的十二种真题问法可归并成五个要求：
 
 1. 快速排序最优情况何时出现？时间复杂度是多少，为什么？
 2. 快速排序最坏情况是什么？什么输入会触发，怎样避免？
@@ -85,12 +85,10 @@ def quicksort(a: MutableSequence[T], seed: int | None = None) -> None:
 ## 知识点
 
 - 分治、三路分区、随机化、递归栈、排序稳定性、Introsort。
-- 面经原题：[B006-G01-Q037](../../docs/references/面经原题.md#b006-g01-q037)、[B006-G01-Q038](../../docs/references/面经原题.md#b006-g01-q038)、[B006-G01-Q066](../../docs/references/面经原题.md#b006-g01-q066)、[B006-G01-Q082](../../docs/references/面经原题.md#b006-g01-q082)、[B006-G01-Q083](../../docs/references/面经原题.md#b006-g01-q083)、[B006-G01-Q084](../../docs/references/面经原题.md#b006-g01-q084)、[B006-G01-Q096](../../docs/references/面经原题.md#b006-g01-q096)、[B006-G01-Q107](../../docs/references/面经原题.md#b006-g01-q107)、[B006-G01-Q108](../../docs/references/面经原题.md#b006-g01-q108)、[B006-G01-Q114](../../docs/references/面经原题.md#b006-g01-q114)、[B006-G01-Q152](../../docs/references/面经原题.md#b006-g01-q152)、[B006-G01-Q232](../../docs/references/面经原题.md#b006-g01-q232)。
-- 老师答案参考：[P009-Q037](../../docs/references/平台题/P009-LC-001-080.md#p009-q037)、[P009-Q038](../../docs/references/平台题/P009-LC-001-080.md#p009-q038)、[P009-Q066](../../docs/references/平台题/P009-LC-001-080.md#p009-q066)、[P009-Q082](../../docs/references/平台题/P009-LC-081-160.md#p009-q082)、[P009-Q083](../../docs/references/平台题/P009-LC-081-160.md#p009-q083)、[P009-Q084](../../docs/references/平台题/P009-LC-081-160.md#p009-q084)、[P009-Q096](../../docs/references/平台题/P009-LC-081-160.md#p009-q096)、[P009-Q107](../../docs/references/平台题/P009-LC-081-160.md#p009-q107)、[P009-Q108](../../docs/references/平台题/P009-LC-081-160.md#p009-q108)、[P009-Q114](../../docs/references/平台题/P009-LC-081-160.md#p009-q114)、[P009-Q152](../../docs/references/平台题/P009-LC-081-160.md#p009-q152)、[P009-Q232](../../docs/references/平台题/P009-LC-161-241.md#p009-q232)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 快排为什么不稳定？怎样获得稳定排序？
 - Top K 怎样复用分区思想做到期望 $O(n)$？

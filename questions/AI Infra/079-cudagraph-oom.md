@@ -1,8 +1,8 @@
 ---
 difficulty: 中等
 topic: CudaGraph/显存开销与OOM
-summary: 开 cudagraph 为什么相对更容易 OOM,有哪些对策
-tags: [面经, 待校对, 显存管理, OOM]
+summary: 开 CUDA Graph 为什么相对更容易 OOM,有哪些对策
+tags: [真题, 待校对, 显存管理, OOM]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-开 cudagraph 为啥会相对更容易 oom?
+开 CUDA Graph 为啥会相对更容易 oom?
 
 ## 要点
 

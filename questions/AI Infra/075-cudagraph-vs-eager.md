@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: CudaGraph/与Eager差异
 summary: eager 逐个下发与 CUDA Graph 重放在形状、控制流、显存等维度的差异
-tags: [面经, 待校对, CUDA Graph, eager]
+tags: [真题, 待校对, CUDA Graph, eager]
 company:
 mastered: false
 highfreq: false
@@ -10,7 +10,7 @@ highfreq: false
 
 ## 题目
 
-eager 和 cudagraph 有啥差异?
+eager 和 CUDA Graph 有啥差异?
 
 ## 要点
 

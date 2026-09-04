@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: Attention/缩放点积注意力
 summary: NumPy 手写单头注意力并解释缩放因子
-tags: [Transformer, Attention, 手撕代码]
+tags: [真题, Transformer, Attention, 手撕代码]
 company: 阿里
 mastered: false
 ---

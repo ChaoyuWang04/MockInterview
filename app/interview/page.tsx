@@ -3,12 +3,14 @@ import InterviewSession from '@/components/interview/InterviewSession'
 import type { ResumeOption } from '@/components/interview/InterviewSession'
 import { buildCorpus } from '@/lib/interview/corpus'
 import { listResumes, loadProfile } from '@/lib/interview/resume'
+import { listSessions } from '@/lib/interview/session'
 
 export const dynamic = 'force-dynamic'
 
 export default function InterviewPage() {
   const resumes = listResumes()
   const corpus = buildCorpus()
+  const sessionCount = listSessions().length
   const questionPool = corpus.candidates.filter((c) => c.kind === 'question').length
 
   const options: ResumeOption[] = resumes.map((r) => ({
@@ -24,9 +26,14 @@ export default function InterviewPage() {
     <main className="mx-auto max-w-3xl px-6 py-12">
       <div className="mb-8 flex items-baseline justify-between">
         <h1 className="text-2xl font-bold">模拟面试</h1>
-        <Link href="/" className="text-xs text-gray-400 hover:text-gray-700">
-          ← 首页
-        </Link>
+        <div className="flex shrink-0 items-baseline gap-4 text-xs">
+          <Link href="/interview/sessions" className="text-gray-500 hover:text-gray-900">
+            📋 复盘记录{sessionCount > 0 ? ` · ${sessionCount} 场` : ''} →
+          </Link>
+          <Link href="/" className="text-gray-400 hover:text-gray-700">
+            ← 首页
+          </Link>
+        </div>
       </div>
 
       {options.length === 0 ? (

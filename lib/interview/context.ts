@@ -31,6 +31,13 @@ export interface QuestionRecord {
     追问: string[]
     needsReview: boolean
     examPoints: ExamPoint[]
+    /**
+     * 面试档的阶段名(开场 / 项目深挖 / 技术延伸 / 广度补充)。
+     * **一道题定死一次就不能再变** —— 它进的是材料块,材料块一变前缀缓存就断。
+     */
+    phase?: string
+    /** 阶段专属的额外说明(开场的项目清单等) */
+    extra?: string
   }
   /** 这道题下面的问答轮次(主问 + 若干追问) */
   turns: { ask: string; answer: string; verdict?: string }[]
@@ -42,6 +49,12 @@ export interface SessionInput {
   resumeName: string
   /** 简历**全文**,不是摘要 —— 云端装得下,面试官才能真的深挖项目 */
   resumeBody: string
+  /**
+   * 上下文来源。单篇过题时换成 `article` —— 第二条消息就从「候选人简历」
+   * 变成「本次考察的文章全文」。**结构一个字不用改**,而模型手里有整篇原文,
+   * 考点行的判分才站得住(那是这个场景能成立的关键)。
+   */
+  sourceKind?: 'resume' | 'article'
   /** 已经问完的题,按顺序 */
   history: QuestionRecord[]
   /** 当前这道题 */
@@ -63,7 +76,7 @@ export interface BuiltContext {
  * 所以只要每条消息一旦写下就永不修改,除最后一条外全部按 1/30 计费。
  *
  * ```
- * [system]     面试官人格 + 评分标准 + 面经口气           ← 整场不变
+ * [system]     面试官人格 + 评分标准 + 真题口气           ← 整场不变
  * [user]       候选人简历全文                            ← 整场不变
  *   ↓ 每题追加,写下就不再动
  * [user]       第 N 题的判分材料(要点/答案/追问池/考点表)
@@ -80,7 +93,13 @@ export interface BuiltContext {
 export function buildSession(input: SessionInput): BuiltContext {
   const messages: Msg[] = [
     { role: 'system', content: systemPrompt(input.mode, input.toneSamples) },
-    { role: 'user', content: `## 候选人简历(${input.resumeName})\n\n${input.resumeBody}` },
+    {
+      role: 'user',
+      content:
+        input.sourceKind === 'article'
+          ? `## 本次考察的文章(${input.resumeName})\n\n${input.resumeBody}`
+          : `## 候选人简历(${input.resumeName})\n\n${input.resumeBody}`,
+    },
   ]
 
   const pushQuestion = (q: QuestionRecord, isCurrent: boolean) => {

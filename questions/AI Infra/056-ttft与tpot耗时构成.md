@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 推理服务指标/耗时构成
 summary: TTFT 与 TPOT 在 server 端的耗时分别花在哪些环节
-tags: [面经, 待校对, 推理服务指标, 性能分析]
+tags: [真题, 待校对, 推理服务指标, 性能分析]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: KVCache量化/prefill与decode的处理差异
 summary: prefill 与 decode 对 KV cache 的处理和量化差异在哪
-tags: [面经, 待校对, KVCache量化, Prefill]
+tags: [真题, 待校对, KVCache量化, Prefill]
 company:
 mastered: false
 highfreq: false

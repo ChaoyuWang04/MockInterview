@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/QLoRA与遗忘边界
 summary: LoRA 与 QLoRA 如何更新参数,为什么冻结基座仍可能遗忘
-tags: [SFT, LoRA, QLoRA, 灾难性遗忘, 待校对]
+tags: [真题, SFT, LoRA, QLoRA, 灾难性遗忘, 待校对]
 company: 字节
 mastered: false
 highfreq: false
@@ -48,7 +48,6 @@ LoRA 把更新限制在选定层的低秩形式,有时减少对原能力的破�
 
 LoRA、QLoRA、灾难性遗忘。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q078、P002-Q256。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[QLoRA](https://arxiv.org/abs/2305.14314)、[LoRA Learns Less and Forgets Less](https://arxiv.org/abs/2405.09673)。
 
 ## 追问

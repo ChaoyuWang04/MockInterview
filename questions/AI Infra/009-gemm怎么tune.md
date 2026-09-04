@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: GEMM优化/调参空间
 summary: GEMM kernel 的调参空间有哪些,各参数调大调小的后果
-tags: [面经, 待校对, GEMM, CUTLASS, 调参]
+tags: [真题, 待校对, GEMM, CUTLASS, 调参]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 机器学习/随机森林与Boosting对比
 summary: 从集成结构训练依赖偏差方差和工程场景比较随机森林与提升树
-tags: [面经, 待校对, 随机森林, Boosting, 集成学习]
+tags: [真题, 待校对, 随机森林, Boosting, 集成学习]
 company: 脉脉
 mastered: false
 highfreq: false
@@ -40,11 +40,10 @@ Boosting 每轮沿损失下降方向补充一棵树，能够逐步修正当前�
 
 - Bagging、Boosting、偏差方差、bootstrap、负梯度、学习率、正则化。
 
-- 面经原题：[B006-G01-Q067](../../docs/references/面经原题.md#b006-g01-q067)；老师答案参考：[P009-Q067](../../docs/references/平台题/P009-LC-001-080.md#p009-q067)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 为什么竞赛中常选 XGBoost 而不是随机森林？
 - 数据噪声很大时如何选型和验证？

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: Agent架构/价值边界与趋势
 summary: 分析 Agent 的价值、局限、适用条件与趋势
-tags: [面经, 待校对, Agent, Workflow, RAG, 可靠性, 安全]
+tags: [真题, 待校对, Agent, Workflow, RAG, 可靠性, 安全]
 company: 字节
 mastered: false
 highfreq: false
@@ -32,12 +32,10 @@ highfreq: false
 ## 知识点
 
 Agent 价值边界、Workflow、RAG、错误累积、工具安全、终止条件、端到端评测。
-- 本批真实面经：[B005-Q008](../../docs/references/面经原题.md#b005-g01-q008)、[B005-Q009](../../docs/references/面经原题.md#b005-g01-q009)、[B005-Q027](../../docs/references/面经原题.md#b005-g01-q027)。
-- 本批老师参考：[P008-Q008](../../docs/references/平台题/P008-Agent-001-030.md#p008-q008)、[P008-Q009](../../docs/references/平台题/P008-Agent-001-030.md#p008-q009)、[P008-Q027](../../docs/references/平台题/P008-Agent-001-030.md#p008-q027)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
 - Agent 与固定 Workflow 的优劣如何比较？
 - 如何设计 Agent 的容错、回退和人工接管？

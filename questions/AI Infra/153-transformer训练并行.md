@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 并行策略/训练并行与自回归解码
 summary: 解释Teacher Forcing带来的训练位置并行和推理逐token依赖
-tags: [面经, 待校对, Transformer, Teacher Forcing, KV Cache, 投机解码]
+tags: [真题, 待校对, Transformer, Teacher Forcing, KV Cache, 投机解码]
 company: 快手
 mastered: false
 highfreq: false
@@ -79,11 +79,9 @@ $$
 
 Teacher Forcing、因果Mask、位置并行、数据并行、张量并行、流水线并行、KV Cache、连续批处理、投机解码。
 
-- 真实面经：[B002-G01-Q172](../../docs/references/面经原题.md#b002-g01-q172)
-- 老师参考：[P005-Q172](../../docs/references/平台题/P005-Infra-151-180.md#p005-q172)
 
 ## 追问
 
-- 参考追问：为什么Decoder推理时不能直接用训练时的并行方式？KV Cache的具体实现和内存开销如何权衡？有没有方法能让Decoder推理也并行化（如投机采样、并行解码）？
+- 为什么Decoder推理时不能直接用训练时的并行方式？KV Cache的具体实现和内存开销如何权衡？有没有方法能让Decoder推理也并行化（如投机采样、并行解码）？
 
 ## Note

@@ -2,7 +2,7 @@
 difficulty: 困难
 topic: KVCache量化/CUDAGraph下的量化参数
 summary: CUDA Graph 下怎么拿 KV 量化参数,什么写法会破图
-tags: [面经, 待校对, KVCache量化, CUDAGraph]
+tags: [真题, 待校对, KVCache量化, CUDAGraph]
 company:
 mastered: false
 highfreq: false

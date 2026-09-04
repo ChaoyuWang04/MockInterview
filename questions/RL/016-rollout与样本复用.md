@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PPO/Rollout与样本复用
 summary: 区分采集轨迹、样本使用次数与PPO多轮更新
-tags: [待校对, PPO, Rollout]
+tags: [真题, 待校对, PPO, Rollout]
 company: 蚂蚁
 mastered: false
 highfreq: false
@@ -41,7 +41,6 @@ RLHF 里还要分开两种约束：概率比比较当前更新与**生成本批�
 
 PPO、rollout、环境交互、样本复用、mini-batch、策略陈旧、reference KL。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P003-Q062。
 - 一手依据：[PPO](https://arxiv.org/abs/1707.06347)。
 
 ## 追问

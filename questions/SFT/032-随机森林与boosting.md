@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 集成学习/Bagging与Boosting
 summary: 随机森林与Boosting如何集成决策树,偏差方差和并行能力有何区别
-tags: [随机森林, Bagging, Boosting, GBDT, 待校对]
+tags: [真题, 随机森林, Bagging, Boosting, GBDT, 待校对]
 company: 脉脉
 mastered: false
 highfreq: false
@@ -45,7 +45,6 @@ AdaBoost 提高错分样本的后续权重,再按弱学习器表现加权组合�
 
 Bootstrap、误差相关性、偏差与方差、加法模型、负梯度、直方图分裂。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q046。
 - 依据:[随机森林与梯度提升官方说明](https://scikit-learn.org/stable/modules/ensemble.html)、[决策树与数据预处理](https://scikit-learn.org/stable/modules/tree.html)、[XGBoost 参数](https://xgboost.readthedocs.io/en/stable/parameter.html)。
 
 ## 追问

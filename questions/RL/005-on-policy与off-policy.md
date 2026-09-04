@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PPO/On-policy与Off-policy
 summary: 区分 On-policy、Off-policy、离线数据与有限复用
-tags: [RL, PPO, GRPO, Off-policy, 待校对]
+tags: [真题, RL, PPO, GRPO, Off-policy, 待校对]
 company: 美团、华为、字节
 mastered: false
 highfreq: false
@@ -49,7 +49,6 @@ LLM 每步动作虽是有限词表，但状态是不断增长的文本前缀，�
 
 行为策略、目标策略、replay buffer、策略陈旧度、online/offline、GRPO。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q056（简单；美团）、P003-Q068（中等；美团）、P003-Q069（简单；美团）、P003-Q072（简单；华为）、P003-Q073（中等；华为）、P003-Q110（简单；美团）、P003-Q112（简单；字节）、P003-Q113（简单；字节）。
 - 依据:[PPO](https://arxiv.org/abs/1707.06347)、[DeepSeekMath/GRPO](https://arxiv.org/abs/2402.03300)、[DPO](https://arxiv.org/abs/2305.18290)、[SAC](https://arxiv.org/abs/1801.01290)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: Norm位置/为何省去均值中心化
 summary: RMSNorm省略均值中心化后怎样控制尺度及如何选型
-tags: [RMSNorm, LayerNorm, 归一化, 混合精度, 待校对]
+tags: [真题, RMSNorm, LayerNorm, 归一化, 混合精度, 待校对]
 company: 快手、小红书
 mastered: false
 highfreq: false
@@ -41,7 +41,6 @@ FP16/BF16 下，两者都涉及平方和归约，常在内部升到更高精度�
 
 RMSNorm 省去的是“减均值”这项重中心化，不只是少一次除法；它保留按均方根控制尺度的能力。效果和速度都需要在具体模型、任务与内核上验证。
 
-- 来源：[老师平台](https://course.terminiai.com/interview)，P004-Q098、P004-Q295、P004-Q324。
 - 一手依据：[RMSNorm](https://arxiv.org/abs/1910.07467)、[Layer Normalization](https://arxiv.org/abs/1607.06450)、[LLaMA](https://arxiv.org/abs/2302.13971)。
 
 ## 追问

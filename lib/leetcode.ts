@@ -50,7 +50,7 @@ export function listHot100(root = leetcodeRoot()): LcGroup[] {
   return parseListFile(path.join(root, 'hot100.md'))
 }
 
-/** 补充题清单(面经高频但不在官方 100 里;单独存放,同步官方清单时不受影响) */
+/** 真题补充清单(不在官方 100 里;单独存放,同步官方清单时不受影响) */
 export function listExtra(root = leetcodeRoot()): LcGroup[] {
   return parseListFile(path.join(root, 'extra.md')).map((g) => ({
     ...g,

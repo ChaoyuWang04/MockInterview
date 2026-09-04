@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: 博弈搜索/Minimax
-tags: [面经, 待校对, 手撕代码, 博弈论, Minimax, Alpha-Beta]
+tags: [真题, 待校对, 手撕代码, 博弈论, Minimax, Alpha-Beta]
 summary: 用 Minimax 判断有限零和博弈胜负并说明剪枝与纳什边界
 company: 拼多多
 mastered: false
@@ -57,12 +57,10 @@ def minimax(state, maximizing, alpha=float("-inf"), beta=float("inf")):
 
 零和博弈、Minimax、最优策略、Alpha-Beta、走法排序、评估函数、MCTS、混合策略纳什均衡。
 
-- 面经原题：[B006-G01-Q238](../../docs/references/面经原题.md#b006-g01-q238)。
-- 老师答案参考：[P009-Q238](../../docs/references/平台题/P009-LC-161-241.md#p009-q238)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - 状态空间很大时，Alpha-Beta、记忆化、迭代加深和 MCTS 怎样取舍？
 - 非终止状态的评估函数怎样训练和校准？

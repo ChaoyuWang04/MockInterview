@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PD分离/KV流转方向
 summary: KV cache 怎么流转,一定是 P 到 D 吗,D 会回到 P 吗
-tags: [面经, 待校对, PD分离, 前缀缓存]
+tags: [真题, 待校对, PD分离, 前缀缓存]
 company:
 mastered: false
 highfreq: false

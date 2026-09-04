@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: PPO/动作与轨迹
 summary: 区分语言模型 RL 中的 token 动作、状态与完整轨迹
-tags: [RL, PPO, RLHF, 序列生成, 待校对]
+tags: [真题, RL, PPO, RLHF, 序列生成, 待校对]
 company: 蔚来
 mastered: false
 highfreq: false
@@ -42,7 +42,6 @@ clip 仍比较本轮旧策略与新策略的 token 概率比；对固定 SFT ref
 
 token MDP、state、action、trajectory、终局奖励、信用分配。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P003-Q018（简单；蔚来）。
 - 依据:[PPO](https://arxiv.org/abs/1707.06347)、[InstructGPT](https://arxiv.org/abs/2203.02155)。
 
 ## 追问

@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: ScalingLaws/Scaling Law 数据与基础模型能力上限
 summary: Scaling Law如何约束参数、数据、算力与模型能力上限
-tags: [待校对, 预训练, Scaling Law]
+tags: [真题, 待校对, 预训练, Scaling Law]
 company: 阿里、腾讯
 mastered: false
 highfreq: false
@@ -34,7 +34,6 @@ Test-time Compute 把更多预算放到采样、搜索、验证或工具调用�
 
 Scaling Law 是经验拟合;计算最优是资源分配问题;能力上限还受数据分布、目标函数、架构、优化和评测共同影响。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P004-Q244、P004-Q266、P004-Q267、P004-Q297。
 
 一手依据:[Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)、[Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)。
 

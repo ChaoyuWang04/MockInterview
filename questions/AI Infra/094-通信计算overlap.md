@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: 集合通信/通信计算overlap
 summary: 通信算子怎么优化,dp、tp、ep 各自怎么做通信计算 overlap
-tags: [面经, 待校对, 集合通信, 通信优化]
+tags: [真题, 待校对, 集合通信, 通信优化]
 company:
 mastered: false
 highfreq: false

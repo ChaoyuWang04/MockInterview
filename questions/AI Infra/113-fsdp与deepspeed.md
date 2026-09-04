@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: FSDP/与DeepSpeed对比
 summary: FSDP与DeepSpeed怎样比较并按训练需求选型
-tags: [面经, 待校对, FSDP, DeepSpeed, 分布式训练]
+tags: [真题, 待校对, FSDP, DeepSpeed, 分布式训练]
 company: 阿里云
 mastered: false
 highfreq: false
@@ -45,18 +45,15 @@ highfreq: false
 
 FSDP、ZeRO、auto wrap、参数预取、CPU/NVMe offload、TP/PP/FSDP混合并行。
 
-真实面经：[B002-G01-Q011](../../docs/references/面经原题.md#b002-g01-q011)、[B002-G01-Q029](../../docs/references/面经原题.md#b002-g01-q029)。
-
-老师参考：[P005-Q011](../../docs/references/平台题/P005-Infra-001-030.md#p005-q011)、[P005-Q029](../../docs/references/平台题/P005-Infra-001-030.md#p005-q029)。
 
 ## 追问
 
-以下均为平台页面参考追问，不作为面经原话：
+相关真题追问：
 
-- 参考追问：auto_wrap_policy怎样避免通信过碎或峰值显存过高？
-- 参考追问：forward/backward prefetch怎样隐藏通信，代价是什么？
-- 参考追问：FSDP和DeepSpeed的CPU offload有何实现边界？
-- 参考追问：超大集群中哪些DeepSpeed能力值得保留？
-- 参考追问：TP、PP与FSDP混合时怎样安排并行域？
+- auto_wrap_policy怎样避免通信过碎或峰值显存过高？
+- forward/backward prefetch怎样隐藏通信，代价是什么？
+- FSDP和DeepSpeed的CPU offload有何实现边界？
+- 超大集群中哪些DeepSpeed能力值得保留？
+- TP、PP与FSDP混合时怎样安排并行域？
 
 ## Note

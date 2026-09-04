@@ -2,7 +2,7 @@
 difficulty: 中等
 topic: PD分离/KVCache操作链路
 summary: PD 分离下一条请求的 KV cache 要经过哪些操作与算子
-tags: [面经, 待校对, PD分离, KVCache]
+tags: [真题, 待校对, PD分离, KVCache]
 company:
 mastered: false
 highfreq: false

@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: RAG系统设计/Fallback
 summary: RAG检索不到可靠证据时如何判断、降级、拒答和恢复
-tags: [RAG, Fallback, 拒答, 面经, 待校对]
+tags: [RAG, Fallback, 拒答, 真题, 待校对]
 company: 抖音
 mastered: false
 highfreq: false
@@ -38,13 +38,11 @@ RAG 没有检索到相关文档时，系统怎样判断这次失败，并设计�
 
 证据充分性、查询改写、混合检索、澄清、降级、拒答、转人工和失败闭环。
 
-- 真实面经：[B003-Q068](../../docs/references/面经原题.md#b003-g01-q068)
-- 老师参考：[P006-Q068](../../docs/references/平台题/P006-RAG-067-097.md#p006-q068)
 
 ## 追问
 
-- 页面参考：如何校准“没有可靠证据”的判断阈值？
-- 页面参考：高风险业务和普通客服的 Fallback 为什么不同？
-- 页面参考：检索重试怎样限制延迟与循环次数？
+- 如何校准“没有可靠证据”的判断阈值？
+- 高风险业务和普通客服的 Fallback 为什么不同？
+- 检索重试怎样限制延迟与循环次数？
 
 ## Note

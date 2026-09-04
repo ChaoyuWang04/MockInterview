@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: 机器人规划/动态窗口法
 summary: 解释 DWA 的速度窗口、轨迹滚动预测、避障评分和工程边界
-tags: [面经, 待校对, 手撕代码, DWA, 路径规划, 机器人]
+tags: [真题, 待校对, 手撕代码, DWA, 路径规划, 机器人]
 company: VIVO
 mastered: false
 highfreq: false
@@ -90,12 +90,10 @@ def dwa_step(state, goal, obstacles, cfg):
 ## 知识点
 
 - 速度空间、动态可达窗口、滚动预测、刹停可行性、局部规划、评价函数、动态障碍预测、TEB、图优化。
-- 面经原题：[B006-G01-Q145](../../docs/references/面经原题.md#b006-g01-q145)、[B006-G01-Q171](../../docs/references/面经原题.md#b006-g01-q171)。
-- 老师答案参考：[P009-Q145](../../docs/references/平台题/P009-LC-081-160.md#p009-q145)、[P009-Q171](../../docs/references/平台题/P009-LC-161-241.md#p009-q171)。
 
 ## 追问
 
-以下均为平台页面追问，不计入面经原题：
+相关真题追问：
 
 - DWA 与 TEB、MPC 各有什么优缺点？
 - 狭窄通道和密集人群中为什么容易失败，怎样改进？

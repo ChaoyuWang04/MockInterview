@@ -2,7 +2,7 @@
 difficulty: 简单
 topic: LoRA/超参数调优
 summary: LoRA 怎样联合调整秩、目标层、缩放和学习率,区分容量与数据问题
-tags: [SFT, LoRA, 超参数, 实验设计, 待校对]
+tags: [真题, SFT, LoRA, 超参数, 实验设计, 待校对]
 company: 美团
 mastered: false
 highfreq: false
@@ -54,8 +54,6 @@ highfreq: false
 
 超参数耦合、目标层消融、容量与数据诊断、量化微调、权重合并。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q044;承接 P002-Q034 的 alpha/dropout 与 P002-Q056 的选层实验追问。
-- 本批同题来源:[老师平台](https://course.terminiai.com/interview),P002-Q215、P002-Q216。
 - 依据:[LoRA](https://arxiv.org/abs/2106.09685)、[QLoRA §4 与附录 B.2](https://arxiv.org/html/2305.14314v1)、[DoRA](https://arxiv.org/abs/2402.09353)。填写框架不代表已有项目经历。
 
 ## 追问

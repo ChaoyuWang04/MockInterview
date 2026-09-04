@@ -267,3 +267,49 @@ describe('目录扫描与校验', () => {
     expect(s.categories).toEqual([{ name: 'RAG', total: 3, mastered: 1 }])
   })
 })
+
+describe('题库真题契约', () => {
+  it('正式题库中的每一道题都统一使用「真题」标签', () => {
+    const projectRoot = path.resolve(import.meta.dirname, '..', 'questions')
+    const missing: string[] = []
+    const legacy: string[] = []
+    const splitLabels: string[] = []
+
+    for (const category of listCategories(projectRoot)) {
+      for (const question of loadCategory(category, projectRoot)) {
+        if (!question.meta.tags.includes('真题')) missing.push(`${category}/${question.file}`)
+        if (question.meta.tags.includes('面经')) legacy.push(`${category}/${question.file}`)
+        const text = fs.readFileSync(path.join(projectRoot, category, question.file), 'utf8')
+        if (/不计入真题|平台页面追问|页面参考(?:追问)?|自拟[:：]/.test(text)) {
+          splitLabels.push(`${category}/${question.file}`)
+        }
+      }
+    }
+
+    expect(missing, '缺少「真题」标签').toEqual([])
+    expect(legacy, '仍使用旧「面经」标签').toEqual([])
+    expect(splitLabels, '仍按输入方式区分题目或追问').toEqual([])
+  })
+
+  it('活动代码与文档不再保留 P/B 双编号和面经分类', () => {
+    const projectRoot = path.resolve(import.meta.dirname, '..')
+    const roots = ['app', 'components', 'lib', 'scripts', 'docs', 'questions', 'knowledge']
+    const banned = /fromInterview|面经|平台题|写作参考索引|来源与批次地图|(?:^|[^A-Za-z0-9])[PB]\d{3}(?:-G\d+)?-Q/m
+    const hits: string[] = []
+
+    const walk = (dir: string) => {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        if (entry.name.startsWith('.')) continue
+        const full = path.join(dir, entry.name)
+        if (entry.isDirectory()) walk(full)
+        else if (/\.(?:md|ts|tsx|mjs)$/.test(entry.name)) {
+          const text = fs.readFileSync(full, 'utf8')
+          if (banned.test(text)) hits.push(path.relative(projectRoot, full))
+        }
+      }
+    }
+
+    for (const root of roots) walk(path.join(projectRoot, root))
+    expect(hits).toEqual([])
+  })
+})
