@@ -1,47 +1,55 @@
 ---
 difficulty: 简单
-topic: Agent框架/选型
-summary: LangChain与LlamaIndex当前侧重点、重叠能力和选型方法
-tags: [面经, 待校对, Agent, LangChain, LlamaIndex, 框架选型]
-company: 阿里云
+topic: Agent框架/开发框架选型
+summary: 比较主流 Agent 框架的定位和选型依据
+tags: [面经, 待校对, Agent, LangGraph, LlamaIndex, AutoGPT, AutoGen, CrewAI]
+company: 淘天、字节、阿里云
 mastered: false
 highfreq: false
 ---
 
 ## 题目
 
-LangChain与LlamaIndex在架构设计和核心功能上有什么差异？它们分别适合哪些场景，设计企业级RAG时又该怎样选择或组合？
+请比较 LangChain/LangGraph、LlamaIndex、AutoGPT 等 Agent 开发框架的技术定位、核心能力、RAG 与工具集成方式、适用场景和局限，并说明项目中如何选型；同时简要说明 AutoGen、CrewAI 一类多 Agent 框架处在什么位置。
 
 ## 要点
 
-- LangChain当前强调由模型、工具、Prompt和中间件组成的可配置Agent框架
-- LangChain Agent建立在LangGraph之上，可使用持久执行和人工介入等编排能力
-- LlamaIndex围绕数据摄取、索引、检索、查询、响应合成和Agent工作流组织能力
-- 两者能力重叠，不能简单断言谁的Agent或RAG一定更强
-- 选型依据是主复杂度、现有生态、可观测性、评测和运维成本
+- 区分有状态编排、数据与检索、自主任务循环和多 Agent 协作
+- 说明框架能力有重叠，不能把“编排”和“检索”画成互斥边界
+- 从持久化、调试、评测、部署和团队维护成本选型
+- 对版本敏感的 API 与成熟度结论标明时间
 
 ## 答案
 
-**两者都能做RAG和Agent，差别主要在默认抽象与使用重心，不是一条绝对分界线。**
+**截至 2026-09，框架适合按“最难维护的部分”选择，而不是按品牌列功能；具体 API 必须以项目锁定版本的官方文档为准。**
 
-LangChain官方当前把核心Agent描述为可配置的harness：把模型、工具、Prompt和中间件装进模型调用循环；其Agent构建在LangGraph上，适合需要工具调用、路由、状态、人工介入和复杂编排的应用。
+| 框架/生态 | 更强的起点 | 常见场景 | 主要风险 |
+| --- | --- | --- | --- |
+| LangChain/LangGraph | 工具封装、有状态图编排、检查点与人工介入 | 多步骤业务流程、需要恢复和审计的 Agent | 抽象层多，版本迁移与调试成本高 |
+| LlamaIndex | 数据接入、索引、检索、重排与 RAG 评测 | 企业知识问答、复杂检索链 | Agent 能力也在扩展，不能只把它当向量库外壳 |
+| AutoGPT | 目标驱动的自主任务循环；当前项目也提供更完整的平台与可复用组件 | 探索自主执行、快速验证长任务闭环 | 自主步骤会放大错误和成本，而且项目定位随版本变化明显 |
+| AutoGen、CrewAI | 多参与者会话或角色任务协作 | 研究型多 Agent、角色边界清晰的原型 | 多角色不等于可靠分工，仍需终止条件、状态治理和生产护栏 |
 
-LlamaIndex官方概念体系从数据连接与摄取开始，继续覆盖Document/Node、索引、Retriever、Query Engine、响应合成和Agent/Workflow。团队若主要难点是把私有数据可靠地解析、索引、检索并评测，通常更容易从这些数据抽象切入。
-
-企业级RAG可以只选一个，也可以让LlamaIndex负责数据与检索，把检索能力暴露给LangChain Agent编排。选择前用同一批真实查询做小型验证，比较检索质量、流程可控性、追踪调试、部署依赖和团队熟悉度，并锁定版本。具体API和功能边界变化很快，不应用连接器数量或静态功能清单做结论。
+知识密集客服可用 LlamaIndex 管数据与检索，用 LangGraph 控制检索、订单工具、转人工和失败恢复；目标开放、需要模型自己拆解许多步骤的探索性任务，才更接近 AutoGPT 代表的自主循环。若一个框架已覆盖核心需求，避免为“组合”增加两套状态。选型应做最小原型，比较任务成功率、P95 延迟、可恢复性、可观测性、部署依赖和团队熟悉度。
 
 ## 知识点
 
-Agent harness、工具调用、LangGraph、数据摄取、Document/Node、Retriever、Query Engine、Workflow、框架选型。
-
+Agent 框架、有状态工作流、RAG 数据链、自主任务循环、多 Agent 运行时、检查点、可观测性。
+- 官方资料（截至 2026-09）：[LangChain Agents](https://docs.langchain.com/oss/python/langchain/agents)、[LlamaIndex 文档](https://docs.llamaindex.ai/)、[AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)。
 - 真实面经：[B003-G01-Q066](../../docs/references/面经原题.md#b003-g01-q066)
 - 老师参考：[P006-Q066](../../docs/references/平台题/P006-RAG-034-066.md#p006-q066)
-- 官方资料（核对于2026-09-04）：[LangChain overview](https://docs.langchain.com/oss/python/langchain/overview)、[LlamaIndex High-Level Concepts](https://developers.llamaindex.ai/python/framework/getting_started/concepts/)
+- 本批真实面经：[B005-Q003](../../docs/references/面经原题.md#b005-g01-q003)、[B005-Q040](../../docs/references/面经原题.md#b005-g01-q040)。
+- 本批老师参考：[P008-Q003](../../docs/references/平台题/P008-Agent-001-030.md#p008-q003)、[P008-Q040](../../docs/references/平台题/P008-Agent-031-059.md#p008-q040)。
 
 ## 追问
 
-- 参考追问：基于两者设计企业级RAG系统时，怎样取舍或组合？
-- 参考追问：LlamaIndex的索引抽象怎样对应不同数据和查询场景？
-- 参考追问：LangChain的LCEL解决什么问题，与传统Chain相比有什么差异？
+以下均为平台页面参考追问，不作为面经原话：
+
+- 如果从零设计电商客服 Agent，会选择哪个框架，如何改造？
+- 这些框架在工具调用失败时的容错机制有何不同？
+- 在项目中应选择 LangChain/LangGraph、LlamaIndex，还是组合使用？
+- AutoGen、CrewAI 一类多 Agent 框架适合解决什么问题？
+- LangChain Expression Language 与普通顺序调用有什么区别？
+- LlamaIndex 的不同索引和检索结构应如何按数据特点选择？
 
 ## Note

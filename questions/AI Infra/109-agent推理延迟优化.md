@@ -3,7 +3,7 @@ difficulty: 中等
 topic: 工具调用/高并发与低延迟
 summary: Agent 高并发时怎样压缩检索、生成和工具调用延迟
 tags: [面经, 待校对, Agent, 工具调用, 推理服务]
-company: 海天、字节、阿里云
+company: 海天、字节、阿里云、淘天
 mastered: false
 highfreq: false
 ---
@@ -59,6 +59,8 @@ INT4 是否可用不能只看困惑度，要比较量化前后**工具选择正�
 真实面经：[B002-G01-Q004](../../docs/references/面经原题.md#b002-g01-q004)、[B002-G01-Q047](../../docs/references/面经原题.md#b002-g01-q047)、[B002-G01-Q117](../../docs/references/面经原题.md#b002-g01-q117)、[B002-G01-Q123](../../docs/references/面经原题.md#b002-g01-q123)、[B002-G01-Q124](../../docs/references/面经原题.md#b002-g01-q124)。
 
 老师参考：[P005-Q004](../../docs/references/平台题/P005-Infra-001-030.md#p005-q004)、[P005-Q047](../../docs/references/平台题/P005-Infra-031-060.md#p005-q047)、[P005-Q117](../../docs/references/平台题/P005-Infra-091-120.md#p005-q117)、[P005-Q123](../../docs/references/平台题/P005-Infra-121-150.md#p005-q123)、[P005-Q124](../../docs/references/平台题/P005-Infra-121-150.md#p005-q124)。
+- 本批真实面经：[B005-Q057](../../docs/references/面经原题.md#b005-g01-q057)。
+- 本批老师参考：[P008-Q057](../../docs/references/平台题/P008-Agent-031-059.md#p008-q057)。
 
 ## 追问
 
