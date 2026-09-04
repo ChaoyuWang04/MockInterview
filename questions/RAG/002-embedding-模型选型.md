@@ -2,15 +2,15 @@
 difficulty: 中等
 topic: Embedding/模型选型
 summary: Embedding如何学习、构建和评估,模型与维度怎样选择
-tags: [RAG, Embedding, 对比学习, 待校对]
-company: 小红书、美团
+tags: [面经, 待校对, RAG, Embedding, 对比学习]
+company: 小红书、美团、字节、淘天
 mastered: false
 highfreq: false
 ---
 
 ## 题目
 
-什么是 Embedding?请说明它如何学习、怎样构建文本或多模态表示、如何评估质量,并解释在 RAG 中选择模型、向量维度和检索方案时要权衡什么。
+什么是 Embedding?请说明它如何学习、怎样构建文本或多模态表示、如何评估质量,并解释在 RAG 中选择模型、向量维度和检索方案时要权衡什么。DPR 与 Contriever 这类编码模型的训练信号和适用条件有什么区别？
 
 ## 要点
 
@@ -45,12 +45,20 @@ $$
 
 中文与垂直领域要检查切词、缩写、实体和长文分块。百万级检索通常让文档塔离线编码,查询塔在线编码,再用 ANN 召回和更强的交互模型重排。ANN 仍有索引遍历与候选访问成本,不能笼统写成 $O(1)$ 或保证毫秒级。
 
+### DPR 与 Contriever 怎样理解
+
+二者都用双编码器独立计算 query 和 passage 向量，再用内积等相似度检索，因此文档向量可以离线缓存。主要区别在训练信号：DPR 用开放域问答中的问题—正 passage 监督训练，并配合 batch 内负例或检索得到的难负例；Contriever 先用无标注文本做对比预训练，目标是在缺少人工相关性标签时得到可迁移的稠密检索表示，之后仍可用领域数据微调。
+
+DPR 在训练分布接近目标问答任务时通常更直接，但对标注、正例定义和负样本质量敏感。Contriever 的优势是无监督起点和迁移能力，不代表它在所有目标域都胜过监督模型或 BM25。比较时应在同一语料、分块和 ANN 配置下看 Recall@K、MRR/nDCG、领域迁移、吞吐及最终回答质量；还要人工检查假负例，防止把同样能回答问题的 passage 当成错误候选。
+
 ## 知识点
 
 分布式表示、上下文表示、句向量、InfoNCE、pooling、ANN、离线与线上评测。
 
 - 来源:[老师平台](https://course.terminiai.com/interview),P004-Q121/Q122/Q194/Q216/Q222。
-- 依据:[Sentence-BERT](https://arxiv.org/abs/1908.10084)、[SimCSE](https://arxiv.org/abs/2104.08821)、[InfoNCE](https://arxiv.org/abs/1807.03748)、[CLIP](https://arxiv.org/abs/2103.00020)。
+- 真实面经：[B003-G01-Q009](../../docs/references/面经原题.md#b003-g01-q009)、[Q036](../../docs/references/面经原题.md#b003-g01-q036)、[Q051](../../docs/references/面经原题.md#b003-g01-q051)、[Q052](../../docs/references/面经原题.md#b003-g01-q052)、[Q082](../../docs/references/面经原题.md#b003-g01-q082)、[Q093](../../docs/references/面经原题.md#b003-g01-q093)
+- 老师参考：[P006-Q009](../../docs/references/平台题/P006-RAG-001-033.md#p006-q009)、[Q036](../../docs/references/平台题/P006-RAG-034-066.md#p006-q036)、[Q051](../../docs/references/平台题/P006-RAG-034-066.md#p006-q051)、[Q052](../../docs/references/平台题/P006-RAG-034-066.md#p006-q052)、[Q082](../../docs/references/平台题/P006-RAG-067-097.md#p006-q082)、[Q093](../../docs/references/平台题/P006-RAG-067-097.md#p006-q093)
+- 依据:[Sentence-BERT](https://arxiv.org/abs/1908.10084)、[SimCSE](https://arxiv.org/abs/2104.08821)、[InfoNCE](https://arxiv.org/abs/1807.03748)、[CLIP](https://arxiv.org/abs/2103.00020)、[DPR](https://arxiv.org/abs/2004.04906)、[Contriever](https://arxiv.org/abs/2112.09118)。
 
 ## 追问
 
@@ -60,5 +68,7 @@ $$
 - 维度增加为什么不保证语义效果提升?
 - 如何处理 OOV、歧义词和领域语义偏移?
 - 更换 Embedding 模型后,已有索引怎样迁移?
+- DPR 的负样本怎样构造，batch 内负样本可能带来什么偏差？
+- 没有相关性标注时，Contriever 这类无监督稠密检索模型怎样训练和评估？
 
 ## Note
