@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
 
 export interface VoiceConfig {
   ttsModel: string
@@ -25,31 +26,71 @@ export const DEFAULT_VOICE_CONFIG: VoiceConfig = {
   volume: 1.2,
   // 0.1:同一段描述两次生成尽量像。模型原默认 0.9 抖得厉害
   temperature: 0.1,
-  // 实测(真声,3 句 15 术语,带热词):Whisper 14/15 · Qwen3-ASR 13/15 · Fun-ASR 10/15
-  sttModel: 'whisper-turbo',
+  // 云端。同一段音频对比:云端标点齐全、术语全中;本地 Whisper 把「异步」听成「一步」。
+  // 云端还吃得下全域热词表(本地 448 token 上下文会溢出)。没配 DASHSCOPE 时自动回落 whisper。
+  sttModel: 'qwen3-asr-flash',
   enabled: true,
 }
 
+/** 语音设置存这个 key。改了设置就永久生效,刷新不丢。 */
+const VOICE_STORAGE_KEY = 'interview.voice.v1'
+
 /**
- * 把一批术语展开成热词表。
+ * 收集热词:去重、去掉太短的,**保留原样写法**。
  *
- * 同一个词给多种写法能明显提高召回:实测 `deepep` 只给 `DeepEP` 时,
- * Qwen3-ASR 听成 `DeepHP`;补上小写和拆写(`deepep` / `Deep EP`)之后两家都认了。
- * 驼峰词尤其需要 —— 模型听到的是连续音节,给它多个落点比给一个准。
+ * 曾经这里会展开大小写与拆写变体(`DeepEP` → `deepep` / `Deep EP`),现已删除 ——
+ * 对照实测(7.6s 音频,6 个驼峰术语)证明变体是负收益:
+ *
+ * | 热词表 | Whisper | Qwen3-ASR |
+ * |---|---|---|
+ * | 不给 | 4/6 | 6/6 |
+ * | 只给规范写法 | **5/6** | 6/6 |
+ * | 规范 + 变体 | **3/6** | 6/6 |
+ *
+ * 原因在机制上说得通:Whisper 把热词折进 `initial_prompt`,变体表更长、更像一份
+ * 逗号分隔的词表,模型会去模仿那个风格 —— 实测直接把整句转成英文、丢掉大半内容。
+ * 云端把热词放 system 的 Context 里,不受影响,但也没有增益。
  */
-export function expandHotwords(terms: Iterable<string>): string[] {
+export function collectHotwords(terms: Iterable<string>): string[] {
   const out = new Set<string>()
   for (const raw of terms) {
     const t = raw.trim()
-    if (t.length < 2) continue
-    out.add(t)
-    const lower = t.toLowerCase()
-    if (lower !== t) out.add(lower)
-    // 驼峰拆开:DeepEP → Deep EP,AllGather → All Gather
-    const spaced = t.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-    if (spaced !== t) out.add(spaced)
+    if (t.length >= 2) out.add(t)
   }
   return [...out]
+}
+
+/**
+ * 语音设置 + localStorage 持久化。
+ *
+ * 初值必须是 `DEFAULT_VOICE_CONFIG` 而不是直接读 localStorage —— 服务端渲染时没有
+ * `window`,首屏两边对不上会 hydration 报错。所以挂载后再读、读完再允许写回。
+ */
+export function useVoiceConfig(): [VoiceConfig, Dispatch<SetStateAction<VoiceConfig>>] {
+  const [config, setConfig] = useState<VoiceConfig>(DEFAULT_VOICE_CONFIG)
+  const loaded = useRef(false)
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(VOICE_STORAGE_KEY)
+      // 与默认值合并:以后给 VoiceConfig 加字段时,老的存档不会缺键
+      if (raw) setConfig({ ...DEFAULT_VOICE_CONFIG, ...(JSON.parse(raw) as Partial<VoiceConfig>) })
+    } catch {
+      // 存档坏了就用默认值,不值得打断面试
+    }
+    loaded.current = true
+  }, [])
+
+  useEffect(() => {
+    if (!loaded.current) return // 别用默认值盖掉还没读出来的存档
+    try {
+      window.localStorage.setItem(VOICE_STORAGE_KEY, JSON.stringify(config))
+    } catch {
+      // 隐私模式下 localStorage 会抛,设置退化成「本次有效」
+    }
+  }, [config])
+
+  return [config, setConfig]
 }
 
 /**

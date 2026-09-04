@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Markdown from '@/components/Markdown'
 import VoiceSettings from '@/components/interview/VoiceSettings'
-import { useVoice, expandHotwords, DEFAULT_VOICE_CONFIG } from '@/components/interview/useVoice'
-import type { VoiceConfig } from '@/components/interview/useVoice'
+import { useVoice, useVoiceConfig, collectHotwords } from '@/components/interview/useVoice'
 import SttBench from '@/components/interview/SttBench'
+import { PHASE_CAPS, PHASE_LABEL, PHASE_ORDER, type InterviewPhase } from '@/lib/interview/phases'
 
 export interface ResumeOption {
   slug: string
@@ -18,6 +18,12 @@ export interface ResumeOption {
 
 type Mode = 'interview' | 'drill'
 
+interface SttOption {
+  id: string
+  label: string
+  ready: boolean
+}
+
 interface Question {
   id: string
   article: string
@@ -26,9 +32,12 @@ interface Question {
   要点数: number
   追问数: number
   highfreq: boolean
-  面经: boolean
+  真题: boolean
   待校对: boolean
   poolSize: number
+  phase?: InterviewPhase
+  phaseLabel?: string
+  projectCount?: number
 }
 
 interface Settlement {
@@ -55,7 +64,26 @@ interface Turn {
 /** 回传给服务端的一道题:题目 id + 这道题下面的问答轮次(与上下文的 append-only 结构对齐) */
 interface WireQuestion {
   questionId: string
+  /** 抽到这题时的阶段。**定死一次不再改** —— 它进上下文的材料块,一变前缀缓存就断 */
+  phase?: InterviewPhase
   turns: { ask: string; answer: string; verdict?: string }[]
+}
+
+/**
+ * 抽题接口返回的 id → 回传服务端用的 questionId。
+ *
+ * **只有 `q:` 开头的题库题才剥前缀**,别的一律原样传:
+ *   `q:<分类>/<文件>`   → 剥掉 `q:`
+ *   `phase:intro` / `phase:project:0` → 原样
+ *   `k:<文章名>#<行号>`(单篇过题的考点行) → 原样
+ *
+ * ⚠️ 这里**必须用白名单,不能用排除法**。写成「不是 phase: 就 slice(2)」的版本
+ * 栽过两次:先把 `phase:project:0` 砍成 `ase:project:0`(整场没有复盘,不报错),
+ * 后来加了考点行又把 `k:CudaGraph#9` 砍成 `CudaGraph#9`(题目读不出来)。
+ * 每加一种新 id 排除法就再坏一次,白名单不会。
+ */
+function toQuestionId(id: string): string {
+  return id.startsWith('q:') ? id.slice(2) : id
 }
 
 const MODE_INFO: Record<Mode, { name: string; desc: string }> = {
@@ -69,9 +97,25 @@ const MODE_INFO: Record<Mode, { name: string; desc: string }> = {
   },
 }
 
-export default function InterviewSession({ resumes }: { resumes: ResumeOption[] }) {
+/** 单篇过题的范围;传了它就不选简历不选模式,固定过题档、池子只限这一篇 */
+export interface KbScope {
+  article: string
+  chapter: string
+  /** 题库题 + 考点行 */
+  poolSize: number
+  questionCount: number
+  examPointCount: number
+}
+
+export default function InterviewSession({
+  resumes,
+  scope,
+}: {
+  resumes: ResumeOption[]
+  scope?: KbScope
+}) {
   const [resume, setResume] = useState(resumes.find((r) => r.isDefault)?.slug ?? resumes[0]?.slug ?? '')
-  const [mode, setMode] = useState<Mode>('interview')
+  const [mode, setMode] = useState<Mode>(scope ? 'drill' : 'interview')
   const [started, setStarted] = useState(false)
 
   const [question, setQuestion] = useState<Question | null>(null)
@@ -85,25 +129,37 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
   const turnsRef = useRef<Turn[]>([])
   /** submit 的最新引用 —— 自动提交的 effect 要用,但 submit 定义在它后面 */
   const submitRef = useRef<(() => Promise<void>) | null>(null)
+  /** finish 的最新引用 —— nextQuestion 里「单篇过完了」要调它,但 finish 定义在后面 */
+  const finishRef = useRef<(() => Promise<void>) | null>(null)
   const [debug, setDebug] = useState<string>('')
-  const [voice, setVoice] = useState<VoiceConfig>(DEFAULT_VOICE_CONFIG)
+  // 存 localStorage:改一次永久生效,刷新不丢
+  const [voice, setVoice] = useVoiceConfig()
   const [recording, setRecording] = useState(false)
   const [speaking, setSpeaking] = useState(false)
   const { speak, stopSpeak, startRecording, stopAndTranscribe } = useVoice()
-  const [sttOptions, setSttOptions] = useState<{ id: string; label: string; ready: boolean }[]>([])
-  const [showBench, setShowBench] = useState(false)
+  const [sttOptions, setSttOptions] = useState<SttOption[]>([])
+  const [showVoice, setShowVoice] = useState(false)
   const [finished, setFinished] = useState<{ review: string; file: string } | null>(null)
   const [ending, setEnding] = useState(false)
   const [pendingSubmit, setPendingSubmit] = useState<string | null>(null)
   const startedAt = useRef('')
 
-  // 语音服务的可用后端列表;服务没起也不影响打字面试
+  // 语音服务的可用后端列表;服务没起也不影响打字面试。
+  // 顺带做一次回落:默认引擎是云端的,没配 DASHSCOPE / 没下模型时别把人卡在不可用的选项上。
   useEffect(() => {
     fetch('/api/interview/voice')
       .then((r) => r.json())
-      .then((d) => setSttOptions(d.stt ?? []))
+      .then((d) => {
+        const stt: SttOption[] = d.stt ?? []
+        setSttOptions(stt)
+        setVoice((v) => {
+          if (stt.find((s) => s.id === v.sttModel)?.ready) return v
+          const usable = stt.find((s) => s.ready)
+          return usable ? { ...v, sttModel: usable.id } : v
+        })
+      })
       .catch(() => setSttOptions([]))
-  }, [])
+  }, [setVoice])
 
   // 服务端无状态,整场进度全在这里;刷新页面会重来,但服务重建不影响。
   // 结构对齐上下文的 append-only 设计:每道题一条记录,里面是这道题下的问答轮次。
@@ -111,6 +167,23 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
   const history = useRef<WireQuestion[]>([])
   const current = useRef<WireQuestion | null>(null)
   const followUpRound = useRef(0)
+
+  // ── 面试档的阶段机(过题档全程停在 breadth,行为和以前一模一样)──
+  // 阶段边界由代码控制:模型可以发 nextphase 提前结束,但轮次上限卡死在 PHASE_CAPS。
+  const phase = useRef<InterviewPhase>('breadth')
+  const projectIndex = useRef(0)
+  const phaseRounds = useRef(0)
+  const projectTotal = useRef(0)
+  /** 本场已经深挖过的项目 —— 不重复挑 */
+  const usedProjects = useRef<Set<number>>(new Set())
+  /**
+   * 会话种子。整场不变,随每次请求回传:
+   * ① 服务端据此决定开场材料里项目清单的呈现顺序(所以每场顺序不同)
+   * ② 模型没挑项目时,前端用它做可复现的随机兜底
+   * **必须整场一致** —— 变了开场材料就变了,前缀缓存会断。
+   */
+  const sessionSeed = useRef(0)
+  const [phaseLabel, setPhaseLabel] = useState('')
 
   useEffect(() => {
     turnsRef.current = turns
@@ -127,21 +200,102 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
     return data
   }, [])
 
+  /**
+   * 挑下一个要深挖的项目。**优先用模型选的**(它刚听完你的自我介绍或上一个项目),
+   * 模型没选 / 选越界 / 选了已问过的,就用会话种子随机挑一个没问过的。
+   * 返回 null 表示没有可挑的了。
+   */
+  const pickProject = useCallback((suggested?: number): number | null => {
+    const left = Array.from({ length: projectTotal.current }, (_, i) => i).filter(
+      (i) => !usedProjects.current.has(i),
+    )
+    if (left.length === 0) return null
+    if (suggested !== undefined && left.includes(suggested)) return suggested
+    // 兜底随机:模型不配合不能让面试卡住,也不能永远退化成「总是第 0 个」
+    return left[(sessionSeed.current + usedProjects.current.size) % left.length]
+  }, [])
+
+  /**
+   * 推进阶段。
+   *
+   * **不再按 0,1,2 把每个项目挨个问一遍** —— 真面试官会挑一两个挖透,剩下的不碰。
+   * 挑哪个由模型说了算(`proj` 字段),挑几个由模型说了算(它随时可以转广度或收尾)。
+   * 代码只保证:不重复挑、越界有兜底、轮次有上限。
+   */
+  const advancePhase = useCallback(
+    (suggestedProject?: number) => {
+      phaseRounds.current = 0
+      if (phase.current === 'project') {
+        // 深挖完 → 进这个项目的技术延伸
+        phase.current = 'tech'
+        return
+      }
+      if (phase.current === 'tech' || phase.current === 'intro') {
+        const next = pickProject(suggestedProject)
+        if (next !== null) {
+          usedProjects.current.add(next)
+          projectIndex.current = next
+          phase.current = 'project'
+          return
+        }
+        phase.current = 'breadth'
+        return
+      }
+      const i = PHASE_ORDER.indexOf(phase.current)
+      phase.current = PHASE_ORDER[Math.min(i + 1, PHASE_ORDER.length - 1)]
+    },
+    [pickProject],
+  )
+
   const nextQuestion = useCallback(async () => {
     setBusy(true)
     setError('')
     setSettlement(null)
     try {
-      const q: Question = await post('/api/interview/next', {
-        resume,
-        asked: asked.current,
-        lastArticle: question?.article,
-      })
+      let q: Question | null = null
+      // 阶段题可能取不到(没有画像、项目问完了、关联不到题)—— 顺次往下走,最多走到 breadth。
+      // 上限给足:project↔tech 会来回切,每个项目各占一次
+      for (let attempt = 0; attempt < PHASE_ORDER.length + 8 && !q; attempt++) {
+        try {
+          q = (await post('/api/interview/next', {
+            resume,
+            asked: asked.current,
+            lastArticle: question?.article,
+            phase: phase.current,
+            projectIndex: projectIndex.current,
+            sessionSeed: sessionSeed.current,
+            article: scope?.article,
+          })) as Question
+        } catch (e) {
+          const msg = (e as Error).message
+          // 阶段取不到题是**正常情况**,不是错误:没有画像、项目问完了、
+          // 或者这个项目关联的文章在题库里一道题都没有。顺次往下走就是了。
+          if (msg.includes('ARTICLE_DONE')) {
+            // 这一篇全过完了 —— 直接收尾并生成复盘,不再抽题
+            await finishRef.current?.()
+            return
+          }
+          if (msg.includes('NO_MORE_PROJECTS')) {
+            phase.current = 'breadth'
+            phaseRounds.current = 0
+          } else if (msg.includes('NO_RELATED_QUESTIONS')) {
+            advancePhase() // 这个项目接不上技术题 —— 换项目或转广度
+          } else {
+            throw e
+          }
+        }
+      }
+      if (!q) throw new Error('抽不到题:阶段都走完了,候选池也是空的')
+
       asked.current = [...asked.current, q.id]
+      if (q.projectCount) projectTotal.current = q.projectCount
       // 上一题(如果有)整条归档进 history,当前题另起一条 —— 只追加,不回改
       if (current.current) history.current = [...history.current, current.current]
-      current.current = { questionId: q.id.slice(2), turns: [] }
+      // 阶段题的 id 是 `phase:xxx`,不能像题库 id 那样剥掉前两个字符
+      current.current = { questionId: toQuestionId(q.id), phase: q.phase, turns: [] }
       followUpRound.current = 0
+      phaseRounds.current = 0
+      setPhaseLabel(q.phaseLabel ?? '')
       setQuestion(q)
       setAsk(q.题目)
       setAnswer('')
@@ -172,7 +326,7 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
     const terms = new Set<string>()
     if (question?.article) terms.add(question.article)
     for (const m of ask.match(/[A-Za-z][A-Za-z0-9_.-]{1,24}/g) ?? []) terms.add(m)
-    return expandHotwords(terms)
+    return collectHotwords(terms)
   }, [question?.article, ask])
 
   /** 录音开关。停止后自动转写,转写完自动提交 —— 全程不用点第二下。 */
@@ -215,6 +369,8 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
         mode,
         startedAt: startedAt.current,
         voice: voice.instruct,
+        sessionSeed: sessionSeed.current,
+        article: scope?.article,
         turns: turnsRef.current,
       })
       setFinished({ review: r.review ?? '', file: r.file ?? '' })
@@ -256,32 +412,44 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
     history.current = []
     current.current = null
     startedAt.current = new Date().toLocaleString('zh-CN')
+    // 面试档从自我介绍开场;过题档没有阶段,直接进正题
+    phase.current = mode === 'interview' && !scope ? 'intro' : 'breadth'
+    projectIndex.current = 0
+    phaseRounds.current = 0
+    usedProjects.current = new Set()
+    // 每场一个新种子 —— 项目清单的呈现顺序因此每场都不同,
+    // 即使模型的偏好稳定,落到的项目也会变。这是「同一份简历多跑几场有价值」的前提。
+    sessionSeed.current = Math.floor(Math.random() * 1e9)
     await nextQuestion()
-  }, [nextQuestion])
+  }, [nextQuestion, mode])
 
   const submit = useCallback(async () => {
     if (!question || !answer.trim() || busy) return
     setBusy(true)
     setError('')
     try {
-      // 把这一轮追加进当前题,再整体回传 —— 服务端据此复原整场 append-only 上下文
+      // 把这一轮追加进当前题,再整体回传 —— 服务端据此复原整场 append-only 上下文。
+      // **判卷成功之前不写回 cur.turns**:失败时不留半条记录,否则你再点一次
+      // 「答完了」会把同一问同一答塞进上下文两遍。
       const cur = current.current!
-      cur.turns = [...cur.turns, { ask, answer }]
+      const pending = { ask, answer }
       const r = await post('/api/interview/turn', {
         resume,
         mode,
         history: history.current,
-        current: cur,
+        current: { ...cur, turns: [...cur.turns, pending] },
+        sessionSeed: sessionSeed.current,
+        article: scope?.article,
       })
       // 判卷结果存回这一轮:下一次它会作为 assistant 消息进上下文,面试官因此记得判过什么
-      cur.turns[cur.turns.length - 1].verdict = r.verdict
+      cur.turns = [...cur.turns, { ...pending, verdict: r.verdict }]
       setTurns((t) => [
         ...t,
         {
           ask,
           answer,
           article: question.article,
-          questionId: question.id.slice(2),
+          questionId: toQuestionId(question.id),
           hit: r.hit,
           miss: r.miss,
           points: r.要点 ?? [],
@@ -300,11 +468,21 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
         return
       }
       // 面试档:不给反馈,直接往下走。
-      // **追问没有轮次上限** —— 追到什么时候、什么时候换题、整场什么时候收,
-      // 全由模型的 `next` 决定(followup / nextq / end)。我们只做兜底。
+      // 阶段内追问归模型(`followup` / `nextq`),**阶段边界归代码**:
+      // 模型发 `nextphase` 可以提前结束一个阶段,但轮次到了上限一律强制推进 ——
+      // 不然一场面试可能在自我介绍上耗掉二十轮。
       followUpRound.current += 1
+      phaseRounds.current += 1
+      const capped = phaseRounds.current >= PHASE_CAPS[phase.current]
+      // 开场与项目深挖**一个阶段只有一道主问**,没有「下一题」可换。
+      // 模型发 nextq 时若不当成 nextphase,会原地反复拿到同一道题(实测踩到)。
+      const oneQuestionPhase = phase.current === 'intro' || phase.current === 'project'
+
       if (r.next === 'end') {
         await finish()
+      } else if (r.next === 'nextphase' || capped || (oneQuestionPhase && r.next === 'nextq')) {
+        advancePhase(typeof r.project === 'number' ? r.project : undefined)
+        await nextQuestion()
       } else if (r.next === 'followup' && r.followUp) {
         setAsk(r.followUp)
         setAnswer('')
@@ -316,12 +494,23 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
     } finally {
       setBusy(false)
     }
-  }, [question, answer, busy, post, resume, mode, ask, nextQuestion, finish])
+  }, [question, answer, busy, post, resume, mode, ask, nextQuestion, finish, advancePhase])
 
   useEffect(() => {
     submitRef.current = submit
   }, [submit])
 
+  useEffect(() => {
+    finishRef.current = finish
+  }, [finish])
+
+  /**
+   * 「这题我熟,跳过」。
+   *
+   * ⚠️ 面试档下必须**推进阶段**,不能只调 nextQuestion:开场和项目深挖
+   * 一个阶段只有一道主问,原地再抽一次拿到的还是同一道题(这个按钮在面试档下
+   * 因此一度是失灵的)。技术延伸和广度补充有题池,跳过 = 换一道,阶段不变。
+   */
   const skip = useCallback(async () => {
     if (!question) return
     setTurns((t) => [
@@ -330,20 +519,40 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
         ask,
         answer: '(跳过)',
         article: question.article,
-        questionId: question.id.slice(2),
+        questionId: toQuestionId(question.id),
         hit: [],
         miss: [],
         points: [],
         skipped: true,
       },
     ])
+    // 跳过的这一轮也要进上下文 —— 否则面试官不知道你跳过了,可能再问一遍类似的
+    const cur = current.current
+    if (cur) cur.turns = [...cur.turns, { ask, answer: '(跳过)' }]
+    if (mode === 'interview' && (phase.current === 'intro' || phase.current === 'project')) {
+      advancePhase()
+    }
     await nextQuestion()
-  }, [question, ask, nextQuestion])
+  }, [question, ask, nextQuestion, mode, advancePhase])
 
   // ---------- 开场:选简历 + 选档 ----------
   if (!started) {
     return (
       <div className="space-y-10">
+        {scope ? (
+          <section className="border border-gray-300 bg-white p-5">
+            <h2 className="font-semibold">单篇过题 · {scope.article}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              只考这一篇。共 <strong>{scope.poolSize}</strong> 问
+              —— 题库题 {scope.questionCount} 道 · 考点 {scope.examPointCount} 条,
+              随机过一遍,过完自动收尾并生成复盘。
+            </p>
+            <p className="mt-2 font-mono text-[11px] leading-relaxed text-gray-400">
+              判分口径:题库题对着人写的 `## 要点` 打勾;考点行没有现成清单,
+              由模型从本文原文现抽 3–5 条再对照 —— 清单会连同原文一起给你看。
+            </p>
+          </section>
+        ) : (
         <section>
           <h2 className="mb-3 text-sm font-semibold text-gray-500">选简历</h2>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -369,8 +578,9 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
             ))}
           </div>
         </section>
+        )}
 
-        <section>
+        <section className={scope ? 'hidden' : undefined}>
           <h2 className="mb-3 text-sm font-semibold text-gray-500">选模式</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {(Object.keys(MODE_INFO) as Mode[]).map((m) => (
@@ -388,30 +598,43 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
           </div>
         </section>
 
-        <section>
-          <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-sm font-semibold text-gray-500">语音</h2>
+        <div className="space-y-3">
+          <button
+            onClick={start}
+            // 单篇过题没有简历,不能拿 resume 当能否开始的条件
+            disabled={(!resume && !scope) || busy}
+            className="border border-gray-800 bg-gray-900 px-6 py-3 text-sm text-white transition-colors hover:bg-gray-700 disabled:opacity-40"
+          >
+            {busy ? '准备中…' : '开始'}
+          </button>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+        </div>
+
+        {/* 语音设置默认收起 —— 设置存了 localStorage,调一次就长期有效,不该每次挡在「开始」前面。
+            展开一次把面板和对照台一起给出来,不用再点第二层。 */}
+        <section className="border-t border-gray-200 pt-6">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-semibold text-gray-500">语音设置</h2>
             <button
-              onClick={() => setShowBench((v) => !v)}
+              onClick={() => setShowVoice((v) => !v)}
               className="text-xs text-gray-400 hover:text-gray-700"
             >
-              {showBench ? '收起 STT 对照台' : 'STT 对照台 →'}
+              {showVoice ? '收起' : '展开(音色 / 语速 / STT 对照台)→'}
             </button>
           </div>
-          <div className="space-y-3">
-            <VoiceSettings config={voice} onChange={setVoice} />
-            {showBench && <SttBench options={sttOptions} />}
-          </div>
+          {showVoice ? (
+            <div className="mt-3 space-y-3">
+              <VoiceSettings config={voice} onChange={setVoice} />
+              <SttBench options={sttOptions} />
+            </div>
+          ) : (
+            <p className="mt-1 font-mono text-[11px] text-gray-400">
+              语音模式 {voice.enabled ? '开' : '关'} · 转写{' '}
+              {sttOptions.find((s) => s.id === voice.sttModel)?.label ?? voice.sttModel} · 语速{' '}
+              {voice.speed.toFixed(2)}×
+            </p>
+          )}
         </section>
-
-        <button
-          onClick={start}
-          disabled={!resume || busy}
-          className="border border-gray-800 bg-gray-900 px-6 py-3 text-sm text-white transition-colors hover:bg-gray-700 disabled:opacity-40"
-        >
-          {busy ? '准备中…' : '开始'}
-        </button>
-        {error && <p className="text-sm text-red-600">{error}</p>}
       </div>
     )
   }
@@ -423,7 +646,13 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-3">
           <h2 className="text-lg font-semibold">复盘</h2>
           <span className="font-mono text-xs text-gray-400">
-            {turns.length} 轮 · 已存 {finished.file}
+            {turns.length} 轮 · 已存{' '}
+            <a
+              href={`/interview/sessions/${finished.file.replace(/^.*\//, '').replace(/\.md$/, '')}`}
+              className="underline hover:text-gray-700"
+            >
+              {finished.file}
+            </a>
           </span>
         </div>
         <div className="prose prose-sm max-w-none">
@@ -446,8 +675,14 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b border-gray-200 pb-3">
         <div className="font-mono text-xs text-gray-500">
-          {MODE_INFO[mode].name} · 第 {turns.length + 1} 轮 · 已问 {asked.current.length} 题
-          {question && ` · 池 ${question.poolSize}`}
+          {MODE_INFO[mode].name}
+          {phaseLabel && (
+            <span className="ml-2 bg-gray-900 px-1.5 py-0.5 text-white">{phaseLabel}</span>
+          )}
+          <span className="ml-2">
+            第 {turns.length + 1} 轮 · 已问 {asked.current.length} 题
+            {question && ` · 池 ${question.poolSize}`}
+          </span>
         </div>
         <button
           onClick={finish}
@@ -462,7 +697,7 @@ export default function InterviewSession({ resumes }: { resumes: ResumeOption[] 
       {question && (
         <div className="flex flex-wrap gap-2 font-mono text-[11px]">
           <span className="bg-gray-100 px-2 py-0.5 text-gray-600">{question.article}</span>
-          {question.面经 && <span className="bg-red-50 px-2 py-0.5 text-red-700">面经真题</span>}
+          {question.真题 && <span className="bg-red-50 px-2 py-0.5 text-red-700">真题</span>}
           {question.highfreq && <span className="bg-amber-50 px-2 py-0.5 text-amber-700">高频</span>}
           {question.待校对 && (
             <span className="bg-amber-50 px-2 py-0.5 text-amber-700" title="参考答案由 AI 代写,尚未人工核对">

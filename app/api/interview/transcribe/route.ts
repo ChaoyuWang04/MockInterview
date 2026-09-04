@@ -8,8 +8,8 @@ const VOICE_URL = process.env.INTERVIEW_VOICE_URL ?? 'http://127.0.0.1:8700'
  * 转写。透传给语音服务。
  *
  * `hotwords` 是这套系统相对通用听写工具的独有优势:每道题会出现哪些技术术语,
- * 我们是知道的(文章名 + 要点里的术语),喂进去能显著提高召回
- * (实测 Fun-ASR 术语召回 10/15 → 12/15,且不增加耗时)。
+ * 我们是知道的(文章名 + 题干里的术语),喂进去能提高召回。
+ * 只传规范写法 —— 变体反而会把本地 Whisper 带跑偏,见 useVoice.ts 的实测数字。
  */
 export async function POST(req: Request) {
   let form: FormData
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   const out = new FormData()
   out.append('file', file, 'audio.wav')
-  out.append('model', String(form.get('model') ?? 'fun-asr-nano'))
+  out.append('model', String(form.get('model') ?? 'qwen3-asr-flash'))
   const hot = form.get('hotwords')
   if (hot) out.append('hotwords', String(hot))
 
@@ -31,7 +31,9 @@ export async function POST(req: Request) {
     const res = await fetch(`${VOICE_URL}/v1/audio/transcriptions`, {
       method: 'POST',
       body: out,
-      signal: AbortSignal.timeout(120_000),
+      // 和 voice-server 里那次云端调用的 300s 对齐 —— 代理先超时的话,
+      // 你看到的是「语音服务不可达」,真正的原因(体积超限之类)就永远看不到了
+      signal: AbortSignal.timeout(310_000),
     })
     const data = await res.json()
     return NextResponse.json(data, { status: res.ok ? 200 : 502 })

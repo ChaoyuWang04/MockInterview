@@ -14,7 +14,7 @@ import type {
 
 /**
  * 整类排除的题库分类。
- * `手撕代码` 要当场写代码,口头面试念不了——这 5 道也正是全库唯一 topic 匹配不到文章的题。
+ * `手撕代码` 要当场写代码,不适合口头面试;具体数量由候选池统计现场输出。
  */
 export const EXCLUDED_CATEGORIES = ['手撕代码']
 
@@ -111,7 +111,6 @@ export function loadQuestions(root = questionsRoot()): QuestionEntry[] {
         difficulty: q.meta.difficulty,
         highfreq: q.meta.highfreq,
         mastered: q.meta.mastered,
-        fromInterview: q.meta.tags.includes('面经'),
         needsReview: q.meta.tags.includes('待校对'),
         pointCount: bulletCount(q.sections['要点']),
         followUps: bulletItems(q.sections['追问']),
@@ -154,19 +153,18 @@ export function loadQuestionDetail(id: string, root = questionsRoot()): Question
 }
 
 /**
- * 从面经原件里取几条原话,当面试官口气的 few-shot。
- * 用真题的电报体(「gemm,分析它的计算量和访存量。」)才像真人,
- * 不然模型会说出「请您简述一下……」这种笔试腔。
+ * 直接从题库取几条真题原话,当面试官口气的 few-shot。
+ * 题库已经是唯一真源,不再维护另一套“原题档案”。
  */
-export function loadToneSamples(limit = 6, cwd = process.cwd()): string[] {
-  const file = path.join(cwd, 'docs', 'references', '面经原题.md')
-  if (!fs.existsSync(file)) return []
-  const lines = fs.readFileSync(file, 'utf8').split('\n')
+export function loadToneSamples(limit = 6, root = questionsRoot()): string[] {
   const out: string[] = []
-  for (const line of lines) {
-    const m = line.match(/^\d+\.\s+(.+?)\s*$/)
-    if (m && m[1].length > 8) out.push(m[1])
-    if (out.length >= limit) break
+  for (const category of listCategories(root)) {
+    for (const file of listQuestionFiles(category, root)) {
+      const q = loadQuestion(category, file, root)
+      const firstLine = q.sections['题目']?.split('\n').map((line) => line.trim()).find(Boolean)
+      if (firstLine && firstLine.length > 8) out.push(firstLine)
+      if (out.length >= limit) return out
+    }
   }
   return out
 }
@@ -208,7 +206,6 @@ export function buildCorpus(
       ask: q.summary,
       highfreq: q.highfreq,
       mastered: q.mastered,
-      fromInterview: q.fromInterview,
     })
   }
 
@@ -225,7 +222,6 @@ export function buildCorpus(
         ask: p.ask,
         highfreq: false,
         mastered: false,
-        fromInterview: a.keypoint,
       })
     })
   }

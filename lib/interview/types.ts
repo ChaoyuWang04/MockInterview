@@ -17,7 +17,7 @@ export interface ArticleEntry {
   /** 相对 knowledge/ 的路径段,如 ['04-Infra','01-原理','KVCache.md'] */
   segments: string[]
   state: ArticleState
-  /** 有真实面经支撑(正文含 🔴 重点考点) */
+  /** 正文含 🔴 重点考点标记 */
   keypoint: boolean
   examPoints: ExamPoint[]
   /** 能不能当出题源:有正文(非占位)且有考点表 */
@@ -38,8 +38,6 @@ export interface QuestionEntry {
   difficulty?: string
   highfreq: boolean
   mastered: boolean
-  /** tags 含「面经」——真题,问法比练习题值钱 */
-  fromInterview: boolean
   /** tags 含「待校对」——答案是 AI 代写、尚未人工核对 */
   needsReview: boolean
   /** `## 要点` 的条目数,判卷用 */
@@ -63,7 +61,6 @@ export interface Candidate {
   ask: string
   highfreq: boolean
   mastered: boolean
-  fromInterview: boolean
 }
 
 export interface Corpus {

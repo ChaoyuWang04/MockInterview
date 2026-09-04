@@ -40,21 +40,18 @@ TTS_MODELS = {
 #: 默认音色描述。显式写「标准普通话、无地方口音」—— 不写它模型会随机带腔调。
 DEFAULT_INSTRUCT = "三十多岁的男性,标准普通话,播音腔,吐字清楚,语气平静克制不带感情,像在严肃地问问题"
 
+#: 云端排第一 —— 它是默认。本地只留 Whisper 一个,断网/云端欠费时兜底。
+#: (Fun-ASR Nano 曾是第三个本地后端,术语召回比 Whisper 差一档,已删除。)
 STT_MODELS = {
-    "fun-asr-nano": {
-        "path": MODELS_DIR / "Fun-ASR-Nano-2512",
-        "label": "Fun-ASR Nano(本地,最快)",
-        "kind": "local",
+    "qwen3-asr-flash": {
+        "path": None,
+        "label": "Qwen3-ASR Flash(云端,默认)",
+        "kind": "dashscope",
     },
     "whisper-turbo": {
         "path": MODELS_DIR / "whisper-large-v3-turbo-asr-fp16",
         "label": "Whisper large-v3-turbo(本地)",
         "kind": "local",
-    },
-    "qwen3-asr-flash": {
-        "path": None,
-        "label": "Qwen3-ASR Flash(云端,术语最准)",
-        "kind": "dashscope",
     },
 }
 
@@ -74,8 +71,14 @@ def _domain_hotwords() -> list[str]:
         return []
     return [x.strip() for x in _DOMAIN_HOTWORDS_FILE.read_text("utf8").splitlines() if x.strip()]
 
+#: 转写临时文件的统一前缀。切段与 mp3 都从它派生(`-partN.wav` / `.mp3`),
+#: 所以启动清扫只认这一个前缀就够。
+STT_TMP_PREFIX = "interview-stt-"
+
 DEFAULT_TTS = "qwen3-tts-design"
-DEFAULT_STT = "whisper-turbo"
+#: 云端。比本地 Whisper 准一档、快一倍,而且不吃本地 6.2 GB 内存;
+#: 更关键的是它吃得下全域热词表(本地会溢出)。没配 DASHSCOPE 时前端会自动回落 whisper。
+DEFAULT_STT = "qwen3-asr-flash"
 DEFAULT_VOICE = ""  # VoiceDesign 没有预设音色,音色全靠 instruct
 # 你反馈本地 TTS 说话偏慢,真人语速约是它的 1.3 倍
 DEFAULT_SPEED = 1.2
@@ -186,7 +189,98 @@ def _stt_ready(spec: dict) -> bool:
     return spec["path"] is not None and spec["path"].exists()
 
 
+#: 百炼单次的时长上限,**实测正好 300 秒整**:300s 过、302s 就报 `The audio is too long`。
+#: 这里取 290 留余量 —— 卡在 300 上会被时长测量的零点几秒差异咬到
+#: (我们用 wave 读帧数算,百炼用它自己的解码器算,两边不保证同一个数)。
+DASHSCOPE_MAX_SECONDS = 290
+#: 切段长度。面试回答很少有超过四分钟还不换气的,240 让绝大多数长回答只切两段。
+CHUNK_SECONDS = 240
+
+
+def _wav_seconds(p: Path) -> float:
+    with wave.open(str(p)) as w:
+        return w.getnframes() / w.getframerate()
+
+
+def _silences(p: Path) -> list[tuple[float, float]]:
+    """用 ffmpeg 找静音区间,给切点用。找不到就返回空,调用方硬切。"""
+    import re
+    import subprocess
+
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-i", str(p), "-af",
+             "silencedetect=noise=-35dB:d=0.35", "-f", "null", "-"],
+            capture_output=True, timeout=180, text=True,
+        )
+    except Exception:  # noqa: BLE001
+        return []
+    log = r.stderr
+    starts = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", log)]
+    ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", log)]
+    return list(zip(starts, ends))
+
+
+def _cut_points(p: Path, total: float) -> list[float]:
+    """切点:每 CHUNK_SECONDS 一刀,**尽量落在静音里**,免得把词切成两半。
+
+    目标点附近 ±30s 内有静音就切在静音正中;没有就硬切在目标点 ——
+    硬切只是让边界那个词可能听错一次,不会让整段转写失败。
+    """
+    sil = _silences(p)
+    points: list[float] = []
+    t = CHUNK_SECONDS
+    while t < total - 20:  # 尾巴不足 20s 就并进上一段
+        best = min(
+            (s for s in sil if abs((s[0] + s[1]) / 2 - t) <= 30),
+            key=lambda s: abs((s[0] + s[1]) / 2 - t),
+            default=None,
+        )
+        cut = (best[0] + best[1]) / 2 if best else t
+        if points and cut - points[-1] < 30:  # 别切出太碎的段
+            cut = t
+        points.append(cut)
+        t = cut + CHUNK_SECONDS
+    return points
+
+
+def _slice_wav(src: Path, start: float, end: float, idx: int) -> Path:
+    import subprocess
+
+    out = src.with_name(f"{src.stem}-part{idx}.wav")
+    subprocess.run(
+        ["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", str(src),
+         "-ss", f"{start:.3f}", "-to", f"{end:.3f}",
+         "-ac", "1", "-ar", "16000", "-y", str(out)],
+        capture_output=True, timeout=180, check=True,
+    )
+    return out
+
+
 def _dashscope_transcribe(wav_path: Path, hotwords: list[str]) -> str:
+    """云端转写。超过单次时长上限就切段并发转,再按序拼接。"""
+    total = _wav_seconds(wav_path)
+    if total <= DASHSCOPE_MAX_SECONDS:
+        return _dashscope_once(wav_path, hotwords)
+
+    from concurrent.futures import ThreadPoolExecutor
+
+    bounds = [0.0, *_cut_points(wav_path, total), total]
+    parts: list[Path] = []
+    try:
+        for i in range(len(bounds) - 1):
+            parts.append(_slice_wav(wav_path, bounds[i], bounds[i + 1], i))
+        print(f"[stt] 音频 {total:.0f}s 超过单次上限,切成 {len(parts)} 段并发转写", flush=True)
+        # map 保序 —— 拼接顺序不能乱。三路并发,再多没必要也容易触发限流
+        with ThreadPoolExecutor(max_workers=3) as ex:
+            texts = list(ex.map(lambda p: _dashscope_once(p, hotwords), parts))
+    finally:
+        for p in parts:
+            p.unlink(missing_ok=True)
+    return " ".join(t.strip() for t in texts if t.strip())
+
+
+def _dashscope_once(wav_path: Path, hotwords: list[str]) -> str:
     """走百炼的 qwen3-asr-flash。
 
     两个关键点:
@@ -194,7 +288,7 @@ def _dashscope_transcribe(wav_path: Path, hotwords: list[str]) -> str:
     ② 热词塞进 system 的 Context —— 实测术语召回 15/20 → **18/20**,而且不增加耗时。
        `CUDA Graph` 这种词,本地模型全军覆没(Kilographs / Kill the Graph),带 Context 才认得出。
     """
-    import base64, json, urllib.request
+    import json, urllib.error, urllib.request
 
     context = ""
     if hotwords:
@@ -202,12 +296,13 @@ def _dashscope_transcribe(wav_path: Path, hotwords: list[str]) -> str:
             "这是一段大模型推理与训练基础设施方向的技术面试录音,可能出现的专有名词:"
             + ", ".join(hotwords)
         )
-    b64 = base64.b64encode(wav_path.read_bytes()).decode()
+
+    audio, mime = _inline_audio(wav_path)
     body = {
         "model": "qwen3-asr-flash",
         "input": {"messages": [
             {"role": "system", "content": [{"text": context}]},
-            {"role": "user", "content": [{"audio": f"data:audio/wav;base64,{b64}"}]}]},
+            {"role": "user", "content": [{"audio": f"data:{mime};base64,{audio}"}]}]},
         "parameters": {"asr_options": {"enable_lid": True, "enable_itn": False}},
     }
     req = urllib.request.Request(
@@ -215,8 +310,54 @@ def _dashscope_transcribe(wav_path: Path, hotwords: list[str]) -> str:
         data=json.dumps(body, ensure_ascii=False).encode(),
         headers={"Content-Type": "application/json", "Authorization": f"Bearer {DASHSCOPE_KEY}"},
     )
-    d = json.load(urllib.request.urlopen(req, timeout=120))
+    try:
+        d = json.load(urllib.request.urlopen(req, timeout=300))
+    except urllib.error.HTTPError as e:
+        # ⚠️ 一定要把 body 读出来。不读的话异常文本只有「HTTP Error 400: Bad Request」,
+        # 而百炼真正的原因写在 body 里(踩过:`Multimodal file size is too large`
+        # 被这层吞掉,只能靠二分音频长度反推)。
+        raise RuntimeError(f"百炼 {e.code}:{e.read().decode('utf8', 'replace')[:300]}") from None
     return d["output"]["choices"][0]["message"]["content"][0]["text"]
+
+
+#: 百炼内联音频的体积上限(实测:9.4 MB 过、14 MB 不过,报
+#: `InvalidParameter: Multimodal file size is too large`)。留一成余量。
+DASHSCOPE_MAX_INLINE_BYTES = 9_500_000
+
+
+def _inline_audio(wav_path: Path) -> tuple[str, str]:
+    """把音频编码成 base64 内联串。**先压 mp3 再传。**
+
+    原来直接传未压缩 WAV:16kHz 单声道 = 32 KB/秒,**5 分半就撞 10 MB 上限**,
+    而且表现是一句看不懂的 400。压成 32k 单声道 mp3 之后同样的上限约等于 40 分钟,
+    实测对识别准确率没有影响(ASR 本来就重采样到 16k)。
+
+    ffmpeg 不在或转码失败时回落原 WAV —— 短音频照样能用,不因为压缩这一步整个挂掉。
+    """
+    import base64
+    import subprocess
+
+    mp3 = wav_path.with_suffix(".mp3")
+    try:
+        subprocess.run(
+            ["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", str(wav_path),
+             "-ac", "1", "-ar", "16000", "-b:a", "32k", "-y", str(mp3)],
+            capture_output=True, timeout=120, check=True,
+        )
+        raw, mime = mp3.read_bytes(), "audio/mp3"
+    except Exception:  # noqa: BLE001
+        raw, mime = wav_path.read_bytes(), "audio/wav"
+    finally:
+        mp3.unlink(missing_ok=True)
+
+    if len(raw) > DASHSCOPE_MAX_INLINE_BYTES:
+        mins = len(raw) / 4000 / 60  # 32kbps ≈ 4 KB/s
+        raise RuntimeError(
+            f"这段录音压缩后还有 {len(raw)/1e6:.1f} MB(约 {mins:.0f} 分钟),"
+            f"超过云端单次 {DASHSCOPE_MAX_INLINE_BYTES/1e6:.1f} MB 的上限。"
+            f"换本地 Whisper 后端可以转(没有时长限制,只是慢),或者分两次答。"
+        )
+    return base64.b64encode(raw).decode(), mime
 
 
 # ---------------------------------------------------------------- 读音修正
@@ -520,8 +661,12 @@ def transcriptions(
     model: str = Form(DEFAULT_STT),
     hotwords: Optional[str] = Form(None),
 ):
-    """hotwords 用逗号分隔。系统知道当前题会出现哪些术语,喂进来能显著提高召回
-    (实测 Fun-ASR 上术语召回 10/15 → 12/15,且不增加耗时)。"""
+    """hotwords 用逗号分隔。系统知道当前题会出现哪些术语,喂进来能提高召回。
+
+    **只传规范写法,不要传大小写/拆写变体。** 实测(7.6s 音频,6 个驼峰术语):
+    Whisper 无热词 4/6 · 只给规范写法 5/6 · 规范+变体 **3/6** —— 变体表更长更像
+    一份词表,会放大 initial_prompt 的模仿效应,把输出带跑偏(整句转英文、丢内容)。
+    云端三种配置都是 6/6,变体对它没有增益。"""
     if model not in STT_MODELS:
         return JSONResponse({"error": f"没有这个 STT 模型:{model}"}, status_code=400)
 
@@ -529,7 +674,8 @@ def transcriptions(
     # 浏览器 MediaRecorder 给的是 webm/opus(Chrome)或 mp4/aac(Safari),
     # ASR 模型只吃 wav。统一用 ffmpeg 转成 16k 单声道 —— 顺带做重采样,
     # 省得每个后端各自处理采样率。
-    tmp = Path("/tmp") / f"interview-stt-{os.getpid()}-{int(time.time()*1000)}.wav"
+    # 切段与 mp3 都是从这个名字派生的(`-partN.wav` / `.mp3`),所以清扫认前缀就够
+    tmp = Path("/tmp") / f"{STT_TMP_PREFIX}{os.getpid()}-{int(time.time()*1000)}.wav"
     import subprocess
 
     try:
@@ -561,6 +707,10 @@ def transcriptions(
             except TypeError:
                 res = m.generate(str(tmp))  # 该后端不认 hotwords
             text = (getattr(res, "text", None) or str(res)).strip()
+    except RuntimeError as e:
+        # 我们自己抛的、写给人看的原因(体积超限、百炼的原始报错)—— 原样透出去,
+        # 别再套一层类型名把它变成天书
+        return JSONResponse({"error": str(e)}, status_code=400)
     except Exception as e:  # noqa: BLE001
         return JSONResponse({"error": f"{type(e).__name__}: {e}"}, status_code=500)
     finally:
@@ -571,9 +721,29 @@ def transcriptions(
     return {"text": text, "model": model, "elapsed_ms": round(elapsed * 1000)}
 
 
+def _sweep_stt_tmp() -> int:
+    """启动时清掉上次残留的转写临时文件。
+
+    正常路径上每个临时文件都有 `finally` 兜底删除,但进程被 SIGKILL / 断电时
+    `finally` 不会执行。那种情况下几百 MB 的 wav 会一直躺在 /tmp 里 ——
+    不报错、不影响功能,只是悄悄占空间,所以放在启动时扫一遍。
+    """
+    n = 0
+    for p in Path("/tmp").glob(f"{STT_TMP_PREFIX}*"):
+        try:
+            p.unlink()
+            n += 1
+        except OSError:
+            pass
+    return n
+
+
 if __name__ == "__main__":
     import uvicorn
 
+    left = _sweep_stt_tmp()
+    if left:
+        print(f"清理了 {left} 个上次残留的转写临时文件", flush=True)
     port = int(os.environ.get("INTERVIEW_VOICE_PORT", "8700"))
     print(f"语音服务 → http://127.0.0.1:{port}  (模型目录 {MODELS_DIR})", flush=True)
     uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")
