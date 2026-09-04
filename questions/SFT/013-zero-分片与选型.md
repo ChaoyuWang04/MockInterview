@@ -2,8 +2,8 @@
 difficulty: 简单
 topic: ZeRO/分片与选型
 summary: ZeRO 三阶段如何节省显存,训练时怎样选型
-tags: [待校对, ZeRO, 分布式训练, 显存优化]
-company: 快手、字节、美团
+tags: [面经, 待校对, ZeRO, 分布式训练, 显存优化]
+company: 快手、字节、美团、阿里云、阿里、腾讯、阿里夸克
 mastered: false
 highfreq: false
 ---
@@ -53,6 +53,9 @@ Stage 1/2 的简化流程是归约并分发梯度,各卡更新分片,再 all-gat
 状态分片、reduce-scatter、all-gather、数据并行、卸载。
 
 来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015、P002-Q043、P002-Q045、P002-Q109。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
+
+- 真实面经来源：[B002-G01-Q001](../../docs/references/面经原题.md#b002-g01-q001)、[B002-G01-Q006](../../docs/references/面经原题.md#b002-g01-q006)、[B002-G01-Q023](../../docs/references/面经原题.md#b002-g01-q023)、[B002-G01-Q037](../../docs/references/面经原题.md#b002-g01-q037)、[B002-G01-Q059](../../docs/references/面经原题.md#b002-g01-q059)、[B002-G01-Q060](../../docs/references/面经原题.md#b002-g01-q060)、[B002-G01-Q072](../../docs/references/面经原题.md#b002-g01-q072)、[B002-G01-Q138](../../docs/references/面经原题.md#b002-g01-q138)、[B002-G01-Q141](../../docs/references/面经原题.md#b002-g01-q141)、[B002-G01-Q143](../../docs/references/面经原题.md#b002-g01-q143)、[B002-G01-Q144](../../docs/references/面经原题.md#b002-g01-q144)、[B002-G01-Q168](../../docs/references/面经原题.md#b002-g01-q168)、[B002-G01-Q192](../../docs/references/面经原题.md#b002-g01-q192)。
+- 老师答案参考：[P005-Q001](../../docs/references/平台题/P005-Infra-001-030.md#p005-q001)、[P005-Q006](../../docs/references/平台题/P005-Infra-001-030.md#p005-q006)、[P005-Q023](../../docs/references/平台题/P005-Infra-001-030.md#p005-q023)、[P005-Q037](../../docs/references/平台题/P005-Infra-031-060.md#p005-q037)、[P005-Q059](../../docs/references/平台题/P005-Infra-031-060.md#p005-q059)、[P005-Q060](../../docs/references/平台题/P005-Infra-031-060.md#p005-q060)、[P005-Q072](../../docs/references/平台题/P005-Infra-061-090.md#p005-q072)、[P005-Q138](../../docs/references/平台题/P005-Infra-121-150.md#p005-q138)、[P005-Q141](../../docs/references/平台题/P005-Infra-121-150.md#p005-q141)、[P005-Q143](../../docs/references/平台题/P005-Infra-121-150.md#p005-q143)、[P005-Q144](../../docs/references/平台题/P005-Infra-121-150.md#p005-q144)、[P005-Q168](../../docs/references/平台题/P005-Infra-151-180.md#p005-q168)、[P005-Q192](../../docs/references/平台题/P005-Infra-181-199.md#p005-q192)。
 
 ## 追问
 

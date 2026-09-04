@@ -2,8 +2,8 @@
 difficulty: 中等
 topic: verl/批次参数
 summary: verl中prompt、response、mini-batch与微批怎样换算
-tags: [待校对, verl, PPO, 分布式训练]
-company: 蚂蚁金服
+tags: [面经, 待校对, verl, PPO, 分布式训练]
+company: 蚂蚁金服、蚂蚁
 mastered: false
 highfreq: false
 ---
@@ -50,6 +50,9 @@ verl、PPO/GRPO 批次、trajectory、梯度累积、动态微批、异构并行
 
 - 来源：[老师平台](https://course.terminiai.com/interview)，P003-Q011。
 - 本题按本地 verl 快照 `3c5f6e0496d3d4fa80f2210859d5dda40a16c877`（提交时间 2026-04-29 22:24:48 +08:00，`v0.7.0-551-g3c5f6e04`）核实；其他版本需重新检查字段与计数口径。
+
+- 真实面经来源：[B002-G01-Q009](../../docs/references/面经原题.md#b002-g01-q009)、[B002-G01-Q044](../../docs/references/面经原题.md#b002-g01-q044)、[B002-G01-Q045](../../docs/references/面经原题.md#b002-g01-q045)。
+- 老师答案参考：[P005-Q009](../../docs/references/平台题/P005-Infra-001-030.md#p005-q009)、[P005-Q044](../../docs/references/平台题/P005-Infra-031-060.md#p005-q044)、[P005-Q045](../../docs/references/平台题/P005-Infra-031-060.md#p005-q045)。
 
 ## 追问
 
