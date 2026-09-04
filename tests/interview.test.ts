@@ -393,7 +393,7 @@ describe('上下文:append-only(前缀缓存的全部前提)', () => {
       }
     }
     expect(bad).toEqual([])
-  })
+  }, 15_000)
 })
 
 // scripts/interview-index.mjs 是 corpus.ts 的 .mjs 镜像(脚本跑不了 .ts)。

@@ -1,7 +1,7 @@
 ---
 difficulty: 中等
 topic: FlowMatching/局限与改进
-summary: 流匹配如何改进速度、稳定性和质量,OT与潜空间各解决什么
+summary: 扩散采样器与Flow Matching是什么关系,各自怎样提速
 tags: [FlowMatching, RectifiedFlow, 最优传输, ODE, 待校对]
 company: 腾讯
 mastered: false
@@ -10,18 +10,22 @@ highfreq: false
 
 ## 题目
 
-Flow Matching 作为一种新兴的生成建模方法,在理论、工程实现或实际应用中是否仍存在可优化的空间?请结合具体例子,从模型效率、训练稳定性、采样质量等角度分析其当前局限性与改进方向。
+扩散模型的 DPM-Solver++ 等采样器与 Flow Matching 是什么关系?请解释各自改变了哪一层,并说明 Flow Matching 在效率、稳定性和生成质量上仍有哪些改进空间。
 
 ## 要点
 
 - 区分训练免解 ODE 与生成时仍需数值积分
+- 区分生成模型的训练路径与推理时的数值求解器
+- RULER 是长上下文评测基准,不是扩散采样器
 - 分清条件插值直线、实际采样轨迹和全局最优传输
 - 按网络求值次数比较速度,说明蒸馏及配对优化的成本
 - 不把确定性 ODE 等同于单模态,不把潜空间扩散与 FM 当作互斥方案
 
 ## 答案
 
-**有。Flow Matching 降低了训练速度场的成本,但没有自动解决少步生成、难时间段的学习和样本质量问题。**
+**扩散采样器主要改“训练好以后怎样数值求解”,Flow Matching 主要改“用什么概率路径和速度目标训练连续流”。** 两者可以组合比较,不是同一层的互斥算法。DPM-Solver++ 利用扩散 ODE 的半线性结构构造高阶求解器,目标是在较少网络调用下控制误差;具体步数和画质依模型、scheduler 与分辨率而变。题目例举的 RULER 实际是长上下文语言模型评测基准,不属于生成采样器。
+
+Flow Matching 降低了训练速度场的成本,但没有自动解决少步生成、难时间段的学习和样本质量问题。
 
 最简单的例子:把噪声 $x_0$ 与数据 $x_1$ 连成直线,$x_t=(1-t)x_0+tx_1$,训练网络预测速度 $x_1-x_0$。训练可直接采样中间点做回归;生成时仍要从随机噪声出发,沿学到的速度场解 ODE。
 
@@ -45,13 +49,14 @@ Flow Matching 作为一种新兴的生成建模方法,在理论、工程实现�
 
 条件流匹配、边际速度场、数值积分、网络求值次数、配对、潜空间压缩。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q062。
-- 依据:[Flow Matching](https://arxiv.org/abs/2210.02747)、[Rectified Flow](https://arxiv.org/abs/2209.03003)、[minibatch OT](https://arxiv.org/abs/2302.00482)、[扩散的 probability-flow ODE](https://arxiv.org/abs/2011.13456)。
+- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q062、P004-Q009。
+- 依据:[Flow Matching](https://arxiv.org/abs/2210.02747)、[Rectified Flow](https://arxiv.org/abs/2209.03003)、[DPM-Solver++](https://arxiv.org/abs/2211.01095)、[minibatch OT](https://arxiv.org/abs/2302.00482)、[扩散的 probability-flow ODE](https://arxiv.org/abs/2011.13456)、[RULER](https://arxiv.org/abs/2404.06654)。
 
 ## 追问
 
 - Flow Matching 与 DDPM 的扩散过程在数学上如何统一理解?
 - 为什么 Optimal Transport 路径能提升训练稳定性,其理论依据是什么?
 - 在实际图像生成任务中,Flow Matching 相比 Latent Diffusion 的优劣势如何?
+- 推理预算相同时,怎样公平比较 DPM-Solver++ 与 Flow Matching 模型的采样效率?
 
 ## Note

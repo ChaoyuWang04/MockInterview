@@ -3,6 +3,7 @@ difficulty: 中等
 topic: Attention/多头注意力
 summary: 手写 MHA,说清多头比单头多了什么、参数量怎么算
 tags: [Transformer, Attention, 手撕代码, 待校对]
+company: 腾讯、小米、美团
 mastered: false
 highfreq: true
 ---
@@ -72,14 +73,20 @@ class MHA(nn.Module):
 - 合头前要 `.contiguous()`,否则 view 报错
 - 缩放除的是 $\sqrt{d_h}$;写成 $\sqrt{d}$ 会让注意力过于平滑
 
+自回归训练时还要传下三角 causal mask,让位置 $t$ 只能读取 $0\ldots t$。否则模型训练时会偷看目标 token 右侧的信息,loss 虽低却不能用于逐 token 生成。增量推理只查询当前新 token,历史 K/V 由 KV cache 提供;此时仍要保证当前 query 不能访问尚未生成的位置。
+
 ## 知识点
 
-多头注意力、拆头/合头的维度变换、参数量估算、注意力 mask;GQA/MQA 是在这个基础上共享 K/V 头(见知识库 GQA 篇)。
+多头注意力、拆头/合头的维度变换、参数量估算、注意力 mask;GQA/MQA 是在这个基础上共享 K/V 头。
+
+- 来源:[老师平台](https://course.terminiai.com/interview),P004-Q011/Q198。
+- 依据:[Transformer](https://arxiv.org/abs/1706.03762)。
 
 ## 追问
 
 - 为什么多头有效?(不同子空间学不同关系,类似 CNN 多个卷积核)
 - 头数怎么选?$d_h$ 太小会怎样?
 - KV cache 存的是哪一部分?为什么 GQA 能省显存?
+- 不加 causal mask 训练 Decoder-only 模型会发生什么?
 
 ## Note

@@ -1,9 +1,9 @@
 ---
-difficulty: 简单
+difficulty: 中等
 topic: 多任务学习/模型结构比较
 summary: MMoE与PLE如何共享专家,ESMM如何联合学习点击和转化
 tags: [多任务学习, 待校对]
-company: 哔哩哔哩
+company: 哔哩哔哩、网易、快手、小红书、阿里、淘天、支付宝
 mastered: false
 highfreq: false
 ---
@@ -29,19 +29,21 @@ highfreq: false
 | PLE | 每层区分共享专家与任务私有专家,门控逐层提取和组合表示 | 需要共享又需要专用容量的任务;结构与调参成本增加,不保证消除跷跷板效应 |
 | ESMM | 共享 embedding,CTR 塔输出 $p(c\mid x)$,CVR 塔输出 $p(v\mid c,x)$,两者乘积预测 CTCVR | 适合曝光→点击→转化链路;依赖标签定义、反馈观察窗口及概率链条成立 |
 
+经典 MMoE 的任务门控通常对多个专家做 softmax 加权,每个任务都有自己的门控参数;它常会计算全部专家输出,不能直接类比 LLM 中只激活少数专家的 Top-k 稀疏 MoE。PLE 在每层放共享专家和任务私有专家,再由 CGC 门控逐层提取;它增加隔离能力,也增加参数、计算和调参成本。
+
 ESMM 在全曝光样本上优化点击 BCE 和“点击且转化”BCE,后者通过乘积反传到两塔,用丰富点击信号帮助稀疏转化任务。**不是先独立预测 CTCVR 再除以 CTR**;乘积建模避免小 CTR 分母造成的不稳定,但不能自动修复所有曝光偏差或延迟反馈。
 
 ### 业务选择与辅助任务
 
 先用同预算的共享底座或 MMoE 作基线,分别看各任务留出指标、梯度关系和门控分布。只有 PLE 的私有专家在消融中持续减少负迁移,且收益覆盖计算成本,才有理由增加结构。
 
-转化稀疏时可共享高质量表示、引入链路相关辅助行为、改善延迟标签和冷启动特征,并在原曝光分布上检查校准;增加不可靠伪标签会放大偏差。辅助任务应在预测时有可用输入、与主任务有关且标签可信,通过移除辅助头或调整权重验证迁移收益。权重问题见 [多任务损失融合](009-多任务损失融合.md)。
+转化稀疏时可共享高质量表示、引入链路相关辅助行为、改善延迟标签和冷启动特征,并在原曝光分布上检查校准;增加不可靠伪标签会放大偏差。新增“收藏”等任务时,先定义观察窗口和特征可用时点,再增加任务头与私有容量,通过移除辅助头或调整权重验证是否负迁移。权重问题见 [多任务损失融合](009-多任务损失融合.md)。
 
 ## 知识点
 
 多任务学习、模型结构比较。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q066。
+- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q066、P004-Q008/Q044/Q060/Q070/Q082/Q083/Q186/Q219/Q278。
 
 - 补充依据:[MMoE 原论文](https://research.google/pubs/modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-of-experts/)、[PLE 原论文](https://datawhalechina.github.io/torch-rechub/file/PDF/2020%20%28Tencent%29%20%28Recsys%29%20%5BPLE%5D%20Progressive%20Layered%20.pdf)、[ESMM 原论文](https://arxiv.org/abs/1804.07931)。
 
@@ -51,5 +53,7 @@ ESMM 在全曝光样本上优化点击 BCE 和“点击且转化”BCE,后者通
 - 实际业务中如何确定是否需要用PLE而不是MMoE？
 - ESMM的CVR预估在样本稀疏时有什么改进方法？
 - 多任务学习中如何设计辅助任务来提升主任务效果？
+- MMoE 的软门控与 LLM 稀疏 MoE 的 Top-k 路由有什么区别?
+- 点击到转化有延迟时,ESMM 的标签窗口和概率链应怎样处理?
 
 ## Note
