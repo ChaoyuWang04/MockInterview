@@ -2,8 +2,8 @@
 difficulty: 中等
 topic: Attention/多头注意力
 summary: 手写 MHA,说清多头比单头多了什么、参数量怎么算
-tags: [Transformer, Attention, 手撕代码, 待校对]
-company: 腾讯、小米、美团
+tags: [Transformer, Attention, 手撕代码, 面经, 待校对]
+company: 腾讯、小米、美团、字节、快手、联通、海天、百度
 mastered: false
 highfreq: true
 ---
@@ -56,7 +56,11 @@ class MHA(nn.Module):
 
         scores = q @ k.transpose(-2, -1) / self.dh ** 0.5      # (B,h,L,L)
         if mask is not None:
-            scores = scores.masked_fill(mask == 0, float('-inf'))
+            # 约定 True 表示允许关注；形状须能广播到 (B,h,L,L)
+            allowed = mask.to(device=x.device, dtype=torch.bool).expand_as(scores)
+            if not allowed.any(dim=-1).all():
+                raise ValueError("每个 query 至少要保留一个可见 key")
+            scores = scores.masked_fill(~allowed, float('-inf'))
         out = F.softmax(scores, dim=-1) @ v                    # (B,h,L,dh)
 
         out = out.transpose(1, 2).contiguous().view(B, L, d)   # 合头
@@ -79,7 +83,7 @@ class MHA(nn.Module):
 
 多头注意力、拆头/合头的维度变换、参数量估算、注意力 mask;GQA/MQA 是在这个基础上共享 K/V 头。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P004-Q011/Q198。
+- 来源:[老师平台](https://course.terminiai.com/interview),P004-Q011/Q198；本批真实面经 [B006-Q001](../../docs/references/面经原题.md#b006-g01-q001)、[Q026](../../docs/references/面经原题.md#b006-g01-q026)、[Q079](../../docs/references/面经原题.md#b006-g01-q079)、[Q098](../../docs/references/面经原题.md#b006-g01-q098)、[Q104](../../docs/references/面经原题.md#b006-g01-q104)、[Q117](../../docs/references/面经原题.md#b006-g01-q117)、[Q196](../../docs/references/面经原题.md#b006-g01-q196)、[Q215](../../docs/references/面经原题.md#b006-g01-q215)。老师答案与逐图纠错见 [P009](../../docs/references/写作参考索引.md#p009)。
 - 依据:[Transformer](https://arxiv.org/abs/1706.03762)。
 
 ## 追问
