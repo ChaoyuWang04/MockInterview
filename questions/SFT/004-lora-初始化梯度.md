@@ -3,7 +3,7 @@ difficulty: 简单
 topic: LoRA/初始化梯度
 summary: LoRA 反向初始化会怎样,两种零增量起点的梯度有何差别
 tags: [SFT, LoRA, 初始化, 梯度, 待校对]
-company: 字节、快手
+company: 字节、快手、百度
 mastered: false
 highfreq: false
 ---
@@ -49,6 +49,8 @@ $$
 - **秩改变什么?** 秩改变容量、参数量及 $s$,随机矩阵的尺度也会影响梯度。比较 r 时须一起记录初始化、缩放与学习率,不能归因于 r 一项。
 - **如何查初始化异常?** 固定输入、关闭随机层,先比较初始输出与基座;随后看 A/B 梯度及增量范数、loss、NaN/Inf。首步单边零梯度正常;持续双零要查冻结、断图或双零初始化,异常放大则查尺度与学习率。
 
+若 A/B 都非零且没有补偿,初始输出可能改变;可减小初始化尺度、降低学习率并检查起始输出,或采用明确的冻结残差补偿。非零 B 不会破坏 $\operatorname{rank}(BA)\le r$。分解初始化及 AdaLoRA/DoRA/QLoRA 的不同设计见 [改进初始化](046-lora-改进初始化.md),不能把交换初始化预设为一定有害。
+
 秩过大或过小的权衡、与 Adapter/Prefix-tuning 的方法比较见 [原理与秩选择](002-lora-原理与秩选择.md)。实际训练的 alpha/dropout 设置见 [超参数调优](031-lora-超参数调优.md)的“调参顺序与故障判断”;这两项须结合学习率、数据量和验证表现选择。
 
 ## 知识点
@@ -56,6 +58,7 @@ $$
 链式法则、零增量初始化、任务梯度、初始化尺度。
 
 - 来源:[老师平台](https://course.terminiai.com/interview),P002-Q025、P002-Q034;承接 P002-Q004 的初始化追问。
+- 本批同题来源:[老师平台](https://course.terminiai.com/interview),P002-Q110、P002-Q154、P002-Q176。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[初始化对 LoRA 训练动态的影响](https://arxiv.org/abs/2406.08447)、[He 初始化论文](https://arxiv.org/abs/1502.01852)。
 
 ## 追问

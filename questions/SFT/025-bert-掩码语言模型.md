@@ -41,7 +41,7 @@ MLM 只监督被选中的位置,信号较稀疏,且预训练中的 MASK 在下�
 
 掩码语言建模、双向自注意力、自监督学习、动态掩码、自回归语言建模。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q031。参考:[BERT](https://aclanthology.org/N19-1423/)、[RoBERTa §4](https://arxiv.org/abs/1907.11692)。
+来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q031、P002-Q202。参考:[BERT](https://aclanthology.org/N19-1423/)、[RoBERTa §4](https://arxiv.org/abs/1907.11692)。
 
 ## 追问
 

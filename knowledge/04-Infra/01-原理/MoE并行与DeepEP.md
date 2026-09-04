@@ -209,7 +209,7 @@ profiling 工具怎么用、trace 怎么抓,见 性能分析与Profiling 篇;这
 | All2All 通信量最省,为什么还有人用 AllGather 或 AllReduce? | 二(规则性、静态形状、TP 布局下 dispatch 免费) |
 | deepep 了解吗?说下原理?为啥 moe 下用 deepep 更快、相对 all2all 好在哪? | 三(两套 kernel + 非对称域转发) |
 | 什么叫非对称域带宽转发?它和 node-limited routing 什么关系? | 三(跨节点只发一份;架构限扇出,系统才敢转发) |
-| 通信和计算都重叠了,为什么还要在意通信占几个 SM? | 三 + 五 |
+| MoE 的 All-to-All 如何优化,重叠时为什么还要在意通信占几个 SM?(平台 P002-Q083) | 三 + 五 |
 | moe 有哪些切分方式?tp 切 atten + 专家,和 tp 切 atten + ep 切专家,差在哪? | 四 |
 | 专家本身不大,为什么不干脆再 TP 切一刀? | 四(小 GEMM 效率 + 两种通信抢同一条链路) |
 | EP 的 rank 是从哪一维凑出来的?和 DP 什么关系? | 四(DP 维在 MoE 层重新解释) |
@@ -217,7 +217,7 @@ profiling 工具怎么用、trace 怎么抓,见 性能分析与Profiling 篇;这
 | moe 这里可以怎么并行?并行起来的必备条件是啥? | 五(拆 batch、dispatch+GEMM、combine+GEMM) |
 | 不拆 micro-batch,直接开两条 stream 让 dispatch 和 GEMM 并行,行不行? | 五(不行,同一批 token 之间是硬依赖) |
 | 专家负载不均会有什么后果?能严重到什么程度? | 六($1/\rho$ 的利用率上界) |
-| 专家负载不均衡的问题怎么处理?trace 上的表现是啥? | 六(三条 trace 特征 + 解法表与上手顺序) |
+| 专家负载不均衡的问题怎么处理?trace 上的表现是啥?(平台 P002-Q084) | 六(三条 trace 特征 + 解法表与上手顺序) |
 | 推理时的负载均衡和训练时的 aux loss 是一回事吗? | 六(不是,训练侧见 MoE路由 篇) |
 
 > 本表混有面经原题与自拟题;自拟题按写作契约第九节的出题标准补出。

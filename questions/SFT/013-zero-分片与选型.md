@@ -52,7 +52,7 @@ Stage 1/2 的简化流程是归约并分发梯度,各卡更新分片,再 all-gat
 
 状态分片、reduce-scatter、all-gather、数据并行、卸载。
 
-来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015、P002-Q043、P002-Q045。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
+来源:[深维 LLM 平台](https://course.terminiai.com/interview),P002-Q015、P002-Q043、P002-Q045、P002-Q109。参考:[ZeRO §3、§5、§7](https://arxiv.org/abs/1910.02054)、[ZeRO-Offload](https://arxiv.org/abs/2101.06840)、[ZeRO-Infinity](https://arxiv.org/abs/2104.07857)。
 
 ## 追问
 

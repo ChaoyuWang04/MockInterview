@@ -9,7 +9,7 @@
 1. `deepspeed.initialize(model=..., model_parameters=...)` —— 把模型换成一个引擎对象,顺手按配置把优化器、LR 调度器(以及可选的 dataloader)一起造好;
 2. `loss.backward()` → `engine.backward(loss)`,`optimizer.step()` → `engine.step()`。
 
-分布式初始化也一并接管:原来的 `torch.distributed.init_process_group` 必须删掉,换成 `deepspeed.init_distributed()`(默认 NCCL 后端),或者干脆不写——`initialize` 会自己起。
+分布式初始化也可交给引擎:尚未初始化时可调用 `deepspeed.init_distributed()`,或让 `initialize` 按配置完成;已有兼容的 PyTorch 进程组也可复用,无需重复初始化。
 
 ```mermaid
 flowchart TD
@@ -87,13 +87,13 @@ deepspeed --num_gpus=8 train.py --deepspeed ds_config.json
 }
 ```
 
-### batch 三件套:唯一一条会当场报错的约束
+### batch 三件套:先核对等式
 
 $$
-\text{train\_batch\_size} = \text{train\_micro\_batch\_size\_per\_gpu} \times \text{gradient\_accumulation\_steps} \times \text{卡数}
+\text{train\_batch\_size} = \text{train\_micro\_batch\_size\_per\_gpu} \times \text{gradient\_accumulation\_steps} \times \text{数据并行度}
 $$
 
-意思是:全局 batch = 每卡一次前反向吃几条 × 攒几次才更新 × 多少张卡。DeepSpeed 启动时**硬校验**这个等式,对不上直接抛异常——新手撞的第一个错基本都是它。省事的写法是只填其中两项、让框架推出第三项;三项都填就必须自洽。
+意思是:全局 batch = 每卡一次前反向吃几条 × 攒几次才更新 × 数据并行副本数。使用 TP/PP 时,参与同一模型副本计算的卡不能再算一份数据副本。DeepSpeed 启动时**硬校验**这个等式,对不上直接抛异常——新手撞的第一个错基本都是它。省事的写法是只填其中两项、让框架推出第三项;三项都填就必须自洽。
 
 三者的分工别混:**显存主要由 `train_micro_batch_size_per_gpu` 决定**,因为它决定一次前反向要留住多少激活;`gradient_accumulation_steps` 是**拿时间换等效大 batch**,几乎不额外吃显存(完整的显存账见 显存管理与OOM 篇)。
 
@@ -102,7 +102,7 @@ $$
 这个问题的答案不是"配置优先"一句话,而是分两层:
 
 - **优化器与 LR 调度器:代码优先。** 传给 `initialize` 的实例(或工厂函数)会**覆盖**配置里的 `optimizer` / `scheduler` 段;什么都不传,才去读配置造一个。而**其余一切(batch、ZeRO、精度、裁剪、checkpoint)配置是唯一入口**,代码里根本没地方设,谈不上冲突。
-- **接了 HuggingFace Trainer 就多一层。** Trainer 通过 `TrainingArguments(deepspeed=...)` 接入,配置里写 `"auto"` 的字段由它按命令行参数自动填。危险的是把这些字段写死成和命令行不一致的值——**这种情况不报错,训练会安静地按配置里那份跑下去**。所以 HF 集成下的铁律是:**能写 `"auto"` 的一律写 `"auto"`**,只在确实要用框架原生优化器时才写死。
+- **接了 HuggingFace Trainer 就多一层。** Trainer 通过 `TrainingArguments(deepspeed=...)` 接入,集成支持的 `"auto"` 字段可按训练参数填写。手动指定同一项时,两处值必须一致;不能依赖某一层覆盖冲突值。先核对最终 batch、精度、学习率与梯度累积配置,再开始训练。哪些字段支持 `"auto"` 取决于所用集成版本,原生 DeepSpeed 配置不能直接照搬这一约定。
 
 ## 三、能力全景
 
@@ -122,6 +122,18 @@ $$
 | DeepSpeed-Chat | RLHF 三阶段流水线与 Hybrid Engine | 教学与历史价值为主(流程本身见 RLHF与RM 篇,框架选型见 RL框架对比 篇) |
 
 看这张表要抓的不是功能数量,而是**它的重心从来没变过:训练侧的显存工程**。推理那条线开得早、也认真做过,但没跟上后来的推理引擎;RLHF 那条线开创了"训练态与生成态共享一份权重来回切"的思路,后来者沿用了思路、换掉了实现。
+
+### 按瓶颈选择能力与并行组合
+
+先量出模型状态、激活和临时缓冲的峰值。状态占不下时选择 ZeRO;激活占不下时比较微批与重算;具体账本见 显存管理与OOM 篇。梯度累积把一次更新拆成多次前反向,重算以额外计算换少存激活;混合精度、融合算子与通信重叠能否提速,要看硬件支持和可重叠窗口。
+
+Stage 2 已装得下时先测它,Stage 3 若能换来更合适的微批或更少重算,也可能更快;分片与选档原理见 ZeRO 篇。Megatron 的 TP/PP 与状态分片解决不同层次的问题,组合应按显存峰值、互联和吞吐验证,不是按固定模型大小背配置,见 并行策略 篇。按本地 2026-04 源码快照,DeepSpeed 流水线引擎拒绝 ZeRO-2/3,不能把算法可组合直接当成该引擎可启用。
+
+### 卸载为什么会变慢
+
+原始 ZeRO-Offload 主要把优化器状态与更新移到 CPU;Infinity 在 ZeRO-3 上使用 GPU、CPU、NVMe 多级存储。NVMe 存状态,CPU 做卸载后的优化器更新,需要的参数仍要送回 GPU。按本地 2026-04 源码快照,分块读写可与更新重叠,固定内存和缓冲池会增加主机内存占用。每步搬运量太大、计算窗口太短或链路太慢时,预取不能消除等待。
+
+调优时分别测 GPU 计算、CPU 更新、PCIe 和磁盘耗时,再改变分块、预取或缓冲配置。跨卡带宽不足还会影响取参,但 TP 也需要频繁通信,不能保证换框架必然更快。省显存与提吞吐要分开验收,底层卸载原理见 ZeRO 篇。
 
 ## 四、和 Megatron 的关系:一个出切法,一个出省法
 
@@ -162,6 +174,10 @@ Stage 3 是在**参数被创建的那一刻**就分片的。要是先把完整�
 
 DeepSpeed 带一批 C++/CUDA 编译算子(CPU Adam、各类融合算子)。**预编译进来的算子在加载时会校验:编译时与运行时的 torch 版本必须 major.minor 一致,CUDA 版本同样要 major.minor 一致**,对不上直接抛异常要求重装;走 JIT 现编的那条路则要求本机 CUDA toolkit 与 torch 的 CUDA 版本对得上。所以升 torch 往往意味着要重装 DeepSpeed——团队实践里锁版本、连镜像一起固化是标配。
 
+### 通信超时先找最早的异常
+
+先收齐各进程日志,找是否有某张卡先 OOM、取数据卡住或提前退出。其他卡随后报通信超时,可能只是等不到它。再检查集合通信的调用顺序、张量形状与全进程保存要求。应用侧无异常后,用最小通信测试核对网卡、链路、驱动与共享内存。只有确认是正常操作过慢,延长超时才有意义。检查顺序参见 [NCCL 官方排障指南](https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/troubleshooting.html)。
+
 ### 其余几条
 
 - **流水线并行与 ZeRO-2/3 不兼容**,框架会直接断言拒绝(为什么冲突,见 ZeRO 篇);
@@ -172,16 +188,16 @@ DeepSpeed 带一批 C++/CUDA 编译算子(CPU Adam、各类融合算子)。**预
 
 | 高频问法 | 本文哪一节 |
 |---|---|
-| DeepSpeed 怎么接进一个已有训练脚本?它的"非侵入"具体非侵入在哪? | 一(三行接入 + 引擎接管清单) |
-| 接完 DeepSpeed,原来训练循环里哪些代码必须删?不删会怎样? | 一(zero_grad / GradScaler / 累积分支 / scheduler) |
-| 它是不是所有能力都不用改模型?哪些必须改,为什么? | 一(两档表;ZeRO 只切存储,所以能躲在 hook 里) |
-| config 里设的和代码里设的冲突了,以谁为准? | 二(优化器与调度器代码优先;HF 下写死不报错、会静默跑错) |
-| batch 那三个参数是什么关系?写错会怎样?哪一个决定显存? | 二(乘积等式与硬校验;micro batch 决定激活) |
-| Megatron-DeepSpeed 是怎么回事?两边各出什么? | 四(切法 vs 省法;BLOOM 的 TP×PP×DP) |
-| ZeRO-3 训完的 checkpoint 为什么不能直接加载?怎么处理? | 六(分片 + 三条出路;还有"必须全 rank 调保存") |
-| 同样是 ZeRO 的思路,DeepSpeed 和 FSDP 你怎么选? | 五(三问:NVMe / 原生语义 / 已有脚本形状) |
+| DeepSpeed 接管哪些训练环节,哪些旧代码要删? | 一:接入、梯度累积与引擎更新 |
+| 哪些能力只改配置,哪些必须改模型?支持的能力能随意组合吗?(P002-Q192/Q193/Q225/Q243/Q257) | 一的两档表、三的能力全景与并行组合 |
+| 配置和代码冲突了怎么办,batch 三项如何对应? | 二:优先级与数据并行副本数 |
+| 为什么省显存后训练反而慢了,ZeRO-2/3怎样选?(P002-Q192/Q193/Q225/Q243) | 三:按瓶颈选择能力与并行组合 |
+| Infinity 比普通分片多解决什么,CPU/NVMe 搬运怎样成为瓶颈?(P002-Q192/Q193/Q225/Q243/Q257) | 三:卸载为什么会变慢 |
+| DeepSpeed 与 Megatron、FSDP 怎么分工和选型?(P002-Q192/Q257) | 四、五 |
+| checkpoint 为什么不能直接加载,为什么所有进程都要保存? | 六:分片保存与转换 |
+| 通信超时怎么排查,加大超时有用吗?(P002-Q192) | 六:通信超时先找最早的异常 |
 
-> 本表按出题标准自拟,非面经原题。
+> 本表混合平台整理题与自拟题,非已核实面经;P002 编号对应来源档案。
 
 ## 相关文献
 
@@ -195,5 +211,7 @@ DeepSpeed 带一批 C++/CUDA 编译算子(CPU Adam、各类融合算子)。**预
 - BLOOM: A 176B-Parameter Open-Access Multilingual Language Model(Megatron-DeepSpeed 的旗舰落地)— [arXiv:2211.05100](https://arxiv.org/abs/2211.05100)
 - DeepSpeed 文档 — Getting Started(三处改动、引擎接管清单、hostfile 与启动器)与 Configuration JSON(全部配置项与默认值)— https://www.deepspeed.ai/getting-started/ 、https://www.deepspeed.ai/docs/config-json/
 - DeepSpeed 文档 — ZeRO 教程(`zero_to_fp32.py` 与约 2 倍 CPU 内存的口径)与 Universal Checkpointing(换并行度续训的三步流程)— https://www.deepspeed.ai/tutorials/zero/ 、https://www.deepspeed.ai/tutorials/universal-checkpointing/
-- HuggingFace Transformers 文档 — DeepSpeed 集成(`"auto"` 字段与写死后静默跑错)— https://huggingface.co/docs/transformers/deepspeed
+- HuggingFace Transformers 文档 — DeepSpeed 集成(`"auto"` 字段与共享参数一致性)— https://huggingface.co/docs/transformers/deepspeed
 - HuggingFace 博客 — The Technology Behind BLOOM Training(TP=4 × PP=12 × DP=8、2.3 TB checkpoint 的出处)— https://huggingface.co/blog/bloom-megatron-deepspeed
+
+- [ZeRO-Offload 官方教程](https://www.deepspeed.ai/tutorials/zero-offload/)与 [ZeRO-Infinity 论文](https://arxiv.org/abs/2104.07857):CPU 更新、多级存储与卸载边界。

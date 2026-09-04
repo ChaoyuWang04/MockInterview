@@ -3,7 +3,7 @@ difficulty: 简单
 topic: SFT/参数高效微调与遗忘
 summary: PEFT 为什么可能少遗忘,四种方法如何权衡成本与效果
 tags: [SFT, PEFT, LoRA, Adapter, 灾难性遗忘, 待校对]
-company: 字节
+company: 字节、淘天
 mastered: false
 highfreq: false
 ---
@@ -11,6 +11,8 @@ highfreq: false
 ## 题目
 
 参数高效微调(PEFT)技术如何在降低大模型微调成本的同时缓解灾难性遗忘问题?请结合原理,举例说明几种典型的 PEFT 方法及其作用机制,并分析它们在实际应用中的优势与差异。
+
+与全量微调相比,这些方法分别适合什么场景?
 
 ## 要点
 
@@ -40,11 +42,17 @@ BitFit 不等于训练整个 LayerNorm。四者的参数比例、效果与延迟
 - **LoRA 与 Adapter 的推理差异为何产生?** LoRA 是线性增量,能提前相加;经典 Adapter 含非线性,通常必须运行新增模块。两者都可多任务切换,不是 Adapter 独有。
 - **强知识注入时一定要全参吗?** 没有统一阈值。先排查数据与训练设置,再与扩大目标层、提高秩和全参基线比较;若 PEFT 持续欠拟合且全参带来可接受的收益,才考虑全参或继续预训练。全参容量更大,但成本和遗忘风险也更高。
 
+### 全参与部署的边界
+
+全参更新全部权重,适合有可靠数据、足够预算且受限更新难以满足任务的情况;PEFT 适合节省训练状态或保留多份任务增量。QLoRA 冻结量化基座后训练 LoRA,实际效果仍须与高精度基线比较。任务与预训练分布差异大时,先改善数据、目标层和训练配置,再比较继续预训练或全参,不能只凭分布距离判 PEFT 无效。
+
+全参微调后遗忘,先查数据、模板与更新强度,再比较旧数据回放或 EWC 等约束,用新旧验证集选检查点,见[遗忘对策](028-灾难性遗忘与对策.md)。部署时 LoRA 可在相同基座上合并线性增量;经典非线性 Adapter 通常不能这样合并。切换还须计入装载、路由和缓存,没有统一延迟增幅。
+
 ## 知识点
 
 参数高效微调、功能性遗忘、模块切换、原有能力回归评测。
 
-- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q008。
+- 来源:[老师平台](https://course.terminiai.com/interview),P002-Q008、P002-Q089、P002-Q189。
 - 依据:[LoRA 原论文](https://arxiv.org/abs/2106.09685)、[Adapter 原论文](https://proceedings.mlr.press/v97/houlsby19a.html)、[Prefix-tuning 原论文](https://aclanthology.org/2021.acl-long.353/)、[BitFit 原论文](https://aclanthology.org/2022.acl-short.1/)、[LoRA 的学习与遗忘对比](https://arxiv.org/abs/2405.09673)。
 
 ## 追问
@@ -52,5 +60,9 @@ BitFit 不等于训练整个 LayerNorm。四者的参数比例、效果与延迟
 - LoRA 的秩 r 如何选择,过大会导致什么问题?
 - Adapter 和 LoRA 在推理阶段的开销差异是什么,为什么?
 - 如果任务需要强知识注入,PEFT 方法是否足够,何时必须全量微调?
+
+- 如果任务与预训练分布差异很大,PEFT 是否适用,如何改进?
+- 如果全量微调出现灾难性遗忘,有哪些缓解手段?
+- LoRA 与 Adapter 部署时如何合并或切换,怎样保证效率?
 
 ## Note
