@@ -39,11 +39,12 @@ $$
 On-Policy Distillation、exposure bias、教师/学生分布、正向 KL、反向 KL、知识蒸馏。
 
 - 依据:[GKD/On-Policy Distillation](https://arxiv.org/abs/2306.13649)、[MiniLLM](https://arxiv.org/abs/2306.08543)。
+- 训练流程与三方对比见 [OPD 与离线蒸馏和 SFT 对比](035-opd与蒸馏和sft对比.md);教师拿不到 logits 时的退路见 [OPD 的 logits 依赖](026-opd-无logits替代.md)。
 
 ## 追问
 
 - on-policy 只表示学生采样吗,与使用正向或反向 KL 有什么关系?
-- 教师只能返回文本、拿不到 logits 时,还能怎样做 OPD?
+- 教师只能返回文本、拿不到 logits 时,还能怎样做 OPD?(见 [026](026-opd-无logits替代.md))
 - 反向 KL 为什么可能降低输出多样性,怎样监控?
 
 ## Note

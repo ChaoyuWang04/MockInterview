@@ -15,6 +15,14 @@
 
 - [ ] 同步核验知识库 `投机解码` 的性能条件与无损表述;依据及已知缺口见 [答案标杆核验](references/答案标杆核验.md)
 
+## 真题导入 · 本批剩余(来源见 `inbox/本批来源.md`)
+
+- [ ] 新建分类 `questions/Quant/`,导入量化四轮真题:OLS 假设与诊断、Fama-French 因子模型、多重共线性、做市随机微分与效用函数、订单到达泊松建模、组合优化、因子生成与 labelling、预测模型加速、orderbook 回测设计、Python–C++ 互操作
+- [ ] `Agent` 6 题:Agent 架构谱系与 Workflow 选型、通用与垂直 Agent 边界、主模型/Memory/多模态选型、子 Agent 分类与任务分发、子 Agent 全局状态合并、告警报文聚类与上下文预算
+- [ ] `SFT` 4 题:后训练小模型替换商业大模型、结构化抽取为何只做 SFT、实体消歧任务设计、实体消歧 SFT 后过于保守
+- [ ] `手撕代码` 3 题:CUDA 矩阵转置、支持 TP 的 transformer layer、KV Cache paged block manager
+- [ ] `RAG` 2 题:Embedding/Rerank/fallback 的效果-延迟-成本权衡、代码知识入库与代码检索设计
+
 ## P0 · 模型结构
 
 - [ ] 旧稿翻新 14 篇:`KV共享注意力` `MLA` `SWA` `稀疏注意力` `线性注意力` `Hybrid注意力` `注意力配件` `RoPE` `MoE基础` `MoE路由` `Norm位置` `FFN与激活` `残差流` `MTP`
