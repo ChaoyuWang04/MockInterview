@@ -17,7 +17,6 @@
 
 ## 真题导入 · 本批剩余(来源见 `inbox/本批来源.md`)
 
-- [ ] 新建分类 `questions/Quant/`,导入量化四轮真题:OLS 假设与诊断、Fama-French 因子模型、多重共线性、做市随机微分与效用函数、订单到达泊松建模、组合优化、因子生成与 labelling、预测模型加速、orderbook 回测设计、Python–C++ 互操作
 - [ ] `Agent` 6 题:Agent 架构谱系与 Workflow 选型、通用与垂直 Agent 边界、主模型/Memory/多模态选型、子 Agent 分类与任务分发、子 Agent 全局状态合并、告警报文聚类与上下文预算
 - [ ] `SFT` 4 题:后训练小模型替换商业大模型、结构化抽取为何只做 SFT、实体消歧任务设计、实体消歧 SFT 后过于保守
 - [ ] `手撕代码` 3 题:CUDA 矩阵转置、支持 TP 的 transformer layer、KV Cache paged block manager
