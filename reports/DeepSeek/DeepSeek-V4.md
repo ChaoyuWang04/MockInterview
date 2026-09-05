@@ -1,5 +1,7 @@
 # DeepSeek-V4：把一百万 Token 从“能塞进去”变成“真的用得起”
 
+<!-- release-date: 2026-04-24 -->
+
 > 本文依据 DeepSeek-AI 发布的 **DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence**，即 arXiv:2606.19348v1、2026-04-26 的预览版。页码均指 PDF 本身的页码。文中会明确区分“报告写了什么”和“我们从中得到什么启发”。
 
 ## 阅读前先搭一张最小地图

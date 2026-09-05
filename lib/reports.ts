@@ -4,6 +4,7 @@ import path from 'node:path'
 export interface ReportSummary {
   slug: string
   title: string
+  releaseDate: string
 }
 
 export interface ReportArticle extends ReportSummary {
@@ -28,13 +29,60 @@ export function listReportCompanies(root = reportsRoot()): string[] {
     .sort((a, b) => a.localeCompare(b, 'zh-CN'))
 }
 
-function validatePublishedReport(file: string, content: string): string {
+function isValidCalendarDate(year: number, month: number, day: number): boolean {
+  if (year < 1 || month < 1 || month > 12 || day < 1) return false
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+  const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  return day <= daysInMonth[month - 1]
+}
+
+function validatePublishedReport(
+  file: string,
+  content: string,
+): Pick<ReportSummary, 'title' | 'releaseDate'> {
   const titleMatch = content.match(/^#\s+(.+)$/m)
   if (!titleMatch?.[1].trim()) throw new Error(`${file}: 缺少一级标题`)
 
-  const body = content.replace(titleMatch[0], '').trim()
+  const rawBody = content.replace(titleMatch[0], '').trim()
+  if (!rawBody) throw new Error(`${file}: 正文为空`)
+
+  const lines = content.split(/\r?\n/)
+  const titleIndex = lines.findIndex((line) => /^#\s+(.+)$/.test(line))
+  const releaseDateIndexes = lines.flatMap((line, index) =>
+    /<!--\s*release-date\b/.test(line) ? [index] : [],
+  )
+
+  if (releaseDateIndexes.length === 0) throw new Error(`${file}: 缺少 release-date`)
+  if (releaseDateIndexes.length > 1) throw new Error(`${file}: release-date 重复`)
+
+  const releaseDateIndex = releaseDateIndexes[0]
+  const firstNonBlankAfterTitle = lines.findIndex(
+    (line, index) => index > titleIndex && line.trim() !== '',
+  )
+  if (releaseDateIndex !== firstNonBlankAfterTitle) {
+    throw new Error(`${file}: release-date 必须是一级标题后的第一个非空行`)
+  }
+
+  const releaseDateMatch = lines[releaseDateIndex]
+    .trim()
+    .match(/^<!-- release-date: (\d{4})-(\d{2})-(\d{2}) -->$/)
+  if (!releaseDateMatch) throw new Error(`${file}: release-date 格式错误`)
+
+  const [, yearText, monthText, dayText] = releaseDateMatch
+  if (!isValidCalendarDate(Number(yearText), Number(monthText), Number(dayText))) {
+    throw new Error(`${file}: release-date 日期非法`)
+  }
+
+  const body = lines
+    .filter((_, index) => index !== titleIndex && index !== releaseDateIndex)
+    .join('\n')
+    .trim()
   if (!body) throw new Error(`${file}: 正文为空`)
-  return titleMatch[1].trim()
+
+  return {
+    title: titleMatch[1].trim(),
+    releaseDate: `${yearText}-${monthText}-${dayText}`,
+  }
 }
 
 export function listReports(company: string, root = reportsRoot()): ReportSummary[] {
@@ -46,11 +94,16 @@ export function listReports(company: string, root = reportsRoot()): ReportSummar
       (entry) => entry.isFile() && entry.name.endsWith('.md') && isVisible(entry.name),
     )
     .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b, 'zh-CN'))
     .map((file) => {
       const slug = file.replace(/\.md$/, '')
       const content = fs.readFileSync(path.join(dir, file), 'utf8')
-      return { slug, title: validatePublishedReport(file, content) }
+      return { slug, ...validatePublishedReport(file, content) }
+    })
+    .sort((a, b) => {
+      const dateOrder = b.releaseDate.localeCompare(a.releaseDate)
+      if (dateOrder !== 0) return dateOrder
+      if (a.slug === b.slug) return 0
+      return a.slug < b.slug ? -1 : 1
     })
 }
 

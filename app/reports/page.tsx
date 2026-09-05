@@ -44,7 +44,10 @@ export default function ReportsIndexPage() {
                     className="block border border-gray-200 bg-white px-5 py-4 transition-colors hover:border-gray-400"
                   >
                     <span className="font-semibold">{report.title}</span>
-                    <span className="mt-2 block font-mono text-xs text-gray-400">阅读全文 →</span>
+                    <span className="mt-2 flex items-center justify-between gap-4 font-mono text-xs text-gray-400">
+                      <span>{report.releaseDate} 首发</span>
+                      <span>阅读全文 →</span>
+                    </span>
                   </Link>
                 ))}
               </div>

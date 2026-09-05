@@ -20,10 +20,13 @@ function makeReportRoot(): string {
   fs.mkdirSync(path.join(root, '_草稿'))
   fs.writeFileSync(
     path.join(root, 'DeepSeek', 'DeepSeek-V4.md'),
-    '# DeepSeek-V4 Technical Report 解读\n\n完整正文。\n',
+    '# DeepSeek-V4 Technical Report 解读\n\n<!-- release-date: 2026-04-24 -->\n\n完整正文。\n',
   )
   fs.writeFileSync(path.join(root, 'DeepSeek', '_未发布.md'), '# 草稿\n')
-  fs.writeFileSync(path.join(root, 'OpenAI', 'GPT.md'), '# GPT Technical Report 解读\n\n完整正文。\n')
+  fs.writeFileSync(
+    path.join(root, 'OpenAI', 'GPT.md'),
+    '# GPT Technical Report 解读\n\n<!-- release-date: 2025-01-01 -->\n\n完整正文。\n',
+  )
   return root
 }
 
@@ -40,10 +43,15 @@ describe('基模报告 reports/', () => {
       {
         slug: 'DeepSeek-V4',
         title: 'DeepSeek-V4 Technical Report 解读',
+        releaseDate: '2026-04-24',
       },
     ])
     expect(listReports('OpenAI', root)).toEqual([
-      { slug: 'GPT', title: 'GPT Technical Report 解读' },
+      {
+        slug: 'GPT',
+        title: 'GPT Technical Report 解读',
+        releaseDate: '2025-01-01',
+      },
     ])
     expect(countReports(root)).toBe(2)
   })
@@ -68,10 +76,71 @@ describe('基模报告 reports/', () => {
     expect(() => listReports('DeepSeek', root)).toThrow(/空正文\.md.*正文为空/)
   })
 
+  it('公司内按实际首发日从新到旧排序,同日按 slug 字面值升序', () => {
+    const root = makeReportRoot()
+    fs.writeFileSync(
+      path.join(root, 'DeepSeek', 'DeepSeek-R1.md'),
+      [
+        '# DeepSeek-R1',
+        '',
+        '<!-- release-date: 2025-01-20 -->',
+        '',
+        '报告后来在 2026-01-04 修订,但修订日不参与排序。',
+      ].join('\n'),
+    )
+    fs.writeFileSync(
+      path.join(root, 'OpenAI', 'Beta.md'),
+      '# Beta\n\n<!-- release-date: 2026-02-03 -->\n\n完整正文。\n',
+    )
+    fs.writeFileSync(
+      path.join(root, 'OpenAI', 'Alpha.md'),
+      '# Alpha\n\n<!-- release-date: 2026-02-03 -->\n\n完整正文。\n',
+    )
+
+    expect(listReports('DeepSeek', root).map((report) => report.slug)).toEqual([
+      'DeepSeek-V4',
+      'DeepSeek-R1',
+    ])
+    expect(listReports('OpenAI', root).map((report) => report.slug)).toEqual([
+      'Alpha',
+      'Beta',
+      'GPT',
+    ])
+  })
+
+  it('拒绝缺失、重复、格式错误、日期非法或位置错误的首发日', () => {
+    const root = makeReportRoot()
+    const file = path.join(root, 'DeepSeek', '坏日期.md')
+
+    fs.writeFileSync(file, '# 坏日期\n\n完整正文。\n')
+    expect(() => listReports('DeepSeek', root)).toThrow(/坏日期\.md.*release-date/)
+
+    fs.writeFileSync(
+      file,
+      '# 坏日期\n\n<!-- release-date: 2026-01-01 -->\n\n<!-- release-date: 2026-01-02 -->\n\n正文。\n',
+    )
+    expect(() => listReports('DeepSeek', root)).toThrow(/坏日期\.md.*重复/)
+
+    fs.writeFileSync(file, '# 坏日期\n\n<!-- release-date: 2026\/01\/01 -->\n\n正文。\n')
+    expect(() => listReports('DeepSeek', root)).toThrow(/坏日期\.md.*格式/)
+
+    fs.writeFileSync(file, '# 坏日期\n\n<!-- release-date: 2025-02-29 -->\n\n正文。\n')
+    expect(() => listReports('DeepSeek', root)).toThrow(/坏日期\.md.*非法/)
+
+    fs.writeFileSync(
+      file,
+      '# 坏日期\n\n> 日期前不应先出现正文。\n\n<!-- release-date: 2026-01-01 -->\n',
+    )
+    expect(() => listReports('DeepSeek', root)).toThrow(/坏日期\.md.*一级标题后的第一个非空行/)
+  })
+
   it('公司名和报告名可以包含字面百分号', () => {
     const root = makeReportRoot()
     fs.mkdirSync(path.join(root, '100%Lab'))
-    fs.writeFileSync(path.join(root, '100%Lab', 'Model%2.md'), '# Model%2\n\n完整正文。\n')
+    fs.writeFileSync(
+      path.join(root, '100%Lab', 'Model%2.md'),
+      '# Model%2\n\n<!-- release-date: 2026-03-01 -->\n\n完整正文。\n',
+    )
 
     expect(getReport('100%Lab', 'Model%2', root)?.title).toBe('Model%2')
   })

@@ -1,5 +1,7 @@
 # DeepSeek-R1：结果奖励能教会模型“想办法”，但验证器决定它能走多远
 
+<!-- release-date: 2025-01-20 -->
+
 > 本文依据 DeepSeek-AI 团队发布的 **DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning**，即 arXiv:2501.12948v2、2026-01-04 修订的 86 页版本。下文括号中的 `PDF p.x` 直接指这份 86 页原文的文件页码。网上很多解读仍使用 2025 年的 v1 数字；本文只采用本地 v2 原件，并把报告事实、我们的解释和外部资料补充分开。
 
 ## 先把最少的背景搭起来
