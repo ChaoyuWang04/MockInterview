@@ -1,6 +1,6 @@
 # 本地大模型面试准备系统
 
-本地、单人、Markdown 即数据的学习系统。项目有六个功能模块:**题库、知识库、开源解读、基模报告、LeetCode 和模拟面试**。内容与学习记录都以纯文本保存,可以直接编辑、用 git 追踪并随时迁移。
+本地、单人、Markdown 即数据的学习系统。项目有六个功能模块:**题库、知识库、开源解读、报告解读、LeetCode 和模拟面试**。内容与学习记录都以纯文本保存,可以直接编辑、用 git 追踪并随时迁移。
 
 > 接手维护?先读 [docs/00-START.md](docs/00-START.md)(守则 + 文档地图)。
 
@@ -29,7 +29,7 @@ npm run dev
 | 题库 | `/`、`/<分类>` | `questions/` | 真题、答案、掌握状态、高频标记和 Note |
 | 知识库 | `/kb` | `knowledge/` | 按学习路径组织的文章,题目通过 `topic` 关联 |
 | 开源解读 | `/opensource` | `opensource/` | 基于 `projects/` 中真实源码写成的项目导读 |
-| 基模报告 | `/reports` | `reports/` | 按公司整理 Technical Report 的完整长文解读 |
+| 报告解读 | `/reports` | `reports/` | 按公司整理 Technical Report 与技术论文的完整长文解读 |
 | LeetCode | `/leetcode` | `leetcode/` | Hot 100、补充题、高频标记和轻量笔记 |
 | 模拟面试 | `/interview` | `interview/` | 使用题库和知识库出题、判卷并保存复盘 |
 
@@ -41,7 +41,7 @@ npm run dev
 - 修改题目格式或答案:遵守 [题目编写规范](docs/03-题目写作规范.md)。
 - 编写知识库文章:先查 [知识库地图](docs/04-知识库地图.md),再按 [知识库写作契约](docs/05-知识库写作契约.md) 写作。
 - 解读开源项目:见 [开源解读流程](docs/06-开源解读流程.md)。
-- 解读基模 Technical Report:见 [基模报告流程](docs/10-基模报告流程.md)。
+- 解读一份 Technical Report 或技术论文:见 [报告解读流程](docs/10-基模报告流程.md)。
 - 维护 LeetCode 清单:见 [LeetCode 清单](docs/07-LeetCode清单.md)。
 
 ## 目录结构
@@ -51,7 +51,7 @@ questions/     真题库
 knowledge/     知识库
 opensource/    开源项目解读
 projects/      解读依据的源码快照(git 不追踪)
-reports/       基模 Technical Report 的长文解读
+reports/       Technical Report 与技术论文的长文解读
 papers/        报告 PDF 原件(默认不追踪 PDF)
 leetcode/      LeetCode 清单与笔记
 interview/     简历、画像、会话复盘与本地缓存

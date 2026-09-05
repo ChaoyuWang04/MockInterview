@@ -13,14 +13,14 @@ export default function ReportsIndexPage() {
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
       <div className="flex items-baseline justify-between">
-        <h1 className="text-2xl font-bold">基模报告</h1>
+        <h1 className="text-2xl font-bold">报告解读</h1>
         <Link href="/" className="text-sm text-gray-500 hover:text-gray-900">
           ← 返回主页
         </Link>
       </div>
       <p className="mt-2 text-sm leading-6 text-gray-500">
-        按公司整理公开 Technical Report。每篇解读用一篇完整长文讲清算法、架构、训练 recipe、infra
-        设计及其背后的原因。当前共 {total} 篇。
+        按公司整理公开的基模 Technical Report
+        与核心技术论文。每篇用一篇完整长文讲清设计、原因和可迁移的部分。当前共 {total} 篇。
       </p>
 
       {total === 0 ? (

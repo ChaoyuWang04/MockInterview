@@ -80,7 +80,7 @@ describe('活动文档', () => {
     }
   })
 
-  it('主页把基模报告作为开源项目旁边的独立入口', () => {
+  it('主页把报告解读作为开源项目旁边的独立入口', () => {
     const home = fs.readFileSync(path.join(projectRoot, 'app/page.tsx'), 'utf8')
     const opensourceAt = home.indexOf('href="/opensource"')
     const reportsAt = home.indexOf('href="/reports"')
@@ -88,10 +88,10 @@ describe('活动文档', () => {
     expect(opensourceAt).toBeGreaterThanOrEqual(0)
     expect(reportsAt).toBeGreaterThan(opensourceAt)
     expect(home.slice(opensourceAt, reportsAt)).not.toContain('href="/leetcode"')
-    expect(home).toContain('基模报告')
+    expect(home).toContain('报告解读')
   })
 
-  it('基模报告动态路由不对 Next 参数重复解码', () => {
+  it('报告解读动态路由不对 Next 参数重复解码', () => {
     const route = fs.readFileSync(
       path.join(projectRoot, 'app/reports/[company]/[report]/page.tsx'),
       'utf8',

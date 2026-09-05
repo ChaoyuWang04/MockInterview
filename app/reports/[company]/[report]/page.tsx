@@ -18,7 +18,7 @@ export default async function ReportPage({
     <main className="mx-auto max-w-4xl px-6 py-10">
       <div className="mb-8 flex items-center gap-4 text-sm text-gray-500">
         <Link href="/reports" className="hover:text-gray-900">
-          ← 返回基模报告
+          ← 返回报告解读
         </Link>
         <span className="text-gray-300">|</span>
         <Link href="/" className="hover:text-gray-900">

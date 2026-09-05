@@ -47,7 +47,7 @@ export default function Home() {
             href="/reports"
             className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
           >
-            📄 基模报告 · {reportCount} 篇 →
+            📄 报告解读 · {reportCount} 篇 →
           </Link>
           <Link
             href="/leetcode"

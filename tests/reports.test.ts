@@ -34,7 +34,7 @@ afterEach(() => {
   for (const root of temporaryRoots.splice(0)) fs.rmSync(root, { recursive: true, force: true })
 })
 
-describe('基模报告 reports/', () => {
+describe('报告解读 reports/', () => {
   it('按公司扫描已发布 Markdown,忽略隐藏目录和草稿', () => {
     const root = makeReportRoot()
 
@@ -156,7 +156,7 @@ describe('基模报告 reports/', () => {
     }
   })
 
-  it('基模报告使用渲染器支持的行内数学边界', () => {
+  it('报告解读使用渲染器支持的行内数学边界', () => {
     for (const company of listReportCompanies()) {
       for (const summary of listReports(company)) {
         const content = getReport(company, summary.slug)?.content
