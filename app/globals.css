@@ -18,3 +18,16 @@ body {
   max-width: 100%;
   height: auto;
 }
+
+/* 宽表格和块级公式只在自身区域横向滚动,避免撑破窄屏页面 */
+.prose .markdown-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.prose .markdown-table-scroll table {
+  margin-block: 0;
+}
+.prose .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+}

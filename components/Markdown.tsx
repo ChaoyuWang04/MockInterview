@@ -13,6 +13,13 @@ export default function Markdown({ children }: { children: string }) {
       remarkPlugins={[remarkGfm, remarkMath]}
       rehypePlugins={[rehypeKatex, [rehypeHighlight, { plainText: ['mermaid'] }]]}
       components={{
+        table({ node: _node, ...props }) {
+          return (
+            <div className="markdown-table-scroll">
+              <table {...props} />
+            </div>
+          )
+        },
         code({ node: _node, className, children: code, ...props }) {
           if (className?.includes('language-mermaid')) return <Mermaid chart={String(code ?? '')} />
           return (
