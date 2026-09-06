@@ -47,7 +47,6 @@
 ## P6 · 开源解读与报告解读
 
 - [ ] 按 `06-开源解读流程.md` 完成 `nano-vllm`;完成后从 06 的项目库存选择下一项并替换本行
-- [ ] 按 `10-基模报告流程.md` 解读 `StepFun/Step-Audio-2` `StepFun/Step-Audio-R1.5` `OpenMOSS/MOVA`;完成后按 10 的库存表选下一批替换本行
 - [ ] 按 `10-基模报告流程.md` 解读 `DeepSeek/Engram` `DeepSeek/mHC` `ByteDance/HybridFlow`;完成后按 10 的命令列出未解读原件,选下一批替换本行
 
 ## 模拟面试系统(可用,剩余项不阻塞)
