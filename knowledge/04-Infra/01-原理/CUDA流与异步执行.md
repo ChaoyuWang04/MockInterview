@@ -72,11 +72,11 @@ GPU 上除了跑 kernel 的 SM 阵列,还有专门的 **DMA 引擎(copy engine)*
 
 操作系统的普通内存是**可分页的(pageable)**——OS 随时可能把某一页换到磁盘上,或者搬到别的物理地址。而 DMA 引擎干活时**绕过 CPU 直接按物理地址搬数据**,它没法应对"我正在搬的这页突然被挪走了"。
 
-**pinned memory(页锁定内存,`cudaHostAlloc`/`cudaMallocHost` 分配)**就是告诉 OS:这块内存钉死在物理内存里,永远不许换页。这样 DMA 才能拿到一个稳定的物理地址,直接搬。
+**pinned memory(页锁定内存,`cudaHostAlloc`/`cudaMallocHost` 分配)** 就是告诉 OS:这块内存钉死在物理内存里,永远不许换页。这样 DMA 才能拿到一个稳定的物理地址,直接搬。
 
 那么不用 pinned 会怎样?这是本节的核心考点:
 
-> 从**可分页内存**发起 `cudaMemcpyAsync`,驱动没法直接 DMA,只能先把数据拷到自己内部的一块 pinned 暂存区(staging buffer),再从那里 DMA 到显存。多了一次 CPU 参与的内存拷贝,而且**这个函数会失去异步性**。CUDA 官方文档的措辞是:涉及可分页内存时,该函数**"可能对 host 是同步的"**(might be synchronous with respect to host);如果需要经 pinned 暂存,驱动**可能与该流同步**。
+> 从**可分页内存**发起 `cudaMemcpyAsync`,驱动没法直接 DMA,只能先把数据拷到自己内部的一块 pinned 暂存区(staging buffer),再从那里 DMA 到显存。多了一次 CPU 参与的内存拷贝,而且**这个函数会失去异步性 **。CUDA 官方文档的措辞是:涉及可分页内存时,该函数**"可能对 host 是同步的"**(might be synchronous with respect to host);如果需要经 pinned 暂存,驱动**可能与该流同步**。
 
 翻译成人话:**你写了 Async,但它退化成了同步行为**——CPU 卡在这里等,重叠没了,而且还白白多付一次内存拷贝。这是"明明用了异步 API 却没有任何加速"的头号原因。
 

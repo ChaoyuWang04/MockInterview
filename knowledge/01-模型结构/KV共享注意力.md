@@ -37,7 +37,7 @@ $$
 
 ### 机制与谱系
 
-**GQA(Grouped-Query Attention)**把 $h$ 个 query 头分成 $g$ 组,**每组共用一套 K/V**($n_{kv} = g$),缓存按组数等比缩小:
+**GQA(Grouped-Query Attention)** 把 $h$ 个 query 头分成 $g$ 组,**每组共用一套 K/V**($n_{kv} = g$),缓存按组数等比缩小:
 
 $$
 \frac{\text{GQA 缓存}}{\text{MHA 缓存}} = \frac{g}{h}
