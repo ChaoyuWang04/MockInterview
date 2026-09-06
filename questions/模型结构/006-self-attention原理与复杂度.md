@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: 注意力配件/Self-Attention原理、公式与复杂度
+topic: 注意力基础/Self-Attention原理、公式与复杂度
 summary: 从QKV推导Self-Attention并计算时间空间复杂度
 tags: [真题, SelfAttention, QKV, 复杂度, 待校对]
 company: 字节、美团、小红书、海天、哔哩哔哩、阿里云、阿里、淘天、京东、滴滴

@@ -1,6 +1,6 @@
 ---
 difficulty: 中等
-topic: Attention/多头注意力
+topic: 注意力基础/多头注意力
 summary: 手写 MHA,说清多头比单头多了什么、参数量怎么算
 tags: [Transformer, Attention, 手撕代码, 真题, 待校对]
 company: 腾讯、小米、美团、字节、快手、联通、海天、百度
