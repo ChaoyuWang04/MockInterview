@@ -65,6 +65,34 @@ describe('报告解读 reports/', () => {
     expect(getReport('DeepSeek', '不存在', root)).toBeNull()
   })
 
+  it('正文剥掉排序用的 release-date 注释,行内提及原样保留', () => {
+    const root = makeReportRoot()
+    fs.writeFileSync(
+      path.join(root, 'DeepSeek', '行内提及.md'),
+      [
+        '# 行内提及',
+        '',
+        '<!-- release-date: 2026-05-06 -->',
+        '',
+        '本文的 `release-date` 取官方发布页的日期。',
+      ].join('\n'),
+    )
+
+    const content = getReport('DeepSeek', '行内提及', root)?.content ?? ''
+    expect(content).not.toContain('<!--')
+    expect(content).toContain('# 行内提及')
+    expect(content).toContain('本文的 `release-date` 取官方发布页的日期。')
+
+    for (const company of listReportCompanies()) {
+      for (const summary of listReports(company)) {
+        expect(
+          getReport(company, summary.slug)?.content,
+          `${company}/${summary.slug} 正文仍带排序注释`,
+        ).not.toMatch(/<!--\s*release-date/)
+      }
+    }
+  })
+
   it('拒绝把空文件或缺少一级标题的文件发布到网页', () => {
     const root = makeReportRoot()
     fs.writeFileSync(path.join(root, 'DeepSeek', '缺标题.md'), '只有正文。\n')

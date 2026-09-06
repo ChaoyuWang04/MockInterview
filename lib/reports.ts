@@ -29,6 +29,22 @@ export function listReportCompanies(root = reportsRoot()): string[] {
     .sort((a, b) => a.localeCompare(b, 'zh-CN'))
 }
 
+/** 只认整行的 release-date 注释;正文里以行内代码提到 `release-date` 的段落不会命中 */
+function releaseDateLineIndexes(lines: string[]): number[] {
+  return lines.flatMap((line, index) =>
+    /<!--\s*release-date\b/.test(line) ? [index] : [],
+  )
+}
+
+/** 该注释是排序元数据、不计入正文,渲染前按行剥掉,其余内容原样保留 */
+function stripReleaseDate(content: string): string {
+  const lines = content.split(/\r?\n/)
+  const [index] = releaseDateLineIndexes(lines)
+  if (index === undefined) return content
+  lines.splice(index, 1)
+  return lines.join('\n')
+}
+
 function isValidCalendarDate(year: number, month: number, day: number): boolean {
   if (year < 1 || month < 1 || month > 12 || day < 1) return false
   const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
@@ -48,9 +64,7 @@ function validatePublishedReport(
 
   const lines = content.split(/\r?\n/)
   const titleIndex = lines.findIndex((line) => /^#\s+(.+)$/.test(line))
-  const releaseDateIndexes = lines.flatMap((line, index) =>
-    /<!--\s*release-date\b/.test(line) ? [index] : [],
-  )
+  const releaseDateIndexes = releaseDateLineIndexes(lines)
 
   if (releaseDateIndexes.length === 0) throw new Error(`${file}: 缺少 release-date`)
   if (releaseDateIndexes.length > 1) throw new Error(`${file}: release-date 重复`)
@@ -121,7 +135,7 @@ export function getReport(
   return {
     ...summary,
     company,
-    content: fs.readFileSync(path.join(root, company, `${slug}.md`), 'utf8'),
+    content: stripReleaseDate(fs.readFileSync(path.join(root, company, `${slug}.md`), 'utf8')),
   }
 }
 
