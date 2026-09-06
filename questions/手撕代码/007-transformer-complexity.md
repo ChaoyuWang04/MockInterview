@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: Transformer/计算复杂度
+topic: Transformer整体架构/计算复杂度
 summary: 分解 Transformer 各组件在训练与自回归推理中的计算和显存开销
 tags: [真题, 待校对, Transformer, 复杂度, KVCache]
 company: 滴滴、快手、字节、哔哩哔哩

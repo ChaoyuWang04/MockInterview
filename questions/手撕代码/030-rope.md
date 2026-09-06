@@ -1,6 +1,6 @@
 ---
 difficulty: 中等
-topic: Transformer/旋转位置编码
+topic: RoPE/旋转位置编码手写实现
 summary: 推导并用相邻偶奇维配对正确实现RoPE作用于查询和键
 tags: [真题, 待校对, Transformer, RoPE, 位置编码]
 company: 得物
