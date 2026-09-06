@@ -51,7 +51,7 @@
 
 - [ ] 按 `06-开源解读流程.md` 完成 `nano-vllm`;完成后从 06 的项目库存选择下一项并替换本行
 - [ ] 按 `10-基模报告流程.md` 解读 `Stanford/FlashAttention-2` `Stanford/FlashAttention-3` `MiniMax/MiniMax-01`;完成后按 10 的命令列出未解读原件,选下一批替换本行
-- [ ] 多模态基座尚无解读:视频、图像生成、音频、3D 与世界模型各选一篇进入下下批
+- [ ] 多模态五个方向里 3D 仍无解读:按 `10-基模报告流程.md` 解读 `Tencent/Hunyuan3D-2.0`,同批补 `Tencent/HunyuanImage-3.0` 与 `Tencent/HunyuanWorld-1.0`;完成后按 10 的库存表选下一批替换本行
 
 ## 模拟面试系统(可用,剩余项不阻塞)
 
