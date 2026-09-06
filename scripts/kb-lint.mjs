@@ -92,7 +92,7 @@ for (const file of files) {
   if (isKey && !text.includes('面试考点串联')) E('带 🔴 标记但缺少「面试考点串联」')
 
   // 跨篇引用的目标必须存在(只查「见/引/参见 XX 篇」这种全名写法)
-  for (const m of text.matchAll(/(?:见|引|参见)\s*[「『]?([A-Za-z0-9一-龥]{3,20}?)[」』]?\s*篇/g)) {
+  for (const m of text.matchAll(/(?:见|引|参见)\s*[「『]?([A-Za-z0-9一-龥]{2,20}?)[」』]?\s*篇/g)) {
     const name = m[1]
     if (titles.has(name)) continue
     // 允许指向开源解读模块与本章总览这类非文章目标
