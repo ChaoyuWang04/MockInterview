@@ -133,13 +133,14 @@ FlashAttention 前向真正存下来的只有两样:输出 $O$($L \times d$),以
 
 一个容易被追问的细节:反向的循环顺序和前向不同(前向外层 $Q$、内层 $K/V$;反向为了让 $dK/dV$ 的累加落在同一个块里,外层走 $K/V$),因此 $dQ$ 会被多个块并发累加,需要原子加或额外的分区策略——这正是 v2 重新设计并行划分时动的地方之一。
 
-## 四、v1 / v2 / v3:每一代解决什么
+## 四、v1 / v2 / v3 / v4:每一代解决什么
 
 | 版本 | 目标硬件 | 核心痛点 | 主要手段 | 论文自报效果 |
 |---|---|---|---|---|
 | **v1**(2022) | Ampere | 中间矩阵反复过 HBM | tiling + online softmax + 反向重算 | GPT-2 训练快 3×、BERT-large 快 15%;显存 $O(L^2) \to O(L)$ |
 | **v2**(2023) | Ampere | 算力利用率只有 25–40% | 减少非矩阵乘运算、加一维并行、改 warp 分工 | 比 v1 快约 2×,A100 上达峰值算力 50–73% |
 | **v3**(2024) | **Hopper** | v2 在 H100 上只用到 35% | TMA 异步搬运、warp specialization、FP8 | 比 v2 快 1.5–2.0×,FP16 达 740 TFLOPS(75%),FP8 近 1.2 PFLOPS |
+| **v4**(2026) | **Blackwell** | Tensor Core 翻倍,shared memory 与指数单元没跟上 | 软件模拟指数、TMEM、2-CTA MMA、条件重定标、LPT 调度 | B200 上 BF16 达 1613 TFLOPS(71%),比 cuDNN 9.13 快 1.3×、比 Triton 快 2.7× |
 
 ### v2 具体改了三件事
 
@@ -154,7 +155,19 @@ FlashAttention 前向真正存下来的只有两样:输出 $O$($L \times d$),以
 3. **matmul 与 softmax 交错(pingpong)**:softmax 跑在特殊函数单元上、矩阵乘跑在 Tensor Core 上,是两条独立流水线。v3 刻意让一个 warpgroup 做 softmax 时另一个做 matmul,**把非矩阵乘的部分藏到矩阵乘底下**。
 4. **FP8**:配合分块量化(block quantization)与 incoherent processing(用 Hadamard 变换打散离群值)控制误差,论文报告在有离群特征时数值误差比 per-tensor 量化的 FP8 基线低 2.6×。
 
-一句话记忆:**v1 解决"访存太多",v2 解决"算力没喂饱",v3 解决"新硬件的异步能力没用上"**。
+### v4 面对的是"硬件不对称扩张"
+
+前三代的主线是"访存 → 算力利用率 → 异步",v4 的起点换了:**Blackwell 把 BF16 Tensor Core 从 Hopper 的 1 PFLOPS 拉到 2.25 PFLOPS,但 shared memory 带宽和指数单元(MUFU)的吞吐一点没涨**。矩阵乘那半边跑得越快,softmax 这半边就越扎眼——瓶颈从"搬那张大表"挪到了"算 exp、以及喂得上料"。MMA 的 tile 也从 Hopper 的 64×128 变成 128×128,面积翻倍,进一步压榨 shared memory。这就是论文说的**非对称扩张**:该快的快了,配套的没跟上。
+
+1. **用 FMA 软件模拟指数**。MUFU 每周期只能出 16 个 exp,现在成了新瓶颈。v4 改用多项式近似在通用 FMA 单元上算 $2^x$,只让 **10–25%** 的指数走硬件 MUFU,其余摊到浮点单元上——把一条窄流水线上的活分散到多条宽流水线。
+2. **TMEM(tensor memory)**:Blackwell 每个 SM 有 256 KB 专用张量内存,MMA 结果直接落在这儿,不再挤占寄存器。
+3. **2-CTA MMA**:两个 CTA 协作啃一个大 tile,每个只搬一半的 B 操作数、由硬件合起来,**shared memory 流量直接减半**。
+4. **条件重定标**:第二节那个折扣系数 $e^{m_{j-1}-m_j}$,在新最大值没涨多少时几乎等于 1。v4 在 $m_j - m_{j-1} \le \tau$(取 8.0)时干脆跳过这次重定标,留到最后统一归一化纠偏——省掉的正是最贵的那批指数运算。
+5. **LPT 调度**:causal mask 让不同 tile 的工作量差很多,v4 按"最长任务优先"排序,配合 head-swizzling 提高 L2 复用,causal 场景多拿 **4–14%** 的 FLOPS。
+
+还有一件与算法无关但影响很大的事:**v4 整个 kernel 用嵌在 Python 里的 CuTe-DSL 写,没有 CUDA C++**,编译比 C++ 模板方案快 20–30×。这让 kernel 从"编译要几分钟到几小时"变成"几秒",迭代速度完全不是一回事。
+
+一句话记忆:**v1 解决"访存太多",v2 解决"算力没喂饱",v3 解决"新硬件的异步能力没用上",v4 解决"Tensor Core 单方面变快之后,softmax 和 shared memory 成了新短板"**。
 
 ## 五、和 PagedAttention 的关系:算得快 vs 存得省
 
@@ -214,8 +227,10 @@ chunked prefill 把一条长 prompt 切成若干 chunk 分批送进模型(**为�
 | 减最大值是为了什么? | 二(数值稳定,fp16 防溢出) |
 | 反向为什么重算而不是把 $S/P$ 存下来? | 三(存了就违背初衷;只存 $O$ 和 logsumexp) |
 | 重算多花多少算力?为什么还是划算? | 三(FLOPs +17%,换几倍访存下降) |
-| v1/v2/v3 分别改了什么? | 四(访存 → 算力利用率 → Hopper 异步) |
+| v1/v2/v3/v4 分别改了什么? | 四(访存 → 算力利用率 → Hopper 异步 → Blackwell 非对称扩张) |
 | v2 为什么要减少非矩阵乘运算? | 四(A100 上非矩阵乘 FLOP 贵 16 倍) |
+| 什么叫"硬件不对称扩张"?它把瓶颈挪到了哪里? | 四(Tensor Core 翻倍但 shared memory 与 MUFU 没变) |
+| v4 为什么要用软件多项式去算指数,而不用硬件指令? | 四(MUFU 每周期只出 16 个 exp,成了新瓶颈) |
 | FlashAttention 和 PagedAttention 什么关系?能一起用吗? | 五(正交,现代引擎结合使用) |
 | 两者 kernel 入参差在哪? | 五(`cu_seqlens` vs block table) |
 | chunked prefill 用的 attention 有什么差异? | 六(变长 q/kv + 右下对齐 + 两套 cu_seqlens) |
@@ -229,6 +244,7 @@ chunked prefill 把一条长 prompt 切成若干 chunk 分批送进模型(**为�
 - FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness — [arXiv:2205.14135](https://arxiv.org/abs/2205.14135)
 - FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning — [arXiv:2307.08691](https://arxiv.org/abs/2307.08691)
 - FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision — [arXiv:2407.08608](https://arxiv.org/abs/2407.08608)
+- FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling — [arXiv:2603.05451](https://arxiv.org/abs/2603.05451)
 - Online normalizer calculation for softmax(online softmax 的原始推导)— [arXiv:1805.02867](https://arxiv.org/abs/1805.02867)
 - Efficient Memory Management for Large Language Model Serving with PagedAttention — [arXiv:2309.06180](https://arxiv.org/abs/2309.06180)
 - Dao-AILab/flash-attention 官方仓库(含 varlen / paged KV 接口说明)— https://github.com/Dao-AILab/flash-attention
