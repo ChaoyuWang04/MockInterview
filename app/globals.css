@@ -19,6 +19,12 @@ body {
   height: auto;
 }
 
+/* 裸链接、以及 code 里的长路径和长标识符都是不可断词,窄屏会把整页撑宽;
+   break-word 只在一行放不下时才断,且不参与 min-content 计算,桌面表格列宽不变 */
+.prose {
+  overflow-wrap: break-word;
+}
+
 /* 宽表格和块级公式只在自身区域横向滚动,避免撑破窄屏页面 */
 .prose .markdown-table-scroll {
   max-width: 100%;
@@ -27,7 +33,10 @@ body {
 .prose .markdown-table-scroll table {
   margin-block: 0;
 }
+/* overflow-x 会把 overflow-y 一并提成 auto,深层上下标的墨迹会被上下边裁掉;
+   留一点上下内边距把墨迹兜回盒子里,也让横向滚动条不压住公式 */
 .prose .katex-display {
   max-width: 100%;
   overflow-x: auto;
+  padding-block: 0.35rem;
 }
