@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: 新架构追踪/Transformer与RNN、GRU、CNN的序列建模比较
+topic: 序列模型/与RNN、GRU、CNN的建模比较
 summary: Transformer与循环卷积结构如何权衡依赖路径和并行成本
 tags: [真题, Transformer, RNN, GRU, CNN, 序列建模, 待校对]
 company: 小红书、哔哩哔哩、美团、华为、腾讯
