@@ -1,205 +1,260 @@
 # PPO(Proximal Policy Optimization)
 
-> ⚠️ 旧版:本篇写于写作契约确立之前,尚未按新标准审查重写。标准见 docs/05-知识库写作契约.md,样板见「GPU架构与执行模型」。
+一句话:PPO 是**用一个廉价的裁剪操作,把"这一步别迈太大"直接写进目标函数**的策略梯度算法——它让语言模型能拿一个不可微的打分(人类偏好、单元测试、规则校验)当训练信号,又不至于一步把自己训崩。
 
-一句话:**TRPO 信任域思想的一阶平价近似**——靠 clip 概率比这一个廉价操作实现"每次更新步子别迈太大",从 InstructGPT 到 ChatGPT 一路沿用,是 RLHF 的老牌主力算法(免 critic 的后继者详见 GRPO 篇)。
+## 一、动机与建模
 
-## 一、动机:一步崩坏与太贵的信任域
+### 为什么要上 RL:奖励不可微,而 REINFORCE 方差太大
 
-### vanilla policy gradient 的两大痛点
-
-朴素策略梯度(policy gradient)$\nabla_\theta J = \mathbb{E}\left[\nabla_\theta \log \pi_\theta(a_t \mid s_t)\, A_t\right]$ 的更新逻辑是"好动作加概率、坏动作减概率",问题有二:
-
-- **方差大**:梯度靠采样少量轨迹估计,奖励噪声随轨迹长度累积——像抽三五个人估全国平均收入,结果抖动剧烈,只能用小学习率慢慢磨;
-- **步长敏感、一步崩坏**:on-policy(在线策略)训练的数据由当前策略自己生成。监督学习里教材是固定的,走错一步下次还能被拉回来;RL 里等于"教材是自己写的"——一次过大的坏更新把策略推下悬崖后,之后采出的数据也全是垃圾,再也爬不回来。
-
-### TRPO:对症,但太贵
-
-TRPO 的解法:限制每次更新前后策略的 KL 散度不超过阈值,只在"信任域"(trust region)内挪动——像在悬崖边行走,规定每步只许落在以脚下为圆心的安全圈内。代价是要解一个带 KL 约束的优化问题:Fisher 信息矩阵、共轭梯度、线搜索,一整套二阶机器,实现复杂、算得慢,还与 dropout、参数共享等常用结构不兼容。
-
-### PPO:用一阶优化限制过大的更新动机
-
-PPO 改造代理目标,降低继续扩大某些动作概率比的收益,从而可用一阶优化器训练。它比求解带约束问题更简单,但不保证每一步满足严格的 KL 上界。
-
-## 二、核心机制:clip 目标 + GAE
-
-### 1. 重要性采样比:旧数据的汇率
+监督学习的梯度从 loss 一路反传到参数,所以 loss 必须可微。但"这个回答讨不讨人喜欢""这段代码过不过测试"根本没有导数。策略梯度绕开了这件事:目标是最大化轨迹期望回报 $J(\theta)=\mathbb E_{\tau\sim\pi_\theta}[R(\tau)]$,用对数导数技巧展开后
 
 $$
-\rho_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{old}}(a_t \mid s_t)}
+\nabla_\theta J(\theta)=\mathbb E_{\tau\sim\pi_\theta}\!\left[R(\tau)\sum_t \nabla_\theta\log\pi_\theta(a_t\mid s_t)\right]
 $$
 
-一批数据由旧策略 $\pi_{\theta_{old}}$ 采集,却要拿来更新走远了的新策略 $\pi_\theta$(同一批数据会复用训多个 epoch,见第四节),就得乘上这个折算系数——重要性采样(importance sampling),好比拿旧账本记的外币账,要按当前汇率换算成新币种才作数。$\rho_t = 1$ 表示新旧策略对该动作看法一致;偏离 1 越远,策略在这一步改得越多,旧数据也就越"不作数"。
+读法是:**梯度只从 $\log\pi_\theta$ 这一项来,$R(\tau)$ 全程只是乘在外面的一个标量权重**。所以奖励可以是纯黑盒——规则脚本、人工判断、编译器返回码都行,因为我们从来不需要 $\nabla R$。回报为正就整体抬高这条路径上各动作的概率,为负就整体压低,像"卷子发下来,考得好的那套做法整体加分"。两条梯度路径别混:**训 reward model 时**梯度要穿过 RM 自己的参数(它是从偏好数据学出来的评分函数);**用 RM 更新策略时** RM 冻结,梯度仍只走 $\log\pi_\theta$。RM 怎么训、奖励怎么设计、reward hacking 怎么防,见 RLHF与RM 篇。反过来也别绝对化:参考策略 KL 由两个概率分布算出,本身对策略参数可导,估计器与方向选择见 KL散度 篇。
 
-### 2. clip 代理目标:方向盘限位器
+上式就是 REINFORCE,它无偏,但**方差大到几乎没法用**,三个来源在语言模型上条条被放大:一段 500 token 的回答只拿一个分,**整条轨迹共用一个权重**,好分数会把其中那些其实很平庸的 token 一起抬高;RM 给 +3 还是 +8 大半反映题目难易而非动作好坏,**回报的绝对尺度直接乘进梯度**;一个 batch 几百上千条回答,却要估一个上亿维参数空间的梯度方向,**样本太少**。后果是只能用很小的学习率慢慢磨。而 RL 又不像监督学习有一份固定教材——**数据是策略自己采的**,一次过大的坏更新把策略推下悬崖,之后采出来的全是垃圾,爬不回来。PPO 要解决的正是这两件事:**降方差**(优势估计,第二节)与**限步长**(裁剪,第三节)。
 
-$$
-L^{CLIP}(\theta) = \mathbb{E}_t\left[ \min\left( \rho_t(\theta)\, \hat{A}_t,\ \mathrm{clip}\left(\rho_t(\theta),\ 1-\varepsilon,\ 1+\varepsilon\right) \hat{A}_t \right) \right]
-$$
+### 语言模型上的 MDP:最常用的是 token 级建模
 
-$\varepsilon=0.2$ 是原论文实验和许多实现中的常见起点,不是跨任务固定值。两个部件各司其职:
+| 概念 | 在语言模型里是什么 | 备注 |
+|---|---|---|
+| 状态 $s_t$ | prompt + 已生成前缀,即 $(x,\,y_{<t})$ | 状态不断变长,不是固定维向量;转移只是把 $y_t$ 拼上去,确定性、无环境随机性 |
+| 动作 $a_t$ | 从词表挑出下一个 token,即 $y_t$ | $\pi_\theta(a_t\mid s_t)$ 就是模型的 next-token 分布 |
+| 轨迹 / episode | 从 prompt 到 EOS 的一整条回答,也叫 rollout | **不是"另一种粒度的动作"** |
 
-- **clip**:把 $\rho_t$ 卡进 $[1-\varepsilon,\ 1+\varepsilon]$,像给方向盘装限位器——优势为正、想加大该动作概率?加到旧概率的 $1+\varepsilon$ 倍就到顶,再往上没有额外收益,梯度自动归零;
-- **min**:取"未裁剪"与"裁剪"两版的较小值,得到更保守的**代理目标值**,让 clip 只在会继续改善样本目标的方向截去额外收益。它不是对真实环境回报的通用下界。
+另一种合法口径是**上下文 bandit**:环境一次性接收整段文本、返回一个结果,整段回答就是一次动作。两种都能用,但答题时**必须先声明用哪个**——不能一边说 token 是动作、一边说整段回答也是动作,那样优势、概率比、KL 的定义全对不上。多轮对话不改这套框架:把"到当前轮为止的完整对话(含工具返回、用户回复)"当 state,本轮回复是由多个 token 动作组成的子轨迹,用户回复与工具结果属于**环境转移**而非策略动作;奖励可按 token、按轮或按整段会话给。多轮信用分配与工具环境怎么搭见 AgenticRL 篇。
 
-裁剪的是代理目标中的收益,**不是把实际策略概率比强制投影回区间**。某个样本的对应项不再鼓励外移,其他样本、共享参数和辅助损失仍可能推动策略变化。因此 PPO-clip 不是 TRPO 的硬约束实现。PPO 原论文还提出自适应 KL 惩罚版,两种版本不要混为一个公式。
-
-### 3. GAE:优势估计的偏差-方差旋钮
-
-优势 $\hat{A}_t$ 回答"这个动作比该状态下的平均水平好多少"。先请一位"心里有预期的教练"——critic(价值网络)$V(s)$,定义一步 TD 残差,即"惊喜差":实际这步的所得(即时奖励 + 下一状态的预期)比教练原本的预期好多少:
-
-$$
-\delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)
-$$
-
-GAE(Generalized Advantage Estimation)把未来各步惊喜差按指数权重叠加:
-
-$$
-\hat{A}_t = \sum_{l=0}^{\infty} (\gamma\lambda)^l\, \delta_{t+l}
-$$
-
-$\lambda$ 是偏差-方差的旋钮:
-
-- $\lambda = 0$:只信教练的一步预估——低方差,但教练估不准就有偏(高偏差);
-- $\lambda = 1$:在完整 episodic 轨迹且终止与 bootstrap 处理正确时,退化为蒙特卡洛回报减基线 $V(s_t)$——偏差较小,但把一路噪声全收进来(高方差);不能脱离这些条件直接称为无偏;
-- 实践常从 0.9–0.98 小范围试验,相当于"天气预报和实况各听一半"的折中;不少有限长度的 LLM 任务把 $\gamma$ 设为 1,仍要以终止、截断和奖励定义为准。
-
-### 4. 三项合成总 loss
-
-写成最小化形式:
-
-$$
-L = \mathbb{E}_t\left[ -L^{CLIP}_t + c_1 \left(V_\theta(s_t) - V^{targ}_t\right)^2 - c_2\, \mathcal{H}\left[\pi_\theta\right](s_t) \right]
-$$
-
-- **value loss**:critic 对回报目标做 MSE 回归,常配 value clip——限制新估值偏离旧估值的幅度,与策略 clip 的动机类似;
-- **entropy bonus**:给策略的随机性"发奖金",防止过早收敛成确定性策略。$c_1=0.5,c_2=0.01$ 只是常见配置起点,都要随奖励尺度和任务验证。
-
-### 5. reward、return、value 与 advantage
-
-这四个量经常被混用。reward $r_t$ 是环境某一步给的信号;return $G_t$ 是从当前步开始的折扣累计奖励;value $V^\pi(s)$ 是当前策略在状态 $s$ 下的期望 return;advantage 则比较某个动作与该状态平均水平:
-
-$$
-A^\pi(s,a)=Q^\pi(s,a)-V^\pi(s)
-$$
-
-减去只依赖状态的基线不会改变策略梯度的期望,却能去掉不同状态本身难易造成的共同波动,所以 PPO 用 advantage 而不是直接用即时 reward。$r_t+\gamma V(s_{t+1})-V(s_t)$ 是一步 TD 残差,可用来估计 advantage,但不是 advantage 的定义。
-
-### 6. 奖励为什么不必可微
-
-策略梯度把采样回报当作权重,梯度走的是动作对数概率:
-
-$$
-\nabla_\theta J=\mathbb E\left[R(\tau)\sum_t\nabla_\theta\log\pi_\theta(a_t\mid s_t)\right]
-$$
-
-因此奖励可以来自不可微规则、人工判断或黑盒程序。奖励模型用神经网络,是因为训练奖励模型自身时要反传;PPO 更新 actor 时奖励模型通常冻结,不需要把梯度穿过奖励值。参考策略 KL 若直接写进目标则本身可微,也可作为采样到的逐 token 惩罚进入策略梯度。
-
-## 三、RLHF 工程形态:四个模型同台
-
-先把语言模型套进 RL 的框架:**状态 = prompt + 已生成的前缀,动作 = 从词表挑出下一个 token,一条完整回答 = 一条轨迹**。上下文 bandit 也可把整段回答视为一次动作,但不能和 token MDP 的口径混用。常见 RLHF-PPO 有"四人剧组";它们在逻辑上同时参与一轮训练,物理上可以分片、卸载或分阶段驻留:
-
-| 模型 | 干什么 | 训练? | 类比 |
-| --- | --- | --- | --- |
-| actor(policy) | 逐 token 生成回答 | 训练 | 台上答题的学生 |
-| critic(value model) | 估每个 token 处的预期总回报 | 训练 | 场边随时预估得分的教练 |
-| reward model(RM) | 给完整回答打一个标量分 | 冻结 | 只看最终卷面的评委 |
-| reference(SFT 模型) | 提供 KL 锚点 | 冻结 | 开训之前的"原来的自己" |
-
-两个 LLM 特有的设计:
-
-- **reward 常很稀疏**:常见结果 RM 对完整序列打一个分,记在最后一个 token 上,中间 token 的原生 reward 为零;若有可靠的过程奖励,也可以逐步给分;
-- **per-token KL 惩罚折进 reward**:为防 actor 一味讨好 RM 说胡话(reward hacking),每个 token 都按偏离 reference 的程度扣分——风筝可以飞高,但线不能断:
-
-$$
-r_t = r_{RM}(x, y)\cdot \mathbf{1}[t = T] - \beta\, \mathrm{KL}_t
-$$
-
-其中 $\mathrm{KL}_t = \log \frac{\pi_\theta(a_t \mid s_t)}{\pi_{ref}(a_t \mid s_t)}$,$T$ 为末 token 位置。一些实现把 KL 折进 reward,再经由 GAE 影响各 token 的优势;另一些实现把 KL 直接写成 loss 正则。应以公式和实现口径判断,不能只按 PPO 或 GRPO 的算法名断定放置位置。
-
-若是多轮对话,state 应包含做当前决策所需的对话历史和环境结果;模型生成的 token 是 action,用户回复、工具返回和外部状态变化属于环境转移。奖励可在 token、单轮或整段会话给出。只有终局奖励时,早期 token 的信用分配更难,GAE 只能改善估计,不能凭空创造过程监督。
-
-一轮迭代的数据流:
+### 一轮迭代里同时站着四个模型
 
 ```mermaid
 flowchart TD
-    A[prompt 批次] --> B[actor 逐 token 生成回答]
-    B --> C[RM 对整条回答打一个分]
-    B --> D[reference 逐 token 算 KL]
-    C --> E[组装 per-token reward: 末 token 加 RM 分, 逐 token 扣 β·KL]
+    A[prompt 批次] --> B[actor 生成回答]
+    B --> C[RM 打整段分]
+    B --> D[ref 算 KL]
+    C --> E[逐 token 奖励]
     D --> E
-    E --> F[critic 估各 token 的价值 V]
-    F --> G[GAE 算出每个 token 的优势]
-    G --> H[clip 目标更新 actor, MSE 更新 critic]
-    H --> A
+    E --> F[critic 估 V 与 GAE]
+    F --> G[更新 actor]
 ```
+
+| 模型 | 干什么 | 状态 | 类比 |
+|---|---|---|---|
+| actor(policy) | 逐 token 生成回答,并接受策略梯度更新 | 训练态 | 台上答题的学生 |
+| critic(value) | 输入当前**前缀**,输出标量 $V(s_t)$,估"从这里写完还能拿多少分" | 训练态 | 场边随时预估比分的教练 |
+| reward model | 给**完整回答**打一个偏好分 | 冻结、只前向 | 只看卷面的评委 |
+| reference | 开训前的 SFT 模型,提供 KL 锚点 | 冻结、只前向 | "原来的自己" |
+
+**critic 不是 RM**:RM 判断成品有多符合偏好、只在末尾出一个数;critic 预测当前策略从某个半成品状态出发还能拿多少回报、每个 token 位置都出一个数(两者职责差异见 RLHF与RM 篇)。同样要分清两个"旧策略":$\pi_{\text{old}}$ 是**本轮采样时冻结的快照**,当次概率比的分母;$\pi_{\text{ref}}$ 是**长期固定的 SFT 模型**,限制累计漂移。二者不冗余——一个管单批次的步子,一个管离出发点多远。RLHF 里常把参考 KL 折进每步奖励:
+
+$$
+r_t=r_{\text{RM}}(x,y)\cdot\mathbf 1[t=T]-\beta\log\frac{\pi_b(a_t\mid s_t)}{\pi_{\text{ref}}(a_t\mid s_t)}
+$$
+
+即:**RM 那一个分只挂在最后一个 token($t=T$)上,而每个 token 都按偏离 reference 的程度扣一点**——风筝可以飞高,线不能断。另一些实现不折进 reward,而把 KL 作为独立 loss 项;两种放法的差别与估计器选择见 KL散度 篇。
+
+## 二、优势:PPO 的"往哪走"从哪来
+
+### reward、return、value、advantage 各是什么
+
+$$
+G_t=\sum_{k=0}^{T-t-1}\gamma^k r_{t+k},\qquad V^\pi(s)=\mathbb E[G_t\mid s_t=s]
+$$
+
+reward $r_t$ 是环境某一步给的信号,return $G_t$ 是**从当前步往后累计**的折扣奖励,value $V^\pi(s)$ 是当前策略在该状态下的期望 return。
+
+$$
+Q^\pi(s,a)=\mathbb E[G_t\mid s_t=s,a_t=a],\qquad A^\pi(s,a)=Q^\pi(s,a)-V^\pi(s)
+$$
+
+advantage 回答"**在这个状态下,选这个动作比平均水平好多少**"。注意 $A$ 的定义是 $Q-V$;一步 TD 残差只是它的一种估计,不是定义。**为什么不能直接拿 reward 当权重**:RLHF 的奖励几乎全落在末尾,中间 token 原生 reward 是 0,直接用等于告诉模型"前面写什么都无所谓";就算把终局分复制给每个 token,也只是让它们共享同一个高方差数字,还混进了题目难易——难题上的好回答可能只有 +0.5,简单题上的平庸回答就有 +3。减基线之所以是"白送的降方差":
+
+$$
+\mathbb E_{a\sim\pi}\big[\nabla_\theta\log\pi_\theta(a\mid s)\,b(s)\big]=b(s)\,\nabla_\theta\sum_a\pi_\theta(a\mid s)=b(s)\,\nabla_\theta 1=0
+$$
+
+只要基线 $b(s)$ **只依赖状态、不依赖动作**,它在期望里恒等于 0(概率之和永远是 1,对参数求导当然是 0)。所以减去 $V(s)$ 期望不变,却抵掉了"这道题本身难不难"这个所有动作共有的偏移,剩下的才是动作之间的相对好坏。
+
+### TD 残差与 GAE
+
+$$
+\delta_t=r_t+\gamma\,(1-d_t)\,V(s_{t+1})-V(s_t)
+$$
+
+$\delta_t$ 是"惊喜值":实际拿到的(即时奖励 + 下一状态预期)比教练原本的预期好多少。$d_t$ 标记**真终止**(生成了 EOS);只是撞上最大长度被截断时 $d_t$ 仍为 0,还要用 $V(s_{t+1})$ 做 bootstrap,否则等于告诉模型"写到 4096 就一分不值"。GAE 把往后每步的惊喜值按指数权重叠起来:
+
+$$
+\hat A_t=\sum_{l=0}^{T-t-1}(\gamma\lambda)^l\,\delta_{t+l}
+$$
+
+它等价于**把所有长度的 n-step 优势估计按几何权重混合**($l=0$ 项是 1-step,前两项偏向 2-step,依此类推)。之所以不固定挑某个 $n$:任何单一 $n$ 都是在偏差和方差之间硬选一个点,几何加权把这些估计平滑融在一起,对 $n$ 的误选不敏感。工程上不必真做双重求和,从后往前扫一遍即可:
+
+```python
+# 一次反向扫描算完整批 GAE,复杂度 O(T),不用存 T×T 的中间量
+adv, last = zeros_like(rewards), 0.0                 # rewards: [B, T]
+for t in reversed(range(T)):
+    nonterm = 1.0 - done[t]                          # 只有真 EOS 才置 0,截断不算
+    delta = rewards[t] + gamma * values[t + 1] * nonterm - values[t]
+    last = delta + gamma * lam * nonterm * last      # 截断处仍靠 V 做 bootstrap
+    adv[t] = last
+returns = adv + values                               # critic 的回归目标
+adv = (adv - adv[m].mean()) / (adv[m].std() + 1e-8)  # m = pad_mask,padding 位不进统计
+```
+
+### $\gamma$、$\lambda$ 与必须记牢的工程细节
+
+两个旋钮长得像,管的事完全不同:
+
+| 旋钮 | 管什么 | 调小 | 调大 |
+|---|---|---|---|
+| $\gamma$(折扣) | 未来奖励折多少,即**看多远** | 只顾眼前,长程依赖学不到 | 看得远,远期噪声也一起收进来 |
+| $\lambda$(GAE) | 更信 critic 的短期预测还是真实回报,即**信谁** | $\lambda=0$ 时 $\hat A_t=\delta_t$,方差最小,但 critic 估错就全是偏差 | $\lambda=1$ 时接近蒙特卡洛回报减基线,偏差小、方差大 |
+
+两个边界值都要带条件:$\lambda=1$ **只有在完整 episode、终止与 bootstrap 都处理正确时**才接近"蒙特卡洛回报减基线",不能无条件称为无偏。有限长度的 LLM 任务常把 $\gamma$ 设为 1(一条回答就是一个 episode),但这仍取决于终止、截断和奖励定义的口径。$\lambda$ 也没有通用最优值:critic 可靠、奖励噪声大时可偏小;critic 明显有偏、长程影响重要时偏大。判据是 value loss、explained variance(critic 解释了多少回报方差)、优势方差和最终评测,不是照抄 0.95;按训练进度调度 $\lambda$ 是超参数策略,不是自适应算法。
+
+**终局奖励怎么摊到每个 token**:GAE 的作用是**把末尾那个分沿轨迹向前传播**,靠 $V(s_{t+1})-V(s_t)$ 这条链逐位记下"写到这里有没有变得更有希望"。但必须说清:**GAE 没有消除稀疏奖励**,它只给出一个带价值基线的信用分配估计;真正的信号还是那一个数,离结果越远的 token 估计越不可靠,critic 学起来也越难。更密的信号只能靠可靠的过程奖励,而过程奖励一旦有偏,错误方向反而传得更快。长序列还有几个纯工程的坑:按有效长度做 mask(padding 位不能进 $\delta$、也不能进白化的均值方差)、分段反向扫描控显存、截断处正确 bootstrap、累加用较高精度——错一条优势就是错的,而 loss 曲线往往看不出来。**advantage 白化**是每个 batch 内减均值除标准差,把"绝对分"换算成"全班排名",这样学习率与 $\varepsilon$ 的行为不随奖励尺度漂移。代价是:若一个 batch 里几乎所有回答都不错,白化会硬把一半样本压成负优势,凭空造出"这条要减概率"的信号——batch 太小或奖励分布极端偏斜时要警惕。
+
+## 三、核心机制:重要性采样 + 裁剪 + 完整损失
+
+### 重要性采样:旧数据的汇率
+
+生成一批 rollout 是 PPO 里最贵的一步(几百上千条、每条几千 token 的自回归解码),只更新一次就扔掉太浪费。可数据是 $\pi_{\text{old}}$ 采的,要更新已经走远的 $\pi_\theta$,就得换算:
+
+$$
+\mathbb E_{x\sim p}[f(x)]=\mathbb E_{x\sim q}\!\left[\frac{p(x)}{q(x)}f(x)\right]
+$$
+
+只要 $p(x)>0$ 的地方 $q(x)$ 也大于 0(**覆盖条件**),就能用 $q$ 采的样本估 $p$ 下的期望,权重是 $p/q$——像拿旧账本上的外币记账,按当前汇率折算才作数。落到 PPO 就是逐 token 概率比:
+
+$$
+\rho_t(\theta)=\frac{\pi_\theta(a_t\mid s_t)}{\pi_{\text{old}}(a_t\mid s_t)}
+$$
+
+$\rho_t=1$ 说明新旧策略对这一步看法一致,偏离 1 越远这条旧数据越"不作数"。**长序列的权重为什么会炸**:若按整条轨迹算,权重是每步比率的连乘,500 个略大于 1 的数相乘就指数放大,少数样本支配整个估计,有效样本量(ESS)塌到个位数。缓解手段有 per-decision IS(逐步用比率而非连乘)、截断权重、自归一化、V-trace 类校正,以及最直接的**缩短策略滞后**;这些几乎都以偏差换方差,没有免费午餐。
+
+### 裁剪目标:给方向盘装限位器
+
+先把比率夹一刀:
+
+$$
+\rho_t^{\text{clip}}=\mathrm{clip}\big(\rho_t(\theta),\,1-\varepsilon,\,1+\varepsilon\big)
+$$
+
+再在"原版"和"夹过的"两个目标里取更保守的那个:
+
+$$
+L^{\text{CLIP}}=\mathbb E_t\Big[\min\big(\rho_t(\theta)\,\hat A_t,\ \rho_t^{\text{clip}}\,\hat A_t\big)\Big]
+$$
+
+拆开看:优势为正时,把概率提到旧概率的 $1+\varepsilon$ 倍就到顶,再往上目标不增、梯度归零;优势为负时压到 $1-\varepsilon$ 倍也到顶。$\min$ 保证被截掉的永远是"继续朝有利方向多迈一步"的额外收益,不利方向的惩罚一分不减。$\varepsilon=0.2$ 是原论文与多数实现的常见起点,**不是跨任务常数**:太小则有效更新过少、学不动,太大则保守作用被削弱。**它裁的到底是什么**,这是最常答错的一点:裁掉的是**样本对代理目标的激励**,不是把实际概率比强行投影回区间。同一批里其他样本、共享参数、value 与熵项都可能继续把某个 token 的概率推出区间,所以监控时看到 clip fraction 大于 0 且实际比率越界是正常的。由此:**PPO-clip 不提供任何 KL 上界,也不保证回报单调上升**,它是一阶优化下的软约束,代价是引入偏差。
+
+### 完整损失:四项各司其职
+
+统一写成**最小化**形式(符号最容易混,先声明口径):
+
+$$
+\mathcal L=-L^{\text{CLIP}}+c_v\,\mathcal L_V-c_H\,\mathcal H(\pi_\theta)+\beta\,D_{\text{KL}}(\pi_\theta\Vert\pi_{\text{ref}})
+$$
+
+四项依次是:策略项(要最大化,故取负号)、价值回归项、熵奖励(要最大化,故取负号)、参考策略 KL 惩罚。价值项是 critic 对回报目标做回归:
+
+$$
+\mathcal L_V=\mathbb E_t\Big[\big(V_\theta(s_t)-\hat R_t\big)^2\Big],\qquad \hat R_t=\hat A_t+V_{\text{old}}(s_t)
+$$
+
+回归目标由本批优势加回旧 value 得到,这样 critic 与 actor 用的是同一份 GAE 结果、口径一致。常见起点是 $c_v$ 取 0.5–1、$c_H$ 取 0.01 量级,都要随奖励尺度重调。value 侧一般还配 **value clip**:限制新估值偏离 $V_{\text{old}}$ 的幅度,动机与策略 clip 一致——critic 在 rollout 之间跳得太狠,GAE 就跟着抖,actor 被带偏。熵项与 KL 项在 RLHF 里都是可选的:$\beta$ 若已折进 per-token reward,就不该在 loss 里再加一遍,**同一根缰绳系两次是常见的实现事故**。$\beta$ 本身也难固定:太小防不住漂移,太大几乎学不动,早期 RLHF 工作的做法是按实测 KL 高于/低于目标值动态增减(自适应 KL 控制器),像恒温器按室温调功率;它到底在读哪个方向的 KL、用哪个估计器,见 KL散度 篇。
+
+### 一批数据被用几次,以及 on-policy / off-policy 到底指什么
+
+面试有个陷阱问法:"真实采样量是不是等于 rollout 数?"答案是**先定口径,否则这问题无解**——环境交互条数、轨迹条数、transition 数、token 数、optimizer step 数是五个不同的量。设采到 $N$ 条样本,训 $E$ 个 epoch,每个 epoch 切 $K$ 个 mini-batch:
+
+| 口径 | 数值 |
+|---|---|
+| 新的环境交互 / 轨迹 | $N$(不随 $E$、$K$ 变) |
+| optimizer step | $E\times K$ |
+| 总样本呈现次数 | $N\times E$ |
+| **每条样本被用几次** | $E$,**不是** $E\times K$ |
+
+具体一点:采 16,384 条,训 4 个 epoch、每 epoch 切 4 个 mini-batch,得到 16 次 optimizer step,每条数据出现 4 次,总呈现量 65,536 条次。多 epoch 的收益是把昂贵的交互数据榨干,代价是**越往后的更新看到的数据越旧**——策略已经走了十几步,数据还是第 0 步采的;表现为比率分布出现尖峰、clip fraction 上冲、approx-KL 飙升,以及对本批奖励噪声过拟合。控制手段按直接程度排:减少 epoch 数 → 按 approx-KL 提前停掉本批剩余 mini-batch(一些实现取 0.01–0.02 量级阈值,口径必须和监控一致)→ 及时重采;再配更小学习率、更保守的 $\varepsilon$ 和梯度裁剪。要点破一个误区:**reference KL 管不了数据陈旧**,它约束的是当前策略离 SFT 有多远,和"这批数据是谁采的"无关,陈旧 rollout 不会因为 KL 项重新变回 on-policy。
+
+**on/off-policy 与 online/offline 是两组正交概念**,混着说必错:**on/off-policy** 看行为策略与目标策略是否一致;**online/offline** 看训练时还能否收集新交互。PPO 由本轮冻结的 $\pi_{\text{old}}$ 采样、有限个 epoch 更新、随即刷新数据,只要策略滞后有限、比率算得对,它就是**近似 on-policy**,不是普通的 off-policy replay 算法(顺带分清:RM 是在静态偏好数据上**离线**训好再冻结的,PPO 的策略阶段才持续产出新回答,所以这个阶段是 online 的)。GRPO 同理——去掉 critic 改变的是优势怎么算,不改变数据分布属性(见 GRPO 篇);DPO 用固定偏好对做监督式成对损失,准确叫法是**离线直接偏好优化**,不是 Q-learning 意义上的 off-policy RL(见 DPO 篇)。
+
+| 算法 | 归类 | 数据怎么用 | 在 LLM 对齐上的处境 |
+|---|---|---|---|
+| PPO / GRPO | 近似 on-policy | 旧策略快照采一批,概率比修正,复用几个 epoch | 主力:直接用预训练模型自带的随机策略,吃得下序列级奖励 |
+| DQN | off-policy | replay buffer 打散样本相关性并复用;target network 让 bootstrap 目标别跟着抖 | 状态是不断变长的文本前缀,要在海量前缀上学稳定的 $Q$,误差逐层传播 |
+| DDPG / TD3 | off-policy | 确定性策略 + 动作噪声探索;TD3 用双 critic、延迟 actor 更新压过估计 | 面向连续动作,token 是离散采样,套不上 |
+| SAC | off-policy | 随机策略,目标是"奖励 + $\alpha\times$熵",$\alpha$ 可按目标熵自动调 | 同样面向连续动作;它的熵是核心目标而非可选正则 |
+
+数据极贵、想提样本效率时,先判断能不能学到够准的环境模型:能,则 model-based 可省真实交互,代价是模型偏差与规划开销;不能,就只能靠 replay、离线数据、示范预训练或限制策略滞后的校正方法。**没有只看 on/off-policy 标签就能选出的"最高效算法"。**
+
+### 各种"限步长"手段到底保证了什么
+
+| 手段 | 怎么约束 | 真正保证了什么 |
+|---|---|---|
+| TRPO | 近似求解带平均 KL 约束的优化问题,配线搜索 | 对实测 KL 的控制最明确;代价是 Fisher 矩阵 + 共轭梯度这套二阶机器,和参数共享、dropout 也不好配 |
+| PPO-penalty | 目标里加 KL 惩罚,按目标 KL 自适应调系数 | 软惩罚,不等于每步严格不超阈值 |
+| PPO-clip | 截去过大比率带来的额外代理收益 | **不保证任何 KL 上界**,但只需一阶优化器,工程上简单得多 |
+| approx-KL 早停 / 梯度裁剪 | 前者本批 KL 超阈值就丢掉剩余 mini-batch,后者限制参数梯度的范数 | 前者限制的是"更新机会",超速就断油;后者控的是参数空间步幅,和概率分布上的 KL 不是一回事 |
+
+PPO 取代 TRPO 成为默认选择,不是因为约束更强,而是因为**它足够便宜,便宜到可以配上一堆工程细节反复调**——这一点有专门的对照实验支持(见相关文献 Engstrom 等)。
 
 ## 四、训练细节与常见坑
 
-- **advantage 白化**:每个 batch 内把优势减均值、除标准差——把绝对分换算成"全班排名"再讲评,稳住不同 batch 之间的梯度尺度;
-- **reward / value clip**:RM 分数裁剪到固定区间防离群值把梯度打飞;value clip 限制 critic 的单步更新幅度;
-- **KL 系数自适应**:$\beta$ 固定时难调——太小防不住漂移,太大学不动;可按实测 KL 高于/低于目标值动态增减(早期 RLHF 工作的 adaptive KL controller),像恒温器根据室温调功率;
-- **critic warmup**:开训先冻结 actor、只训 critic 若干步——教练还不会估分,比赛没法打:初期 critic 输出全是噪声,GAE 会把 actor 带偏;
-- **mini-epoch 与 early stop**:同一批 rollout 复用训练多个 epoch(这正是需要 $\rho_t$ 的原因);但 approx-KL 一旦超过阈值(如 0.02)立即停掉本批剩余更新,像超速就自动断油,防 ratio 跑飞;
-- **四模型显存压力**:actor 与 critic 是训练态,RM 与 reference 通常是推理态。可用参数分片、混合精度、梯度检查点、模型或优化器卸载、序列打包、设备微批次和高吞吐 rollout 引擎降低峰值;冻结模型的分数与 log-prob 可在单个 rollout 批次内缓存。免 critic 的 GRPO 和离线 DPO 进一步减少模型或在线生成成本,详见 GRPO 篇与 DPO 篇。
+### 策略熵与熵塌缩
 
-### On-policy 与有限数据复用
+$$
+\mathcal H(\pi(\cdot\mid s))=-\sum_{a}\pi(a\mid s)\log\pi(a\mid s)
+$$
 
-PPO 由本轮冻结的 $\pi_{old}$ 生成 rollout,对同一批数据做有限个 minibatch epoch,然后刷新策略和数据。概率比修正的是这几步内的新旧差异;若长期混入任意陈旧 replay,覆盖不足和极端权重会让估计失真。因此 PPO 仍是近似 on-policy,而不是普通 off-policy replay 算法。
+熵衡量**同一状态下动作分布有多分散**:高熵表示多个 token 都有机会被采到,低熵表示策略接近确定性。给目标加 $c_H\mathcal H$ 能保留随机性、减少过早锁死在局部方案的风险,但两点要说清:**它改变了优化目标本身**(最优解不再是纯奖励最优),而且**不自动降低策略梯度方差**。熵系数要不要衰减看任务——探索需求逐渐降低的可以衰减,多解或非平稳任务反而要保留;太大则模型为了随机牺牲奖励,太小则很快塌缩、rollout 高度同质。
 
-On/off-policy 描述行为策略与目标策略的关系;online/offline 描述训练时还能否收集新交互,两组概念不能画等号。DPO 使用固定偏好对,更准确地说是离线直接偏好优化,并不是传统 Q-learning 意义下的 off-policy RL。标准 GRPO 也从旧策略快照采样、计算概率比并限制更新,去掉 critic 不会自动改变其 on-policy 属性。
+**熵和参考 KL 不能互换**:熵只看当前策略自身散不散,KL 比的是当前策略与另一个分布像不像;高熵策略照样可能离 reference 很远,低熵策略也可能和低熵 reference 贴得很紧。符号上习惯 $\alpha$ 表熵温度、$\beta$ 表 KL 系数。SAC 是另一个极端:它把最大熵写进核心目标,还能自动调温度——实际熵低于目标熵就把 $\alpha$ 调大、高于就调小;PPO 的熵奖励只是可选正则,两者别混成同一个机制。
 
-一般重要性采样可用目标分布与采样分布的比率修正期望,但长轨迹上的连乘权重可能爆炸。截断、自归一化、per-decision 权重和缩短策略滞后都在偏差与方差之间取舍;PPO 的 clip 正是其中一种保守处理,不保证无偏。
+熵塌缩是 RL 训练里最典型的失败模式:训练早期熵急速下滑,随后性能跟着饱和。近期工作把这一现象刻画为熵的变化与"动作概率和 logit 变化量的协方差"相关,而该协方差在训练中大多为正,所以熵单调下降(论文自报,见相关文献)。诊断时**不要只看熵一条曲线**,要和奖励、独立评测、KL、优势尺度、clip fraction 一起看;干预手段包括提高熵系数、降学习率或减少复用轮数、修正奖励尺度、补充多样数据,并检查是不是少数模式被 RM 错误放大。只把熵强行拉高,得到的是随机但无用的策略。
 
-### 策略熵与塌缩诊断
+### 该盯哪些指标,以及调优顺序
 
-策略熵 $\mathcal H(\pi(\cdot\mid s))$ 衡量动作分布有多分散。PPO 可加熵奖励保留探索,但高熵不等于高质量,熵正则也不保证降低梯度方差。SAC 则把最大熵作为核心目标,还可自动调整温度 $\alpha$ 以逼近目标熵;两种用法不要混成同一个算法机制。
+PPO 的 loss 曲线几乎不携带有效信息,只看它等于没看。要同时盯:**实测 approx-KL 与 clip fraction**(被裁样本比例与更新前后的策略距离,直接反映步子大小)、**策略熵 / token 熵**(塌缩的第一预警)、**value loss 与 explained variance**(critic 解释了多少回报方差,低到接近 0 说明它基本在瞎猜,GAE 会把偏差直接传给 actor)、**比率分布与有效样本量**(尖峰意味着数据太旧),以及**reward 曲线加一份独立评测**——**RM 分涨而独立评测不涨甚至下跌,就是 reward hacking 的信号**(成因与缓解见 RLHF与RM 篇)。
 
-熵只看当前策略自身,参考策略 KL 比较当前策略与另一个分布,二者不能互换。熵下降过快时一起检查奖励、独立评测、KL、优势尺度和 clip fraction;可尝试提高熵系数、降低学习率或更新轮数、修正奖励尺度和补充多样数据,而不是只强行增加随机性。
+调优顺序错了只会更快地训坏,正确的次序是**正确性 → 算法稳定性 → 显存 → 硬件利用率**。第一步用小规模样例逐项核对奖励、终止与 mask、优势、旧策略 log-prob、loss 归一化;特别注意生成引擎与训练引擎算出的 log-prob 并不逐位相等(kernel 实现、精度、并行规约顺序都不同),直接拿生成端的 log-prob 当分母会给概率比引入系统性偏差(见 RL框架对比 篇)。第二步学习率、batch、$\varepsilon$、$\beta$、熵系数逐项改,每次只动一个;actor 与 critic 的损失尺度、初始化、更新次数都不同,"**critic 学习率必须比 actor 小一个数量级**"不是通用规则,正确做法是分别看 KL/熵与 value loss/explained variance——critic 欠拟合就加容量或更新次数,策略漂移过快就先压 actor 的更新强度;critic 初期噪声大时可先冻 actor 单训 critic 若干步,教练还不会估分,比赛没法打。探索强度的调法随算法与动作空间变:离散价值算法用 $\varepsilon$-greedy,连续控制加动作噪声,随机策略用熵奖励,语言模型主要靠采样温度、top-p 加熵/KL 约束,**这几种不能混写**。
 
-### KL 阈值、裁剪与其他步幅控制
+### 显存与吞吐
 
-先区分两个比较对象:本轮采样策略与更新后策略的 KL 用来观察**单轮更新**;当前策略与固定 reference 的 KL 用来限制**偏离初始行为**。方向、按 token 求均值还是按序列累加、精确计算还是采样估计都必须一致,否则阈值没有可比性。
+四模型同台的压力是实打实的。以 7B 为例,一个训练态模型按 bf16 权重 2 + bf16 梯度 2 + fp32 master 4 + Adam 一阶二阶动量 4+4 ≈ **16 字节/参数**算,约 112 GB;actor + critic 两份 224 GB,再加冻结的 RM 与 reference 各约 14 GB(bf16 只前向),**常驻参数就逼近 250 GB**,吃掉一台 8×80 GB 机器近四成——还没算激活、KV cache 和 rollout 的中间结果。按代价从小到大:先减每卡 micro-batch 并用**梯度累积**保住 optimizer 看到的有效 batch(注意累积只是把一次前反向拆成几次,**总计算量一分不减**,微批切太小反而掉吞吐),再上混合精度、激活重计算、序列打包、按 token 动态组批,然后参数与优化器分片(见 ZeRO 篇)、参数卸载;冻结模型的分数与 log-prob 在同一个 rollout 批次内可缓存,不必重复前向。显存账怎么拆见 显存管理与OOM 篇。吞吐侧,生成与训练解耦能填掉彼此空泡,但异步过强会制造策略陈旧,**必须记录每批数据由哪个策略版本生成并限制滞后**;还有一条要说死:经验回放与优先回放属于可做分布校正的 off-policy 算法,**不能当作 PPO 的加速插件直接挂上**。判定加速是否有效要同时看端到端 samples/tokens per second 和 reward、KL、熵、clip fraction、value 误差这组训练口径——吞吐涨了而训练口径变了,那不是加速,是换了个算法。想进一步省成本:GRPO 用组内相对优势免掉 critic(见 GRPO 篇),DPO 连在线 rollout 都省掉(见 DPO 篇),GRPO 一族各变体修的是什么问题见 GRPO变体 篇。选型的粗口径是:奖励可靠、需要在线探索或有可验证信号时用 PPO/GRPO;已有覆盖足够的离线偏好且预算紧时先用 DPO 建基线。
 
-阈值过小可能让更新过早停止、学不到有效改进;过大则容易让旧样本失去代表性或允许策略明显漂移。先观察小步更新时的 KL、回报、熵与任务评测,再做小范围比较。没有对不同模型、奖励尺度和归一化口径都适用的固定阈值;前文的数值只作配置举例。
+## 五、面试考点串联
 
-| 方法 | 怎样约束更新 | 能保证什么 |
-|---|---|---|
-| TRPO | 求解带平均 KL 约束的近似优化问题,结合线搜索 | 比直接无约束更新更明确地控制实测约束,实际有限样本与近似求解仍需检查 |
-| PPO-penalty | 在目标中加入 KL 惩罚,按目标 KL 调整系数 | 软惩罚,不等于每一步严格不超阈值 |
-| PPO-clip | 截去部分过大概率比带来的额外收益 | 不直接保证整个策略的 KL 上界 |
-| 实用控制 | 降学习率、减少复用轮数、按 KL 提前停止、裁剪梯度 | 限制更新机会或参数梯度,单独使用也不等于概率分布上的硬信任域 |
-
-梯度裁剪控制的是参数更新相关的梯度幅度,不是 KL 本身。交叉熵能否代替 KL 还取决于哪个分布可学习、是否保留熵项,见 KL散度 篇。
-
-## 五、与 GRPO / DPO 一行对照
-
-| 维度 | PPO | GRPO | DPO |
-| --- | --- | --- | --- |
-| 优势/信号来源 | critic + GAE(token 级) | 组内得分标准化(response 级) | 偏好对的隐式 reward(无显式 RL) |
-| 额外模型 | critic + RM + reference | RM/verifier + reference(免 critic) | 仅 reference |
-| 成本 | 最重:四模型在线训练 | 中:三模型 + 每题多倍采样 | 最轻:离线训练,流程近似 SFT |
-
-## 六、面试考点串联
-
-| 问法 | 本文哪一节 |
-| --- | --- |
-| PPO 的 clip、完整 loss、四个模型和 RLHF 流程怎样串起来? | 二、核心机制;三、RLHF 工程形态;四、训练细节 |
-| GAE 的公式、$\lambda$ 两个极端与长轨迹处理是什么? | 二、核心机制 / GAE |
-| LLM 中 action、state、trajectory 怎样定义,奖励不可微时为什么仍能更新策略? | 二、奖励为什么不必可微;三、RLHF 工程形态 |
-| PPO、GRPO 为什么是近似 on-policy,DPO 又该怎样定位? | 四、训练细节 / On-policy 与有限数据复用 |
-| 重要性采样怎样修正分布,裁剪为何会引入偏差? | 二、核心机制 / 重要性采样比;四、On-policy 与有限数据复用 |
-| 策略熵、SAC 温度与参考策略 KL 有什么区别? | 二、完整 loss;四、策略熵与塌缩诊断 |
-| reward、return、value 与 advantage 怎样区分? | 二、reward、return、value 与 advantage |
-| KL 阈值、PPO-clip 与 TRPO 各自约束什么? | 一、动机;二、clip 代理目标;四、KL 阈值 |
-
-> 本篇仍保留旧稿重写状态。
+| 高频问法 | 本文哪一节 |
+|---|---|
+| PPO 的裁剪目标是什么?完整损失有哪几项?四个模型怎么协作? | 三(裁剪目标;完整损失);一(四个模型) |
+| clip 和参考策略 KL 是不是重复了?$\varepsilon$、$\beta$ 分别怎么调? | 一(四个模型);三(裁剪目标);四(该盯哪些指标,以及调优顺序) |
+| GAE 怎么写?$\lambda=0$ 和 $\lambda=1$ 各对应什么?它和 n-step TD 什么关系,为什么不固定一个 $n$? | 二(TD 残差与 GAE;$\gamma$、$\lambda$ 与必须记牢的工程细节) |
+| RLHF 的终局奖励怎么分到 token?长序列算 GAE 要注意什么? | 二($\gamma$、$\lambda$ 与必须记牢的工程细节) |
+| LLM 的 PPO 里 state、action、trajectory 指什么?多轮对话怎么定义? | 一(语言模型上的 MDP) |
+| 奖励必须可微吗?不可微的规则打分怎么更新可微的策略?REINFORCE 又为什么方差高? | 一(为什么要上 RL) |
+| 基线为什么既降方差又不改变期望梯度?GAE、PPO 在此之上各改善了什么? | 二(reward…advantage);三(裁剪目标) |
+| On-policy 和 off-policy 差在哪?"真实采样量"等于 rollout 数吗?多 epoch 复用会带来什么问题? | 三(一批数据被用几次) |
+| DQN 的 replay 与 target network 各解决什么?LLM 对齐为什么很少用 DQN/SAC? | 三(一批数据被用几次,算法归类表) |
+| 重要性采样在修正什么?长序列权重为什么会炸,裁剪付出了什么代价? | 三(重要性采样;裁剪目标) |
+| reward、return、value、advantage 怎么区分?直接拿 reward 当权重会怎样? | 二(reward、return、value、advantage) |
+| 策略熵是什么?熵塌缩怎么诊断和干预?它和参考 KL、SAC 的熵有什么区别? | 四(策略熵与熵塌缩) |
+| PPO 和 TRPO 各约束了什么?为什么工程上更常用 PPO? | 三(各种"限步长"手段) |
+| RL 训练按什么顺序调?actor 和 critic 的学习率怎么定,critic 估不准会怎样? | 四(该盯哪些指标,以及调优顺序) |
+| 显存不够又要保住有效 batch,有哪些手段?哪些能真的省算力? | 四(显存与吞吐) |
+| value loss 为什么也要 clip?不 clip 会怎样?(补充题) | 三(完整损失) |
+| advantage 为什么要在 batch 内白化?什么时候反而有害?(补充题) | 二($\gamma$、$\lambda$ 与必须记牢的工程细节) |
 
 ## 相关文献
 
-- PPO(clip 目标提出)— [arXiv:1707.06347](https://arxiv.org/abs/1707.06347)
-- TRPO(信任域策略优化)— [arXiv:1502.05477](https://arxiv.org/abs/1502.05477)
-- GAE(广义优势估计)— [arXiv:1506.02438](https://arxiv.org/abs/1506.02438)
-- InstructGPT(确立 RLHF 三阶段范式)— [arXiv:2203.02155](https://arxiv.org/abs/2203.02155)
-- Learning to summarize from human feedback(RLHF-PPO 早期实践)— [arXiv:2009.01325](https://arxiv.org/abs/2009.01325)
-- SAC(最大熵与自动温度)— [arXiv:1801.01290](https://arxiv.org/abs/1801.01290)
+- Proximal Policy Optimization Algorithms — [arXiv:1707.06347](https://arxiv.org/abs/1707.06347)
+- Trust Region Policy Optimization — [arXiv:1502.05477](https://arxiv.org/abs/1502.05477)
+- High-Dimensional Continuous Control Using Generalized Advantage Estimation(GAE)— [arXiv:1506.02438](https://arxiv.org/abs/1506.02438)
+- Training language models to follow instructions with human feedback(InstructGPT,确立 RLHF-PPO 三阶段范式)— [arXiv:2203.02155](https://arxiv.org/abs/2203.02155)
+- Implementation Matters in Deep Policy Gradients: A Case Study on PPO and TRPO — [arXiv:2005.12729](https://arxiv.org/abs/2005.12729)
+- Secrets of RLHF in Large Language Models Part I: PPO — [arXiv:2307.04964](https://arxiv.org/abs/2307.04964)
+- The Entropy Mechanism of Reinforcement Learning for Reasoning Language Models(熵塌缩)— [arXiv:2505.22617](https://arxiv.org/abs/2505.22617)
+- Soft Actor-Critic: Off-Policy Maximum Entropy Deep RL with a Stochastic Actor — [arXiv:1801.01290](https://arxiv.org/abs/1801.01290)
+- Williams, R. J. (1992). Simple statistical gradient-following algorithms for connectionist reinforcement learning(REINFORCE)— https://doi.org/10.1007/BF00992696
+- The 37 Implementation Details of Proximal Policy Optimization(ICLR Blog Track, 2022)— https://iclr-blog-track.github.io/2022/03/25/ppo-implementation-details/
