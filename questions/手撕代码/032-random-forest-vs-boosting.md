@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: 机器学习/随机森林与Boosting对比
+topic: 集成学习/随机森林与Boosting对比
 summary: 从集成结构训练依赖偏差方差和工程场景比较随机森林与提升树
 tags: [真题, 待校对, 随机森林, Boosting, 集成学习]
 company: 脉脉

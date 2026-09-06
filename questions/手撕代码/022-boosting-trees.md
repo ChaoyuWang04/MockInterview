@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: 机器学习/GBDT与XGBoost及LightGBM
+topic: 集成学习/GBDT与XGBoost及LightGBM
 summary: 比较三类提升树的目标近似分裂策略训练效率内存机制和适用场景
 tags: [真题, 待校对, GBDT, XGBoost, LightGBM]
 company: 哔哩哔哩
