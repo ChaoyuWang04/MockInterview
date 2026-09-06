@@ -98,6 +98,65 @@ describe('Markdown 星号泄漏', () => {
   })
 })
 
+/**
+ * 子 agent 用带标签的语法调用工具,收尾标签可能跟着正文一起被写进文件。
+ * 这类残片只会由 AI 写手产生,人不会手打;实际发生过一次,混过了人工验收与一次提交。
+ */
+const toolCallMarkers = [
+  '<invoke name=',
+  '</invoke>',
+  '<function_calls>',
+  '</function_calls>',
+  '<parameter name=',
+  '</content>',
+  'antml:',
+]
+
+/** 讲 Agent 或工具调用的文章可以合法地引用这些语法,所以代码块与行内代码整段跳过 */
+function stripCode(source: string): string {
+  return source.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
+}
+
+function toolCallResidue(source: string): string[] {
+  const text = stripCode(source)
+  return toolCallMarkers.filter((marker) => text.includes(marker))
+}
+
+/** 内容目录之外,手册也由 agent 维护,同样会踩 */
+const agentWrittenRoots = [...contentRoots, 'docs']
+
+describe('工具调用残片', () => {
+  it('认得出被写进正文的工具调用标签', () => {
+    expect(toolCallResidue('正文到此结束。\n\n</content>\n</invoke>\n')).toEqual([
+      '</invoke>',
+      '</content>',
+    ])
+  })
+
+  it('不误报代码块与行内代码里对同一段语法的合法引用', () => {
+    expect(toolCallResidue('```xml\n<invoke name="Write">\n</invoke>\n```\n')).toEqual([])
+    expect(toolCallResidue('调用格式写作 `<invoke name="Write">`,收尾要闭合。')).toEqual([])
+  })
+
+  it('全库正文与手册都不残留工具调用片段', () => {
+    const residues: string[] = []
+
+    for (const root of agentWrittenRoots) {
+      for (const file of markdownFiles(path.join(projectRoot, root))) {
+        const source = fs.readFileSync(file, 'utf8')
+        const found = toolCallResidue(source)
+        if (found.length === 0) continue
+        const at = stripCode(source).indexOf(found[0])
+        residues.push(
+          `${path.relative(projectRoot, file)}(${found.join('、')}):${excerpt(stripCode(source), at)}`,
+        )
+      }
+    }
+
+    expect(residues).toEqual([])
+  })
+})
+
 describe('Markdown 窄屏渲染', () => {
   it('给宽表格提供局部横向滚动容器', () => {
     const renderer = fs.readFileSync(path.join(projectRoot, 'components/Markdown.tsx'), 'utf8')
