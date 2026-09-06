@@ -22,10 +22,6 @@
 - [ ] `手撕代码` 3 题:CUDA 矩阵转置、支持 TP 的 transformer layer、KV Cache paged block manager
 - [ ] `RAG` 2 题:Embedding/Rerank/fallback 的效果-延迟-成本权衡、代码知识入库与代码检索设计
 
-## P0 · 模型结构
-
-- [ ] `00-总览` —— 全章已无 🚧 无 ⚠️,重写为目录导航篇(不写技术综述)
-
 ## P1 · 强化学习章
 
 - [ ] 旧稿翻新 6 篇:`00-总览` `PPO` `GRPO` `DPO` `RLHF与RM` `KL散度`
