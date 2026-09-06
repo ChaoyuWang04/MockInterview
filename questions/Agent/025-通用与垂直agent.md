@@ -1,6 +1,6 @@
 ---
 difficulty: 中等
-topic: Agent架构/通用与垂直Agent
+topic: Agent选型与治理/通用与垂直Agent
 summary: 通用与垂直 Agent 的边界在哪,竞争力来自什么
 tags: [真题, 待校对, Agent, 产品形态, 技术选型, 评测]
 company:

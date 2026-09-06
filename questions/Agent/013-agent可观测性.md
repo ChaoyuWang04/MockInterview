@@ -1,6 +1,6 @@
 ---
 difficulty: 中等
-topic: Agent架构/可观测性
+topic: Agent选型与治理/可观测性
 summary: 设计 Agent 分层监控、调用追踪与故障诊断体系
 tags: [真题, 待校对, Agent, 可观测性, 故障诊断, 监控]
 company: 蚂蚁

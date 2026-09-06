@@ -1,6 +1,6 @@
 ---
 difficulty: 中等
-topic: Agent架构/安全与权限
+topic: Agent选型与治理/安全与权限
 summary: 从算法与系统架构设计 Agent 的隐私和越权防线
 tags: [真题, 待校对, Agent, 安全, 权限控制, 隐私保护]
 company: 高德

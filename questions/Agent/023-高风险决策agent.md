@@ -1,6 +1,6 @@
 ---
 difficulty: 困难
-topic: Agent架构/高风险决策
+topic: Agent选型与治理/高风险决策
 summary: 人类也难判断的欺诈风险场景怎样设计受控Agent系统
 tags: [真题, 待校对, Agent, 风控, 人机协作, 安全]
 company:
