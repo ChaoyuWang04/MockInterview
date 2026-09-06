@@ -39,8 +39,11 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.22",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "unified": "11.0.5",
     "vitest": "^4.1.10"
   }
 }
