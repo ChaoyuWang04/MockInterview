@@ -35,7 +35,6 @@ const legacyIssues = [] // 旧稿的违规 → 不阻断,作为重写工作清�
 let placeholders = 0
 let legacy = 0
 let done = 0
-let keypoints = 0
 
 for (const file of files) {
   const rel = path.relative(process.cwd(), file)
@@ -43,11 +42,10 @@ for (const file of files) {
   const lines = text.split('\n')
   const isPlaceholder = text.includes('🚧 占位')
   const isLegacy = text.includes('⚠️ 旧版')
-  const isKey = text.includes('🔴 重点考点')
+  const isHub = path.basename(file) === '00-总览.md'
   if (isPlaceholder) placeholders++
   else if (isLegacy) legacy++
   else done++
-  if (isKey) keypoints++
 
   // 旧稿是已知不合规的存量,违规单列成重写清单,不阻断
   const E = (msg) => (isLegacy ? legacyIssues : errors).push(`${rel}: ${msg}`)
@@ -89,10 +87,12 @@ for (const file of files) {
 
   // 收尾
   if (!text.includes('## 相关文献')) E('缺少「## 相关文献」')
-  if (isKey && !text.includes('面试考点串联')) E('带 🔴 标记但缺少「面试考点串联」')
+  // 契约:除纯介绍性文章外都要有考点表。00-总览 是导航 hub,考点表在各专篇文末,豁免
+  if (!isHub && !text.includes('面试考点串联')) E('缺少「面试考点串联」')
 
   // 跨篇引用的目标必须存在(只查「见/引/参见 XX 篇」这种全名写法)
-  for (const m of text.matchAll(/(?:见|引|参见)\s*[「『]?([A-Za-z0-9一-龥]{2,20}?)[」』]?\s*篇/g)) {
+  // 名字前必须是空白或引号:否则「推理引擎对比 篇」里的「引」会被当成触发词,截出「擎对比」这种半截名字
+  for (const m of text.matchAll(/(?:见|引|参见)\s*[「『]?((?<![A-Za-z0-9一-龥])[A-Za-z0-9一-龥]{2,20}?)[」』]?\s*篇/g)) {
     const name = m[1]
     if (titles.has(name)) continue
     // 允许指向开源解读模块与本章总览这类非文章目标
@@ -118,7 +118,7 @@ for (const f of files) {
   seen.set(t, path.relative(process.cwd(), f))
 }
 
-console.log(`知识库 ${files.length} 篇:成文 ${done} · 旧稿 ${legacy} · 占位 ${placeholders} · 重点考点 ${keypoints}\n`)
+console.log(`知识库 ${files.length} 篇:成文 ${done} · 旧稿 ${legacy} · 占位 ${placeholders}\n`)
 if (legacyIssues.length) {
   console.log(`📋 ${legacyIssues.length} 条旧稿违规(不阻断,重写这些篇时一并修):`)
   for (const l of legacyIssues) console.log('   ' + l)

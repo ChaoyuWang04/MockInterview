@@ -17,8 +17,6 @@ export interface ArticleEntry {
   /** 相对 knowledge/ 的路径段,如 ['04-Infra','01-原理','KVCache.md'] */
   segments: string[]
   state: ArticleState
-  /** 正文含 🔴 重点考点标记 */
-  keypoint: boolean
   examPoints: ExamPoint[]
   /** 能不能当出题源:有正文(非占位)且有考点表 */
   usableAsSource: boolean

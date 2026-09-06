@@ -85,7 +85,6 @@ export function loadArticles(root = knowledgeRoot()): ArticleEntry[] {
         chapter: a.segments[0] ?? '',
         segments: a.segments,
         state,
-        keypoint: a.keypoint,
         examPoints,
         // 占位稿没有正文,拿它出题就是让 AI 现编答案(铁律 4)
         usableAsSource: state !== 'placeholder' && examPoints.length > 0,

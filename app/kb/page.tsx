@@ -28,14 +28,6 @@ function ArticleGrid({ folder }: { folder: KbFolder }) {
               旧
             </span>
           )}
-          {a.keypoint && (
-            <span
-              title="重点复习文章,文末有「面试考点串联」"
-              className="shrink-0 bg-red-600 px-1 font-mono text-[10px] font-bold text-white"
-            >
-              重
-            </span>
-          )}
         </Link>
       ))}
     </div>
@@ -72,7 +64,6 @@ export default function KbIndexPage() {
   const total = articles.length
   const placeholders = articles.filter((a) => a.placeholder).length
   const legacy = articles.filter((a) => a.legacy).length
-  const keypoints = articles.filter((a) => a.keypoint).length
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
@@ -86,7 +77,6 @@ export default function KbIndexPage() {
         按训练流程编排:模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用。
         共 {total} 篇:{total - placeholders - legacy} 篇已按写作契约成文、
         <span className="text-amber-600">{legacy} 篇旧稿待重写(标「旧」)</span>、{placeholders} 篇占位(虚线框)。
-        <span className="text-red-600">红「重」= 重点复习文章({keypoints} 篇)</span>。
       </p>
       {total === 0 ? (
         <p className="mt-10 text-gray-500">还没有文章。规范见 docs/04-知识库地图.md。</p>

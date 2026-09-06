@@ -62,7 +62,6 @@ export function collect(cwd = process.cwd()) {
       title: path.basename(file, '.md').replace(/^\d+-/, ''),
       chapter: segments[0] ?? '',
       state,
-      keypoint: body.includes('🔴 重点考点'),
       examPoints,
       usableAsSource: state !== 'placeholder' && examPoints.length > 0,
     })
