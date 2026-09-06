@@ -21,13 +21,12 @@
 
 ## P1 · 强化学习章
 
-- [ ] 旧稿翻新 6 篇:`00-总览` `PPO` `GRPO` `DPO` `RLHF与RM` `KL散度`
-- [ ] 新写 3 篇:`GRPO变体` `多模态RL` `AgenticRL`
+- [ ] 旧稿翻新 3 篇:`00-总览` `GRPO` `DPO`
+- [ ] 新写 4 篇:`GRPO变体` `多模态RL` `AgenticRL` `强化学习基础`
 
 ## P2 · 预训练与微调章
 
-- [ ] 旧稿翻新 6 篇:`预训练流程` `ScalingLaws` `数据工程` `优化器` `SFT` `LoRA`
-- [ ] 新写 3 篇:`00-总览` `蒸馏` `长上下文训练`;按同名 topic 覆盖全部真题
+- [ ] 新写 3 篇:`00-总览` `蒸馏` `长上下文训练`;按同名 topic 覆盖全部真题,`蒸馏` 另答 `ScalingLaws` 转来的端侧压缩与系统能力考点
 - [ ] 新写 `分类损失` `损失函数` `泛化与正则化` `多任务学习` `域泛化` `集成学习` `对比学习` `回归损失` `参数初始化` `特征工程` `推荐模型` `拒绝采样` `提示微调`;每篇覆盖题库同名 topic 的主问与追问
 
 ## P3 · 多模态
@@ -38,7 +37,7 @@
 ## P4 · 应用
 
 - [ ] 新写:`00-总览` + RAG 7 篇 + Agent 7 篇;包含 `RAG系统设计` `GraphRAG` `Agent框架` `Agent架构`,逐篇覆盖同名 topic
-- [ ] 新写 `Prompt优化`、`思维链`,补写占位文章 `Embedding`:按同名 topic 的主问与追问完成正文
+- [ ] 新写 `Prompt优化`、`思维链`:按同名 topic 的主问与追问完成正文
 
 ## P5 · Infra 跨章与应用基础
 
@@ -48,7 +47,8 @@
 ## P6 · 开源解读与报告解读
 
 - [ ] 按 `06-开源解读流程.md` 完成 `nano-vllm`;完成后从 06 的项目库存选择下一项并替换本行
-- [ ] 按 `10-基模报告流程.md` 解读 `Stanford/FlashAttention-2` `Stanford/FlashAttention-3` `MiniMax/MiniMax-01`;完成后按 10 的命令列出未解读原件,选下一批替换本行
+- [ ] 按 `10-基模报告流程.md` 解读 `StepFun/Step-Audio-2` `StepFun/Step-Audio-R1.5` `OpenMOSS/MOVA`;完成后按 10 的库存表选下一批替换本行
+- [ ] 按 `10-基模报告流程.md` 解读 `DeepSeek/Engram` `DeepSeek/mHC` `ByteDance/HybridFlow`;完成后按 10 的命令列出未解读原件,选下一批替换本行
 
 ## 模拟面试系统(可用,剩余项不阻塞)
 
