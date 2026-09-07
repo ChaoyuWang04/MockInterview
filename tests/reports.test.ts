@@ -3,11 +3,14 @@ import os from 'node:os'
 import path from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
+  checkReportIndex,
   countReports,
   getReport,
   isValidReport,
   listReportCompanies,
   listReports,
+  listReportTopics,
+  parseReportIndex,
 } from '../lib/reports'
 
 const temporaryRoots: string[] = []
@@ -26,6 +29,28 @@ function makeReportRoot(): string {
   fs.writeFileSync(
     path.join(root, 'OpenAI', 'GPT.md'),
     '# GPT Technical Report 解读\n\n<!-- release-date: 2025-01-01 -->\n\n完整正文。\n',
+  )
+  // 索引行序故意让旧的 GPT 排在新的 DeepSeek-V4 前面:页面顺序由索引决定,不由首发日决定
+  fs.writeFileSync(
+    path.join(root, 'index.md'),
+    [
+      '# 报告库存',
+      '',
+      '## 语言基模',
+      '',
+      '| 报告 | 公司 | 一句话 |',
+      '|---|---|---|',
+      '| GPT | OpenAI | 早期基模 |',
+      '| DeepSeek-V4 | DeepSeek | 长上下文 |',
+      '| 只有原件 | DeepSeek | 尚未解读 |',
+      '',
+      '## 音频',
+      '',
+      '| 报告 | 公司 | 一句话 |',
+      '|---|---|---|',
+      '| 还没写 | StepFun | 尚未解读,公司目录也还不存在 |',
+      '',
+    ].join('\n'),
   )
   return root
 }
@@ -191,5 +216,96 @@ describe('报告解读 reports/', () => {
         expect(content, `${company}/${summary.slug} 仍使用 \\(...\\)`).not.toMatch(/\\\(|\\\)/)
       }
     }
+  })
+
+  it('index.md 决定主题分组与顺序,未解读条目不上页面', () => {
+    const root = makeReportRoot()
+
+    expect(parseReportIndex(root).map((topic) => topic.title)).toEqual(['语言基模', '音频'])
+    expect(listReportTopics(root)).toEqual([
+      {
+        title: '语言基模',
+        reports: [
+          {
+            slug: 'GPT',
+            company: 'OpenAI',
+            summary: '早期基模',
+            title: 'GPT Technical Report 解读',
+            releaseDate: '2025-01-01',
+          },
+          {
+            slug: 'DeepSeek-V4',
+            company: 'DeepSeek',
+            summary: '长上下文',
+            title: 'DeepSeek-V4 Technical Report 解读',
+            releaseDate: '2026-04-24',
+          },
+        ],
+      },
+    ])
+    expect(getReport('DeepSeek', 'DeepSeek-V4', root)?.topic).toBe('语言基模')
+  })
+
+  it('已发布文章没有登记或公司与目录不一致时带文件名报错', () => {
+    const root = makeReportRoot()
+    fs.writeFileSync(
+      path.join(root, 'DeepSeek', 'Extra.md'),
+      '# Extra\n\n<!-- release-date: 2026-01-01 -->\n\n正文。\n',
+    )
+
+    expect(checkReportIndex(root)).toEqual(['DeepSeek/Extra.md 未在 index.md 登记'])
+    expect(() => listReportTopics(root)).toThrow(/Extra\.md/)
+
+    fs.appendFileSync(path.join(root, 'index.md'), '| Extra | OpenAI | 登记错了公司 |\n')
+    expect(checkReportIndex(root)).toEqual([
+      'DeepSeek/Extra.md 在 index.md 登记的公司是 OpenAI,与目录不一致',
+    ])
+  })
+
+  it('拒绝列数不足、重复行、指向草稿或缺少主题的索引', () => {
+    const root = makeReportRoot()
+    const index = path.join(root, 'index.md')
+
+    fs.writeFileSync(index, '# 报告库存\n\n| 报告 | 公司 | 一句话 |\n|---|---|---|\n| GPT | OpenAI | 早期基模 |\n')
+    expect(() => parseReportIndex(root)).toThrow(/index\.md 第 5 行.*主题/)
+
+    fs.writeFileSync(index, '# 报告库存\n\n## 语言基模\n\n| 报告 | 公司 |\n|---|---|\n| GPT | OpenAI |\n')
+    expect(() => parseReportIndex(root)).toThrow(/index\.md 第 7 行.*列/)
+
+    fs.writeFileSync(
+      index,
+      '# 报告库存\n\n## 语言基模\n\n| 报告 | 公司 | 一句话 |\n|---|---|---|\n| GPT | OpenAI | 一 |\n| GPT | OpenAI | 二 |\n',
+    )
+    expect(() => parseReportIndex(root)).toThrow(/index\.md 第 8 行.*重复/)
+
+    fs.writeFileSync(
+      index,
+      '# 报告库存\n\n## 语言基模\n\n| 报告 | 公司 | 一句话 |\n|---|---|---|\n| _未发布 | DeepSeek | 草稿 |\n',
+    )
+    expect(() => parseReportIndex(root)).toThrow(/index\.md 第 7 行.*草稿/)
+
+    fs.writeFileSync(index, '# 报告库存\n\n## 语言基模\n\n## 语言基模\n')
+    expect(() => parseReportIndex(root)).toThrow(/index\.md 第 5 行.*重复/)
+
+    fs.unlinkSync(index)
+    expect(() => listReportTopics(root)).toThrow(/index\.md/)
+    expect(getReport('DeepSeek', 'DeepSeek-V4', root)?.topic).toBeNull()
+  })
+
+  it('仓库的索引与已发布文章一一对应,每个方向都有条目', () => {
+    expect(checkReportIndex()).toEqual([])
+    const topics = parseReportIndex()
+    expect(topics.length).toBeGreaterThan(0)
+    for (const topic of topics) {
+      expect(topic.entries.length, `${topic.title} 没有条目`).toBeGreaterThan(0)
+    }
+  })
+
+  it('防漂移:reports:status 脚本与 lib 读出同一份索引', async () => {
+    const script = await import('../scripts/reports-status.mjs')
+    expect(script.parseIndex().map((topic: { title: string }) => topic.title)).toEqual(
+      parseReportIndex().map((topic) => topic.title),
+    )
+    expect(script.collect().warnings).toEqual(checkReportIndex())
   })
 })

@@ -21,7 +21,7 @@
 | 题库 | `questions/<分类>/<序号>-<简称>.md` | `/` → `/<分类>` |
 | 知识库 | `knowledge/NN-章节/[NN-子领域/]文章.md` | `/kb` |
 | 开源解读 | `opensource/<主题>/<项目>/NN-*.md`(源码仓在 `projects/`,git 不追踪) | `/opensource` |
-| 报告解读 | `reports/<公司>/<报告>.md`(PDF 原件在 `papers/`,默认不追踪 PDF) | `/reports` |
+| 报告解读 | `reports/<公司>/<报告>.md`,方向索引 `reports/index.md`(PDF 原件在 `papers/`,默认不追踪 PDF) | `/reports` |
 | LeetCode | `leetcode/hot100.md` + `extra.md` + `notes/` | `/leetcode` |
 | **模拟面试** | `interview/`(出题语料只读题库与知识库) | `/interview` |
 

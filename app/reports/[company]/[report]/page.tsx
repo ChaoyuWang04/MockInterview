@@ -25,6 +25,7 @@ export default async function ReportPage({
           返回主页
         </Link>
         <span className="ml-auto font-mono text-xs tracking-widest text-gray-400">
+          {report.topic ? `${report.topic} · ` : ''}
           {report.company}
         </span>
       </div>

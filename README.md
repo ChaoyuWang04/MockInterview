@@ -29,7 +29,7 @@ npm run dev
 | 题库 | `/`、`/<分类>` | `questions/` | 真题、答案、掌握状态、高频标记和 Note |
 | 知识库 | `/kb` | `knowledge/` | 按学习路径组织的文章,题目通过 `topic` 关联 |
 | 开源解读 | `/opensource` | `opensource/` | 基于 `projects/` 中真实源码写成的项目导读 |
-| 报告解读 | `/reports` | `reports/` | 按公司整理 Technical Report 与技术论文的完整长文解读 |
+| 报告解读 | `/reports` | `reports/` | Technical Report 与技术论文的完整长文解读,页面按 `reports/index.md` 的技术方向分组 |
 | LeetCode | `/leetcode` | `leetcode/` | Hot 100、补充题、高频标记和轻量笔记 |
 | 模拟面试 | `/interview` | `interview/` | 使用题库和知识库出题、判卷并保存复盘 |
 
