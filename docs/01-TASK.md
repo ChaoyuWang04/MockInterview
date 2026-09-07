@@ -31,7 +31,7 @@
 ## P6 · 开源解读与报告解读
 
 - [ ] 按 `06-开源解读流程.md` 完成 `nano-vllm`;完成后从 06 的项目库存选择下一项并替换本行
-- [ ] 按 `10-基模报告流程.md` 解读 `MiniMax/MiniMax-M2` `Moonshot/Kimi-Linear` `NVIDIA/Polar`;完成后按 10 的命令列出未解读原件,选下一批替换本行
+- [ ] 按 `10-基模报告流程.md` 解读 `Meituan/LongCat-Flash-Thinking` `Meituan/LongCat-Flash-Thinking-2601` `Xiaomi/MiMo-V2-Flash`;完成后按 10 的命令列出未解读原件,选下一批替换本行
 - [ ] 克隆 06 库存里标「repo 未克隆」的项目到 `projects/<主题>/`,按主题分批,克隆后删掉该条标注
 
 ## 模拟面试系统(可用,剩余项不阻塞)
