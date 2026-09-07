@@ -1,14 +1,15 @@
-# GRPO 变体(DAPO / Dr. GRPO / GSPO / GiGPO)
+# GRPO 变体(DAPO / Dr. GRPO / GSPO / CISPO / GiGPO)
 
-一句话:这篇不讲 GRPO 怎么工作,只讲**它在大规模训练里暴露出的几个具体故障,以及四组改法各自动了哪一处、换来什么、又付出什么代价**——组内相对优势怎么算、为什么能免掉 critic、组大小 $G$ 怎么影响方差,见 GRPO 篇。
+一句话:这篇不讲 GRPO 怎么工作,只讲**它在大规模训练里暴露出的几个具体故障,以及五组改法各自动了哪一处、换来什么、又付出什么代价**——组内相对优势怎么算、为什么能免掉 critic、组大小 $G$ 怎么影响方差,见 GRPO 篇。
 
 ## 一、病历:GRPO 留下的五个口子
 
-GRPO 把一道题采一组回答、用组内相对得分当优势,省掉了 critic。但"省"是有代价的:**价值函数原本干的两件事——给每个位置一个基线、把终局奖励沿轨迹往前摊——现在被一个"整条回答共享的标量"顶替了**;再加上组统计和逐 token 概率比这两处实现选择,一共漏出五个口子。下面每个变体登场时,都先回到它盯上的那一条。
+GRPO 把一道题采一组回答、用组内相对得分当优势,省掉了 critic。但"省"是有代价的:**价值函数原本干的两件事——给每个位置一个基线、把终局奖励沿轨迹往前摊——现在被一个"整条回答共享的标量"顶替了**;再加上组统计和逐 token 概率比这两处实现选择,一共漏出六个口子。下面每个变体登场时,都先回到它盯上的那一条。
 
 | 口子 | 面板上的症状 | 谁来修 |
 |---|---|---|
 | 裁剪上界把探索压死 | 训练早期熵急速下滑,一组回答越采越像 | DAPO 的 clip-higher |
+| 被裁的 token 整个退出梯度 | 反思类低概率词第一次更新后就再学不动,off-policy 轮数越多损失越大 | CISPO 改裁权重 |
 | 零方差组 | 整组全对或全错,优势恒为 0,这批 rollout 白采 | DAPO 的动态采样 |
 | 长回答在梯度里被稀释 | 长 CoT 里的好模式学不进去、坏模式也罚不动 | DAPO 的 token 级损失 |
 | 两处归一化带来的偏置 | 错误回答越写越长;最没区分度的题权重最高 | Dr. GRPO |
@@ -68,7 +69,7 @@ DAPO 分两步:先做 **overlong filtering**,把截断样本的损失屏蔽掉,�
 
 代价:这等于往奖励里塞了一个长度先验,两个阈值都是任务相关的超参——设太紧会压掉本来就需要长推理的题,设太松等于没设。它也替代不了对长度 hack 的监控(奖励侧的诊断见 RLHF与RM 篇)。
 
-## 三、Dr. GRPO 与 GSPO:一个删掉除法,一个换掉粒度
+## 三、Dr. GRPO、GSPO 与 CISPO:删除法、换粒度、挪裁剪落点
 
 ### Dr. GRPO:两个归一化悄悄改了目标
 
@@ -115,7 +116,31 @@ MoE 的每个 token 要先过路由选专家(路由机制见 MoE路由 篇),而�
 
 另一条边界:序列级比率天然配序列级优势。**要给同一条回答里的不同 token 不同优势时**(过程奖励、多轮里按步给分),得用论文给的 GSPO-token 变体,它在"整条回答共享同一个优势"时与 GSPO 数值等价,只是把 per-token 的调整口子留出来。最后,几何平均意味着单个 token 的剧烈偏离会被 $1/|y_i|$ 摊薄——好处是抗噪,坏处是"某一步错得离谱"这个信息在比率里被冲淡了。
 
-## 四、GiGPO,以及四个变体怎么选
+### CISPO:裁的是权重,不是把 token 开除
+
+DAPO 嫌上界太紧就把它放宽,GSPO 嫌粒度不对就换成序列级。CISPO(Clipped IS-weight Policy Optimization,MiniMax-M1 提出)问的是第三个问题:**裁剪为什么非得让这个 token 的梯度归零?**
+
+病症很具体。`However`、`Recheck`、`Wait`、`Aha` 这类词在推理里充当**分叉点**,但它们在基座模型里概率极低。概率比 $\rho_{i,t}$ 的分母本来就小,分子稍涨比值就冲出上界,于是这些词**第一次 on-policy 更新之后就被裁掉,后续所有 off-policy 轮次都缺席**。MiniMax-M1 每批 rollout 复用 16 轮,缺席的就是 15 轮;他们在混合架构上做 zero-RL 时发现 GRPO 反而有害,消融后把主因锁在这里,并明说 DAPO 的 clip-higher 在这个设置下不够用(论文自报)。
+
+新设计只改一处:回到带分布修正的 REINFORCE 形式,把 clip 从整个更新项挪到重要性权重上。
+
+$$
+\mathcal J_{\text{CISPO}}=\mathbb E\left[\frac{1}{\sum_i |o_i|}\sum_{i,t}\operatorname{sg}\big(\hat\rho_{i,t}\big)\,\hat A_{i,t}\,\log\pi_\theta(o_{i,t}\mid\cdot)\right],\qquad
+\hat\rho_{i,t}=\operatorname{clip}\big(\rho_{i,t},\,1-\varepsilon^{IS}_{\text{low}},\,1+\varepsilon^{IS}_{\text{high}}\big)
+$$
+
+读法:$\operatorname{sg}(\cdot)$ 是 stop-gradient,被它括住的东西只当数值参与前向、不回传梯度。**梯度全部来自后面那个 $\log\pi_\theta$ 项,而它永远存在**;裁剪只是给这个 token 的学习权重设了个上限,不是把它开除。对照 PPO/GRPO:那里的 $\rho_{i,t}$ 自己带梯度,一旦被裁进常数区间,这一项对 $\theta$ 的导数就是 0,整个 token 本轮彻底消失。**同一个 clip 动作,落点差一层,结果完全相反。**
+
+论文还顺手给了一个统一形式:在上式里插一个 token 级 mask,PPO 的裁剪就等价于「优势为正且权重过大、或优势为负且权重过小时把 mask 置 0」。写成这个形式之后,**裁多少和扔不扔就变成了两个独立旋钮**,CISPO 是 mask 恒为 1 的那个特例。
+
+代价与边界:
+
+- **梯度是有偏的**。权重被裁之后就不再是无偏的重要性修正,论文自己承认这一点;换来的是所有 token 都留在梯度里,长回答上尤其值钱。
+- **不裁就退化**。完全不裁权重时它就是标准策略梯度目标,所以 CISPO 不是新框架,而是在策略梯度和 PPO 之间插的一档。
+- **实践里只裁上界**:MiniMax-M1 把 $\varepsilon^{IS}_{\text{low}}$ 设得很大让下界失效,只调上界,而且**没有 KL 惩罚项**;上界的具体取值论文未公开。
+- 归一化是 token 级的(分母取这一组的 token 总数),**和 DAPO 的 token 级损失动的是同一处**,二者不能各写一套。
+
+## 四、GiGPO,以及五个变体怎么选
 
 ### 旧问题:一条轨迹一个优势,十步只错一步也十步同罚
 
@@ -156,13 +181,14 @@ $\omega$ 失衡的两头:太小等于回到轨迹级;太大则单步的局部比
 
 **什么信号说明"轨迹级优势太粗"**:同组轨迹前缀高度重合、成败却只差一两个动作;成功率长期停滞而失败集中在少数几个环节;组内优势方差主要由题目难度贡献而非行为质量。**引入 critic 与换 GiGPO 的成本差多少**:critic 是一个训练态的同量级模型,7B 按 16 字节/参数(权重+梯度+fp32 master+Adam 动量)算就是 110 GB 量级(账怎么拆见 PPO 篇),还要额外调 $\gamma$、$\lambda$、value clip、critic 学习率并盯 explained variance;GiGPO 不增加任何模型,新增超参基本只有 $\omega$ 和步级折扣 $\gamma$,代价是"状态可判等"那条硬假设。
 
-### 四个变体横向对照
+### 五个变体横向对照
 
 | 变体 | 盯上的病 | 动了目标函数的哪一处 | 主要代价 | 前提 |
 |---|---|---|---|---|
 | DAPO | 熵塌缩、零方差组、长回答被稀释、截断噪声 | 裁剪上界、batch 组成、损失分母、奖励整形 | 采样预算不再固定;难度分布被改写;长度阈值要调 | 结果奖励可自动判定 |
 | Dr. GRPO | 长度归一化与 std 归一化引入的偏置 | 优势不再除 std,损失分母换常数 | 优势尺度不再自动归一,学习率与 $\varepsilon$ 要重调 | 无 |
 | GSPO | token 级比率的噪声;MoE 上的路由抖动 | 重要性比率与裁剪整体挪到序列级 | 裁掉比例高两个数量级;$\varepsilon$ 与 clip 指标不可与 GRPO 比 | 优势是序列级(否则用 GSPO-token) |
+| CISPO | 被裁的低概率分叉 token 整个退出梯度 | 裁剪从更新项挪到重要性权重,权重加 stop-gradient | 梯度有偏;上界取值论文未公开 | off-policy 复用轮数较多时收益才明显 |
 | GiGPO | 多轮长轨迹的信用分配 | 优势拆成 episode 级 + step 级两层 | 多一个 $\omega$;状态不重复时白加一层 | 环境状态可判等、可哈希 |
 
 ### 能不能叠加
@@ -171,6 +197,8 @@ $\omega$ 失衡的两头:太小等于回到轨迹级;太大则单步的局部比
 - **DAPO 的 token 级损失和 Dr. GRPO 的去长度归一化动的是同一处**(损失分母),必须二选一。
 - **Dr. GRPO 去 std 和 DAPO 的动态采样**都在处理组内统计,但一个改权重、一个改样本组成,可以共存;共存时优势尺度会被改两次,要重新看梯度范数。
 - **上了 GSPO,clip-higher 和 token 级损失基本失去对象**:裁剪与长度归一化都已在序列级完成,再叠 token 级补丁没有意义,$\varepsilon$ 也必须按序列级比率重新标定。
+- **CISPO 和 clip-higher 是同一个病的两种解法,二选一**:一个把上界放宽让 token 少被裁,一个干脆让裁剪不再等于开除。同时上会让"到底还有多少 token 在贡献梯度"这件事没法归因。
+- **CISPO 与 GSPO 都在改重要性比率,但一个改落点、一个改粒度**,原则上不冲突,实践中不建议同时换——序列级比率下"某个 token 被裁掉"这个问题本来就不存在了,再挪落点没有对象。
 - **GiGPO 与前三者原则上正交**(它改优势怎么算,GSPO 改比率怎么算),但同时上会让两个新超参一起动,先分开验再合。
 
 ### 按症状选,而不是按名字选
@@ -183,6 +211,7 @@ $\omega$ 失衡的两头:太小等于回到轨迹级;太大则单步的局部比
 | 零方差组占比高且随训练上升 | prompt 池的难度分布 | 动态采样(采样预算会涨) |
 | 错误回答长度持续膨胀,正确回答不变 | 奖励里有无长度漏洞、截断怎么算分 | Dr. GRPO 去长度归一化 + 超长整形 |
 | 长序列比率分布出尖峰;MoE 训练发散 | 生成端与训练端 logprob 是否一致(见 RL框架对比 篇) | GSPO |
+| 熵还在掉,且 clip 掉的多为反思类低概率词;off-policy 复用轮数多 | 复用轮数是否过高、上界是否已经放宽过 | CISPO(改裁权重,不再开除 token) |
 | 多轮任务成功率停滞,失败集中在少数步骤 | 环境与奖励是否正确、轨迹长度分布 | GiGPO(前提:状态可判等) |
 
 最后一条必须说死:**这些变体改的全是"怎么用信号",没有一个能修正"信号本身是错的"**。训练奖励一路上涨而人评或独立验证器掉头、长度格式拒答率同时异常,那是 reward hacking——换目标函数只会让模型更快找到漏洞,诊断与兜底手段见 RLHF与RM 篇。
@@ -214,6 +243,8 @@ $\omega$ 失衡的两头:太小等于回到轨迹级;太大则单步的局部比
 | 补充题:动态采样把全对全错的组丢掉,会不会偷偷改变训练集? | 二(动态采样的代价) |
 | 补充题:GSPO 的 clip 区间为什么不能照抄 GRPO 的那一套? | 三(GSPO 的代价) |
 | 补充题:同时上 DAPO 的 token 级损失和 Dr. GRPO 的去归一化会怎样? | 四(能不能叠加) |
+| 补充题:同样是嫌裁剪太狠,CISPO 和 DAPO 的 clip-higher 差在哪? | 三(CISPO);四(能不能叠加) |
+| 补充题:CISPO 把 clip 挪到重要性权重上,被裁的 token 为什么就不掉梯度了?代价是什么? | 三(CISPO) |
 
 ## 相关文献
 
@@ -221,5 +252,6 @@ $\omega$ 失衡的两头:太小等于回到轨迹级;太大则单步的局部比
 - Understanding R1-Zero-Like Training: A Critical Perspective(提出 Dr. GRPO)— [arXiv:2503.20783](https://arxiv.org/abs/2503.20783)
 - Group Sequence Policy Optimization(GSPO)— [arXiv:2507.18071](https://arxiv.org/abs/2507.18071)
 - Group-in-Group Policy Optimization for LLM Agent Training(GiGPO)— [arXiv:2505.10978](https://arxiv.org/abs/2505.10978)
+- MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention(提出 CISPO)— [arXiv:2506.13585](https://arxiv.org/abs/2506.13585)
 - DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models(GRPO 原始提出)— [arXiv:2402.03300](https://arxiv.org/abs/2402.03300)
 - DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning — [arXiv:2501.12948](https://arxiv.org/abs/2501.12948)
