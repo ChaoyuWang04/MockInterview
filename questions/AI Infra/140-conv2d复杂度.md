@@ -1,6 +1,6 @@
 ---
 difficulty: 简单
-topic: 模型算子/Conv2D 复杂度
+topic: 卷积与池化/Conv2D 复杂度
 summary: 从输出尺寸推导普通、分组和深度可分离卷积计算量
 tags: [真题, 待校对, Conv2D, 计算复杂度, FLOPs]
 company: 小红书
