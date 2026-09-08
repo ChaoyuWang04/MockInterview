@@ -44,6 +44,9 @@ projects/
 /papers/**/*.pdf
 .leet/
 /.next-prod/
+/.next-check/
+/.next-blue/
+/.next-green/
 interview/cache/
 
 # 模拟面试:语音环境与音频缓存(体积大,可重建)

@@ -2,7 +2,7 @@
 """把 next start 变成真正脱离终端的后台进程。
 
 用法(由 scripts/leet-server.sh 调用):
-    python3 leet-daemon.py <APP_DIR> <PORT> <LOG_FILE> <PID_FILE>
+    python3 leet-daemon.py <APP_DIR> <PORT> <LOG_FILE> <PID_FILE> <DIST_DIR> <SERVER_DIST_FILE>
 
 为什么需要它:`nohup cmd &` 起的进程仍留在终端的会话里,关闭 Terminal 窗口
 时会被一起收走。这里用标准的 double-fork + setsid 把进程放进**新的会话**,
@@ -19,9 +19,16 @@ import sys
 
 
 def main() -> None:
-    if len(sys.argv) != 5:
-        sys.exit(f"用法: {sys.argv[0]} <APP_DIR> <PORT> <LOG_FILE> <PID_FILE>")
-    app_dir, port, log_file, pid_file = sys.argv[1:5]
+    if len(sys.argv) != 7:
+        sys.exit(
+            f"用法: {sys.argv[0]} <APP_DIR> <PORT> <LOG_FILE> <PID_FILE> "
+            "<DIST_DIR> <SERVER_DIST_FILE>"
+        )
+    app_dir, port, log_file, pid_file, dist_dir, server_dist_file = sys.argv[1:7]
+    if dist_dir not in {".next-blue", ".next-green", ".next-prod"}:
+        sys.exit(f"非法构建槽: {dist_dir}")
+    if not os.path.isfile(os.path.join(app_dir, dist_dir, "BUILD_ID")):
+        sys.exit(f"构建槽缺少 BUILD_ID: {dist_dir}")
 
     if os.fork() > 0:  # 父进程立即返回,不阻塞调用它的 shell
         return
@@ -38,10 +45,13 @@ def main() -> None:
     os.dup2(log.fileno(), 1)
     os.dup2(log.fileno(), 2)
 
-    with open(pid_file, "w") as f:
-        f.write(str(os.getpid()))
+    for target, value in ((pid_file, str(os.getpid())), (server_dist_file, dist_dir)):
+        temporary = f"{target}.tmp.{os.getpid()}"
+        with open(temporary, "w") as f:
+            f.write(f"{value}\n")
+        os.replace(temporary, target)
 
-    env = dict(os.environ, NEXT_DIST_DIR=".next-prod", NODE_ENV="production")
+    env = dict(os.environ, NEXT_DIST_DIR=dist_dir, NODE_ENV="production")
     node = env.get("LEET_NODE_BIN") or "node"
     next_bin = os.path.join(app_dir, "node_modules", "next", "dist", "bin", "next")
     os.execvpe(node, [node, next_bin, "start", "-p", str(port)], env)

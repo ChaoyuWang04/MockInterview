@@ -12,7 +12,7 @@
 leet-start
 ```
 
-打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改内容(题目/笔记/文章)不用重启,改代码用 `leet-rebuild`。详见 [docs/08-常驻服务.md](docs/08-常驻服务.md)。
+打开 <http://localhost:3000>;停止用 `leet-stop`,状态用 `leet-status`。改 Markdown 内容不用重启,改 `public/` 用 `leet-restart`,改代码或依赖用 `leet-rebuild`。普通 `npm run build` 只做隔离验证,不会覆盖在线服务。详见 [docs/08-常驻服务.md](docs/08-常驻服务.md)。
 
 **开发调试**(热更新,端口 3001,与常驻服务互不干扰):
 

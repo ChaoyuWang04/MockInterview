@@ -1,8 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // 生产(常驻服务)与开发用不同的构建目录,避免 npm run dev 冲掉常驻服务的产物。
-  // 常驻服务通过 NEXT_DIST_DIR=.next-prod 启动,开发保持默认 .next。
+  // 开发、验证构建与 blue/green 生产槽互相隔离。具体目录只由受控脚本传入。
   distDir: process.env.NEXT_DIST_DIR || '.next',
 }
 
