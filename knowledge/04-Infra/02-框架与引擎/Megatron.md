@@ -187,6 +187,8 @@ torchrun --nproc_per_node=8 --nnodes=8 <预训练入口脚本> \
 
 ## 相关文献
 
+FSDP2、DeepSpeed 与 Megatron-FSDP 的同层选型和边界,统一见 训练引擎对比 篇。
+
 - Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism — [arXiv:1909.08053](https://arxiv.org/abs/1909.08053)
 - Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM(3D 并行与 interleaved 调度,SC'21)— [arXiv:2104.04473](https://arxiv.org/abs/2104.04473)
 - Reducing Activation Recomputation in Large Transformer Models(SP 与选择性重算的出处)— [arXiv:2205.05198](https://arxiv.org/abs/2205.05198)

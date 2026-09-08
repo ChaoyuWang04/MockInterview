@@ -200,6 +200,8 @@ DeepSpeed 带一批 C++/CUDA 编译算子(CPU Adam、各类融合算子)。**预
 
 ## 相关文献
 
+FSDP2、Megatron-Core 与 DeepSpeed 的完整横向选型,统一见 训练引擎对比 篇。
+
 - ZeRO 系列论文(ZeRO / Offload / Infinity / ZeRO++)集中列在 ZeRO 篇,本篇不重复
 - DeepSpeed-MoE: Advancing Mixture-of-Experts Inference and Training to Power Next-Generation AI Scale — [arXiv:2201.05596](https://arxiv.org/abs/2201.05596)
 - DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models — [arXiv:2309.14509](https://arxiv.org/abs/2309.14509)

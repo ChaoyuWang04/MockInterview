@@ -2,6 +2,7 @@
 // 用法:npm run kb:lint        有硬性违规时退出码为 1
 import fs from 'node:fs'
 import path from 'node:path'
+import { lengthWarning } from './kb-lint-policy.mjs'
 
 const ROOT = path.join(process.cwd(), 'knowledge')
 
@@ -98,7 +99,8 @@ for (const file of files) {
 
   // 篇幅
   const n = lines.length
-  if (n < 100 || n > 300) W(`篇幅 ${n} 行,契约建议 120–260`)
+  const lengthMessage = lengthWarning(file, text, n)
+  if (lengthMessage) W(lengthMessage)
 }
 
 // 文章名全局唯一(00-总览 是各章 hub 页,豁免)
