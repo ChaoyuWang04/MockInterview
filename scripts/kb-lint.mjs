@@ -29,33 +29,25 @@ function mermaidNodes(block) {
 
 const files = walk(ROOT)
 const titles = new Set(files.map((f) => path.basename(f, '.md').replace(/^\d+-/, '')))
-const errors = []   // 已成文文章的违规 → 阻断
+const errors = []   // 契约违规 → 阻断
 const warns = []    // 提醒 → 不阻断
-const legacyIssues = [] // 旧稿的违规 → 不阻断,作为重写工作清单
-let placeholders = 0
-let legacy = 0
-let done = 0
 
 for (const file of files) {
   const rel = path.relative(process.cwd(), file)
   const text = fs.readFileSync(file, 'utf8')
   const lines = text.split('\n')
-  const isPlaceholder = text.includes('🚧 占位')
-  const isLegacy = text.includes('⚠️ 旧版')
   const isHub = path.basename(file) === '00-总览.md'
-  if (isPlaceholder) placeholders++
-  else if (isLegacy) legacy++
-  else done++
 
-  // 旧稿是已知不合规的存量,违规单列成重写清单,不阻断
-  const E = (msg) => (isLegacy ? legacyIssues : errors).push(`${rel}: ${msg}`)
+  const E = (msg) => errors.push(`${rel}: ${msg}`)
   const W = (msg) => warns.push(`${rel}: ${msg}`)
 
   if (!lines[0].startsWith('# ')) E('首行不是 H1 标题')
   if (text.startsWith('---\n')) E('不应有 frontmatter')
 
-  // 占位稿只查到这里,其余规则对成文/旧稿生效
-  if (isPlaceholder) continue
+  // 2026-09 起全库无占位稿与旧稿,这两个状态标记已废弃:留一道闸,谁再写进来就红。
+  // 注意 `🖼️ 占位` 是配图占位,是另一回事,不在此列。
+  if (text.includes('🚧 占位')) E('含已废弃的占位标记 🚧 占位 —— 文章要么写完,要么别建文件')
+  if (text.includes('⚠️ 旧版')) E('含已废弃的旧稿标记 ⚠️ 旧版 —— 按写作契约重写后删掉该行')
 
   // 公式:块级 $$ 必须独占一行
   const inline = lines.filter((l) => /\$\$.+\$\$/.test(l)).length
@@ -106,7 +98,7 @@ for (const file of files) {
 
   // 篇幅
   const n = lines.length
-  if (!isLegacy && (n < 100 || n > 300)) W(`篇幅 ${n} 行,契约建议 120–260`)
+  if (n < 100 || n > 300) W(`篇幅 ${n} 行,契约建议 120–260`)
 }
 
 // 文章名全局唯一(00-总览 是各章 hub 页,豁免)
@@ -118,12 +110,7 @@ for (const f of files) {
   seen.set(t, path.relative(process.cwd(), f))
 }
 
-console.log(`知识库 ${files.length} 篇:成文 ${done} · 旧稿 ${legacy} · 占位 ${placeholders}\n`)
-if (legacyIssues.length) {
-  console.log(`📋 ${legacyIssues.length} 条旧稿违规(不阻断,重写这些篇时一并修):`)
-  for (const l of legacyIssues) console.log('   ' + l)
-  console.log()
-}
+console.log(`知识库 ${files.length} 篇\n`)
 if (warns.length) {
   console.log(`⚠️  ${warns.length} 条提醒(不阻断):`)
   for (const w of warns) console.log('   ' + w)

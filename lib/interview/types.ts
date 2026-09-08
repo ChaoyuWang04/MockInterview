@@ -1,6 +1,3 @@
-/** 文章状态:能不能拿来出题,取决于它有没有正文 */
-export type ArticleState = 'ready' | 'legacy' | 'placeholder'
-
 /** 知识库「面试考点串联」表里的一行 */
 export interface ExamPoint {
   /** 高频问法 */
@@ -16,9 +13,8 @@ export interface ArticleEntry {
   chapter: string
   /** 相对 knowledge/ 的路径段,如 ['04-Infra','01-原理','KVCache.md'] */
   segments: string[]
-  state: ArticleState
   examPoints: ExamPoint[]
-  /** 能不能当出题源:有正文(非占位)且有考点表 */
+  /** 能不能当出题源:有考点表 */
   usableAsSource: boolean
 }
 
@@ -44,7 +40,6 @@ export interface QuestionEntry {
   followUps: string[]
   /** 匹配到的文章所在章节;匹配不到则为 undefined,过不了章节门禁 */
   chapter?: string
-  articleState?: ArticleState
 }
 
 /** 抽题候选:题库题与知识库考点行合并成同一个池 */

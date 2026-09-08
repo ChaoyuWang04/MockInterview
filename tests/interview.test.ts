@@ -128,17 +128,6 @@ describe('语料索引 corpus', () => {
     expect(pool.every((c) => c.chapter === '02-预训练与微调')).toBe(true)
   })
 
-  it('占位稿不进出题池(没有正文=没有答案,拿它出题就是编造)', () => {
-    const placeholders = new Set(
-      corpus.articles.filter((a) => a.state === 'placeholder').map((a) => a.title),
-    )
-    expect(placeholders.size).toBeGreaterThan(0)
-    const leaked = corpus.candidates.filter(
-      (c) => c.kind === 'exam-point' && placeholders.has(c.article),
-    )
-    expect(leaked).toEqual([])
-  })
-
   it('候选池非空且题库题占主力', () => {
     const q = corpus.candidates.filter((c) => c.kind === 'question').length
     expect(q).toBeGreaterThan(80)
@@ -200,22 +189,27 @@ describe('简历 = 硬门禁的来源', () => {
     // ⚠️ 必须比**章内占比**,不能比绝对次数。改成两级采样之后,
     // 一个章节被抽中的总次数由简历的章节权重决定,和画像无关 ——
     // 拿绝对次数比会把「Infra 整体份额下降」误当成「画像没生效」。
-    const shareInChapter = (prof: typeof p, article: string, chapter: string) => {
+    // ⚠️ 也不能只盯**单篇**(曾经写死的是 vLLM)。单篇在 6000 次抽样里只命中十几次,
+    // 两侧之差常常只有一两次,知识库多几篇文章就会把这个比较翻面 —— 实测 8 个种子只过 5 个。
+    // 改成对**画像加权的全部文章**求和:命中数从两位数涨到三千量级,信号(约 5 个百分点)
+    // 远大于噪声,8 个种子全过,而且守的还是同一个不变量。
+    const boosted = new Set(Object.keys(p!.topic亲和))
+    const boostedShareInChapter = (prof: typeof p, chapter: string) => {
       const sp = samplerProfileFor(r, prof)
       const rnd = seededRandom(99)
       let inChapter = 0
       let hit = 0
       for (let i = 0; i < 6000; i++) {
         const c = pick(corpus.candidates, sp, EMPTY_SESSION, rnd)
-        if (!c) continue
-        if (c.chapter === chapter) inChapter++
-        if (c.article === article) hit++
+        if (!c || c.chapter !== chapter) continue
+        inChapter++
+        if (boosted.has(c.article)) hit++
       }
       return inChapter ? hit / inChapter : 0
     }
-    // 简历里明确写过 vLLM,画像该把它在本章内的占比抬上去
-    expect(shareInChapter(p, 'vLLM', '04-Infra')).toBeGreaterThan(
-      shareInChapter(null, 'vLLM', '04-Infra'),
+    // 简历里写过的那些主题,画像该把它们在本章内的合计占比抬上去
+    expect(boostedShareInChapter(p, '04-Infra')).toBeGreaterThan(
+      boostedShareInChapter(null, '04-Infra'),
     )
   })
 
@@ -577,7 +571,7 @@ describe('复盘主题:模型不配合时必须有兜底', () => {
   })
 })
 
-describe('会话文件:没有 frontmatter 的旧稿也要读得出来', () => {
+describe('会话文件:没有 frontmatter 的早期文件也要读得出来', () => {
   it('第一场真实面试(无 frontmatter)能解析出全部字段', () => {
     const found = readSession('2026-09-02-2337-agent-rl')
     if (!found) return // 本地没这个文件就跳过,不让测试依赖某一场记录
@@ -810,13 +804,13 @@ describe('单篇过题', () => {
     expect(located.length).toBe(a.examPoints.length)
   })
 
-  it('四种 where 写法都认(旧稿各写各的)', () => {
+  it('四种 where 写法都认(早期文章各写各的)', () => {
     const fake = ['## 一、甲', 'A', '## 二、乙', 'B', '## 三、丙丁', 'C'].join('\n')
     expect(sectionOf(fake, '二(压缩过的答案)')).toContain('乙')
     expect(sectionOf(fake, '第三节')).toContain('丙丁')
     expect(sectionOf(fake, '一段很长的解释(§二)')).toContain('乙')
     expect(sectionOf(fake, '3.2')).toContain('丙丁')
-    // 只写小节标题关键词(旧稿的写法)。**关键词至少两个字** ——
+    // 只写小节标题关键词(早期写法)。**关键词至少两个字** ——
     // 一个字太容易在别的标题里误命中,宁可定位不到回落整篇
     expect(sectionOf(fake, '丙丁')).toContain('丙丁')
     expect(sectionOf(fake, '丙')).toBe('')
@@ -895,20 +889,10 @@ describe('「考一遍这篇」的显示条件', () => {
   }
   // 页面上的判据,和 app/kb/[...slug]/page.tsx 保持一致
   const drillCount = (a: (typeof corpus.articles)[number]) =>
-    a.state === 'placeholder' ? 0 : a.examPoints.length + (qByArticle[a.title] ?? 0)
+    a.examPoints.length + (qByArticle[a.title] ?? 0)
 
-  it('成文与旧稿只要有考点表或题库题就能考', () => {
-    const written = corpus.articles.filter((a) => a.state !== 'placeholder')
-    expect(written.every((a) => drillCount(a) > 0)).toBe(true)
-    expect(written.length).toBeGreaterThan(60)
-  })
-
-  // 仓库已有的规则:没有正文=没有答案,拿它出题就是编造。
-  // 有 6 篇占位稿恰好有题库题指过来,不挡的话按钮会出现在一篇还没写的文章上,
-  // 而送进模型的「本次考察的文章」只是段 200 字的占位提示。
-  it('占位稿一律不能考,哪怕它有题库题', () => {
-    const holes = corpus.articles.filter((a) => a.state === 'placeholder')
-    expect(holes.some((a) => (qByArticle[a.title] ?? 0) > 0)).toBe(true) // 确实存在这种情况
-    expect(holes.every((a) => drillCount(a) === 0)).toBe(true)
+  it('每篇都能考:考点表或题库题至少有一个', () => {
+    expect(corpus.articles.every((a) => drillCount(a) > 0)).toBe(true)
+    expect(corpus.articles.length).toBeGreaterThan(60)
   })
 })

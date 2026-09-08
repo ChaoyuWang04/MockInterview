@@ -4,7 +4,6 @@ import { isValidRef, listCategories, listQuestionFiles, loadQuestion, questionsR
 import { flattenArticles, knowledgeRoot, listKbTree } from '../knowledge'
 import type {
   ArticleEntry,
-  ArticleState,
   Candidate,
   Corpus,
   CorpusStats,
@@ -18,7 +17,7 @@ import type {
  */
 export const EXCLUDED_CATEGORIES = ['手撕代码']
 
-/** 从正文抽「面试考点串联」表。成文篇用 markdown 表格,旧稿用编号列表,两种都认。 */
+/** 从正文抽「面试考点串联」表。标准写法是 markdown 表格,编号列表也认(早期文章用过)。 */
 export function extractExamPoints(body: string): ExamPoint[] {
   const start = body.search(/^##\s+.*面试考点串联/m)
   if (start < 0) return []
@@ -36,7 +35,7 @@ export function extractExamPoints(body: string): ExamPoint[] {
       out.push({ ask: cells[0], where: cells[1] })
       continue
     }
-    // 旧稿:`1. 问法 →「小节」`
+    // 编号列表写法:`1. 问法 →「小节」`
     const m = line.match(/^\d+\.\s*(.+?)\s*→\s*[「『"]?(.*?)[」』"]?\s*$/)
     if (m && m[1]) out.push({ ask: m[1], where: m[2] || '' })
   }
@@ -58,12 +57,6 @@ function bulletItems(section: string | undefined): string[] {
     .filter(Boolean)
 }
 
-function stateOf(placeholder: boolean, legacy: boolean): ArticleState {
-  if (placeholder) return 'placeholder'
-  if (legacy) return 'legacy'
-  return 'ready'
-}
-
 /**
  * 各章的 `00-总览.md` 是 hub 导航页,不是知识点专篇:
  * 剥掉 NN- 前缀后它们全部叫「总览」,标题会撞车;而且知识库地图明确写了
@@ -78,16 +71,14 @@ export function loadArticles(root = knowledgeRoot()): ArticleEntry[] {
     .filter((a) => !isHubPage(a.segments))
     .map((a) => {
       const body = fs.readFileSync(path.join(root, ...a.segments), 'utf8')
-      const state = stateOf(a.placeholder, a.legacy)
       const examPoints = extractExamPoints(body)
       return {
         title: a.title,
         chapter: a.segments[0] ?? '',
         segments: a.segments,
-        state,
         examPoints,
-        // 占位稿没有正文,拿它出题就是让 AI 现编答案(铁律 4)
-        usableAsSource: state !== 'placeholder' && examPoints.length > 0,
+        // 没有考点表 = 出不出题都无从验收,不进池
+        usableAsSource: examPoints.length > 0,
       }
     })
 }
@@ -188,7 +179,6 @@ export function buildCorpus(
   for (const q of questions) {
     const article = byTitle.get(q.article)
     q.chapter = article?.chapter
-    q.articleState = article?.state
     if (EXCLUDED_CATEGORIES.includes(q.category)) {
       excluded[q.category] = (excluded[q.category] ?? 0) + 1
       continue

@@ -36,13 +36,13 @@ function headings(lines: string[]): [number, string][] {
 /**
  * 从「本文哪一节」那一格里解析出小节号。
  *
- * 契约确立后写的文章都是 `二(压缩过的答案)`,但**旧稿有三种别的写法**,
+ * 契约确立后写的文章都是 `二(压缩过的答案)`,但**另有三种写法也要认**,
  * 各章不统一(实测:`第一节` / `2.3` / 长句末尾带 `(§二)` / 干脆只写小节标题的关键词)。
  * 一层层试,全都试不出来才回落关键词匹配。
  */
 function sectionIndex(where: string, heads: [number, string][]): number {
   const w = where.trim()
-  // ① `§二` / `(§二)` —— 旧稿把标记放在长句末尾
+  // ① `§二` / `(§二)` —— 标记放在长句末尾
   const para = w.match(/§\s*([一二三四五六七八九十])/)
   if (para) return CN_NUM[para[1]]
   // ② `第二节`

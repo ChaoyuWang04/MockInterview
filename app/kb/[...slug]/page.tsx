@@ -21,14 +21,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   // 显示一个点进去发现没题的钮,比没有按钮更糟
   const corpus = buildCorpus()
   const kbEntry = corpus.articles.find((a) => a.title === title)
-  // ⚠️ **占位稿不给按钮**,哪怕它有题库题。仓库已有的规则是「没有正文=没有答案,
-  // 拿它出题就是编造」(corpus 的 usableAsSource 和一条测试都守着这条)。
-  // 「考一遍这篇」在一篇还没写的文章上是句假话,送进模型的「本文」也只是段占位提示。
-  const drillCount =
-    kbEntry && kbEntry.state !== 'placeholder'
-      ? kbEntry.examPoints.length +
-        corpus.candidates.filter((c) => c.kind === 'question' && c.article === title).length
-      : 0
+  const drillCount = kbEntry
+    ? kbEntry.examPoints.length +
+      corpus.candidates.filter((c) => c.kind === 'question' && c.article === title).length
+    : 0
 
   const related = listCategories().flatMap((c) =>
     loadCategory(c)

@@ -11,23 +11,9 @@ function ArticleGrid({ folder }: { folder: KbFolder }) {
         <Link
           key={a.segments.join('/')}
           href={articleHref(a)}
-          className={[
-            'flex items-center justify-between gap-2 border bg-white px-4 py-3 transition-colors',
-            a.placeholder
-              ? 'border-dashed border-gray-200 text-gray-400 hover:border-gray-400'
-              : 'border-gray-200 font-semibold hover:border-gray-400',
-          ].join(' ')}
+          className="flex items-center justify-between gap-2 border border-gray-200 bg-white px-4 py-3 font-semibold transition-colors hover:border-gray-400"
         >
           <span className="truncate">{a.title}</span>
-          {a.placeholder && <span className="shrink-0 font-mono text-[10px]">占位</span>}
-          {a.legacy && (
-            <span
-              title="写作契约确立前的旧稿,待按新标准重写"
-              className="shrink-0 border border-amber-300 bg-amber-50 px-1 font-mono text-[10px] font-normal text-amber-600"
-            >
-              旧
-            </span>
-          )}
         </Link>
       ))}
     </div>
@@ -62,8 +48,6 @@ export default function KbIndexPage() {
   const tree = listKbTree()
   const articles = flattenArticles(tree)
   const total = articles.length
-  const placeholders = articles.filter((a) => a.placeholder).length
-  const legacy = articles.filter((a) => a.legacy).length
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
@@ -74,9 +58,7 @@ export default function KbIndexPage() {
         </Link>
       </div>
       <p className="mt-2 text-sm text-gray-500">
-        按训练流程编排:模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用。
-        共 {total} 篇:{total - placeholders - legacy} 篇已按写作契约成文、
-        <span className="text-amber-600">{legacy} 篇旧稿待重写(标「旧」)</span>、{placeholders} 篇占位(虚线框)。
+        按训练流程编排:模型结构 → 预训练与微调 → 强化学习 → Infra → 多模态 → 应用。共 {total} 篇。
       </p>
       {total === 0 ? (
         <p className="mt-10 text-gray-500">还没有文章。规范见 docs/04-知识库地图.md。</p>

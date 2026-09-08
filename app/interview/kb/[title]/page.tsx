@@ -24,17 +24,15 @@ export default async function KbDrillPage({ params }: { params: Promise<{ title:
   const article = findArticle(title)
   if (!entry || !article) notFound()
 
-  // 占位稿即使手敲 URL 进来也不给考 —— 和文章页的按钮同一条规则
-  const isPlaceholder = entry.state === 'placeholder'
-  const questionCount = isPlaceholder
-    ? 0
-    : corpus.candidates.filter((c) => c.kind === 'question' && c.article === title).length
+  const questionCount = corpus.candidates.filter(
+    (c) => c.kind === 'question' && c.article === title,
+  ).length
   const scope: KbScope = {
     article: title,
     chapter: entry.chapter,
     questionCount,
-    examPointCount: isPlaceholder ? 0 : entry.examPoints.length,
-    poolSize: questionCount + (isPlaceholder ? 0 : entry.examPoints.length),
+    examPointCount: entry.examPoints.length,
+    poolSize: questionCount + entry.examPoints.length,
   }
 
   return (
@@ -53,9 +51,8 @@ export default async function KbDrillPage({ params }: { params: Promise<{ title:
 
       {scope.poolSize === 0 ? (
         <p className="text-sm text-gray-500">
-          {isPlaceholder
-            ? '这一篇还是占位稿,正文都还没写 —— 没有「这一篇」可以考。写完(删掉 🚧 占位 + 补考点表)之后这里就有题了。'
-            : '这一篇还没有可考的内容:既没有 topic 指向它的题库题,文末也没有「面试考点串联」表。补上考点表(见 docs/05-知识库写作契约.md 第九节)之后这里就有题了。'}
+          这一篇还没有可考的内容:既没有 topic 指向它的题库题,文末也没有「面试考点串联」表。补上考点表(见
+          docs/05-知识库写作契约.md 第九节)之后这里就有题了。
         </p>
       ) : (
         // 简历列表传空数组:单篇模式下选简历那一节根本不渲染

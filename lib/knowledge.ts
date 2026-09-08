@@ -6,10 +6,6 @@ export interface KbArticle {
   title: string
   /** 相对 knowledge/ 的路径段,如 ['01-模型结构', 'RoPE.md'] */
   segments: string[]
-  /** 是否仍是占位稿(正文含 🚧 占位 标记) */
-  placeholder: boolean
-  /** 是否为写作契约确立之前的旧稿,待按新标准重写(正文含 ⚠️ 旧版 标记) */
-  legacy: boolean
 }
 
 export interface KbFolder {
@@ -49,13 +45,7 @@ function buildFolder(absDir: string, segments: string[]): KbFolder {
     if (entry.isDirectory()) {
       folders.push(buildFolder(path.join(absDir, entry.name), next))
     } else if (entry.name.endsWith('.md')) {
-      const content = fs.readFileSync(path.join(absDir, entry.name), 'utf8')
-      articles.push({
-        title: stripOrder(entry.name.slice(0, -3)),
-        segments: next,
-        placeholder: content.includes('🚧 占位'),
-        legacy: content.includes('⚠️ 旧版'),
-      })
+      articles.push({ title: stripOrder(entry.name.slice(0, -3)), segments: next })
     }
   }
   return {

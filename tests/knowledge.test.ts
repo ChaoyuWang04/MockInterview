@@ -32,10 +32,15 @@ describe('真实知识库 knowledge/', () => {
     expect(getArticleBySegments(['04-Infra', '01-原理', 'FlashAttention.md'])).toContain('FlashAttention')
   })
 
-  it('占位稿被正确识别', () => {
-    const ph = articles.filter((a) => a.placeholder)
-    expect(ph.length).toBeGreaterThan(0)
-    expect(articles.find((a) => a.title === 'GRPO')!.placeholder).toBe(false)
+  // 2026-09 起「占位稿 / 旧稿」这两个状态已废弃:全库每篇都是成文,不再有状态之分。
+  // 这里守住那个前提 —— 谁把标记写回来,这条就红(kb:lint 也有同一道闸)。
+  // 注意 `🖼️ 占位` 是配图占位,是另一回事,不算违规。
+  it('全库没有残留的占位稿 / 旧稿标记', () => {
+    const stale = articles.filter((a) => {
+      const body = getArticleBySegments(a.segments) ?? ''
+      return body.includes('🚧 占位') || body.includes('⚠️ 旧版')
+    })
+    expect(stale.map((a) => a.segments.join('/'))).toEqual([])
   })
 
   it('白名单校验拒绝路径穿越', () => {

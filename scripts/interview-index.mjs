@@ -52,18 +52,12 @@ export function collect(cwd = process.cwd()) {
     if (path.basename(file) === '00-总览.md') continue // hub 页,不参与匹配
     const body = fs.readFileSync(file, 'utf8')
     const segments = path.relative(kRoot, file).split(path.sep)
-    const state = body.includes('🚧 占位')
-      ? 'placeholder'
-      : body.includes('⚠️ 旧版')
-        ? 'legacy'
-        : 'ready'
     const examPoints = extractExamPoints(body)
     articles.push({
       title: path.basename(file, '.md').replace(/^\d+-/, ''),
       chapter: segments[0] ?? '',
-      state,
       examPoints,
-      usableAsSource: state !== 'placeholder' && examPoints.length > 0,
+      usableAsSource: examPoints.length > 0,
     })
   }
   const byTitle = new Map(articles.map((a) => [a.title, a]))
@@ -144,9 +138,6 @@ function main() {
     return
   }
 
-  const byState = { ready: 0, legacy: 0, placeholder: 0 }
-  for (const a of articles) byState[a.state]++
-
   console.log('\n模拟面试候选池')
   console.log('─'.repeat(52))
   console.log(`题库    ${s.题目总数} 道 → 参与出题 ${s.参与出题的题目} 道`)
@@ -156,9 +147,7 @@ function main() {
   if (s.匹配不到文章的题目) {
     console.log(`        ⚠️  ${s.匹配不到文章的题目} 道 topic 匹配不到文章,已跳过`)
   }
-  console.log(
-    `知识库  ${s.文章总数} 篇(成文 ${byState.ready} · 旧稿 ${byState.legacy} · 占位 ${byState.placeholder})`,
-  )
+  console.log(`知识库  ${s.文章总数} 篇`)
   console.log(`        可出题 ${s.可出题文章} 篇 · 考点行 ${s.考点行总数} 条`)
   console.log('─'.repeat(52))
   console.log(`候选池  ${s.候选池大小} 个可问点`)
@@ -167,9 +156,7 @@ function main() {
   }
   const n = writeHotwords(articles)
   console.log(`热词    ${n} 个 → interview/hotwords.txt(只给云端 STT 用)`)
-  console.log(
-    `\n提示:写完一篇知识库文章(删掉 🚧 占位 + 补考点表)重跑本命令,池子和热词都会自动变大。\n`,
-  )
+  console.log(`\n提示:给一篇知识库文章补上「面试考点串联」表后重跑本命令,池子和热词都会自动变大。\n`)
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) main()
