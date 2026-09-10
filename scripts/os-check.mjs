@@ -4,21 +4,27 @@
 //   2) 每份规格都有 public/opensource/<项目>/<slug>.svg 与 .html,且产物不比规格旧
 //   3) 每页 markdown 引用的 /opensource/<项目>/... 文件都存在
 //   4) 每份 _NN-evidence.md 的「位置」与「原样引用」逐条拿到 projects/<主题>/<项目>/ 的源码上核对
-// 用法: node scripts/os-check.mjs [--project <项目名>] [--skip-archify]
+//   5) 开跑前先把被检查项目的源码仓同步到上游最新(见 scripts/projects-sync.mjs),
+//      再核对解读页记录的源码基准 commit 是否就是当前 HEAD;落后即判失败,提示按 06 更新
+// 用法: node scripts/os-check.mjs [--project <项目名>] [--skip-archify] [--skip-sync]
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { syncProjects } from './projects-sync.mjs';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
 const onlyProject = args.includes('--project') ? args[args.indexOf('--project') + 1] : null;
 const skipArchify = args.includes('--skip-archify');
+const skipSync = args.includes('--skip-sync') || process.env.OS_CHECK_SKIP_SYNC === '1';
 const ARCHIFY = path.join(process.env.ARCHIFY_HOME || path.join(os.homedir(), '.claude', 'skills', 'archify'), 'bin', 'archify.mjs');
 
 let failures = 0;
 const fail = (msg) => { failures += 1; console.log('  ✗ ' + msg); };
 const ok = (msg) => console.log('  ✓ ' + msg);
+let warnings = 0;
+const warn = (msg) => { warnings += 1; console.log('  ! ' + msg); };
 
 function listProjects() {
   const out = [];
@@ -159,11 +165,46 @@ function checkEvidence({ topic, project, dir }) {
   }
 }
 
-for (const p of listProjects()) {
+// ---- 源码基准核对 ----
+// 解读的每一条断言都钉在一个 commit 上。工作树被同步到上游最新之后,
+// 若解读页记录的基准不是当前 HEAD,这份解读就已经过期,必须按 06 的「已有解读更新」复核。
+function checkBaseline({ topic, project, dir }) {
+  const repoRoot = path.join(ROOT, 'projects', topic, project);
+  if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${project} 不存在,跳过基准核对`); return; }
+  const overview = fs.readdirSync(dir).filter((f) => /^00-.*\.md$/.test(f))[0];
+  if (!overview) { warn(`没有 00- 总览页,无法核对源码基准`); return; }
+  const md = fs.readFileSync(path.join(dir, overview), 'utf8');
+  const m = md.match(/commit\s+`([0-9a-f]{7,40})`/);
+  if (!m) { warn(`${overview}: 没有记录源码基准 commit(格式: commit \`<sha>\`),无法判断解读是否已过期`); return; }
+  let head;
+  try { head = execFileSync('git', ['-C', repoRoot, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(); }
+  catch (e) { fail(`读不到 projects/${topic}/${project} 的 HEAD(${(e.message || '').split('\n')[0]})`); return; }
+  const recorded = m[1];
+  if (head.startsWith(recorded)) ok(`源码基准 ${recorded.slice(0, 12)} 与工作树 HEAD 一致`);
+  else fail(`源码基准已过期:${overview} 记录 ${recorded.slice(0, 12)},工作树 HEAD 是 ${head.slice(0, 12)};按 06 的「已有解读更新」复核基准、正文与证据表`);
+}
+
+const projects = listProjects();
+
+if (!skipSync) {
+  console.log('== 同步 projects/ 下被检查的源码仓到上游最新');
+  const names = new Set(projects.map((p) => p.project));
+  const results = syncProjects({ filter: names, log: (m) => console.log(m) });
+  for (const r of results) {
+    if (['dirty', 'ahead', 'detached', 'no-upstream', 'fetch-failed', 'error'].includes(r.state)) {
+      fail(`${r.rel} 无法同步到最新:${r.detail}`);
+    }
+  }
+} else {
+  console.log('== 跳过源码仓同步(--skip-sync)');
+}
+
+for (const p of projects) {
   console.log(`\n== ${p.topic}/${p.project}`);
+  checkBaseline(p);
   checkDiagrams(p);
   checkPageAssets(p);
   checkEvidence(p);
 }
-console.log(failures ? `\n共 ${failures} 项未过` : '\n全部通过');
+console.log(failures ? `\n共 ${failures} 项未过${warnings ? `、${warnings} 项提醒` : ''}` : `\n全部通过${warnings ? `(${warnings} 项提醒)` : ''}`);
 process.exit(failures ? 1 : 0);
