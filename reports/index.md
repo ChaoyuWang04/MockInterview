@@ -245,20 +245,20 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
+| HunyuanWorld-2.0 | Tencent | 重建、生成、模拟三合一的 3D 世界模型 |
 | pi0.7 | PhysicalIntelligence | 可操控的通用机器人基模,涌现能力 |
+| Matrix-Game-3.0 | Skywork | 实时流式交互世界模型,长程记忆 |
 | DreamDojo | NVIDIA | 大规模人类视频训练的通用机器人世界模型 |
+| Infinite-World | Meituan | 无位姿层级记忆,交互世界模型扩到 1000 帧(与南开合作) |
 | DreamZero | NVIDIA | 世界动作模型即零样本策略 |
 | LingBot-World | AntGroup | 开源世界模型(蚂蚁灵波 Robbyant) |
+| HunyuanWorld-1.5 | Tencent | HunyuanWorld-1.0 的可交互续作(HY-WorldPlay) |
 | ToolOrchestra | NVIDIA | 模型与工具的高效编排,把智能从「更大模型」挪到「更会调度」 |
 | Dreamer-4 | Google | 在可扩展世界模型里训练 agent(DeepMind) |
 | V-JEPA-2 | Meta | 自监督视频模型做理解、预测与规划(FAIR) |
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
-| HunyuanWorld-2.0 | Tencent | 重建、生成、模拟三合一的 3D 世界模型 |
-| HunyuanWorld-1.5 | Tencent | HunyuanWorld-1.0 的可交互续作(HY-WorldPlay) |
-| Infinite-World | Meituan | 无位姿层级记忆,交互世界模型扩到 1000 帧(与南开合作) |
-| Matrix-Game-3.0 | Skywork | 实时流式交互世界模型,长程记忆 |
 | V-JEPA-2.1 | Meta | 解锁视频自监督的稠密特征(FAIR) |
 | VL-JEPA | Meta | 视觉语言联合嵌入预测架构(FAIR) |
 | World-Guidance | ByteDance | 在条件空间做世界建模来生成动作(Seed) |
