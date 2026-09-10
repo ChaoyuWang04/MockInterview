@@ -50,6 +50,7 @@
 | OPT | Meta | 175B 开源复现 GPT-3,附完整训练日志与故障记录(2022) |
 | GPT-3 | OpenAI | few-shot 学习与 scaling 的源头 |
 | BERT | Google | 双向编码器预训练,微调范式的起点(2018) |
+| DeepSeek-V4.1-Flash | DeepSeek | 552B CED,prefill 8B/decode 16B,CSA2+FP4 把全局 KV 压到 890 B/token |
 
 ## 注意力与长上下文
 
@@ -81,14 +82,17 @@
 | APEX-Agents-SkyRL-Recipe | Mercor | 397B 知识工作 Agent 的六步 RL recipe;**原件是官方博客,`papers/` 下无 PDF** |
 | SOAP-Muon-and-Beyond | NVIDIA | 优化器 scaling 对照,附开源实现 |
 | AReaL-2.0 | AntGroup | position paper:轨迹协议、数据代理、演化控制面三支柱 |
+| MOPD | Xiaomi | 多教师 on-policy 蒸馏做能力整合,MiMo-V2-Flash 的后训练方法(北大合作) |
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
 | Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
 | ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
+| Terminal-Data-Engineering | NVIDIA | 扩展 LLM 终端能力的数据工程 |
 | AReaL-DTA | AntGroup | 动态树注意力,共享前缀只算一次 |
 | AReaL-SEA | AntGroup | 多 agent 合成对话 + 每实例可执行 checker |
 | Endless-Terminals | Stanford | 规模化生成 terminal agent 的 RL 环境 |
 | Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
 | SkyRL-Agent | Berkeley | 多轮长程 agent 的异步流水线调度 |
+| AgentEvolver | Alibaba | 通义,自进化 agent 系统:自出题、自导航、自归因 |
 | Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
 | rStar2-Agent | Microsoft | agentic reasoning 的训练 |
 | Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
@@ -101,11 +105,8 @@
 | DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
 | Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
 | HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
-| DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
-| MOPD | Xiaomi | 多教师 on-policy 蒸馏做能力整合,MiMo-V2-Flash 的后训练方法(北大合作) |
-| AgentEvolver | Alibaba | 通义,自进化 agent 系统:自出题、自导航、自归因 |
-| Terminal-Data-Engineering | NVIDIA | 扩展 LLM 终端能力的数据工程 |
 | FineWeb | HuggingFace | 15T token 预训练语料的清洗与消融配方 |
+| DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
 | Coconut | Meta | 连续潜空间推理,不吐出 CoT token(FAIR) |
 | Ouro | ByteDance | 参数循环复用做潜空间推理的 scaling(Seed) |
@@ -161,6 +162,8 @@
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
 | DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
+| DSpark | DeepSeek | 半自回归草稿 + 置信度调度验证,投机解码 |
+| DFlash | UCSD | 块扩散做并行草稿的投机解码,ICML 2026 |
 
 ## 分布式训练与并行
 
