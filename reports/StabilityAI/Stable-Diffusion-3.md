@@ -342,8 +342,8 @@ UViT 是 UNet 和 Transformer 的杂交（PDF p. 8）。也就是说，在这组
 
 | 编码器 | 取出什么 | 尺寸 |
 |---|---|---|
-| CLIP L/14 | pooled + 倒数第二层隐状态 | pooled 768；序列 $77\times ?$ |
-| OpenCLIP bigG/14 | 同上 | pooled 1280 |
+| CLIP L/14 | pooled + 倒数第二层隐状态 | pooled 768；序列 $77\times 768$ |
+| OpenCLIP bigG/14 | 同上 | pooled 1280；序列 $77\times 1280$ |
 | T5-v1.1-XXL | 编码器末层 | $77\times 4096$ |
 
 两个 pooled 拼成 $c_{\mathrm{vec}}\in\mathbb{R}^{2048}$，给调制用。两个 CLIP 的序列按通道拼成 $c^{\mathrm{CLIP}}_{\mathrm{ctxt}}\in\mathbb{R}^{77\times 2048}$，再在通道上零填充到 4096，与 T5 在序列维拼接，得到 $c_{\mathrm{ctxt}}\in\mathbb{R}^{154\times 4096}$（PDF p. 18）。

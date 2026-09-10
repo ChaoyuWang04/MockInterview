@@ -44,6 +44,7 @@
 | Llama-3 | Meta | 405B dense,复杂度从架构挪到数据与运维 |
 | DeepSeek-V2 | DeepSeek | MLA 与 DeepSeekMoE 的出处 |
 | Phi-3 | Microsoft | 小模型靠数据质量取胜;依据 arXiv v4,覆盖 phi-3 与 phi-3.5 共六个成员 |
+| Llama-2 | Meta | 7B–70B,GQA 与 4k 上下文,公开预训练加对话对齐 |
 | GPT-4 | OpenAI | 能力与安全评测,训练细节保留 |
 | LLaMA | Meta | 开源基模时代的起点:7B–65B dense,只用公开数据(2023) |
 | OPT | Meta | 175B 开源复现 GPT-3,附完整训练日志与故障记录(2022) |
@@ -195,6 +196,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| World-Tracing | WorldLabs | 生成像素对齐的几何,超出可见范围 |
 | Seed3D-2.0 | ByteDance | 仿真可用的高保真 3D 生成,统一 PBR 模型(Seed) |
 | Causal-Forcing | ShengShu | 自回归扩散蒸馏的正确做法,实时交互视频(生数,与清华合作) |
 | MOVA | OpenMOSS | 音视频同步生成,非对称双塔 |
@@ -214,7 +216,6 @@
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
-| World-Tracing | WorldLabs | 生成像素对齐的几何,超出可见范围 |
 
 ## 音频
 
