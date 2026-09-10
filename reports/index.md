@@ -83,9 +83,13 @@
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
 | Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
 | ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
+| AReaL-DTA | AntGroup | 动态树注意力,共享前缀只算一次 |
+| AReaL-SEA | AntGroup | 多 agent 合成对话 + 每实例可执行 checker |
 | Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
+| SkyRL-Agent | Berkeley | 多轮长程 agent 的异步流水线调度 |
 | Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
 | rStar2-Agent | Microsoft | agentic reasoning 的训练 |
+| Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
 | GSPO | Alibaba | 序列级重要性比 |
 | AReaL | AntGroup | 大规模异步 RL 系统 |
 | DAPO | ByteDance | 长思维链 RL 的四项工程改动 |
@@ -94,10 +98,6 @@
 | Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
 | HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
 | DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
-| AReaL-SEA | AntGroup | 多 agent 合成对话 + 每实例可执行 checker |
-| AReaL-DTA | AntGroup | 动态树注意力,共享前缀只算一次 |
-| Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
-| SkyRL-Agent | Berkeley | 多轮长程 agent 的异步流水线调度 |
 | AsyncFlow | Huawei | 服务化异步流式 RL,生产者-消费者工作流 |
 | ROLL | Alibaba | 面向 RLHF / 推理 / 多轮 agentic 的框架论文 |
 | SOAP-Muon-and-Beyond | NVIDIA | 优化器 scaling 对照,附开源实现 |
