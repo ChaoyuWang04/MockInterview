@@ -14,7 +14,6 @@
 ## P6 · 开源解读与报告解读
 
 - [ ] 按 `06-开源解读流程.md` 完成 `vllm`:按老师讲稿分批核对入 `opensource/推理服务/vllm/_登记表.md` 并渲染正文;总览与 01 章文字已完成,02 章(调度器)Part 1、Part 2 与 Part 3 的 3.1 已完成待确认,下一批为 02 章 3.2 起;文字全部确认后再补图与证据表;`projects/推理服务/vllm` 工作树需先对齐基准 `2a02f6e`(见底稿第一节)才能跑 `os:check`;完成后从 06 的项目库存选择下一项并替换本行
-- [ ] 按 `10-基模报告流程.md` 解读 `StepFun/Step-3.5-Flash` `Zyphra/ZAYA1-8B` `Poolside/Laguna-M1-XS2`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
 - [ ] 按 `10-基模报告流程.md` 解读 `AntGroup/AReaL-SEA` `AntGroup/AReaL-DTA` `Microsoft/Agent-Lightning`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
 - [ ] 克隆 06 库存里标「repo 未克隆」的项目到 `projects/<主题>/`,按主题分批,克隆后删掉该条标注
 

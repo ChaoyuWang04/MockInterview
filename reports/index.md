@@ -2,67 +2,67 @@
 
 按方向分组的报告索引,是 `/reports` 页面分组与排序的唯一数据源;规则见 [docs/10-基模报告流程.md](../docs/10-基模报告流程.md) 第七节。
 
-- `## 方向` 是页面分组;方向内的行序即页面顺序,从整体报告排到单点机制
+- `## 方向` 是页面分组;方向内的行序即页面顺序。每个方向的已发布卡片按首发日从新到旧,同日按报告名字面值升序;未解读排在已发布后面,发布后插到对应日期位置
 - 「报告」等于 `reports/<公司>/<报告>.md` 去掉 `.md`;「公司」等于目录名
 - 状态由文件推导,不手写:正文存在为已发布,`_<报告>.md` 为施工中,否则未解读;`npm run reports:status` 现场打印
 - 网页原件在 `papers/` 下没有文件,在一句话里注明并留 URL 线索
 
 ## 语言基模
 
+本组已发布卡片按首发日从新到旧;未解读排在后面,发布后插到对应日期位置。
+
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| DeepSeek-V4 | DeepSeek | 百万 Token 长上下文的成本重构(**写作标杆**) |
+| Qwen3.8-Max | Alibaba | 2.4T/95B;真正的内容是 RL 系统——环境按 Task/Workspace/Harness 三轴解耦扩展、统一奖励系统、在线数据均衡器压批间梯度方差。**原件是网页**,见 qwen.ai/blog?id=qwen3.8 |
 | Kimi-K3 | Moonshot | 序列、深度、宽度一起扩的系统级设计 |
-| DeepSeek-V3 | DeepSeek | 671B MoE,FP8、DualPipe、无辅助损失负载均衡 |
-| DeepSeek-V2 | DeepSeek | MLA 与 DeepSeekMoE 的出处 |
-| Qwen3 | Alibaba | 一套权重兼顾深思、快答与预算控制 |
-| Llama-3 | Meta | 405B dense,复杂度从架构挪到数据与运维 |
-| Gemma-4 | Google | 小模型家族,原生多模态与 encoder-free |
-| Gemini-2.5 | Google | 闭源前沿少有的公开报告 |
-| GLM-5 | Z.ai | 从 vibe coding 到 agentic engineering 的全栈重设计 |
-| GLM-4.5 | Z.ai | ARC 三能力先分开练,再蒸馏回一套权重 |
-| Kimi-K2 | Moonshot | 高质量数据见底后的 Token 与轨迹再利用 |
-| Qwen2.5 | Alibaba | Qwen 上一代:架构几乎不动,增量全在数据与后训练(依据 arXiv v2) |
-| Nemotron-3 | NVIDIA | 权重、数据、recipe 一并公开;原件是 13 页白皮书,Nano 另有技术报告 |
-| Olmo-3 | Ai2 | 完全开源路线:交付整条模型流水线而非只交权重(依据 arXiv v2,118 页) |
-| GPT-4 | OpenAI | 能力与安全评测,训练细节保留 |
-| GPT-3 | OpenAI | few-shot 学习与 scaling 的源头 |
-| Phi-3 | Microsoft | 小模型靠数据质量取胜;依据 arXiv v4,覆盖 phi-3 与 phi-3.5 共六个成员 |
-| Trinity-Large | Arcee | 400B,滑窗 + 全局交错注意力,极高稀疏度的粗粒度 MoE;稳定性优先的现场记录 |
-| Ministral-3 | Mistral | 参数高效的 dense 家族:从 24B 父模型级联剪枝蒸馏而来,14 页方法说明非完整报告 |
-| Ling-Ring-2.6 | AntGroup | 1T,Lightning + MLA 混合线性;靠架构迁移预训练而非从零训 |
-| LongCat-Flash | Meituan | 560B,零计算专家做动态算力预算 + 快捷连接 MoE |
-| LongCat-Flash-Thinking | Meituan | 领域并行训练再融合,DORA 异步 rollout |
-| LongCat-Flash-Thinking-2601 | Meituan | 上一篇的 agentic 续作 |
-| MiMo-V2-Flash | Xiaomi | 309B/15B,128 窗口 SWA 5:1 + 注意力 sink,27T Token |
-| MiniMax-M2 | MiniMax | 掉头回全注意力 GQA 的反例,与 MiniMax-M1 的线性路线对着读 |
-| Step-3.5-Flash | StepFun | 196B/11B,SWA 3:1 + MTP-3 训推都用 |
+| Nemotron-3-Ultra | NVIDIA | 550B/55B,Hybrid Mamba-Attention + LatentMoE + NVFP4;官方已出 65 页技术报告 |
 | ZAYA1-8B | Zyphra | CCA + top-1 专家,AMD GPU 训练 |
 | Laguna-M1-XS2 | Poolside | 逐层 query 头预算,编码向开放权重 |
+| DeepSeek-V4 | DeepSeek | 百万 Token 长上下文的成本重构(**写作标杆**) |
+| Ling-Ring-2.6 | AntGroup | 1T,Lightning + MLA 混合线性;靠架构迁移预训练而非从零训 |
+| Gemma-4 | Google | 小模型家族,原生多模态与 encoder-free |
+| GLM-5 | Z.ai | 从 vibe coding 到 agentic engineering 的全栈重设计 |
 | Qwen3-Coder-Next | Alibaba | 编码 agent 方向的 Qwen 分支 |
+| Step-3.5-Flash | StepFun | 196B/11B,SWA 3:1 + MTP-3 训推都用 |
+| Trinity-Large | Arcee | 400B,滑窗 + 全局交错注意力,极高稀疏度的粗粒度 MoE;稳定性优先的现场记录 |
+| LongCat-Flash-Thinking-2601 | Meituan | 上一篇的 agentic 续作 |
+| MiMo-V2-Flash | Xiaomi | 309B/15B,128 窗口 SWA 5:1 + 注意力 sink,27T Token |
+| Nemotron-3 | NVIDIA | 权重、数据、recipe 一并公开;原件是 13 页白皮书,Nano 另有技术报告 |
+| Ministral-3 | Mistral | 参数高效的 dense 家族:从 24B 父模型级联剪枝蒸馏而来,14 页方法说明非完整报告 |
 | INTELLECT-3 | PrimeIntellect | prime-rl 训练栈产出的模型 |
+| Olmo-3 | Ai2 | 完全开源路线:交付整条模型流水线而非只交权重(依据 arXiv v2,118 页) |
+| MiniMax-M2 | MiniMax | 掉头回全注意力 GQA 的反例,与 MiniMax-M1 的线性路线对着读 |
+| LongCat-Flash-Thinking | Meituan | 领域并行训练再融合,DORA 异步 rollout |
+| LongCat-Flash | Meituan | 560B,零计算专家做动态算力预算 + 快捷连接 MoE |
+| GLM-4.5 | Z.ai | ARC 三能力先分开练,再蒸馏回一套权重 |
+| Kimi-K2 | Moonshot | 高质量数据见底后的 Token 与轨迹再利用 |
+| Qwen3 | Alibaba | 一套权重兼顾深思、快答与预算控制 |
+| Gemini-2.5 | Google | 闭源前沿少有的公开报告 |
 | Gemma-3 | Google | SWA 5:1 与 496 KiB/token 的 KV cache 对照基准 |
-| Nemotron-3-Ultra | NVIDIA | 550B/55B,Mamba-Transformer + LatentMoE + NVFP4 预训练;**原件是网页**,见 research.nvidia.com/labs/nemotron/Nemotron-3-Ultra/ |
-| Qwen3.8-Max | Alibaba | 2.4T/95B;真正的内容是 RL 系统——环境按 Task/Workspace/Harness 三轴解耦扩展、统一奖励系统、在线数据均衡器压批间梯度方差。**原件是网页**,见 qwen.ai/blog?id=qwen3.8 |
-| BERT | Google | 双向编码器预训练,微调范式的起点(2018) |
+| DeepSeek-V3 | DeepSeek | 671B MoE,FP8、DualPipe、无辅助损失负载均衡 |
+| Qwen2.5 | Alibaba | Qwen 上一代:架构几乎不动,增量全在数据与后训练(依据 arXiv v2) |
+| Llama-3 | Meta | 405B dense,复杂度从架构挪到数据与运维 |
+| DeepSeek-V2 | DeepSeek | MLA 与 DeepSeekMoE 的出处 |
+| Phi-3 | Microsoft | 小模型靠数据质量取胜;依据 arXiv v4,覆盖 phi-3 与 phi-3.5 共六个成员 |
+| GPT-4 | OpenAI | 能力与安全评测,训练细节保留 |
 | LLaMA | Meta | 开源基模时代的起点:7B–65B dense,只用公开数据(2023) |
-| Chinchilla | Google | 算力固定时参数与数据应等比例扩,推翻「越大越好」(DeepMind,2022) |
 | OPT | Meta | 175B 开源复现 GPT-3,附完整训练日志与故障记录(2022) |
-| Scaling-Laws | OpenAI | 损失随参数、数据、算力的幂律(2020) |
+| GPT-3 | OpenAI | few-shot 学习与 scaling 的源头 |
+| BERT | Google | 双向编码器预训练,微调范式的起点(2018) |
 
 ## 注意力与长上下文
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | DeepSeek-V3.2 | DeepSeek | DSA 稀疏注意力,先让长上下文变便宜 |
-| MiniMax-M1 | MiniMax | 混合线性注意力,把测试时算力成本压回线性 |
-| NSA | DeepSeek | 原生可训练、硬件对齐的稀疏注意力 |
-| MoBA | Moonshot | 块注意力混合,与 NSA 同期对打 |
-| MiniMax-01 | MiniMax | lightning attention 的出处 |
-| FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
-| FlashAttention-2 | Stanford | 并行与工作划分改进 |
-| FlashAttention-3 | Stanford | 异步与低精度(依据 NeurIPS 2024 正式版) |
 | FlashAttention-4 | Stanford | Blackwell 上的非对称扩张:软件模拟指数、TMEM、2-CTA MMA |
+| MiniMax-M1 | MiniMax | 混合线性注意力,把测试时算力成本压回线性 |
+| MoBA | Moonshot | 块注意力混合,与 NSA 同期对打 |
+| NSA | DeepSeek | 原生可训练、硬件对齐的稀疏注意力 |
+| MiniMax-01 | MiniMax | lightning attention 的出处 |
+| FlashAttention-3 | Stanford | 异步与低精度(依据 NeurIPS 2024 正式版) |
+| FlashAttention-2 | Stanford | 并行与工作划分改进 |
+| FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
 | MiniMax-Sparse-Attention | MiniMax | MSA:GQA 之上的块稀疏,在未压缩 KV 上做选择;MiniMax-M3 的注意力底座 |
 | Kimi-Linear | Moonshot | KDA:通道级遗忘门的线性注意力,Kimi-K3 的骨干 |
 | CCA | Zyphra | 直接在压缩空间里做注意力,MLA 的激进版 |
@@ -77,22 +77,22 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
-| DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
-| DAPO | ByteDance | 长思维链 RL 的四项工程改动 |
-| GSPO | Alibaba | 序列级重要性比 |
-| Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
-| Muon-is-Scalable-for-LLM-Training | Moonshot | Muon 规模化的两个前提:权重衰减与更新尺度对齐 |
-| Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
-| Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
-| rStar2-Agent | Microsoft | agentic reasoning 的训练 |
-| HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
-| AReaL | AntGroup | 大规模异步 RL 系统 |
-| Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
 | APEX-Agents-SkyRL-Recipe | Mercor | 397B 知识工作 Agent 的六步 RL recipe;**原件是官方博客,`papers/` 下无 PDF** |
-| Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
-| ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
 | AReaL-2.0 | AntGroup | position paper:轨迹协议、数据代理、演化控制面三支柱 |
+| Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
+| Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
+| ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
+| Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
+| Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
+| rStar2-Agent | Microsoft | agentic reasoning 的训练 |
+| GSPO | Alibaba | 序列级重要性比 |
+| AReaL | AntGroup | 大规模异步 RL 系统 |
+| DAPO | ByteDance | 长思维链 RL 的四项工程改动 |
+| Muon-is-Scalable-for-LLM-Training | Moonshot | Muon 规模化的两个前提:权重衰减与更新尺度对齐 |
+| DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
+| Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
+| HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
+| DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
 | AReaL-SEA | AntGroup | 多 agent 合成对话 + 每实例可执行 checker |
 | AReaL-DTA | AntGroup | 动态树注意力,共享前缀只算一次 |
 | Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
@@ -148,9 +148,9 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Engram | DeepSeek | 可扩展查表式条件记忆,稀疏的新维度(依据 arXiv v2) |
 | mHC | DeepSeek | 流形约束的超连接 |
+| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Slicing-and-Dicing-MoE | Washington | MoE 配置的系统性搜索(158 页,含大量附录) |
 | DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | LiquidGEMM | ByteDance | W4A8 GEMM 内核的硬件高效实现(Seed,与上交合作) |
@@ -178,11 +178,11 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| Kimi-K2.5 | Moonshot | 视觉与文本联合优化,加上 Agent Swarm 的并行编排 |
+| Thinking-with-Visual-Primitives | DeepSeek | 把坐标当思考的最小单位;**官方仓库已删除**,原件只剩本地件与社区镜像 |
 | GLM-5V-Turbo | Z.ai | 把感知放进决策回路,而不是当输入接口 |
 | Qwen3.5-Omni | Alibaba | Thinker/Talker 全模态,难点在流式与延迟 |
+| Kimi-K2.5 | Moonshot | 视觉与文本联合优化,加上 Agent Swarm 的并行编排 |
 | DeepSeek-OCR | DeepSeek | 把文字渲染成图,用视觉 Token 换文本 Token |
-| Thinking-with-Visual-Primitives | DeepSeek | 把坐标当思考的最小单位;**官方仓库已删除**,原件只剩本地件与社区镜像 |
 | Qwen3-Omni | Alibaba | 证明「全模态不退化可以做到」的实证工作,Qwen3.5-Omni 的前作 |
 | Qwen3-VL | Alibaba | Qwen 视觉理解线,dense 与 MoE 双形态 |
 | LongCat-Flash-Omni | Meituan | 560B 全模态,实时音视频交互 |
@@ -195,34 +195,34 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| Janus-Pro | DeepSeek | 解耦视觉编码:看图和画图不共用一只眼睛 |
-| HunyuanImage-3.0 | Tencent | 原生多模态图像生成 |
-| HunyuanVideo-1.5 | Tencent | 8.3B 视频 DiT,把成本压到单卡跑得动 |
-| Hunyuan3D-2.0 | Tencent | 高分辨率带纹理 3D 资产生成 |
-| HunyuanWorld-1.0 | Tencent | 可探索、可交互的 3D 世界生成 |
-| Kandinsky-5.0 | Sber | 图像与视频的基座模型家族 |
-| MOVA | OpenMOSS | 音视频同步生成,非对称双塔 |
-| Adversarial-Flow-Models | ByteDance | 对抗式流模型(Seed) |
-| Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
-| Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
-| AAPT | ByteDance | 自回归对抗后训练做实时交互视频生成(Seed) |
-| Flow-GRPO | Kuaishou | 在线 RL 训练流匹配模型(可灵,与港中文合作) |
-| Self-Forcing | Adobe | 自回归视频扩散的训推差距:用自己的输出做条件 |
-| Causal-Forcing | ShengShu | 自回归扩散蒸馏的正确做法,实时交互视频(生数,与清华合作) |
-| MixGRPO | Tencent | 混合 ODE-SDE 让流模型 GRPO 提速(混元) |
 | Seed3D-2.0 | ByteDance | 仿真可用的高保真 3D 生成,统一 PBR 模型(Seed) |
-| TRELLIS | Microsoft | 结构化 3D 潜表示,一套潜变量出多种 3D 格式 |
-| FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
+| Causal-Forcing | ShengShu | 自回归扩散蒸馏的正确做法,实时交互视频(生数,与清华合作) |
+| MOVA | OpenMOSS | 音视频同步生成,非对称双塔 |
 | TRELLIS-2 | Microsoft | 原生紧凑的结构化 3D 潜表示(O-Voxel) |
+| Adversarial-Flow-Models | ByteDance | 对抗式流模型(Seed) |
+| HunyuanVideo-1.5 | Tencent | 8.3B 视频 DiT,把成本压到单卡跑得动 |
+| Kandinsky-5.0 | Sber | 图像与视频的基座模型家族 |
+| HunyuanImage-3.0 | Tencent | 原生多模态图像生成 |
+| MixGRPO | Tencent | 混合 ODE-SDE 让流模型 GRPO 提速(混元) |
+| HunyuanWorld-1.0 | Tencent | 可探索、可交互的 3D 世界生成 |
+| AAPT | ByteDance | 自回归对抗后训练做实时交互视频生成(Seed) |
+| Self-Forcing | Adobe | 自回归视频扩散的训推差距:用自己的输出做条件 |
+| Flow-GRPO | Kuaishou | 在线 RL 训练流匹配模型(可灵,与港中文合作) |
+| Janus-Pro | DeepSeek | 解耦视觉编码:看图和画图不共用一只眼睛 |
+| Hunyuan3D-2.0 | Tencent | 高分辨率带纹理 3D 资产生成 |
+| TRELLIS | Microsoft | 结构化 3D 潜表示,一套潜变量出多种 3D 格式 |
+| Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
+| Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
+| FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
 | World-Tracing | WorldLabs | 生成像素对齐的几何,超出可见范围 |
 
 ## 音频
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| Step-Audio-R1.5 | StepFun | 听觉领域的思维链推理 |
 | StepAudio-2.5 | StepFun | 一个骨干带 ASR/TTS/Realtime 三种特化 |
 | Step-Audio-2 | StepFun | 带检索增强的音频理解与对话 |
-| Step-Audio-R1.5 | StepFun | 听觉领域的思维链推理 |
 | EnCodec | Meta | 神经音频编解码器 |
 | Whisper | OpenAI | 大规模弱监督的鲁棒语音识别 |
 | AudioLM | Google | 用语言模型方法生成音频 |
@@ -234,9 +234,9 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
-| Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
+| Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
+| Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | ToolOrchestra | NVIDIA | 模型与工具的高效编排,把智能从「更大模型」挪到「更会调度」 |
 | pi0.7 | PhysicalIntelligence | 可操控的通用机器人基模,涌现能力 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
@@ -256,21 +256,21 @@
 
 ## 自进化系统
 
-按「**哪个部件在自进化**」组织。已收录的邻近条目:`AIDE2`(Weco,harness)、`Fugu`(Sakana,编排器)、`AgentEvolver`(Alibaba,任务/课程)、`AReaL-2.0`(AntGroup,演化控制面)。
+本组已发布卡片按首发日从新到旧;未解读排在后面,发布后插到对应日期位置。一句话里仍标明「哪个部件在自进化」。已收录的邻近条目:`AIDE2`(Weco,harness)、`Fugu`(Sakana,编排器)、`AgentEvolver`(Alibaba,任务/课程)、`AReaL-2.0`(AntGroup,演化控制面)。
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
-| Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
-| SEAL | MIT | 部件:模型权重。让模型自己生成「自编辑指令」来更新权重 |
-| Absolute-Zero | Tsinghua | 部件:任务/课程。零外部数据,出题者与解题者自博弈(BIGAI 合作) |
-| R-Zero | Tencent | 部件:任务/课程。challenger 与 solver 共进化,ICLR 2026(腾讯西雅图 AI Lab) |
-| PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |
-| GEPA | Berkeley | 部件:Prompt。反思式提示词进化,DSPy 生态(Databricks/Stanford/MIT 合作) |
-| ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
-| Darwin-Godel-Machine | Sakana | 部件:harness。agent 改写自身代码 + 基准存档做开放式进化(UBC 合作) |
-| Agent-Workflow-Memory | CMU | 部件:记忆/经验。从轨迹里归纳可复用的工作流 |
-| Alita | Princeton | 部件:工具/技能库。最小预定义,自己造 MCP 工具(清华合作) |
-| AlphaEvolve | Google | 部件:算子/infra。进化搜索出的 kernel 反过来加速训练它自己的模型;**原件是白皮书,非 arXiv** |
 | AIDE2 | Weco | autoresearch 套 autoresearch,递归自我改进的首份实验证据;**原件是官方博客,`papers/` 下无 PDF** |
 | Reward-Free-Self-Evolution | Tencent | 部件:任务/课程。通过世界知识探索做无奖励的自发自进化 |
 | Dr-Zero | Meta | 部件:任务/课程。无训练数据的自进化搜索 agent(MSL) |
+| R-Zero | Tencent | 部件:任务/课程。challenger 与 solver 共进化,ICLR 2026(腾讯西雅图 AI Lab) |
+| GEPA | Berkeley | 部件:Prompt。反思式提示词进化,DSPy 生态(Databricks/Stanford/MIT 合作) |
+| SEAL | MIT | 部件:模型权重。让模型自己生成「自编辑指令」来更新权重 |
+| Darwin-Godel-Machine | Sakana | 部件:harness。agent 改写自身代码 + 基准存档做开放式进化(UBC 合作) |
+| Alita | Princeton | 部件:工具/技能库。最小预定义,自己造 MCP 工具(清华合作) |
+| AlphaEvolve | Google | 部件:算子/infra。进化搜索出的 kernel 反过来加速训练它自己的模型;**原件是白皮书,非 arXiv** |
+| Absolute-Zero | Tsinghua | 部件:任务/课程。零外部数据,出题者与解题者自博弈(BIGAI 合作) |
+| Agent-Workflow-Memory | CMU | 部件:记忆/经验。从轨迹里归纳可复用的工作流 |
+| ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
+| Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
+| PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |

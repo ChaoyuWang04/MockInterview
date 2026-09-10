@@ -86,7 +86,7 @@ $\theta'$ 才拿去答 $\tau$。答得好，这份 $\mathrm{SE}$ 就得到正奖
 
 和两条邻近路线的差别，用一句话就够，不在这里展开：
 
-- 本站 `reports/Meta/` 即将有的 Self-Rewarding-LM，改的也是权重，但奖励来自模型给自己打分；SEAL 的奖励来自「用 self-edit 更新之后，外部任务有没有做对」。
+- 本站 [Self-Rewarding-LM](/reports/Meta/Self-Rewarding-LM)，改的也是权重，但奖励来自模型给自己打分；SEAL 的奖励来自「用 self-edit 更新之后，外部任务有没有做对」。
 - 本站 [AIDE2](../Weco/AIDE2.md) 改的是包在模型外面的 harness，不改权重。SEAL 改的是权重本身。
 
 ## 旧方案卡在哪
@@ -569,4 +569,4 @@ SEAL 最值得记住的不是 47.0% 这个数，而是它把「学习」拆成�
 - $\mathrm{ReST}^{EM}$ 出处（论文参考文献 [40]）：Singh 等人，*Beyond human data: Scaling self-training for problem-solving with language models*，TMLR 2024。
 - 少样本 TTT 工具与协议（论文参考文献 [36]）：Akyürek 等人，*The surprising effectiveness of test-time training for few-shot learning*，arXiv:2411.07279。作者名单与本文高度重叠，SEAL 的少样本实例是在那篇工作的工具集上再包一层 RL。
 - implications 格式的前作（论文参考文献 [30]）：Akyürek 等人，Deductive closure training。
-- 跨篇指针：同为改权重的自我改进，见即将写入 `reports/Meta/` 的 Self-Rewarding-LM——那边是模型兼任奖励模型、给自己打分；这边是生成自编辑指令、用更新后的任务对错当奖励。改 harness 而不是改权重的路线，见 [AIDE2](../Weco/AIDE2.md)。
+- 跨篇指针：同为改权重的自我改进，见 [Self-Rewarding-LM](/reports/Meta/Self-Rewarding-LM)——那边是模型兼任奖励模型、给自己打分；这边是生成自编辑指令、用更新后的任务对错当奖励。改 harness 而不是改权重的路线，见 [AIDE2](/reports/Weco/AIDE2)。

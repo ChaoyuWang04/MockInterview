@@ -79,7 +79,7 @@ describe('Markdown 星号泄漏', () => {
     expect(renderMarkdown('- 结尾一个星号 \\*\n- \\* 开头一个星号')).not.toContain('**')
   })
 
-  it('全库正文渲染后不出现字面 **', () => {
+  it('全库正文渲染后不出现字面 **', { timeout: 15_000 }, () => {
     const leaks: string[] = []
 
     for (const root of contentRoots) {

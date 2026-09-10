@@ -17,7 +17,7 @@ export default function ReportsIndexPage() {
       </div>
       <p className="mt-2 text-sm leading-6 text-gray-500">
         按技术方向整理公开的基模 Technical Report
-        与核心技术论文,同一方向内从整体报告排到单点机制;条幅标出主要归属方。每篇用一篇完整长文讲清设计、原因和可迁移的部分。当前共
+        与核心技术论文。每个方向按首发日从新到旧;条幅标出主要归属方。每篇用一篇完整长文讲清设计、原因和可迁移的部分。当前共
         {' '}
         {total} 篇。
       </p>

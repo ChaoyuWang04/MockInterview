@@ -21,7 +21,7 @@ export interface ReportIndexEntry {
   summary: string
 }
 
-/** reports/index.md 的一个 `## 方向`,条目按行序 */
+/** reports/index.md 的一个 `## 方向`;已发布行必须按首发日从新到旧,同日按 slug 升序 */
 export interface ReportIndexTopic {
   title: string
   entries: ReportIndexEntry[]
@@ -169,7 +169,7 @@ export function getReport(
 
 /**
  * 解析 reports/index.md:`## 方向` 分组,表格三列 报告|公司|一句话。
- * 行序就是页面顺序(方向内从整体报告排到单点机制),这里不做任何重排。
+ * 行序就是页面顺序,这里不做任何重排。已发布行必须按首发日从新到旧,由 checkReportIndex 守住。
  * 状态不在索引里:是否已发布由文件是否存在决定,见 listReportTopics。
  */
 export function parseReportIndex(root = reportsRoot()): ReportIndexTopic[] {
@@ -212,11 +212,12 @@ export function parseReportIndex(root = reportsRoot()): ReportIndexTopic[] {
   return topics
 }
 
-/** 已发布文章与索引的一致性:每篇已发布文章必须在索引里恰有一行,且公司列等于目录名 */
+/** 已发布文章与索引的一致性:每篇已发布文章必须在索引里恰有一行,且公司列等于目录名;每个方向的已发布行必须按首发日从新到旧,同日按 slug 升序 */
 export function checkReportIndex(root = reportsRoot()): string[] {
   const registered = new Set<string>()
   const bySlug = new Map<string, string[]>()
-  for (const topic of parseReportIndex(root)) {
+  const topics = parseReportIndex(root)
+  for (const topic of topics) {
     for (const entry of topic.entries) {
       registered.add(`${entry.company}/${entry.slug}`)
       bySlug.set(entry.slug, [...(bySlug.get(entry.slug) ?? []), entry.company])
@@ -234,12 +235,47 @@ export function checkReportIndex(root = reportsRoot()): string[] {
       )
     }
   }
+
+  const publishedByCompany = new Map<string, Map<string, ReportSummary>>()
+  const publishedOf = (company: string, slug: string): ReportSummary | undefined => {
+    if (!publishedByCompany.has(company)) {
+      publishedByCompany.set(
+        company,
+        new Map(listReports(company, root).map((report) => [report.slug, report])),
+      )
+    }
+    return publishedByCompany.get(company)?.get(slug)
+  }
+  for (const topic of topics) {
+    let previous: { company: string; slug: string; releaseDate: string } | null = null
+    for (const entry of topic.entries) {
+      const summary = publishedOf(entry.company, entry.slug)
+      if (!summary) continue
+      if (previous) {
+        const dateOrder = summary.releaseDate.localeCompare(previous.releaseDate)
+        if (dateOrder > 0) {
+          errors.push(
+            `${topic.title}: ${entry.company}/${entry.slug} (${summary.releaseDate}) 排在 ${previous.company}/${previous.slug} (${previous.releaseDate}) 后面,已发布卡片必须按首发日从新到旧`,
+          )
+        } else if (dateOrder === 0 && entry.slug < previous.slug) {
+          errors.push(
+            `${topic.title}: ${entry.company}/${entry.slug} 与 ${previous.company}/${previous.slug} 同日 ${summary.releaseDate},同日必须按 slug 升序`,
+          )
+        }
+      }
+      previous = {
+        company: entry.company,
+        slug: entry.slug,
+        releaseDate: summary.releaseDate,
+      }
+    }
+  }
   return errors
 }
 
 /**
  * 页面数据:按索引顺序返回各方向及其已发布文章;未解读条目不出现,没有已发布文章的方向也不出现。
- * 索引与文件不一致时直接抛错,和 release-date 契约一样让问题带文件名暴露。
+ * 索引与文件不一致、或某方向已发布行不是从新到旧时直接抛错,和 release-date 契约一样让问题带文件名暴露。
  */
 export function listReportTopics(root = reportsRoot()): ReportTopic[] {
   const errors = checkReportIndex(root)

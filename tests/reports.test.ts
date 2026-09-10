@@ -30,7 +30,7 @@ function makeReportRoot(): string {
     path.join(root, 'OpenAI', 'GPT.md'),
     '# GPT Technical Report 解读\n\n<!-- release-date: 2025-01-01 -->\n\n完整正文。\n',
   )
-  // 索引行序故意让旧的 GPT 排在新的 DeepSeek-V4 前面:页面顺序由索引决定,不由首发日决定
+  // 已发布按首发日从新到旧;未解读排在后面
   fs.writeFileSync(
     path.join(root, 'index.md'),
     [
@@ -40,8 +40,8 @@ function makeReportRoot(): string {
       '',
       '| 报告 | 公司 | 一句话 |',
       '|---|---|---|',
-      '| GPT | OpenAI | 早期基模 |',
       '| DeepSeek-V4 | DeepSeek | 长上下文 |',
+      '| GPT | OpenAI | 早期基模 |',
       '| 只有原件 | DeepSeek | 尚未解读 |',
       '',
       '## 音频',
@@ -218,6 +218,76 @@ describe('报告解读 reports/', () => {
     }
   })
 
+  it('每个方向的已发布卡片按首发日从新到旧,同日按 slug 升序', () => {
+    for (const topic of listReportTopics()) {
+      const actual = topic.reports.map((report) => `${report.releaseDate}\t${report.slug}`)
+      const expected = [...topic.reports]
+        .sort((left, right) => {
+          const dateOrder = right.releaseDate.localeCompare(left.releaseDate)
+          if (dateOrder !== 0) return dateOrder
+          if (left.slug === right.slug) return 0
+          return left.slug < right.slug ? -1 : 1
+        })
+        .map((report) => `${report.releaseDate}\t${report.slug}`)
+      expect(actual, topic.title).toEqual(expected)
+    }
+  })
+
+  it('索引把较新的已发布报告排在较旧的后面时带方向名报错', () => {
+    const root = makeReportRoot()
+    fs.writeFileSync(
+      path.join(root, 'index.md'),
+      [
+        '# 报告库存',
+        '',
+        '## 语言基模',
+        '',
+        '| 报告 | 公司 | 一句话 |',
+        '|---|---|---|',
+        '| GPT | OpenAI | 早期基模 |',
+        '| DeepSeek-V4 | DeepSeek | 长上下文 |',
+        '',
+      ].join('\n'),
+    )
+
+    expect(checkReportIndex(root)).toEqual([
+      '语言基模: DeepSeek/DeepSeek-V4 (2026-04-24) 排在 OpenAI/GPT (2025-01-01) 后面,已发布卡片必须按首发日从新到旧',
+    ])
+    expect(() => listReportTopics(root)).toThrow(/从新到旧/)
+  })
+
+  it('同日已发布报告未按 slug 升序时带方向名报错', () => {
+    const root = makeReportRoot()
+    fs.writeFileSync(
+      path.join(root, 'OpenAI', 'Alpha.md'),
+      '# Alpha\n\n<!-- release-date: 2026-02-03 -->\n\n完整正文。\n',
+    )
+    fs.writeFileSync(
+      path.join(root, 'OpenAI', 'Beta.md'),
+      '# Beta\n\n<!-- release-date: 2026-02-03 -->\n\n完整正文。\n',
+    )
+    fs.writeFileSync(
+      path.join(root, 'index.md'),
+      [
+        '# 报告库存',
+        '',
+        '## 语言基模',
+        '',
+        '| 报告 | 公司 | 一句话 |',
+        '|---|---|---|',
+        '| DeepSeek-V4 | DeepSeek | 长上下文 |',
+        '| Beta | OpenAI | 同日乙 |',
+        '| Alpha | OpenAI | 同日甲 |',
+        '| GPT | OpenAI | 早期基模 |',
+        '',
+      ].join('\n'),
+    )
+
+    expect(checkReportIndex(root)).toEqual([
+      '语言基模: OpenAI/Alpha 与 OpenAI/Beta 同日 2026-02-03,同日必须按 slug 升序',
+    ])
+  })
+
   it('index.md 决定主题分组与顺序,未解读条目不上页面', () => {
     const root = makeReportRoot()
 
@@ -227,18 +297,18 @@ describe('报告解读 reports/', () => {
         title: '语言基模',
         reports: [
           {
-            slug: 'GPT',
-            company: 'OpenAI',
-            summary: '早期基模',
-            title: 'GPT Technical Report 解读',
-            releaseDate: '2025-01-01',
-          },
-          {
             slug: 'DeepSeek-V4',
             company: 'DeepSeek',
             summary: '长上下文',
             title: 'DeepSeek-V4 Technical Report 解读',
             releaseDate: '2026-04-24',
+          },
+          {
+            slug: 'GPT',
+            company: 'OpenAI',
+            summary: '早期基模',
+            title: 'GPT Technical Report 解读',
+            releaseDate: '2025-01-01',
           },
         ],
       },

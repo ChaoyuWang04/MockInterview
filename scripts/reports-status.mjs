@@ -1,6 +1,6 @@
 // 报告库存与解读状态:读 reports/index.md,状态由文件推导(docs/10-基模报告流程.md 第七节)
 //   ✅ reports/<公司>/<报告>.md 已发布   🚧 存在 _<报告>.md 草稿   ⬜ 只有原件或线索
-// 用法:npm run reports:status        有告警(已发布未登记 / 公司不一致 / PDF 未登记)时退出码为 1
+// 用法:npm run reports:status        有告警(已发布未登记 / 公司不一致 / 已发布未从新到旧 / PDF 未登记)时退出码为 1
 // lib/reports.ts 是同一套解析规则的 TS 版本;tests/reports.test.ts 钉住两边不漂移
 import fs from 'node:fs'
 import path from 'node:path'
@@ -89,6 +89,37 @@ export function collect(root = REPORTS, papers = PAPERS) {
         ? `${company}/${slug}.md 在 index.md 登记的公司是 ${elsewhere.join('、')},与目录不一致`
         : `${company}/${slug}.md 未在 index.md 登记`,
     )
+  }
+
+  const releaseDateOf = (company, slug) => {
+    const file = path.join(root, company, `${slug}.md`)
+    if (!fs.existsSync(file)) return null
+    for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
+      const match = line.trim().match(/^<!-- release-date: (\d{4}-\d{2}-\d{2}) -->$/)
+      if (match) return match[1]
+    }
+    return null
+  }
+  for (const topic of topics) {
+    let previous = null
+    for (const row of topic.rows) {
+      if (row.status !== '✅') continue
+      const releaseDate = releaseDateOf(row.company, row.slug)
+      if (!releaseDate) continue
+      if (previous) {
+        const dateOrder = releaseDate.localeCompare(previous.releaseDate)
+        if (dateOrder > 0) {
+          warnings.push(
+            `${topic.title}: ${row.company}/${row.slug} (${releaseDate}) 排在 ${previous.company}/${previous.slug} (${previous.releaseDate}) 后面,已发布卡片必须按首发日从新到旧`,
+          )
+        } else if (dateOrder === 0 && row.slug < previous.slug) {
+          warnings.push(
+            `${topic.title}: ${row.company}/${row.slug} 与 ${previous.company}/${previous.slug} 同日 ${releaseDate},同日必须按 slug 升序`,
+          )
+        }
+      }
+      previous = { company: row.company, slug: row.slug, releaseDate }
+    }
   }
 
   const unregisteredPdfs = []
