@@ -88,6 +88,7 @@
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
 | Continuous-Latent-Diffusion-LM | ByteDance | 连续潜空间上的扩散式语言模型(Seed) |
 | Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
+| FIPO | Alibaba | 未来 KL 影响的策略优化,引出深度推理(Qwen Pilot) |
 | ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
 | Terminal-Data-Engineering | NVIDIA | 扩展 LLM 终端能力的数据工程 |
 | AReaL-DTA | AntGroup | 动态树注意力,共享前缀只算一次 |
@@ -96,14 +97,17 @@
 | Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
 | SkyRL-Agent | Berkeley | 多轮长程 agent 的异步流水线调度 |
 | AgentEvolver | Alibaba | 通义,自进化 agent 系统:自出题、自导航、自归因 |
+| FP16-Training-Inference-Mismatch | SeaAILab | 训推数值不一致导致 RL 崩溃,换 FP16 即可解决 |
 | Ouro | ByteDance | 参数循环复用做潜空间推理的 scaling(Seed) |
 | Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
+| Evolution-Strategies-at-Scale | Cognizant | 进化策略替代 RL 微调十亿参数模型 |
 | rStar2-Agent | Microsoft | agentic reasoning 的训练 |
 | Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
 | GSPO | Alibaba | 序列级重要性比 |
 | AsyncFlow | Huawei | 服务化异步流式 RL,生产者-消费者工作流 |
 | ROLL | Alibaba | 面向 RLHF / 推理 / 多轮 agentic 的框架论文 |
 | AReaL | AntGroup | 大规模异步 RL 系统 |
+| GPG | Alibaba | 去掉 GRPO 多余项后的最简 RL 基线(AMAP) |
 | DAPO | ByteDance | 长思维链 RL 的四项工程改动 |
 | Muon-is-Scalable-for-LLM-Training | Moonshot | Muon 规模化的两个前提:权重衰减与更新尺度对齐 |
 | DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
@@ -119,10 +123,6 @@
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
 | Constitutional-AI | Anthropic | 用原则和 AI 反馈替代人工有害性标注,RLAIF 的出处 |
 | InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
-| Evolution-Strategies-at-Scale | Cognizant | 进化策略替代 RL 微调十亿参数模型 |
-| FIPO | Alibaba | 未来 KL 影响的策略优化,引出深度推理(Qwen Pilot) |
-| GPG | Alibaba | 去掉 GRPO 多余项后的最简 RL 基线(AMAP) |
-| FP16-Training-Inference-Mismatch | SeaAILab | 训推数值不一致导致 RL 崩溃,换 FP16 即可解决 |
 
 ## Agent 训练与工具使用
 
@@ -246,15 +246,15 @@
 |---|---|---|
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
 | pi0.7 | PhysicalIntelligence | 可操控的通用机器人基模,涌现能力 |
+| DreamDojo | NVIDIA | 大规模人类视频训练的通用机器人世界模型 |
+| DreamZero | NVIDIA | 世界动作模型即零样本策略 |
+| LingBot-World | AntGroup | 开源世界模型(蚂蚁灵波 Robbyant) |
 | ToolOrchestra | NVIDIA | 模型与工具的高效编排,把智能从「更大模型」挪到「更会调度」 |
 | Dreamer-4 | Google | 在可扩展世界模型里训练 agent(DeepMind) |
+| V-JEPA-2 | Meta | 自监督视频模型做理解、预测与规划(FAIR) |
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
-| V-JEPA-2 | Meta | 自监督视频模型做理解、预测与规划(FAIR) |
-| LingBot-World | AntGroup | 开源世界模型(蚂蚁灵波 Robbyant) |
-| DreamDojo | NVIDIA | 大规模人类视频训练的通用机器人世界模型 |
-| DreamZero | NVIDIA | 世界动作模型即零样本策略 |
 | HunyuanWorld-2.0 | Tencent | 重建、生成、模拟三合一的 3D 世界模型 |
 | HunyuanWorld-1.5 | Tencent | HunyuanWorld-1.0 的可交互续作(HY-WorldPlay) |
 | Infinite-World | Meituan | 无位姿层级记忆,交互世界模型扩到 1000 帧(与南开合作) |
