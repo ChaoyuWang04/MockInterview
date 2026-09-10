@@ -13,6 +13,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| DeepSeek-V4.1-Flash | DeepSeek | 552B CED,prefill 8B/decode 16B,CSA2+FP4 把全局 KV 压到 890 B/token |
 | Qwen3.8-Max | Alibaba | 2.4T/95B;真正的内容是 RL 系统——环境按 Task/Workspace/Harness 三轴解耦扩展、统一奖励系统、在线数据均衡器压批间梯度方差。**原件是网页**,见 qwen.ai/blog?id=qwen3.8 |
 | Kimi-K3 | Moonshot | 序列、深度、宽度一起扩的系统级设计 |
 | Nemotron-3-Ultra | NVIDIA | 550B/55B,Hybrid Mamba-Attention + LatentMoE + NVFP4;官方已出 65 页技术报告 |
@@ -50,7 +51,6 @@
 | OPT | Meta | 175B 开源复现 GPT-3,附完整训练日志与故障记录(2022) |
 | GPT-3 | OpenAI | few-shot 学习与 scaling 的源头 |
 | BERT | Google | 双向编码器预训练,微调范式的起点(2018) |
-| DeepSeek-V4.1-Flash | DeepSeek | 552B CED,prefill 8B/decode 16B,CSA2+FP4 把全局 KV 压到 890 B/token |
 
 ## 注意力与长上下文
 
@@ -84,6 +84,7 @@
 | AReaL-2.0 | AntGroup | position paper:轨迹协议、数据代理、演化控制面三支柱 |
 | MOPD | Xiaomi | 多教师 on-policy 蒸馏做能力整合,MiMo-V2-Flash 的后训练方法(北大合作) |
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
+| Continuous-Latent-Diffusion-LM | ByteDance | 连续潜空间上的扩散式语言模型(Seed) |
 | Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
 | ProRL-Agent | NVIDIA | Polar 前作,Rollout-as-a-Service |
 | Terminal-Data-Engineering | NVIDIA | 扩展 LLM 终端能力的数据工程 |
@@ -93,6 +94,7 @@
 | Stabilizing-RL-with-LLMs | Alibaba | RL 稳定性的形式化与实践(与 GSPO 篇立场相反,已在文中摆明) |
 | SkyRL-Agent | Berkeley | 多轮长程 agent 的异步流水线调度 |
 | AgentEvolver | Alibaba | 通义,自进化 agent 系统:自出题、自导航、自归因 |
+| Ouro | ByteDance | 参数循环复用做潜空间推理的 scaling(Seed) |
 | Laminar | ByteDance | 可扩展的异步 RL 后训练框架(依据 arXiv v1;EuroSys '26 正式版数字一致) |
 | rStar2-Agent | Microsoft | agentic reasoning 的训练 |
 | Agent-Lightning | Microsoft | agent 执行与训练完全解耦,span 流入 LightningStore |
@@ -104,13 +106,11 @@
 | Muon-is-Scalable-for-LLM-Training | Moonshot | Muon 规模化的两个前提:权重衰减与更新尺度对齐 |
 | DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
 | Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
+| Coconut | Meta | 连续潜空间推理,不吐出 CoT token(FAIR) |
 | HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
 | FineWeb | HuggingFace | 15T token 预训练语料的清洗与消融配方 |
 | DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
-| Coconut | Meta | 连续潜空间推理,不吐出 CoT token(FAIR) |
-| Ouro | ByteDance | 参数循环复用做潜空间推理的 scaling(Seed) |
-| Continuous-Latent-Diffusion-LM | ByteDance | 连续潜空间上的扩散式语言模型(Seed) |
 | InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
 | LIMA | Meta | 1000 条精选样本就够对齐,能力来自预训练 |
 | RFT | Alibaba | 拒绝采样微调:推理路径越多样,数学能力提升越大(DAMO) |
@@ -150,6 +150,8 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| DSpark | DeepSeek | 半自回归草稿 + 置信度调度验证,投机解码 |
+| DFlash | UCSD | 块扩散做并行草稿的投机解码,ICML 2026 |
 | Engram | DeepSeek | 可扩展查表式条件记忆,稀疏的新维度(依据 arXiv v2) |
 | mHC | DeepSeek | 流形约束的超连接 |
 | PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
@@ -162,8 +164,6 @@
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
 | DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
-| DSpark | DeepSeek | 半自回归草稿 + 置信度调度验证,投机解码 |
-| DFlash | UCSD | 块扩散做并行草稿的投机解码,ICML 2026 |
 
 ## 分布式训练与并行
 
@@ -213,15 +213,15 @@
 | AAPT | ByteDance | 自回归对抗后训练做实时交互视频生成(Seed) |
 | Self-Forcing | Adobe | 自回归视频扩散的训推差距:用自己的输出做条件 |
 | Flow-GRPO | Kuaishou | 在线 RL 训练流匹配模型(可灵,与港中文合作) |
+| SpatialLLM | JohnsHopkins | 3D 空间智能的多模态模型设计(CVPR 2025 highlight) |
+| CAST | ShanghaiTech | 单张 RGB 做组件对齐的 3D 场景重建(SIGGRAPH 2025 Best Paper) |
 | Janus-Pro | DeepSeek | 解耦视觉编码:看图和画图不共用一只眼睛 |
 | Hunyuan3D-2.0 | Tencent | 高分辨率带纹理 3D 资产生成 |
 | TRELLIS | Microsoft | 结构化 3D 潜表示,一套潜变量出多种 3D 格式 |
+| Video-3D-LLM | CUHK | 把 3D 场景当视频,位置感知表示(CVPR 2025) |
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
-| CAST | ShanghaiTech | 单张 RGB 做组件对齐的 3D 场景重建(SIGGRAPH 2025 Best Paper 提名) |
-| SpatialLLM | JohnsHopkins | 3D 空间智能的多模态模型设计(CVPR 2025 highlight) |
-| Video-3D-LLM | CUHK | 把 3D 场景当视频,位置感知表示(CVPR 2025) |
 | FirePlace | Google | LLM 常识加几何约束做 3D 物体摆放(CVPR 2025 highlight;DeepMind) |
 | LayoutVLM | Stanford | VLM 可微优化 3D 布局(CVPR 2025) |
 | Global-Local-Tree-Search | BUPT | VLM 全局-局部树搜索做室内 3D 场景(CVPR 2025) |
