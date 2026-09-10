@@ -40,3 +40,15 @@ body {
   overflow-x: auto;
   padding-block: 0.35rem;
 }
+
+/* 开源解读阅读器:只有图片撑满整篇宽度,其余一切(正文、表格、代码块、公式)保持 52rem 阅读宽度并居中。
+   archify 导出的 SVG 画布约 1100px 宽,在 832px 的文字栏里会被缩到 0.77 倍,字号掉到 6.8px;
+   放到整篇宽度后回到 10px 以上。含图片的段落可能同时带着「打开交互版」链接,所以按「段落里有图」匹配;选择器带 .prose 是为了压过上面 .prose .markdown-table-scroll 与 .prose .katex-display 的 max-width: 100% */
+.prose.os-prose > :not(:has(> img)) {
+  max-width: 52rem;
+  margin-inline: auto;
+}
+.prose.os-prose > p:has(> img) img {
+  width: 100%;
+  height: auto;
+}
