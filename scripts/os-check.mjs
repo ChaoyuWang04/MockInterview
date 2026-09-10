@@ -5,7 +5,8 @@
 //   3) 每页 markdown 引用的 /opensource/<项目>/... 文件都存在
 //   4) 每份 _NN-evidence.md 的「位置」与「原样引用」逐条拿到 projects/<主题>/<项目>/ 的源码上核对
 //   5) 开跑前先把被检查项目的源码仓同步到上游最新(见 scripts/projects-sync.mjs),
-//      再核对解读页记录的源码基准 commit 是否就是当前 HEAD;落后即判失败,提示按 06 更新
+//      再核对解读页记录的源码基准 commit 是否就是当前 HEAD;漂移且动到被引用文件才判失败,
+//      未触及引用点只提醒(上游高频合并时绝大多数漂移与本解读无关)
 // 用法: node scripts/os-check.mjs [--project <项目名>] [--skip-archify] [--skip-sync]
 import fs from 'node:fs';
 import os from 'node:os';
@@ -168,6 +169,16 @@ function checkEvidence({ topic, project, dir }) {
 // ---- 源码基准核对 ----
 // 解读的每一条断言都钉在一个 commit 上。工作树被同步到上游最新之后,
 // 若解读页记录的基准不是当前 HEAD,这份解读就已经过期,必须按 06 的「已有解读更新」复核。
+function citedSourceFiles(dir) {
+  // 底稿与证据表里所有形如 `path/to/file.py` 或 `path/to/file.py:12-34` 的引用
+  const files = new Set();
+  for (const f of fs.readdirSync(dir).filter((x) => x.startsWith('_') && x.endsWith('.md'))) {
+    const md = fs.readFileSync(path.join(dir, f), 'utf8');
+    for (const m of md.matchAll(/`([\w./-]+\.(?:py|cu|cuh|h|cpp|hpp|rs|mjs|ts))(?::[\d,、/ -]*)?`/g)) files.add(m[1]);
+  }
+  return files;
+}
+
 function checkBaseline({ topic, project, dir }) {
   const repoRoot = path.join(ROOT, 'projects', topic, project);
   if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${project} 不存在,跳过基准核对`); return; }
@@ -176,12 +187,36 @@ function checkBaseline({ topic, project, dir }) {
   const md = fs.readFileSync(path.join(dir, overview), 'utf8');
   const m = md.match(/commit\s+`([0-9a-f]{7,40})`/);
   if (!m) { warn(`${overview}: 没有记录源码基准 commit(格式: commit \`<sha>\`),无法判断解读是否已过期`); return; }
+  const git = (a) => execFileSync('git', ['-C', repoRoot, ...a], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim();
   let head;
-  try { head = execFileSync('git', ['-C', repoRoot, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(); }
+  try { head = git(['rev-parse', 'HEAD']); }
   catch (e) { fail(`读不到 projects/${topic}/${project} 的 HEAD(${(e.message || '').split('\n')[0]})`); return; }
   const recorded = m[1];
-  if (head.startsWith(recorded)) ok(`源码基准 ${recorded.slice(0, 12)} 与工作树 HEAD 一致`);
-  else fail(`源码基准已过期:${overview} 记录 ${recorded.slice(0, 12)},工作树 HEAD 是 ${head.slice(0, 12)};按 06 的「已有解读更新」复核基准、正文与证据表`);
+  if (head.startsWith(recorded)) { ok(`源码基准 ${recorded.slice(0, 12)} 与工作树 HEAD 一致`); return; }
+
+  // 基准漂移了。只有当漂移真的动到被引用的文件时才算解读过期;
+  // 上游高频合并(vLLM 一天几十个提交)时,绝大多数漂移与本解读无关。
+  let changed, count;
+  try {
+    changed = new Set(git(['diff', '--name-only', `${recorded}..HEAD`]).split('\n').filter(Boolean));
+    count = git(['rev-list', '--count', `${recorded}..HEAD`]);
+  } catch (e) {
+    fail(`${overview}: 基准 ${recorded.slice(0, 12)} 在工作树里找不到(${(e.message || '').split('\n')[0]});请重新核对并更新基准`);
+    return;
+  }
+  const cited = citedSourceFiles(dir);
+  const hit = [...cited].filter((f) => changed.has(f)).sort();
+  if (!hit.length) {
+    warn(
+      `基准漂移 ${count} 个提交(${recorded.slice(0, 12)} → ${head.slice(0, 12)}),` +
+        `但未触及本解读引用的任何文件(共引用 ${cited.size} 个);把 ${overview} 的基准更新为 ${head.slice(0, 12)} 即可`,
+    );
+    return;
+  }
+  fail(
+    `源码基准已过期:${overview} 记录 ${recorded.slice(0, 12)},工作树 HEAD 是 ${head.slice(0, 12)}(相差 ${count} 个提交),` +
+      `其中 ${hit.length} 个被引用的文件有改动,需按 06 的「已有解读更新」逐条复核:${hit.slice(0, 8).join('、')}${hit.length > 8 ? ' 等' : ''}`,
+  );
 }
 
 const projects = listProjects();
