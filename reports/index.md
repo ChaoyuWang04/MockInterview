@@ -57,22 +57,22 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | MiniMax-Sparse-Attention | MiniMax | MSA:GQA 之上的块稀疏,在未压缩 KV 上做选择;MiniMax-M3 的注意力底座 |
+| Mixture-of-Depths-Attention | ByteDance | 让 Query 额外看前层同位置的 depth KV,缓解深层信号稀释(Seed) |
 | IndexCache | Z.ai | 每四个稀疏注意力层复用同一个 indexer,1M 上下文每 token FLOPs 降 2.9×;GLM-5.2 的 IndexShare 出处,GLM-5 报告未覆盖 |
 | DeepSeek-V3.2 | DeepSeek | DSA 稀疏注意力,先让长上下文变便宜 |
 | Kimi-Linear | Moonshot | KDA:通道级遗忘门的线性注意力,Kimi-K3 的骨干 |
+| Recursive-Language-Models | MIT | 把长上下文当外部变量,让模型递归调用自己来处理 |
 | CCA | Zyphra | 直接在压缩空间里做注意力,MLA 的激进版 |
 | FlashAttention-4 | Stanford | Blackwell 上的非对称扩张:软件模拟指数、TMEM、2-CTA MMA |
 | MiniMax-M1 | MiniMax | 混合线性注意力,把测试时算力成本压回线性 |
 | MoBA | Moonshot | 块注意力混合,与 NSA 同期对打 |
 | NSA | DeepSeek | 原生可训练、硬件对齐的稀疏注意力 |
 | MiniMax-01 | MiniMax | lightning attention 的出处 |
+| From-Attention-to-Activation | Huawei | 首 token 注意力集中与激活离群值的成因,OrthoAdam 消除(诺亚方舟) |
 | FlashAttention-3 | Stanford | 异步与低精度(依据 NeurIPS 2024 正式版) |
 | FlashAttention-2 | Stanford | 并行与工作划分改进 |
 | FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
 | Transformer | Google | 注意力机制的出处:Attention Is All You Need(2017) |
-| Mixture-of-Depths-Attention | ByteDance | 按 token 动态分配注意力深度(Seed) |
-| Recursive-Language-Models | MIT | 把长上下文当外部变量,让模型递归调用自己来处理 |
-| From-Attention-to-Activation | Huawei | 首 token 注意力集中与激活离群值的成因,OrthoAdam 消除(诺亚方舟) |
 | Gated-Attention | Alibaba | 注意力输出加门控,消 attention sink 并提升稀疏性;Qwen3-Next 采用 |
 
 ## 训练方法与强化学习
@@ -158,10 +158,10 @@
 | LiquidGEMM | ByteDance | W4A8 GEMM 内核的硬件高效实现(Seed,与上交合作) |
 | DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
-| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
-| Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Sarathi-Serve | Microsoft | 分块预填充 + 无停顿调度,吞吐与延迟兼得(MSR India) |
 | SGLang | Berkeley | RadixAttention 前缀缓存与结构化输出的服务框架(LMSYS) |
+| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
+| Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
 | DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 
@@ -186,11 +186,11 @@
 | GLM-5V-Turbo | Z.ai | 把感知放进决策回路,而不是当输入接口 |
 | Qwen3.5-Omni | Alibaba | Thinker/Talker 全模态,难点在流式与延迟 |
 | Kimi-K2.5 | Moonshot | 视觉与文本联合优化,加上 Agent Swarm 的并行编排 |
-| DeepSeek-OCR | DeepSeek | 把文字渲染成图,用视觉 Token 换文本 Token |
-| Qwen3-Omni | Alibaba | 证明「全模态不退化可以做到」的实证工作,Qwen3.5-Omni 的前作 |
-| Qwen3-VL | Alibaba | Qwen 视觉理解线,dense 与 MoE 双形态 |
-| LongCat-Flash-Omni | Meituan | 560B 全模态,实时音视频交互 |
 | ERNIE-5.0 | Baidu | 2.4T 原生全模态,统一理解与生成;ERNIE 5.1 是纯文本版、无独立报告 |
+| LongCat-Flash-Omni | Meituan | 560B 全模态,实时音视频交互 |
+| DeepSeek-OCR | DeepSeek | 把文字渲染成图,用视觉 Token 换文本 Token |
+| Qwen3-VL | Alibaba | Qwen 视觉理解线,dense 与 MoE 双形态 |
+| Qwen3-Omni | Alibaba | 证明「全模态不退化可以做到」的实证工作,Qwen3.5-Omni 的前作 |
 | Flamingo | Google | 冻结视觉编码器 + 冻结 LM 的少样本视觉语言模型(DeepMind) |
 | Chameleon | Meta | 早期融合的混合模态基模,图文统一 token(FAIR) |
 | Qwen2.5-Omni | Alibaba | Thinker-Talker 全模态架构的出处 |
