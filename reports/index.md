@@ -81,6 +81,7 @@
 |---|---|---|
 | APEX-Agents-SkyRL-Recipe | Mercor | 397B 知识工作 Agent 的六步 RL recipe;**原件是官方博客,`papers/` 下无 PDF** |
 | SOAP-Muon-and-Beyond | NVIDIA | 优化器 scaling 对照,附开源实现 |
+| Behavior-Leverage-Imbalance | AntGroup | 多教师 OPD 的 top-K 丢掉决策坐标,导致过调用 |
 | AReaL-2.0 | AntGroup | position paper:轨迹协议、数据代理、演化控制面三支柱 |
 | MOPD | Xiaomi | 多教师 on-policy 蒸馏做能力整合,MiMo-V2-Flash 的后训练方法(北大合作) |
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
@@ -110,11 +111,10 @@
 | HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
 | FineWeb | HuggingFace | 15T token 预训练语料的清洗与消融配方 |
 | DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
+| RFT | Alibaba | 拒绝采样微调:推理路径越多样,数学能力提升越大(DAMO) |
+| LIMA | Meta | 1000 条精选样本就够对齐,能力来自预训练 |
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
 | InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
-| LIMA | Meta | 1000 条精选样本就够对齐,能力来自预训练 |
-| RFT | Alibaba | 拒绝采样微调:推理路径越多样,数学能力提升越大(DAMO) |
-| Behavior-Leverage-Imbalance | AntGroup | 多教师在线策略蒸馏中的行为杠杆失衡 |
 | Counteraction-Aware-OPD | Kuaishou | 多教师在线策略蒸馏:恢复通用能力同时保住领域能力 |
 | Constitutional-AI | Anthropic | 用原则和 AI 反馈替代人工有害性标注,RLAIF 的出处 |
 | Lets-Verify-Step-by-Step | OpenAI | 过程监督优于结果监督,PRM800K 的出处 |
@@ -214,17 +214,17 @@
 | Self-Forcing | Adobe | 自回归视频扩散的训推差距:用自己的输出做条件 |
 | Flow-GRPO | Kuaishou | 在线 RL 训练流匹配模型(可灵,与港中文合作) |
 | SpatialLLM | JohnsHopkins | 3D 空间智能的多模态模型设计(CVPR 2025 highlight) |
+| Global-Local-Tree-Search | BUPT | VLM 全局-局部树搜索做室内 3D 场景(CVPR 2025) |
+| FirePlace | Google | LLM 常识加几何约束做 3D 物体摆放(CVPR 2025 highlight;DeepMind) |
 | CAST | ShanghaiTech | 单张 RGB 做组件对齐的 3D 场景重建(SIGGRAPH 2025 Best Paper) |
 | Janus-Pro | DeepSeek | 解耦视觉编码:看图和画图不共用一只眼睛 |
 | Hunyuan3D-2.0 | Tencent | 高分辨率带纹理 3D 资产生成 |
+| LayoutVLM | Stanford | VLM 可微优化 3D 布局(CVPR 2025) |
 | TRELLIS | Microsoft | 结构化 3D 潜表示,一套潜变量出多种 3D 格式 |
 | Video-3D-LLM | CUHK | 把 3D 场景当视频,位置感知表示(CVPR 2025) |
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
-| FirePlace | Google | LLM 常识加几何约束做 3D 物体摆放(CVPR 2025 highlight;DeepMind) |
-| LayoutVLM | Stanford | VLM 可微优化 3D 布局(CVPR 2025) |
-| Global-Local-Tree-Search | BUPT | VLM 全局-局部树搜索做室内 3D 场景(CVPR 2025) |
 
 ## 音频
 
