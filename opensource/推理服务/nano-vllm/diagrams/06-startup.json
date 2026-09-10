@@ -1,0 +1,293 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "06 启动期:开店前按什么顺序做了什么?",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "main",
+        "label": "主线:从店规到开门",
+        "focus": [
+          "e1",
+          "e2",
+          "r1",
+          "r2",
+          "r3",
+          "r4",
+          "e3"
+        ],
+        "note": "经理建店规、开分店,rank 0 厨房四步做完,经理才建领班。"
+      },
+      {
+        "id": "branches",
+        "label": "分店:同样的四步,末尾进 loop",
+        "focus": [
+          "e2",
+          "n1",
+          "n2",
+          "r4"
+        ],
+        "note": "子进程各自完整跑一遍厨房初始化,barrier 后打开传菜窗口等指令。"
+      },
+      {
+        "id": "constants",
+        "label": "常量:谁产出、谁消费",
+        "focus": [
+          "r2",
+          "r3",
+          "r4",
+          "e3"
+        ],
+        "note": "试做量峰值,摆桌算出桌数并写回店规,领班读到它才能建座位管理员。"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "engine",
+      "label": "经理 · LLMEngine.__init__(主进程)"
+    },
+    {
+      "id": "runner",
+      "label": "厨房 rank 0 · ModelRunner.__init__"
+    },
+    {
+      "id": "runnerN",
+      "label": "分店厨房 · rank 1..N(spawn 子进程)"
+    }
+  ],
+  "phases": [
+    {
+      "id": "ph0",
+      "label": "建店规",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "ph1",
+      "label": "开分店",
+      "fromCol": 1,
+      "toCol": 1
+    },
+    {
+      "id": "ph2",
+      "label": "建厨房:菜谱、试做、摆桌、录流水线",
+      "fromCol": 2,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_runner",
+      "label": "ModelRunner.__init__ 四步(model_runner.py:26-37)",
+      "lane": "runner",
+      "fromCol": 2,
+      "toCol": 5
+    },
+    {
+      "id": "g_child",
+      "label": "子进程:同样的 __init__,末尾 loop(:41-48, 61-66)",
+      "lane": "runnerN",
+      "fromCol": 1,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "e1",
+    "e2",
+    "r1",
+    "r2",
+    "r3",
+    "r4",
+    "e3"
+  ],
+  "nodes": [
+    {
+      "id": "e1",
+      "lane": "engine",
+      "col": 0,
+      "type": "security",
+      "label": "① 建店规",
+      "sublabel": "三条断言;桌大小 256",
+      "width": 150
+    },
+    {
+      "id": "e2",
+      "lane": "engine",
+      "col": 1,
+      "type": "backend",
+      "label": "② 开分店",
+      "sublabel": "spawn;每店一个 Event",
+      "width": 150
+    },
+    {
+      "id": "e3",
+      "lane": "engine",
+      "col": 5,
+      "type": "backend",
+      "label": "⑦ 建领班,开门",
+      "sublabel": "tokenizer;领班读桌数",
+      "width": 150
+    },
+    {
+      "id": "r1",
+      "lane": "runner",
+      "col": 2,
+      "type": "backend",
+      "label": "③ 建菜谱装权重",
+      "sublabel": "NCCL 入组;装权重",
+      "width": 150
+    },
+    {
+      "id": "r2",
+      "lane": "runner",
+      "col": 3,
+      "type": "backend",
+      "label": "④ 试做最大一单",
+      "sublabel": "warmup;量峰值显存",
+      "width": 150
+    },
+    {
+      "id": "r3",
+      "lane": "runner",
+      "col": 4,
+      "type": "database",
+      "label": "⑤ 摆桌",
+      "sublabel": "算桌数写回;绑每层",
+      "width": 150
+    },
+    {
+      "id": "r4",
+      "lane": "runner",
+      "col": 5,
+      "type": "cloud",
+      "label": "⑥ 录流水线",
+      "sublabel": "graph_bs 倒序;共享池",
+      "width": 150
+    },
+    {
+      "id": "n1",
+      "lane": "runnerN",
+      "col": 1,
+      "type": "external",
+      "label": "分店进程启动",
+      "sublabel": "config 副本与 Event",
+      "width": 150
+    },
+    {
+      "id": "n2",
+      "lane": "runnerN",
+      "col": 5,
+      "type": "messagebus",
+      "label": "传菜窗口开张",
+      "sublabel": "barrier 后 attach;loop",
+      "width": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_e1_e2",
+      "from": "e1",
+      "to": "e2",
+      "label": "店规就绪",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_e2_r1",
+      "from": "e2",
+      "to": "r1",
+      "label": "自己建厨房",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_e2_n1",
+      "from": "e2",
+      "to": "n1",
+      "label": "spawn",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_r1_r2",
+      "from": "r1",
+      "to": "r2",
+      "label": "权重在卡上",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_r2_r3",
+      "from": "r2",
+      "to": "r3",
+      "label": "峰值已知",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_r3_r4",
+      "from": "r3",
+      "to": "r4",
+      "label": "桌数写回",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_r3_e3",
+      "from": "r3",
+      "to": "e3",
+      "label": "enforce_eager 跳过",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_r4_e3",
+      "from": "r4",
+      "to": "e3",
+      "label": "流水线就绪",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_r4_n2",
+      "from": "r4",
+      "to": "n2",
+      "label": "TP>1:建窗口后 barrier",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_n1_n2",
+      "from": "n1",
+      "to": "n2",
+      "label": "同样跑完 ③ 到 ⑥",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "三条公式",
+      "items": [
+        "block_bytes = 2 · L · 256 · H_kv · d · itemsize(:112)",
+        "桌数 = ⌊(total · util − used − peak + current) / block_bytes⌋(:113)",
+        "试做:seq_len = min(预算, max_model_len),num_seqs = min(预算 ÷ seq_len, max_num_seqs)(:94-97)"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "顺序为什么不能换",
+      "items": [
+        "领班在厨房之后建(llm_engine.py:31-34):桌数是试做之后才算出来写回店规的",
+        "分店先 spawn,各自完整跑一遍厨房初始化;窗口由 rank 0 建,barrier 后分店才 attach"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "写死的东西",
+      "items": [
+        "NCCL tcp://localhost:2333;共享内存名 nanovllm、1 MiB",
+        "graph_bs = 1, 2, 4, 8, 16 … 512,倒序捕获、共享一个池;TP 1 到 8;桌大小是 256 的倍数"
+      ]
+    }
+  ]
+}

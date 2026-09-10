@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "05b 前向两条路:现做还是回放,为什么只有 rank 0 出菜?",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1080,
+      640
+    ],
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "default": {
+          "label": "现做路 / 共用"
+        },
+        "emphasis": {
+          "label": "主路径:decode 回放"
+        },
+        "dashed": {
+          "label": "录制时定下的动作"
+        },
+        "security": {
+          "label": "TP 会合点"
+        },
+        "database": {
+          "label": "厨房持有的显存状态"
+        }
+      }
+    },
+    "views": [
+      {
+        "id": "replay-path",
+        "label": "回放路",
+        "focus": [
+          "inp",
+          "gv",
+          "replay",
+          "head",
+          "samp"
+        ],
+        "note": "decode、没开 enforce_eager、bs≤512:填静态缓冲,按桶取图回放,再现做 lm_head 与采样。"
+      },
+      {
+        "id": "eager-path",
+        "label": "现做路",
+        "focus": [
+          "inp",
+          "eager",
+          "attn",
+          "kv",
+          "ar",
+          "head",
+          "samp"
+        ],
+        "note": "prefill 永远现做;每层灶台先按槽位写 K/V,再用 flash-attn 读桌位;切菜刀在 TP>1 时 all_reduce。"
+      },
+      {
+        "id": "tp-side",
+        "label": "分店旁路",
+        "focus": [
+          "runnerN",
+          "ar",
+          "head",
+          "samp"
+        ],
+        "note": "分店用同一份工单做同样的前向,只在 all_reduce 与 gather 处会合;不备温度、不采样、返回 None。"
+      }
+    ]
+  },
+  "stages": [
+    {
+      "label": "前向入口"
+    },
+    {
+      "label": "选路"
+    },
+    {
+      "label": "菜谱前向 · 每层"
+    },
+    {
+      "label": "出 logits"
+    },
+    {
+      "label": "出菜"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "inp",
+      "type": "backend",
+      "label": "① 前向入口",
+      "sublabel": "run_model(ids, pos);工单在全局",
+      "stage": 0,
+      "row": 1,
+      "tag": "inference_mode",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "runnerN",
+      "type": "external",
+      "label": "⑩ 分店厨房 rank≥1",
+      "sublabel": "同一份单,同样前向,不出菜",
+      "stage": 0,
+      "row": 3,
+      "tag": "TP>1",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "gv",
+      "type": "database",
+      "label": "② 静态缓冲",
+      "sublabel": "graph_vars;slot 余位填 -1",
+      "stage": 1,
+      "row": 0,
+      "tag": "启动期建",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "eager",
+      "type": "backend",
+      "label": "⑥ 现做",
+      "sublabel": "model(ids, pos):形状随批变",
+      "stage": 1,
+      "row": 2,
+      "tag": "prefill 永远",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "replay",
+      "type": "backend",
+      "label": "③ 回放 · replay()",
+      "sublabel": "graphs[首个 ≥ bs 的桶]",
+      "stage": 2,
+      "row": 0,
+      "tag": "示例丙:3 → 4",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "kv",
+      "type": "database",
+      "label": "⑧ KV cache",
+      "sublabel": "kv_cache;每层每桌 256×H_kv×d",
+      "stage": 2,
+      "row": 1,
+      "tag": "按槽位写",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "attn",
+      "type": "backend",
+      "label": "⑦ 灶台 · Attention",
+      "sublabel": "写槽位;flash-attn 读桌位",
+      "stage": 2,
+      "row": 2,
+      "tag": "每层一次",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "ar",
+      "type": "security",
+      "label": "⑨ 切菜刀",
+      "sublabel": "RowParallel all_reduce ×2/层",
+      "stage": 2,
+      "row": 3,
+      "tag": "TP>1 才对账",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "head",
+      "type": "backend",
+      "label": "④ 出 logits",
+      "sublabel": "lm_head:取每段末位;gather",
+      "stage": 3,
+      "row": 1,
+      "tag": "现做,不进图",
+      "width": 136,
+      "height": 64
+    },
+    {
+      "id": "samp",
+      "type": "backend",
+      "label": "⑤ 出菜 · Sampler",
+      "sublabel": "只在 rank 0;.tolist() 同步",
+      "stage": 4,
+      "row": 1,
+      "tag": "list[int]",
+      "width": 136,
+      "height": 64
+    }
+  ],
+  "flows": [
+    {
+      "id": "f_inp_gv",
+      "from": "inp",
+      "to": "gv",
+      "label": "decode 且 bs≤512",
+      "variant": "emphasis"
+    },
+    {
+      "id": "f_gv_replay",
+      "from": "gv",
+      "to": "replay",
+      "label": "取桶回放",
+      "variant": "emphasis"
+    },
+    {
+      "id": "f_replay_head",
+      "from": "replay",
+      "to": "head",
+      "label": "outputs[:bs]",
+      "variant": "emphasis"
+    },
+    {
+      "id": "f_head_samp",
+      "from": "head",
+      "to": "samp",
+      "label": "logits",
+      "variant": "emphasis"
+    },
+    {
+      "id": "f_inp_eager",
+      "from": "inp",
+      "to": "eager",
+      "label": "三条件任一",
+      "variant": "default"
+    },
+    {
+      "id": "f_eager_attn",
+      "from": "eager",
+      "to": "attn",
+      "label": "逐层调用",
+      "variant": "default"
+    },
+    {
+      "id": "f_attn_kv",
+      "from": "attn",
+      "to": "kv",
+      "label": "写槽位、读桌位",
+      "variant": "default",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "f_replay_kv",
+      "from": "replay",
+      "to": "kv",
+      "label": "录好的写读",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    },
+    {
+      "id": "f_attn_ar",
+      "from": "attn",
+      "to": "ar",
+      "label": "o → o_proj",
+      "variant": "default",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    },
+    {
+      "id": "f_ar_head",
+      "from": "ar",
+      "to": "head",
+      "label": "L 层后过 norm",
+      "variant": "default"
+    },
+    {
+      "id": "f_runnerN_ar",
+      "from": "runnerN",
+      "to": "ar",
+      "label": "每层对账",
+      "variant": "security"
+    },
+    {
+      "id": "f_runnerN_head",
+      "from": "runnerN",
+      "to": "head",
+      "label": "gather 半张",
+      "variant": "security",
+      "route": "bottom-channel",
+      "toSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "选路三条件(run_model:197)",
+      "items": [
+        "is_prefill、enforce_eager、bs>512 任一为真就现做",
+        "prefill 每轮形状不同,录不成图,永远现做"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "示例丙:3 位客人 decode",
+      "items": [
+        "首个 ≥3 的桶是 4,取 graphs[4],只填前 3 行",
+        "补齐位:槽 -1 拦写、context_len 0 拦读、outputs[:3] 切掉"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "只有 rank 0 出菜",
+      "items": [
+        "rank≠0:温度、logits、token_ids 都是 None",
+        "会合点:embedding 1 次、每层 2 次 all_reduce、末尾 1 次 gather"
+      ]
+    }
+  ]
+}

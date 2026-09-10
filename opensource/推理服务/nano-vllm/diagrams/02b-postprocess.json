@@ -1,0 +1,338 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "02b 善后:postprocess() 按什么顺序记账?",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "bookkeeping",
+        "label": "登记与计数",
+        "focus": [
+          "e1",
+          "s1",
+          "b1",
+          "s2"
+        ],
+        "note": "hash_blocks 在计数推进之前跑,用的是本轮排入前的 num_cached_tokens。"
+      },
+      {
+        "id": "chunk-continue",
+        "label": "分块没做完就丢弃采样",
+        "focus": [
+          "s3",
+          "q_wait"
+        ],
+        "note": "prefill 只做了一部分时,这一轮采出来的 token 不追加,客人留在 waiting 队首。"
+      },
+      {
+        "id": "finish",
+        "label": "结账顺序",
+        "focus": [
+          "s4",
+          "s5",
+          "b2",
+          "q_fin",
+          "q_run"
+        ],
+        "note": "先追加 token(eos 也追加),再判结账:FINISHED → 退桌 → 出队。"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "engine",
+      "label": "经理 · LLMEngine.step()"
+    },
+    {
+      "id": "scheduler",
+      "label": "领班 · Scheduler.postprocess()"
+    },
+    {
+      "id": "blocks",
+      "label": "座位管理员 · BlockManager"
+    },
+    {
+      "id": "guest",
+      "label": "客人状态 · Sequence"
+    }
+  ],
+  "phases": [
+    {
+      "id": "ph_book",
+      "label": "登记与计数",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "ph_append",
+      "label": "追加 token",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "ph_finish",
+      "label": "结账",
+      "fromCol": 4,
+      "toCol": 5
+    }
+  ],
+  "groups": [
+    {
+      "id": "g_loop",
+      "label": "逐位客人(与 batch 同序,:82)",
+      "lane": "scheduler",
+      "fromCol": 0,
+      "toCol": 4
+    }
+  ],
+  "mainPath": [
+    "e1",
+    "s1",
+    "b1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "b2",
+    "q_fin"
+  ],
+  "semanticChecks": {
+    "allowedRoots": [
+      "e1"
+    ],
+    "allowedTerminals": [
+      "q_wait",
+      "q_run",
+      "q_fin"
+    ],
+    "requiredEdges": [
+      {
+        "from": "s1",
+        "to": "b1"
+      },
+      {
+        "from": "s3",
+        "to": "q_wait"
+      },
+      {
+        "from": "s5",
+        "to": "b2"
+      }
+    ],
+    "requiredPaths": [
+      {
+        "from": "e1",
+        "to": "q_fin"
+      },
+      {
+        "from": "e1",
+        "to": "q_run"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "e1",
+      "lane": "engine",
+      "col": 0,
+      "type": "backend",
+      "label": "① 收回 token_ids",
+      "sublabel": "与 batch 同序",
+      "width": 150
+    },
+    {
+      "id": "s1",
+      "lane": "scheduler",
+      "col": 0,
+      "type": "backend",
+      "label": "② 先登记满桌",
+      "sublabel": "hash_blocks(seq)",
+      "width": 150
+    },
+    {
+      "id": "s2",
+      "lane": "scheduler",
+      "col": 1,
+      "type": "backend",
+      "label": "③ 计数推进",
+      "sublabel": "cached += scheduled",
+      "width": 150
+    },
+    {
+      "id": "s3",
+      "lane": "scheduler",
+      "col": 2,
+      "type": "security",
+      "label": "④ 分块做完了吗",
+      "sublabel": "cached < num_tokens?",
+      "width": 150
+    },
+    {
+      "id": "s4",
+      "lane": "scheduler",
+      "col": 3,
+      "type": "backend",
+      "label": "⑤ append_token",
+      "sublabel": "eos 也追加",
+      "width": 150
+    },
+    {
+      "id": "s5",
+      "lane": "scheduler",
+      "col": 4,
+      "type": "security",
+      "label": "⑥ 结账判定",
+      "sublabel": "eos 或满 max_tokens",
+      "width": 150
+    },
+    {
+      "id": "b1",
+      "lane": "blocks",
+      "col": 0,
+      "type": "database",
+      "label": "hash_blocks",
+      "sublabel": "整桌算哈希并登记",
+      "width": 150
+    },
+    {
+      "id": "b2",
+      "lane": "blocks",
+      "col": 5,
+      "type": "database",
+      "label": "⑦ deallocate 退桌",
+      "sublabel": "倒序 ref_count − 1",
+      "width": 150
+    },
+    {
+      "id": "q_wait",
+      "lane": "guest",
+      "col": 2,
+      "type": "external",
+      "label": "留在 waiting 队首",
+      "sublabel": "采样丢弃,下轮续做",
+      "width": 150
+    },
+    {
+      "id": "q_run",
+      "lane": "guest",
+      "col": 4,
+      "type": "external",
+      "label": "留在 running",
+      "sublabel": "下轮 decode",
+      "width": 150
+    },
+    {
+      "id": "q_fin",
+      "lane": "guest",
+      "col": 5,
+      "type": "external",
+      "label": "⑧ FINISHED 出队",
+      "sublabel": "running.remove",
+      "width": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_e1_s1",
+      "from": "e1",
+      "to": "s1",
+      "label": "zip(seqs, token_ids)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s1_b1",
+      "from": "s1",
+      "to": "b1",
+      "label": "登记",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_b1_s2",
+      "from": "b1",
+      "to": "s2",
+      "label": "登记完",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s2_s3",
+      "from": "s2",
+      "to": "s3",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s3_q_wait",
+      "from": "s3",
+      "to": "q_wait",
+      "label": "没做完 → continue",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e_s3_s4",
+      "from": "s3",
+      "to": "s4",
+      "label": "做完,或 decode",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s4_s5",
+      "from": "s4",
+      "to": "s5",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s5_b2",
+      "from": "s5",
+      "to": "b2",
+      "label": "结账:status = FINISHED",
+      "variant": "emphasis",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "e_b2_q_fin",
+      "from": "b2",
+      "to": "q_fin",
+      "label": "退桌后出队",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e_s5_q_run",
+      "from": "s5",
+      "to": "q_run",
+      "label": "未结账",
+      "variant": "dashed",
+      "role": "branch",
+      "fromSide": "bottom"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "顺序很重要",
+      "items": [
+        "hash_blocks 先于计数推进(:83-84),按推进前的计数定整桌范围",
+        "append_token 先于结账判定(:88-89),eos 也进 token_ids"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "分块没做完时",
+      "items": [
+        "厨房照样采了 token,:86-87 直接 continue 不追加",
+        "客人留在 waiting 队首,下轮从 num_cached_tokens 续做"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "结账三连",
+      "items": [
+        "FINISHED(:90)→ deallocate(:91)→ running.remove(:92)",
+        "退桌只减 ref_count,哈希登记不删,旧桌还能被拼桌命中"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "04a 桌位编号的一生:从空闲到复活或重置经过谁的手?",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1080,
+      560
+    ],
+    "views": [
+      {
+        "id": "table0",
+        "label": "桌 0:分配、盖章、拼桌、复活",
+        "focus": [
+          "q_free",
+          "alloc",
+          "btable",
+          "stamp",
+          "registry",
+          "lookup",
+          "revive"
+        ],
+        "note": "①→②→③→④→⑤ 是桌 0 第 1 步的路;第 2 步与第 10 步 B 走 ⑤→⑥→⑦→③。"
+      },
+      {
+        "id": "table7",
+        "label": "桌 7:分配、退桌、重置",
+        "focus": [
+          "q_free",
+          "alloc",
+          "btable",
+          "release"
+        ],
+        "note": "桌 7 没盖过章:第 2 步 ①→②→③ 给 B,第 3 步 ③→⑧→① 退桌,同一轮再 ①→② 被 C 重置拿走。"
+      },
+      {
+        "id": "gate",
+        "label": "拼桌判定",
+        "focus": [
+          "registry",
+          "lookup",
+          "revive"
+        ],
+        "note": "只查前 num_blocks−1 桌;章相同还要整桌 token 一致;空出带章的桌算命中但仍占一张空桌。"
+      }
+    ]
+  },
+  "stages": [
+    {
+      "label": "空闲与分配"
+    },
+    {
+      "label": "入座"
+    },
+    {
+      "label": "写满盖章"
+    },
+    {
+      "label": "退桌仍带章"
+    },
+    {
+      "label": "拼桌命中"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "q_free",
+      "type": "messagebus",
+      "label": "① 空闲队列",
+      "sublabel": "free_block_ids",
+      "stage": 0,
+      "row": 0,
+      "tag": "座位管理员"
+    },
+    {
+      "id": "alloc",
+      "type": "backend",
+      "label": "② 分配或重置",
+      "sublabel": "_allocate_block",
+      "stage": 0,
+      "row": 1,
+      "tag": "座位管理员"
+    },
+    {
+      "id": "btable",
+      "type": "external",
+      "label": "③ 桌号单",
+      "sublabel": "seq.block_table",
+      "stage": 1,
+      "row": 1,
+      "tag": "客人"
+    },
+    {
+      "id": "stamp",
+      "type": "backend",
+      "label": "④ 盖章",
+      "sublabel": "hash_blocks",
+      "stage": 2,
+      "row": 1,
+      "tag": "postprocess 调用"
+    },
+    {
+      "id": "registry",
+      "type": "database",
+      "label": "⑤ 登记簿",
+      "sublabel": "hash_to_block_id",
+      "stage": 2,
+      "row": 0,
+      "tag": "座位管理员"
+    },
+    {
+      "id": "release",
+      "type": "backend",
+      "label": "⑧ 退桌",
+      "sublabel": "deallocate",
+      "stage": 3,
+      "row": 2,
+      "tag": "结账或请离席"
+    },
+    {
+      "id": "lookup",
+      "type": "security",
+      "label": "⑥ 拼桌判定",
+      "sublabel": "can_allocate",
+      "stage": 4,
+      "row": 1,
+      "tag": "schedule 调用"
+    },
+    {
+      "id": "revive",
+      "type": "backend",
+      "label": "⑦ 共享或复活",
+      "sublabel": "allocate 命中分支",
+      "stage": 4,
+      "row": 0,
+      "tag": "座位管理员"
+    }
+  ],
+  "flows": [
+    {
+      "id": "f1",
+      "from": "q_free",
+      "to": "alloc",
+      "label": "popleft",
+      "classification": "编号",
+      "variant": "emphasis",
+      "labelAt": [
+        160,
+        214
+      ]
+    },
+    {
+      "id": "f2",
+      "from": "alloc",
+      "to": "btable",
+      "label": "桌号",
+      "classification": "编号",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "f3",
+      "from": "btable",
+      "to": "stamp",
+      "label": "整桌 token",
+      "classification": "内容摘要",
+      "variant": "emphasis",
+      "route": "straight"
+    },
+    {
+      "id": "f4",
+      "from": "stamp",
+      "to": "registry",
+      "label": "hash→桌号",
+      "classification": "登记",
+      "variant": "emphasis",
+      "labelAt": [
+        470,
+        214
+      ]
+    },
+    {
+      "id": "f5",
+      "from": "registry",
+      "to": "lookup",
+      "label": "查簿比对",
+      "classification": "查簿",
+      "variant": "emphasis",
+      "route": "vertical-channel",
+      "labelAt": [
+        770,
+        250
+      ]
+    },
+    {
+      "id": "f6",
+      "from": "lookup",
+      "to": "revive",
+      "label": "命中 n 桌",
+      "classification": "编号",
+      "variant": "emphasis",
+      "labelAt": [
+        1030,
+        214
+      ]
+    },
+    {
+      "id": "f7",
+      "from": "revive",
+      "to": "btable",
+      "label": "共享桌号",
+      "classification": "编号",
+      "variant": "default",
+      "route": "top-channel"
+    },
+    {
+      "id": "f8",
+      "from": "btable",
+      "to": "release",
+      "label": "结账或请离席",
+      "classification": "编号",
+      "variant": "default",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [
+        [
+          315,
+          385
+        ]
+      ],
+      "labelAt": [
+        500,
+        372
+      ]
+    },
+    {
+      "id": "f9",
+      "from": "release",
+      "to": "q_free",
+      "label": "归零回队尾",
+      "classification": "编号",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "via": [
+        [
+          745,
+          460
+        ],
+        [
+          20,
+          460
+        ],
+        [
+          20,
+          157
+        ]
+      ],
+      "labelAt": [
+        400,
+        447
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "桌 0:被用、被拼、空出仍带章、复活",
+      "items": [
+        "第 1 步分给 A,出菜后整桌盖章登记;第 2 步 B 命中,ref_count 加到 2",
+        "第 9 步 A 结账归零回队尾,章不擦;第 10 步 B 回座,从空闲队列 remove 复活"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "桌 7:半桌、被请走、被重置",
+      "items": [
+        "第 2 步只写 50 个 token,不满一桌不盖章",
+        "第 3 步 B 被请走归零回队尾,同一轮 C 要新桌 popleft 到它并 reset"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "账本只管编号",
+      "items": [
+        "在座的命中桌不占新桌,空出带章的命中桌仍占一张",
+        "空闲队列先进先出,退桌倒序入队,前缀桌留得最久"
+      ]
+    }
+  ]
+}
