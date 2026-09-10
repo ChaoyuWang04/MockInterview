@@ -52,3 +52,54 @@ body {
   width: 100%;
   height: auto;
 }
+
+/* 表格:typography 插件只给横线,列一多就不好扫。改成卡片式——
+   整表白底加圆角边框(页面底色是 #fafafa 加网格,白底才浮得出来)、
+   表头着色、隔行底纹、淡竖线分列。全站表格统一,不只开源解读 */
+.prose .markdown-table-scroll {
+  border: 1px solid #d8dee7;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.07);
+}
+.prose .markdown-table-scroll table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+.prose .markdown-table-scroll thead {
+  background: #eef2f7;
+}
+.prose .markdown-table-scroll th {
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1px solid #d8dee7;
+}
+/* 隔行底纹:比表头浅一档,只做区分不抢视线 */
+.prose .markdown-table-scroll tbody tr:nth-child(even) {
+  background: #f6f8fb;
+}
+.prose .markdown-table-scroll tbody td {
+  border-bottom: 1px solid #e8edf3;
+}
+.prose .markdown-table-scroll tbody tr:last-child td {
+  border-bottom: 0;
+}
+/* 淡竖线分列;首列不画,避免与外框重叠 */
+.prose .markdown-table-scroll th:not(:first-child),
+.prose .markdown-table-scroll td:not(:first-child) {
+  border-left: 1px solid #e8edf3;
+}
+.prose .markdown-table-scroll th,
+.prose .markdown-table-scroll td {
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+}
+/* 表格里的行内代码在浅色底上会糊,给它一个更实的底和边 */
+.prose .markdown-table-scroll code {
+  background: #eef2f7;
+  border: 1px solid #dde3ec;
+  border-radius: 0.25rem;
+  padding: 0.05rem 0.3rem;
+  font-weight: 400;
+}
