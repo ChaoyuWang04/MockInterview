@@ -16,7 +16,8 @@
     "interview:index": "node scripts/interview-index.mjs",
     "interview:live": "INTERVIEW_LIVE=1 vitest run tests/interview-live.test.ts",
     "interview:profile": "node scripts/interview-profile.mjs",
-    "interview:tts": "node scripts/interview-prerender.mjs"
+    "interview:tts": "node scripts/interview-prerender.mjs",
+    "os:check": "node scripts/os-check.mjs"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.20",
