@@ -216,6 +216,12 @@
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
+| CAST | ShanghaiTech | 单张 RGB 做组件对齐的 3D 场景重建(SIGGRAPH 2025 Best Paper 提名) |
+| SpatialLLM | JohnsHopkins | 3D 空间智能的多模态模型设计(CVPR 2025 highlight) |
+| Video-3D-LLM | CUHK | 把 3D 场景当视频,位置感知表示(CVPR 2025) |
+| FirePlace | Google | LLM 常识加几何约束做 3D 物体摆放(CVPR 2025 highlight;DeepMind) |
+| LayoutVLM | Stanford | VLM 可微优化 3D 布局(CVPR 2025) |
+| Global-Local-Tree-Search | BUPT | VLM 全局-局部树搜索做室内 3D 场景(CVPR 2025) |
 
 ## 音频
 
