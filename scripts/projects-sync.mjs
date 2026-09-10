@@ -3,7 +3,8 @@
 //   · 自动发现:凡 projects/ 下带 .git 的目录都算,新增项目无需登记
 //   · 只做快进:工作树干净且只落后上游时 git merge --ff-only,绝不 merge、rebase、reset
 //   · 不安全的一律不碰并报告:有未提交改动、有本地提交、游离 HEAD、无上游、fetch 失败
-// 用法: node scripts/projects-sync.mjs [--dry-run] [--only <项目名>[,<项目名>…]] [--quiet]
+//   · --discard-local 会丢弃本地提交与未提交改动(projects/ 只镜像官方,不留自己的修改)
+// 用法: node scripts/projects-sync.mjs [--dry-run] [--only <项目名>[,<项目名>…]] [--quiet] [--discard-local]
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -12,6 +13,7 @@ const ROOT = process.cwd();
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const quiet = args.includes('--quiet');
+const discardLocal = args.includes('--discard-local');
 const onlyArg = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
 const only = onlyArg ? new Set(onlyArg.split(',').map((s) => s.trim()).filter(Boolean)) : null;
 
@@ -45,7 +47,7 @@ const git = (dir, cmdArgs, timeout) =>
   }).trim();
 
 // 返回 { state, detail, … }。state: latest | advanced | dirty | ahead | detached | no-upstream | fetch-failed | error
-export function inspectRepo(dir, { fetch = true, apply = true } = {}) {
+export function inspectRepo(dir, { fetch = true, apply = true, discard = discardLocal } = {}) {
   const rel = path.relative(ROOT, dir);
   const info = { dir, rel, name: path.basename(dir) };
   try {
@@ -86,16 +88,35 @@ export function inspectRepo(dir, { fetch = true, apply = true } = {}) {
       .map(Number);
     Object.assign(info, { dirty, ahead, behind });
 
+    // --discard-local:projects/ 只镜像官方,本地提交与改动一律丢弃(丢掉的提交 90 天内可用 git reflog 找回)
+    if (discard && apply && !dryRun && (ahead > 0 || dirty > 0)) {
+      const before = git(dir, ['rev-parse', '--short', 'HEAD']);
+      git(dir, ['reset', '--hard', upstream]);
+      git(dir, ['clean', '-fdq']);
+      const after = git(dir, ['rev-parse', '--short', 'HEAD']);
+      return {
+        ...info,
+        state: 'discarded',
+        applied: true,
+        before,
+        after,
+        detail: `丢弃 ${ahead} 个本地提交与 ${dirty} 处改动,重置到 ${upstream} ${before} → ${after}`,
+      };
+    }
     if (ahead > 0) {
       return {
         ...info,
         state: 'ahead',
-        detail: `本地有 ${ahead} 个自己的提交${behind ? `,同时落后上游 ${behind} 个` : ''};不擅自 rebase`,
+        detail: `本地有 ${ahead} 个自己的提交${behind ? `,同时落后上游 ${behind} 个` : ''};不擅自 rebase(要清掉用 --discard-local)`,
       };
     }
-    if (behind === 0) return { ...info, state: 'latest', detail: '已是上游最新' };
+    if (behind === 0 && dirty === 0) return { ...info, state: 'latest', detail: '已是上游最新' };
     if (dirty > 0) {
-      return { ...info, state: 'dirty', detail: `落后上游 ${behind} 个提交,但有 ${dirty} 处未提交改动` };
+      return {
+        ...info,
+        state: 'dirty',
+        detail: `${behind ? `落后上游 ${behind} 个提交,` : '已在上游最新,'}有 ${dirty} 处未提交改动(要清掉用 --discard-local)`,
+      };
     }
     if (!apply || dryRun) {
       return { ...info, state: 'advanced', applied: false, detail: `可快进 ${behind} 个提交(dry-run,未执行)` };
@@ -112,6 +133,7 @@ export function inspectRepo(dir, { fetch = true, apply = true } = {}) {
 const ICON = {
   latest: '·',
   advanced: '↑',
+  discarded: '⟲',
   dirty: '✗',
   ahead: '✗',
   detached: '✗',
@@ -136,7 +158,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(`把 projects/ 下的仓库同步到各自上游最新${dryRun ? '(dry-run)' : ''}\n`);
   const results = syncProjects({ apply: !dryRun, filter: only });
   const blocked = results.filter((r) => BLOCKED.has(r.state));
-  const moved = results.filter((r) => r.state === 'advanced' && r.applied);
+  const moved = results.filter((r) => (r.state === 'advanced' || r.state === 'discarded') && r.applied);
   console.log(
     `\n共 ${results.length} 个仓库:已最新 ${results.filter((r) => r.state === 'latest').length}` +
       `,本次快进 ${moved.length},需人工处理 ${blocked.length}`,
