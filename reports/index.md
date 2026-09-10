@@ -56,7 +56,11 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| MiniMax-Sparse-Attention | MiniMax | MSA:GQA 之上的块稀疏,在未压缩 KV 上做选择;MiniMax-M3 的注意力底座 |
+| IndexCache | Z.ai | 每四个稀疏注意力层复用同一个 indexer,1M 上下文每 token FLOPs 降 2.9×;GLM-5.2 的 IndexShare 出处,GLM-5 报告未覆盖 |
 | DeepSeek-V3.2 | DeepSeek | DSA 稀疏注意力,先让长上下文变便宜 |
+| Kimi-Linear | Moonshot | KDA:通道级遗忘门的线性注意力,Kimi-K3 的骨干 |
+| CCA | Zyphra | 直接在压缩空间里做注意力,MLA 的激进版 |
 | FlashAttention-4 | Stanford | Blackwell 上的非对称扩张:软件模拟指数、TMEM、2-CTA MMA |
 | MiniMax-M1 | MiniMax | 混合线性注意力,把测试时算力成本压回线性 |
 | MoBA | Moonshot | 块注意力混合,与 NSA 同期对打 |
@@ -65,10 +69,6 @@
 | FlashAttention-3 | Stanford | 异步与低精度(依据 NeurIPS 2024 正式版) |
 | FlashAttention-2 | Stanford | 并行与工作划分改进 |
 | FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
-| MiniMax-Sparse-Attention | MiniMax | MSA:GQA 之上的块稀疏,在未压缩 KV 上做选择;MiniMax-M3 的注意力底座 |
-| Kimi-Linear | Moonshot | KDA:通道级遗忘门的线性注意力,Kimi-K3 的骨干 |
-| CCA | Zyphra | 直接在压缩空间里做注意力,MLA 的激进版 |
-| IndexCache | Z.ai | 每四个稀疏注意力层复用同一个 indexer,1M 上下文每 token FLOPs 降 2.9×;GLM-5.2 的 IndexShare 出处,GLM-5 报告未覆盖 |
 | Transformer | Google | 注意力机制的出处:Attention Is All You Need(2017) |
 | Mixture-of-Depths-Attention | ByteDance | 按 token 动态分配注意力深度(Seed) |
 | Recursive-Language-Models | MIT | 把长上下文当外部变量,让模型递归调用自己来处理 |
@@ -84,6 +84,7 @@
 | Behavior-Leverage-Imbalance | AntGroup | 多教师 OPD 的 top-K 丢掉决策坐标,导致过调用 |
 | AReaL-2.0 | AntGroup | position paper:轨迹协议、数据代理、演化控制面三支柱 |
 | MOPD | Xiaomi | 多教师 on-policy 蒸馏做能力整合,MiMo-V2-Flash 的后训练方法(北大合作) |
+| Counteraction-Aware-OPD | Kuaishou | 多教师在线策略蒸馏:恢复通用能力同时保住领域能力 |
 | Polar | NVIDIA | harness 当黑盒的 agentic RL;同模型同算法换 harness 差 22 分 |
 | Continuous-Latent-Diffusion-LM | ByteDance | 连续潜空间上的扩散式语言模型(Seed) |
 | Model-Spec-Midtraining | Anthropic | 对齐训练如何泛化 |
@@ -107,18 +108,17 @@
 | Muon-is-Scalable-for-LLM-Training | Moonshot | Muon 规模化的两个前提:权重衰减与更新尺度对齐 |
 | DeepSeek-R1 | DeepSeek | 结果奖励训练推理能力 |
 | Kimi-k1.5 | Moonshot | 把搜索压进上下文,用 RL 扩展模型能力 |
+| Qwen-Math-PRM | Alibaba | 开发数学过程奖励模型的教训:MC 估计的坑与共识过滤 |
 | Coconut | Meta | 连续潜空间推理,不吐出 CoT token(FAIR) |
 | HybridFlow | ByteDance | verl 的论文,RLHF 框架编程模型 |
 | FineWeb | HuggingFace | 15T token 预训练语料的清洗与消融配方 |
 | DeepSeekMath | DeepSeek | GRPO 的出处与数学语料流水线 |
 | RFT | Alibaba | 拒绝采样微调:推理路径越多样,数学能力提升越大(DAMO) |
+| Lets-Verify-Step-by-Step | OpenAI | 过程监督优于结果监督,PRM800K 的出处 |
 | LIMA | Meta | 1000 条精选样本就够对齐,能力来自预训练 |
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
-| InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
-| Counteraction-Aware-OPD | Kuaishou | 多教师在线策略蒸馏:恢复通用能力同时保住领域能力 |
 | Constitutional-AI | Anthropic | 用原则和 AI 反馈替代人工有害性标注,RLAIF 的出处 |
-| Lets-Verify-Step-by-Step | OpenAI | 过程监督优于结果监督,PRM800K 的出处 |
-| Qwen-Math-PRM | Alibaba | 开发数学过程奖励模型的教训:MC 估计的坑与共识过滤 |
+| InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
 | Evolution-Strategies-at-Scale | Cognizant | 进化策略替代 RL 微调十亿参数模型 |
 | FIPO | Alibaba | 未来 KL 影响的策略优化,引出深度推理(Qwen Pilot) |
 | GPG | Alibaba | 去掉 GRPO 多余项后的最简 RL 基线(AMAP) |
@@ -130,9 +130,9 @@
 |---|---|---|
 | AgentRL | Tsinghua | 多轮多任务 agentic RL 框架(THUDM,Z.ai 同源) |
 | MUA-RL | Meituan | 多轮用户交互的 agentic 工具使用 RL |
-| ReTool | ByteDance | 代码解释器工具调用的 RL(Seed) |
 | WebSailor | Alibaba | 高不确定性 web agent 的数据合成与 RL(通义) |
-| MT-GRPO | Huawei | 多轮 GRPO(诺亚方舟) |
+| ReTool | ByteDance | 代码解释器工具调用的 RL(Seed) |
+| MT-GRPO | Huawei | 多任务 GRPO,按最差任务加权(诺亚方舟) |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Voyager | NVIDIA | Minecraft 里的终身学习 agent:技能库 + 自动课程 |
 | Beyond-Stochastic-Exploration | Alibaba | agentic 搜索的训练数据凭什么有价值(阿里云) |
@@ -151,17 +151,17 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | DSpark | DeepSeek | 半自回归草稿 + 置信度调度验证,投机解码 |
+| Slicing-and-Dicing-MoE | Washington | MoE 配置的系统性搜索(158 页,含大量附录) |
 | DFlash | UCSD | 块扩散做并行草稿的投机解码,ICML 2026 |
 | Engram | DeepSeek | 可扩展查表式条件记忆,稀疏的新维度(依据 arXiv v2) |
 | mHC | DeepSeek | 流形约束的超连接 |
-| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
-| Slicing-and-Dicing-MoE | Washington | MoE 配置的系统性搜索(158 页,含大量附录) |
-| DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | LiquidGEMM | ByteDance | W4A8 GEMM 内核的硬件高效实现(Seed,与上交合作) |
+| DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
+| Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
+| PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Sarathi-Serve | Microsoft | 分块预填充 + 无停顿调度,吞吐与延迟兼得(MSR India) |
 | SGLang | Berkeley | RadixAttention 前缀缓存与结构化输出的服务框架(LMSYS) |
-| Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
 | DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 
@@ -245,12 +245,12 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
+| pi0.7 | PhysicalIntelligence | 可操控的通用机器人基模,涌现能力 |
+| ToolOrchestra | NVIDIA | 模型与工具的高效编排,把智能从「更大模型」挪到「更会调度」 |
+| Dreamer-4 | Google | 在可扩展世界模型里训练 agent(DeepMind) |
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
-| ToolOrchestra | NVIDIA | 模型与工具的高效编排,把智能从「更大模型」挪到「更会调度」 |
-| pi0.7 | PhysicalIntelligence | 可操控的通用机器人基模,涌现能力 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
-| Dreamer-4 | Google | 在可扩展世界模型里训练 agent(DeepMind) |
 | V-JEPA-2 | Meta | 自监督视频模型做理解、预测与规划(FAIR) |
 | LingBot-World | AntGroup | 开源世界模型(蚂蚁灵波 Robbyant) |
 | DreamDojo | NVIDIA | 大规模人类视频训练的通用机器人世界模型 |
