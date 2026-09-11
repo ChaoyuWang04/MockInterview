@@ -172,11 +172,11 @@
 | Ultra-Scale-Playbook | HuggingFace | 512 卡上 4000+ 次实验测出的并行训练手册;**原件是网页**(依据 2026-09-07 线上版,页面自报发布日 2025-02-19),本地打印件仅作 2025-02 的冻结快照 |
 | Zero-Bubble-Pipeline-Parallelism | SeaAILab | 拆分反向传播消除流水线气泡,DualPipe 的前作 |
 | ZeRO-Infinity | Microsoft | 把 NVMe 与 CPU 内存纳入训练,突破 GPU 显存墙 |
-| Megatron-LM | NVIDIA | 张量并行的出处,层内切分训练十亿级模型 |
-| GPipe | Google | 微批流水线并行的出处 |
-| ZeRO | Microsoft | 优化器状态、梯度、参数三级切分 |
 | Megatron-LM-2 | NVIDIA | 张量 + 流水 + 数据并行组合(PTD-P),万卡训练万亿参数 |
 | GShard | Google | 条件计算 + 自动分片,MoE 规模化的出处 |
+| ZeRO | Microsoft | 优化器状态、梯度、参数三级切分 |
+| Megatron-LM | NVIDIA | 张量并行的出处,层内切分训练十亿级模型 |
+| GPipe | Google | 微批流水线并行的出处 |
 
 ## 多模态理解与 Omni
 
