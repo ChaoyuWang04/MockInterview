@@ -17,7 +17,7 @@
 - [ ] 按 `10-基模报告流程.md` 解读 `Microsoft/ZeRO` `NVIDIA/Megatron-LM-2` `Google/GShard`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
 - [ ] 按 `10-基模报告流程.md` 解读 `Huawei/MT-GRPO` `OpenAI/WebGPT` `NVIDIA/Voyager` `Alibaba/Beyond-Stochastic-Exploration`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
 - [ ] 按 `10-基模报告流程.md` 解读 `Meta/V-JEPA-2.1` `Meta/VL-JEPA` `ByteDance/World-Guidance` `Google/AI-Co-Mathematician`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
-- [ ] 按 `10-基模报告流程.md` 解读 `Alibaba/Gated-Attention` `Meta/Toolformer` `AntGroup/BalanceSFT` `Huawei/ToolACE`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
+- [ ] 按 `10-基模报告流程.md` 解读 `Meta/Toolformer` `AntGroup/BalanceSFT` `Huawei/ToolACE`;完成后用 `npm run reports:status` 列出未解读原件,选下一批替换本行
 - [ ] 克隆 06 库存里标「repo 未克隆」的项目到 `projects/<主题>/`,按主题分批,克隆后删掉该条标注
 
 ## 模拟面试系统(可用,剩余项不阻塞)
