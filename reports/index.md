@@ -128,23 +128,23 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| DR-Venus | AntGroup | 只用 1 万条开放数据训边缘规模深研 agent |
+| Agent-World | ByteDance | 规模化合成真实环境,演化通用 agent(Seed,与人大合作) |
+| Beyond-Stochastic-Exploration | Alibaba | agentic 搜索的训练数据凭什么有价值(阿里云) |
+| WebWorld | Alibaba | 用网页世界模型当 agent 训练环境(Qwen) |
+| Agent-World-Model | Snowflake | 无限合成环境做 agentic RL |
+| MT-GRPO | Huawei | 多任务 GRPO,按最差任务加权(诺亚方舟) |
 | AgentRL | Tsinghua | 多轮多任务 agentic RL 框架(THUDM,Z.ai 同源) |
 | MUA-RL | Meituan | 多轮用户交互的 agentic 工具使用 RL |
-| WebSailor | Alibaba | 高不确定性 web agent 的数据合成与 RL(通义) |
-| ReTool | ByteDance | 代码解释器工具调用的 RL(Seed) |
-| MT-GRPO | Huawei | 多任务 GRPO,按最差任务加权(诺亚方舟) |
-| WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
-| Voyager | NVIDIA | Minecraft 里的终身学习 agent:技能库 + 自动课程 |
-| Beyond-Stochastic-Exploration | Alibaba | agentic 搜索的训练数据凭什么有价值(阿里云) |
-| Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
-| BalanceSFT | AntGroup | 工具调用 SFT 的数据均衡(Inclusion AI AWorld) |
-| ToolACE | Huawei | 函数调用数据合成,小模型上 BFCL 榜首 |
 | MemAgent | ByteDance | 多轮 RL 训练的记忆 agent 处理长上下文(Seed) |
-| WebWorld | Alibaba | 用网页世界模型当 agent 训练环境(Qwen) |
+| WebSailor | Alibaba | 高不确定性 web agent 的数据合成与 RL(通义) |
 | SimpleTIR | ByteDance | 端到端多轮工具集成推理 RL,过滤 void turn 稳定训练(TikTok) |
-| Agent-World-Model | Snowflake | 无限合成环境做 agentic RL |
-| Agent-World | ByteDance | 规模化合成真实环境,演化通用 agent(Seed,与人大合作) |
-| DR-Venus | AntGroup | 只用 1 万条开放数据训边缘规模深研 agent |
+| BalanceSFT | AntGroup | 工具调用 SFT 的数据均衡(Inclusion AI AWorld) |
+| ReTool | ByteDance | 代码解释器工具调用的 RL(Seed) |
+| ToolACE | Huawei | 函数调用数据合成,小模型上 BFCL 榜首 |
+| Voyager | NVIDIA | Minecraft 里的终身学习 agent:技能库 + 自动课程 |
+| Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
+| WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 
 ## 推理服务与架构探索
 
@@ -159,11 +159,11 @@
 | DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Sarathi-Serve | Microsoft | 分块预填充 + 无停顿调度,吞吐与延迟兼得(MSR India) |
+| DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 | SGLang | Berkeley | RadixAttention 前缀缓存与结构化输出的服务框架(LMSYS) |
 | PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
-| DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 
 ## 分布式训练与并行
 
@@ -191,9 +191,9 @@
 | DeepSeek-OCR | DeepSeek | 把文字渲染成图,用视觉 Token 换文本 Token |
 | Qwen3-VL | Alibaba | Qwen 视觉理解线,dense 与 MoE 双形态 |
 | Qwen3-Omni | Alibaba | 证明「全模态不退化可以做到」的实证工作,Qwen3.5-Omni 的前作 |
-| Flamingo | Google | 冻结视觉编码器 + 冻结 LM 的少样本视觉语言模型(DeepMind) |
-| Chameleon | Meta | 早期融合的混合模态基模,图文统一 token(FAIR) |
 | Qwen2.5-Omni | Alibaba | Thinker-Talker 全模态架构的出处 |
+| Chameleon | Meta | 早期融合的混合模态基模,图文统一 token(FAIR) |
+| Flamingo | Google | 冻结视觉编码器 + 冻结 LM 的少样本视觉语言模型(DeepMind) |
 
 ## 图像、视频与 3D 生成
 
@@ -233,12 +233,12 @@
 | Step-Audio-R1.5 | StepFun | 听觉领域的思维链推理 |
 | StepAudio-2.5 | StepFun | 一个骨干带 ASR/TTS/Realtime 三种特化 |
 | Step-Audio-2 | StepFun | 带检索增强的音频理解与对话 |
+| Moshi | Kyutai | 全双工实时语音对话基模 |
+| DAC | Descript | 改进 RVQGAN 的高保真音频压缩 |
+| VALL-E | Microsoft | 把 TTS 当编解码语言建模,零样本音色克隆 |
 | EnCodec | Meta | 神经音频编解码器 |
 | Whisper | OpenAI | 大规模弱监督的鲁棒语音识别 |
 | AudioLM | Google | 用语言模型方法生成音频 |
-| DAC | Descript | 改进 RVQGAN 的高保真音频压缩 |
-| VALL-E | Microsoft | 把 TTS 当编解码语言建模,零样本音色克隆 |
-| Moshi | Kyutai | 全双工实时语音对话基模 |
 
 ## 世界模型与 Agent
 
