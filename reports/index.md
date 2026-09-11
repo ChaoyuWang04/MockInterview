@@ -159,11 +159,11 @@
 | DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Sarathi-Serve | Microsoft | 分块预填充 + 无停顿调度,吞吐与延迟兼得(MSR India) |
+| DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 | SGLang | Berkeley | RadixAttention 前缀缓存与结构化输出的服务框架(LMSYS) |
 | PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
-| DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 
 ## 分布式训练与并行
 
