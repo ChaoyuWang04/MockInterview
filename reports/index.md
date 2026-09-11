@@ -65,6 +65,7 @@
 | CCA | Zyphra | 直接在压缩空间里做注意力,MLA 的激进版 |
 | FlashAttention-4 | Stanford | Blackwell 上的非对称扩张:软件模拟指数、TMEM、2-CTA MMA |
 | MiniMax-M1 | MiniMax | 混合线性注意力,把测试时算力成本压回线性 |
+| Gated-Attention | Alibaba | 注意力输出加门控,消 attention sink 并提升稀疏性;Qwen3-Next 采用 |
 | MoBA | Moonshot | 块注意力混合,与 NSA 同期对打 |
 | NSA | DeepSeek | 原生可训练、硬件对齐的稀疏注意力 |
 | MiniMax-01 | MiniMax | lightning attention 的出处 |
@@ -73,7 +74,6 @@
 | FlashAttention-2 | Stanford | 并行与工作划分改进 |
 | FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
 | Transformer | Google | 注意力机制的出处:Attention Is All You Need(2017) |
-| Gated-Attention | Alibaba | 注意力输出加门控,消 attention sink 并提升稀疏性;Qwen3-Next 采用 |
 
 ## 训练方法与强化学习
 
