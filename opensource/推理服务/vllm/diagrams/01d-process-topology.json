@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "进程与通信全景:三类进程各持有什么,四种边分别走什么",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "external": {
+          "label": "客户端"
+        },
+        "frontend": {
+          "label": "API 进程组件"
+        },
+        "messagebus": {
+          "label": "ZMQ 端点(独立线程)"
+        },
+        "backend": {
+          "label": "EngineCore 组件"
+        },
+        "cloud": {
+          "label": "GPU Worker 进程"
+        }
+      }
+    }
+  },
+  "layout": {
+    "mode": "grid",
+    "cols": 3,
+    "cellW": 220,
+    "cellH": 78,
+    "gapX": 70,
+    "gapY": 56
+  },
+  "components": [
+    {
+      "id": "client",
+      "row": 0,
+      "col": 1,
+      "type": "external",
+      "label": "客户端",
+      "sublabel": "N 个并发 HTTP 连接"
+    },
+    {
+      "id": "api_in",
+      "row": 1,
+      "col": 0,
+      "type": "frontend",
+      "label": "FastAPI + 输入处理",
+      "sublabel": "renderer · tokenize · 多模态"
+    },
+    {
+      "id": "api_client",
+      "row": 1,
+      "col": 1,
+      "type": "messagebus",
+      "label": "AsyncMPClient",
+      "sublabel": "msgpack 序列化,收发两头"
+    },
+    {
+      "id": "api_out",
+      "row": 1,
+      "col": 2,
+      "type": "frontend",
+      "label": "输出后台 task",
+      "sublabel": "OutputProcessor · detokenize"
+    },
+    {
+      "id": "core_in",
+      "row": 2,
+      "col": 0,
+      "type": "messagebus",
+      "label": "input_thread",
+      "sublabel": "线程 · ZMQ 收"
+    },
+    {
+      "id": "core_main",
+      "row": 2,
+      "col": 1,
+      "type": "backend",
+      "label": "主线程 busy loop",
+      "sublabel": "线程 · 跑 step_fn()"
+    },
+    {
+      "id": "core_out",
+      "row": 2,
+      "col": 2,
+      "type": "messagebus",
+      "label": "output_thread",
+      "sublabel": "线程 · ZMQ 发"
+    },
+    {
+      "id": "sched",
+      "row": 3,
+      "col": 0,
+      "type": "backend",
+      "label": "Scheduler",
+      "sublabel": "KVCacheManager 挂它下面"
+    },
+    {
+      "id": "execu",
+      "row": 3,
+      "col": 1,
+      "type": "backend",
+      "label": "ModelExecutor",
+      "sublabel": "把 batch 发给 Worker"
+    },
+    {
+      "id": "w0",
+      "row": 4,
+      "col": 0,
+      "type": "cloud",
+      "label": "Worker 0(GPU 0)",
+      "sublabel": "各存 1/TP 的 KV"
+    },
+    {
+      "id": "w1",
+      "row": 4,
+      "col": 2,
+      "type": "cloud",
+      "label": "Worker 1(GPU 1)",
+      "sublabel": "各存 1/TP 的 KV"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "API 进程",
+      "wraps": [
+        "api_in",
+        "api_client",
+        "api_out"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "EngineCore 进程",
+      "wraps": [
+        "core_in",
+        "core_main",
+        "core_out",
+        "sched",
+        "execu"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Worker 进程",
+      "wraps": [
+        "w0",
+        "w1"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "http-in",
+      "from": "client",
+      "to": "api_in",
+      "label": "HTTP 请求",
+      "variant": "emphasis"
+    },
+    {
+      "id": "sse-out",
+      "from": "api_out",
+      "to": "client",
+      "label": "SSE 流式返回",
+      "variant": "emphasis"
+    },
+    {
+      "id": "in-to-client",
+      "from": "api_in",
+      "to": "api_client",
+      "label": "进程内调用",
+      "labelDy": -39
+    },
+    {
+      "id": "zmq-down",
+      "from": "api_client",
+      "to": "core_in",
+      "label": "ZMQ · ROUTER → DEALER",
+      "variant": "emphasis",
+      "labelDy": 40
+    },
+    {
+      "id": "zmq-up",
+      "from": "core_out",
+      "to": "api_out",
+      "label": "ZMQ · PUSH → PULL",
+      "variant": "emphasis",
+      "labelDy": -40
+    },
+    {
+      "id": "in-queue",
+      "from": "core_in",
+      "to": "core_main",
+      "label": "input_queue",
+      "labelDy": 39
+    },
+    {
+      "id": "out-queue",
+      "from": "core_main",
+      "to": "core_out",
+      "label": "output_queue"
+    },
+    {
+      "id": "hold-sched",
+      "from": "core_main",
+      "to": "sched",
+      "label": "持有",
+      "variant": "dashed"
+    },
+    {
+      "id": "hold-exec",
+      "from": "core_main",
+      "to": "execu",
+      "label": "持有",
+      "variant": "dashed",
+      "labelDy": 40
+    },
+    {
+      "id": "rpc-w0",
+      "from": "execu",
+      "to": "w0",
+      "label": "共享内存消息队列",
+      "variant": "emphasis"
+    },
+    {
+      "id": "rpc-w1",
+      "from": "execu",
+      "to": "w1",
+      "label": "共享内存消息队列",
+      "variant": "emphasis"
+    },
+    {
+      "id": "nccl",
+      "from": "w0",
+      "to": "w1",
+      "label": "NCCL all-reduce · TP 层内"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三类进程各几个",
+      "items": [
+        "API 进程 1 个:单个 asyncio 事件循环加一个线程池",
+        "EngineCore 进程 1 个:里面三个框都是线程,靠 GIL 释放并行,把 IO 藏进 GPU 计算窗口",
+        "Worker 进程 = PP × TP × PCP 个,图里按 TP=2 画;单卡默认 uniproc,Worker 直接住在 EngineCore 进程里"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "四种边分别走什么",
+      "items": [
+        "客户端 ↔ API:HTTP 进,SSE 流式出",
+        "API ↔ EngineCore:ZMQ 跨进程,下行 ROUTER → DEALER,上行 PUSH → PULL,内容用 msgpack 序列化",
+        "EngineCore → Worker:共享内存消息队列,不是 ZMQ",
+        "Worker ↔ Worker:NCCL,走 NVLink,只在 TP 层内做 all-reduce"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "谁持有谁",
+      "items": [
+        "EngineCore 直接持有 Scheduler、StructuredOutputManager 与 ModelExecutor",
+        "KVCacheManager 挂在 Scheduler 下面,不是 EngineCore 直接持有",
+        "KV cache 本体在 Worker 手里,每个 rank 只存 1/TP"
+      ]
+    }
+  ]
+}

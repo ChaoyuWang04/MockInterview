@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "fork-join:SchedulerOutput 分出哪两条独立路径,在哪里合流",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "backend": {
+          "label": "EngineCore 主线程(CPU)"
+        },
+        "cloud": {
+          "label": "GPU Worker(GPU)"
+        },
+        "messagebus": {
+          "label": "合流点"
+        }
+      }
+    }
+  },
+  "layout": {
+    "mode": "grid",
+    "cols": 3,
+    "cellW": 210,
+    "cellH": 84,
+    "gapX": 60,
+    "gapY": 74
+  },
+  "components": [
+    {
+      "id": "sched",
+      "row": 0,
+      "col": 1,
+      "type": "backend",
+      "label": "② schedule()",
+      "sublabel": "产出 SchedulerOutput",
+      "size": [
+        200,
+        72
+      ]
+    },
+    {
+      "id": "fwd",
+      "row": 1,
+      "col": 0,
+      "type": "cloud",
+      "label": "③ 模型前向",
+      "sublabel": "只看 token_ids 与 KV",
+      "tag": "CUDA kernel 释放 GIL",
+      "size": [
+        200,
+        84
+      ]
+    },
+    {
+      "id": "mask",
+      "row": 1,
+      "col": 2,
+      "type": "backend",
+      "label": "④ 算 grammar bitmask",
+      "sublabel": "只看已生成的 token 序列",
+      "tag": "xgrammar C++,不碰 GPU",
+      "size": [
+        200,
+        84
+      ]
+    },
+    {
+      "id": "join",
+      "row": 2,
+      "col": 1,
+      "type": "messagebus",
+      "label": "⑤ 合流",
+      "sublabel": "等前向,再带 bitmask 发采样",
+      "size": [
+        200,
+        72
+      ]
+    },
+    {
+      "id": "apply",
+      "row": 3,
+      "col": 1,
+      "type": "cloud",
+      "label": "⑥⑦ 压非法位 → 采样",
+      "sublabel": "在 GPU Worker 上做",
+      "size": [
+        200,
+        72
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "fork-gpu",
+      "from": "sched",
+      "to": "fwd",
+      "label": "fork ③ · 非阻塞下发",
+      "variant": "emphasis"
+    },
+    {
+      "id": "fork-cpu",
+      "from": "sched",
+      "to": "mask",
+      "label": "fork ④ · 同一份输入"
+    },
+    {
+      "id": "gpu-join",
+      "from": "fwd",
+      "to": "join",
+      "label": "logits",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cpu-join",
+      "from": "mask",
+      "to": "join",
+      "label": "bitmask"
+    },
+    {
+      "id": "join-sample",
+      "from": "join",
+      "to": "apply",
+      "label": "sample_tokens(bitmask)",
+      "variant": "emphasis",
+      "labelDy": 24
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "两条路为什么互不依赖",
+      "items": [
+        "③ 只吃 token_ids、positions、block_table,产出 logits",
+        "④ 只吃「哪些请求要结构化输出」加每个请求已生成的 token 序列,产出 bitmask",
+        "两者的输入都在 ② 结束时就定死了,谁也不是对方的输入",
+        "只在合流点碰头:bitmask 把 logits 里非法 token 压成负无穷,采样才采不出非法 token"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Python 单线程怎么做到并行",
+      "items": [
+        "③ 下发时不等 GPU,立刻返回一个 Future",
+        "CUDA kernel 在 GPU 上跑的时候 GIL 是放开的",
+        "主线程于是接着算 ④,xgrammar 的 C++ 实现同样放开 GIL",
+        "到 ⑤ 才真正阻塞等 GPU;④ 通常远快于 ③,这段重叠等于白捡"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "两个前提",
+      "items": [
+        "这条 fork-join 只对带结构化输出的请求成立;本 step 一个都没有时 ④ 直接返回空,普通请求没有可重叠的 CPU 活儿",
+        "④ 要是比 ③ 还慢(超复杂 schema 加巨大词表),⑤ 就变成 GPU 闲着等 CPU;这种情况极少见",
+        "压非法位与采样都在 Worker 上跑,EngineCore 只是发起那次调用"
+      ]
+    }
+  ]
+}

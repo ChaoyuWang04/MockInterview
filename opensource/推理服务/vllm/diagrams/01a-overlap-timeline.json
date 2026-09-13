@@ -1,0 +1,73 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "同一条请求:CPU 段与 GPU 段在单进程与多进程下各占哪段时间",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "legend": {
+      "mode": "auto",
+      "entries": {
+        "frontend": { "label": "CPU 段(tokenize / detokenize / HTTP)" },
+        "backend": { "label": "GPU 段(模型前向)" }
+      }
+    }
+  },
+  "lanes": [
+    { "id": "serial", "label": "单进程串行" },
+    { "id": "mp_cpu", "label": "多进程 · API 进程(CPU)" },
+    { "id": "mp_gpu", "label": "多进程 · EngineCore(GPU)" }
+  ],
+  "phases": [
+    { "id": "ph_in", "label": "① 收包与 tokenize", "fromCol": 0, "toCol": 1 },
+    { "id": "ph_fwd", "label": "② 模型前向", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "ph_out", "label": "③ detokenize 与回包", "fromCol": 3, "toCol": 4 }
+  ],
+  "groups": [
+    { "id": "gpu_busy", "label": "GPU 连续满载,没有空隙", "lane": "mp_gpu", "fromCol": 1, "toCol": 3, "variant": "emphasis" }
+  ],
+  "mainPath": ["p_in", "g_cur", "p_out"],
+  "nodes": [
+    { "id": "s_recv", "lane": "serial", "col": 0, "type": "frontend", "label": "HTTP 收包", "width": 150 },
+    { "id": "s_tok", "lane": "serial", "col": 1, "type": "frontend", "label": "tokenize", "sublabel": "CPU 约 10 ms", "tag": "GPU 空等", "width": 150 },
+    { "id": "s_fwd", "lane": "serial", "col": 2, "type": "backend", "label": "模型前向", "sublabel": "GPU 约 50 ms", "tag": "CPU 空等", "width": 150 },
+    { "id": "s_detok", "lane": "serial", "col": 3, "type": "frontend", "label": "detokenize", "sublabel": "CPU", "tag": "GPU 空等", "width": 150 },
+    { "id": "s_send", "lane": "serial", "col": 4, "type": "frontend", "label": "HTTP 回包", "sublabel": "合计约 60 ms", "width": 150 },
+    { "id": "p_in", "lane": "mp_cpu", "col": 1, "type": "frontend", "label": "收包 + tokenize", "sublabel": "本请求", "width": 150 },
+    { "id": "p_out", "lane": "mp_cpu", "col": 3, "type": "frontend", "label": "detokenize + 回包", "sublabel": "本请求", "width": 150 },
+    { "id": "g_prev", "lane": "mp_gpu", "col": 1, "type": "backend", "label": "模型前向", "sublabel": "上一个 step", "width": 150 },
+    { "id": "g_cur", "lane": "mp_gpu", "col": 2, "type": "backend", "label": "模型前向", "sublabel": "本请求 约 50 ms", "width": 150 },
+    { "id": "g_next", "lane": "mp_gpu", "col": 3, "type": "backend", "label": "模型前向", "sublabel": "下一个 step", "width": 150 }
+  ],
+  "edges": [
+    { "id": "e_recv_tok", "from": "s_recv", "to": "s_tok", "role": "main" },
+    { "id": "e_tok_fwd", "from": "s_tok", "to": "s_fwd", "role": "main" },
+    { "id": "e_fwd_detok", "from": "s_fwd", "to": "s_detok", "role": "main" },
+    { "id": "e_detok_send", "from": "s_detok", "to": "s_send", "role": "main" },
+    { "id": "e_prev_cur", "from": "g_prev", "to": "g_cur", "variant": "emphasis", "role": "main" },
+    { "id": "e_cur_next", "from": "g_cur", "to": "g_next", "variant": "emphasis", "role": "main" },
+    { "id": "e_submit", "from": "p_in", "to": "g_cur", "label": "ZMQ 提交", "variant": "emphasis", "role": "main" },
+    { "id": "e_return", "from": "g_cur", "to": "p_out", "label": "ZMQ 回传 token", "role": "return" }
+  ],
+  "cards": [
+    {
+      "dot": "slate",
+      "title": "怎么读这张图",
+      "items": [
+        "同一列 = 同一时刻;上面一条泳道是单进程,下面两条是多进程的 CPU 侧与 GPU 侧",
+        "单进程里 CPU 与 GPU 轮流工作,谁在干活另一个就挂着空等",
+        "多进程里同一列的两条泳道同时有活,CPU 段被藏进 GPU 段背后"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "总时长差在哪",
+      "items": [
+        "串行:tokenize 10 ms 与前向 50 ms 相加,约 60 ms",
+        "重叠:CPU 那 10 ms 与 GPU 的前向同时发生,理论下限约 50 ms",
+        "省下的正是两段空等;GPU 是瓶颈,所以下限由前向本身决定",
+        "数字是讲稿给的量级参考,不是本仓库实测"
+      ]
+    }
+  ]
+}

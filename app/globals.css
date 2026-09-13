@@ -41,6 +41,16 @@ body {
   padding-block: 0.35rem;
 }
 
+/* typography 插件默认把引用块渲染成斜体,长引用因此很难读。
+   引用块在本站只用来放一句话提示,不需要斜体;引号也一并去掉 */
+.prose blockquote {
+  font-style: normal;
+}
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
+
 /* 开源解读阅读器:只有图片撑满整篇宽度,其余一切(正文、表格、代码块、公式)保持 52rem 阅读宽度并居中。
    archify 导出的 SVG 画布约 1100px 宽,在 832px 的文字栏里会被缩到 0.77 倍,字号掉到 6.8px;
    放到整篇宽度后回到 10px 以上。含图片的段落可能同时带着「打开交互版」链接,所以按「段落里有图」匹配;选择器带 .prose 是为了压过上面 .prose .markdown-table-scroll 与 .prose .katex-display 的 max-width: 100% */
@@ -51,6 +61,15 @@ body {
 .prose.os-prose > p:has(> img) img {
   width: 100%;
   height: auto;
+}
+/* 但「撑满宽度」对竖长的图是灾难:底边一铺满,高度就按比例窜到 1200px 以上,
+   一张图占掉两屏。给一个高度上限,触发时用 object-fit 保住比例并居中
+   (盒子仍是整篇宽度,两侧留白是透明的)。横长的图高度本来就在上限以下,不受影响。
+   930 这个值是按「竖图缩完也不能比正文窄」定的:接近正方的图(约 0.9 宽高比)
+   缩到 930 高时宽约 839px,刚好压过正文的 52rem(832px) */
+.prose.os-prose > p:has(> img) img {
+  max-height: 930px;
+  object-fit: contain;
 }
 
 /* 表格:typography 插件只给横线,列一多就不好扫。改成卡片式——

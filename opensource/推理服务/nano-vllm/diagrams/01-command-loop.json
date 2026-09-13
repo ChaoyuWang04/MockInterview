@@ -6,72 +6,435 @@
     "subtitle": "示例甲:A=300、B=600 token,max_tokens=3,一轮预算 512,单卡;TP=2 只多 ⑦⑧ 一条虚线分支",
     "locale": "zh-CN",
     "quality_profile": "showcase",
-    "viewBox": [1080, 1150],
+    "viewBox": [
+      1080,
+      1195
+    ],
     "column_fit": "spread",
     "animation": "trace",
     "views": [
-      { "id": "first-token", "label": "收单到第一个 token", "focus": ["user", "engine", "scheduler", "blocks", "runner"], "note": "step 1:A 入座、300 个 token 一次算完,postprocess 把 tA1 写回客人对象。" },
-      { "id": "cross-process", "label": "跨进程的那一跳", "focus": ["runner", "shm", "runnerN"], "note": "TP=2 时 rank 0 只单向广播方法名与瘦身参数;分店同名执行,不回传。" },
-      { "id": "chunked-and-finish", "label": "分块预填充与结账", "focus": ["engine", "scheduler", "blocks", "runner"], "note": "B 分 512+88 两轮;第一轮采出的 token 被丢弃;step 5 两人结账退桌。" }
+      {
+        "id": "first-token",
+        "label": "收单到第一个 token",
+        "focus": [
+          "user",
+          "engine",
+          "scheduler",
+          "blocks",
+          "runner"
+        ],
+        "note": "step 1:A 入座、300 个 token 一次算完,postprocess 把 tA1 写回客人对象。"
+      },
+      {
+        "id": "cross-process",
+        "label": "跨进程的那一跳",
+        "focus": [
+          "runner",
+          "shm",
+          "runnerN"
+        ],
+        "note": "TP=2 时 rank 0 只单向广播方法名与瘦身参数;分店同名执行,不回传。"
+      },
+      {
+        "id": "chunked-and-finish",
+        "label": "分块预填充与结账",
+        "focus": [
+          "engine",
+          "scheduler",
+          "blocks",
+          "runner"
+        ],
+        "note": "B 分 512+88 两轮;第一轮采出的 token 被丢弃;step 5 两人结账退桌。"
+      }
     ]
   },
   "participants": [
-    { "id": "user", "type": "external", "label": "用户脚本", "sublabel": "example.py" },
-    { "id": "engine", "type": "backend", "label": "经理", "sublabel": "LLMEngine" },
-    { "id": "scheduler", "type": "backend", "label": "领班", "sublabel": "Scheduler" },
-    { "id": "blocks", "type": "database", "label": "座位管理员", "sublabel": "BlockManager" },
-    { "id": "runner", "type": "backend", "label": "厨房 rank 0", "sublabel": "ModelRunner" },
-    { "id": "shm", "type": "messagebus", "label": "传菜窗口", "sublabel": "SharedMemory + Event" },
-    { "id": "runnerN", "type": "backend", "label": "分店厨房", "sublabel": "ModelRunner rank 1..N" }
+    {
+      "id": "user",
+      "type": "external",
+      "label": "用户脚本",
+      "sublabel": "example.py"
+    },
+    {
+      "id": "engine",
+      "type": "backend",
+      "label": "经理",
+      "sublabel": "LLMEngine"
+    },
+    {
+      "id": "scheduler",
+      "type": "backend",
+      "label": "领班",
+      "sublabel": "Scheduler"
+    },
+    {
+      "id": "blocks",
+      "type": "database",
+      "label": "座位管理员",
+      "sublabel": "BlockManager"
+    },
+    {
+      "id": "runner",
+      "type": "backend",
+      "label": "厨房 rank 0",
+      "sublabel": "ModelRunner"
+    },
+    {
+      "id": "shm",
+      "type": "messagebus",
+      "label": "传菜窗口",
+      "sublabel": "SharedMemory + Event"
+    },
+    {
+      "id": "runnerN",
+      "type": "backend",
+      "label": "分店厨房",
+      "sublabel": "ModelRunner rank 1..N"
+    }
   ],
   "segments": [
-    { "from": 150, "to": 212, "label": "收单 · add_request" },
-    { "from": 222, "to": 462, "label": "step 1 · A 入座,拿到第一个 token(⑦⑧ 为 TP=2 分支)" },
-    { "from": 472, "to": 802, "label": "step 2–3 · B 大桌分批上菜" },
-    { "from": 812, "to": 1064, "label": "step 4–5 · 每轮一道菜,直到结账" }
+    {
+      "from": 195,
+      "to": 257,
+      "label": "收单 · add_request"
+    },
+    {
+      "from": 267,
+      "to": 507,
+      "label": "step 1 · A 入座,拿到第一个 token(⑦⑧ 为 TP=2 分支)"
+    },
+    {
+      "from": 517,
+      "to": 847,
+      "label": "step 2–3 · B 大桌分批上菜"
+    },
+    {
+      "from": 857,
+      "to": 1109,
+      "label": "step 4–5 · 每轮一道菜,直到结账"
+    }
   ],
   "messages": [
-    { "id": "m01", "from": "user", "to": "engine", "y": 165, "label": "generate(prompts, sp)", "variant": "emphasis", "note": "同步阻塞到全部客人结账" },
-    { "id": "m02", "from": "engine", "to": "scheduler", "y": 195, "label": "add(seq) ×2", "variant": "default", "note": "encode → Sequence;waiting=[A, B]" },
-    { "id": "m03", "from": "engine", "to": "scheduler", "y": 240, "label": "schedule()", "variant": "emphasis" },
-    { "id": "m04", "from": "scheduler", "to": "blocks", "y": 268, "label": "allocate(A, 0) → [0, 1]", "variant": "default", "note": "B 要 600 > 剩余 212,留在队里" },
-    { "id": "m05", "from": "scheduler", "to": "engine", "y": 296, "label": "([A], True)", "variant": "return", "note": "is_prefill=True;A 转 RUNNING" },
-    { "id": "m06", "from": "engine", "to": "runner", "y": 326, "label": "call(\"run\", [A], True)", "variant": "emphasis", "note": "同进程同步;300 个 token 一次算完" },
-    { "id": "m07", "from": "runner", "to": "shm", "y": 354, "label": "write_shm + Event.set", "variant": "dashed", "note": "pickle 瘦身后的 seqs;不等回复" },
-    { "id": "m08", "from": "shm", "to": "runnerN", "y": 382, "label": "read_shm → call(\"run\")", "variant": "dashed", "note": "同名执行;logits、token_ids 皆 None,不回传" },
-    { "id": "m09", "from": "runner", "to": "engine", "y": 412, "label": "token_ids=[tA1]", "variant": "return", "note": "sampler(...).tolist() 在此等 GPU" },
-    { "id": "m10", "from": "engine", "to": "scheduler", "y": 442, "label": "postprocess([A], [tA1])", "variant": "default", "note": "A.append_token(tA1):第一个 token 写回" },
-    { "id": "m11", "from": "engine", "to": "scheduler", "y": 490, "label": "schedule() → B 拿 512", "variant": "emphasis", "note": "队首才允许分块" },
-    { "id": "m12", "from": "scheduler", "to": "blocks", "y": 518, "label": "allocate(B, 0) → [2, 3, 4]", "variant": "default", "note": "三桌一次分完,只算前 512" },
-    { "id": "m13", "from": "scheduler", "to": "engine", "y": 546, "label": "([B], True) · 512 个", "variant": "return", "note": "B 仍在 waiting;running 里的 A 空等" },
-    { "id": "m14", "from": "engine", "to": "runner", "y": 576, "label": "call(\"run\", [B], True)", "variant": "emphasis", "note": "无缓存前缀,不带 block_tables" },
-    { "id": "m15", "from": "runner", "to": "engine", "y": 604, "label": "token_ids=[tB?]", "variant": "return", "note": "照常采了一个 token" },
-    { "id": "m16", "from": "engine", "to": "scheduler", "y": 634, "label": "postprocess:丢弃 tB?", "variant": "default", "note": "512 < 600 → continue,不 append" },
-    { "id": "m17", "from": "engine", "to": "scheduler", "y": 674, "label": "schedule() → B 剩 88", "variant": "emphasis", "note": "512+88=600,B 转 RUNNING" },
-    { "id": "m18", "from": "scheduler", "to": "engine", "y": 702, "label": "([B], True) · 88 个", "variant": "return", "note": "running=[A, B]" },
-    { "id": "m19", "from": "engine", "to": "runner", "y": 732, "label": "call(\"run\", [B], True)", "variant": "emphasis", "note": "k 长 600 > q 长 88,带 block_tables 读回前 512 段 KV" },
-    { "id": "m20", "from": "runner", "to": "engine", "y": 760, "label": "token_ids=[tB1]", "variant": "return" },
-    { "id": "m21", "from": "engine", "to": "scheduler", "y": 790, "label": "postprocess → B + tB1", "variant": "default", "note": "600 == 600,append_token" },
-    { "id": "m22", "from": "engine", "to": "scheduler", "y": 830, "label": "schedule() → decode", "variant": "emphasis", "note": "waiting 空,才轮到 decode" },
-    { "id": "m23", "from": "scheduler", "to": "blocks", "y": 858, "label": "can_append ×2 · 不加桌", "variant": "default", "note": "len % 256 ≠ 1" },
-    { "id": "m24", "from": "scheduler", "to": "engine", "y": 886, "label": "([A, B], False)", "variant": "return", "note": "is_prefill=False;每人 1 个 token" },
-    { "id": "m25", "from": "engine", "to": "runner", "y": 916, "label": "call(\"run\", [A, B], False)", "variant": "emphasis", "note": "TP 时瘦身只带 last_token" },
-    { "id": "m26", "from": "runner", "to": "engine", "y": 944, "label": "token_ids=[tA2, tB2]", "variant": "return" },
-    { "id": "m27", "from": "engine", "to": "scheduler", "y": 974, "label": "postprocess → 各 +1", "variant": "default", "note": "step 5 同形,产出 tA3、tB3" },
-    { "id": "m28", "from": "scheduler", "to": "blocks", "y": 1004, "label": "deallocate(A)、(B)", "variant": "default", "note": "step 5:completion == 3 → FINISHED,退桌" },
-    { "id": "m29", "from": "engine", "to": "user", "y": 1044, "label": "[{text, token_ids}] ×2", "variant": "return", "note": "waiting、running 皆空才返回" }
+    {
+      "id": "m01",
+      "from": "user",
+      "to": "engine",
+      "y": 210,
+      "label": "generate(prompts, sp)",
+      "variant": "emphasis",
+      "note": "同步阻塞到全部客人结账"
+    },
+    {
+      "id": "m02",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 240,
+      "label": "add(seq) ×2",
+      "variant": "default",
+      "note": "encode → Sequence;waiting=[A, B]"
+    },
+    {
+      "id": "m03",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 285,
+      "label": "schedule()",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m04",
+      "from": "scheduler",
+      "to": "blocks",
+      "y": 313,
+      "label": "allocate(A, 0) → [0, 1]",
+      "variant": "default",
+      "note": "B 要 600 > 剩余 212,留在队里"
+    },
+    {
+      "id": "m05",
+      "from": "scheduler",
+      "to": "engine",
+      "y": 341,
+      "label": "([A], True)",
+      "variant": "return",
+      "note": "is_prefill=True;A 转 RUNNING"
+    },
+    {
+      "id": "m06",
+      "from": "engine",
+      "to": "runner",
+      "y": 371,
+      "label": "call(\"run\", [A], True)",
+      "variant": "emphasis",
+      "note": "同进程同步;300 个 token 一次算完"
+    },
+    {
+      "id": "m07",
+      "from": "runner",
+      "to": "shm",
+      "y": 399,
+      "label": "write_shm + Event.set",
+      "variant": "dashed",
+      "note": "pickle 瘦身后的 seqs;不等回复"
+    },
+    {
+      "id": "m08",
+      "from": "shm",
+      "to": "runnerN",
+      "y": 427,
+      "label": "read_shm → call(\"run\")",
+      "variant": "dashed",
+      "note": "同名执行;logits、token_ids 皆 None,不回传"
+    },
+    {
+      "id": "m09",
+      "from": "runner",
+      "to": "engine",
+      "y": 457,
+      "label": "token_ids=[tA1]",
+      "variant": "return",
+      "note": "sampler(...).tolist() 在此等 GPU"
+    },
+    {
+      "id": "m10",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 487,
+      "label": "postprocess([A], [tA1])",
+      "variant": "default",
+      "note": "A.append_token(tA1):第一个 token 写回"
+    },
+    {
+      "id": "m11",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 535,
+      "label": "schedule() → B 拿 512",
+      "variant": "emphasis",
+      "note": "队首才允许分块"
+    },
+    {
+      "id": "m12",
+      "from": "scheduler",
+      "to": "blocks",
+      "y": 563,
+      "label": "allocate(B, 0) → [2, 3, 4]",
+      "variant": "default",
+      "note": "三桌一次分完,只算前 512"
+    },
+    {
+      "id": "m13",
+      "from": "scheduler",
+      "to": "engine",
+      "y": 591,
+      "label": "([B], True) · 512 个",
+      "variant": "return",
+      "note": "B 仍在 waiting;running 里的 A 空等"
+    },
+    {
+      "id": "m14",
+      "from": "engine",
+      "to": "runner",
+      "y": 621,
+      "label": "call(\"run\", [B], True)",
+      "variant": "emphasis",
+      "note": "无缓存前缀,不带 block_tables"
+    },
+    {
+      "id": "m15",
+      "from": "runner",
+      "to": "engine",
+      "y": 649,
+      "label": "token_ids=[tB?]",
+      "variant": "return",
+      "note": "照常采了一个 token"
+    },
+    {
+      "id": "m16",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 679,
+      "label": "postprocess:丢弃 tB?",
+      "variant": "default",
+      "note": "512 < 600 → continue,不 append"
+    },
+    {
+      "id": "m17",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 719,
+      "label": "schedule() → B 剩 88",
+      "variant": "emphasis",
+      "note": "512+88=600,B 转 RUNNING"
+    },
+    {
+      "id": "m18",
+      "from": "scheduler",
+      "to": "engine",
+      "y": 747,
+      "label": "([B], True) · 88 个",
+      "variant": "return",
+      "note": "running=[A, B]"
+    },
+    {
+      "id": "m19",
+      "from": "engine",
+      "to": "runner",
+      "y": 777,
+      "label": "call(\"run\", [B], True)",
+      "variant": "emphasis",
+      "note": "k 长 600 > q 长 88,带 block_tables 读回前 512 段 KV"
+    },
+    {
+      "id": "m20",
+      "from": "runner",
+      "to": "engine",
+      "y": 805,
+      "label": "token_ids=[tB1]",
+      "variant": "return"
+    },
+    {
+      "id": "m21",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 835,
+      "label": "postprocess → B + tB1",
+      "variant": "default",
+      "note": "600 == 600,append_token"
+    },
+    {
+      "id": "m22",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 875,
+      "label": "schedule() → decode",
+      "variant": "emphasis",
+      "note": "waiting 空,才轮到 decode"
+    },
+    {
+      "id": "m23",
+      "from": "scheduler",
+      "to": "blocks",
+      "y": 903,
+      "label": "can_append ×2 · 不加桌",
+      "variant": "default",
+      "note": "len % 256 ≠ 1"
+    },
+    {
+      "id": "m24",
+      "from": "scheduler",
+      "to": "engine",
+      "y": 931,
+      "label": "([A, B], False)",
+      "variant": "return",
+      "note": "is_prefill=False;每人 1 个 token"
+    },
+    {
+      "id": "m25",
+      "from": "engine",
+      "to": "runner",
+      "y": 961,
+      "label": "call(\"run\", [A, B], False)",
+      "variant": "emphasis",
+      "note": "TP 时瘦身只带 last_token"
+    },
+    {
+      "id": "m26",
+      "from": "runner",
+      "to": "engine",
+      "y": 989,
+      "label": "token_ids=[tA2, tB2]",
+      "variant": "return"
+    },
+    {
+      "id": "m27",
+      "from": "engine",
+      "to": "scheduler",
+      "y": 1019,
+      "label": "postprocess → 各 +1",
+      "variant": "default",
+      "note": "step 5 同形,产出 tA3、tB3"
+    },
+    {
+      "id": "m28",
+      "from": "scheduler",
+      "to": "blocks",
+      "y": 1049,
+      "label": "deallocate(A)、(B)",
+      "variant": "default",
+      "note": "step 5:completion == 3 → FINISHED,退桌"
+    },
+    {
+      "id": "m29",
+      "from": "engine",
+      "to": "user",
+      "y": 1089,
+      "label": "[{text, token_ids}] ×2",
+      "variant": "return",
+      "note": "waiting、running 皆空才返回"
+    }
   ],
   "activations": [
-    { "participant": "engine", "from": 165, "to": 1044, "type": "backend" },
-    { "participant": "scheduler", "from": 240, "to": 296, "type": "backend" },
-    { "participant": "scheduler", "from": 490, "to": 546, "type": "backend" },
-    { "participant": "scheduler", "from": 674, "to": 702, "type": "backend" },
-    { "participant": "scheduler", "from": 830, "to": 886, "type": "backend" },
-    { "participant": "runner", "from": 326, "to": 412, "type": "backend" },
-    { "participant": "runner", "from": 576, "to": 604, "type": "backend" },
-    { "participant": "runner", "from": 732, "to": 760, "type": "backend" },
-    { "participant": "runner", "from": 916, "to": 944, "type": "backend" },
-    { "participant": "runnerN", "from": 382, "to": 408, "type": "backend" }
+    {
+      "participant": "engine",
+      "from": 210,
+      "to": 1089,
+      "type": "backend"
+    },
+    {
+      "participant": "scheduler",
+      "from": 285,
+      "to": 341,
+      "type": "backend"
+    },
+    {
+      "participant": "scheduler",
+      "from": 535,
+      "to": 591,
+      "type": "backend"
+    },
+    {
+      "participant": "scheduler",
+      "from": 719,
+      "to": 747,
+      "type": "backend"
+    },
+    {
+      "participant": "scheduler",
+      "from": 875,
+      "to": 931,
+      "type": "backend"
+    },
+    {
+      "participant": "runner",
+      "from": 371,
+      "to": 457,
+      "type": "backend"
+    },
+    {
+      "participant": "runner",
+      "from": 621,
+      "to": 649,
+      "type": "backend"
+    },
+    {
+      "participant": "runner",
+      "from": 777,
+      "to": 805,
+      "type": "backend"
+    },
+    {
+      "participant": "runner",
+      "from": 961,
+      "to": 989,
+      "type": "backend"
+    },
+    {
+      "participant": "runnerN",
+      "from": 427,
+      "to": 453,
+      "type": "backend"
+    }
   ],
   "cards": [
     {
