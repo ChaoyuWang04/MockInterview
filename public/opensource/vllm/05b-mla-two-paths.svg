@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 740" width="1120" height="740" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif">
+  <rect x="0" y="0" width="1120" height="740" fill="#fcfcfb"/>
+
+  <text x="40" y="44" font-size="23" font-weight="700" fill="#1a1a1a">MLA 的两条计算路径:同一份数学,两个方向相反的代价</text>
+  <text x="40" y="72" font-size="14.5" fill="#6b6b6b">路径 A = 先解压再按标准 MHA 算 · 路径 B = 不解压,把解压矩阵吸收进 Q 侧和输出侧。两条横杠按数值等比例画。</text>
+  <line x1="40" y1="92" x2="1080" y2="92" stroke="#dedbd6" stroke-width="1"/>
+
+  <!-- ===== 第一组:读的元素 ===== -->
+  <text x="40" y="152" font-size="15" font-weight="700" fill="#1a1a1a">每 token 要读的</text>
+  <text x="40" y="173" font-size="15" font-weight="700" fill="#1a1a1a">KV 元素</text>
+  <text x="40" y="196" font-size="12" fill="#8a8a8a">访存侧</text>
+
+  <text x="198" y="163" font-size="13" font-weight="700" fill="#8a8a8a" text-anchor="end">A</text>
+  <rect x="220" y="145" width="700" height="24" rx="3" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+  <text x="932" y="163" font-size="14" font-weight="700" fill="#1a1a1a">32768</text>
+  <text x="228" y="162" font-size="12.5" fill="#7a5450">解压后:128 个 head × 256 维</text>
+
+  <text x="198" y="199" font-size="13" font-weight="700" fill="#8a8a8a" text-anchor="end">B</text>
+  <rect x="220" y="181" width="12" height="24" rx="2" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+  <text x="244" y="199" font-size="14" font-weight="700" fill="#1a1a1a">576</text>
+  <text x="292" y="199" font-size="13.5" font-weight="700" fill="#b5544a">← 1/57</text>
+  <text x="372" y="199" font-size="12.5" fill="#8a8a8a">原始 latent 512 + rope 64,细到几乎看不见 —— 这正是重点</text>
+
+  <!-- ===== 第二组:点积维度 ===== -->
+  <text x="40" y="270" font-size="15" font-weight="700" fill="#1a1a1a">QK 点积维度</text>
+  <text x="40" y="292" font-size="12" fill="#8a8a8a">算力侧</text>
+
+  <text x="198" y="281" font-size="13" font-weight="700" fill="#8a8a8a" text-anchor="end">A</text>
+  <rect x="220" y="263" width="233" height="24" rx="3" fill="#dfe7f5" stroke="#7f93bd" stroke-width="1.3"/>
+  <text x="465" y="281" font-size="14" font-weight="700" fill="#1a1a1a">192</text>
+  <text x="512" y="281" font-size="12.5" fill="#8a8a8a">= 不带位置编码的 128 维 + rope 的 64 维</text>
+
+  <text x="198" y="317" font-size="13" font-weight="700" fill="#8a8a8a" text-anchor="end">B</text>
+  <rect x="220" y="299" width="700" height="24" rx="3" fill="#dfe7f5" stroke="#7f93bd" stroke-width="1.3"/>
+  <text x="932" y="317" font-size="14" font-weight="700" fill="#1a1a1a">576</text>
+  <text x="228" y="316" font-size="12.5" fill="#4a5a7a">K 和 V 是同一块 latent,head 维度直接变成 576</text>
+  <text x="988" y="317" font-size="13.5" font-weight="700" fill="#4d6396">← 3 倍</text>
+
+  <line x1="40" y1="352" x2="1080" y2="352" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== 第三组:形态 ===== -->
+  <text x="40" y="400" font-size="15" font-weight="700" fill="#1a1a1a">attention 形态</text>
+  <text x="40" y="422" font-size="12" fill="#8a8a8a">图示用 8 个头</text>
+
+  <text x="220" y="398" font-size="13.5" font-weight="700" fill="#1a1a1a">A · MHA</text>
+  <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.2">
+    <rect x="220" y="410" width="24" height="24" rx="4"/><rect x="249" y="410" width="24" height="24" rx="4"/>
+    <rect x="278" y="410" width="24" height="24" rx="4"/><rect x="307" y="410" width="24" height="24" rx="4"/>
+    <rect x="336" y="410" width="24" height="24" rx="4"/><rect x="365" y="410" width="24" height="24" rx="4"/>
+    <rect x="394" y="410" width="24" height="24" rx="4"/><rect x="423" y="410" width="24" height="24" rx="4"/>
+  </g>
+  <g fill="#fadedb" stroke="#cb8d86" stroke-width="1.2">
+    <rect x="220" y="444" width="24" height="24" rx="4"/><rect x="249" y="444" width="24" height="24" rx="4"/>
+    <rect x="278" y="444" width="24" height="24" rx="4"/><rect x="307" y="444" width="24" height="24" rx="4"/>
+    <rect x="336" y="444" width="24" height="24" rx="4"/><rect x="365" y="444" width="24" height="24" rx="4"/>
+    <rect x="394" y="444" width="24" height="24" rx="4"/><rect x="423" y="444" width="24" height="24" rx="4"/>
+  </g>
+  <text x="220" y="492" font-size="12.5" fill="#6b6b6b">每个 head 一份解压出来的 K/V —— 真实是 128 份</text>
+
+  <text x="650" y="398" font-size="13.5" font-weight="700" fill="#1a1a1a">B · MQA</text>
+  <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.2">
+    <rect x="650" y="410" width="24" height="24" rx="4"/><rect x="679" y="410" width="24" height="24" rx="4"/>
+    <rect x="708" y="410" width="24" height="24" rx="4"/><rect x="737" y="410" width="24" height="24" rx="4"/>
+    <rect x="766" y="410" width="24" height="24" rx="4"/><rect x="795" y="410" width="24" height="24" rx="4"/>
+    <rect x="824" y="410" width="24" height="24" rx="4"/><rect x="853" y="410" width="24" height="24" rx="4"/>
+  </g>
+  <path d="M662 436 L751 444 M691 436 L751 444 M720 436 L751 444 M749 436 L751 444 M778 436 L763 444 M807 436 L763 444 M836 436 L763 444 M865 436 L763 444"
+        stroke="#cbc6bf" stroke-width="1" fill="none"/>
+  <rect x="739" y="444" width="36" height="24" rx="4" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+  <text x="757" y="461" font-size="10.5" fill="#5a5a5a" text-anchor="middle">latent</text>
+  <text x="650" y="492" font-size="12.5" fill="#6b6b6b">所有 head 共用同一块 latent,一份都不解压</text>
+
+  <line x1="40" y1="516" x2="1080" y2="516" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== 适合 ===== -->
+  <text x="40" y="552" font-size="15" font-weight="700" fill="#1a1a1a">什么时候用</text>
+  <text x="220" y="552" font-size="14" font-weight="700" fill="#1a1a1a">query 和 KV 一样长 → prefill</text>
+  <text x="650" y="552" font-size="14" font-weight="700" fill="#1a1a1a">query 远短于 KV → decode</text>
+  <text x="220" y="574" font-size="12.5" fill="#8a8a8a">解压的成本摊在很多 query 上,划算</text>
+  <text x="650" y="574" font-size="12.5" fill="#8a8a8a">只有 1 个 query,解压纯属白干</text>
+
+  <line x1="40" y1="602" x2="1080" y2="602" stroke="#dedbd6" stroke-width="1"/>
+
+  <!-- ===== 收口 ===== -->
+  <text x="40" y="634" font-size="15.5" font-weight="700" fill="#1a1a1a">两根横杠的方向是反的 —— 这正是这套设计能成立的地方</text>
+  <text x="40" y="660" font-size="13.5" fill="#4a4a4a">路径 B 多花 3 倍算力,换来少读 57 倍的数据。而 decode 阶段的算力利用率本来只有 0.34%(见 5.2),那 3 倍是白送的。</text>
+  <text x="40" y="684" font-size="13.5" fill="#4a4a4a">所以 vLLM 不在两条里选一条,而是在同一个 step 内按 token 类型分派:prefill token 走 A,decode token 走 B(见 5.8)。</text>
+  <text x="40" y="716" font-size="12" fill="#8a8a8a">数字取自 DeepSeek-V3 的形状(128 个 head、每头 128 维、latent 512、rope 64)。两条横杠在各自那一行内等比例,不跨行比较。</text>
+</svg>
