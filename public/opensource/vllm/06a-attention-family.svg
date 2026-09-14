@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1080" width="1120" height="1080" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', Roboto, sans-serif">
+  <rect x="0" y="0" width="1120" height="1080" fill="#fcfcfb"/>
+
+  <text x="40" y="46" font-size="23" font-weight="700" fill="#1a1a1a">七种注意力机制:各自省的是哪一维</text>
+  <text x="40" y="74" font-size="14.5" fill="#6b6b6b">同一组小数字:8 个 Q 头 · 每头 128 维 · FP16。右列是每层每 token 的 KV cache。</text>
+
+  <line x1="40" y1="92" x2="1080" y2="92" stroke="#dedbd6" stroke-width="1"/>
+  <text x="40" y="117" font-size="12.5" font-weight="600" fill="#8a8a8a">机制</text>
+  <text x="200" y="117" font-size="12.5" font-weight="600" fill="#8a8a8a">Q 头(上)与它们实际读到的东西(下)</text>
+  <text x="620" y="117" font-size="12.5" font-weight="600" fill="#8a8a8a">每层每 token 的 KV cache</text>
+
+  <!-- ===== MHA ===== -->
+  <g>
+    <text x="40" y="163" font-size="17" font-weight="700" fill="#1a1a1a">MHA</text>
+    <text x="40" y="184" font-size="12" fill="#8a8a8a">基线</text>
+    <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3">
+      <rect x="200" y="138" width="30" height="30" rx="5"/><rect x="236" y="138" width="30" height="30" rx="5"/>
+      <rect x="272" y="138" width="30" height="30" rx="5"/><rect x="308" y="138" width="30" height="30" rx="5"/>
+      <rect x="344" y="138" width="30" height="30" rx="5"/><rect x="380" y="138" width="30" height="30" rx="5"/>
+      <rect x="416" y="138" width="30" height="30" rx="5"/><rect x="452" y="138" width="30" height="30" rx="5"/>
+    </g>
+    <g fill="#fadedb" stroke="#cb8d86" stroke-width="1.3">
+      <rect x="200" y="182" width="30" height="30" rx="5"/><rect x="236" y="182" width="30" height="30" rx="5"/>
+      <rect x="272" y="182" width="30" height="30" rx="5"/><rect x="308" y="182" width="30" height="30" rx="5"/>
+      <rect x="344" y="182" width="30" height="30" rx="5"/><rect x="380" y="182" width="30" height="30" rx="5"/>
+      <rect x="416" y="182" width="30" height="30" rx="5"/><rect x="452" y="182" width="30" height="30" rx="5"/>
+    </g>
+    <text x="620" y="160" font-size="17" font-weight="700" fill="#1a1a1a">8 个 KV 头 → 4 KB</text>
+    <text x="620" y="182" font-size="13.5" fill="#6b6b6b">2 × 8 × 128 × 2 B。一个 Q 头配一个 KV 头。</text>
+    <text x="620" y="202" font-size="13.5" fill="#6b6b6b">decode 时算力利用率只有 0.34%,全卡在读带宽上。</text>
+  </g>
+  <line x1="40" y1="234" x2="1080" y2="234" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== MQA ===== -->
+  <g>
+    <text x="40" y="279" font-size="17" font-weight="700" fill="#1a1a1a">MQA</text>
+    <text x="40" y="300" font-size="12" fill="#8a8a8a">压 KV 头数</text>
+    <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3">
+      <rect x="200" y="254" width="30" height="30" rx="5"/><rect x="236" y="254" width="30" height="30" rx="5"/>
+      <rect x="272" y="254" width="30" height="30" rx="5"/><rect x="308" y="254" width="30" height="30" rx="5"/>
+      <rect x="344" y="254" width="30" height="30" rx="5"/><rect x="380" y="254" width="30" height="30" rx="5"/>
+      <rect x="416" y="254" width="30" height="30" rx="5"/><rect x="452" y="254" width="30" height="30" rx="5"/>
+    </g>
+    <path d="M215 286 L326 296 M251 286 L326 296 M287 286 L326 296 M323 286 L326 296 M359 286 L341 296 M395 286 L341 296 M431 286 L341 296 M467 286 L341 296"
+          stroke="#cbc6bf" stroke-width="1" fill="none"/>
+    <rect x="326" y="298" width="30" height="30" rx="5" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+    <text x="620" y="276" font-size="17" font-weight="700" fill="#1a1a1a">1 个 KV 头 → 512 B</text>
+    <text x="620" y="298" font-size="13.5" fill="#6b6b6b">省 32 倍(以 32 头的模型算)。</text>
+    <text x="620" y="318" font-size="13.5" fill="#6b6b6b">代价:所有 Q 头被迫共用一份 K/V,质量损失可观察。</text>
+  </g>
+  <line x1="40" y1="350" x2="1080" y2="350" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== GQA ===== -->
+  <g>
+    <text x="40" y="395" font-size="17" font-weight="700" fill="#1a1a1a">GQA</text>
+    <text x="40" y="416" font-size="12" fill="#8a8a8a">当前主流</text>
+    <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3">
+      <rect x="200" y="370" width="30" height="30" rx="5"/><rect x="236" y="370" width="30" height="30" rx="5"/>
+      <rect x="272" y="370" width="30" height="30" rx="5"/><rect x="308" y="370" width="30" height="30" rx="5"/>
+      <rect x="344" y="370" width="30" height="30" rx="5"/><rect x="380" y="370" width="30" height="30" rx="5"/>
+      <rect x="416" y="370" width="30" height="30" rx="5"/><rect x="452" y="370" width="30" height="30" rx="5"/>
+    </g>
+    <path d="M215 402 L254 412 M251 402 L254 412 M287 402 L269 412 M323 402 L269 412 M359 402 L398 412 M395 402 L398 412 M431 402 L413 412 M467 402 L413 412"
+          stroke="#cbc6bf" stroke-width="1" fill="none"/>
+    <rect x="254" y="414" width="30" height="30" rx="5" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+    <rect x="398" y="414" width="30" height="30" rx="5" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+    <text x="620" y="392" font-size="17" font-weight="700" fill="#1a1a1a">2 个 KV 头,每 4 个 Q 共用 1 个 → 1 KB</text>
+    <text x="620" y="414" font-size="13.5" fill="#6b6b6b">省 4 倍,质量几乎不掉。</text>
+    <text x="620" y="434" font-size="13.5" fill="#6b6b6b">额外收益:一次 K/V 加载被 4 个 Q 头复用,算术强度也涨 4 倍。</text>
+  </g>
+  <line x1="40" y1="466" x2="1080" y2="466" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== MLA ===== -->
+  <g>
+    <text x="40" y="511" font-size="17" font-weight="700" fill="#1a1a1a">MLA</text>
+    <text x="40" y="532" font-size="12" fill="#8a8a8a">压表示维度</text>
+    <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3">
+      <rect x="200" y="486" width="30" height="30" rx="5"/><rect x="236" y="486" width="30" height="30" rx="5"/>
+      <rect x="272" y="486" width="30" height="30" rx="5"/><rect x="308" y="486" width="30" height="30" rx="5"/>
+      <rect x="344" y="486" width="30" height="30" rx="5"/><rect x="380" y="486" width="30" height="30" rx="5"/>
+      <rect x="416" y="486" width="30" height="30" rx="5"/><rect x="452" y="486" width="30" height="30" rx="5"/>
+    </g>
+    <text x="200" y="536" font-size="12" fill="#8a8a8a">↑ 用时从下面这一条解压出各头的 K/V</text>
+    <rect x="200" y="544" width="282" height="26" rx="5" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+    <text x="341" y="562" font-size="12.5" fill="#5a5a5a" text-anchor="middle">latent 512 + rope 64</text>
+    <text x="620" y="508" font-size="17" font-weight="700" fill="#1a1a1a">不存 K/V,存一个压缩向量 → 1.1 KB</text>
+    <text x="620" y="530" font-size="13.5" fill="#6b6b6b">(512 + 64) × 2 B。关键性质:<tspan font-weight="700" fill="#1a1a1a">与头数无关</tspan>。</text>
+    <text x="620" y="550" font-size="13.5" fill="#6b6b6b">DeepSeek 那类 128 头的模型:MHA 要 64 KB,MLA 还是 1.1 KB。</text>
+  </g>
+  <line x1="40" y1="592" x2="1080" y2="592" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== DSA / MSA ===== -->
+  <g>
+    <text x="40" y="637" font-size="17" font-weight="700" fill="#1a1a1a">DSA / MSA</text>
+    <text x="40" y="658" font-size="12" fill="#8a8a8a">压参与计算的</text>
+    <text x="40" y="675" font-size="12" fill="#8a8a8a">token 数</text>
+    <g fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3">
+      <rect x="200" y="612" width="30" height="30" rx="5"/><rect x="236" y="612" width="30" height="30" rx="5"/>
+      <rect x="272" y="612" width="30" height="30" rx="5"/><rect x="308" y="612" width="30" height="30" rx="5"/>
+      <rect x="344" y="612" width="30" height="30" rx="5"/><rect x="380" y="612" width="30" height="30" rx="5"/>
+      <rect x="416" y="612" width="30" height="30" rx="5"/><rect x="452" y="612" width="30" height="30" rx="5"/>
+    </g>
+    <text x="200" y="664" font-size="12" fill="#8a8a8a">历史 12 个 token,每个 query 只对挑中的 3 个算:</text>
+    <g stroke="#a9a49c" stroke-width="1.2">
+      <rect x="200" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="224" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="248" y="674" width="20" height="24" rx="4" fill="#dff0e6" stroke="#6faa8b"/>
+      <rect x="272" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="296" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="320" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="344" y="674" width="20" height="24" rx="4" fill="#dff0e6" stroke="#6faa8b"/>
+      <rect x="368" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="392" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="416" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+      <rect x="440" y="674" width="20" height="24" rx="4" fill="#dff0e6" stroke="#6faa8b"/>
+      <rect x="464" y="674" width="20" height="24" rx="4" fill="#eceae5"/>
+    </g>
+    <text x="620" y="634" font-size="17" font-weight="700" fill="#1a1a1a">存的一个不省,算的从 L 个变成 k 个</text>
+    <text x="620" y="656" font-size="13.5" fill="#6b6b6b">DSA 建在 MLA 上按 token 选;MSA 建在 GQA 上按<tspan font-weight="700" fill="#1a1a1a">块</tspan>选。</text>
+    <text x="620" y="676" font-size="13.5" fill="#6b6b6b">选谁由<tspan font-weight="700" fill="#1a1a1a">内容</tspan>决定,所以能选到远处 —— 这是它和滑动窗口的分界。</text>
+    <text x="620" y="696" font-size="13.5" fill="#6b6b6b">缓解读带宽,<tspan font-weight="700" fill="#1a1a1a">不缓解显存容量</tspan>。</text>
+  </g>
+  <line x1="40" y1="722" x2="1080" y2="722" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== 线性注意力 ===== -->
+  <g>
+    <text x="40" y="767" font-size="17" font-weight="700" fill="#1a1a1a">线性注意力</text>
+    <text x="40" y="788" font-size="12" fill="#8a8a8a">GDN / KDA</text>
+    <text x="200" y="758" font-size="12.5" fill="#8a8a8a">不按 token 存,只维护一个固定大小的状态:</text>
+    <rect x="200" y="768" width="282" height="34" rx="5" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+    <text x="341" y="790" font-size="12.5" fill="#5a5a5a" text-anchor="middle">state[d_k × d_v] — 每来一个 token 就原地更新</text>
+    <text x="620" y="764" font-size="17" font-weight="700" fill="#1a1a1a">与序列长度无关 → 「每 token 多少字节」不适用</text>
+    <text x="620" y="786" font-size="13.5" fill="#6b6b6b">预填充从平方降到线性,每 token 解码开销恒定。</text>
+    <text x="620" y="806" font-size="13.5" fill="#6b6b6b">代价:状态是有损压缩,<tspan font-weight="700" fill="#1a1a1a">精确回看某个 token 的能力会掉</tspan>。</text>
+  </g>
+  <line x1="40" y1="832" x2="1080" y2="832" stroke="#eeece8" stroke-width="1"/>
+
+  <!-- ===== 混合 ===== -->
+  <g>
+    <text x="40" y="877" font-size="17" font-weight="700" fill="#1a1a1a">混合架构</text>
+    <text x="40" y="898" font-size="12" fill="#8a8a8a">2026 年主流</text>
+    <text x="200" y="868" font-size="12.5" fill="#8a8a8a">按层交错,常见比例 3:1 —— 每四层里留一层全注意力:</text>
+    <g>
+      <rect x="200" y="878" width="66" height="34" rx="5" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+      <text x="233" y="900" font-size="12" fill="#5a5a5a" text-anchor="middle">线性</text>
+      <rect x="272" y="878" width="66" height="34" rx="5" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+      <text x="305" y="900" font-size="12" fill="#5a5a5a" text-anchor="middle">线性</text>
+      <rect x="344" y="878" width="66" height="34" rx="5" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+      <text x="377" y="900" font-size="12" fill="#5a5a5a" text-anchor="middle">线性</text>
+      <rect x="416" y="878" width="66" height="34" rx="5" fill="#dff0e6" stroke="#6faa8b" stroke-width="1.6"/>
+      <text x="449" y="900" font-size="12" font-weight="700" fill="#2e6b4f" text-anchor="middle">MLA</text>
+    </g>
+    <text x="200" y="932" font-size="11.5" fill="#8a8a8a">重复 N 次 · Kimi 那条线还让 MLA 层不加位置编码,位置全交给线性层</text>
+    <text x="620" y="874" font-size="17" font-weight="700" fill="#1a1a1a">线性层扛成本,全注意力层兜精确检索</text>
+    <text x="620" y="896" font-size="13.5" fill="#6b6b6b">Qwen 第四代实验版 · GLM-5-next · Kimi K3 都是这个形状。</text>
+    <text x="620" y="916" font-size="13.5" fill="#6b6b6b">(以上取自这三家提交进 vLLM 的实现,可在基准源码里直接查证。)</text>
+  </g>
+
+  <line x1="40" y1="962" x2="1080" y2="962" stroke="#dedbd6" stroke-width="1"/>
+  <g>
+    <rect x="40" y="982" width="16" height="16" rx="3" fill="#dff0e6" stroke="#6faa8b" stroke-width="1.3"/>
+    <text x="64" y="995" font-size="13" fill="#5a5a5a">Q 头 / 被选中算的 token / 全注意力层</text>
+    <rect x="330" y="982" width="16" height="16" rx="3" fill="#fadedb" stroke="#cb8d86" stroke-width="1.3"/>
+    <text x="354" y="995" font-size="13" fill="#5a5a5a">真实存在 cache 里的 KV 头</text>
+    <rect x="580" y="982" width="16" height="16" rx="3" fill="#eceae5" stroke="#a9a49c" stroke-width="1.3"/>
+    <text x="604" y="995" font-size="13" fill="#5a5a5a">压缩后的存储 / 没被选中的 token / 线性层</text>
+  </g>
+  <text x="40" y="1034" font-size="12.5" fill="#8a8a8a">前三行动的是同一个公式里的 KV 头数那一维;MLA 动每头维度;DSA 与 MSA 一个字节都不省、只少算;</text>
+  <text x="40" y="1054" font-size="12.5" fill="#8a8a8a">最后两行让「每 token 多少字节」这个问法本身失效 —— 这既是它们最大的卖点,也是最难评估的地方。</text>
+</svg>
