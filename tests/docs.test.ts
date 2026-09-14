@@ -51,14 +51,15 @@ describe('活动文档', () => {
     expect(agents).toContain('docs/00-START.md')
   })
 
-  it('入口统一为六个功能模块,运行设施不算模块', () => {
+  it('入口统一为七个功能模块,运行设施不算模块', () => {
     const entryFiles = ['README.md', 'AGENTS.md', 'CLAUDE.md', 'docs/00-START.md']
     const entry = entryFiles
       .map((file) => fs.readFileSync(path.join(projectRoot, file), 'utf8'))
       .join('\n')
 
-    expect(entry).toContain('六个功能模块')
+    expect(entry).toContain('七个功能模块')
     expect(entry).not.toContain('五个功能模块')
+    expect(entry).not.toContain('六个功能模块')
   })
 
   it('入口地图覆盖全部现行手册', () => {
