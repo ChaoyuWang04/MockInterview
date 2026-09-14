@@ -145,6 +145,7 @@
 | Voyager | NVIDIA | Minecraft 里的终身学习 agent:技能库 + 自动课程 |
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
+| Cordis | DeepSeek | DeepSeek Harness 底下的插件内核;把动态组合拆成时间(可完全撤销副作用)与空间(响应式依赖)两维并给出演算 |
 
 ## 推理服务与架构探索
 
@@ -225,6 +226,7 @@
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
+| Qwen-Image-2.0-RL | Alibaba | 在 Qwen-Image-2.0 上做 RLHF + on-policy 蒸馏;组合奖励模型、GRPO 框架与混合 CFG,最后用 OPD 合并 T2I 与编辑两条策略 |
 
 ## 音频
 

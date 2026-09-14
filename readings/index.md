@@ -18,11 +18,15 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| StreamingLLM | MIT | attention sink 的提出者;保住开头几个 token 就能让窗口注意力无限外推,不微调也不崩 |
+| TransMLA | PKU | 把已有的 GQA 模型等价转成 MLA,不重训就拿到 DeepSeek 那套 KV 压缩 |
+| Topological Trouble With Transformers | GoogleDeepMind | Transformer 用扩张的上下文历史编码结构,这套表示在拓扑上存在固有困难 |
 
 ## 训练方法与强化学习
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| On-Policy Self-Distillation | UCSD | 无监督的 on-policy 自蒸馏,后训练不再依赖外部标注 |
 
 ## Agent 训练与工具使用
 
@@ -33,6 +37,8 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| ReQAT | Hanyang | W4A4KV4 下推理精度不掉;发现 FP4 的错集中在数字与运算符这类低熵 token,用轨迹对齐 QAT 加选择性熵最小化补回来 |
+| KDA | BAAI | 用 LLM 自动生成 GPU kernel 的框架与评测 |
 
 ## 分布式训练与并行
 
@@ -43,11 +49,13 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Segment Anything | Meta | 可提示分割的视觉基座 SAM,连带 SA-1B 数据引擎;分割任务被重述成 promptable 任务 |
 
 ## 图像、视频与 3D 生成
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| D4RT | GoogleDeepMind | 单个 transformer 从一段视频里同时推深度、时空对应与相机参数;核心是一套查询机制,绕开逐帧稠密解码,让模型按需探任意时空点的 3D 位置 |
 
 ## 音频
 
@@ -63,3 +71,12 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Self-Evolving AI Agents Survey | Glasgow | 自进化的一张分类地图:抽出一个统一的反馈回路框架,再把技术切成单 agent 优化、多 agent 优化、领域优化三支 |
+| RSI Survey | UCR | 1250 篇语料切成两轴(改什么 × 回路闭合到什么程度),中心刀是「有界自我精修」对「开放式 RSI」,并指出治理级的度量是最空的一块 |
+
+## 可解释性与对齐
+
+| 材料 | 机构 | 一句话 |
+|---|---|---|
+| Scaling Monosemanticity | Anthropic | 稀疏自编码器在 Claude 3 Sonnet 上规模化,抽出可解释、可干预的单义特征 |
+| Refusal Direction | ETH | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
