@@ -104,6 +104,11 @@ function looksLikeMaterial(file, { head, broken }) {
 
 /** 认出转录文本只为把「为什么不收」写准。**扫描器只提名文献**;
  *  网页、字幕、视频这些载体能进库,但要由维护者点名,不由扫描自动提议 */
+function isSurvey(file, head) {
+  return /\bsurvey\b|\breview\b|综述/i.test(path.basename(file)) ||
+    /\b(this|our|a comprehensive) survey\b/i.test(head)
+}
+
 function isTranscript(file) {
   const name = path.basename(file)
   return /\.(srt|vtt)$/i.test(name) || /字幕|转录|转写|录音|访谈|交流会|分享会|发布会|实录|transcript|subtitle/i.test(name)
@@ -174,6 +179,10 @@ function classify(file, info, known) {
   const gates = []
   if (repo) gates.push(`有仓库 ${repo}`)
   if (arxiv) gates.push(`arXiv ${arxiv}`)
+  // 综述免闸门三:新领域的综述往往出自小机构,拿机构与顶会卡它会把整个方向挡在外面
+  if (isSurvey(file, info.head)) {
+    return { tier: 'B', reason: `综述,免闸门三;写法见手册第四节${gates.length ? ';' + gates.join('、') : ''}`, target: '待定' }
+  }
   // 闸门三的机构与顶会两条脚本判不了,留给核实那一步
   if (gates.length === 0) {
     return {
