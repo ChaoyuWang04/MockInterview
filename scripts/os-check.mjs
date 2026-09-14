@@ -5,8 +5,9 @@
 //   3) 每页 markdown 引用的 /opensource/<项目>/... 文件都存在
 //   4) 每份 _NN-evidence.md 的「位置」与「原样引用」逐条拿到 projects/<主题>/<项目>/ 的源码上核对
 //   5) 开跑前先把被检查项目的源码仓同步到上游最新(见 scripts/projects-sync.mjs),
-//      再核对解读页记录的源码基准 commit 是否就是当前 HEAD;漂移且动到被引用文件才判失败,
-//      未触及引用点只提醒(上游高频合并时绝大多数漂移与本解读无关)
+//      再核对解读页记录的源码基准 commit 与当前 HEAD 的漂移。漂移一律不判失败:
+//      底稿引用的那些行真被改了才提醒(!),否则只打一行信息(·)。
+//      红灯只留给「现在就是坏的」:证据表引用对不上源码、产物缺失、图校验不过、文字遮挡
 // 用法: node scripts/os-check.mjs [--project <项目名>] [--skip-archify] [--skip-sync]
 import fs from 'node:fs';
 import os from 'node:os';
@@ -212,16 +213,51 @@ function checkEvidence({ topic, project, dir }) {
 }
 
 // ---- 源码基准核对 ----
-// 解读的每一条断言都钉在一个 commit 上。工作树被同步到上游最新之后,
-// 若解读页记录的基准不是当前 HEAD,这份解读就已经过期,必须按 06 的「已有解读更新」复核。
-function citedSourceFiles(dir) {
-  // 底稿与证据表里所有形如 `path/to/file.py` 或 `path/to/file.py:12-34` 的引用
-  const files = new Set();
+// 基准 commit 记的是「这份稿子当时照着哪个版本写的」,是历史事实,不是要追的目标
+// (2026-09-13 用户拍板:解读不跟着上游走,全量复核只在用户点名时做)。所以漂移一律不判失败:
+//   · 信息行 = 漂移了,但底稿引用的那些行没被动到
+//   ! 提醒   = 引用点真被上游改了,值得哪天看一眼
+// 判据是行级不是文件级:vLLM 一天几十个提交,按文件判几乎永远命中,红灯常亮就失去意义。
+const SRC_EXT = String.raw`(?:py|cu|cuh|h|cpp|hpp|rs|mjs|ts)`;
+const CITE_RE = new RegExp(
+  // `path/to/file.py` 或 `path/to/file.py:12-34`;或裸的 `:12-34`(沿用同一行前面的文件)
+  String.raw`\`([\w./-]+\.${SRC_EXT})((?::[\d,、/ -]*)?)\`|\`(:[\d,、/ -]+)\``,
+  'g',
+);
+
+/** 底稿与证据表里的源码引用,返回 Map<文件, 基准侧行区间[]>;只写文件名的留空数组 */
+function citedSourceRefs(dir) {
+  const cites = new Map();
+  const add = (file, spec) => {
+    if (!cites.has(file)) cites.set(file, []);
+    if (!spec) return;
+    for (const part of spec.replace(/^:/, '').split(/[,、]/)) {
+      const m = part.trim().match(/^(\d+)(?:\s*-\s*(\d+))?/);
+      if (m) cites.get(file).push([+m[1], +(m[2] || m[1])]);
+    }
+  };
   for (const f of fs.readdirSync(dir).filter((x) => x.startsWith('_') && x.endsWith('.md'))) {
-    const md = fs.readFileSync(path.join(dir, f), 'utf8');
-    for (const m of md.matchAll(/`([\w./-]+\.(?:py|cu|cuh|h|cpp|hpp|rs|mjs|ts))(?::[\d,、/ -]*)?`/g)) files.add(m[1]);
+    // 逐行扫:证据表的规则是「裸 :12-34 只沿用同一行前面的文件」
+    for (const line of fs.readFileSync(path.join(dir, f), 'utf8').split('\n')) {
+      let last = null;
+      for (const m of line.matchAll(CITE_RE)) {
+        if (m[1]) { last = m[1]; add(m[1], m[2]); }
+        else if (last) add(last, m[3]);
+      }
+    }
   }
-  return files;
+  return cites;
+}
+
+/** 某文件在 base..HEAD 之间被改动的行区间,按**基准侧**行号(-U0 的 hunk 头旧侧) */
+function changedHunks(git, base, file) {
+  const out = [];
+  for (const m of git(['diff', '-U0', `${base}..HEAD`, '--', file]).matchAll(/^@@ -(\d+)(?:,(\d+))? /gm)) {
+    const start = +m[1];
+    const len = m[2] === undefined ? 1 : +m[2];
+    out.push(len === 0 ? [start, start] : [start, start + len - 1]); // 纯新增旧侧长度为 0,记成插入点
+  }
+  return out;
 }
 
 function checkBaseline({ topic, project, dir }) {
@@ -239,28 +275,48 @@ function checkBaseline({ topic, project, dir }) {
   const recorded = m[1];
   if (head.startsWith(recorded)) { ok(`源码基准 ${recorded.slice(0, 12)} 与工作树 HEAD 一致`); return; }
 
-  // 基准漂移了。只有当漂移真的动到被引用的文件时才算解读过期;
-  // 上游高频合并(vLLM 一天几十个提交)时,绝大多数漂移与本解读无关。
+  // 基准漂移了——不判失败,只分「引用点被动过」和「没动过」两档。
   let changed, count;
   try {
     changed = new Set(git(['diff', '--name-only', `${recorded}..HEAD`]).split('\n').filter(Boolean));
     count = git(['rev-list', '--count', `${recorded}..HEAD`]);
   } catch (e) {
-    fail(`${overview}: 基准 ${recorded.slice(0, 12)} 在工作树里找不到(${(e.message || '').split('\n')[0]});请重新核对并更新基准`);
+    warn(`${overview}: 基准 ${recorded.slice(0, 12)} 在工作树里找不到(${(e.message || '').split('\n')[0]}),无法比对漂移`);
     return;
   }
-  const cited = citedSourceFiles(dir);
-  const hit = [...cited].filter((f) => changed.has(f)).sort();
-  if (!hit.length) {
-    warn(
-      `基准漂移 ${count} 个提交(${recorded.slice(0, 12)} → ${head.slice(0, 12)}),` +
-        `但未触及本解读引用的任何文件(共引用 ${cited.size} 个);把 ${overview} 的基准更新为 ${head.slice(0, 12)} 即可`,
+  const cites = citedSourceRefs(dir);
+  const touched = [...cites.keys()].filter((f) => changed.has(f)).sort();
+  const drift = `基准 ${recorded.slice(0, 12)} → HEAD ${head.slice(0, 12)},漂移 ${count} 个提交`;
+  if (!touched.length) {
+    console.log(`  · ${drift};未触及本解读引用的任何文件(共引用 ${cites.size} 个)`);
+    return;
+  }
+
+  // 文件变了不等于引用点变了:拿底稿记的基准侧行号和 diff 的旧侧 hunk 求交
+  const hits = [];
+  const noRange = [];
+  for (const f of touched) {
+    const ranges = cites.get(f);
+    let hunks = null;
+    if (ranges.length) { try { hunks = changedHunks(git, recorded, f); } catch { /* 读不到就按无行号处理 */ } }
+    if (!hunks) { noRange.push(f); continue; }
+    const n = ranges.filter(([a, b]) => hunks.some(([c, d]) => a <= d && c <= b)).length;
+    if (n) hits.push(`${f}(引用 ${ranges.length} 处,命中 ${n} 处)`);
+  }
+  if (!hits.length && !noRange.length) {
+    console.log(`  · ${drift};${touched.length} 个被引用的文件有改动,但引用的行都没被动到`);
+    return;
+  }
+  const parts = [];
+  if (hits.length) parts.push(`引用点被改:${hits.join('、')}`);
+  if (noRange.length) {
+    parts.push(
+      `另有 ${noRange.length} 个引用未标行号、只能按文件判:${noRange.slice(0, 4).join('、')}${noRange.length > 4 ? ' 等' : ''}`,
     );
-    return;
   }
-  fail(
-    `源码基准已过期:${overview} 记录 ${recorded.slice(0, 12)},工作树 HEAD 是 ${head.slice(0, 12)}(相差 ${count} 个提交),` +
-      `其中 ${hit.length} 个被引用的文件有改动,需按 06 的「已有解读更新」逐条复核:${hit.slice(0, 8).join('、')}${hit.length > 8 ? ' 等' : ''}`,
+  warn(
+    `${drift};${touched.length}/${cites.size} 个被引用的文件有改动。${parts.join(';')}。` +
+      `基准不必跟着走,要复核时按 06 的「已有解读更新」逐条查`,
   );
 }
 
