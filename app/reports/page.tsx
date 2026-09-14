@@ -25,7 +25,7 @@ export default function ReportsIndexPage() {
       {total === 0 ? (
         <div className="mt-10 border border-dashed border-gray-300 bg-white p-6 text-sm leading-7 text-gray-500">
           还没有已发布的解读。PDF 原件放到 papers/&lt;公司&gt;/，完成的长文放到
-          reports/&lt;公司&gt;/，并在 reports/index.md 登记方向；完整流程见 docs/10-基模报告流程.md。
+          reports/&lt;公司&gt;/，并在 reports/index.md 登记方向；完整流程见 docs/10-材料解读流程.md。
         </div>
       ) : (
         topics.map((topic) => (

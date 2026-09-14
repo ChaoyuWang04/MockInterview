@@ -1,4 +1,4 @@
-// 报告库存与解读状态:读 reports/index.md,状态由文件推导(docs/10-基模报告流程.md 第七节)
+// 报告库存与解读状态:读 reports/index.md,状态由文件推导(docs/10-材料解读流程.md 第八节)
 //   ✅ reports/<公司>/<报告>.md 已发布   🚧 存在 _<报告>.md 草稿   ⬜ 只有原件或线索
 // 用法:npm run reports:status        有告警(已发布未登记 / 公司不一致 / 已发布未从新到旧 / PDF 未登记)时退出码为 1
 // lib/reports.ts 是同一套解析规则的 TS 版本;tests/reports.test.ts 钉住两边不漂移

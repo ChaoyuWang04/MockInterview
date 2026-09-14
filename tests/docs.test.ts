@@ -73,7 +73,7 @@ describe('活动文档', () => {
       '07-LeetCode清单.md',
       '08-常驻服务.md',
       '09-日常维护.md',
-      '10-基模报告流程.md',
+      '10-材料解读流程.md',
       '11-模拟面试系统.md',
     ]) {
       expect(start, `00-START 缺少 ${manual}`).toContain(manual)
