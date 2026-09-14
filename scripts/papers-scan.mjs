@@ -20,7 +20,7 @@ const TIER = {
   B: 'B · 建议进日常研读',
   C: 'C · ⚠️ 闸门三未过,请逐条拍板',
   D: 'D · 已在库或已判定,跳过',
-  E: 'E · 不是可解读的材料,原地不动',
+  E: 'E · 非文献,默认不收,原地不动',
 }
 
 function parseArgs(argv) {
@@ -91,13 +91,19 @@ function looksLikeMaterial(file, { head, broken }) {
   if (/\buniversity\b|\binstitute\b|\blaborator/.test(text)) hits.push('有机构署名')
   if (/\bwe (propose|present|introduce|show)\b/.test(text)) hits.push('有论文式表述')
   if (/^\d{4}-/.test(path.basename(file))) hits.push('文件名带年份前缀')
-  if (isTranscript(file)) hits.push('疑似转录文本')
-  if (hits.length === 0) return { ok: false, why: '首页没有摘要、机构或 arXiv 迹象' }
+  if (hits.length === 0) {
+    return {
+      ok: false,
+      why: isTranscript(file)
+        ? '转录文本,非文献,默认不收——要收请直接点名'
+        : '非文献:首页没有摘要、机构或 arXiv 迹象',
+    }
+  }
   return { ok: true, why: hits.join('、') }
 }
 
-/** 转录文本原件(字幕、录音转写、发布会与访谈)。它们首页不会有摘要与机构,
- *  按论文的判据一定落进 E,所以单独认出来交给人判断,别当噪音丢掉 */
+/** 认出转录文本只为把「为什么不收」写准。**扫描器只提名文献**;
+ *  网页、字幕、视频这些载体能进库,但要由维护者点名,不由扫描自动提议 */
 function isTranscript(file) {
   const name = path.basename(file)
   return /\.(srt|vtt)$/i.test(name) || /字幕|转录|转写|录音|访谈|交流会|分享会|发布会|实录|transcript|subtitle/i.test(name)
@@ -164,14 +170,6 @@ function classify(file, info, known) {
   const material = looksLikeMaterial(file, info)
   if (!material.ok) return { tier: 'E', reason: material.why, target: '跳过' }
 
-  if (isTranscript(file)) {
-    return {
-      tier: 'C',
-      reason: '转录文本原件,闸门三(仓库/机构/顶会)无法从字幕判断,需人工定重要程度与来源 URL',
-      target: '待定',
-    }
-  }
-
   const { arxiv, repo } = detect(info.head)
   const gates = []
   if (repo) gates.push(`有仓库 ${repo}`)
@@ -195,6 +193,9 @@ function report(rows, args) {
     `扫描范围:\`${args.dir}\`${args.recursive ? '(递归)' : '(仅顶层)'}`,
     '',
     '**这份报告是临时产物,不入库。** 脚本只采集不判断:A/B 是建议,不是判决。',
+    '',
+    '**扫描只提名文献。** 网页、博客、字幕、录音转写这些载体照样能进库(手册「三种原件形态」),',
+    '但要由你点名,不由扫描自动提议——所以它们都在 E 档,附上认出来的类型,方便你挑。',
     '核实后改「去向」列,再跑 `npm run papers:file -- <本文件>` 归档。去向的写法:',
     '',
     '| 去向的写法 | 含义 |',
