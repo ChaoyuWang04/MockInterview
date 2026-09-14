@@ -5,6 +5,7 @@ import { listHot100 } from '@/lib/leetcode'
 import { listSessions } from '@/lib/interview/session'
 import { listOsProjects, listOsTopics } from '@/lib/opensource'
 import { getStats } from '@/lib/questions'
+import { countReadings } from '@/lib/readings'
 import { countReports } from '@/lib/reports'
 
 export const dynamic = 'force-dynamic'
@@ -14,6 +15,7 @@ export default function Home() {
   const kbCount = countArticles(listKbTree())
   const osCount = listOsTopics().reduce((s, t) => s + listOsProjects(t).length, 0)
   const reportCount = countReports()
+  const readingCount = countReadings()
   const lcCount = listHot100().reduce((s, g) => s + g.problems.length, 0)
   const sessionCount = listSessions().length
   return (
@@ -48,6 +50,12 @@ export default function Home() {
             className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
           >
             📄 报告解读 · {reportCount} 篇 →
+          </Link>
+          <Link
+            href="/readings"
+            className="inline-block border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-500"
+          >
+            🔖 日常研读 · {readingCount} 篇 →
           </Link>
           <Link
             href="/leetcode"

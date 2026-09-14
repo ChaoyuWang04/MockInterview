@@ -1,11 +1,21 @@
+/**
+ * 报告解读库:必看的报告与论文,目录键是**公司**,方向只存在于 reports/index.md。
+ * 共用原语见 lib/library.ts;日常研读库见 lib/readings.ts。规则见 docs/10-材料解读流程.md。
+ */
 import fs from 'node:fs'
 import path from 'node:path'
 
-export interface ReportSummary {
-  slug: string
-  title: string
-  releaseDate: string
-}
+import {
+  type ArticleSummary,
+  checkTopicOrder,
+  indexPath,
+  listArticles,
+  listDirectories,
+  parseIndex,
+  readArticleBody,
+} from './library'
+
+export type ReportSummary = ArticleSummary
 
 export interface ReportArticle extends ReportSummary {
   company: string
@@ -35,117 +45,28 @@ export interface ReportTopic {
   reports: ReportCard[]
 }
 
+const INDEX_SPEC = {
+  slugHeader: '报告',
+  badgeHeader: '公司',
+  label: 'reports',
+  // 同一家公司下的同一份报告只能登记一次,跨方向也算重复
+  dedupKey: (entry: { slug: string; badge: string }) => `${entry.badge}/${entry.slug}`,
+}
+
 export function reportsRoot(): string {
   return path.join(process.cwd(), 'reports')
 }
 
 export function reportIndexPath(root = reportsRoot()): string {
-  return path.join(root, 'index.md')
-}
-
-function isVisible(name: string): boolean {
-  return !name.startsWith('.') && !name.startsWith('_')
+  return indexPath(root)
 }
 
 export function listReportCompanies(root = reportsRoot()): string[] {
-  if (!fs.existsSync(root)) return []
-  return fs
-    .readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && isVisible(entry.name))
-    .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b, 'zh-CN'))
-}
-
-/** 只认整行的 release-date 注释;正文里以行内代码提到 `release-date` 的段落不会命中 */
-function releaseDateLineIndexes(lines: string[]): number[] {
-  return lines.flatMap((line, index) =>
-    /<!--\s*release-date\b/.test(line) ? [index] : [],
-  )
-}
-
-/** 该注释是排序元数据、不计入正文,渲染前按行剥掉,其余内容原样保留 */
-function stripReleaseDate(content: string): string {
-  const lines = content.split(/\r?\n/)
-  const [index] = releaseDateLineIndexes(lines)
-  if (index === undefined) return content
-  lines.splice(index, 1)
-  return lines.join('\n')
-}
-
-function isValidCalendarDate(year: number, month: number, day: number): boolean {
-  if (year < 1 || month < 1 || month > 12 || day < 1) return false
-  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
-  const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  return day <= daysInMonth[month - 1]
-}
-
-function validatePublishedReport(
-  file: string,
-  content: string,
-): Pick<ReportSummary, 'title' | 'releaseDate'> {
-  const titleMatch = content.match(/^#\s+(.+)$/m)
-  if (!titleMatch?.[1].trim()) throw new Error(`${file}: 缺少一级标题`)
-
-  const rawBody = content.replace(titleMatch[0], '').trim()
-  if (!rawBody) throw new Error(`${file}: 正文为空`)
-
-  const lines = content.split(/\r?\n/)
-  const titleIndex = lines.findIndex((line) => /^#\s+(.+)$/.test(line))
-  const releaseDateIndexes = releaseDateLineIndexes(lines)
-
-  if (releaseDateIndexes.length === 0) throw new Error(`${file}: 缺少 release-date`)
-  if (releaseDateIndexes.length > 1) throw new Error(`${file}: release-date 重复`)
-
-  const releaseDateIndex = releaseDateIndexes[0]
-  const firstNonBlankAfterTitle = lines.findIndex(
-    (line, index) => index > titleIndex && line.trim() !== '',
-  )
-  if (releaseDateIndex !== firstNonBlankAfterTitle) {
-    throw new Error(`${file}: release-date 必须是一级标题后的第一个非空行`)
-  }
-
-  const releaseDateMatch = lines[releaseDateIndex]
-    .trim()
-    .match(/^<!-- release-date: (\d{4})-(\d{2})-(\d{2}) -->$/)
-  if (!releaseDateMatch) throw new Error(`${file}: release-date 格式错误`)
-
-  const [, yearText, monthText, dayText] = releaseDateMatch
-  if (!isValidCalendarDate(Number(yearText), Number(monthText), Number(dayText))) {
-    throw new Error(`${file}: release-date 日期非法`)
-  }
-
-  const body = lines
-    .filter((_, index) => index !== titleIndex && index !== releaseDateIndex)
-    .join('\n')
-    .trim()
-  if (!body) throw new Error(`${file}: 正文为空`)
-
-  return {
-    title: titleMatch[1].trim(),
-    releaseDate: `${yearText}-${monthText}-${dayText}`,
-  }
+  return listDirectories(root)
 }
 
 export function listReports(company: string, root = reportsRoot()): ReportSummary[] {
-  if (!listReportCompanies(root).includes(company)) return []
-  const dir = path.join(root, company)
-  return fs
-    .readdirSync(dir, { withFileTypes: true })
-    .filter(
-      (entry) => entry.isFile() && entry.name.endsWith('.md') && isVisible(entry.name),
-    )
-    .map((entry) => entry.name)
-    .map((file) => {
-      const slug = file.replace(/\.md$/, '')
-      const content = fs.readFileSync(path.join(dir, file), 'utf8')
-      return { slug, ...validatePublishedReport(file, content) }
-    })
-    .sort((a, b) => {
-      const dateOrder = b.releaseDate.localeCompare(a.releaseDate)
-      if (dateOrder !== 0) return dateOrder
-      if (a.slug === b.slug) return 0
-      return a.slug < b.slug ? -1 : 1
-    })
+  return listArticles(root, company)
 }
 
 export function isValidReport(company: string, slug: string, root = reportsRoot()): boolean {
@@ -163,56 +84,22 @@ export function getReport(
     ...summary,
     company,
     topic: findReportTopic(company, slug, root),
-    content: stripReleaseDate(fs.readFileSync(path.join(root, company, `${slug}.md`), 'utf8')),
+    content: readArticleBody(root, company, slug),
   }
 }
 
-/**
- * 解析 reports/index.md:`## 方向` 分组,表格三列 报告|公司|一句话。
- * 行序就是页面顺序,这里不做任何重排。已发布行必须按首发日从新到旧,由 checkReportIndex 守住。
- * 状态不在索引里:是否已发布由文件是否存在决定,见 listReportTopics。
- */
 export function parseReportIndex(root = reportsRoot()): ReportIndexTopic[] {
-  const file = reportIndexPath(root)
-  if (!fs.existsSync(file)) {
-    throw new Error('reports/index.md 不存在:报告索引是页面分组与排序的唯一数据源')
-  }
-  const topics: ReportIndexTopic[] = []
-  const seenTopics = new Set<string>()
-  const seenEntries = new Set<string>()
-  let current: ReportIndexTopic | null = null
-  const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/)
-  for (const [index, line] of lines.entries()) {
-    const at = `index.md 第 ${index + 1} 行`
-    const heading = line.match(/^##\s+(.+?)\s*$/)
-    if (heading) {
-      const title = heading[1]
-      if (seenTopics.has(title)) throw new Error(`${at}: 主题「${title}」重复`)
-      seenTopics.add(title)
-      current = { title, entries: [] }
-      topics.push(current)
-      continue
-    }
-    if (!line.startsWith('|')) continue
-    const cells = line.split('|').slice(1, -1).map((cell) => cell.trim())
-    // 表头与分隔行
-    if (cells[0] === '报告' || cells.every((cell) => /^:?-+:?$/.test(cell))) continue
-    if (!current) throw new Error(`${at}: 表格行出现在任何主题之前`)
-    if (cells.length < 3) throw new Error(`${at}: 列数不足,需要 报告|公司|一句话 三列`)
-    const [slug, company, summary] = cells
-    if (!slug || !company) throw new Error(`${at}: 报告或公司为空`)
-    if (!isVisible(slug) || !isVisible(company)) {
-      throw new Error(`${at}: 不能登记以 _ 或 . 开头的草稿或隐藏名`)
-    }
-    const key = `${company}/${slug}`
-    if (seenEntries.has(key)) throw new Error(`${at}: ${key} 重复登记`)
-    seenEntries.add(key)
-    current.entries.push({ slug, company, summary })
-  }
-  return topics
+  return parseIndex(root, INDEX_SPEC).map((topic) => ({
+    title: topic.title,
+    entries: topic.entries.map((entry) => ({
+      slug: entry.slug,
+      company: entry.badge,
+      summary: entry.summary,
+    })),
+  }))
 }
 
-/** 已发布文章与索引的一致性:每篇已发布文章必须在索引里恰有一行,且公司列等于目录名;每个方向的已发布行必须按首发日从新到旧,同日按 slug 升序 */
+/** 已发布文章与索引的一致性:每篇已发布文章必须在索引里恰有一行,且**公司列等于目录名**;每个方向的已发布行必须按首发日从新到旧,同日按 slug 升序 */
 export function checkReportIndex(root = reportsRoot()): string[] {
   const registered = new Set<string>()
   const bySlug = new Map<string, string[]>()
@@ -236,40 +123,27 @@ export function checkReportIndex(root = reportsRoot()): string[] {
     }
   }
 
-  const publishedByCompany = new Map<string, Map<string, ReportSummary>>()
+  const cache = new Map<string, Map<string, ReportSummary>>()
   const publishedOf = (company: string, slug: string): ReportSummary | undefined => {
-    if (!publishedByCompany.has(company)) {
-      publishedByCompany.set(
-        company,
-        new Map(listReports(company, root).map((report) => [report.slug, report])),
-      )
+    if (!cache.has(company)) {
+      cache.set(company, new Map(listReports(company, root).map((r) => [r.slug, r])))
     }
-    return publishedByCompany.get(company)?.get(slug)
+    return cache.get(company)?.get(slug)
   }
-  for (const topic of topics) {
-    let previous: { company: string; slug: string; releaseDate: string } | null = null
-    for (const entry of topic.entries) {
-      const summary = publishedOf(entry.company, entry.slug)
-      if (!summary) continue
-      if (previous) {
-        const dateOrder = summary.releaseDate.localeCompare(previous.releaseDate)
-        if (dateOrder > 0) {
-          errors.push(
-            `${topic.title}: ${entry.company}/${entry.slug} (${summary.releaseDate}) 排在 ${previous.company}/${previous.slug} (${previous.releaseDate}) 后面,已发布卡片必须按首发日从新到旧`,
-          )
-        } else if (dateOrder === 0 && entry.slug < previous.slug) {
-          errors.push(
-            `${topic.title}: ${entry.company}/${entry.slug} 与 ${previous.company}/${previous.slug} 同日 ${summary.releaseDate},同日必须按 slug 升序`,
-          )
-        }
-      }
-      previous = {
-        company: entry.company,
-        slug: entry.slug,
-        releaseDate: summary.releaseDate,
-      }
-    }
-  }
+  errors.push(
+    ...checkTopicOrder(
+      topics.map((topic) => ({
+        title: topic.title,
+        entries: topic.entries.map((entry) => ({
+          slug: entry.slug,
+          badge: entry.company,
+          summary: entry.summary,
+        })),
+      })),
+      (entry) => publishedOf(entry.badge, entry.slug),
+      (entry) => `${entry.badge}/${entry.slug}`,
+    ),
+  )
   return errors
 }
 

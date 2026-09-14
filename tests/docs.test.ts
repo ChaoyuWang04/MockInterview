@@ -92,6 +92,16 @@ describe('活动文档', () => {
     expect(home).toContain('报告解读')
   })
 
+  it('主页把日常研读作为报告解读旁边的独立入口', () => {
+    const home = fs.readFileSync(path.join(projectRoot, 'app/page.tsx'), 'utf8')
+    const reportsAt = home.indexOf('href="/reports"')
+    const readingsAt = home.indexOf('href="/readings"')
+
+    expect(readingsAt).toBeGreaterThan(reportsAt)
+    expect(home.slice(reportsAt, readingsAt)).not.toContain('href="/leetcode"')
+    expect(home).toContain('日常研读')
+  })
+
   it('报告解读动态路由不对 Next 参数重复解码', () => {
     const route = fs.readFileSync(
       path.join(projectRoot, 'app/reports/[company]/[report]/page.tsx'),
@@ -99,6 +109,16 @@ describe('活动文档', () => {
     )
 
     expect(route).not.toContain('decodeURIComponent')
+  })
+
+  // 方向名全是中文,动态段是百分号编码送进来的,不解码会 404(实测)。/opensource 同理
+  it('日常研读动态路由必须解码中文方向段', () => {
+    const route = fs.readFileSync(
+      path.join(projectRoot, 'app/readings/[topic]/[paper]/page.tsx'),
+      'utf8',
+    )
+
+    expect(route).toContain('decodeURIComponent')
   })
 
   it('不再恢复已废弃的静态面试池说明', () => {
