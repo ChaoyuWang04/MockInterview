@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <!-- ===== 标题 ===== -->
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">一份锁页缓冲,还是轮转两份</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">横轴是时间,每一行是一块物理内存。读和写落在同一行、而且横向重叠 —— 那就是写后读竞争。</text>
+
+  <!-- ===== 面板一:单缓冲 ===== -->
+  <circle cx="37" cy="94" r="6" fill="#dc2626"/>
+  <text x="52" y="99" font-size="15" font-weight="700" fill="#991b1b">只有一份缓冲 B</text>
+  <text x="1090" y="99" font-size="12" fill="#9ca3af" text-anchor="end">时间 →</text>
+
+  <!-- 行底 -->
+  <rect x="170" y="112" width="920" height="36" rx="4" fill="#f9fafb"/>
+  <rect x="170" y="164" width="920" height="36" rx="4" fill="#f9fafb"/>
+  <rect x="170" y="216" width="920" height="36" rx="4" fill="#f9fafb"/>
+
+  <!-- 冲突带:横跨 DMA 行与缓冲行 -->
+  <rect x="640" y="164" width="250" height="88" rx="4" fill="#fecaca" fill-opacity="0.55"/>
+  <rect x="640" y="164" width="250" height="88" rx="4" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <!-- 行标签 -->
+  <text x="156" y="135" font-size="13" fill="#374151" text-anchor="end">CPU</text>
+  <text x="156" y="187" font-size="13" fill="#374151" text-anchor="end">DMA 引擎</text>
+  <text x="156" y="239" font-size="13" font-weight="600" fill="#374151" text-anchor="end">缓冲 B</text>
+
+  <!-- CPU 行 -->
+  <rect x="180" y="116" width="160" height="28" rx="4" fill="#e5e7eb"/>
+  <text x="260" y="135" font-size="13" fill="#374151" text-anchor="middle">写 B = [10,20,30]</text>
+  <rect x="350" y="116" width="110" height="28" rx="4" fill="#dbeafe"/>
+  <text x="405" y="135" font-size="13" fill="#1e40af" text-anchor="middle">发起 H2D</text>
+  <rect x="470" y="116" width="140" height="28" rx="4" fill="#e5e7eb"/>
+  <text x="540" y="135" font-size="13" fill="#374151" text-anchor="middle">下发前向 N</text>
+  <rect x="640" y="116" width="180" height="28" rx="4" fill="#dc2626"/>
+  <text x="730" y="135" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">写 B = [40,50,60]</text>
+
+  <!-- DMA 行 -->
+  <rect x="460" y="168" width="430" height="28" rx="4" fill="#3b82f6"/>
+  <text x="675" y="187" font-size="13" fill="#ffffff" text-anchor="middle">读 B 搬向 GPU(异步,CPU 不知道读到哪了)</text>
+
+  <!-- 缓冲 B 行 -->
+  <rect x="180" y="220" width="460" height="28" rx="4" fill="#e5e7eb"/>
+  <text x="410" y="239" font-size="13" fill="#374151" text-anchor="middle">[10,20,30]</text>
+  <rect x="640" y="220" width="250" height="28" rx="4" fill="#dc2626"/>
+  <text x="765" y="239" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">[40,50,60]</text>
+
+  <!-- 冲突注解 -->
+  <text x="765" y="274" font-size="12.5" font-weight="600" fill="#991b1b" text-anchor="middle">同一块内存,读还没完,写就来了</text>
+  <path d="M 890 234 L 935 234" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 935 234 l -7 -4 l 0 8 z" fill="#dc2626"/>
+  <text x="945" y="231" font-size="13" font-weight="700" fill="#991b1b">GPU 收到 [10,20,60]</text>
+  <text x="945" y="249" font-size="12" fill="#b91c1c">一半新、一半旧</text>
+
+  <!-- ===== 分隔 ===== -->
+  <line x1="30" y1="304" x2="1090" y2="304" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- ===== 面板二:轮转 ===== -->
+  <circle cx="37" cy="340" r="6" fill="#059669"/>
+  <text x="52" y="345" font-size="15" font-weight="700" fill="#065f46">轮转两份 B0 与 B1</text>
+  <text x="1090" y="345" font-size="12" fill="#9ca3af" text-anchor="end">时间 →</text>
+
+  <!-- 行底 -->
+  <rect x="170" y="358" width="920" height="36" rx="4" fill="#f9fafb"/>
+  <rect x="170" y="410" width="920" height="36" rx="4" fill="#f9fafb"/>
+  <rect x="170" y="462" width="920" height="36" rx="4" fill="#f9fafb"/>
+  <rect x="170" y="514" width="920" height="36" rx="4" fill="#f9fafb"/>
+
+  <!-- 行标签 -->
+  <text x="156" y="381" font-size="13" fill="#374151" text-anchor="end">CPU</text>
+  <text x="156" y="433" font-size="13" fill="#374151" text-anchor="end">DMA 引擎</text>
+  <text x="156" y="485" font-size="13" font-weight="600" fill="#065f46" text-anchor="end">缓冲 B0</text>
+  <text x="156" y="537" font-size="13" font-weight="600" fill="#065f46" text-anchor="end">缓冲 B1</text>
+
+  <!-- CPU 行 -->
+  <rect x="180" y="362" width="170" height="28" rx="4" fill="#e5e7eb"/>
+  <text x="265" y="381" font-size="13" fill="#374151" text-anchor="middle">写 B0 = [10,20,30]</text>
+  <rect x="360" y="362" width="110" height="28" rx="4" fill="#dbeafe"/>
+  <text x="415" y="381" font-size="13" fill="#1e40af" text-anchor="middle">发起 H2D</text>
+  <rect x="480" y="362" width="140" height="28" rx="4" fill="#e5e7eb"/>
+  <text x="550" y="381" font-size="13" fill="#374151" text-anchor="middle">下发前向 N</text>
+  <rect x="640" y="362" width="180" height="28" rx="4" fill="#059669"/>
+  <text x="730" y="381" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">写 B1 = [40,50,60]</text>
+
+  <!-- DMA 行 -->
+  <rect x="470" y="414" width="420" height="28" rx="4" fill="#3b82f6"/>
+  <text x="680" y="433" font-size="13" fill="#ffffff" text-anchor="middle">读 B0 搬向 GPU(异步)</text>
+
+  <!-- B0 行:全程不被改写 -->
+  <rect x="180" y="466" width="710" height="28" rx="4" fill="#d1fae5"/>
+  <text x="535" y="485" font-size="13" fill="#065f46" text-anchor="middle">[10,20,30] —— 从写入到读完,没有人动它</text>
+
+  <!-- B1 行 -->
+  <rect x="640" y="518" width="250" height="28" rx="4" fill="#a7f3d0"/>
+  <text x="765" y="537" font-size="13" fill="#065f46" text-anchor="middle">[40,50,60]</text>
+
+  <!-- 安全注解 -->
+  <path d="M 890 480 L 935 480" stroke="#059669" stroke-width="1.5"/>
+  <path d="M 935 480 l -7 -4 l 0 8 z" fill="#059669"/>
+  <text x="945" y="477" font-size="13" font-weight="700" fill="#065f46">GPU 收到 [10,20,30]</text>
+  <text x="945" y="495" font-size="12" fill="#047857">完整,且不必同步</text>
+
+  <text x="640" y="572" font-size="12.5" font-weight="600" fill="#065f46">新的写落在另一行 —— 读和写不再共用同一块内存,冲突带消失</text>
+
+  <!-- ===== 页脚 ===== -->
+  <line x1="30" y1="594" x2="1090" y2="594" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="30" y="616" font-size="12" fill="#6b7280">份数不是定死的 2:池子按「engine 允许多少步同时在飞」开,默认 2、下界也是 2。方括号里的数值是示意。</text>
+</svg>
