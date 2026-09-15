@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <!-- ===== 标题 ===== -->
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">同样三把刀,换一个分布就换一个松紧次序</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">上半是分布形状(柱高 = 概率,两边同一刻度),下半是三把刀各自留下的候选。实心格子的个数就是候选数。</text>
+
+  <!-- ===== 面板标题 ===== -->
+  <text x="132" y="96" font-size="15" font-weight="700" fill="#111827">分布 A|模型很确定</text>
+  <text x="682" y="96" font-size="15" font-weight="700" fill="#111827">分布 B|模型没主意</text>
+
+  <!-- ===== 分隔线 ===== -->
+  <line x1="552" y1="90" x2="552" y2="480" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- ===== 左panel:概率柱 ===== -->
+  <rect x="146" y="130" width="40" height="118" fill="#9fb9cc"/>
+  <rect x="214" y="241.4" width="40" height="6.6" fill="#9fb9cc"/>
+  <rect x="282" y="244.1" width="40" height="3.9" fill="#9fb9cc"/>
+  <rect x="350" y="245" width="40" height="3" fill="#9fb9cc"/>
+  <rect x="418" y="245" width="40" height="3" fill="#9fb9cc"/>
+  <text x="166" y="123" font-size="11" fill="#6b7280" text-anchor="middle">0.90</text>
+  <text x="234" y="234" font-size="11" fill="#6b7280" text-anchor="middle">0.05</text>
+  <text x="302" y="237" font-size="11" fill="#6b7280" text-anchor="middle">0.03</text>
+  <text x="370" y="238" font-size="11" fill="#6b7280" text-anchor="middle">0.01</text>
+  <text x="438" y="238" font-size="11" fill="#6b7280" text-anchor="middle">0.01</text>
+  <line x1="132" y1="248" x2="472" y2="248" stroke="#cbd2d9" stroke-width="1.2"/>
+  <text x="166" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">A</text>
+  <text x="234" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">B</text>
+  <text x="302" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">C</text>
+  <text x="370" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">D</text>
+  <text x="438" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">E</text>
+
+  <!-- ===== 右panel:概率柱 ===== -->
+  <rect x="696" y="195.6" width="40" height="52.4" fill="#9fb9cc"/>
+  <rect x="764" y="208.7" width="40" height="39.3" fill="#9fb9cc"/>
+  <rect x="832" y="228.3" width="40" height="19.7" fill="#9fb9cc"/>
+  <rect x="900" y="234.9" width="40" height="13.1" fill="#9fb9cc"/>
+  <rect x="968" y="241.4" width="40" height="6.6" fill="#9fb9cc"/>
+  <text x="716" y="188" font-size="11" fill="#6b7280" text-anchor="middle">0.40</text>
+  <text x="784" y="201" font-size="11" fill="#6b7280" text-anchor="middle">0.30</text>
+  <text x="852" y="221" font-size="11" fill="#6b7280" text-anchor="middle">0.15</text>
+  <text x="920" y="228" font-size="11" fill="#6b7280" text-anchor="middle">0.10</text>
+  <text x="988" y="234" font-size="11" fill="#6b7280" text-anchor="middle">0.05</text>
+  <line x1="682" y1="248" x2="1022" y2="248" stroke="#cbd2d9" stroke-width="1.2"/>
+  <text x="716" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">A</text>
+  <text x="784" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">B</text>
+  <text x="852" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">C</text>
+  <text x="920" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">D</text>
+  <text x="988" y="266" font-size="12" fill="#9ca3af" text-anchor="middle">E</text>
+
+  <!-- ===== 图例 ===== -->
+  <text x="30" y="306" font-size="12" fill="#9ca3af">实心 = 留下的候选,空心 = 被设成 -∞</text>
+
+  <!-- ===== top_k 行的底纹:强调它两边一样 ===== -->
+  <rect x="40" y="312" width="1044" height="50" rx="4" fill="#f3f4f6"/>
+
+  <!-- ===== 左panel:top_k = 3 ===== -->
+  <text x="122" y="341.5" font-size="13" font-weight="600" fill="#374151" text-anchor="end">top_k = 3</text>
+  <rect x="140" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="166" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="208" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="234" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">B</text>
+  <rect x="276" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="302" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">C</text>
+  <rect x="344" y="318" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="370" y="342" font-size="13" fill="#c0c6cd" text-anchor="middle">D</text>
+  <rect x="412" y="318" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="438" y="342" font-size="13" fill="#c0c6cd" text-anchor="middle">E</text>
+  <text x="486" y="341.5" font-size="13" font-weight="700" fill="#6b7280">3 个</text>
+
+  <!-- ===== 左panel:top_p = 0.9 ===== -->
+  <text x="122" y="397.5" font-size="13" font-weight="600" fill="#374151" text-anchor="end">top_p = 0.9</text>
+  <rect x="140" y="374" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="166" y="398" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="208" y="374" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="234" y="398" font-size="13" fill="#c0c6cd" text-anchor="middle">B</text>
+  <rect x="276" y="374" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="302" y="398" font-size="13" fill="#c0c6cd" text-anchor="middle">C</text>
+  <rect x="344" y="374" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="370" y="398" font-size="13" fill="#c0c6cd" text-anchor="middle">D</text>
+  <rect x="412" y="374" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="438" y="398" font-size="13" fill="#c0c6cd" text-anchor="middle">E</text>
+  <text x="486" y="397.5" font-size="13" font-weight="700" fill="#2c5f8a">1 个</text>
+
+  <!-- ===== 左panel:min_p = 0.05 ===== -->
+  <text x="122" y="447" font-size="13" font-weight="600" fill="#374151" text-anchor="end">min_p = 0.05</text>
+  <text x="122" y="462" font-size="10.5" fill="#9ca3af" text-anchor="end">阈值 0.045</text>
+  <rect x="140" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="166" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="208" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="234" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">B</text>
+  <rect x="276" y="430" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="302" y="454" font-size="13" fill="#c0c6cd" text-anchor="middle">C</text>
+  <rect x="344" y="430" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="370" y="454" font-size="13" fill="#c0c6cd" text-anchor="middle">D</text>
+  <rect x="412" y="430" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="438" y="454" font-size="13" fill="#c0c6cd" text-anchor="middle">E</text>
+  <text x="486" y="453.5" font-size="13" font-weight="700" fill="#2c5f8a">2 个</text>
+
+  <!-- ===== 右panel:top_k = 3 ===== -->
+  <text x="672" y="341.5" font-size="13" font-weight="600" fill="#374151" text-anchor="end">top_k = 3</text>
+  <rect x="690" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="716" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="758" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="784" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">B</text>
+  <rect x="826" y="318" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="852" y="342" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">C</text>
+  <rect x="894" y="318" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="920" y="342" font-size="13" fill="#c0c6cd" text-anchor="middle">D</text>
+  <rect x="962" y="318" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="988" y="342" font-size="13" fill="#c0c6cd" text-anchor="middle">E</text>
+  <text x="1036" y="341.5" font-size="13" font-weight="700" fill="#6b7280">3 个</text>
+
+  <!-- ===== 右panel:top_p = 0.9 ===== -->
+  <text x="672" y="397.5" font-size="13" font-weight="600" fill="#374151" text-anchor="end">top_p = 0.9</text>
+  <rect x="690" y="374" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="716" y="398" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="758" y="374" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="784" y="398" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">B</text>
+  <rect x="826" y="374" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="852" y="398" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">C</text>
+  <rect x="894" y="374" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="920" y="398" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">D</text>
+  <rect x="962" y="374" width="52" height="38" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="988" y="398" font-size="13" fill="#c0c6cd" text-anchor="middle">E</text>
+  <text x="1036" y="397.5" font-size="13" font-weight="700" fill="#2c5f8a">4 个</text>
+
+  <!-- ===== 右panel:min_p = 0.05 ===== -->
+  <text x="672" y="447" font-size="13" font-weight="600" fill="#374151" text-anchor="end">min_p = 0.05</text>
+  <text x="672" y="462" font-size="10.5" fill="#9ca3af" text-anchor="end">阈值 0.02</text>
+  <rect x="690" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="716" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">A</text>
+  <rect x="758" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="784" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">B</text>
+  <rect x="826" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="852" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">C</text>
+  <rect x="894" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="920" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">D</text>
+  <rect x="962" y="430" width="52" height="38" rx="4" fill="#2c5f8a"/>
+  <text x="988" y="454" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">E</text>
+  <text x="1036" y="453.5" font-size="13" font-weight="700" fill="#2c5f8a">5 个</text>
+
+  <!-- ===== 结论 ===== -->
+  <rect x="30" y="500" width="1060" height="96" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="50" y="526" font-size="13.5" font-weight="700" fill="#111827">top_k 那一行两边一模一样 —— 它对分布形状完全不敏感,这既是它的稳定性也是它的缺点。</text>
+  <text x="50" y="550" font-size="13" fill="#374151">top_p 与 min_p 两行从左到右各自长出去,双双越过 top_k:分布尖锐时 top_p 最严,分布平坦时它反而最松。</text>
+  <text x="50" y="574" font-size="13" fill="#374151">min_p 的松紧跟着分布走 —— 阈值是最大概率的固定倍数,模型没主意的时候它就不裁了。</text>
+
+  <!-- ===== 页脚 ===== -->
+  <text x="30" y="618" font-size="11" fill="#9ca3af">两组概率与三个参数取自 07 章 1.15;min_p 阈值 = min_p × 最大概率。0.01 那两根柱按最小可见高度绘制,其余严格按刻度。</text>
+</svg>
