@@ -251,15 +251,16 @@
 |---|---|---|
 | ResNet | MSRA | 残差连接让上百层可训,此后所有深网络的默认组件 |
 | BatchNorm | Google | 逐 batch 归一化中间激活,深层网络才敢用大学习率 |
+| Adam | Amsterdam | 一阶矩与二阶矩自适应的优化器,十年后仍是默认选择 |
 | GRU | Montreal | **对照实验**:固定参数量下 tanh/LSTM/GRU 在音乐与语音上比;门控优于 tanh,两种门控无统一赢家 |
 | Seq2Seq | Google | encoder-decoder 把变长序列映射到变长序列,机器翻译的范式转换 |
+| Bahdanau-Attention | JacobsBremen | 注意力机制的原始论文:解码时软对齐到编码器的每个位置 |
 | Word2Vec-NegativeSampling | Google | word2vec 第二篇:负采样与层次 softmax 把训练拉到可负担,并处理短语 |
 | Word2Vec | Google | CBOW 与 Skip-gram,词向量的起点 |
 | AlexNet | Toronto | ImageNet 上让深度 CNN 一举确立地位;GPU 训练加 ReLU 与 dropout 的组合 |
 | LSTM | TUMunich | 用门控与恒定误差流治住 RNN 的梯度消失,长程依赖第一次可训 |
 | RNN | UCSD | 多层网的误差反传:隐层表征从任务误差里长出来,同一规则也能训迭代网 |
-| Bahdanau-Attention | Montreal | 注意力机制的原始论文:解码时软对齐到编码器的每个位置 |
-| Adam | Toronto | 一阶矩与二阶矩自适应的优化器,十年后仍是默认选择 |
+
 
 
 ## 检索与 RAG
