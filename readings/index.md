@@ -21,7 +21,10 @@
 | 材料 | 机构 | 一句话 |
 |---|---|---|
 | Topological Trouble With Transformers | GoogleDeepMind | Transformer 用扩张的上下文历史编码结构,这套表示在拓扑上存在固有困难 |
+| Attention-Sink-Survey | Tsinghua | **综述**:attention sink 怎么被利用、怎么被解释、怎么被消除,三支各自的代表工作 |
+| Latent-Space-Survey | NUS | **综述**:潜空间的基础、演化、机制、能力与展望 |
 | TransMLA | PKU | 把已有的 GQA 模型等价转成 MLA,不重训就拿到 DeepSeek 那套 KV 压缩 |
+| Mamba-2 | Princeton | 证明 Transformer 与 SSM 是对偶的,并给出结构化状态空间的高效算法 |
 | GLA | MIT | 带门控的线性注意力,配一套硬件高效的分块并行训练 |
 | Mamba | CMU | 选择性状态空间:让 SSM 的参数随输入变化,线性时间对上 Transformer 的质量 |
 | StreamingLLM | MIT | attention sink 的提出者;保住开头几个 token 就能让窗口注意力无限外推,不微调也不崩 |
@@ -30,9 +33,12 @@
 | O1-Memory-Attention | Google | 注意力的内存可以做到常数级,为 FlashAttention 那条路铺前提 |
 | RoPE | Zhuiyi | 旋转位置编码:绝对位置进旋转角,相对距离出现在内积里 |
 | Linear-Attention | Idiap | 用核技巧把 softmax 注意力换成线性形式;自回归推理时它等价于一个 RNN |
-| Mamba-2 | CMU | 证明 Transformer 与 SSM 是对偶的,并给出结构化状态空间的高效算法 |
-| Attention-Sink-Survey | Columbia | **综述**:attention sink 怎么被利用、怎么被解释、怎么被消除,三支各自的代表工作 |
-| Latent-Space-Survey | CUHK | **综述**:潜空间的基础、演化、机制、能力与展望 |
+| Huginn | ELLIS | 循环深度做潜空间测试时算力。arXiv 2502.05171,来自 Latent-Space-Survey |
+| Reasoning-by-Superposition | Berkeley | 连续 CoT 叠加态的形式解释。arXiv 2505.12514,来自 Latent-Space-Survey |
+| SoftCoT-Plus-Plus | NTU | 连续嵌入里多条并行路径做测试时缩放。arXiv 2505.11484,来自 Latent-Space-Survey |
+| Cache-to-Cache | Tsinghua | KV-cache 投影融合,协作从文本信道改到潜信道。arXiv 2510.03215,来自 Latent-Space-Survey |
+| Value-State-Gated-Attention | AntGroup | 在 value 上先门,打断注意力–value 抽干循环。arXiv 2510.09017,来自 Attention-Sink-Survey |
+| LatentMAS | UIUC | 多智能体共享潜工作记忆。arXiv 2511.20639,来自 Latent-Space-Survey |
 
 ## 训练方法与强化学习
 
@@ -243,15 +249,15 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| ResNet | MSRA | 残差连接让上百层可训,此后所有深网络的默认组件 |
+| BatchNorm | Google | 逐 batch 归一化中间激活,深层网络才敢用大学习率 |
 | GRU | Montreal | **对照实验**:固定参数量下 tanh/LSTM/GRU 在音乐与语音上比;门控优于 tanh,两种门控无统一赢家 |
+| Seq2Seq | Google | encoder-decoder 把变长序列映射到变长序列,机器翻译的范式转换 |
 | Word2Vec-NegativeSampling | Google | word2vec 第二篇:负采样与层次 softmax 把训练拉到可负担,并处理短语 |
 | Word2Vec | Google | CBOW 与 Skip-gram,词向量的起点 |
 | AlexNet | Toronto | ImageNet 上让深度 CNN 一举确立地位;GPU 训练加 ReLU 与 dropout 的组合 |
 | LSTM | TUMunich | 用门控与恒定误差流治住 RNN 的梯度消失,长程依赖第一次可训 |
 | RNN | UCSD | 多层网的误差反传:隐层表征从任务误差里长出来,同一规则也能训迭代网 |
-| Seq2Seq | Google | encoder-decoder 把变长序列映射到变长序列,机器翻译的范式转换 |
-| BatchNorm | Google | 逐 batch 归一化中间激活,深层网络才敢用大学习率 |
-| ResNet | MSRA | 残差连接让上百层可训,此后所有深网络的默认组件 |
 | Bahdanau-Attention | Montreal | 注意力机制的原始论文:解码时软对齐到编码器的每个位置 |
 | Adam | Toronto | 一阶矩与二阶矩自适应的优化器,十年后仍是默认选择 |
 
