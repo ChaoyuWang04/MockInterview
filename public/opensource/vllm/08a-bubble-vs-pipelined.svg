@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+  <title>同步调度与异步调度下推测解码一个 step 的三条通道对比:两图的 GPU 计算块宽度完全相同,同步模式下计算块之间被 CPU 工作隔出空隙、同样的时间里只跑完两步,异步模式下计算块首尾相接、同样的时间里跑完四步。</title>
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <text x="40" y="42" font-size="23" font-weight="700" fill="#111827">同一段 GPU 工作,两种排法</text>
+  <text x="40" y="68" font-size="14" fill="#4b5563">色块 = 在算,空白 = 空闲。两图的 GPU 计算块宽度完全相同 —— 差别只在它们之间有没有空隙。</text>
+
+  <!-- ============ 同步 ============ -->
+  <text x="40" y="112" font-size="17" font-weight="700" fill="#b91c1c">同步调度</text>
+  <text x="128" y="112" font-size="13" fill="#6b7280">CPU 与 GPU 互斥,轮流干活</text>
+
+  <!-- 泳道标签 -->
+  <text x="196" y="149" font-size="13" fill="#374151" text-anchor="end">GPU 默认流</text>
+  <text x="196" y="193" font-size="13" fill="#374151" text-anchor="end">CPU 调度与簿记</text>
+  <text x="196" y="237" font-size="13" fill="#374151" text-anchor="end">独立拷贝流</text>
+
+  <!-- 泳道底槽 -->
+  <rect x="210" y="128" width="870" height="30" fill="#f3f4f6"/>
+  <rect x="210" y="172" width="870" height="30" fill="#f3f4f6"/>
+  <rect x="210" y="216" width="870" height="30" fill="#f3f4f6"/>
+
+  <!-- GPU 段 1:270..470 -->
+  <rect x="270" y="128" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="360" y="128" width="40" height="30" fill="#3b82f6"/>
+  <rect x="400" y="128" width="30" height="30" fill="#60a5fa"/>
+  <rect x="430" y="128" width="40" height="30" fill="#93c5fd"/>
+  <!-- GPU 段 2:590..790 -->
+  <rect x="590" y="128" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="680" y="128" width="40" height="30" fill="#3b82f6"/>
+  <rect x="720" y="128" width="30" height="30" fill="#60a5fa"/>
+  <rect x="750" y="128" width="40" height="30" fill="#93c5fd"/>
+  <!-- GPU 段 3 起头 -->
+  <rect x="910" y="128" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="1000" y="128" width="40" height="30" fill="#3b82f6"/>
+  <rect x="1040" y="128" width="30" height="30" fill="#60a5fa"/>
+
+  <!-- 空闲标注 -->
+  <rect x="210" y="128" width="60" height="30" fill="none" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <rect x="470" y="128" width="120" height="30" fill="none" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <rect x="790" y="128" width="120" height="30" fill="none" stroke="#dc2626" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <text x="530" y="148" font-size="12" fill="#b91c1c" text-anchor="middle">空闲</text>
+  <text x="850" y="148" font-size="12" fill="#b91c1c" text-anchor="middle">空闲</text>
+
+  <!-- CPU 段 -->
+  <rect x="210" y="172" width="60" height="30" fill="#fcd34d"/>
+  <rect x="470" y="172" width="80" height="30" fill="#fbbf24"/>
+  <rect x="550" y="172" width="40" height="30" fill="#ea580c"/>
+  <rect x="590" y="172" width="0" height="30" fill="#fcd34d"/>
+  <rect x="790" y="172" width="80" height="30" fill="#fbbf24"/>
+  <rect x="870" y="172" width="40" height="30" fill="#ea580c"/>
+
+  <text x="240" y="192" font-size="11" fill="#78350f" text-anchor="middle">调度</text>
+  <text x="510" y="192" font-size="11" fill="#78350f" text-anchor="middle">搬回加簿记</text>
+  <text x="830" y="192" font-size="11" fill="#78350f" text-anchor="middle">搬回加簿记</text>
+
+  <!-- 拷贝流:同步下是空的 -->
+  <text x="645" y="236" font-size="12" fill="#9ca3af" text-anchor="middle">没有,搬回就在上面那条 CPU 段里</text>
+
+  <!-- 步计数 -->
+  <line x1="270" y1="266" x2="550" y2="266" stroke="#9ca3af" stroke-width="1"/>
+  <line x1="590" y1="266" x2="870" y2="266" stroke="#9ca3af" stroke-width="1"/>
+  <text x="410" y="282" font-size="12" fill="#6b7280" text-anchor="middle">第 1 步</text>
+  <text x="730" y="282" font-size="12" fill="#6b7280" text-anchor="middle">第 2 步</text>
+  <text x="1000" y="282" font-size="12" fill="#b91c1c" text-anchor="middle">第 3 步刚开头</text>
+
+  <!-- ============ 异步 ============ -->
+  <text x="40" y="352" font-size="17" font-weight="700" fill="#047857">异步调度</text>
+  <text x="128" y="352" font-size="13" fill="#6b7280">三条通道各走各的,默认流被连续排满</text>
+
+  <text x="196" y="389" font-size="13" fill="#374151" text-anchor="end">GPU 默认流</text>
+  <text x="196" y="433" font-size="13" fill="#374151" text-anchor="end">CPU 调度与簿记</text>
+  <text x="196" y="477" font-size="13" fill="#374151" text-anchor="end">独立拷贝流</text>
+
+  <rect x="210" y="368" width="870" height="30" fill="#f3f4f6"/>
+  <rect x="210" y="412" width="870" height="30" fill="#f3f4f6"/>
+  <rect x="210" y="456" width="870" height="30" fill="#f3f4f6"/>
+
+  <!-- GPU:四个 step 首尾相接,每个 200 -->
+  <rect x="210" y="368" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="300" y="368" width="40" height="30" fill="#3b82f6"/>
+  <rect x="340" y="368" width="30" height="30" fill="#60a5fa"/>
+  <rect x="370" y="368" width="40" height="30" fill="#93c5fd"/>
+  <rect x="410" y="368" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="500" y="368" width="40" height="30" fill="#3b82f6"/>
+  <rect x="540" y="368" width="30" height="30" fill="#60a5fa"/>
+  <rect x="570" y="368" width="40" height="30" fill="#93c5fd"/>
+  <rect x="610" y="368" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="700" y="368" width="40" height="30" fill="#3b82f6"/>
+  <rect x="740" y="368" width="30" height="30" fill="#60a5fa"/>
+  <rect x="770" y="368" width="40" height="30" fill="#93c5fd"/>
+  <rect x="810" y="368" width="90" height="30" fill="#1d4ed8"/>
+  <rect x="900" y="368" width="40" height="30" fill="#3b82f6"/>
+  <rect x="940" y="368" width="30" height="30" fill="#60a5fa"/>
+  <rect x="970" y="368" width="40" height="30" fill="#93c5fd"/>
+  <rect x="1010" y="368" width="70" height="30" fill="#1d4ed8"/>
+
+  <!-- 分步细线 -->
+  <line x1="410" y1="368" x2="410" y2="398" stroke="#ffffff" stroke-width="1.6"/>
+  <line x1="610" y1="368" x2="610" y2="398" stroke="#ffffff" stroke-width="1.6"/>
+  <line x1="810" y1="368" x2="810" y2="398" stroke="#ffffff" stroke-width="1.6"/>
+  <line x1="1010" y1="368" x2="1010" y2="398" stroke="#ffffff" stroke-width="1.6"/>
+
+  <!-- CPU:与 GPU 并行 -->
+  <rect x="230" y="412" width="60" height="30" fill="#fcd34d"/>
+  <rect x="430" y="412" width="60" height="30" fill="#fcd34d"/>
+  <rect x="630" y="412" width="60" height="30" fill="#fcd34d"/>
+  <rect x="830" y="412" width="60" height="30" fill="#fcd34d"/>
+  <text x="260" y="432" font-size="11" fill="#78350f" text-anchor="middle">调度</text>
+  <text x="460" y="432" font-size="11" fill="#78350f" text-anchor="middle">调度</text>
+  <text x="660" y="432" font-size="11" fill="#78350f" text-anchor="middle">调度</text>
+  <text x="860" y="432" font-size="11" fill="#78350f" text-anchor="middle">调度</text>
+
+  <!-- 拷贝流 -->
+  <rect x="380" y="456" width="50" height="30" fill="#c4b5fd"/>
+  <rect x="580" y="456" width="50" height="30" fill="#c4b5fd"/>
+  <rect x="780" y="456" width="50" height="30" fill="#c4b5fd"/>
+  <rect x="980" y="456" width="50" height="30" fill="#c4b5fd"/>
+  <text x="405" y="476" font-size="11" fill="#4c1d95" text-anchor="middle">输出</text>
+  <text x="605" y="476" font-size="11" fill="#4c1d95" text-anchor="middle">输出</text>
+  <text x="805" y="476" font-size="11" fill="#4c1d95" text-anchor="middle">输出</text>
+  <text x="1005" y="476" font-size="11" fill="#4c1d95" text-anchor="middle">输出</text>
+
+  <line x1="210" y1="506" x2="1010" y2="506" stroke="#9ca3af" stroke-width="1"/>
+  <text x="310" y="522" font-size="12" fill="#6b7280" text-anchor="middle">第 1 步</text>
+  <text x="510" y="522" font-size="12" fill="#6b7280" text-anchor="middle">第 2 步</text>
+  <text x="710" y="522" font-size="12" fill="#6b7280" text-anchor="middle">第 3 步</text>
+  <text x="910" y="522" font-size="12" fill="#047857" text-anchor="middle">第 4 步</text>
+
+  <!-- 时间轴 -->
+  <line x1="210" y1="548" x2="1080" y2="548" stroke="#374151" stroke-width="1.2" marker-end="url(#ar)"/>
+  <defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#374151"/></marker></defs>
+  <text x="196" y="552" font-size="12" fill="#374151" text-anchor="end">时间</text>
+
+  <!-- 图例 -->
+  <rect x="210" y="572" width="16" height="13" fill="#1d4ed8"/>
+  <text x="232" y="583" font-size="12" fill="#374151">目标前向</text>
+  <rect x="304" y="572" width="16" height="13" fill="#3b82f6"/>
+  <text x="326" y="583" font-size="12" fill="#374151">采样</text>
+  <rect x="374" y="572" width="16" height="13" fill="#60a5fa"/>
+  <text x="396" y="583" font-size="12" fill="#374151">接受判定</text>
+  <rect x="468" y="572" width="16" height="13" fill="#93c5fd"/>
+  <text x="490" y="583" font-size="12" fill="#374151">草稿 k 步</text>
+  <rect x="566" y="572" width="16" height="13" fill="#fbbf24"/>
+  <text x="588" y="583" font-size="12" fill="#374151">CPU 簿记</text>
+  <rect x="670" y="572" width="16" height="13" fill="#ea580c"/>
+  <text x="692" y="583" font-size="12" fill="#374151">草稿回路(只有同步模式有)</text>
+  <rect x="908" y="572" width="16" height="13" fill="#c4b5fd"/>
+  <text x="930" y="583" font-size="12" fill="#374151">输出搬回</text>
+
+  <text x="40" y="614" font-size="12" fill="#6b7280">两图的四色计算块逐块等宽,代表同样的 kernel;同步图里橙色那小块是推测解码独有的草稿回路,异步下整条消失。</text>
+  <text x="40" y="632" font-size="12" fill="#9ca3af">CPU 段与 GPU 段的宽度比例为示意,非本仓库实测;承载信息的是「计算块之间有没有空隙」,不是空隙的具体长度。</text>
+</svg>
