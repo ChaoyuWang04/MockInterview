@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <defs>
+    <pattern id="waste" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#f3f4f6"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#c9ced6" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== 标题 ===== -->
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">32 是密度,8 是上限,6.25 是含浪费的实际值</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">全图同一刻度:一个小格 = 一个二进制位。格子数是位数,长度比是节省倍数,斜纹面积是浪费。</text>
+
+  <!-- ===== 上半 ===== -->
+  <text x="30" y="100" font-size="15" font-weight="700" fill="#111827">同样 32 个 token,两种存法各占多少位</text>
+
+  <text x="60" y="128" font-size="12" fill="#374151">逐个布尔值:每个 token 占 1 字节</text>
+
+  <!-- 条1:32 个 token,每个 8 位 = 32px;第一个块画出 8 个小格 -->
+  <rect x="60" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="64" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="68" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="72" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="76" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="80" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="84" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="88" y="138" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="92" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="124" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="156" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="188" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="220" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="252" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="284" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="316" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="348" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="380" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="412" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="444" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="476" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="508" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="540" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="572" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="604" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="636" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="668" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="700" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="732" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="764" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="796" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="828" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="860" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="892" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="924" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="956" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="988" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="1020" y="138" width="31" height="44" fill="#9fb9cc"/>
+  <rect x="1052" y="138" width="31" height="44" fill="#9fb9cc"/>
+
+  <text x="60" y="200" font-size="11" fill="#6b7280">最左边那一块画出了它的 8 个位;其余 31 块同样宽。合计 256 位 = 32 字节。</text>
+
+  <text x="60" y="242" font-size="12" fill="#374151">按位打包:每个 token 占 1 位</text>
+
+  <!-- 条2:32 个 token,每个 1 位 = 4px -->
+  <rect x="60" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="64" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="68" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="72" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="76" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="80" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="84" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="88" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="92" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="96" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="100" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="104" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="108" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="112" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="116" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="120" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="124" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="128" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="132" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="136" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="140" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="144" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="148" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="152" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="156" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="160" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="164" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="168" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="172" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="176" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="180" y="252" width="3" height="44" fill="#9fb9cc"/>
+  <rect x="184" y="252" width="3" height="44" fill="#9fb9cc"/>
+
+  <!-- 条2 末端的对照虚线,直通到条1 -->
+  <line x1="188" y1="138" x2="188" y2="306" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <text x="204" y="268" font-size="13" font-weight="700" fill="#111827">下面这条到这里就没了</text>
+  <text x="204" y="290" font-size="13" fill="#374151">同一刻度下,上面那条正好是它的 8 倍长 —— 这就是「省八倍」</text>
+
+  <text x="60" y="320" font-size="11" fill="#6b7280">这 32 个格子正好装满一个 int32。合计 32 位 = 4 字节。</text>
+
+  <!-- ===== 分隔线 ===== -->
+  <line x1="30" y1="350" x2="1090" y2="350" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- ===== 下半 ===== -->
+  <text x="30" y="386" font-size="15" font-weight="700" fill="#111827">那为什么小词表实测只有 6.25 倍:整数边界上的浪费</text>
+
+  <text x="60" y="408" font-size="12" fill="#374151">词表 100 时,按位打包必须取满 4 个 int32</text>
+
+  <text x="124" y="432" font-size="11" fill="#6b7280" text-anchor="middle">int32 #1</text>
+  <text x="252" y="432" font-size="11" fill="#6b7280" text-anchor="middle">#2</text>
+  <text x="380" y="432" font-size="11" fill="#6b7280" text-anchor="middle">#3</text>
+  <text x="508" y="432" font-size="11" fill="#6b7280" text-anchor="middle">#4</text>
+
+  <!-- 条3:128 位,前 100 实心,后 28 斜纹 -->
+  <rect x="60" y="440" width="400" height="44" fill="#9fb9cc"/>
+  <rect x="460" y="440" width="112" height="44" fill="url(#waste)"/>
+  <rect x="60" y="440" width="512" height="44" fill="none" stroke="#c9ced6" stroke-width="1"/>
+  <line x1="188" y1="440" x2="188" y2="484" stroke="#ffffff" stroke-width="2"/>
+  <line x1="316" y1="440" x2="316" y2="484" stroke="#ffffff" stroke-width="2"/>
+  <line x1="444" y1="440" x2="444" y2="484" stroke="#ffffff" stroke-width="2"/>
+
+  <text x="600" y="458" font-size="13" font-weight="700" fill="#111827">斜纹这 28 格就是差距的全部来源</text>
+  <text x="600" y="480" font-size="12" fill="#374151">前三个 int32 装满 96 个 token,第四个只用掉 4 格</text>
+
+  <text x="60" y="504" font-size="11" fill="#6b7280">实心 100 格 = 100 个 token,斜纹 28 格空转。合计 128 位 = 16 字节。</text>
+
+  <!-- ===== 三行结论 ===== -->
+  <text x="60" y="536" font-size="13" fill="#374151">理论下限:100 个 token 只需 100 位 = 12.5 字节,相对 100 字节正好 <tspan font-weight="700" fill="#111827">8 倍</tspan></text>
+  <text x="60" y="560" font-size="13" fill="#374151">实际必须:取满 4 个 int32 = 128 位 = 16 字节,于是只剩 <tspan font-weight="700" fill="#111827">6.25 倍</tspan></text>
+  <text x="60" y="584" font-size="13" fill="#374151">真实词表 151936 恰好被 32 整除,4748 个 int32 一位不浪费,所以就是满 <tspan font-weight="700" fill="#111827">8 倍</tspan></text>
+
+  <!-- ===== 页脚 ===== -->
+  <text x="30" y="616" font-size="11" fill="#9ca3af">三个数字各自是什么:32 是一个 int32 能装几个 token(格子数),8 是同一批 token 两种存法的长度比,6.25 是小词表上被整数边界吃掉之后的实际值。</text>
+</svg>
