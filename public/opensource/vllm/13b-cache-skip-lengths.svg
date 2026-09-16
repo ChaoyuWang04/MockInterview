@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6690"/>
+    </marker>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- ===== 标题 ===== -->
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">三级缓存是串联的:命中越靠后,跳过的越多</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">下面那条流水线的每段宽度按它的耗时画;上面三条旁路的长度,就是该级命中时省掉的工作量。</text>
+
+  <!-- ===== 旁路三:KV 前缀缓存 ===== -->
+  <path d="M220,394 L220,170 L940,170 L940,394" fill="none" stroke="#2f6690" stroke-width="2.2" marker-end="url(#ah)"/>
+  <text x="228" y="162" font-size="13" font-weight="700" fill="#2f6690">命中 KV 前缀缓存</text>
+  <text x="952" y="166" font-size="12" fill="#374151">省掉全部三段</text>
+  <text x="952" y="184" font-size="11" fill="#6b7280">约 120 ms</text>
+
+  <!-- ===== 旁路二:编码器缓存 ===== -->
+  <path d="M220,394 L220,238 L604,238 L604,394" fill="none" stroke="#2f6690" stroke-width="2.2" marker-end="url(#ah)"/>
+  <text x="228" y="230" font-size="13" font-weight="700" fill="#2f6690">命中编码器缓存</text>
+  <text x="616" y="242" font-size="12" fill="#374151">省 64 ms</text>
+
+  <!-- ===== 旁路一:预处理器缓存 ===== -->
+  <path d="M220,394 L220,306 L370,306 L370,394" fill="none" stroke="#2f6690" stroke-width="2.2" marker-end="url(#ah)"/>
+  <text x="228" y="298" font-size="13" font-weight="700" fill="#2f6690">命中预处理器缓存</text>
+  <text x="382" y="310" font-size="12" fill="#374151">省 25 ms</text>
+
+  <!-- ===== 流水线三段 ===== -->
+  <rect x="220" y="400" width="150" height="54" fill="#dbe6ee" stroke="#9fb9cc" stroke-width="1.2"/>
+  <text x="295" y="424" font-size="13" fill="#111827" text-anchor="middle">预处理</text>
+  <text x="295" y="443" font-size="10.5" fill="#6b7280" text-anchor="middle">CPU · 约 25 ms</text>
+
+  <rect x="370" y="400" width="234" height="54" fill="#c7d8e4" stroke="#9fb9cc" stroke-width="1.2"/>
+  <text x="487" y="424" font-size="13" fill="#111827" text-anchor="middle">塔加连接层</text>
+  <text x="487" y="443" font-size="10.5" fill="#6b7280" text-anchor="middle">GPU · 约 39 ms</text>
+
+  <rect x="604" y="400" width="336" height="54" fill="#aec9da" stroke="#9fb9cc" stroke-width="1.2"/>
+  <text x="772" y="424" font-size="13" fill="#111827" text-anchor="middle">decoder 预填充</text>
+  <text x="772" y="443" font-size="10.5" fill="#6b7280" text-anchor="middle">GPU · 约 56 ms</text>
+
+  <!-- ===== 入口与出口 ===== -->
+  <text x="30" y="432" font-size="13" fill="#374151">媒体字节</text>
+  <line x1="102" y1="427" x2="208" y2="427" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ahg)"/>
+  <line x1="946" y1="427" x2="1004" y2="427" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ahg)"/>
+  <text x="1014" y="432" font-size="13" fill="#374151">decode</text>
+
+  <!-- ===== 每级缓存存的是什么 ===== -->
+  <line x1="370" y1="454" x2="370" y2="484" stroke="#cbd2d9" stroke-width="1.2"/>
+  <text x="370" y="500" font-size="11.5" fill="#6b7280" text-anchor="middle">像素张量</text>
+  <line x1="604" y1="454" x2="604" y2="484" stroke="#cbd2d9" stroke-width="1.2"/>
+  <text x="604" y="500" font-size="11.5" fill="#6b7280" text-anchor="middle">视觉 embedding</text>
+  <line x1="940" y1="454" x2="940" y2="484" stroke="#cbd2d9" stroke-width="1.2"/>
+  <text x="940" y="500" font-size="11.5" fill="#6b7280" text-anchor="middle">KV</text>
+
+  <!-- ===== 结论 ===== -->
+  <text x="30" y="548" font-size="14" font-weight="700" fill="#111827">三条旁路长度不同,这就是「串联」的意思</text>
+  <text x="30" y="574" font-size="13" fill="#374151">命中第一级只省掉 CPU 预处理;命中第二级连塔一起省;命中第三级整段预填充都不用跑。</text>
+  <text x="30" y="596" font-size="13" fill="#374151">三级各自独立驱逐,所以实际走哪一条旁路,每一步都可能不同。</text>
+
+  <text x="30" y="622" font-size="10.5" fill="#9ca3af">一个例外:第三级命中而第二级恰好被驱逐时,调度器只能给该请求 0 个 token,见 1.38。耗时是量级参考不是实测,出处见 1.36。</text>
+</svg>
