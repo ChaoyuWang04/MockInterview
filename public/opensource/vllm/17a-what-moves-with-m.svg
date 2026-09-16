@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+  <title>M 变了,tile 的形状与总数跟着变,但每个输出元素的 K 归约次序一格不变</title>
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <text x="60" y="44" font-size="23" font-weight="700" fill="#111827">M 变了,什么跟着变,什么一寸不让</text>
+  <text x="60" y="74" font-size="14.5" fill="#6b7280">同一个形状下的两种 batch 规模。上半随 M 变,下半不变 —— 批不变性要的只是下半那一条。</text>
+
+  <line x1="560" y1="100" x2="560" y2="530" stroke="#e5e7eb" stroke-width="1"/>
+
+  <text x="290" y="124" font-size="17" font-weight="700" fill="#1e3a8a" text-anchor="middle">M = 1</text>
+  <text x="290" y="148" font-size="13.5" fill="#6b7280" text-anchor="middle">单条请求在 decode,落在调优表第一个桶</text>
+  <text x="830" y="124" font-size="17" font-weight="700" fill="#1e3a8a" text-anchor="middle">M = 512</text>
+  <text x="830" y="148" font-size="13.5" fill="#6b7280" text-anchor="middle">混在一批里,落在另一个桶</text>
+
+  <text x="290" y="174" font-size="13.5" font-weight="600" fill="#374151" text-anchor="middle">BLOCK_M × BLOCK_N = 16 × 128</text>
+  <text x="830" y="174" font-size="13.5" font-weight="600" fill="#374151" text-anchor="middle">BLOCK_M × BLOCK_N = 128 × 64</text>
+
+  <rect x="218" y="242" width="144" height="18" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <rect x="794" y="179" width="72" height="144" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+
+  <text x="290" y="288" font-size="12" fill="#2563eb" text-anchor="middle">一个 tile 的形状(两边同一比例尺)</text>
+  <text x="830" y="348" font-size="12" fill="#2563eb" text-anchor="middle">一个 tile 的形状(两边同一比例尺)</text>
+
+  <text x="290" y="316" font-size="13.5" fill="#374151" text-anchor="middle">每 tile 2048 个元素 · tile 总数 96</text>
+  <text x="830" y="376" font-size="13.5" fill="#374151" text-anchor="middle">每 tile 8192 个元素 · tile 总数 768</text>
+
+  <rect x="60" y="398" width="1000" height="30" rx="5" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+  <text x="560" y="418" font-size="14" font-weight="600" fill="#b91c1c" text-anchor="middle">以上三样 —— tile 的长宽、每 tile 装多少、一共切成几块 —— 全都随 M 变</text>
+
+  <text x="290" y="462" font-size="13.5" font-weight="600" fill="#374151" text-anchor="middle">BLOCK_K = 64,K 归约分 32 步</text>
+  <text x="830" y="462" font-size="13.5" font-weight="600" fill="#374151" text-anchor="middle">BLOCK_K = 64,K 归约分 32 步</text>
+
+  <g fill="#fde68a" stroke="#b45309" stroke-width="0.9">
+    <rect x="91" y="474" width="11" height="26"/><rect x="103.5" y="474" width="11" height="26"/><rect x="116" y="474" width="11" height="26"/><rect x="128.5" y="474" width="11" height="26"/>
+    <rect x="141" y="474" width="11" height="26"/><rect x="153.5" y="474" width="11" height="26"/><rect x="166" y="474" width="11" height="26"/><rect x="178.5" y="474" width="11" height="26"/>
+    <rect x="191" y="474" width="11" height="26"/><rect x="203.5" y="474" width="11" height="26"/><rect x="216" y="474" width="11" height="26"/><rect x="228.5" y="474" width="11" height="26"/>
+    <rect x="241" y="474" width="11" height="26"/><rect x="253.5" y="474" width="11" height="26"/><rect x="266" y="474" width="11" height="26"/><rect x="278.5" y="474" width="11" height="26"/>
+    <rect x="291" y="474" width="11" height="26"/><rect x="303.5" y="474" width="11" height="26"/><rect x="316" y="474" width="11" height="26"/><rect x="328.5" y="474" width="11" height="26"/>
+    <rect x="341" y="474" width="11" height="26"/><rect x="353.5" y="474" width="11" height="26"/><rect x="366" y="474" width="11" height="26"/><rect x="378.5" y="474" width="11" height="26"/>
+    <rect x="391" y="474" width="11" height="26"/><rect x="403.5" y="474" width="11" height="26"/><rect x="416" y="474" width="11" height="26"/><rect x="428.5" y="474" width="11" height="26"/>
+    <rect x="441" y="474" width="11" height="26"/><rect x="453.5" y="474" width="11" height="26"/><rect x="466" y="474" width="11" height="26"/><rect x="478.5" y="474" width="11" height="26"/>
+  </g>
+  <g fill="#fde68a" stroke="#b45309" stroke-width="0.9">
+    <rect x="631" y="474" width="11" height="26"/><rect x="643.5" y="474" width="11" height="26"/><rect x="656" y="474" width="11" height="26"/><rect x="668.5" y="474" width="11" height="26"/>
+    <rect x="681" y="474" width="11" height="26"/><rect x="693.5" y="474" width="11" height="26"/><rect x="706" y="474" width="11" height="26"/><rect x="718.5" y="474" width="11" height="26"/>
+    <rect x="731" y="474" width="11" height="26"/><rect x="743.5" y="474" width="11" height="26"/><rect x="756" y="474" width="11" height="26"/><rect x="768.5" y="474" width="11" height="26"/>
+    <rect x="781" y="474" width="11" height="26"/><rect x="793.5" y="474" width="11" height="26"/><rect x="806" y="474" width="11" height="26"/><rect x="818.5" y="474" width="11" height="26"/>
+    <rect x="831" y="474" width="11" height="26"/><rect x="843.5" y="474" width="11" height="26"/><rect x="856" y="474" width="11" height="26"/><rect x="868.5" y="474" width="11" height="26"/>
+    <rect x="881" y="474" width="11" height="26"/><rect x="893.5" y="474" width="11" height="26"/><rect x="906" y="474" width="11" height="26"/><rect x="918.5" y="474" width="11" height="26"/>
+    <rect x="931" y="474" width="11" height="26"/><rect x="943.5" y="474" width="11" height="26"/><rect x="956" y="474" width="11" height="26"/><rect x="968.5" y="474" width="11" height="26"/>
+    <rect x="981" y="474" width="11" height="26"/><rect x="993.5" y="474" width="11" height="26"/><rect x="1006" y="474" width="11" height="26"/><rect x="1018.5" y="474" width="11" height="26"/>
+  </g>
+
+  <text x="91" y="516" font-size="11.5" fill="#92400e">ki=0</text>
+  <text x="489.5" y="516" font-size="11.5" fill="#92400e" text-anchor="end">ki=31</text>
+  <text x="631" y="516" font-size="11.5" fill="#92400e">ki=0</text>
+  <text x="1029.5" y="516" font-size="11.5" fill="#92400e" text-anchor="end">ki=31</text>
+
+  <rect x="60" y="534" width="1000" height="30" rx="5" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="560" y="554" font-size="14" font-weight="600" fill="#047857" text-anchor="middle">而这一条 —— 每个输出元素把 K 加完的步数与次序 —— 两边逐格相同</text>
+
+  <text x="60" y="590" font-size="13.5" fill="#374151">调优的自由度全留在 M 与 N 两个方向,K 方向一寸不让。所以「配置会不会变」问错了,要问的是「它会不会随 batch 变」。</text>
+
+  <text x="60" y="620" font-size="11.5" fill="#9ca3af">图上数字取自基准调优表 ada 架构、形状 (N=12288, K=2048) 一组:M 桶 1 与 512 的块配置,BLOCK_K=64 是形状级常量。两个 tile 按同一比例尺绘制,面积比 1:4 即元素数之比。</text>
+</svg>
