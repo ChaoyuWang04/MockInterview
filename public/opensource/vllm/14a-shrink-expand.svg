@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+
+  <text x="40" y="44" font-size="21" font-weight="700" fill="#1a1a1a">shrink 与 expand:两个互为镜像的形状</text>
+  <text x="40" y="72" font-size="14" fill="#555555">四条横杠画在同一把尺子上,1 像素 = 8 个元素。切开的永远是长的那一维 —— 而长的那一维,两边换了个个儿。</text>
+
+  <line x1="40" y1="92" x2="1080" y2="92" stroke="#dddddd" stroke-width="1"/>
+
+  <!-- ============ shrink ============ -->
+  <text x="40" y="140" font-size="17" font-weight="700" fill="#1f5fa8">shrink</text>
+  <text x="40" y="163" font-size="13" fill="#666666">u = Ax</text>
+  <text x="40" y="183" font-size="13" fill="#666666">输出瘦长</text>
+
+  <!-- K bar: 4096 -->
+  <text x="150" y="212" font-size="13" fill="#444444">规约维 K</text>
+  <text x="150" y="230" font-size="13" font-weight="700" fill="#1a1a1a">4096</text>
+  <rect x="250" y="196" width="512" height="38" fill="#4a86c8" stroke="#1f5fa8" stroke-width="1.5"/>
+  <line x1="314" y1="196" x2="314" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="378" y1="196" x2="378" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="442" y1="196" x2="442" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="506" y1="196" x2="506" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="570" y1="196" x2="570" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="634" y1="196" x2="634" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <line x1="698" y1="196" x2="698" y2="234" stroke="#ffffff" stroke-width="2"/>
+  <text x="782" y="212" font-size="13" font-weight="700" fill="#1f5fa8">切它</text>
+  <text x="782" y="230" font-size="13" fill="#555555">沿 K 切开,多个 CTA 各算部分和再汇总</text>
+
+  <!-- N bar: 16 -->
+  <text x="150" y="272" font-size="13" fill="#444444">输出宽 N</text>
+  <text x="150" y="290" font-size="13" font-weight="700" fill="#1a1a1a">16</text>
+  <rect x="250" y="256" width="2" height="38" fill="#4a86c8" stroke="#1f5fa8" stroke-width="1"/>
+  <text x="782" y="272" font-size="13" font-weight="700" fill="#999999">不切</text>
+  <text x="782" y="290" font-size="13" fill="#555555">一个分块就装满,宽度也只能开到 16</text>
+
+  <line x1="250" y1="244" x2="250" y2="306" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="762" y1="184" x2="762" y2="246" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <line x1="40" y1="340" x2="1080" y2="340" stroke="#eeeeee" stroke-width="1"/>
+
+  <!-- ============ expand ============ -->
+  <text x="40" y="388" font-size="17" font-weight="700" fill="#b06a16">expand</text>
+  <text x="40" y="411" font-size="13" fill="#666666">y += Bu</text>
+  <text x="40" y="431" font-size="13" fill="#666666">输出宽扁</text>
+
+  <!-- K bar: 16 -->
+  <text x="150" y="460" font-size="13" fill="#444444">规约维 K</text>
+  <text x="150" y="478" font-size="13" font-weight="700" fill="#1a1a1a">16</text>
+  <rect x="250" y="444" width="2" height="38" fill="#e09a3e" stroke="#b06a16" stroke-width="1"/>
+  <text x="782" y="460" font-size="13" font-weight="700" fill="#999999">不切</text>
+  <text x="782" y="478" font-size="13" fill="#555555">一个分块就吃完,不需要沿 K 切</text>
+
+  <!-- N bar: 4096 -->
+  <text x="150" y="520" font-size="13" fill="#444444">输出宽 N</text>
+  <text x="150" y="538" font-size="13" font-weight="700" fill="#1a1a1a">4096</text>
+  <rect x="250" y="504" width="512" height="38" fill="#e09a3e" stroke="#b06a16" stroke-width="1.5"/>
+  <line x1="314" y1="504" x2="314" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="378" y1="504" x2="378" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="442" y1="504" x2="442" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="506" y1="504" x2="506" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="570" y1="504" x2="570" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="634" y1="504" x2="634" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <line x1="698" y1="504" x2="698" y2="542" stroke="#ffffff" stroke-width="2"/>
+  <text x="782" y="520" font-size="13" font-weight="700" fill="#b06a16">切它</text>
+  <text x="782" y="538" font-size="13" fill="#555555">沿 N 切成多块,每个 CTA 认领一块</text>
+
+  <line x1="250" y1="492" x2="250" y2="554" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="762" y1="432" x2="762" y2="554" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <line x1="40" y1="578" x2="1080" y2="578" stroke="#dddddd" stroke-width="1"/>
+  <text x="40" y="600" font-size="12" fill="#666666">两根 2 像素的细条不是画错:16 个元素在这把尺子上就是这么长。4096 比 16 大 256 倍,而两个 kernel 的 N 与 K 恰好对调。</text>
+  <text x="40" y="620" font-size="12" fill="#888888">数值取自贯穿全篇的例子(hidden 4096、rank 16)。分块的份数按示意画,实际份数由自动调参表按 rank 与 batch 查表决定。</text>
+</svg>
