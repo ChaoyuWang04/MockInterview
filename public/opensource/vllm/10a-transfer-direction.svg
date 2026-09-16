@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <title>三种 KV 传输方向下 P 侧块占用时长的对比</title>
+  <defs>
+    <pattern id="waitpat" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="#f8f9fa"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#ced4da" stroke-width="2.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+
+  <!-- ===== 标题 ===== -->
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">方向不同,P 那块显存被扣住的时间就不同</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">每组上面一条是 P、下面一条是 D。P 那条的长度就是它的块被占住的时长 —— 从 prefill 开始,到能还回池子为止。</text>
+
+  <!-- ===== 图例 ===== -->
+  <rect x="560" y="80" width="13" height="13" fill="#4263eb"/>
+  <text x="579" y="91" font-size="12" fill="#374151">prefill</text>
+  <rect x="632" y="80" width="13" height="13" fill="#2b8a3e"/>
+  <text x="651" y="91" font-size="12" fill="#374151">真的在搬字节</text>
+  <rect x="745" y="80" width="13" height="13" fill="url(#waitpat)" stroke="#dee2e6"/>
+  <text x="764" y="91" font-size="12" fill="#374151">P 空等</text>
+  <rect x="828" y="80" width="13" height="13" fill="#e8590c"/>
+  <text x="847" y="91" font-size="12" fill="#374151">D 的动作</text>
+  <rect x="922" y="80" width="13" height="13" fill="#adb5bd"/>
+  <text x="941" y="91" font-size="12" fill="#374151">decode</text>
+
+  <!-- ===== 时间轴 ===== -->
+  <line x1="200" y1="112" x2="920" y2="112" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="936" y="116" font-size="12" fill="#6b7280">时间</text>
+
+  <!-- ========== 推 ========== -->
+  <text x="30" y="148" font-size="14" font-weight="700" fill="#111827">推</text>
+  <text x="30" y="167" font-size="11.5" fill="#6b7280">P 写进 D</text>
+  <rect x="200" y="130" width="320" height="24" fill="#4263eb"/>
+  <text x="212" y="146" font-size="12" fill="#ffffff">prefill</text>
+  <rect x="520" y="130" width="96" height="24" fill="url(#waitpat)" stroke="#dee2e6"/>
+  <text x="530" y="146" font-size="11.5" fill="#495057">等 D</text>
+  <rect x="616" y="130" width="96" height="24" fill="#2b8a3e"/>
+  <text x="634" y="146" font-size="12" fill="#ffffff">写</text>
+  <line x1="712" y1="124" x2="712" y2="192" stroke="#e03131" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="720" y="146" font-size="12" font-weight="700" fill="#e03131">归还</text>
+  <rect x="552" y="162" width="64" height="24" fill="#e8590c"/>
+  <text x="562" y="178" font-size="11.5" fill="#ffffff">备块</text>
+  <rect x="616" y="162" width="96" height="24" fill="#f08c00"/>
+  <text x="640" y="178" font-size="12" fill="#ffffff">收</text>
+  <rect x="712" y="162" width="208" height="24" fill="#adb5bd"/>
+  <text x="724" y="178" font-size="12" fill="#ffffff">decode</text>
+
+  <!-- ========== 拉 ========== -->
+  <text x="30" y="228" font-size="14" font-weight="700" fill="#111827">拉</text>
+  <text x="30" y="247" font-size="11.5" fill="#6b7280">D 来读 P</text>
+  <rect x="200" y="210" width="320" height="24" fill="#4263eb"/>
+  <text x="212" y="226" font-size="12" fill="#ffffff">prefill</text>
+  <rect x="520" y="210" width="160" height="24" fill="url(#waitpat)" stroke="#dee2e6"/>
+  <text x="532" y="226" font-size="11.5" fill="#495057">等 D 来读</text>
+  <rect x="680" y="210" width="96" height="24" fill="#2b8a3e"/>
+  <text x="694" y="226" font-size="12" fill="#ffffff">被读</text>
+  <line x1="776" y1="204" x2="776" y2="272" stroke="#e03131" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="784" y="226" font-size="12" font-weight="700" fill="#e03131">归还</text>
+  <rect x="680" y="242" width="96" height="24" fill="#e8590c"/>
+  <text x="700" y="258" font-size="12" fill="#ffffff">读</text>
+  <rect x="776" y="242" width="144" height="24" fill="#adb5bd"/>
+  <text x="788" y="258" font-size="12" fill="#ffffff">decode</text>
+
+  <!-- ========== 中转 ========== -->
+  <text x="30" y="308" font-size="14" font-weight="700" fill="#111827">中转</text>
+  <text x="30" y="327" font-size="11.5" fill="#6b7280">经共享存储</text>
+  <rect x="200" y="290" width="320" height="24" fill="#4263eb"/>
+  <text x="212" y="306" font-size="12" fill="#ffffff">prefill</text>
+  <rect x="520" y="290" width="96" height="24" fill="#2b8a3e"/>
+  <text x="538" y="306" font-size="12" fill="#ffffff">上传</text>
+  <line x1="616" y1="284" x2="616" y2="352" stroke="#e03131" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="624" y="306" font-size="12" font-weight="700" fill="#e03131">归还</text>
+  <rect x="696" y="322" width="96" height="24" fill="#e8590c"/>
+  <text x="716" y="338" font-size="12" fill="#ffffff">取</text>
+  <rect x="792" y="322" width="128" height="24" fill="#adb5bd"/>
+  <text x="804" y="338" font-size="12" fill="#ffffff">decode</text>
+
+  <!-- ===== 分隔 ===== -->
+  <line x1="30" y1="372" x2="1090" y2="372" stroke="#e9ecef" stroke-width="1"/>
+
+  <!-- ===== 下半:占用时长直接比 ===== -->
+  <text x="30" y="398" font-size="15" font-weight="700" fill="#111827">把三条 P 摞起来比:块被扣住多久</text>
+  <text x="30" y="418" font-size="12" fill="#6b7280">三条都从 prefill 开始,右端就是各自能还回去的那一刻。</text>
+
+  <text x="186" y="444" font-size="13" font-weight="700" fill="#374151" text-anchor="end">推</text>
+  <rect x="200" y="430" width="512" height="18" fill="#5c7cfa"/>
+  <text x="722" y="444" font-size="12" fill="#495057">要等 D 备好块才能写</text>
+
+  <text x="186" y="476" font-size="13" font-weight="700" fill="#374151" text-anchor="end">拉</text>
+  <rect x="200" y="462" width="576" height="18" fill="#5c7cfa"/>
+  <rect x="776" y="462" width="104" height="18" fill="url(#waitpat)" stroke="#dee2e6"/>
+  <text x="890" y="476" font-size="12" fill="#495057">最长,而且 D 越忙越长</text>
+
+  <text x="186" y="508" font-size="13" font-weight="700" fill="#374151" text-anchor="end">中转</text>
+  <rect x="200" y="494" width="416" height="18" fill="#5c7cfa"/>
+  <text x="626" y="508" font-size="12" fill="#495057">最短,且与 D 的忙闲无关</text>
+
+  <!-- ===== 脚注 ===== -->
+  <text x="30" y="540" font-size="11.5" fill="#9ca3af">横条长度是示意,不是实测:三种方向下「P 何时能释放块」的先后关系来自源码,具体时长取决于模型、prompt 长度与网络。</text>
+</svg>
