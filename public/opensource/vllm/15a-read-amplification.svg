@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+<title>同一份权重在三个层次上被放大了不同的倍数:磁盘只搬 141 GB,内存总线上流动 1128 GB,而真正被用上的仍然只有 141 GB</title>
+<rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+<text x="60" y="46" font-size="21" font-weight="700" fill="#1a1a1a">同一份权重,在三个层次上被放大了不同的倍数</text>
+<text x="60" y="74" font-size="14" fill="#666666">70B 模型 141 GB bf16,张量并行度 8。条带高度 = 该层实际搬运的字节数,全图同一把尺子;</text>
+<text x="60" y="94" font-size="14" fill="#666666">每条 lane 切成 8 格 = 一个张量的 8 段,只有实心那一格是这个 rank 留下的。</text>
+<text x="125" y="118" font-size="14" font-weight="600" fill="#1a1a1a" text-anchor="middle">磁盘</text>
+<text x="365" y="118" font-size="14" font-weight="600" fill="#1a1a1a" text-anchor="middle">页缓存</text>
+<text x="365" y="136" font-size="12" fill="#888888" text-anchor="middle">整机共享</text>
+<text x="710" y="136" font-size="14" font-weight="600" fill="#1a1a1a" text-anchor="middle">8 个 worker 进程各读一遍全部</text>
+<text x="1035" y="118" font-size="14" font-weight="600" fill="#1a1a1a" text-anchor="middle">真正用上</text>
+<g fill="#c8d8ea" fill-opacity="0.4">
+<polygon points="410,295.0 560,150 560,194.0 410,339.0"/>
+<polygon points="410,295.0 560,200 560,244.0 410,339.0"/>
+<polygon points="410,295.0 560,250 560,294.0 410,339.0"/>
+<polygon points="410,295.0 560,300 560,344.0 410,339.0"/>
+<polygon points="410,295.0 560,350 560,394.0 410,339.0"/>
+<polygon points="410,295.0 560,400 560,444.0 410,339.0"/>
+<polygon points="410,295.0 560,450 560,494.0 410,339.0"/>
+<polygon points="410,295.0 560,500 560,544.0 410,339.0"/>
+</g>
+<rect x="70" y="295.0" width="110" height="44.0" fill="#3f6fa8"/>
+<polygon points="180,295.0 300,295.0 300,339.0 180,339.0" fill="#c8d8ea" fill-opacity="0.6"/>
+<rect x="300" y="295.0" width="110" height="44.0" fill="#3f6fa8"/>
+<rect x="560" y="150" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="150.0" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="155.5" x2="860" y2="155.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="161.0" x2="860" y2="161.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="166.5" x2="860" y2="166.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="172.0" x2="860" y2="172.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="177.5" x2="860" y2="177.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="183.0" x2="860" y2="183.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="188.5" x2="860" y2="188.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="150" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="176.0" font-size="12" fill="#666666" text-anchor="end">rank 0</text>
+<rect x="560" y="200" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="205.5" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="205.5" x2="860" y2="205.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="211.0" x2="860" y2="211.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="216.5" x2="860" y2="216.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="222.0" x2="860" y2="222.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="227.5" x2="860" y2="227.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="233.0" x2="860" y2="233.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="238.5" x2="860" y2="238.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="200" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="226.0" font-size="12" fill="#666666" text-anchor="end">rank 1</text>
+<rect x="560" y="250" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="261.0" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="255.5" x2="860" y2="255.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="261.0" x2="860" y2="261.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="266.5" x2="860" y2="266.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="272.0" x2="860" y2="272.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="277.5" x2="860" y2="277.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="283.0" x2="860" y2="283.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="288.5" x2="860" y2="288.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="250" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="276.0" font-size="12" fill="#666666" text-anchor="end">rank 2</text>
+<rect x="560" y="300" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="316.5" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="305.5" x2="860" y2="305.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="311.0" x2="860" y2="311.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="316.5" x2="860" y2="316.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="322.0" x2="860" y2="322.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="327.5" x2="860" y2="327.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="333.0" x2="860" y2="333.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="338.5" x2="860" y2="338.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="300" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="326.0" font-size="12" fill="#666666" text-anchor="end">rank 3</text>
+<rect x="560" y="350" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="372.0" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="355.5" x2="860" y2="355.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="361.0" x2="860" y2="361.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="366.5" x2="860" y2="366.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="372.0" x2="860" y2="372.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="377.5" x2="860" y2="377.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="383.0" x2="860" y2="383.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="388.5" x2="860" y2="388.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="350" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="376.0" font-size="12" fill="#666666" text-anchor="end">rank 4</text>
+<rect x="560" y="400" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="427.5" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="405.5" x2="860" y2="405.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="411.0" x2="860" y2="411.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="416.5" x2="860" y2="416.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="422.0" x2="860" y2="422.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="427.5" x2="860" y2="427.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="433.0" x2="860" y2="433.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="438.5" x2="860" y2="438.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="400" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="426.0" font-size="12" fill="#666666" text-anchor="end">rank 5</text>
+<rect x="560" y="450" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="483.0" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="455.5" x2="860" y2="455.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="461.0" x2="860" y2="461.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="466.5" x2="860" y2="466.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="472.0" x2="860" y2="472.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="477.5" x2="860" y2="477.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="483.0" x2="860" y2="483.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="488.5" x2="860" y2="488.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="450" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="476.0" font-size="12" fill="#666666" text-anchor="end">rank 6</text>
+<rect x="560" y="500" width="300" height="44.0" fill="#eef2f6"/>
+<rect x="560" y="538.5" width="300" height="5.5" fill="#3f6fa8"/>
+<line x1="560" y1="505.5" x2="860" y2="505.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="511.0" x2="860" y2="511.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="516.5" x2="860" y2="516.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="522.0" x2="860" y2="522.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="527.5" x2="860" y2="527.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="533.0" x2="860" y2="533.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="560" y1="538.5" x2="860" y2="538.5" stroke="#ffffff" stroke-width="0.9"/>
+<rect x="560" y="500" width="300" height="44.0" fill="none" stroke="#c3ced9" stroke-width="1"/>
+<text x="548" y="526.0" font-size="12" fill="#666666" text-anchor="end">rank 7</text>
+<g fill="#3f6fa8" fill-opacity="0.5">
+<polygon points="860,150.0 980,295.0 980,300.5 860,155.5"/>
+<polygon points="860,205.5 980,300.5 980,306.0 860,211.0"/>
+<polygon points="860,261.0 980,306.0 980,311.5 860,266.5"/>
+<polygon points="860,316.5 980,311.5 980,317.0 860,322.0"/>
+<polygon points="860,372.0 980,317.0 980,322.5 860,377.5"/>
+<polygon points="860,427.5 980,322.5 980,328.0 860,433.0"/>
+<polygon points="860,483.0 980,328.0 980,333.5 860,488.5"/>
+<polygon points="860,538.5 980,333.5 980,339.0 860,544.0"/>
+</g>
+<rect x="980" y="295.0" width="110" height="44.0" fill="#3f6fa8"/>
+<line x1="980" y1="300.5" x2="1090" y2="300.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="306.0" x2="1090" y2="306.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="311.5" x2="1090" y2="311.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="317.0" x2="1090" y2="317.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="322.5" x2="1090" y2="322.5" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="328.0" x2="1090" y2="328.0" stroke="#ffffff" stroke-width="0.9"/>
+<line x1="980" y1="333.5" x2="1090" y2="333.5" stroke="#ffffff" stroke-width="0.9"/>
+<text x="125" y="364" font-size="15" font-weight="700" fill="#1a1a1a" text-anchor="middle">141 GB</text>
+<text x="125" y="384" font-size="12" fill="#888888" text-anchor="middle">冷启动读一次</text>
+<text x="365" y="364" font-size="15" font-weight="700" fill="#1a1a1a" text-anchor="middle">141 GB</text>
+<text x="365" y="384" font-size="12" fill="#888888" text-anchor="middle">装得下就只读这一次</text>
+<text x="1035" y="364" font-size="15" font-weight="700" fill="#1a1a1a" text-anchor="middle">141 GB</text>
+<text x="1035" y="384" font-size="12" fill="#888888" text-anchor="middle">每 rank 17.6 GB</text>
+<text x="710" y="578" font-size="15" font-weight="700" fill="#b3452f" text-anchor="middle">1128 GB</text>
+<text x="710" y="598" font-size="12" fill="#888888" text-anchor="middle">8 × 141,全部压在内存总线上</text>
+<text x="240" y="288" font-size="15" font-weight="700" fill="#3f6fa8" text-anchor="middle">×1</text>
+<text x="487" y="128" font-size="15" font-weight="700" fill="#b3452f" text-anchor="middle">×8</text>
+<text x="920" y="270" font-size="15" font-weight="700" fill="#3f6fa8" text-anchor="middle">÷8</text>
+<line x1="60" y1="470" x2="60" y2="548" stroke="#b3452f" stroke-width="3"/>
+<text x="76" y="488" font-size="13" font-weight="700" fill="#1a1a1a">进来 141 GB,出去也是 141 GB,</text>
+<text x="76" y="508" font-size="13" font-weight="700" fill="#b3452f">中间却流动了 1128 GB。</text>
+<text x="76" y="530" font-size="12" fill="#666666">放大全部发生在中间那一层,</text>
+<text x="76" y="548" font-size="12" fill="#666666">因为读取粒度是整个张量。</text>
+</svg>
