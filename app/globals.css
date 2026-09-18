@@ -62,14 +62,16 @@ body {
   width: 100%;
   height: auto;
 }
-/* 但「撑满宽度」对竖长的图是灾难:底边一铺满,高度就按比例窜到 1200px 以上,
-   一张图占掉两屏。给一个高度上限,触发时用 object-fit 保住比例并居中
-   (盒子仍是整篇宽度,两侧留白是透明的)。横长的图高度本来就在上限以下,不受影响。
-   930 这个值是按「竖图缩完也不能比正文窄」定的:接近正方的图(约 0.9 宽高比)
-   缩到 930 高时宽约 839px,刚好压过正文的 52rem(832px) */
-.prose.os-prose > p:has(> img) img {
-  max-height: 930px;
-  object-fit: contain;
+/* 竖长的图(高大于宽)不撑满整篇宽度:底边一铺满,高度会按比例窜到 1500px 以上。
+   但也不能按高度上限缩——缩完比正文还窄,字就看不清了(2026-09-18 用户在 03a 上确认过)。
+   规则:竖图宽度固定等于正文栏 52rem、高度顺其自然;横图照旧撑满整篇。
+   「竖」由 ProjectReader 在图片加载后按 naturalHeight > naturalWidth 打上 data-tall,
+   CSS 没有按宽高比选图的办法,只能靠这个标记 */
+.prose.os-prose > p:has(> img) img[data-tall] {
+  width: 52rem;
+  max-width: 100%;
+  display: block;
+  margin-inline: auto;
 }
 
 /* 表格:typography 插件只给横线,列一多就不好扫。改成卡片式——

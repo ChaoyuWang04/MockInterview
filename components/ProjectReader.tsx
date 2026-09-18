@@ -50,6 +50,15 @@ export default function ProjectReader({ topic, project, pages }: Props) {
       h.id = h.id || `sec-${i}`
     })
     setToc(heads.map((h) => ({ id: h.id, text: h.textContent ?? '' })))
+    // 竖长的图(高大于宽)打上 data-tall,CSS 据此让它只占正文栏宽而不是整篇宽
+    const markTall = (img: HTMLImageElement) => {
+      if (img.naturalWidth && img.naturalHeight > img.naturalWidth) img.setAttribute('data-tall', '')
+      else img.removeAttribute('data-tall')
+    }
+    el.querySelectorAll('img').forEach((img) => {
+      if (img.complete && img.naturalWidth) markTall(img)
+      else img.addEventListener('load', () => markTall(img), { once: true })
+    })
     if (pendingScroll.current !== null) {
       const y = pendingScroll.current
       pendingScroll.current = null
