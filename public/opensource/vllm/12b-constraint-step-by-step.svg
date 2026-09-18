@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" width="1120" height="760" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="760" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">约束怎么逐步生效:从 schema 到每一步的允许集,再到一步里 mask 怎么作用到打分</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">例子:schema 是一个对象,唯一字段 age,整数。绿 = 允许 / 合法,灰 = 禁止或从没被生成,黄 = 本步在看的东西。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 不加约束:模型想写什么写什么</text>
+<text x="50" y="128.0" font-size="13" fill="#6b7280" text-anchor="end"></text>
+<rect x="60" y="106" width="217" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="168.5" y="127.68" font-size="13" fill="#6b7280" text-anchor="middle">思考过程</text>
+<rect x="280" y="106" width="217" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="388.5" y="127.68" font-size="13" fill="#6b7280" text-anchor="middle">一段解释</text>
+<rect x="500" y="106" width="297" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="648.5" y="127.68" font-size="13" fill="#111827" text-anchor="middle">{ "age": 25 }</text>
+<rect x="800" y="106" width="237" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="918.5" y="127.68" font-size="13" fill="#6b7280" text-anchor="middle">再一段解释</text>
+<text x="30" y="172" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 加 JSON schema 约束:第一个 token 起就只能走 JSON</text>
+<text x="50" y="204.0" font-size="13" fill="#6b7280" text-anchor="end"></text>
+<rect x="60" y="182" width="297" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="208.5" y="203.68" font-size="13" fill="#111827" text-anchor="middle">{ "age": 25 }</text>
+<rect x="360" y="182" width="97" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="408.5" y="203.68" font-size="13" fill="#6b7280" text-anchor="middle">结束</text>
+<text x="480" y="204" font-size="12" fill="#6b7280" text-anchor="start">灰色那些段落不是被删了,是从没被生成:第一步允许的 token 只有 {,模型再想先写「让我想想」也写不出来</text>
+<line x1="30" y1="236" x2="1090" y2="236" stroke="#e5e7eb"/>
+<text x="30" y="266" font-size="15" fill="#111827" text-anchor="start" font-weight="700">③ 六步写完一个对象:每一步的允许集由「到目前为止生成了什么」决定</text>
+<text x="130" y="290" font-size="11" fill="#6b7280" text-anchor="middle">只允许 {</text>
+<line x1="130" y1="298" x2="130" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="60" y="322" width="140" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="130.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">{</text>
+<text x="130" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 1 步</text>
+<text x="302" y="290" font-size="11" fill="#6b7280" text-anchor="middle">只允许 "age"</text>
+<line x1="302" y1="298" x2="302" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="232" y="322" width="140" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="302.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">"age"</text>
+<text x="302" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 2 步</text>
+<text x="474" y="290" font-size="11" fill="#6b7280" text-anchor="middle">只允许 :</text>
+<line x1="474" y1="298" x2="474" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="404" y="322" width="140" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="474.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">:</text>
+<text x="474" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 3 步</text>
+<text x="646" y="290" font-size="11" fill="#6b7280" text-anchor="middle">允许 数字、空格、负号</text>
+<line x1="646" y1="298" x2="646" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="576" y="322" width="140" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="646.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">25</text>
+<text x="646" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 4 步</text>
+<text x="818" y="290" font-size="11" fill="#6b7280" text-anchor="middle">允许 更多数字 或 }</text>
+<line x1="818" y1="298" x2="818" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="748" y="322" width="140" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="818.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">}</text>
+<text x="818" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 5 步</text>
+<text x="990" y="290" font-size="11" fill="#6b7280" text-anchor="middle">只允许 结束符</text>
+<line x1="990" y1="298" x2="990" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="920" y="322" width="140" height="44" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="990.0" y="349.4" font-size="15" fill="#111827" text-anchor="middle">结束</text>
+<text x="990" y="388" font-size="12" fill="#6b7280" text-anchor="middle">第 6 步</text>
+<text x="60" y="414" font-size="12" fill="#6b7280" text-anchor="start">模型只在允许集里按自己的打分选:第 4 步选 25 还是 30 是它自己的事,约束只管「必须是数字」。</text>
+<line x1="30" y1="434" x2="1090" y2="434" stroke="#e5e7eb"/>
+<text x="30" y="464" font-size="15" fill="#111827" text-anchor="start" font-weight="700">④ 放大第 4 步:已生成 {"age": ,schema 说 age 是整数</text>
+<text x="140" y="488" font-size="12" fill="#6b7280" text-anchor="middle">候选 token</text>
+<text x="340" y="488" font-size="12" fill="#6b7280" text-anchor="middle">模型打分</text>
+<text x="540" y="488" font-size="12" fill="#6b7280" text-anchor="middle">检查员说合法?</text>
+<text x="740" y="488" font-size="12" fill="#6b7280" text-anchor="middle">mask 后的分</text>
+<rect x="60" y="498" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="140.0" y="516.32" font-size="12" fill="#111827" text-anchor="middle">25</text>
+<rect x="260" y="498" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="340.0" y="516.32" font-size="12" fill="#111827" text-anchor="middle">3.1</text>
+<rect x="460" y="498" width="160" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="540.0" y="516.32" font-size="12" fill="#111827" text-anchor="middle">1 合法</text>
+<rect x="660" y="498" width="160" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="740.0" y="516.32" font-size="12" fill="#111827" text-anchor="middle">3.1</text>
+<rect x="60" y="534" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="140.0" y="552.32" font-size="12" fill="#111827" text-anchor="middle">"</text>
+<rect x="260" y="534" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="340.0" y="552.32" font-size="12" fill="#111827" text-anchor="middle">2.8</text>
+<rect x="460" y="534" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="540.0" y="552.32" font-size="12" fill="#111827" text-anchor="middle">0 禁止</text>
+<rect x="660" y="534" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="740.0" y="552.32" font-size="12" fill="#111827" text-anchor="middle">−∞</text>
+<rect x="60" y="570" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="140.0" y="588.32" font-size="12" fill="#111827" text-anchor="middle">}</text>
+<rect x="260" y="570" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="340.0" y="588.32" font-size="12" fill="#111827" text-anchor="middle">2.0</text>
+<rect x="460" y="570" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="540.0" y="588.32" font-size="12" fill="#111827" text-anchor="middle">0 禁止</text>
+<rect x="660" y="570" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="740.0" y="588.32" font-size="12" fill="#111827" text-anchor="middle">−∞</text>
+<rect x="60" y="606" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="140.0" y="624.32" font-size="12" fill="#111827" text-anchor="middle">hello</text>
+<rect x="260" y="606" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="340.0" y="624.32" font-size="12" fill="#111827" text-anchor="middle">1.5</text>
+<rect x="460" y="606" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="540.0" y="624.32" font-size="12" fill="#111827" text-anchor="middle">0 禁止</text>
+<rect x="660" y="606" width="160" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="740.0" y="624.32" font-size="12" fill="#111827" text-anchor="middle">−∞</text>
+<rect x="60" y="642" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="140.0" y="660.32" font-size="12" fill="#111827" text-anchor="middle">7</text>
+<rect x="260" y="642" width="160" height="28" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="340.0" y="660.32" font-size="12" fill="#111827" text-anchor="middle">0.9</text>
+<rect x="460" y="642" width="160" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="540.0" y="660.32" font-size="12" fill="#111827" text-anchor="middle">1 合法</text>
+<rect x="660" y="642" width="160" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="740.0" y="660.32" font-size="12" fill="#111827" text-anchor="middle">0.9</text>
+<text x="850" y="520" font-size="12" fill="#111827" text-anchor="start">采样只会在这两行里选</text>
+<text x="850" y="540" font-size="11" fill="#6b7280" text-anchor="start">(1.7 讲这张表按位打包成掩码)</text>
+<text x="60" y="696" font-size="12" fill="#6b7280" text-anchor="start">模型打分和检查员判定互不依赖,各算各的,最后对格相加:禁止的位置加负无穷,softmax 之后概率就是零。</text>
+<text x="30" y="736" font-size="12" fill="#6b7280" text-anchor="start">绿 = 允许 / 合法,灰 = 禁止或没被生成</text>
+</svg>

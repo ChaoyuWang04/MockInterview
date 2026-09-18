@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 320" width="1120" height="320" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="320" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">思考模型:&lt;/think&gt; 之前语法关闭,之后每步算 bitmask</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">默认行为:配置了 reasoning parser,enable_in_reasoning = False。灰 = 不受约束的段,黄 = 开关,绿 = 受约束的段。</text>
+<text x="50" y="125.0" font-size="13" fill="#6b7280" text-anchor="end"></text>
+<rect x="60" y="100" width="127" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="123.5" y="124.68" font-size="13" fill="#6b7280" text-anchor="middle">&lt;think&gt;</text>
+<rect x="190" y="100" width="417" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="398.5" y="124.68" font-size="13" fill="#6b7280" text-anchor="middle">自由思考,想写什么写什么</text>
+<rect x="610" y="100" width="137" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="678.5" y="124.68" font-size="13" fill="#111827" text-anchor="middle">&lt;/think&gt;</text>
+<rect x="750" y="100" width="257" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="878.5" y="124.68" font-size="13" fill="#111827" text-anchor="middle">{ "age": 25 }</text>
+<rect x="1010" y="100" width="107" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="1063.5" y="124.68" font-size="13" fill="#6b7280" text-anchor="middle">结束</text>
+<line x1="60" y1="156" x2="746" y2="156" stroke="#6b7280" stroke-width="2"/><line x1="750" y1="156" x2="1117" y2="156" stroke="#5fa886" stroke-width="3"/>
+<text x="403" y="178" font-size="13" fill="#111827" text-anchor="middle">语法关闭:不算 bitmask,状态机不动</text>
+<text x="933" y="178" font-size="13" fill="#111827" text-anchor="middle">语法开启:每步算 bitmask</text>
+<text x="60" y="222" font-size="12" fill="#6b7280" text-anchor="start">黄色标记是开关:parser 在输出流里看到思考结束 token,把请求标成 reasoning_ended,从下一步起才开始填 bitmask、推进状态机(7.3)。</text>
+<text x="60" y="242" font-size="12" fill="#6b7280" text-anchor="start">思考段在一个步中间结束时,结束 token 之后的那几个 token 要单独裁掉再喂给状态机(7.4);把开关设成 True 则思考段也受约束。</text>
+<text x="30" y="296" font-size="12" fill="#6b7280" text-anchor="start">灰 = 不受约束,黄 = 开关,绿 = 受约束</text>
+</svg>

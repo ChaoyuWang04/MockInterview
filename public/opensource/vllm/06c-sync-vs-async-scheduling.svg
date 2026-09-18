@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同步调度 CPU 和 GPU 互相等,异步调度让 CPU 提前一步、GPU 无缝接上</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = CPU 在调度或收结果,绿 = GPU 在算,灰 = 空等。每格是一步;两组横轴同一刻度。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">同步调度:CPU 和 GPU 互相等</text>
+<text x="120" y="127.0" font-size="13" fill="#6b7280" text-anchor="end">CPU</text>
+<rect x="130" y="108" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="183.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">调度 N</text>
+<rect x="240" y="108" width="267" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="373.5" y="126.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="510" y="108" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="563.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">调度 N+1</text>
+<rect x="620" y="108" width="267" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="753.5" y="126.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="890" y="108" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="943.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">调度 N+2</text>
+<text x="120" y="163.0" font-size="13" fill="#6b7280" text-anchor="end">GPU</text>
+<rect x="130" y="144" width="107" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="183.5" y="162.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<rect x="240" y="144" width="267" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="373.5" y="162.32" font-size="12" fill="#111827" text-anchor="middle">算第 N 步</text>
+<rect x="510" y="144" width="107" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="563.5" y="162.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<rect x="620" y="144" width="267" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="753.5" y="162.32" font-size="12" fill="#111827" text-anchor="middle">算第 N+1 步</text>
+<rect x="890" y="144" width="107" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="943.5" y="162.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<text x="30" y="214" font-size="15" fill="#111827" text-anchor="start" font-weight="700">异步调度:CPU 提前一步,GPU 无缝接上</text>
+<text x="120" y="245.0" font-size="13" fill="#6b7280" text-anchor="end">CPU</text>
+<rect x="130" y="226" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="183.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">调度 N</text>
+<rect x="240" y="226" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="293.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">调度 N+1</text>
+<rect x="350" y="226" width="157" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.5" y="244.32" font-size="12" fill="#6b7280" text-anchor="middle">收 N 结果</text>
+<rect x="510" y="226" width="107" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="563.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">调度 N+2</text>
+<rect x="620" y="226" width="157" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="698.5" y="244.32" font-size="12" fill="#6b7280" text-anchor="middle">收 N+1 结果</text>
+<text x="120" y="281.0" font-size="13" fill="#6b7280" text-anchor="end">GPU</text>
+<rect x="130" y="262" width="107" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="183.5" y="280.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<rect x="240" y="262" width="267" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="373.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">算第 N 步</text>
+<rect x="510" y="262" width="267" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="643.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">算第 N+1 步</text>
+<rect x="780" y="262" width="217" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="888.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">算第 N+2 步</text>
+<text x="130" y="318" font-size="12" fill="#6b7280" text-anchor="start">调度 N+1 时第 N 步的 token 还没出来,CPU 只是先把「每个请求多一个座位」留好;结果回来后再修正记账(7.5、8.7),抢占撞上在途帧另有处理(7.6)。</text>
+<text x="130" y="338" font-size="12" fill="#6b7280" text-anchor="start">GPU 那一行从此没有空格:上一步在算的时候,下一步的输入已经准备好了。这就是「两步同时在飞」(7.4)。</text>
+<text x="30" y="392" font-size="12" fill="#6b7280" text-anchor="start">紫 = CPU 调度,绿 = GPU 在算,灰 = 等或收结果</text>
+</svg>

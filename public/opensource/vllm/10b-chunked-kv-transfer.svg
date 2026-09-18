@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 460" width="1120" height="460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="460" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">KV 传输分不分块:不分块要算完才传、decode 干等,分块边算边传只等最后一块</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = prefill 卡在算,紫 = 在传;虚线 = decode 能开始的时刻。两组横轴同一刻度。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">不分块:算完才能传,decode 干等传输</text>
+<text x="120" y="127.0" font-size="13" fill="#6b7280" text-anchor="end">prefill 卡</text>
+<rect x="130" y="108" width="537" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="398.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">算整个 prompt</text>
+<text x="120" y="163.0" font-size="13" fill="#6b7280" text-anchor="end">传输</text>
+<rect x="130" y="144" width="537" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="670" y="144" width="267" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="803.5" y="162.32" font-size="12" fill="#111827" text-anchor="middle">传全部 KV</text>
+<line x1="940" y1="104" x2="940" y2="176" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="950" y="150" font-size="12" fill="#6b7280" text-anchor="start">decode 开始</text>
+<text x="30" y="214" font-size="15" fill="#111827" text-anchor="start" font-weight="700">分三块:边算边传,decode 只等最后一块</text>
+<text x="120" y="245.0" font-size="13" fill="#6b7280" text-anchor="end">prefill 卡</text>
+<rect x="130" y="226" width="177" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="218.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">块 1</text>
+<rect x="310" y="226" width="177" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="398.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">块 2</text>
+<rect x="490" y="226" width="177" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="578.5" y="244.32" font-size="12" fill="#111827" text-anchor="middle">块 3</text>
+<text x="120" y="281.0" font-size="13" fill="#6b7280" text-anchor="end">传输</text>
+<rect x="130" y="262" width="177" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="310" y="262" width="87" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="353.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">KV1</text>
+<rect x="400" y="262" width="87" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="490" y="262" width="87" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="533.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">KV2</text>
+<rect x="580" y="262" width="87" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="670" y="262" width="87" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="713.5" y="280.32" font-size="12" fill="#111827" text-anchor="middle">KV3</text>
+<line x1="760" y1="222" x2="760" y2="294" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="770" y="268" font-size="12" fill="#6b7280" text-anchor="start">decode 开始,提前了</text>
+<text x="130" y="326" font-size="12" fill="#6b7280" text-anchor="start">传输那段在 PD 里不小:一个 8k 上下文的 70B 请求,KV 有 2.6 GB,跨机器走 RDMA 要几十毫秒,同一台机器走 NVLink 也要几毫秒(讲稿量级)。</text>
+<text x="130" y="346" font-size="12" fill="#6b7280" text-anchor="start">不分块的话这段全部叠在 TTFT 上(3.2);分块之后大部分藏在计算后面。Mooncake、DistServe 这类系统都是按块甚至按层流式传;</text>
+<text x="130" y="366" font-size="12" fill="#6b7280" text-anchor="start">vLLM 里分层传是 connector 的能力上限而不是默认行为(本节),而且分层与整块是两个正交方向,会互相削弱(2.6)。</text>
+<text x="30" y="430" font-size="12" fill="#6b7280" text-anchor="start">绿 = prefill 在算,紫 = 在传,灰 = 等</text>
+</svg>

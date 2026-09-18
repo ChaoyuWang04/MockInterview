@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">训练与推理的算与存:训练每个位置都判分、每层都留着;推理只答最后一题、一块缓冲区轮着用</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">黄 = 前向产出、要留给反向的东西,绿 = 反向算出的梯度或反复覆盖的缓冲,灰 = 跳过的计算 / 唯一长期留下的东西。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">训练:每个位置都是一道题,答案已知,每题都判分</text>
+<rect x="70" y="106" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="130.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">今天</text>
+<line x1="130" y1="140" x2="130" y2="156" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="70" y="158" width="120" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="130.0" y="178.68" font-size="13" fill="#111827" text-anchor="middle">打分 [V]</text>
+<text x="130" y="212" font-size="12" fill="#6b7280" text-anchor="middle">答案:天气</text>
+<rect x="70" y="222" width="120" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="130.0" y="242.68" font-size="13" fill="#111827" text-anchor="middle">loss₁</text>
+<rect x="290" y="106" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="350.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">天气</text>
+<line x1="350" y1="140" x2="350" y2="156" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="290" y="158" width="120" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="350.0" y="178.68" font-size="13" fill="#111827" text-anchor="middle">打分 [V]</text>
+<text x="350" y="212" font-size="12" fill="#6b7280" text-anchor="middle">答案:很</text>
+<rect x="290" y="222" width="120" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="350.0" y="242.68" font-size="13" fill="#111827" text-anchor="middle">loss₂</text>
+<rect x="510" y="106" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="570.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">很</text>
+<line x1="570" y1="140" x2="570" y2="156" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="510" y="158" width="120" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="570.0" y="178.68" font-size="13" fill="#111827" text-anchor="middle">打分 [V]</text>
+<text x="570" y="212" font-size="12" fill="#6b7280" text-anchor="middle">答案:好</text>
+<rect x="510" y="222" width="120" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="570.0" y="242.68" font-size="13" fill="#111827" text-anchor="middle">loss₃</text>
+<rect x="730" y="106" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="790.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">好</text>
+<line x1="790" y1="140" x2="790" y2="156" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="730" y="158" width="120" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="790.0" y="178.68" font-size="13" fill="#111827" text-anchor="middle">打分 [V]</text>
+<text x="790" y="212" font-size="12" fill="#6b7280" text-anchor="middle">答案:结束</text>
+<rect x="730" y="222" width="120" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="790.0" y="242.68" font-size="13" fill="#111827" text-anchor="middle">loss₄</text>
+<text x="1000" y="244" font-size="13" fill="#111827" text-anchor="start">4 份梯度</text>
+<text x="30" y="290" font-size="15" fill="#111827" text-anchor="start" font-weight="700">推理 prefill:前三个位置的答案早就知道,不判;只有最后一题要答</text>
+<rect x="70" y="300" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="130.0" y="320.68" font-size="13" fill="#111827" text-anchor="middle">今天</text>
+<rect x="70" y="352" width="120" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="130.0" y="372.68" font-size="13" fill="#6b7280" text-anchor="middle">不乘 lm_head</text>
+<rect x="290" y="300" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="350.0" y="320.68" font-size="13" fill="#111827" text-anchor="middle">天气</text>
+<rect x="290" y="352" width="120" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="350.0" y="372.68" font-size="13" fill="#6b7280" text-anchor="middle">不乘 lm_head</text>
+<rect x="510" y="300" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="570.0" y="320.68" font-size="13" fill="#111827" text-anchor="middle">很</text>
+<rect x="510" y="352" width="120" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="570.0" y="372.68" font-size="13" fill="#6b7280" text-anchor="middle">不乘 lm_head</text>
+<rect x="730" y="300" width="120" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="790.0" y="320.68" font-size="13" fill="#111827" text-anchor="middle">好</text>
+<line x1="790" y1="334" x2="790" y2="350" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="730" y="352" width="120" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="790.0" y="372.68" font-size="13" fill="#111827" text-anchor="middle">打分 → 采样</text>
+<text x="1000" y="374" font-size="13" fill="#111827" text-anchor="start">只算 1 行 logits</text>
+<line x1="30" y1="406" x2="1090" y2="406" stroke="#e5e7eb"/>
+<text x="30" y="436" font-size="15" fill="#111827" text-anchor="start" font-weight="700">训练:每层都留着等反向,峰值 = 单层 × 层数</text>
+<text x="600" y="436" font-size="15" fill="#111827" text-anchor="start" font-weight="700">推理:一块缓冲区轮着用,峰值 = 单层的量级,和层数无关</text>
+<rect x="60" y="448" width="400" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="260.0" y="468.32" font-size="12" fill="#111827" text-anchor="middle">层 1 的中间结果</text>
+<rect x="60" y="488" width="400" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="260.0" y="508.32" font-size="12" fill="#111827" text-anchor="middle">层 2 的中间结果</text>
+<rect x="60" y="528" width="400" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="260.0" y="548.32" font-size="12" fill="#111827" text-anchor="middle">层 3 的中间结果</text>
+<rect x="60" y="568" width="400" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="260.0" y="588.32" font-size="12" fill="#111827" text-anchor="middle">层 4 的中间结果</text>
+<text x="260" y="624" font-size="12" fill="#6b7280" text-anchor="middle">… 一直堆到最后一层,反向时从后往前用</text>
+<line x1="540" y1="430" x2="540" y2="640" stroke="#d1d5db" stroke-dasharray="4 4"/>
+<rect x="600" y="448" width="360" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="780.0" y="469" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">当前层的中间结果</text><text x="780.0" y="489" font-size="11" fill="#6b7280" text-anchor="middle">层 1 → 层 2 → 层 3 → …,算完一层原地覆盖</text>
+<rect x="980" y="448" width="40" height="52" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1000" y="528" font-size="11" fill="#6b7280" text-anchor="middle">k、v</text>
+<line x1="780" y1="502" x2="780" y2="530" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ar)"/>
+<rect x="600" y="532" width="360" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="780.0" y="552.32" font-size="12" fill="#111827" text-anchor="middle">残差流 x′:传给下一层</text>
+<text x="600" y="596" font-size="12" fill="#6b7280" text-anchor="start">右侧灰条:这一层的 k、v 单独写进 KV cache,跨步保留(03 章);</text>
+<text x="600" y="616" font-size="12" fill="#6b7280" text-anchor="start">别的中间结果用完即丢,所以推理显存的大头是 KV 而不是激活。</text>
+<text x="30" y="676" font-size="12" fill="#6b7280" text-anchor="start">黄 = 前向产出 / 一直占着,绿 = 梯度 / 反复覆盖,灰 = 跳过的计算 / 唯一长期留下的东西</text>
+</svg>

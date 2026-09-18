@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" width="1120" height="760" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="760" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">DP 下的 prefill 节流与对齐:一个 rank 拉进大 prefill,其他 rank 只能陪等</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">专家并行时每一步所有 rank 要在专家层同步点会合,这一步的长度由最慢的 rank 决定。绿 = decode,黄 = prefill,灰 = 干等或被拉长的步。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 不节流:rank 2 拉进一个 2048 token 的新 prefill,其他三个 rank 陪等</text>
+<text x="120" y="126.0" font-size="13" fill="#6b7280" text-anchor="end">rank 0</text>
+<rect x="130" y="108" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="125.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<rect x="240" y="108" width="377" height="26" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.5" y="125.32" font-size="12" fill="#6b7280" text-anchor="middle">在专家层同步点等 rank 2</text>
+<text x="120" y="160.0" font-size="13" fill="#6b7280" text-anchor="end">rank 1</text>
+<rect x="130" y="142" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="159.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<rect x="240" y="142" width="377" height="26" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.5" y="159.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<text x="120" y="194.0" font-size="13" fill="#6b7280" text-anchor="end">rank 2</text>
+<rect x="130" y="176" width="487" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="373.5" y="193.32" font-size="12" fill="#111827" text-anchor="middle">decode + 新 prefill 2048</text>
+<text x="120" y="228.0" font-size="13" fill="#6b7280" text-anchor="end">rank 3</text>
+<rect x="130" y="210" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="227.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<rect x="240" y="210" width="377" height="26" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.5" y="227.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<line x1="620" y1="104" x2="620" y2="242" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="636" y="178" font-size="12" fill="#6b7280" text-anchor="start">四个 rank 的这一步都这么长</text>
+<text x="30" y="268" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 节流:协调器让 rank 2 这一步不拉新 prefill,只算已在跑的 chunk</text>
+<text x="120" y="298.0" font-size="13" fill="#6b7280" text-anchor="end">rank 0</text>
+<rect x="130" y="280" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="297.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<text x="120" y="332.0" font-size="13" fill="#6b7280" text-anchor="end">rank 1</text>
+<rect x="130" y="314" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="331.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<text x="120" y="366.0" font-size="13" fill="#6b7280" text-anchor="end">rank 2</text>
+<rect x="130" y="348" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="365.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<rect x="240" y="348" width="47" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="263.5" y="365.32" font-size="12" fill="#111827" text-anchor="middle">chunk</text>
+<text x="120" y="400.0" font-size="13" fill="#6b7280" text-anchor="end">rank 3</text>
+<rect x="130" y="382" width="107" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="399.32" font-size="12" fill="#111827" text-anchor="middle">decode</text>
+<line x1="292" y1="276" x2="292" y2="414" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="308" y="350" font-size="12" fill="#6b7280" text-anchor="start">同步点很快到齐,所有 rank 的 decode 用户不受影响;新 prefill 下一步再说</text>
+<line x1="30" y1="432" x2="1090" y2="432" stroke="#e5e7eb"/>
+<text x="30" y="462" font-size="15" fill="#111827" text-anchor="start" font-weight="700">③ 再往前一步:同样的 prefill 量,散在各步会拉长每一步,集中到相同的步只拉长那几步</text>
+<text x="130" y="488" font-size="12" fill="#111827" text-anchor="start" font-weight="700">各自为政:每个 rank 8 步里有 2 步带 prefill,时机随机</text>
+<text x="120" y="512" font-size="12" fill="#6b7280" text-anchor="end">rank 0</text>
+<rect x="130" y="494" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="212" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="294" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="376" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="458" y="494" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="540" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="622" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="704" y="494" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="120" y="538" font-size="12" fill="#6b7280" text-anchor="end">rank 1</text>
+<rect x="130" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="212" y="520" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="294" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="376" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="458" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="540" y="520" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="622" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="704" y="520" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="120" y="564" font-size="12" fill="#6b7280" text-anchor="end">rank 2</text>
+<rect x="130" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="212" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="294" y="546" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="376" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="458" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="540" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="622" y="546" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="704" y="546" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="120" y="590" font-size="12" fill="#6b7280" text-anchor="end">rank 3</text>
+<rect x="130" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="212" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="294" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="376" y="572" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="458" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="540" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="622" y="572" width="78" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="704" y="572" width="78" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="120" y="616" font-size="12" fill="#6b7280" text-anchor="end">全局</text>
+<rect x="130" y="598" width="652" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="456.0" y="612.96" font-size="11" fill="#6b7280" text-anchor="middle">8 步全部被拉长:每一步都有人在 prefill</text>
+<line x1="810" y1="480" x2="810" y2="640" stroke="#e5e7eb"/>
+<text x="836" y="488" font-size="12" fill="#111827" text-anchor="start" font-weight="700">协调对齐:集中到相同的两步</text>
+<rect x="836" y="494" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="866" y="494" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="896" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="926" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="956" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="986" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1016" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1046" y="494" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="836" y="520" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="866" y="520" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="896" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="926" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="956" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="986" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1016" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1046" y="520" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="836" y="546" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="866" y="546" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="896" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="926" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="956" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="986" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1016" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1046" y="546" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="836" y="572" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="866" y="572" width="27" height="22" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="896" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="926" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="956" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="986" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1016" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1046" y="572" width="27" height="22" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="836" y="598" width="57" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="864.5" y="612.6" font-size="10" fill="#6b7280" text-anchor="middle">长 2 步</text>
+<rect x="896" y="598" width="177" height="22" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="984.5" y="612.6" font-size="10" fill="#111827" text-anchor="middle">其余 6 步是纯 decode 的短步</text>
+<text x="30" y="690" font-size="12" fill="#6b7280" text-anchor="start">上下两张 prefill 总量一样。协调靠的是一个布尔量而不是请求数:这一步谁都不准拉新 prefill,或者都可以(09 章 11.8);节流的判断在调度器里(本节)。</text>
+<text x="30" y="724" font-size="12" fill="#6b7280" text-anchor="start">绿 = decode,黄 = 这一步有 prefill 块,灰 = 干等 / 被拉长的步</text>
+</svg>

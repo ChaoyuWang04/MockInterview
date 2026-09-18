@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">抢占:块池占满时踢掉队尾的请求,释放它的全部块,让它回 waiting 队首重算</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">vLLM 只有重算这一种抢占,没有 swap。数字是走读用的例子:块池共能装 10000 个 token 的 KV。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">抢占前:块池 100% 被占,A 要写第 5001 个 token,跨到新块</text>
+<text x="100" y="133.0" font-size="13" fill="#6b7280" text-anchor="end">块池</text>
+<rect x="110" y="110" width="477" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="348.5" y="132.68" font-size="13" fill="#111827" text-anchor="middle">A:5000 个 token 的 KV</text>
+<rect x="590" y="110" width="285" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="732.5" y="132.68" font-size="13" fill="#111827" text-anchor="middle">B:3000</text>
+<rect x="878" y="110" width="189" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="972.5" y="132.68" font-size="13" fill="#111827" text-anchor="middle">C:2000</text>
+<text x="110" y="170" font-size="12" fill="#6b7280" text-anchor="start">running 队列:[A, B, C],C 最晚进来,排在队尾;给 A 分配 1 个新块 → 拿不到</text>
+<line x1="560" y1="190" x2="560" y2="232" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="30" y="262" font-size="15" fill="#111827" text-anchor="start" font-weight="700">抢占:踢掉队尾的 C,释放它的全部块,已算数清零,放回 waiting 队首</text>
+<text x="100" y="299.0" font-size="13" fill="#6b7280" text-anchor="end">块池</text>
+<rect x="110" y="276" width="477" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="348.5" y="298.68" font-size="13" fill="#111827" text-anchor="middle">A:5001,拿到新块,继续</text>
+<rect x="590" y="276" width="285" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="732.5" y="298.68" font-size="13" fill="#111827" text-anchor="middle">B:3000,不受影响</text>
+<rect x="878" y="276" width="189" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="972.5" y="298.68" font-size="13" fill="#6b7280" text-anchor="middle">空出 1999</text>
+<text x="110" y="336" font-size="12" fill="#6b7280" text-anchor="start">running 队列:[A, B];waiting 队列:[C(欠账 2000,全部重算), D, …]</text>
+<text x="110" y="356" font-size="12" fill="#6b7280" text-anchor="start">下一步或几步后,C 用空出的块重新 prefill 它已有的 2000 个 token,然后接着生成;前缀缓存命中的话重算的只是没命中的那段(04 章)。</text>
+<text x="110" y="392" font-size="12" fill="#6b7280" text-anchor="start">为什么踢队尾:running 队列按到达顺序排,牺牲最晚来的、已算最少的,浪费最小;priority 策略下改成牺牲优先级最低的(4.3)。</text>
+<text x="30" y="450" font-size="12" fill="#6b7280" text-anchor="start">绿 = 继续跑的,紫 = 被牺牲的,灰 = 释放出来的空间</text>
+</svg>
