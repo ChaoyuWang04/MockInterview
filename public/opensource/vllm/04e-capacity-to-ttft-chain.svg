@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">两个开关一路传导到首字时间:块变多 → 驱逐减少 → 命中率上升 → 重算变少 → TTFT 变短</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">灰 = 开关,绿 = 中间量,红 = 最终指标。数字是示意,不是实测。</text>
+<rect x="60" y="100" width="320" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="220.0" y="121" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">开关 1:FP8 KV</text><text x="220.0" y="141" font-size="11" fill="#6b7280" text-anchor="middle">每块 8 KB → 4 KB</text>
+<rect x="60" y="190" width="320" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="220.0" y="211" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">开关 2:多留显存</text><text x="220.0" y="231" font-size="11" fill="#6b7280" text-anchor="middle">利用率 0.90 → 0.92</text>
+<polyline points="382,126 420,126 420,140 478,140" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="382,216 420,216 420,140" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="480" y="114" width="560" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="760.0" y="135" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">储物柜格子变多</text><text x="760.0" y="155" font-size="11" fill="#6b7280" text-anchor="middle">82000 块 → 164000 块</text>
+<line x1="760" y1="168" x2="760" y2="196" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="480" y="198" width="560" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="760.0" y="219" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">老块不那么容易被扔</text><text x="760.0" y="239" font-size="11" fill="#6b7280" text-anchor="middle">LRU 驱逐减少</text>
+<line x1="760" y1="252" x2="760" y2="280" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="480" y="282" width="560" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="760.0" y="303" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">新请求的前缀更可能还在</text><text x="760.0" y="323" font-size="11" fill="#6b7280" text-anchor="middle">命中率 75% → 92%(示意)</text>
+<line x1="760" y1="336" x2="760" y2="364" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="480" y="366" width="560" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="760.0" y="387" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">要重算的 token 变少</text><text x="760.0" y="407" font-size="11" fill="#6b7280" text-anchor="middle">2000 × (1 − 命中率):500 → 160</text>
+<line x1="760" y1="420" x2="760" y2="448" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="480" y="450" width="560" height="52" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="760.0" y="471" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">首字时间变短</text><text x="760.0" y="491" font-size="11" fill="#6b7280" text-anchor="middle">× 0.06 ms/token:30 ms → 10 ms</text>
+<text x="60" y="300" font-size="11" fill="#6b7280" text-anchor="start">这条链每一环都能单独量:块数看启动日志,</text>
+<text x="60" y="318" font-size="11" fill="#6b7280" text-anchor="start">驱逐与命中率看 7.4 的指标,重算 token 数</text>
+<text x="60" y="336" font-size="11" fill="#6b7280" text-anchor="start">看 prefill 的 token 计数;哪一环没动,</text>
+<text x="60" y="354" font-size="11" fill="#6b7280" text-anchor="start">说明瓶颈不在容量(6.3 的公式)。</text>
+</svg>

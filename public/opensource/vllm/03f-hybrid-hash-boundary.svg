@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">混合模型:hash 边界取两组块大小的最大公约数,否则全命中会变成零命中</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">attention 组块 = 16,Mamba 组块 = 1024。绿 = 命中 / 复用,红 = 要算的,黄 = 重算加复制块。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 共同前缀在第 528 个 token 结束</text>
+<text x="280" y="122" font-size="12" fill="#111827" text-anchor="start" font-weight="700">token 0</text>
+<text x="1040" y="122" font-size="12" fill="#111827" text-anchor="end" font-weight="700">1024</text>
+<line x1="330" y1="118" x2="1000" y2="118" stroke="#111827"/>
+<text x="120" y="150" font-size="12" fill="#6b7280" text-anchor="end">attention 组,块 = 16</text>
+<rect x="280" y="132" width="391.875" height="32" rx="2" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="671.875" y="132" width="368.125" height="32" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="291.875" y1="132" x2="291.875" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="303.75" y1="132" x2="303.75" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="315.625" y1="132" x2="315.625" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="327.5" y1="132" x2="327.5" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="339.375" y1="132" x2="339.375" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="351.25" y1="132" x2="351.25" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="363.125" y1="132" x2="363.125" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="375.0" y1="132" x2="375.0" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="386.875" y1="132" x2="386.875" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="398.75" y1="132" x2="398.75" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="410.625" y1="132" x2="410.625" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="422.5" y1="132" x2="422.5" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="434.375" y1="132" x2="434.375" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="446.25" y1="132" x2="446.25" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="458.125" y1="132" x2="458.125" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="470.0" y1="132" x2="470.0" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="481.875" y1="132" x2="481.875" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="493.75" y1="132" x2="493.75" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="505.625" y1="132" x2="505.625" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="517.5" y1="132" x2="517.5" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="529.375" y1="132" x2="529.375" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="541.25" y1="132" x2="541.25" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="553.125" y1="132" x2="553.125" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="565.0" y1="132" x2="565.0" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="576.875" y1="132" x2="576.875" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="588.75" y1="132" x2="588.75" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="600.625" y1="132" x2="600.625" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="612.5" y1="132" x2="612.5" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="624.375" y1="132" x2="624.375" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="636.25" y1="132" x2="636.25" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="648.125" y1="132" x2="648.125" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<line x1="660.0" y1="132" x2="660.0" y2="164" stroke="#5fa886" stroke-width="0.5"/>
+<text x="475.9375" y="184" font-size="11" fill="#6b7280" text-anchor="middle">命中 33 个整块(528 个 token)</text>
+<text x="120" y="222" font-size="12" fill="#6b7280" text-anchor="end">Mamba 组,块 = 1024</text>
+<rect x="280" y="204" width="760.0" height="32" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="660.0" y="225" font-size="11" fill="#111827" text-anchor="middle">一个物理块装 1024 个 token 的跨度</text>
+<line x1="671.875" y1="126" x2="671.875" y2="256" stroke="#c9922a" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="671.875" y="272" font-size="11" fill="#6b7280" text-anchor="middle">共同前缀在第 528 个 token 结束</text>
+<text x="60" y="304" font-size="12" fill="#6b7280" text-anchor="start">hash 边界 = gcd(16, 1024) = 16:每 16 个 token 一个,和 attention 块严丝合缝,落在 Mamba 大块内部;</text>
+<text x="60" y="324" font-size="12" fill="#6b7280" text-anchor="start">如果按 Mamba 的 1024 算 hash,528 的前缀连一个 hash 都凑不满,两个组都命不中 —— 细粒度是为了保住 attention 组的命中。</text>
+<line x1="30" y1="346" x2="1090" y2="346" stroke="#e5e7eb"/>
+<text x="30" y="376" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 1024 个 token 的 prompt,缓存里全有:命中长度先减 1 = 1023,然后向下对齐</text>
+<text x="250" y="408" font-size="12" fill="#6b7280" text-anchor="end">普通模型,块 = 16</text>
+<rect x="262" y="390" width="746.125" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="635.0625" y="408.32" font-size="12" fill="#111827" text-anchor="middle">命中 1008</text>
+<rect x="1010.125" y="390" width="9.875" height="28" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="262" y="436" font-size="11" fill="#6b7280" text-anchor="start">对齐到 1008,重算 16 个 token:一步之内白送,从来没人在意</text>
+<text x="250" y="480" font-size="12" fill="#6b7280" text-anchor="end">混合模型,块 = 1024</text>
+<rect x="262" y="462" width="758.0" height="28" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="641.0" y="480.32" font-size="12" fill="#111827" text-anchor="middle">命中 0,整个 1024 重算</text>
+<text x="262" y="508" font-size="11" fill="#6b7280" text-anchor="start">1023 向下对齐到最近的 1024 边界 = 0:全命中变成零命中,issue 里实测短 prompt 命中率 0%</text>
+<text x="250" y="552" font-size="12" fill="#6b7280" text-anchor="end">混合模型 + match-unit 16</text>
+<rect x="262" y="534" width="746.125" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="635.0625" y="552.32" font-size="12" fill="#111827" text-anchor="middle">命中 1008</text>
+<rect x="1010.125" y="534" width="9.875" height="28" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="262" y="580" font-size="11" fill="#6b7280" text-anchor="start">hash 边界按 16 算,1023 对齐到 1008;那个 1024 的物理块被写时复制一份再接着写,重算 16 个</text>
+<text x="30" y="614" font-size="12" fill="#6b7280" text-anchor="start">绿 = 复用,红 = 重算,黄 = 重算 + 复制块;match-unit 就是 prefix_match_unit(本节),混合模型的迭代匹配见 04 章 5.2</text>
+</svg>

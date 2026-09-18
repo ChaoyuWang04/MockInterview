@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 820" width="1120" height="820" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="820" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">复制的两个方向:命中方复制,或写方保住快照;都是「先拷一份再动笔」,区别只是谁拿走副本</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = 被复制的源块 / 原件,黄 = 新分配的副本 / 复印件。</text>
+<text x="290" y="100" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">方向一:命中方复制(2.2)</text>
+<text x="830" y="100" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">方向二:写方保住快照(本节)</text>
+<line x1="560" y1="90" x2="560" y2="400" stroke="#d1d5db" stroke-dasharray="4 4"/>
+<rect x="60" y="114" width="460" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="290.0" y="135" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">物理块 P:缓存里的共享块</text><text x="290.0" y="155" font-size="11" fill="#6b7280" text-anchor="middle">前半是公共前缀,后半是上个请求的</text>
+<text x="290" y="190" font-size="12" fill="#6b7280" text-anchor="middle">新请求 X 命中了 P 的前半段,X 要从中间接着写自己的 token</text>
+<rect x="60" y="210" width="460" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="290.0" y="231" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">新块 C:P 的内容拷过来</text><text x="290.0" y="251" font-size="11" fill="#6b7280" text-anchor="middle">X 的块表指向 C,后半段随便写</text>
+<text x="290" y="290" font-size="12" fill="#6b7280" text-anchor="middle">P 原封不动,继续在缓存里、继续被别人用</text>
+<text x="290" y="310" font-size="12" fill="#6b7280" text-anchor="middle">复印件归读者,原件留在图书馆</text>
+<rect x="600" y="114" width="460" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="830.0" y="135" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">物理块 P:请求 W 自己的块</text><text x="830.0" y="155" font-size="11" fill="#6b7280" text-anchor="middle">在某个边界登记了 hash 当快照</text>
+<text x="830" y="190" font-size="12" fill="#6b7280" text-anchor="middle">但 W 还在跑,要继续往 P 里写;写下去快照就被覆盖了</text>
+<rect x="600" y="210" width="460" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="830.0" y="231" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">新块 C:P 的内容拷过来</text><text x="830.0" y="251" font-size="11" fill="#6b7280" text-anchor="middle">hash 从 P 挪到 C,C 成为只读快照</text>
+<text x="830" y="290" font-size="12" fill="#6b7280" text-anchor="middle">W 继续写 P(P 不再在缓存里)</text>
+<text x="830" y="310" font-size="12" fill="#6b7280" text-anchor="middle">原件归作者继续改,复印件送去图书馆</text>
+<text x="60" y="350" font-size="12" fill="#6b7280" text-anchor="start">共同点:都是「先拷一份再动笔」,都走同一条待复制队列(2.3),都在复制完成前按住两边的引用;区别只是谁拿走副本:方向一是读者拿副本、原件留缓存,方向二是缓存拿副本、原件留给写者。</text>
+<line x1="30" y1="412" x2="1090" y2="412" stroke="#e5e7eb"/>
+<text x="30" y="442" font-size="15" fill="#111827" text-anchor="start" font-weight="700">图书馆的两种复印</text>
+<text x="60" y="470" font-size="13" fill="#111827" text-anchor="start">情况一:小明要在图书馆的纸上接着写</text>
+<rect x="60" y="480" width="400" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="260.0" y="504.32" font-size="12" fill="#111827" text-anchor="middle">原件:留在图书馆,不动</text>
+<rect x="500" y="480" width="400" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="700.0" y="504.32" font-size="12" fill="#111827" text-anchor="middle">复印件:小明拿走,往下写</text>
+<text x="60" y="548" font-size="13" fill="#111827" text-anchor="start">情况二:小红自己的纸,图书馆想留一份</text>
+<rect x="60" y="558" width="400" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="260.0" y="582.32" font-size="12" fill="#111827" text-anchor="middle">原件:小红留着,继续写</text>
+<rect x="500" y="558" width="400" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="700.0" y="582.32" font-size="12" fill="#111827" text-anchor="middle">复印件:图书馆收藏,只看不写</text>
+<line x1="30" y1="620" x2="1090" y2="620" stroke="#e5e7eb"/>
+<text x="30" y="650" font-size="15" fill="#111827" text-anchor="start" font-weight="700">方向二为什么存在:Mamba 类模型的状态池里,分叉点的快照要留给下一轮同前缀命中</text>
+<rect x="60" y="664" width="1020" height="110" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="80" y="676" width="112" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="136.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">会话 A</text>
+<rect x="204" y="676" width="112" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="260.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">A 验证</text>
+<rect x="328" y="676" width="112" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="384.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">A 验证</text>
+<rect x="452" y="676" width="112" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="508.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">A 缓冲</text>
+<rect x="576" y="676" width="112" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="632.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">会话 B</text>
+<rect x="700" y="676" width="112" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="756.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">B 验证</text>
+<rect x="824" y="676" width="112" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="880.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">B 验证</text>
+<rect x="948" y="676" width="112" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="1004.0" y="698.32" font-size="12" fill="#111827" text-anchor="middle">B 缓冲</text>
+<rect x="80" y="722" width="112" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="136.0" y="744.32" font-size="12" fill="#111827" text-anchor="middle">快照 1</text>
+<rect x="204" y="722" width="112" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="260.0" y="744.32" font-size="12" fill="#111827" text-anchor="middle">快照 2</text>
+<rect x="328" y="722" width="112" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="384.0" y="744.32" font-size="12" fill="#111827" text-anchor="middle">快照 3</text>
+<rect x="452" y="722" width="112" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="508.0" y="744.32" font-size="12" fill="#111827" text-anchor="middle">空</text>
+<text x="1000" y="745" font-size="11" fill="#6b7280" text-anchor="end">← 分叉点快照,空闲但保留</text>
+<text x="60" y="800" font-size="11" fill="#6b7280" text-anchor="start">每槽是一整份状态(bf16 下几十 MB),运行中的会话各占运行态、推测解码验证的中间态与分叉缓冲;池子满时按最久未用驱逐,默认驱逐即丢、下次重算,分层缓存开着时先拷到 CPU(03 章 4.2)。</text>
+</svg>

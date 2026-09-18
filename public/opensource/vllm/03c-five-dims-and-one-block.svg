@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">KV cache 张量的五维嵌套,以及一个真的能看见数字的块</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">从外到里:L 层、B 块、H 头槽位、N 个 token 状态、C 字节。上半是嵌套关系,下半把 L = 1、B = 3、H = 2、N = 4、C = 8 的小例子摊开。</text>
+<rect x="40" y="90" width="1040" height="300" rx="10" fill="#ffffff" stroke="#6b5cd6" stroke-width="1"/>
+<text x="60" y="114" font-size="13" fill="#111827" text-anchor="start">L:共用这块缓冲区的层数。普通模型每层各一个张量,L = 1;80 层就有 80 个这样的张量</text>
+<rect x="64" y="128" width="992" height="252" rx="10" fill="#ffffff" stroke="#5fa886" stroke-width="1"/>
+<text x="84" y="152" font-size="13" fill="#111827" text-anchor="start">B:这个张量里有多少个块。由剩余显存算出来,比如 8.7 万(3.4)</text>
+<rect x="88" y="166" width="944" height="204" rx="10" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="108" y="190" font-size="13" fill="#111827" text-anchor="start">H:一个块里的头槽位数 = 这张卡分到的 KV 头数。8 头 ÷ TP 8 = 1</text>
+<rect x="112" y="204" width="896" height="156" rx="10" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="132" y="228" font-size="13" fill="#111827" text-anchor="start">N:一个头槽位里有多少个「状态」= 16,每个 token 一个</text>
+<rect x="140" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="186" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="232" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="278" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="324" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="370" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="416" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="462" y="242" width="40" height="40" rx="3" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<text x="520" y="268" font-size="12" fill="#6b7280" text-anchor="start">… 共 16 格</text>
+<rect x="140" y="296" width="330" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="305.0" y="317" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">C:一格里的字节数 = 512</text><text x="305.0" y="337" font-size="11" fill="#6b7280" text-anchor="middle">K 128 个数 + V 128 个数,各 2 字节</text>
+<text x="490" y="326" font-size="12" fill="#6b7280" text-anchor="start">放大第 1 格</text>
+<text x="40" y="414" font-size="12" fill="#6b7280" text-anchor="start">一个块 = H × N × C = 1 × 16 × 512 = 8 KB(单层);80 层各一个张量 → 一个块 id 对应 80 × 8 KB = 640 KB。和 3b 那笔「2 × 80 × 1 × 16 × 128 × 2 = 640 KB」是同一笔账,只是分组方式不同。</text>
+<line x1="30" y1="436" x2="1090" y2="436" stroke="#e5e7eb"/>
+<text x="30" y="466" font-size="15" fill="#111827" text-anchor="start" font-weight="700">B = 3 个块(L = 1 层的张量),放大块 0:H = 2 行(头),N = 4 列(token)</text>
+<rect x="60" y="480" width="100" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="110.0" y="502.68" font-size="13" fill="#111827" text-anchor="middle">块 0</text>
+<rect x="170" y="480" width="100" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="220.0" y="502.68" font-size="13" fill="#111827" text-anchor="middle">块 1</text>
+<rect x="280" y="480" width="100" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="330.0" y="502.68" font-size="13" fill="#111827" text-anchor="middle">块 2</text>
+<line x1="110" y1="518" x2="110" y2="540" stroke="#6b5cd6" stroke-width="1.5"/>
+<text x="500" y="556" font-size="11" fill="#6b7280" text-anchor="middle">token 0</text>
+<text x="640" y="556" font-size="11" fill="#6b7280" text-anchor="middle">token 1</text>
+<text x="780" y="556" font-size="11" fill="#6b7280" text-anchor="middle">token 2</text>
+<text x="920" y="556" font-size="11" fill="#6b7280" text-anchor="middle">token 3</text>
+<text x="420" y="592" font-size="12" fill="#6b7280" text-anchor="end">头 0</text>
+<rect x="432" y="562" width="132" height="48" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="498" y="582" font-size="11" fill="#111827" text-anchor="middle">K [1.2, 0.4]</text>
+<text x="498" y="600" font-size="11" fill="#111827" text-anchor="middle">V [0.7, 2.1]</text>
+<rect x="572" y="562" width="132" height="48" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="638" y="582" font-size="11" fill="#111827" text-anchor="middle">K [0.3, 1.9]</text>
+<text x="638" y="600" font-size="11" fill="#111827" text-anchor="middle">V [1.5, 0.2]</text>
+<rect x="712" y="562" width="132" height="48" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="778" y="582" font-size="11" fill="#111827" text-anchor="middle">K [2.0, 0.8]</text>
+<text x="778" y="600" font-size="11" fill="#111827" text-anchor="middle">V [0.9, 1.1]</text>
+<rect x="852" y="562" width="132" height="48" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="918" y="582" font-size="11" fill="#111827" text-anchor="middle">K [0.6, 1.4]</text>
+<text x="918" y="600" font-size="11" fill="#111827" text-anchor="middle">V [1.8, 0.5]</text>
+<text x="420" y="646" font-size="12" fill="#6b7280" text-anchor="end">头 1</text>
+<rect x="432" y="616" width="132" height="48" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="498" y="636" font-size="11" fill="#111827" text-anchor="middle">K [0.9, 1.7]</text>
+<text x="498" y="654" font-size="11" fill="#111827" text-anchor="middle">V [2.2, 0.1]</text>
+<rect x="572" y="616" width="132" height="48" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="638" y="636" font-size="11" fill="#111827" text-anchor="middle">K [1.1, 0.6]</text>
+<text x="638" y="654" font-size="11" fill="#111827" text-anchor="middle">V [0.4, 1.3]</text>
+<rect x="712" y="616" width="132" height="48" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="778" y="636" font-size="11" fill="#111827" text-anchor="middle">K [0.2, 2.3]</text>
+<text x="778" y="654" font-size="11" fill="#111827" text-anchor="middle">V [1.0, 0.8]</text>
+<rect x="852" y="616" width="132" height="48" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="918" y="636" font-size="11" fill="#111827" text-anchor="middle">K [1.6, 0.3]</text>
+<text x="918" y="654" font-size="11" fill="#111827" text-anchor="middle">V [0.5, 1.9]</text>
+<text x="1000" y="592" font-size="11" fill="#6b7280" text-anchor="start">← 一格 = C = 8 字节</text>
+<text x="1000" y="646" font-size="11" fill="#6b7280" text-anchor="start">← 一行 = N = 4 格</text>
+<text x="60" y="560" font-size="11" fill="#6b7280" text-anchor="start">一个块 = H × N × C</text>
+<text x="60" y="578" font-size="11" fill="#6b7280" text-anchor="start">= 2 × 4 × 8 = 64 字节</text>
+<text x="60" y="596" font-size="11" fill="#6b7280" text-anchor="start">张量总大小 = L × B × 64</text>
+<text x="60" y="614" font-size="11" fill="#6b7280" text-anchor="start">= 192 字节</text>
+<text x="60" y="644" font-size="11" fill="#6b7280" text-anchor="start">真实模型只是数字变大:</text>
+<text x="60" y="662" font-size="11" fill="#6b7280" text-anchor="start">C = 512,N = 16,H = 1,</text>
+<text x="60" y="680" font-size="11" fill="#6b7280" text-anchor="start">B = 8.7 万,80 个张量</text>
+<text x="432" y="690" font-size="11" fill="#6b7280" text-anchor="start">绿 = 头 0 的格子,黄 = 头 1 的格子;每格里的 K、V 就是 3a 讲的「要留下来的原材料」</text>
+</svg>

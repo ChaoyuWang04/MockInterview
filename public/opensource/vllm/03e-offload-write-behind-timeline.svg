@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">多级缓存的时间线:备份发生在第 N+1 步,比驱逐早了 49 步;驱逐那一刻 GPU 什么都不用做</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = GPU 算出,紫 = 提前备份,灰 = GPU 驱逐,黄 = 从 CPU 回填。这就是 write-behind:写完就抄一份,不等到要丢的时候才搬。</text>
+<rect x="80" y="96" width="240" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="200.0" y="117" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第 N 步</text><text x="200.0" y="137" font-size="11" fill="#6b7280" text-anchor="middle">GPU 算出块 B5</text>
+<line x1="200" y1="154" x2="200" y2="172" stroke="#5fa886" stroke-width="2"/>
+<rect x="340" y="96" width="240" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="460.0" y="117" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第 N+1 步</text><text x="460.0" y="137" font-size="11" fill="#6b7280" text-anchor="middle">异步拷到 CPU,两份并存</text>
+<line x1="460" y1="154" x2="460" y2="172" stroke="#8f8bd8" stroke-width="2"/>
+<rect x="600" y="96" width="240" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="720.0" y="117" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第 N+50 步</text><text x="720.0" y="137" font-size="11" fill="#6b7280" text-anchor="middle">GPU 空间紧,B5 被驱逐</text>
+<line x1="720" y1="154" x2="720" y2="172" stroke="#b9b9b9" stroke-width="2"/>
+<rect x="860" y="96" width="240" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="980.0" y="117" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第 N+200 步</text><text x="980.0" y="137" font-size="11" fill="#6b7280" text-anchor="middle">新请求命中,从 CPU 填回 GPU</text>
+<line x1="980" y1="154" x2="980" y2="172" stroke="#d4a24c" stroke-width="2"/>
+<line x1="60" y1="172" x2="1090" y2="172" stroke="#9ca3af"/>
+<text x="1088" y="166" font-size="11" fill="#6b7280" text-anchor="end">时间 →</text>
+<text x="30" y="214" font-size="15" fill="#111827" text-anchor="start" font-weight="700">两条时间线上各自发生了什么</text>
+<text x="60" y="246" font-size="13" fill="#111827" text-anchor="start">GPU:B5 存在 ————————————————————————— 被驱逐,哈希丢掉 ······ 分配新块,填入内容,继续用</text>
+<text x="60" y="276" font-size="13" fill="#111827" text-anchor="start">CPU:副本出现 ———————————————————————————————————————————————— 副本一直在,被读走</text>
+<text x="60" y="320" font-size="12" fill="#6b7280" text-anchor="start">回填时 GPU 块是正常分配流程给的新块,block_table 指向新块,offload 只负责把字节填进去;命中率因此不再受 GPU 池大小限制(04 章 6.5)。</text>
+<text x="60" y="340" font-size="12" fill="#6b7280" text-anchor="start">CPU 侧按 chunk 粒度存、驱逐策略独立(本节);开关与三条收益边界见 4.3、4.4。</text>
+<text x="30" y="392" font-size="12" fill="#6b7280" text-anchor="start">绿 = GPU 算出,紫 = 提前备份,灰 = GPU 驱逐,黄 = 从 CPU 回填</text>
+</svg>

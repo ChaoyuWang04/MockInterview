@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 470" width="1120" height="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="470" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">预算管「每步算多少」,池子装「KV 里存了多少」:一个恒定,一个只增不减</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">三个请求同时 decode。黄 = 这一步要算的 token / decode 每步追加的一格,绿 = prefill 时一次性存进去的;一格 = 一个 token 的 KV。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">每步算多少(预算管这个):3 个请求各 1 个,恒定</text>
+<text x="110" y="124" font-size="13" fill="#6b7280" text-anchor="end">步 1</text>
+<rect x="120" y="106" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="150" y="106" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="180" y="106" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="220" y="123" font-size="12" fill="#6b7280" text-anchor="start">3 个 token,预算 2048 只用了零头</text>
+<text x="110" y="156" font-size="13" fill="#6b7280" text-anchor="end">步 2</text>
+<rect x="120" y="138" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="150" y="138" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="180" y="138" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="220" y="155" font-size="12" fill="#6b7280" text-anchor="start">3 个</text>
+<text x="110" y="188" font-size="13" fill="#6b7280" text-anchor="end">步 3</text>
+<rect x="120" y="170" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="150" y="170" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="180" y="170" width="26" height="24" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="220" y="187" font-size="12" fill="#6b7280" text-anchor="start">3 个 …… 永远是 3 个</text>
+<text x="30" y="232" font-size="15" fill="#111827" text-anchor="start" font-weight="700">KV 里存了多少(池子装这个):每步各多 1 格,只增不减</text>
+<text x="110" y="262" font-size="13" fill="#6b7280" text-anchor="end">请求 A</text>
+<rect x="120" y="244" width="300" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="270.0" y="261.32" font-size="12" fill="#111827" text-anchor="middle">prompt 1000 个</text>
+<rect x="424" y="244" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="454" y="244" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="484" y="244" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="514" y="244" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="544" y="244" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="584" y="262" font-size="12" fill="#6b7280" text-anchor="start">5 步后多了 5 格,第 16 步要新块</text>
+<text x="110" y="302" font-size="13" fill="#6b7280" text-anchor="end">请求 B</text>
+<rect x="120" y="284" width="180" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="210.0" y="301.32" font-size="12" fill="#111827" text-anchor="middle">600 个</text>
+<rect x="304" y="284" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="334" y="284" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="364" y="284" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="394" y="284" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="424" y="284" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="110" y="342" font-size="13" fill="#6b7280" text-anchor="end">请求 C</text>
+<rect x="120" y="324" width="450" height="26" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="345.0" y="341.32" font-size="12" fill="#111827" text-anchor="middle">1500 个</text>
+<rect x="574" y="324" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="604" y="324" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="634" y="324" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="664" y="324" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="694" y="324" width="26" height="26" rx="2" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="120" y="388" font-size="12" fill="#6b7280" text-anchor="start">256 个请求同时 decode = 池子每步多 256 个 token = 平均每步 16 个请求跨到新块(256 ÷ 16)—— 这就是「每步 16 个请求跨块边界」的来源。</text>
+<text x="120" y="408" font-size="12" fill="#6b7280" text-anchor="start">预算那道闸门永远宽裕,真正卡住并发的是池子:池子有限,长到装不下时就得有人出去(3.4 抢占)。</text>
+<text x="30" y="448" font-size="12" fill="#6b7280" text-anchor="start">绿 = prefill 一次性存进去的,黄 = 每步算的 / 每步追加的</text>
+</svg>

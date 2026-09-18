@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">每块拿回来要多久:CPU 层稳赚,磁盘层和重算差不多;三档部署各配什么缓存</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">以 16 个 token 的一块计;绿 = 比重算快得多,红 = 和重算一个量级。数字是讲稿量级。</text>
+<text x="30" y="100" font-size="15" fill="#111827" text-anchor="start" font-weight="700">每块(16 token)拿回来要多久</text>
+<text x="150" y="138" font-size="13" fill="#6b7280" text-anchor="end">GPU 命中</text>
+<rect x="170" y="116" width="10" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="198" y="137" font-size="12" fill="#6b7280" text-anchor="start">≈ 0,只改引用计数</text>
+<text x="150" y="184" font-size="13" fill="#6b7280" text-anchor="end">CPU 内存</text>
+<rect x="170" y="162" width="20.4" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="208.4" y="183" font-size="12" fill="#6b7280" text-anchor="start">0.03 ms,比重算快 20–30 倍</text>
+<text x="150" y="230" font-size="13" fill="#6b7280" text-anchor="end">磁盘</text>
+<rect x="170" y="208" width="408.0" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="596.0" y="229" font-size="12" fill="#6b7280" text-anchor="start">0.2–1 ms</text>
+<line x1="510.0" y1="108" x2="510.0" y2="256" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="516.0" y="270" font-size="11" fill="#6b7280" text-anchor="start">重算线 ≈ 0.5–1 ms</text>
+<text x="60" y="300" font-size="12" fill="#6b7280" text-anchor="start">结论:CPU 层稳赚;磁盘层和重算差不多,价值在「能存更多」而不是「更快」(本节)。</text>
+<line x1="30" y1="322" x2="1090" y2="322" stroke="#e5e7eb"/>
+<text x="30" y="352" font-size="15" fill="#111827" text-anchor="start" font-weight="700">三档部署各配什么</text>
+<rect x="60" y="364" width="400" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="260.0" y="385" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">一张卡 / 一台机器</text><text x="260.0" y="405" font-size="11" fill="#6b7280" text-anchor="middle">你的单卡就是这档</text>
+<line x1="462" y1="389" x2="518" y2="389" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="520" y="364" width="520" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="780.0" y="385" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">prefix cache + CPU offload</text><text x="780.0" y="405" font-size="11" fill="#6b7280" text-anchor="middle">不需要任何路由</text>
+<rect x="60" y="424" width="400" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="260.0" y="445" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">几台机器,不拆 PD</text><text x="260.0" y="465" font-size="11" fill="#6b7280" text-anchor="middle">每台既读题又写答案</text>
+<line x1="462" y1="449" x2="518" y2="449" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="520" y="424" width="520" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="780.0" y="445" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">会话粘性路由</text><text x="780.0" y="465" font-size="11" fill="#6b7280" text-anchor="middle">每台自己的 GPU + CPU 缓存</text>
+<rect x="60" y="484" width="400" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="260.0" y="505" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">拆了 PD</text><text x="260.0" y="525" font-size="11" fill="#6b7280" text-anchor="middle">读题和写答案分两组机器</text>
+<line x1="462" y1="509" x2="518" y2="509" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="520" y="484" width="520" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="780.0" y="505" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">bidirectional 或全局仓库</text><text x="780.0" y="525" font-size="11" fill="#6b7280" text-anchor="middle">规模小选前者,大选后者</text>
+</svg>

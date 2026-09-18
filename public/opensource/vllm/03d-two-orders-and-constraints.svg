@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同样的 64 个字节,两种排法,各有一种操作是「一口气读连续一段」</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">沿用上一张的块 0:2 个头 × 4 个 token,每格 8 字节。绿 = 头 0 的格子,黄 = 头 1 的格子。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">拍法一:「token 在前」(FlashAttention 用,LBNHC):先定 token,再在里面排头</text>
+<rect x="60" y="106" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="121.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t0 头0</text>
+<rect x="190" y="106" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="251.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t0 头1</text>
+<rect x="320" y="106" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="381.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t1 头0</text>
+<rect x="450" y="106" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="511.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t1 头1</text>
+<rect x="580" y="106" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="641.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t2 头0</text>
+<rect x="710" y="106" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="771.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t2 头1</text>
+<rect x="840" y="106" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="901.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t3 头0</text>
+<rect x="970" y="106" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="1031.0" y="130.32" font-size="12" fill="#111827" text-anchor="middle">t3 头1</text>
+<text x="60" y="166" font-size="12" fill="#6b7280" text-anchor="start">字节 0  8  16  24  32  40  48  56。同一个 token 的两个头挨着;同一个头的四个 token 隔着一格</text>
+<text x="30" y="206" font-size="15" fill="#111827" text-anchor="start" font-weight="700">拍法二:「head 在前」(FlashInfer 用,LBHNC):先定头,再在里面排 token</text>
+<rect x="60" y="216" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="121.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头0 t0</text>
+<rect x="190" y="216" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="251.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头0 t1</text>
+<rect x="320" y="216" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="381.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头0 t2</text>
+<rect x="450" y="216" width="122" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="511.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头0 t3</text>
+<rect x="580" y="216" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="641.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头1 t0</text>
+<rect x="710" y="216" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="771.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头1 t1</text>
+<rect x="840" y="216" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="901.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头1 t2</text>
+<rect x="970" y="216" width="122" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="1031.0" y="240.32" font-size="12" fill="#111827" text-anchor="middle">头1 t3</text>
+<text x="60" y="276" font-size="12" fill="#6b7280" text-anchor="start">字节 0  8  16  24  32  40  48  56。同一个头的四个 token 挨着;同一个 token 的两个头隔着四格</text>
+<text x="60" y="300" font-size="12" fill="#6b7280" text-anchor="start">attention 算头 0 时要读头 0 的全部 token:拍法二是字节 0–31 一段连续,拍法一要跳着读 4 段;写入一个新 token 的所有头时:拍法一是一段连续,拍法二要跳着写 2 段。</text>
+<line x1="30" y1="322" x2="1090" y2="322" stroke="#e5e7eb"/>
+<text x="30" y="352" font-size="15" fill="#111827" text-anchor="start" font-weight="700">每种访问方式,各要一样东西「紧挨着」</text>
+<rect x="60" y="362" width="480" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="300.0" y="383" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">按块表跳转,然后顺着读一块</text><text x="300.0" y="403" font-size="11" fill="#6b7280" text-anchor="middle">要求:一个块的全部字节是一整段</text>
+<rect x="600" y="362" width="480" height="44" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="840.0" y="383" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">→ B 必须在 H、N、C 外面</text><text x="840.0" y="403" font-size="11" fill="#6b7280" text-anchor="middle">硬约束,6 个候选全满足</text>
+<rect x="60" y="412" width="480" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="300.0" y="433" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">q·k 点积,一条指令装一个向量</text><text x="300.0" y="453" font-size="11" fill="#6b7280" text-anchor="middle">要求:一个向量的 128 个数是一整段</text>
+<rect x="600" y="412" width="480" height="44" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="840.0" y="433" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">→ C 必须在最里面</text><text x="840.0" y="453" font-size="11" fill="#6b7280" text-anchor="middle">硬约束,6 个候选全满足</text>
+<rect x="60" y="462" width="480" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="300.0" y="483" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">每步写入:一个新 token 的所有头</text><text x="300.0" y="503" font-size="11" fill="#6b7280" text-anchor="middle">希望:同一 token 的各头相邻</text>
+<rect x="600" y="462" width="480" height="44" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="840.0" y="483" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">→ N 在 H 外面:LBNHC</text><text x="840.0" y="503" font-size="11" fill="#6b7280" text-anchor="middle">FlashAttention 的选择,默认第一</text>
+<rect x="60" y="512" width="480" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="300.0" y="533" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">按头读:一个头扫所有 token</text><text x="300.0" y="553" font-size="11" fill="#6b7280" text-anchor="middle">希望:同一头的各 token 相邻</text>
+<rect x="600" y="512" width="480" height="44" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="840.0" y="533" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">→ H 在 N 外面:LBHNC</text><text x="840.0" y="553" font-size="11" fill="#6b7280" text-anchor="middle">FlashInfer 的选择,默认第二</text>
+<text x="30" y="580" font-size="12" fill="#6b7280" text-anchor="start">绿 = 硬约束,所有布局都得满足;黄 = 二选一,两边各有一种操作占便宜,由后端自己申报(本节的四级优先决议)</text>
+</svg>
