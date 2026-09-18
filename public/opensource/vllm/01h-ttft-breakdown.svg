@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">TTFT 里到底有什么:排队 + tokenize + prefill + 返回,每一段靠什么缩短</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">先把首字延迟拆开,才知道优化点在哪。它不只是 prefill:负载高时排队可能最长,prompt 长时 prefill 最长;tokenize 和返回本来就只有毫秒级。</text>
+<rect x="40" y="100" width="266.40000000000003" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="173.20000000000002" y="124.68" font-size="13" fill="#6b7280" text-anchor="middle">排队等调度</text>
+<text x="173.20000000000002" y="160" font-size="12" fill="#6b7280" text-anchor="middle">负载高时可能最长</text>
+<rect x="310.40000000000003" y="100" width="68.80000000000001" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="344.80000000000007" y="124.68" font-size="13" fill="#111827" text-anchor="middle">tokenize</text>
+<text x="344.80000000000007" y="160" font-size="12" fill="#6b7280" text-anchor="middle">tokenize</text>
+<rect x="383.20000000000005" y="100" width="620.0" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="693.2" y="124.68" font-size="13" fill="#111827" text-anchor="middle">prefill:算完整个 prompt</text>
+<text x="693.2" y="160" font-size="12" fill="#6b7280" text-anchor="middle">prompt 长时最长,随长度线性到平方增长</text>
+<rect x="1007.2" y="100" width="68.80000000000001" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="1041.6000000000001" y="124.68" font-size="13" fill="#111827" text-anchor="middle">返回</text>
+<text x="1041.6000000000001" y="160" font-size="12" fill="#6b7280" text-anchor="middle">返回</text>
+<text x="40" y="196" font-size="15" fill="#111827" text-anchor="start" font-weight="700">能缩短它的手段(括号里是本项目展开讲的章)</text>
+<rect x="40" y="216" width="170" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="125.0" y="236.68" font-size="13" fill="#6b7280" text-anchor="middle">排队</text>
+<text x="226" y="237" font-size="13" fill="#111827" text-anchor="start">加卡;PD 分离让 prefill 有专用 GPU(10 章);给新请求更高优先级、限制并发(02 章 Part 3、4)</text>
+<rect x="40" y="262" width="170" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="125.0" y="282.68" font-size="13" fill="#111827" text-anchor="middle">prefill</text>
+<text x="226" y="283" font-size="13" fill="#111827" text-anchor="start">prefix caching 跳过算过的前缀(04 章);chunk 调大让它少分几步(02 章 1.3);更快的 attention kernel(05 章);FP8(11 章)</text>
+<rect x="40" y="308" width="170" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="125.0" y="328.68" font-size="13" fill="#111827" text-anchor="middle">prefill(超长 prompt)</text>
+<text x="226" y="329" font-size="13" fill="#111827" text-anchor="start">把一个 prompt 切到多张卡并行算:sequence / context parallel(09 章 Part 7、8)</text>
+<rect x="40" y="354" width="170" height="32" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="125.0" y="374.68" font-size="13" fill="#111827" text-anchor="middle">tokenize 与返回</text>
+<text x="226" y="375" font-size="13" fill="#111827" text-anchor="start">Rust tokenizer 放进线程池、流式立刻推第一个字(01 章 Part 3);本来就只有毫秒级,不是主要矛盾</text>
+<text x="40" y="430" font-size="12" fill="#6b7280" text-anchor="start">这四段分别落在不同的进程和线程上:排队在 EngineCore 的调度器,tokenize 与返回在 API 进程,prefill 在 GPU worker。谁在哪一跳、各发生几次,见 Part 2 的请求生命周期。</text>
+<text x="40" y="452" font-size="12" fill="#6b7280" text-anchor="start">TPOT(每个后续 token 的间隔)是另一笔账:它只由 decode 每步的耗时决定,和排队、tokenize 无关;调度器怎么同时压这两个指标,见 02 章 Part 9。</text>
+<text x="40" y="500" font-size="12" fill="#6b7280" text-anchor="start">灰 = 等,紫 = CPU 小活,绿 = GPU 大活</text>
+</svg>

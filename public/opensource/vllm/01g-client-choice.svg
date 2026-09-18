@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">EngineCoreClient 是一层插座:三种接法,按你在用 vLLM 干什么来选</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">上面的 LLMEngine 和 AsyncLLM 只认插座的形状,不管后面接的是什么电。紫 = 用户侧,绿 = 引擎侧,虚线框 = 进程边界;三列上面的代码看到的接口一模一样。</text>
+<text x="200" y="96" font-size="16" fill="#111827" text-anchor="middle" font-weight="700">InprocClient</text>
+<text x="200" y="116" font-size="12" fill="#6b7280" text-anchor="middle">同一个进程,直接调函数</text>
+<rect x="40" y="130" width="320" height="290" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="54" y="150" font-size="12" fill="#6b7280" text-anchor="start">进程 1</text>
+<rect x="70" y="166" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="200.0" y="191.04" font-size="14" fill="#111827" text-anchor="middle">用户代码 generate()</text>
+<line x1="200" y1="208" x2="200" y2="232" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="70" y="234" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="200.0" y="259.04" font-size="14" fill="#111827" text-anchor="middle">InprocClient</text>
+<line x1="200" y1="276" x2="200" y2="346" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="70" y="348" width="260" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="200.0" y="375.4" font-size="15" fill="#111827" text-anchor="middle">EngineCore</text>
+<rect x="40" y="446" width="320" height="58" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="200" y="470" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">调试 / 单测 / 内存紧</text>
+<text x="200" y="492" font-size="12" fill="#6b7280" text-anchor="middle">要能打断点、要启动快;1 个进程,全在一起</text>
+<text x="560" y="96" font-size="16" fill="#111827" text-anchor="middle" font-weight="700">SyncMPClient</text>
+<text x="560" y="116" font-size="12" fill="#6b7280" text-anchor="middle">两个进程,发出去就等</text>
+<rect x="400" y="130" width="320" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="414" y="150" font-size="12" fill="#6b7280" text-anchor="start">进程 1</text>
+<rect x="430" y="166" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="560.0" y="191.04" font-size="14" fill="#111827" text-anchor="middle">用户代码 generate()</text>
+<rect x="430" y="224" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="560.0" y="249.04" font-size="14" fill="#111827" text-anchor="middle">SyncMPClient</text>
+<line x1="560" y1="282" x2="560" y2="326" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="572" y="292" width="44" height="20" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="594.0" y="305.96" font-size="11" fill="#6b7280" text-anchor="middle">ZMQ</text>
+<rect x="400" y="328" width="320" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="414" y="348" font-size="12" fill="#6b7280" text-anchor="start">进程 2(子进程)</text>
+<rect x="430" y="362" width="260" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="560.0" y="389.4" font-size="15" fill="#111827" text-anchor="middle">EngineCore</text>
+<rect x="400" y="446" width="320" height="58" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="560" y="470" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">离线跑一大批 prompt</text>
+<text x="560" y="492" font-size="12" fill="#6b7280" text-anchor="middle">只要总吞吐,等得起;引擎独立进程,前端等</text>
+<text x="920" y="96" font-size="16" fill="#111827" text-anchor="middle" font-weight="700">AsyncMPClient</text>
+<text x="920" y="116" font-size="12" fill="#6b7280" text-anchor="middle">两个进程 + asyncio,不等</text>
+<rect x="760" y="130" width="320" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="774" y="150" font-size="12" fill="#6b7280" text-anchor="start">进程 1</text>
+<rect x="790" y="166" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="920.0" y="191.04" font-size="14" fill="#111827" text-anchor="middle">HTTP server</text>
+<rect x="790" y="224" width="260" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="920.0" y="249.04" font-size="14" fill="#111827" text-anchor="middle">AsyncMPClient</text>
+<line x1="920" y1="282" x2="920" y2="326" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="932" y="292" width="44" height="20" rx="4" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="954.0" y="305.96" font-size="11" fill="#6b7280" text-anchor="middle">ZMQ</text>
+<rect x="760" y="328" width="320" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="774" y="348" font-size="12" fill="#6b7280" text-anchor="start">进程 2(子进程)</text>
+<rect x="790" y="362" width="260" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="920.0" y="389.4" font-size="15" fill="#111827" text-anchor="middle">EngineCore</text>
+<rect x="760" y="446" width="320" height="58" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="920" y="470" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">对外开 HTTP 服务</text>
+<text x="920" y="492" font-size="12" fill="#6b7280" text-anchor="middle">很多用户同时在等字;引擎独立进程,前端不等</text>
+<text x="30" y="540" font-size="12" fill="#6b7280" text-anchor="start">为什么这么分:调试要断点直接生效、报错栈完整可见,一个进程最省事;离线批量只看总吞吐,让引擎独立进程连轴转、前端同步取结果就够;</text>
+<text x="30" y="558" font-size="12" fill="#6b7280" text-anchor="start">在线服务要同时伺候很多连接,前端必须用 asyncio 不阻塞地收发,所以是异步版。三者对应 1.4 的三种入口:LLM(多进程开关置 0)、LLM 默认、AsyncLLM / vllm serve。</text>
+<text x="30" y="592" font-size="12" fill="#6b7280" text-anchor="start">进程数 1 和 2+:1 就是全在一个进程里;2+ 是前端 1 个 + 引擎 1 个起步,模型切到多张卡时每张卡再加一个 GPU 进程(2.1 的进程拓扑)。</text>
+</svg>
