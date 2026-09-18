@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个 scale 管多大一片:五档粒度,同色 = 共用一个 scale</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">每张小图都是同一个权重矩阵。越往右越细:精度越高(一个离群值只影响身边几个数),但 scale 本身占的空间和 kernel 的复杂度也越高(1.8)。</text>
+<text x="130" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">整矩阵</text>
+<rect x="50.0" y="124.0" width="160.0" height="140.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="130" y="288" font-size="11" fill="#111827" text-anchor="middle">1 个 scale</text>
+<text x="130" y="308" font-size="11" fill="#6b7280" text-anchor="middle">(-1, -1) per-tensor</text>
+<text x="130" y="328" font-size="11" fill="#6b7280" text-anchor="middle">最粗,离群值害全场</text>
+<text x="350" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">每行 / 每列</text>
+<rect x="270.0" y="124.0" width="160.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="270.0" y="160.0" width="160.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="270.0" y="196.0" width="160.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="270.0" y="232.0" width="160.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="350" y="288" font-size="11" fill="#111827" text-anchor="middle">每行或每列 1 个</text>
+<text x="350" y="308" font-size="11" fill="#6b7280" text-anchor="middle">(1, -1) 与 (-1, 1)</text>
+<text x="350" y="328" font-size="11" fill="#6b7280" text-anchor="middle">FP8 常用</text>
+<text x="570" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">每组(如 128 个)</text>
+<rect x="490.0" y="124.0" width="78.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572.0" y="124.0" width="78.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="490.0" y="160.0" width="78.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="572.0" y="160.0" width="78.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="490.0" y="196.0" width="78.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572.0" y="196.0" width="78.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="490.0" y="232.0" width="78.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="572.0" y="232.0" width="78.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="570" y="288" font-size="11" fill="#111827" text-anchor="middle">每行再分几段</text>
+<text x="570" y="308" font-size="11" fill="#6b7280" text-anchor="middle">组宽 128</text>
+<text x="570" y="328" font-size="11" fill="#6b7280" text-anchor="middle">AWQ / GPTQ 用</text>
+<text x="790" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">二维块(128 × 128)</text>
+<rect x="710.0" y="124.0" width="78.0" height="68.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="792.0" y="124.0" width="78.0" height="68.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="710.0" y="196.0" width="78.0" height="68.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="792.0" y="196.0" width="78.0" height="68.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="790" y="288" font-size="11" fill="#111827" text-anchor="middle">每块 1 个</text>
+<text x="790" y="308" font-size="11" fill="#6b7280" text-anchor="middle">按输入维和输出维都切</text>
+<text x="790" y="328" font-size="11" fill="#6b7280" text-anchor="middle">DeepSeek 的 FP8 权重</text>
+<text x="1010" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">微块(16 / 32 个)</text>
+<rect x="930.0" y="124.0" width="37.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="971.0" y="124.0" width="37.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="1012.0" y="124.0" width="37.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="1053.0" y="124.0" width="37.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="930.0" y="160.0" width="37.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="971.0" y="160.0" width="37.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="1012.0" y="160.0" width="37.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="1053.0" y="160.0" width="37.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="930.0" y="196.0" width="37.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="971.0" y="196.0" width="37.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="1012.0" y="196.0" width="37.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="1053.0" y="196.0" width="37.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="930.0" y="232.0" width="37.0" height="32.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="971.0" y="232.0" width="37.0" height="32.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="1012.0" y="232.0" width="37.0" height="32.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="1053.0" y="232.0" width="37.0" height="32.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1010" y="288" font-size="11" fill="#111827" text-anchor="middle">几个数 1 个</text>
+<text x="1010" y="308" font-size="11" fill="#6b7280" text-anchor="middle">(1, 16) 与 (1, 32)</text>
+<text x="1010" y="328" font-size="11" fill="#6b7280" text-anchor="middle">NVFP4 / MX 系</text>
+<line x1="60" y1="364" x2="1060" y2="364" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="60" y="358" font-size="11" fill="#6b7280" text-anchor="start">粗</text>
+<text x="1050" y="358" font-size="11" fill="#6b7280" text-anchor="end">细</text>
+<text x="30" y="398" font-size="12" fill="#6b7280" text-anchor="start">vLLM 用一个二元组统一描述粒度,两个分量是「一个 scale 覆盖多少行、多少列」,−1 表示整个维度(1.8)。</text>
+<text x="30" y="422" font-size="12" fill="#6b7280" text-anchor="start">NVFP4 是两级:16 个数一个 FP8 E4M3 的块 scale(有尾数),整个张量再乘一个 FP32 的全局 scale;MX 系是 32 个数一个 E8M0 —— 纯指数即 2 的幂,没有第二级(3.10、6.6)。</text>
+<text x="30" y="446" font-size="12" fill="#6b7280" text-anchor="start">scale 是 2 的幂还带来一个好处:反量化从一次乘法退化成一次指数加法。新数值格式几乎都把粒度做得很细,因为位宽越低能容忍的动态范围越小。</text>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">逐行算子看不见请求边界:6 行各算各的,权重只从显存读一次</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">同一步的 6 个 token 摞成 6 行(A 的 4 行是 prefill,B、C 各 1 行是 decode),乘一个 4 × 4 的 W_Q。颜色只标记哪行属于哪条请求。</text>
+<text x="100" y="104" font-size="13" fill="#111827" text-anchor="start">X:6 行 × hidden</text>
+<text x="300" y="104" font-size="13" fill="#111827" text-anchor="start">W_Q:4 × 4</text>
+<text x="500" y="104" font-size="13" fill="#111827" text-anchor="start">= 6 × 4</text>
+<text x="90" y="138" font-size="11" fill="#6b7280" text-anchor="end">A1</text>
+<rect x="100" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="500" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="136" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="536" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="172" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="208" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="608" y="118" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="90" y="174" font-size="11" fill="#6b7280" text-anchor="end">A2</text>
+<rect x="100" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="500" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="136" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="536" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="172" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="208" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="608" y="154" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="90" y="210" font-size="11" fill="#6b7280" text-anchor="end">A3</text>
+<rect x="100" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="500" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="136" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="536" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="172" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="208" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="608" y="190" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="90" y="246" font-size="11" fill="#6b7280" text-anchor="end">A4</text>
+<rect x="100" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="500" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="136" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="536" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="172" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="208" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="608" y="226" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="90" y="282" font-size="11" fill="#6b7280" text-anchor="end">B</text>
+<rect x="100" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="500" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="136" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="536" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="172" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="572" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="208" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="608" y="262" width="32" height="32" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="90" y="318" font-size="11" fill="#6b7280" text-anchor="end">C</text>
+<rect x="100" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="500" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="136" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="536" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="172" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="572" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="208" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="608" y="298" width="32" height="32" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="300" y="190" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="336" y="190" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="372" y="190" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="408" y="190" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="226" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="336" y="226" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="372" y="226" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="408" y="226" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="262" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="336" y="262" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="372" y="262" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="408" y="262" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="298" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="336" y="298" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="372" y="298" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="408" y="298" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="278" y="208" font-size="11" fill="#6b7280" text-anchor="end">W_Q</text>
+<text x="275" y="258" font-size="17" fill="#6b7280" text-anchor="middle">×</text>
+<text x="475" y="258" font-size="17" fill="#6b7280" text-anchor="middle">=</text>
+<text x="660" y="132" font-size="12" fill="#6b7280" text-anchor="start">每一行各算各的,互不相干</text>
+<text x="660" y="176" font-size="12" fill="#6b7280" text-anchor="start">A 的 4 行是 prefill、B 与 C 各 1 行是 decode,</text>
+<text x="660" y="198" font-size="12" fill="#6b7280" text-anchor="start">对这个矩阵乘来说它们完全一样,没有无效格子</text>
+<text x="660" y="242" font-size="12" fill="#6b7280" text-anchor="start">W_Q 只从显存读 1 次,6 行共用</text>
+<text x="660" y="264" font-size="12" fill="#6b7280" text-anchor="start">→ 行越多,读权重的成本摊得越薄</text>
+<text x="660" y="298" font-size="12" fill="#6b7280" text-anchor="start">→ 算术强度约等于行数 M;H800 的拐点约 295(05 章 7.2),</text>
+<text x="660" y="320" font-size="12" fill="#6b7280" text-anchor="start">   所以要几百行才开始吃满算力 —— 这正是 chunked prefill</text>
+<text x="660" y="342" font-size="12" fill="#6b7280" text-anchor="start">   愿意把 decode 和 prefill 拼进同一步的本钱(1.4)</text>
+<line x1="30" y1="400" x2="1090" y2="400" stroke="#e5e7eb"/>
+<text x="30" y="430" font-size="12" fill="#6b7280" text-anchor="start">这一条对 7.2 那张表里除 attention 之外的每个算子都成立:embedding、RMSNorm、残差相加、o_proj、FFN、lm_head —— 它们只看到一个扁平的「总 token 数」维度。</text>
+<text x="30" y="454" font-size="12" fill="#6b7280" text-anchor="start">唯一要把行和请求对上的是 attention,它靠的是 7.4 那四个数组。所以混合 batch 几乎没有额外开销:绝大多数算子根本不知道 batch 里混了 P 和 D。</text>
+<text x="30" y="478" font-size="12" fill="#6b7280" text-anchor="start">顺带一句:logits 虽然算了全部 6 行,但采样只取每条请求的最后一行 —— 本例是第 3、4、5 行。</text>
+</svg>

@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 806" width="1120" height="806" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="806" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一个 kernel 入口,两条内部路径:prefill 的 tile 拿来跑 decode,会空着 127 行、闲下 100 个 SM</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">8 个 query 对 8 个 key 的小例子;绿 = 真的在算,灰 = 掩掉或白算。每 tile 128 行 query 是 FlashAttention 的一档常见配置,132 是 H100 的 SM 数 —— 第三格是量级账,不是本仓库实测。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 真正要算的格子:prefill 是个下三角,decode 只有一行</text>
+<text x="76" y="120" font-size="13" fill="#111827" text-anchor="start">prefill:8 个 query × 8 个 key</text>
+<text x="92" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k1</text>
+<text x="127" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k2</text>
+<text x="162" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k3</text>
+<text x="197" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k4</text>
+<text x="232" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k5</text>
+<text x="267" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k6</text>
+<text x="302" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k7</text>
+<text x="337" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k8</text>
+<text x="66" y="173" font-size="11" fill="#6b7280" text-anchor="end">q1</text>
+<text x="66" y="208" font-size="11" fill="#6b7280" text-anchor="end">q2</text>
+<text x="66" y="243" font-size="11" fill="#6b7280" text-anchor="end">q3</text>
+<text x="66" y="278" font-size="11" fill="#6b7280" text-anchor="end">q4</text>
+<text x="66" y="313" font-size="11" fill="#6b7280" text-anchor="end">q5</text>
+<text x="66" y="348" font-size="11" fill="#6b7280" text-anchor="end">q6</text>
+<text x="66" y="383" font-size="11" fill="#6b7280" text-anchor="end">q7</text>
+<text x="66" y="418" font-size="11" fill="#6b7280" text-anchor="end">q8</text>
+<rect x="76" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="146" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="181" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="216" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="251" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="286" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="152" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="187" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="187" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="181" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="216" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="251" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="286" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="187" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="222" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="222" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="222" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="222" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="216" y="222" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="251" y="222" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="286" y="222" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="222" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="257" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="257" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="257" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="257" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="216" y="257" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="251" y="257" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="286" y="257" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="257" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="292" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="292" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="292" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="292" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="216" y="292" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="251" y="292" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="286" y="292" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="292" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="216" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="251" y="327" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="286" y="327" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="321" y="327" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="216" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="251" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="286" y="362" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="321" y="362" width="32" height="32" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="76" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="111" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="146" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="181" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="216" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="251" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="286" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="321" y="397" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="600" y="120" font-size="13" fill="#111827" text-anchor="start">decode:1 个 query × 8 个 key</text>
+<text x="616" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k1</text>
+<text x="651" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k2</text>
+<text x="686" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k3</text>
+<text x="721" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k4</text>
+<text x="756" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k5</text>
+<text x="791" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k6</text>
+<text x="826" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k7</text>
+<text x="861" y="142" font-size="11" fill="#6b7280" text-anchor="middle">k8</text>
+<text x="590" y="173" font-size="11" fill="#6b7280" text-anchor="end">q</text>
+<rect x="600" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="635" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="670" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="705" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="740" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="775" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="810" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="845" y="152" width="32" height="32" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="187" width="277" height="197" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="738" y="278" font-size="12" fill="#6b7280" text-anchor="middle">tile 硬凑出来的空行</text>
+<text x="738" y="298" font-size="12" fill="#6b7280" text-anchor="middle">数学上不存在,不是 attention 的东西</text>
+<text x="76" y="412" font-size="12" fill="#6b7280" text-anchor="start">绿 36 格:真的在算(每个 query 看自己和之前的 key)</text>
+<text x="76" y="434" font-size="12" fill="#6b7280" text-anchor="start">灰 28 格:看未来,掩掉不算</text>
+<text x="600" y="412" font-size="12" fill="#6b7280" text-anchor="start">绿 8 格:真的在算,全部有效</text>
+<text x="600" y="434" font-size="12" fill="#6b7280" text-anchor="start">虚线框:tile 里剩下的行,填什么都是白算</text>
+<line x1="30" y1="462" x2="1090" y2="462" stroke="#e5e7eb"/>
+<text x="30" y="494" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 把 decode 塞进 prefill 的 tile 里:128 行只有 1 行是真的</text>
+<rect x="60" y="508" width="470" height="86" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="295.0" y="538.0" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">prefill 的一个 tile:128 行 query</text><text x="295.0" y="556.0" font-size="12" fill="#6b7280" text-anchor="middle">128 行全是真的 query</text><text x="295.0" y="574.0" font-size="12" fill="#6b7280" text-anchor="middle">tensor core 吃满</text>
+<rect x="580" y="508" width="500" height="86" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="830.0" y="538.0" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">decode 塞进同一个 tile:1 行真,127 行白算</text><text x="830.0" y="556.0" font-size="12" fill="#6b7280" text-anchor="middle">但此时瓶颈是带宽,这些算力本来就在等数据</text><text x="830.0" y="574.0" font-size="12" fill="#6b7280" text-anchor="middle">(05 章 7.2:MHA 的 decode 算力利用率天然只有 0.34%)</text>
+<line x1="30" y1="624" x2="1090" y2="624" stroke="#e5e7eb"/>
+<text x="30" y="656" font-size="15" fill="#111827" text-anchor="start" font-weight="700">③ SM 占用账:一份活 = 一个 tile × 一个头。132 个 SM 全占满才算把带宽拉满</text>
+<text x="430" y="682" font-size="10" fill="#6b7280" text-anchor="middle">0</text>
+<text x="990" y="682" font-size="10" fill="#6b7280" text-anchor="middle">132 个 SM</text>
+<text x="420" y="709" font-size="12" fill="#6b7280" text-anchor="end">prefill 2000 token:16 个 tile × 8 个头 = 128 份活</text>
+<rect x="430" y="692" width="560" height="24" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="430" y="692" width="543" height="24" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1000" y="709" font-size="11" fill="#6b7280" text-anchor="start">基本占满</text>
+<text x="420" y="741" font-size="12" fill="#6b7280" text-anchor="end">decode 4 条请求:1 个 tile × 8 个头 × 4 条 = 32 份活</text>
+<rect x="430" y="724" width="560" height="24" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="430" y="724" width="136" height="24" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1000" y="741" font-size="11" fill="#6b7280" text-anchor="start">闲着 100 个</text>
+<text x="420" y="773" font-size="12" fill="#6b7280" text-anchor="end">split-KV:再把每份活的 KV 切 4 段 = 128 份活</text>
+<rect x="430" y="756" width="560" height="24" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="430" y="756" width="543" height="24" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1000" y="773" font-size="11" fill="#6b7280" text-anchor="start">带宽才拉得满</text>
+<text x="30" y="796" font-size="12" fill="#6b7280" text-anchor="start">7.5 的两条内部路径就是这么分出来的:query 段长度等于 1 走 split-KV,大于 1 走标准 FA。tile 怎么切、KV 怎么分段见 05 章 2.1。</text>
+</svg>

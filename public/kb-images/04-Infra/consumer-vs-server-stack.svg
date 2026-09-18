@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一条推理链,两条路线:每一层各自换了一套东西</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">从上到下是调用方向。绿 = 推理引擎那一层,红 = 权重格式那一层 —— 这两层是两条路线真正分道的地方。</text>
+<text x="50" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">层</text>
+<text x="230" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">消费级 / 端侧路线</text>
+<text x="670" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">服务器路线</text>
+<text x="50" y="152" font-size="13" fill="#111827" text-anchor="start">agent / 客户端</text>
+<rect x="220" y="118" width="420" height="54" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="430.0" y="149.68" font-size="13" fill="#111827" text-anchor="middle">Open WebUI、桌面客户端、CLI 工具</text>
+<rect x="660" y="118" width="420" height="54" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="870" y="152" font-size="13" fill="#111827" text-anchor="middle">同一批客户端,只是接的后端不同</text>
+<text x="50" y="216" font-size="13" fill="#111827" text-anchor="start">打包 / 管理壳</text>
+<rect x="220" y="182" width="420" height="54" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="430.0" y="213.68" font-size="13" fill="#111827" text-anchor="middle">Ollama、LM Studio、Jan</text>
+<rect x="660" y="182" width="420" height="54" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="870" y="216" font-size="13" fill="#6b7280" text-anchor="middle">通常没有,直接起服务</text>
+<text x="50" y="280" font-size="13" fill="#111827" text-anchor="start">推理引擎</text>
+<rect x="220" y="246" width="420" height="54" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="430.0" y="277.68" font-size="13" fill="#111827" text-anchor="middle">llama.cpp、MLX、ExLlama</text>
+<rect x="660" y="246" width="420" height="54" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="870" y="280" font-size="13" fill="#111827" text-anchor="middle">vLLM、SGLang、TensorRT-LLM</text>
+<text x="50" y="344" font-size="13" fill="#111827" text-anchor="start">权重格式</text>
+<rect x="220" y="310" width="420" height="54" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="430.0" y="341.68" font-size="13" fill="#111827" text-anchor="middle">GGUF(Q4_K_M 一类 k-quants)</text>
+<rect x="660" y="310" width="420" height="54" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="870" y="344" font-size="13" fill="#111827" text-anchor="middle">safetensors(BF16 / FP8 / NVFP4 / AWQ)</text>
+<text x="50" y="408" font-size="13" fill="#111827" text-anchor="start">硬件</text>
+<rect x="220" y="374" width="420" height="54" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="430.0" y="405.68" font-size="13" fill="#111827" text-anchor="middle">Mac、CPU、消费级显卡</text>
+<rect x="660" y="374" width="420" height="54" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="870" y="408" font-size="13" fill="#111827" text-anchor="middle">数据中心 GPU</text>
+<text x="30" y="466" font-size="12" fill="#6b7280" text-anchor="start">「换引擎」和「换权重格式」基本是同一个决定:GGUF 的 k-quants 是端侧格式,服务器那条线只在实验性档位上读它(见上面「GGUF 与 k-quants」一节)。</text>
+<text x="30" y="490" font-size="12" fill="#6b7280" text-anchor="start">打包壳那一层换掉的是「怎么装、怎么管模型」,不是引擎本身 —— 所以它不影响吞吐,只影响上手成本。</text>
+<text x="30" y="514" font-size="12" fill="#6b7280" text-anchor="start">训练那一层不在这条链上:Unsloth、Axolotl、TRL 产出上面这些权重文件,和推理引擎各管一段。</text>
+</svg>

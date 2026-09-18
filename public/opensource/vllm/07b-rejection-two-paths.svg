@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 530" width="1120" height="530" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="530" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">打回的那部分不再给猫:接受路径 + 补偿路径 = 目标分布,一分不多一分不少</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">三条横条同一刻度,整条 = 概率 1。q 是草稿的分布,p 是目标的分布。例子沿用 6.3 的猫狗鸟。</text>
+<text x="30" y="106" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 草稿的猜测频率 q</text>
+<rect x="120" y="116" width="806" height="46" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="523.0" y="144.04" font-size="14" fill="#111827" text-anchor="middle">猫 0.9</text>
+<rect x="930" y="116" width="41" height="46" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="975" y="116" width="41" height="46" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="952" y="180" font-size="10" fill="#6b7280" text-anchor="middle">狗 .05</text>
+<text x="998" y="198" font-size="10" fill="#6b7280" text-anchor="middle">鸟 .05</text>
+<text x="30" y="236" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 猫每次只以 min(1, p/q) = 0.5 / 0.9 ≈ 56% 的概率放行</text>
+<rect x="120" y="246" width="446" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="343.0" y="274.04" font-size="14" fill="#111827" text-anchor="middle">猫 通过 0.5</text>
+<rect x="570" y="246" width="356" height="46" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="750" y="275" font-size="14" fill="#6b7280" text-anchor="middle">猫 被打回 0.4</text>
+<rect x="930" y="246" width="41" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="975" y="246" width="41" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="620" y="236" font-size="12" fill="#6b7280" text-anchor="start">狗、鸟 被猜中时 p/q &gt; 1,必接受</text>
+<polyline points="750,296 750,330" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="764" y="322" font-size="12" fill="#6b7280" text-anchor="start">打回的 0.4 不再给猫,只补目标「没吃够」的词</text>
+<text x="30" y="366" font-size="15" fill="#111827" text-anchor="start" font-weight="700">③ 最终输出频率 = 目标自己的分布 p</text>
+<rect x="120" y="376" width="446" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="343.0" y="404.04" font-size="14" fill="#111827" text-anchor="middle">猫 0.5</text>
+<rect x="570" y="376" width="266" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="703.0" y="404.04" font-size="14" fill="#111827" text-anchor="middle">狗 0.3</text>
+<rect x="840" y="376" width="176" height="46" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="928.0" y="404.04" font-size="14" fill="#111827" text-anchor="middle">鸟 0.2</text>
+<text x="30" y="452" font-size="12" fill="#6b7280" text-anchor="start">狗:草稿给 0.05,补 0.25 → 0.3;鸟:0.05 + 0.15 → 0.2。补的那两笔就是修正分布 max(0, p − q) 的两个非零项(6.3)。</text>
+<text x="30" y="476" font-size="12" fill="#6b7280" text-anchor="start">猫的修正概率是 0 —— 它已经在接受路径上被喂饱了,所以打回之后绝不会再抽到猫。恒等式 min(p, q) + max(0, p − q) = p 就是这张图的两条路。</text>
+<text x="30" y="500" font-size="12" fill="#6b7280" text-anchor="start">红 = 草稿的分布,绿 = 被放行 / 最终留下的,虚线 = 被打回的那部分</text>
+</svg>

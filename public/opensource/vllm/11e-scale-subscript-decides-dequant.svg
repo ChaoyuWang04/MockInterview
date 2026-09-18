@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">scale 的下标落在输出坐标上就能后置到 epilogue,一旦落在 K 上就必须进主循环</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">M = token 数,N = 输出维,K = 输入维,也是被求和的那一维。同色 = 共用一个 scale。</text>
+<text x="50" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">A:激活,每行一个 scale</text>
+<text x="210" y="130" font-size="12" fill="#6b7280" text-anchor="middle">K</text>
+<text x="66" y="220" font-size="12" fill="#6b7280" text-anchor="middle">M</text>
+<rect x="84.0" y="140.0" width="272.0" height="36.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="84.0" y="180.0" width="272.0" height="36.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="84.0" y="220.0" width="272.0" height="36.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="84.0" y="260.0" width="272.0" height="36.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="210" y="326" font-size="11" fill="#111827" text-anchor="middle">每行 1 个 = per-token</text>
+<text x="210" y="346" font-size="11" fill="#6b7280" text-anchor="middle">下标只有 i(token)</text>
+<text x="210" y="366" font-size="11" fill="#6b7280" text-anchor="middle">出口乘回,免费</text>
+<text x="410" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">W:权重,每列一个 scale</text>
+<text x="570" y="130" font-size="12" fill="#6b7280" text-anchor="middle">N</text>
+<text x="426" y="220" font-size="12" fill="#6b7280" text-anchor="middle">K</text>
+<rect x="444.0" y="140.0" width="65.0" height="156.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="513.0" y="140.0" width="65.0" height="156.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="582.0" y="140.0" width="65.0" height="156.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="651.0" y="140.0" width="65.0" height="156.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="570" y="326" font-size="11" fill="#111827" text-anchor="middle">每列 1 个 = per-channel</text>
+<text x="570" y="346" font-size="11" fill="#6b7280" text-anchor="middle">下标只有 j(输出通道)</text>
+<text x="570" y="366" font-size="11" fill="#6b7280" text-anchor="middle">出口乘回,免费</text>
+<text x="770" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">沿 K 分块:scale 带上了块号</text>
+<text x="930" y="130" font-size="12" fill="#6b7280" text-anchor="middle">K</text>
+<text x="786" y="220" font-size="12" fill="#6b7280" text-anchor="middle">M</text>
+<rect x="804.0" y="140.0" width="88.0" height="36.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="896.0" y="140.0" width="88.0" height="36.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="988.0" y="140.0" width="88.0" height="36.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="804.0" y="180.0" width="88.0" height="36.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="896.0" y="180.0" width="88.0" height="36.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="988.0" y="180.0" width="88.0" height="36.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="804.0" y="220.0" width="88.0" height="36.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="896.0" y="220.0" width="88.0" height="36.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="988.0" y="220.0" width="88.0" height="36.0" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="804.0" y="260.0" width="88.0" height="36.0" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="896.0" y="260.0" width="88.0" height="36.0" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="988.0" y="260.0" width="88.0" height="36.0" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="930" y="326" font-size="11" fill="#111827" text-anchor="middle">group / block / 微块</text>
+<text x="930" y="346" font-size="11" fill="#6b7280" text-anchor="middle">下标里出现了 k 块号</text>
+<text x="930" y="366" font-size="11" fill="#6b7280" text-anchor="middle">只能在 kernel 内逐块乘</text>
+<line x1="30" y1="392" x2="1090" y2="392" stroke="#e5e7eb"/>
+<text x="30" y="424" font-size="12" fill="#6b7280" text-anchor="start">左边两张的 scale 下标里都没有 k,于是 s(i) · s(j) 能整体提到求和号外面 → 反量化落进 epilogue,规模只有主循环的 1/K,典型四千分之一(3.4)。</text>
+<text x="30" y="448" font-size="12" fill="#6b7280" text-anchor="start">右边那张里每 128 个 k 就有自己的一对 scale:累加器必须每段出一次寄存器、乘完再加回去,tensor core 最快的形态被打断 —— 这才是 block 量化的真正代价(3.6)。</text>
+<text x="30" y="472" font-size="12" fill="#6b7280" text-anchor="start">精度想沿 K 切细(离群通道是沿 K 分布的),硬件想沿 M / N 切粗 —— 这就是粒度选择的全部矛盾。</text>
+</svg>

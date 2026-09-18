@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 690" width="1120" height="690" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="690" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">四个数组就是 kernel 看到的全部边界:拍扁之后 6 个 token 一排,本身没有边界</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">三条请求同一步:A 是 4 个 token 的 prefill,B、C 各 1 个 decode token。绿 / 红 / 紫 = 三条请求这一步的新 token,灰 = 之前算过、已经在 cache 里的。block 大小取 4。</text>
+<rect x="60" y="88" width="150" height="48" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="135.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">A1</text>
+<text x="135" y="156" font-size="11" fill="#6b7280" text-anchor="middle">0</text>
+<rect x="218" y="88" width="150" height="48" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="293.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">A2</text>
+<text x="293" y="156" font-size="11" fill="#6b7280" text-anchor="middle">1</text>
+<rect x="376" y="88" width="150" height="48" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="451.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">A3</text>
+<text x="451" y="156" font-size="11" fill="#6b7280" text-anchor="middle">2</text>
+<rect x="534" y="88" width="150" height="48" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="609.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">A4</text>
+<text x="609" y="156" font-size="11" fill="#6b7280" text-anchor="middle">3</text>
+<rect x="692" y="88" width="150" height="48" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="767.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">B</text>
+<text x="767" y="156" font-size="11" fill="#6b7280" text-anchor="middle">4</text>
+<rect x="850" y="88" width="150" height="48" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="925.0" y="117.4" font-size="15" fill="#111827" text-anchor="middle">C</text>
+<text x="925" y="156" font-size="11" fill="#6b7280" text-anchor="middle">5</text>
+<text x="50" y="156" font-size="11" fill="#6b7280" text-anchor="end">位置:</text>
+<path d="M60,168 L60,176 L684,176 L684,168" fill="none" stroke="#b9b9b9"/>
+<text x="372.0" y="194" font-size="11" fill="#6b7280" text-anchor="middle">A 占 0-3</text>
+<path d="M692,168 L692,176 L842,176 L842,168" fill="none" stroke="#b9b9b9"/>
+<text x="767.0" y="194" font-size="11" fill="#6b7280" text-anchor="middle">B 占 4</text>
+<path d="M850,168 L850,176 L1000,176 L1000,168" fill="none" stroke="#b9b9b9"/>
+<text x="925.0" y="194" font-size="11" fill="#6b7280" text-anchor="middle">C 占 5</text>
+<text x="30" y="228" font-size="15" fill="#111827" text-anchor="start" font-weight="700">query_start_loc = [0, 4, 5, 6]</text>
+<text x="330" y="228" font-size="12" fill="#6b7280" text-anchor="start">第 i 段占的行是 [cu[i], cu[i+1]);传给 kernel 就是 cu_seqlens_q(7.4)</text>
+<text x="30" y="266" font-size="15" fill="#111827" text-anchor="start" font-weight="700">seq_lens = [4, 7, 3]</text>
+<text x="260" y="266" font-size="12" fill="#6b7280" text-anchor="start">每条请求算完这步共有多少 token(历史 + 新的):kernel 据此知道每行 query 要看多少 key</text>
+<text x="120" y="302" font-size="12" fill="#6b7280" text-anchor="end">请求 A</text>
+<rect x="130" y="284" width="26" height="26" rx="2" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="170" y="302" font-size="12" fill="#6b7280" text-anchor="start">4 = 0 历史 + 4 个新的</text>
+<text x="120" y="336" font-size="12" fill="#6b7280" text-anchor="end">请求 B</text>
+<rect x="130" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="160" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="190" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="220" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="250" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="280" y="318" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="310" y="318" width="26" height="26" rx="2" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="350" y="336" font-size="12" fill="#6b7280" text-anchor="start">7 = 6 历史 + 1 个新的</text>
+<text x="120" y="370" font-size="12" fill="#6b7280" text-anchor="end">请求 C</text>
+<rect x="130" y="352" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="160" y="352" width="26" height="26" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="190" y="352" width="26" height="26" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="230" y="370" font-size="12" fill="#6b7280" text-anchor="start">3 = 2 历史 + 1 个新的</text>
+<line x1="30" y1="394" x2="1090" y2="394" stroke="#e5e7eb"/>
+<text x="30" y="424" font-size="15" fill="#111827" text-anchor="start" font-weight="700">block_table = A:[b0]   B:[b3, b7]   C:[b2]        slot_mapping = [0, 1, 2, 3, 30, 10]</text>
+<text x="30" y="448" font-size="12" fill="#6b7280" text-anchor="start">block_table 说每条请求的 KV 在哪些块里,slot_mapping 说这 6 个新 token 的 KV 各写进哪个格子。全局格号 = 块号 × 4 + 块内偏移。</text>
+<text x="60" y="486" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 b0</text>
+<rect x="60" y="494" width="196" height="66" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="70" y="504" width="40" height="34" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="90" y="526" font-size="12" fill="#111827" text-anchor="middle">A1</text>
+<text x="90" y="554" font-size="10" fill="#6b7280" text-anchor="middle">0</text>
+<rect x="116" y="504" width="40" height="34" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="136" y="526" font-size="12" fill="#111827" text-anchor="middle">A2</text>
+<text x="136" y="554" font-size="10" fill="#6b7280" text-anchor="middle">1</text>
+<rect x="162" y="504" width="40" height="34" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="182" y="526" font-size="12" fill="#111827" text-anchor="middle">A3</text>
+<text x="182" y="554" font-size="10" fill="#6b7280" text-anchor="middle">2</text>
+<rect x="208" y="504" width="40" height="34" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="228" y="526" font-size="12" fill="#111827" text-anchor="middle">A4</text>
+<text x="228" y="554" font-size="10" fill="#6b7280" text-anchor="middle">3</text>
+<text x="310" y="486" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 b2</text>
+<rect x="310" y="494" width="196" height="66" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="320" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="340" y="554" font-size="10" fill="#6b7280" text-anchor="middle">8</text>
+<rect x="366" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="386" y="554" font-size="10" fill="#6b7280" text-anchor="middle">9</text>
+<rect x="412" y="504" width="40" height="34" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="432" y="526" font-size="12" fill="#111827" text-anchor="middle">C</text>
+<text x="432" y="554" font-size="10" fill="#6b7280" text-anchor="middle">10</text>
+<rect x="458" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="478" y="554" font-size="10" fill="#6b7280" text-anchor="middle">11</text>
+<text x="560" y="486" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 b3</text>
+<rect x="560" y="494" width="196" height="66" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="570" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="590" y="554" font-size="10" fill="#6b7280" text-anchor="middle">12</text>
+<rect x="616" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="636" y="554" font-size="10" fill="#6b7280" text-anchor="middle">13</text>
+<rect x="662" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="682" y="554" font-size="10" fill="#6b7280" text-anchor="middle">14</text>
+<rect x="708" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="728" y="554" font-size="10" fill="#6b7280" text-anchor="middle">15</text>
+<text x="810" y="486" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 b7</text>
+<rect x="810" y="494" width="196" height="66" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="820" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="840" y="554" font-size="10" fill="#6b7280" text-anchor="middle">28</text>
+<rect x="866" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="886" y="554" font-size="10" fill="#6b7280" text-anchor="middle">29</text>
+<rect x="912" y="504" width="40" height="34" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="932" y="526" font-size="12" fill="#111827" text-anchor="middle">B</text>
+<text x="932" y="554" font-size="10" fill="#6b7280" text-anchor="middle">30</text>
+<rect x="958" y="504" width="40" height="34" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="978" y="554" font-size="10" fill="#6b7280" text-anchor="middle">31</text>
+<text x="30" y="596" font-size="12" fill="#6b7280" text-anchor="start">这一步写进去的 6 个格子:A1→0、A2→1、A3→2、A4→3、B→30(= 7 × 4 + 2,B 的第 7 个 token 落在 b7 的第 3 格)、C→10(= 2 × 4 + 2)</text>
+<text x="30" y="620" font-size="12" fill="#6b7280" text-anchor="start">灰格子是 B 与 C 已经算过的历史 KV,这一步不动它们;b3 里 4 格满了,B 才跨到 b7 —— 两块在显存里不必相邻,这就是分页的意思(03 章 2.1)</text>
+<text x="30" y="644" font-size="12" fill="#6b7280" text-anchor="start">四个数组加起来只干一件事:让唯一需要区分请求的那个算子(attention)知道每一行属于谁、要看多少 key。别的算子一个都不需要它们。</text>
+</svg>

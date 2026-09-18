@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">SP 把三个逐点算子压成一个,并且让 all-gather 那条腿搬 FP8</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">一层里从注意力之后到下一个矩阵乘之前的那一段。红 = 矩阵乘,灰 = 通信,绿 = 逐点算子。N = TP 大小。</text>
+<text x="30" y="100" font-size="15" fill="#111827" text-anchor="start" font-weight="700">纯 TP:三个逐点操作都在整句上重复做</text>
+<rect x="40" y="112" width="110" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="95.0" y="148.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">矩阵乘</text>
+<rect x="160" y="112" width="190" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="255.0" y="139.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">all-reduce</text><text x="255.0" y="157.0" font-size="11" fill="#6b7280" text-anchor="middle">整句 bf16</text>
+<rect x="360" y="112" width="150" height="62" rx="6" fill="#eef7f2" stroke="#8fc4aa" stroke-width="1"/><text x="435.0" y="139.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">残差</text><text x="435.0" y="157.0" font-size="11" fill="#6b7280" text-anchor="middle">整句,×N 重复</text>
+<rect x="520" y="112" width="150" height="62" rx="6" fill="#eef7f2" stroke="#8fc4aa" stroke-width="1"/><text x="595.0" y="139.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">norm</text><text x="595.0" y="157.0" font-size="11" fill="#6b7280" text-anchor="middle">整句,×N 重复</text>
+<rect x="680" y="112" width="160" height="62" rx="6" fill="#eef7f2" stroke="#8fc4aa" stroke-width="1"/><text x="760.0" y="139.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FP8 量化</text><text x="760.0" y="157.0" font-size="11" fill="#6b7280" text-anchor="middle">整句,×N 重复</text>
+<rect x="850" y="112" width="110" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="905.0" y="148.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">矩阵乘</text>
+<text x="974" y="148" font-size="11" fill="#6b7280" text-anchor="start">中间 4 次下发</text>
+<text x="40" y="196" font-size="12" fill="#6b7280" text-anchor="start">三个逐点操作各自读写一遍整句的激活,而且 N 张卡算的是同一份 —— 重复 N 遍</text>
+<text x="30" y="232" font-size="15" fill="#111827" text-anchor="start" font-weight="700">SP:半句窗口里一个 kernel 干完,再用 FP8 拼回整句</text>
+<rect x="40" y="244" width="110" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="95.0" y="280.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">矩阵乘</text>
+<rect x="160" y="244" width="190" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="255.0" y="271.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">reduce-scatter</text><text x="255.0" y="289.0" font-size="11" fill="#6b7280" text-anchor="middle">→ 半句 bf16</text>
+<rect x="360" y="244" width="220" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="470.0" y="271.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">残差 + norm + FP8 量化</text><text x="470.0" y="289.0" font-size="11" fill="#6b7280" text-anchor="middle">一个 kernel,只算 1/N</text>
+<rect x="590" y="244" width="150" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="665.0" y="271.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">all-gather</text><text x="665.0" y="289.0" font-size="11" fill="#6b7280" text-anchor="middle">整句 FP8</text>
+<rect x="750" y="244" width="110" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="805.0" y="280.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">矩阵乘</text>
+<text x="874" y="280" font-size="11" fill="#6b7280" text-anchor="start">中间 3 次下发</text>
+<text x="40" y="328" font-size="12" fill="#6b7280" text-anchor="start">融合成一个 kernel:归一化的计算量与它的输入输出张量都降到 1/N,还少两次 kernel 启动、少两次分片张量的读写往返(7.13)</text>
+<line x1="30" y1="352" x2="1090" y2="352" stroke="#e5e7eb"/>
+<text x="30" y="382" font-size="15" fill="#111827" text-anchor="start" font-weight="700">每卡收发的字节数(一份完整张量 64 MiB、8 卡,7.15)</text>
+<text x="280" y="415" font-size="12" fill="#6b7280" text-anchor="end">纯 TP 的 all-reduce</text>
+<rect x="290" y="398" width="700" height="24" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="640.0" y="413.96" font-size="11" fill="#6b7280" text-anchor="middle">all-reduce 112 MiB</text>
+<text x="1000" y="415" font-size="11" fill="#6b7280" text-anchor="start">112 MiB,基线</text>
+<text x="280" y="449" font-size="12" fill="#6b7280" text-anchor="end">SP,all-gather 走 bf16</text>
+<rect x="290" y="432" width="347" height="24" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="463.5" y="447.96" font-size="11" fill="#6b7280" text-anchor="middle">reduce-scatter 56</text>
+<rect x="640" y="432" width="347" height="24" rx="4" fill="#eef7f2" stroke="#8fc4aa" stroke-width="1"/><text x="813.5" y="447.96" font-size="11" fill="#111827" text-anchor="middle">all-gather 56</text>
+<text x="1000" y="449" font-size="11" fill="#6b7280" text-anchor="start">112 MiB,与纯 TP 相同</text>
+<text x="280" y="483" font-size="12" fill="#6b7280" text-anchor="end">SP,all-gather 走 FP8</text>
+<rect x="290" y="466" width="347" height="24" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="463.5" y="481.96" font-size="11" fill="#6b7280" text-anchor="middle">reduce-scatter 56</text>
+<rect x="640" y="466" width="172" height="24" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="726.0" y="481.96" font-size="11" fill="#111827" text-anchor="middle">all-gather 28</text>
+<text x="1000" y="483" font-size="11" fill="#6b7280" text-anchor="start">84 MiB,省 25%</text>
+<text x="30" y="520" font-size="12" fill="#6b7280" text-anchor="start">reduce-scatter 那 56 MiB 是省不掉的地板:它要做跨卡求和,低精度的舍入会累积;all-gather 只是拼接,没有算术,所以能降精度(7.14)。</text>
+</svg>

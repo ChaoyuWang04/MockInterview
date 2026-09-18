@@ -1,0 +1,232 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 950" width="1120" height="950" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="950" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">两条路线:把 K/V 搬过去,还是把布局转过来</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">2 张卡、4 个 token、4 个头。绿 = 卡 0 持有的格子,红 = 卡 1 持有的。vLLM 走的是「搬 K/V」那条(8.2);「转布局」那条是 Ulysses,本仓库没有实现(8.13)。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">① 同一份数据的两种布局:一次 all-to-all 就是在这两者之间转</text>
+<text x="148" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头0</text>
+<text x="208" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头1</text>
+<text x="268" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头2</text>
+<text x="328" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头3</text>
+<text x="110" y="166" font-size="11" fill="#6b7280" text-anchor="end">t0</text>
+<text x="110" y="210" font-size="11" fill="#6b7280" text-anchor="end">t1</text>
+<text x="110" y="254" font-size="11" fill="#6b7280" text-anchor="end">t2</text>
+<text x="110" y="298" font-size="11" fill="#6b7280" text-anchor="end">t3</text>
+<rect x="120" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="180" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="140" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="140" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="120" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="180" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="184" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="184" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="120" y="228" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="180" y="228" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="120" y="272" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="180" y="272" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="588" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头0</text>
+<text x="648" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头1</text>
+<text x="708" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头2</text>
+<text x="768" y="132" font-size="11" fill="#6b7280" text-anchor="middle">头3</text>
+<text x="550" y="166" font-size="11" fill="#6b7280" text-anchor="end">t0</text>
+<text x="550" y="210" font-size="11" fill="#6b7280" text-anchor="end">t1</text>
+<text x="550" y="254" font-size="11" fill="#6b7280" text-anchor="end">t2</text>
+<text x="550" y="298" font-size="11" fill="#6b7280" text-anchor="end">t3</text>
+<rect x="560" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="680" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="740" y="140" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="560" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="680" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="740" y="184" width="56" height="40" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="560" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="620" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="680" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="740" y="228" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="560" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="620" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="680" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="740" y="272" width="56" height="40" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<line x1="400" y1="226" x2="540" y2="226" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="468" y="210" font-size="12" fill="#111827" text-anchor="middle">all-to-all</text>
+<text x="468" y="250" font-size="11" fill="#6b7280" text-anchor="middle">转个方向</text>
+<text x="120" y="340" font-size="13" fill="#111827" text-anchor="start">attention 算完:每卡「整句 × 一半的头」</text>
+<text x="560" y="340" font-size="13" fill="#111827" text-anchor="start">o_proj 之前:每卡「半句 × 全部的头」</text>
+<line x1="30" y1="364" x2="1090" y2="364" stroke="#e5e7eb"/>
+<text x="30" y="396" font-size="15" fill="#111827" text-anchor="start" font-weight="700">② 为什么 TP 那条必须求和,而转成按句切之后不必</text>
+<text x="60" y="424" font-size="13" fill="#111827" text-anchor="start" font-weight="700">TP:按头切,权重按行切 → 半成品</text>
+<text x="118" y="450" font-size="11" fill="#6b7280" text-anchor="middle">attention 输出</text>
+<rect x="60" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="90" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="120" y="458" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="150" y="458" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="60" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="90" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="120" y="488" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="150" y="488" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="60" y="518" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="90" y="518" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="120" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="150" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="60" y="548" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="90" y="548" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="120" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="150" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="268" y="450" font-size="11" fill="#6b7280" text-anchor="middle">权重 W(按行切)</text>
+<rect x="210" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="270" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="300" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="210" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="270" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="300" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="210" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="240" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="270" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="210" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="240" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="270" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="300" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="418" y="450" font-size="11" fill="#6b7280" text-anchor="middle">输出:每格都缺一半</text>
+<rect x="360" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="390" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="420" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="450" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="360" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="390" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="420" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="450" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="360" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="390" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="420" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="450" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="360" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="390" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="420" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="450" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="196" y="510" font-size="15" fill="#6b7280" text-anchor="middle">×</text>
+<text x="346" y="510" font-size="15" fill="#6b7280" text-anchor="middle">=</text>
+<text x="600" y="424" font-size="13" fill="#111827" text-anchor="start" font-weight="700">Ulysses:转成按句切,权重完整 → 成品</text>
+<text x="658" y="450" font-size="11" fill="#6b7280" text-anchor="middle">attention 输出</text>
+<rect x="600" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="630" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="660" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="690" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="630" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="660" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="690" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="630" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="660" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="690" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="600" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="630" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="660" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="690" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="808" y="450" font-size="11" fill="#6b7280" text-anchor="middle">权重 W(每卡完整)</text>
+<rect x="750" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="780" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="840" y="458" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="750" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="780" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="840" y="488" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="750" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="780" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="840" y="518" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="750" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="780" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="840" y="548" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="958" y="450" font-size="11" fill="#6b7280" text-anchor="middle">输出:每格一次算完</text>
+<rect x="900" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="930" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="960" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="990" y="458" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="900" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="930" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="960" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="990" y="488" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="900" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="930" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="960" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="990" y="518" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="900" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="930" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="960" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="990" y="548" width="26" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="736" y="510" font-size="15" fill="#6b7280" text-anchor="middle">×</text>
+<text x="886" y="510" font-size="15" fill="#6b7280" text-anchor="middle">=</text>
+<text x="60" y="590" font-size="11" fill="#6b7280" text-anchor="start">卡 0 只有头 0、头 1 的列,和头 0、头 1 的行,</text>
+<text x="60" y="610" font-size="11" fill="#6b7280" text-anchor="start">算出的每一格都缺另外两个头那部分</text>
+<text x="60" y="630" font-size="11" fill="#6b7280" text-anchor="start">→ 两张卡的 16 格都要相加 → reduce-scatter</text>
+<text x="600" y="590" font-size="11" fill="#6b7280" text-anchor="start">卡 0 手里是 t0、t1 的全部头,乘一份完整的 W,</text>
+<text x="600" y="610" font-size="11" fill="#6b7280" text-anchor="start">t0、t1 那 8 格就是完整答案</text>
+<text x="600" y="630" font-size="11" fill="#6b7280" text-anchor="start">→ 不用和卡 1 相加 → 不需要 reduce-scatter</text>
+<text x="30" y="672" font-size="12" fill="#6b7280" text-anchor="start">矩阵乘的规则:输出的一格 = 一整行 × 一整列。左边每张卡只有半行,所以每格只算了一半;右边每张卡有整行,每格一次算完。</text>
+<line x1="30" y1="696" x2="1090" y2="696" stroke="#e5e7eb"/>
+<text x="30" y="728" font-size="15" fill="#111827" text-anchor="start" font-weight="700">③ 两条路线各搬什么</text>
+<text x="40" y="752" font-size="13" fill="#111827" text-anchor="start" font-weight="700">vLLM 的 PCP(8.2):布局不变,把 K/V 拼回来</text>
+<rect x="60" y="766" width="445" height="38" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="282.5" y="789.32" font-size="12" fill="#111827" text-anchor="middle">step 1  all-gather K/V:每卡拿到完整序列的 K、V</text>
+<rect x="60" y="812" width="215" height="38" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="167.5" y="835.32" font-size="12" fill="#111827" text-anchor="middle">step 2  卡 0 算 t0、t1 那段</text>
+<rect x="290" y="812" width="215" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="397.5" y="835.32" font-size="12" fill="#111827" text-anchor="middle">卡 1 算 t2、t3 那段</text>
+<rect x="60" y="858" width="445" height="38" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="282.5" y="881.32" font-size="12" fill="#111827" text-anchor="middle">step 3  KV cache 仍按段分散存放,每卡只存自己那段</text>
+<text x="60" y="918" font-size="11" fill="#6b7280" text-anchor="start">非注意力模块完全不需要跨 rank 通信;PCP 切的是序列,</text>
+<text x="60" y="938" font-size="11" fill="#6b7280" text-anchor="start">所以不受 KV 头数限制 —— 这正是它对超长上下文有意义的原因(8.2)</text>
+<text x="580" y="752" font-size="13" fill="#111827" text-anchor="start" font-weight="700">Ulysses(8.13):先转成按头切,本地算完,再转回来</text>
+<rect x="600" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="623" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="623" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="623" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="600" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="623" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="621" y="876" font-size="11" fill="#6b7280" text-anchor="middle">按句切</text>
+<line x1="646" y1="812" x2="704" y2="812" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="675" y="804" font-size="10" fill="#6b7280" text-anchor="middle">all-to-all</text>
+<rect x="712" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="735" y="768" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="712" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="735" y="791" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="712" y="814" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="735" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="712" y="837" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="735" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="733" y="876" font-size="11" fill="#6b7280" text-anchor="middle">按头切</text>
+<text x="733" y="894" font-size="11" fill="#6b7280" text-anchor="middle">= TP 的布局</text>
+<line x1="758" y1="812" x2="816" y2="812" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="787" y="804" font-size="10" fill="#6b7280" text-anchor="middle">本地算</text>
+<rect x="824" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="847" y="768" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="824" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="847" y="791" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="824" y="814" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="847" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="824" y="837" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="847" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="845" y="876" font-size="11" fill="#6b7280" text-anchor="middle">attention 输出</text>
+<line x1="870" y1="812" x2="928" y2="812" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="899" y="804" font-size="10" fill="#6b7280" text-anchor="middle">all-to-all</text>
+<rect x="936" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="959" y="768" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="936" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="959" y="791" width="20" height="20" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="936" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="959" y="814" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="936" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="959" y="837" width="20" height="20" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="957" y="876" font-size="11" fill="#6b7280" text-anchor="middle">转回按句切</text>
+<text x="580" y="918" font-size="11" fill="#6b7280" text-anchor="start">搬的是 Q / K / V 和输出,attention 本身零通信,通信量小四倍;</text>
+<text x="580" y="938" font-size="11" fill="#6b7280" text-anchor="start">但转成按头切之后卡数就受头数限制了(2.13 那个天花板),vLLM 没走这条(8.14、8.15)</text>
+</svg>

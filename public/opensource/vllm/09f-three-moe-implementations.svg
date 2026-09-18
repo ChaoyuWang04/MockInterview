@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">MoE 的三种实现:只有第三种真的让每卡权重变少</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">4 个专家、2 张卡。红 = 专家权重,绿 = 这张卡手里的 token。三者数学上完全等价,区别全在无效开销长什么样(6.1)。</text>
+<text x="40" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">方式一  TP all-reduce</text>
+<text x="40" y="126" font-size="12" fill="#6b7280" text-anchor="start">默认,不开 EP</text>
+<text x="80" y="164" font-size="12" fill="#6b7280" text-anchor="end">卡 0</text>
+<rect x="86" y="140" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="120.0" y="163.32" font-size="12" fill="#111827" text-anchor="middle">E0½</text>
+<rect x="158" y="140" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="192.0" y="163.32" font-size="12" fill="#111827" text-anchor="middle">E1½</text>
+<rect x="230" y="140" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="264.0" y="163.32" font-size="12" fill="#111827" text-anchor="middle">E2½</text>
+<rect x="302" y="140" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="336.0" y="163.32" font-size="12" fill="#111827" text-anchor="middle">E3½</text>
+<text x="80" y="210" font-size="12" fill="#6b7280" text-anchor="end">卡 1</text>
+<rect x="86" y="186" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="120.0" y="209.32" font-size="12" fill="#111827" text-anchor="middle">E0½</text>
+<rect x="158" y="186" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="192.0" y="209.32" font-size="12" fill="#111827" text-anchor="middle">E1½</text>
+<rect x="230" y="186" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="264.0" y="209.32" font-size="12" fill="#111827" text-anchor="middle">E2½</text>
+<rect x="302" y="186" width="68" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="336.0" y="209.32" font-size="12" fill="#111827" text-anchor="middle">E3½</text>
+<text x="400" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">方式二  EP 融合 + all-reduce</text>
+<text x="400" y="126" font-size="12" fill="#6b7280" text-anchor="start">开 EP,数据并行 = 1</text>
+<text x="440" y="164" font-size="12" fill="#6b7280" text-anchor="end">卡 0</text>
+<rect x="446" y="140" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="516.0" y="163.68" font-size="13" fill="#111827" text-anchor="middle">E0</text>
+<rect x="590" y="140" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="660.0" y="163.68" font-size="13" fill="#111827" text-anchor="middle">E1</text>
+<text x="440" y="210" font-size="12" fill="#6b7280" text-anchor="end">卡 1</text>
+<rect x="446" y="186" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="516.0" y="209.68" font-size="13" fill="#111827" text-anchor="middle">E2</text>
+<rect x="590" y="186" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="660.0" y="209.68" font-size="13" fill="#111827" text-anchor="middle">E3</text>
+<text x="760" y="104" font-size="14" fill="#111827" text-anchor="start" font-weight="700">方式三  EP all-to-all</text>
+<text x="760" y="126" font-size="12" fill="#6b7280" text-anchor="start">开 EP,数据并行 &gt; 1</text>
+<text x="800" y="164" font-size="12" fill="#6b7280" text-anchor="end">卡 0</text>
+<rect x="806" y="140" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="876.0" y="163.68" font-size="13" fill="#111827" text-anchor="middle">E0</text>
+<rect x="950" y="140" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="1020.0" y="163.68" font-size="13" fill="#111827" text-anchor="middle">E1</text>
+<text x="800" y="210" font-size="12" fill="#6b7280" text-anchor="end">卡 1</text>
+<rect x="806" y="186" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="876.0" y="209.68" font-size="13" fill="#111827" text-anchor="middle">E2</text>
+<rect x="950" y="186" width="140" height="38" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="1020.0" y="209.68" font-size="13" fill="#111827" text-anchor="middle">E3</text>
+<rect x="86" y="248" width="284" height="38" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="228.0" y="271.32" font-size="12" fill="#111827" text-anchor="middle">两卡都有全部 token</text>
+<rect x="446" y="248" width="284" height="38" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="588.0" y="271.32" font-size="12" fill="#111827" text-anchor="middle">两卡都有全部 token</text>
+<rect x="806" y="248" width="130" height="38" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="871.0" y="271.32" font-size="12" fill="#111827" text-anchor="middle">卡 0 自己的</text>
+<rect x="960" y="248" width="130" height="38" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="1025.0" y="271.32" font-size="12" fill="#111827" text-anchor="middle">卡 1 自己的</text>
+<text x="948" y="272" font-size="14" fill="#6b7280" text-anchor="middle">⇄</text>
+<text x="86" y="312" font-size="13" fill="#111827" text-anchor="start" font-weight="700">合并:1 次 all-reduce</text>
+<text x="86" y="336" font-size="12" fill="#6b7280" text-anchor="start">负载不均衡:无</text>
+<text x="446" y="312" font-size="13" fill="#111827" text-anchor="start" font-weight="700">合并:1 次 all-reduce</text>
+<text x="446" y="336" font-size="12" fill="#6b7280" text-anchor="start">负载不均衡:有</text>
+<text x="806" y="312" font-size="13" fill="#111827" text-anchor="start" font-weight="700">合并:2 次 all-to-all</text>
+<text x="806" y="336" font-size="12" fill="#6b7280" text-anchor="start">负载不均衡:有</text>
+<line x1="380" y1="96" x2="380" y2="348" stroke="#e5e7eb"/>
+<line x1="740" y1="96" x2="740" y2="348" stroke="#e5e7eb"/>
+<line x1="30" y1="372" x2="1090" y2="372" stroke="#e5e7eb"/>
+<text x="30" y="404" font-size="12" fill="#6b7280" text-anchor="start">方式一和方式二每张卡的权重字节数一样多(4 个半份 = 2 个整份),差别只在「切碎」还是「完整」—— 这是最容易记错的一行(6.2)。</text>
+<text x="30" y="428" font-size="12" fill="#6b7280" text-anchor="start">方式一之所以没有不均衡:每张卡都把全部 token 与专家的配对在自己那 1/TP 的分片上算一遍,工作量逐卡相同 —— 代价是它根本没利用稀疏性。</text>
+<text x="30" y="452" font-size="12" fill="#6b7280" text-anchor="start">方式二的无效开销是「每个 token 在每卡各存一份」加 all-reduce 覆盖完整张量;方式三的无效开销是对齐补齐加两次同步。</text>
+<text x="30" y="476" font-size="12" fill="#6b7280" text-anchor="start">只有方式三让每卡权重真的变少:专家并行规模乘上了数据并行,设备总数多一个量级,专家池才摊得更薄。token 也不复制,每卡只管自己那份 —— 这是它能跨节点扩展的原因。</text>
+</svg>
