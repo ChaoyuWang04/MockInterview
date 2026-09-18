@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个 step 就是一次完整 forward:所有请求这一步要算的 token 摞成一个矩阵,一层一层过</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">三条请求同一步:A、B 在 decode(各 1 个新词),C 刚到达在 prefill(512 个 prompt 词)。绿 = 一个 kernel 只读一次、全体共享;灰 = 每个请求各读各的,摊不掉。</text>
+<text x="40" y="100" font-size="13" fill="#111827" text-anchor="start">这一步的输入 [N×d]</text>
+<rect x="40" y="112" width="300" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="190.0" y="129.68" font-size="13" fill="#111827" text-anchor="middle">A:1 个新词</text>
+<rect x="40" y="146" width="300" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="190.0" y="163.68" font-size="13" fill="#111827" text-anchor="middle">B:1 个新词</text>
+<rect x="40" y="180" width="300" height="200" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="190.0" y="284.68" font-size="13" fill="#111827" text-anchor="middle">C:512 个 prompt 词</text>
+<text x="40" y="405" font-size="13" fill="#6b7280" text-anchor="start">N = 514 行</text>
+<line x1="342" y1="250" x2="408" y2="250" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="410" y="95" width="330" height="340" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="426" y="115" font-size="13" fill="#6b7280" text-anchor="start">第 1 层(每层一样)</text>
+<rect x="770" y="95" width="310" height="340" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="786" y="115" font-size="13" fill="#6b7280" text-anchor="start">显存 HBM</text>
+<rect x="430" y="135" width="290" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="575" y="162" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">QKV 矩阵乘</text>
+<text x="575" y="184" font-size="12" fill="#6b7280" text-anchor="middle">读一次 W,算全部 514 行</text>
+<rect x="790" y="135" width="270" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="925" y="162" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">Wq  Wk  Wv</text>
+<text x="925" y="184" font-size="12" fill="#6b7280" text-anchor="middle">所有请求共享</text>
+<line x1="788" y1="167" x2="724" y2="167" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="430" y="225" width="290" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="575" y="252" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">attention</text>
+<text x="575" y="274" font-size="12" fill="#6b7280" text-anchor="middle">每个请求只读自己的 KV</text>
+<rect x="790" y="225" width="270" height="64" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="925" y="252" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">KV cache A、B、C</text>
+<text x="925" y="274" font-size="12" fill="#6b7280" text-anchor="middle">各读各的:A 读 A 的,C 读 C 的</text>
+<line x1="788" y1="257" x2="724" y2="257" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="430" y="315" width="290" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="575" y="342" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">O 投影 + MLP 矩阵乘</text>
+<text x="575" y="364" font-size="12" fill="#6b7280" text-anchor="middle">读一次 W,算全部 514 行</text>
+<rect x="790" y="315" width="270" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="925" y="342" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">Wo  W_mlp</text>
+<text x="925" y="364" font-size="12" fill="#6b7280" text-anchor="middle">所有请求共享</text>
+<line x1="788" y1="347" x2="724" y2="347" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="575" y="470" font-size="13" fill="#111827" text-anchor="middle">重复 80 层 → 最后一层输出 → logits → 采样:A、B、C 各得到一个新词,进入下一步</text>
+<text x="40" y="510" font-size="12" fill="#6b7280" text-anchor="start">prefill 的 512 行和 decode 的 1 行摞在同一个矩阵里,矩阵乘 kernel 不区分它们;只有 attention 要按请求分段读各自的 KV(Part 7 讲 kernel 怎么分段)。</text>
+<text x="40" y="532" font-size="12" fill="#6b7280" text-anchor="start">所以 batch 里的行越多,每读一次权重摊到的行就越多 —— 这是连续批处理提吞吐的物理来源;而 KV cache 的读取随请求数线性增长,摊不掉。</text>
+<text x="40" y="570" font-size="12" fill="#6b7280" text-anchor="start">黄 = 这一步要算的行,紫 = 一层里的三段计算,绿 = 读一次全体共享的权重,灰 = 各读各的 KV cache</text>
+</svg>

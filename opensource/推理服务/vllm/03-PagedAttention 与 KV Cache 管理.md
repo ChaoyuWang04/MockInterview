@@ -34,6 +34,10 @@ KV cache 存的不是 token id,也不是 embedding,而是**每个 token 经过�
 
 所以 KV cache 的本质是**一份只增不改的历史编码**。这一点后面会反复用到:正因为它只增不改、且内容完全由「前缀 token 序列」决定,同样的前缀才能在请求之间共享。
 
+把 1.1 到这里的内容放进一张图:prefill 时 4 个词一起算、K 和 V 存进 cache 而 Q 不存;decode 第 5 个词时,有 cache 只算自己那一行,没 cache 五行全部重算;而且每一层各有一份 cache,老词在每一层都被整行跳过。
+
+![KV cache 存了什么、省了什么的三个视角:上段是 4 个词的 prefill 怎么算出 Q、K、V 和带因果遮罩的分表并把 K、V 存进 cache;中段并排对比 decode 第 5 个词时有 cache 只算一行与没 cache 五行全部重算;下段是两层里老词整条链被跳过、只剩 k、v 留在每层 cache 里](/opensource/vllm/03a-kv-cache-three-views.svg)
+
 ### 1.3 这笔交换为什么划算
 
 KV cache 是典型的**用空间换时间**:拿 GPU 显存换 GPU 算力。
