@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">单批算和传串行,传的时候算力空着;拆成 A、B 两个微批交错,传 A 时算 B</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 / 黄 = 两个微批的计算,紫 = 通信,灰 = 空。耗时数字是讲稿的相对量,只看比例。</text>
+<text x="30" y="96" font-size="15" fill="#111827" text-anchor="start" font-weight="700">单批:算和传串行,传的时候算力空着</text>
+<text x="100" y="127.0" font-size="13" fill="#6b7280" text-anchor="end">计算</text>
+<rect x="110" y="108" width="197" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="208.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">注意力</text>
+<rect x="310" y="108" width="157" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="388.5" y="126.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<rect x="470" y="108" width="197" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="568.5" y="126.32" font-size="12" fill="#111827" text-anchor="middle">专家</text>
+<rect x="670" y="108" width="157" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="748.5" y="126.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<text x="100" y="163.0" font-size="13" fill="#6b7280" text-anchor="end">通信</text>
+<rect x="110" y="144" width="197" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="310" y="144" width="157" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="388.5" y="162.32" font-size="12" fill="#111827" text-anchor="middle">发</text>
+<rect x="470" y="144" width="197" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="670" y="144" width="157" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="748.5" y="162.32" font-size="12" fill="#111827" text-anchor="middle">回</text>
+<text x="850" y="136" font-size="13" fill="#111827" text-anchor="start">一层耗时:320</text>
+<text x="30" y="212" font-size="15" fill="#111827" text-anchor="start" font-weight="700">拆成 A、B 两个微批交错:传 A 时算 B</text>
+<text x="100" y="243.0" font-size="13" fill="#6b7280" text-anchor="end">计算</text>
+<rect x="110" y="224" width="97" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="158.5" y="242.32" font-size="12" fill="#111827" text-anchor="middle">A 注意</text>
+<rect x="210" y="224" width="97" height="28" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="258.5" y="242.32" font-size="12" fill="#111827" text-anchor="middle">B 注意</text>
+<rect x="310" y="224" width="97" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="358.5" y="242.32" font-size="12" fill="#111827" text-anchor="middle">A 专家</text>
+<rect x="410" y="224" width="97" height="28" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="458.5" y="242.32" font-size="12" fill="#111827" text-anchor="middle">B 专家</text>
+<rect x="510" y="224" width="77" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="100" y="279.0" font-size="13" fill="#6b7280" text-anchor="end">通信</text>
+<rect x="110" y="260" width="97" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="210" y="260" width="97" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="258.5" y="278.32" font-size="12" fill="#111827" text-anchor="middle">A 发</text>
+<rect x="310" y="260" width="97" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="358.5" y="278.32" font-size="12" fill="#111827" text-anchor="middle">B 发</text>
+<rect x="410" y="260" width="97" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="458.5" y="278.32" font-size="12" fill="#111827" text-anchor="middle">A 回</text>
+<rect x="510" y="260" width="97" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="558.5" y="278.32" font-size="12" fill="#111827" text-anchor="middle">B 回</text>
+<text x="850" y="252" font-size="13" fill="#111827" text-anchor="start">一层耗时:约 230</text>
+<text x="110" y="318" font-size="12" fill="#6b7280" text-anchor="start">下面两条道同时忙,灰色几乎消失。每个微批只有一半的 token,单独看每一段都变短了,但两条道叠起来把总长压掉了将近三成。</text>
+<text x="110" y="338" font-size="12" fill="#6b7280" text-anchor="start">这就是 vLLM 的 DBO、SGLang 的 two-batch overlap、DeepSeek 训练里 DualPipe 的同一个思想;token 太少就不切(5.6),CPU 上仍是轮流跑(5.3)。</text>
+<text x="30" y="450" font-size="12" fill="#6b7280" text-anchor="start">绿 / 黄 = 微批 A / B 的计算,紫 = 通信,灰 = 空</text>
+</svg>

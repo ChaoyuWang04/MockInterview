@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 440" width="1120" height="440" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="440" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">机内、机间、直达显存:三层线各多快</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">NVLink = 机内的线;InfiniBand / RoCE = 机间的线;RDMA = 在机间的线上「不经 CPU 直达显存」的用法。带宽是量级参考,不是本仓库实测。</text>
+<rect x="40" y="90" width="500" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="56" y="110" font-size="13" fill="#6b7280" text-anchor="start">机器 A</text>
+<rect x="580" y="90" width="500" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="596" y="110" font-size="13" fill="#6b7280" text-anchor="start">机器 B</text>
+<rect x="60" y="130" width="220" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="170.0" y="151" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">8 张 GPU</text><text x="170.0" y="171" font-size="12" fill="#6b7280" text-anchor="middle">NVLink 全互联</text>
+<rect x="300" y="130" width="220" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="410.0" y="151" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">CPU + 网卡</text><text x="410.0" y="171" font-size="12" fill="#6b7280" text-anchor="middle">PCIe 相连</text>
+<rect x="600" y="130" width="220" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="710.0" y="151" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">网卡 + CPU</text><text x="710.0" y="171" font-size="12" fill="#6b7280" text-anchor="middle">PCIe 相连</text>
+<rect x="840" y="130" width="220" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="950.0" y="151" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">8 张 GPU</text><text x="950.0" y="171" font-size="12" fill="#6b7280" text-anchor="middle">NVLink 全互联</text>
+<line x1="282" y1="165" x2="298" y2="165" stroke="#9ca3af" stroke-width="2"/><line x1="822" y1="165" x2="838" y2="165" stroke="#9ca3af" stroke-width="2"/><line x1="522" y1="165" x2="598" y2="165" stroke="#6b5cd6" stroke-width="3"/>
+<text x="560" y="150" font-size="11" fill="#6b7280" text-anchor="middle">InfiniBand 或 RoCE 以太网</text>
+<text x="170" y="222" font-size="12" fill="#6b7280" text-anchor="middle">卡之间 ~900 GB/s</text>
+<text x="410" y="222" font-size="12" fill="#6b7280" text-anchor="middle">GPU ↔ 网卡 ~60 GB/s</text>
+<text x="560" y="190" font-size="11" fill="#6b7280" text-anchor="middle">~50 GB/s</text>
+<text x="60" y="262" font-size="12" fill="#111827" text-anchor="start">RDMA:网卡直接读写显存,不经过 CPU 和内存</text>
+<text x="60" y="282" font-size="12" fill="#6b7280" text-anchor="start">TP 的 all-reduce 走机内那条线(2.10);PD 分离的 KV 传输走机间那条(10 章)</text>
+<text x="560" y="346" font-size="13" fill="#111827" text-anchor="middle">机器之间一张 400G 网卡 ~50 GB/s,是三者里最慢的一层;所以 TP 只在机内开,跨机走 PP 或 EP(Part 12)</text>
+<text x="30" y="410" font-size="12" fill="#6b7280" text-anchor="start">绿 = GPU,灰 = CPU 与网卡,紫 = 机间链路</text>
+</svg>

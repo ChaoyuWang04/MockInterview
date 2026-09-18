@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 470" width="1120" height="470" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="470" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个 token 要去机器 B 的卡 1、5、6:跨机只发一次到同号卡,再由它用 NVLink 分发</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">黄 = 发送方,紫 = 中转卡,绿 = 目标专家所在卡。这就是「非对称域带宽转发」:省的是慢链路那一段。</text>
+<rect x="40" y="90" width="260" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="56" y="110" font-size="13" fill="#6b7280" text-anchor="start">机器 A</text>
+<rect x="90" y="140" width="160" height="80" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="170.0" y="185.76" font-size="16" fill="#111827" text-anchor="middle">卡 3</text>
+<rect x="340" y="90" width="740" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="356" y="110" font-size="13" fill="#6b7280" text-anchor="start">机器 B(8 张卡用 NVLink 全互联)</text>
+<rect x="370" y="140" width="76" height="80" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="408.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">1</text>
+<rect x="456" y="140" width="76" height="80" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="494.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">2</text>
+<rect x="542" y="140" width="76" height="80" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="580.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">3</text>
+<rect x="628" y="140" width="76" height="80" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="666.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">4</text>
+<rect x="714" y="140" width="76" height="80" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="752.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">5</text>
+<rect x="800" y="140" width="76" height="80" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="838.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">6</text>
+<rect x="886" y="140" width="76" height="80" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="924.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">7</text>
+<rect x="972" y="140" width="76" height="80" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="1010.0" y="185.4" font-size="15" fill="#111827" text-anchor="middle">8</text>
+<line x1="252" y1="180" x2="368" y2="180" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="448" y1="180" x2="542" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="250" y="248" font-size="11" fill="#6b7280" text-anchor="start">RDMA 跨机只发 1 次,到同号卡 3</text>
+<polyline points="580,222 580,262 752,262 752,232" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="580,262 838,262 838,232" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="760" y="288" font-size="11" fill="#6b7280" text-anchor="middle">卡 3 再通过 NVLink 分给 1、5、6,快十几倍</text>
+<text x="40" y="356" font-size="12" fill="#6b7280" text-anchor="start">朴素做法:A 卡 3 → B 卡 1、B 卡 5、B 卡 6 各走一次 RDMA,跨机字节 ×3;转发后跨机只走一次,NVLink 那段又快又便宜。</text>
+<text x="40" y="376" font-size="12" fill="#6b7280" text-anchor="start">DeepSeek-V3 的路由规定每个 token 最多去 4 台机器,配合这种转发,跨机流量被封顶;DeepEP 的 normal kernel 就是这么做的。</text>
+<text x="30" y="440" font-size="12" fill="#6b7280" text-anchor="start">黄 = 发送方,紫 = 中转卡,绿 = 目标专家所在卡</text>
+</svg>

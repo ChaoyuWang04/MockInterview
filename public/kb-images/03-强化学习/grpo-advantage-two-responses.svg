@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一个 prompt,采两条回复,打分器分别打分:advantage 为正整条推高,为负整条压低</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = 正 advantage,红 = 负 advantage。两条回复都被当作前文喂进模型,各自算出每个位置的 log p —— 这一步和 SFT 的前向一模一样,不判对错。</text>
+<text x="110" y="128" font-size="13" fill="#6b7280" text-anchor="end">回复 1</text>
+<rect x="130" y="100" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="188.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">设</text>
+<text x="188" y="166" font-size="12" fill="#6b7280" text-anchor="middle">↑ 推高</text>
+<rect x="260" y="100" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="318.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">x=3</text>
+<text x="318" y="166" font-size="12" fill="#6b7280" text-anchor="middle">↑ 推高</text>
+<rect x="390" y="100" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="448.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">代入</text>
+<text x="448" y="166" font-size="12" fill="#6b7280" text-anchor="middle">↑ 推高</text>
+<rect x="520" y="100" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="578.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">得 7</text>
+<text x="578" y="166" font-size="12" fill="#6b7280" text-anchor="middle">↑ 推高</text>
+<rect x="690" y="100" width="190" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="785.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">答对,奖励 1</text>
+<rect x="900" y="100" width="180" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="990.0" y="126.68" font-size="13" fill="#111827" text-anchor="middle">A = +0.8</text>
+<text x="110" y="258" font-size="13" fill="#6b7280" text-anchor="end">回复 2</text>
+<rect x="130" y="230" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="188.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">设</text>
+<text x="188" y="296" font-size="12" fill="#6b7280" text-anchor="middle">↓ 压低</text>
+<rect x="260" y="230" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="318.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">x=5</text>
+<text x="318" y="296" font-size="12" fill="#6b7280" text-anchor="middle">↓ 压低</text>
+<rect x="390" y="230" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="448.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">代入</text>
+<text x="448" y="296" font-size="12" fill="#6b7280" text-anchor="middle">↓ 压低</text>
+<rect x="520" y="230" width="116" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="578.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">得 9</text>
+<text x="578" y="296" font-size="12" fill="#6b7280" text-anchor="middle">↓ 压低</text>
+<rect x="690" y="230" width="190" height="44" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="785.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">答错,奖励 0</text>
+<rect x="900" y="230" width="180" height="44" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="990.0" y="256.68" font-size="13" fill="#111827" text-anchor="middle">A = −0.8</text>
+<text x="60" y="376" font-size="12" fill="#6b7280" text-anchor="start">对错在这里:每个位置的梯度 = A × ∇log p。A 为正推高,A 为负压低;SFT 相当于 A 永远等于 +1,因为数据集里的序列默认全对。</text>
+<text x="60" y="396" font-size="12" fill="#6b7280" text-anchor="start">「设」这个词两条里都有,一条推高一条压低,净效果由整组决定 —— 这正是组内相对优势的含义(本节)。</text>
+<text x="30" y="450" font-size="12" fill="#6b7280" text-anchor="start">绿 = 正 advantage,红 = 负 advantage</text>
+</svg>

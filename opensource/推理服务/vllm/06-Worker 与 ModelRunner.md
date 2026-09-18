@@ -205,6 +205,10 @@ vLLM V1 把它当默认必开的特性。关掉它要用 `--enforce-eager`,而�
 
 > 提个醒免得混:02 章里的「V1」指的是 **vLLM 引擎本身的代号**(整套引擎都在 `v1` 这个命名空间下),而本章 1.4 起说的「V1 运行器 / V2 运行器」是**这套引擎内部两套并存的模型运行器实现**。两个 V1 不是一回事,所以后文凡是指运行器的地方都会带上「运行器」三个字。
 
+把一步 forward 的算子带画出来,两档的差别一眼可见:
+
+![一步 forward 的算子带:嵌入、每层的 norm 与 QKV、attention、FFN、lm_head;FULL 把整条录成一张图 attention 也在里面,只能给所有请求段长相同的 batch 用;PIECEWISE 按 attention 切开各录一张、attention 现场发,80 层就是 81 张小图加 80 次现场发](/opensource/vllm/06d-full-vs-piecewise-graph.svg)
+
 ### 2.5 档位不是设什么就是什么
 
 配置期有一串自动调整,把用户给的档位改成实际可行的那一档:

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" width="1120" height="760" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="760" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">PD 分离的请求怎么走:路由器不在 vLLM 里,先 P 后 D,KV 卡到卡直传</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">上半是一条请求的五步,下半是部署形态:每个 vLLM 实例内部两进程结构原封不动,路由器只是在它们前面多加了一层,用 HTTP 说话。</text>
+<rect x="40" y="150" width="150" height="50" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="115.0" y="180.04" font-size="14" fill="#111827" text-anchor="middle">客户端</text>
+<line x1="192" y1="175" x2="258" y2="175" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="260" y="130" width="220" height="90" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="370.0" y="162.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由器 / proxy</text><text x="370.0" y="180.0" font-size="11" fill="#6b7280" text-anchor="middle">不在 vLLM 里</text><text x="370.0" y="198.0" font-size="11" fill="#6b7280" text-anchor="middle">先 P 后 D</text>
+<rect x="640" y="96" width="440" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="860.0" y="128.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">Prefill 实例(kv_producer)</text><text x="860.0" y="146.0" font-size="11" fill="#6b7280" text-anchor="middle">算完整个 prompt,出第 1 个 token</text><text x="860.0" y="164.0" font-size="11" fill="#6b7280" text-anchor="middle">KV 留在自己显存,先不释放</text>
+<rect x="640" y="250" width="440" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="860.0" y="288.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">Decode 实例(kv_consumer)</text><text x="860.0" y="306.0" font-size="11" fill="#6b7280" text-anchor="middle">请求先进 waiting,等 KV 到</text><text x="860.0" y="324.0" font-size="11" fill="#6b7280" text-anchor="middle">连接器通过 RDMA 直接从 P 的显存拉</text><text x="860.0" y="342.0" font-size="11" fill="#6b7280" text-anchor="middle">拉完进 running 开始 decode;拉完后通知 P 释放那些块</text>
+<line x1="482" y1="150" x2="638" y2="120" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="459.38" y="116.65" width="161.24" height="19" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="540.0" y="127.65" font-size="11" fill="#6b7280" text-anchor="middle">① 发给 P,只要 1 个 token</text>
+<line x1="638" y1="160" x2="482" y2="166" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="484.88" y="166.65" width="150.24" height="19" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="560.0" y="177.65" font-size="11" fill="#6b7280" text-anchor="middle">② 返回 token + KV 在哪</text>
+<line x1="482" y1="200" x2="638" y2="290" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="470.6" y="252.65" width="138.8" height="19" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="540.0" y="263.65" font-size="11" fill="#6b7280" text-anchor="middle">③ 转给 D,带上位置信息</text>
+<line x1="860" y1="188" x2="860" y2="248" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<rect x="880" y="208.65" width="72.8" height="19" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="916.4" y="219.65" font-size="11" fill="#6b7280" text-anchor="middle">④ KV 直传</text>
+<polyline points="640,340 370,340 370,222" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="448.36" y="342.65" width="113.28" height="19" rx="3" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/><text x="505.0" y="353.65" font-size="11" fill="#6b7280" text-anchor="middle">⑤ token 流式回来</text>
+<text x="40" y="392" font-size="12" fill="#6b7280" text-anchor="start">虚线 = KV 走 RDMA 卡到卡,不经过路由器;路由器只传小消息。P 与 D 之间没有一句 RPC(1.6),D 靠轮询发现 KV 到了(02 章 6.8)。</text>
+<line x1="30" y1="414" x2="1090" y2="414" stroke="#e5e7eb"/>
+<rect x="40" y="540" width="150" height="50" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="115.0" y="570.04" font-size="14" fill="#111827" text-anchor="middle">客户端</text>
+<line x1="192" y1="565" x2="258" y2="565" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="260" y="440" width="300" height="250" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="276" y="460" font-size="13" fill="#6b7280" text-anchor="start">一台机器,可以没有 GPU</text>
+<rect x="290" y="520" width="240" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="410.0" y="547.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由器进程</text><text x="410.0" y="565.0" font-size="11" fill="#6b7280" text-anchor="middle">普通 HTTP 服务</text><text x="410.0" y="583.0" font-size="11" fill="#6b7280" text-anchor="middle">Python / Rust / Envoy</text>
+<text x="410" y="640" font-size="12" fill="#6b7280" text-anchor="middle">不属于任何 vLLM 实例</text>
+<text x="410" y="658" font-size="12" fill="#6b7280" text-anchor="middle">也不是 vLLM 的一部分</text>
+<rect x="620" y="440" width="460" height="116" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="636" y="460" font-size="13" fill="#6b7280" text-anchor="start">Prefill 实例(可多个)</text>
+<rect x="640" y="468" width="200" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="740.0" y="493.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vllm serve P1</text><text x="740.0" y="511.0" font-size="11" fill="#6b7280" text-anchor="middle">API 进程</text><text x="740.0" y="529.0" font-size="11" fill="#6b7280" text-anchor="middle">+ EngineCore 进程</text>
+<rect x="860" y="468" width="200" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="960.0" y="493.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vllm serve P2</text><text x="960.0" y="511.0" font-size="11" fill="#6b7280" text-anchor="middle">API 进程</text><text x="960.0" y="529.0" font-size="11" fill="#6b7280" text-anchor="middle">+ EngineCore 进程</text>
+<rect x="620" y="574" width="460" height="116" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="636" y="594" font-size="13" fill="#6b7280" text-anchor="start">Decode 实例(可多个)</text>
+<rect x="640" y="602" width="200" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="740.0" y="627.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vllm serve D1</text><text x="740.0" y="645.0" font-size="11" fill="#6b7280" text-anchor="middle">API 进程</text><text x="740.0" y="663.0" font-size="11" fill="#6b7280" text-anchor="middle">+ EngineCore 进程</text>
+<rect x="860" y="602" width="200" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="960.0" y="627.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vllm serve D2</text><text x="960.0" y="645.0" font-size="11" fill="#6b7280" text-anchor="middle">API 进程</text><text x="960.0" y="663.0" font-size="11" fill="#6b7280" text-anchor="middle">+ EngineCore 进程</text>
+<line x1="532" y1="540" x2="618" y2="500" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="532" y1="590" x2="618" y2="630" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="575" y="572" font-size="12" fill="#6b7280" text-anchor="middle">HTTP</text>
+<text x="30" y="730" font-size="12" fill="#6b7280" text-anchor="start">紫 = 路由器,绿 = vLLM 实例,灰 = 客户端;虚线 = KV 直传</text>
+</svg>

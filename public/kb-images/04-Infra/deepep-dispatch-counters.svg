@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">dispatch 直接写进对方显存:原子计数器就是通知,专家 kernel 的网格固定启动</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">黄 = 这一步实际用到的格子,灰 = 预留但空着的格子;CPU 从头到尾只发 kernel,没读过任何数。例子:4 个 token,top-2,每卡 4 个专家。</text>
+<rect x="40" y="90" width="500" height="470" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="56" y="110" font-size="13" fill="#6b7280" text-anchor="start">卡 0(发送方)</text>
+<rect x="70" y="120" width="440" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="290.0" y="144.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">门控 kernel:h × Wg,取 top-2</text><text x="290.0" y="162.0" font-size="11" fill="#6b7280" text-anchor="middle">结果留在显存里</text>
+<rect x="70" y="196" width="440" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="290.0" y="216.32" font-size="12" fill="#111827" text-anchor="middle">token a → 专家 5、专家 2</text>
+<rect x="70" y="236" width="440" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="290.0" y="256.32" font-size="12" fill="#111827" text-anchor="middle">token b → 专家 5、专家 0</text>
+<rect x="70" y="276" width="440" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="290.0" y="296.32" font-size="12" fill="#111827" text-anchor="middle">token c → 专家 6、专家 1</text>
+<rect x="70" y="316" width="440" height="32" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="290.0" y="336.32" font-size="12" fill="#111827" text-anchor="middle">token d → 专家 5、专家 7</text>
+<rect x="70" y="372" width="440" height="150" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="290.0" y="425.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">发送 kernel,每个线程负责一个 (token, 专家) 对:</text><text x="290.0" y="443.0" font-size="12" fill="#6b7280" text-anchor="middle">1. 专家号 ÷ 4 = 目标卡</text><text x="290.0" y="461.0" font-size="12" fill="#6b7280" text-anchor="middle">2. 对目标卡上该专家的计数器原子 +1</text><text x="290.0" y="479.0" font-size="12" fill="#6b7280" text-anchor="middle">3. 拿到格子号,把 token 写进去</text>
+<line x1="542" y1="330" x2="598" y2="330" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="570" y="318" font-size="11" fill="#6b7280" text-anchor="middle">直接写</text>
+<text x="570" y="352" font-size="11" fill="#6b7280" text-anchor="middle">对方显存</text>
+<rect x="600" y="90" width="480" height="470" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/><text x="616" y="110" font-size="13" fill="#6b7280" text-anchor="start">卡 1(有专家 4、5、6、7)</text>
+<text x="620" y="128" font-size="12" fill="#111827" text-anchor="start">接收区:启动时按上限开好,从不重新分配</text>
+<text x="640" y="156" font-size="11" fill="#6b7280" text-anchor="start">专家</text>
+<text x="1020" y="156" font-size="11" fill="#6b7280" text-anchor="start">计数器</text>
+<text x="646" y="192" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<rect x="670" y="170" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="732" y="170" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="794" y="170" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="856" y="170" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="918" y="170" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1000" y="170" width="56" height="36" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="1028.0" y="192.32" font-size="12" fill="#111827" text-anchor="middle">0</text>
+<text x="646" y="238" font-size="12" fill="#6b7280" text-anchor="middle">5</text>
+<rect x="670" y="216" width="56" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="698.0" y="238.32" font-size="12" fill="#111827" text-anchor="middle">a</text>
+<rect x="732" y="216" width="56" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="760.0" y="238.32" font-size="12" fill="#111827" text-anchor="middle">b</text>
+<rect x="794" y="216" width="56" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="822.0" y="238.32" font-size="12" fill="#111827" text-anchor="middle">d</text>
+<rect x="856" y="216" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="918" y="216" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1000" y="216" width="56" height="36" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="1028.0" y="238.32" font-size="12" fill="#111827" text-anchor="middle">3</text>
+<text x="646" y="284" font-size="12" fill="#6b7280" text-anchor="middle">6</text>
+<rect x="670" y="262" width="56" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="698.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">c</text>
+<rect x="732" y="262" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="794" y="262" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="856" y="262" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="918" y="262" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1000" y="262" width="56" height="36" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="1028.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">1</text>
+<text x="646" y="330" font-size="12" fill="#6b7280" text-anchor="middle">7</text>
+<rect x="670" y="308" width="56" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="698.0" y="330.32" font-size="12" fill="#111827" text-anchor="middle">d</text>
+<rect x="732" y="308" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="794" y="308" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="856" y="308" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="918" y="308" width="56" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1000" y="308" width="56" height="36" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="1028.0" y="330.32" font-size="12" fill="#111827" text-anchor="middle">1</text>
+<rect x="620" y="372" width="440" height="150" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="840.0" y="425.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">专家 kernel:网格按「4 个专家 × 5 格」固定启动</text><text x="840.0" y="443.0" font-size="12" fill="#6b7280" text-anchor="middle">每个线程块先读自己专家的计数器</text><text x="840.0" y="461.0" font-size="12" fill="#6b7280" text-anchor="middle">超出计数的格子直接退出,不算</text><text x="840.0" y="479.0" font-size="12" fill="#6b7280" text-anchor="middle">CPU 从头到尾只发 kernel,没读过任何数</text>
+<text x="30" y="590" font-size="12" fill="#6b7280" text-anchor="start">这就是 DeepEP 的通知机制:不发消息、不等 CPU,计数器本身就是「到了多少」;接收区按上限预留,换来的是永不重新分配。</text>
+</svg>

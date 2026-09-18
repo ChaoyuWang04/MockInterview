@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">P 卡与 D 卡跑的是同一套 kernel,不同的只有 batch 形状和连接器插的钩子</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">灰 = 两边完全相同的算子,紫 = 连接器插在算子之间的钩子,绿 / 黄 = 两边不同的 batch 形状。</text>
+<text x="270" y="100" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">P 卡</text>
+<text x="850" y="100" font-size="15" fill="#111827" text-anchor="middle" font-weight="700">D 卡</text>
+<rect x="80" y="112" width="380" height="40" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="270.0" y="136.68" font-size="13" fill="#111827" text-anchor="middle">batch:只有 prefill 段,行很多</text>
+<rect x="660" y="112" width="380" height="40" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="850.0" y="136.68" font-size="13" fill="#111827" text-anchor="middle">batch:只有长度 1 的段,行 = 请求数</text>
+<rect x="80" y="168" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="270.0" y="192.68" font-size="13" fill="#6b7280" text-anchor="middle">norm → QKV 投影</text>
+<rect x="660" y="168" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="850.0" y="192.68" font-size="13" fill="#6b7280" text-anchor="middle">norm → QKV 投影</text>
+<text x="560" y="193" font-size="12" fill="#6b7280" text-anchor="middle">同一 kernel</text>
+<rect x="660" y="224" width="380" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="850.0" y="248.68" font-size="13" fill="#111827" text-anchor="middle">钩子:等这一层的 KV 从 P 到达</text>
+<rect x="80" y="280" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="270.0" y="304.68" font-size="13" fill="#6b7280" text-anchor="middle">写 KV → attention(长段路径)</text>
+<rect x="660" y="280" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="850.0" y="304.68" font-size="13" fill="#6b7280" text-anchor="middle">写 KV → attention(短段路径)</text>
+<text x="560" y="305" font-size="12" fill="#6b7280" text-anchor="middle">同一 kernel</text>
+<rect x="80" y="336" width="380" height="40" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="270.0" y="360.68" font-size="13" fill="#111827" text-anchor="middle">钩子:把这一层刚写的 KV 发给 D</text>
+<rect x="80" y="392" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="270.0" y="416.68" font-size="13" fill="#6b7280" text-anchor="middle">O 投影 → FFN → 残差</text>
+<rect x="660" y="392" width="380" height="40" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="850.0" y="416.68" font-size="13" fill="#6b7280" text-anchor="middle">O 投影 → FFN → 残差</text>
+<text x="560" y="417" font-size="12" fill="#6b7280" text-anchor="middle">同一 kernel</text>
+<text x="270" y="458" font-size="12" fill="#6b7280" text-anchor="middle">最后 lm_head 只取每段末行,采出第 1 个 token</text>
+<text x="850" y="458" font-size="12" fill="#6b7280" text-anchor="middle">最后 lm_head 取每一行,采下一个 token</text>
+<text x="30" y="500" font-size="12" fill="#6b7280" text-anchor="start">钩子在哪一层、等不等、按层发还是整块发,都是 connector 向引擎声明的能力(本节);默认路径不逐层(2.5)。</text>
+</svg>

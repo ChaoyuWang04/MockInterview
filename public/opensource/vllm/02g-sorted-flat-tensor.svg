@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 400" width="1120" height="400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="400" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">排好序的 flat tensor:decode 类在前、prefill 类在后,中间只有一个切分点</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">一行 = 一个 token 的隐状态。紫 + 绿 = 段长相同的 decode 类,黄 = 段长各异的 prefill 类;黑线 = split_decodes_and_prefills 切的那一刀。</text>
+<text x="50" y="137.0" font-size="13" fill="#6b7280" text-anchor="end"></text>
+<rect x="60" y="110" width="217" height="44" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="168.5" y="136.68" font-size="13" fill="#111827" text-anchor="middle">验证请求:每个 1+k 个</text>
+<rect x="280" y="110" width="177" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="368.5" y="136.68" font-size="13" fill="#111827" text-anchor="middle">纯 decode:每个 1 个</text>
+<rect x="460" y="110" width="157" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="538.5" y="136.68" font-size="13" fill="#111827" text-anchor="middle">短 extend:几个到几十</text>
+<rect x="620" y="110" width="477" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="858.5" y="136.68" font-size="13" fill="#111827" text-anchor="middle">prefill 块,按长度升序:500 … 1024 …</text>
+<line x1="457" y1="96" x2="457" y2="216" stroke="#111827" stroke-width="2.5"/>
+<text x="457" y="236" font-size="12" fill="#111827" text-anchor="middle">← 唯一的切分点 →</text>
+<text x="258" y="176" font-size="12" fill="#6b7280" text-anchor="middle">段长固定:decode 块可以当规则矩阵处理</text>
+<text x="780" y="176" font-size="12" fill="#6b7280" text-anchor="middle">段长各异:varlen 部分只能靠 cu_seqlens 一段段来</text>
+<text x="60" y="280" font-size="12" fill="#6b7280" text-anchor="start">decode 块给专门的 decode kernel(或 MLA 的 decode 路径、CUDA graph 的固定形状),后面给 varlen 路径;</text>
+<text x="60" y="300" font-size="12" fill="#6b7280" text-anchor="start">一个 batch 描述成「前 n 个请求是 decode,其余是 prefill」—— 一个整数 n 就够,不需要一张「谁是谁」的表。排序由调度器保证,kernel 只依赖这个不变量。</text>
+<text x="30" y="370" font-size="12" fill="#6b7280" text-anchor="start">紫 + 绿 = decode 类,黄 = prefill 类,黑线 = 切分点</text>
+</svg>

@@ -50,6 +50,10 @@ adv_tok = adv[:, None].expand(-1, T)  # 同一回答所有 token 共用,无逐 t
 
 顺手澄清一个容易混的地方:PPO 里的 advantage 白化是在**整个 batch** 内减均值除标准差,GRPO 是在**同一道题的组内**做,两者分母的口径完全不同,不是同一个操作换了个名字。
 
+拿两条回复看 advantage 怎么作用到每个位置:
+
+![同一个 prompt 采两条回复分别打分:回复 1 答对奖励 1、advantage 正 0.8,它的每个 token 都被推高;回复 2 答错奖励 0、advantage 负 0.8,每个 token 都被压低;两条回复都当作前文喂进模型算每个位置的 log p,这一步与 SFT 前向相同,对错全在梯度等于 advantage 乘 log p 的梯度这一处,SFT 相当于 advantage 恒为正 1](/kb-images/03-强化学习/grpo-advantage-two-responses.svg)
+
 ### 为什么"同组平均分"就能当基线
 
 基线定理说:只要减掉的量**只依赖状态、不依赖动作**,期望梯度就不变(推导见 PPO 篇)。GRPO 把整条回答看成一次动作,那"状态"就是 prompt 本身,而这个状态的价值恰好是

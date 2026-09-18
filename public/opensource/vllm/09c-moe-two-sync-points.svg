@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 440" width="1120" height="440" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="440" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个 MoE 层:两次集合点,谁先到谁等</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = 4 张卡必须同时做的 all-to-all,绿 = 各卡自己的计算,灰 = 先到的卡在集合点干等最慢的。横轴同一刻度。</text>
+<text x="100" y="118.0" font-size="13" fill="#6b7280" text-anchor="end">卡 0</text>
+<rect x="110" y="96" width="147" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="183.5" y="117.32" font-size="12" fill="#111827" text-anchor="middle">注意力</text>
+<rect x="260" y="96" width="197" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="358.5" y="117.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="460" y="96" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="540" y="96" width="157" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="618.5" y="117.32" font-size="12" fill="#111827" text-anchor="middle">本地专家</text>
+<rect x="700" y="96" width="127" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="763.5" y="117.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="830" y="96" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="100" y="162.0" font-size="13" fill="#6b7280" text-anchor="end">卡 1</text>
+<rect x="110" y="140" width="347" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="283.5" y="161.32" font-size="12" fill="#111827" text-anchor="middle">注意力(这步活多,最慢)</text>
+<rect x="460" y="140" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="540" y="140" width="287" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="683.5" y="161.32" font-size="12" fill="#111827" text-anchor="middle">本地专家(收到的多)</text>
+<rect x="830" y="140" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="100" y="206.0" font-size="13" fill="#6b7280" text-anchor="end">卡 2</text>
+<rect x="110" y="184" width="117" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="168.5" y="205.32" font-size="12" fill="#111827" text-anchor="middle">注意力</text>
+<rect x="230" y="184" width="227" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="343.5" y="205.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="460" y="184" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="540" y="184" width="127" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="603.5" y="205.32" font-size="12" fill="#111827" text-anchor="middle">专家</text>
+<rect x="670" y="184" width="157" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="748.5" y="205.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="830" y="184" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="100" y="250.0" font-size="13" fill="#6b7280" text-anchor="end">卡 3</text>
+<rect x="110" y="228" width="57" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="138.5" y="249.32" font-size="12" fill="#6b7280" text-anchor="middle">空</text>
+<rect x="170" y="228" width="287" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="313.5" y="249.32" font-size="12" fill="#6b7280" text-anchor="middle">等(没请求也得陪跑)</text>
+<rect x="460" y="228" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="540" y="228" width="107" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="593.5" y="249.32" font-size="12" fill="#111827" text-anchor="middle">专家</text>
+<rect x="650" y="228" width="177" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="738.5" y="249.32" font-size="12" fill="#6b7280" text-anchor="middle">等</text>
+<rect x="830" y="228" width="77" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="460" y1="90" x2="460" y2="272" stroke="#6b5cd6" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="460" y="292" font-size="13" fill="#111827" text-anchor="middle">集合 1:发 token</text>
+<line x1="830" y1="90" x2="830" y2="272" stroke="#6b5cd6" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="830" y="292" font-size="13" fill="#111827" text-anchor="middle">集合 2:送回结果</text>
+<text x="110" y="330" font-size="12" fill="#6b7280" text-anchor="start">卡 3 这一步没有任何请求,也必须到场发一个空包,否则集合完不成;几十层专家层 = 一步里几十次这样的集合,每次都按最慢的算。</text>
+<text x="110" y="350" font-size="12" fill="#6b7280" text-anchor="start">这就是 EP 下负载不均衡的代价形状(4.6);缓解手段是对齐缓冲区(4.7)、EPLB 搬专家(4.11)、以及把通信藏进计算(Part 5)。</text>
+<text x="30" y="410" font-size="12" fill="#6b7280" text-anchor="start">紫 = 同步的 all-to-all,绿 = 本卡计算,灰 = 干等</text>
+</svg>

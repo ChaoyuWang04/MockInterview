@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一个数学,两种切法:prefill 段按 q 行切成大块,decode 段切 KV 成长条再合并</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = 片(一次搬进片上存储的一份 KV),紫 = 段(一个线程块负责的范围),黄 = decode 的 KV 分块。数字是走读例子。</text>
+<text x="60" y="100" font-size="15" fill="#111827" text-anchor="start" font-weight="700">prefill 段:500 个 q × 500 个 KV,大块</text>
+<text x="60" y="120" font-size="12" fill="#6b7280" text-anchor="start">按 q 的行切,每块一条横带,扫完所有 KV</text>
+<rect x="60" y="132" width="440" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="280.0" y="152.32" font-size="12" fill="#111827" text-anchor="middle">线程块 1:q 行 0–127 → 扫全部 KV</text>
+<rect x="60" y="172" width="440" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="280.0" y="192.32" font-size="12" fill="#111827" text-anchor="middle">线程块 2:q 行 128–255 → 扫全部 KV</text>
+<rect x="60" y="212" width="440" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="280.0" y="232.32" font-size="12" fill="#111827" text-anchor="middle">线程块 3:q 行 256–383 → 扫全部 KV</text>
+<rect x="60" y="252" width="440" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="280.0" y="272.32" font-size="12" fill="#111827" text-anchor="middle">线程块 4:q 行 384–499 → 扫全部 KV</text>
+<text x="60" y="312" font-size="11" fill="#6b7280" text-anchor="start">每块把一片 KV 搬进片上,对 128 个 q 复用 128 次:算力瓶颈;</text>
+<text x="60" y="330" font-size="11" fill="#6b7280" text-anchor="start">并行度 = q 块数 × 头数,够多;右上角因果 mask 的部分直接跳过不算。</text>
+<line x1="560" y1="96" x2="560" y2="350" stroke="#d1d5db" stroke-dasharray="4 4"/>
+<text x="600" y="100" font-size="15" fill="#111827" text-anchor="start" font-weight="700">decode 段:1 个 q × 4000 个 KV,长条</text>
+<text x="600" y="120" font-size="12" fill="#6b7280" text-anchor="start">q 切不了,改切 KV:每块一段 KV</text>
+<rect x="600" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="626.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块1</text>
+<rect x="658" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="684.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块2</text>
+<rect x="716" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="742.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块3</text>
+<rect x="774" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="800.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块4</text>
+<rect x="832" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="858.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块5</text>
+<rect x="890" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="916.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块6</text>
+<rect x="948" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="974.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块7</text>
+<rect x="1006" y="132" width="52" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="1032.0" y="153.96" font-size="11" fill="#111827" text-anchor="middle">块8</text>
+<text x="830" y="190" font-size="11" fill="#6b7280" text-anchor="middle">每块:这 1 个 q 对自己那 500 个 KV 打分,各自算出局部最大值、局部指数和、局部加权和</text>
+<rect x="730" y="206" width="200" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="830.0" y="228.32" font-size="12" fill="#111827" text-anchor="middle">合并 kernel:8 份 → 1 份</text>
+<text x="600" y="270" font-size="11" fill="#6b7280" text-anchor="start">每片 KV 只被 1 个 q 用一次,搬进来就是为了读:带宽瓶颈,并行度靠切 KV 撑起来;</text>
+<text x="600" y="288" font-size="11" fill="#6b7280" text-anchor="start">不切的话一个头只有 1 个线程块,132 个 SM 大半空着。这就是 decode 侧的 split-KV 路径。</text>
+<line x1="30" y1="360" x2="1090" y2="360" stroke="#e5e7eb"/>
+<text x="30" y="390" font-size="15" fill="#111827" text-anchor="start" font-weight="700">段与片是两层:片是为了片上存储装得下,段是为了线程块数够多;段里面永远还有片</text>
+<text x="60" y="418" font-size="13" fill="#111827" text-anchor="start">prefill 段(q 有 500 行):1 段,段内 8 片,1 个线程块顺着扫</text>
+<rect x="60" y="428" width="1000" height="56" rx="6" fill="#ffffff" stroke="#5fa886" stroke-width="1"/>
+<rect x="72" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="195" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="318" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="441" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="564" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="687" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="810" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="933" y="438" width="111" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="560" y="504" font-size="11" fill="#6b7280" text-anchor="middle">片 → 片 → 片 … online 折算 8 次,扫完直接输出;并行度来自 500 行 q 分出的 4 块 × 64 头</text>
+<text x="60" y="538" font-size="13" fill="#111827" text-anchor="start">decode 段(q 只有 1 行):切 4 段,每段 1 个线程块,段内各自 2 片</text>
+<rect x="60" y="548" width="240" height="56" rx="6" fill="#ffffff" stroke="#6b5cd6" stroke-width="1"/>
+<rect x="72" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="184" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="312" y="548" width="240" height="56" rx="6" fill="#ffffff" stroke="#6b5cd6" stroke-width="1"/>
+<rect x="324" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="436" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="564" y="548" width="240" height="56" rx="6" fill="#ffffff" stroke="#6b5cd6" stroke-width="1"/>
+<rect x="576" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="688" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="816" y="548" width="240" height="56" rx="6" fill="#ffffff" stroke="#6b5cd6" stroke-width="1"/>
+<rect x="828" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="940" y="558" width="100" height="36" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="560" y="624" font-size="11" fill="#6b7280" text-anchor="middle">段内仍是片 → 片 online 折算;段与段并行,各交一份 (m, l, o),最后合并一次</text>
+<text x="30" y="672" font-size="12" fill="#6b7280" text-anchor="start">绿框 = 片,紫框 = 段,黄 = decode 的 KV 分块;合并的数学(局部最大值、指数和、加权和怎么折算)见知识库 FlashAttention 篇</text>
+</svg>

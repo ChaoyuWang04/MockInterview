@@ -75,6 +75,10 @@ flowchart TD
 
 前向靠的是 **CPU 跑在 GPU 前面**:第 $k$ 层还在算的时候,CPU 已经触发了第 $k+1$ 层的钩子,把它的 all-gather 发到一条专用的通信流上。反向则更主动——FSDP2 **默认就显式预取**下一个组的 all-gather,并把 reduce-scatter 放到另一条流上。所以"层粒度"之所以是甜点位,是因为**它恰好给每次通信配了一层计算做掩护**。CPU 侧开销太大导致提前量不够时,可以用 `set_modules_to_forward_prefetch` 把 all-gather 更早发出去。
 
+把一层的一生画出来,前向反向各一趟:
+
+![FSDP 第 i 层在每张卡上的一生:常驻只有本卡的 1/4 参数与 1/4 优化器状态,前向前 all-gather 凑齐整层权重、前向计算并存这层的输入、算完释放只剩 1/4;反向再 all-gather 一次、用前向存的输入算整层梯度、reduce-scatter 后各卡只留 1/4 梯度、释放权重与完整梯度,优化器只更新自己那 1/4;算这层时下一层的 all-gather 已在后台预取](/kb-images/04-Infra/fsdp-layer-lifecycle.svg)
+
 ### 一段最小用法
 
 ```python

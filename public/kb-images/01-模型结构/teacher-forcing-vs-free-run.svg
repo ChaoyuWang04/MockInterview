@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">自由生成:输入是自己的上一个输出,错了就一路错,只能串行;teacher forcing:输入是真实词,四个位置一起算</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">红 = 模型自己猜出来、已经偏掉的输入,黄 = 模型的输出 / 预测分布,白 = 数据里的真实词。</text>
+<text x="30" y="100" font-size="15" fill="#111827" text-anchor="start" font-weight="700">自由生成(推理时)</text>
+<rect x="80" y="112" width="180" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="170.0" y="138.68" font-size="13" fill="#111827" text-anchor="middle">今天</text>
+<line x1="170" y1="158" x2="170" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="80" y="182" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="170.0" y="208.68" font-size="13" fill="#111827" text-anchor="middle">输出:天空</text>
+<polyline points="262,204 300,204 300,134 338,134" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="340" y="112" width="180" height="44" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="430.0" y="138.68" font-size="13" fill="#111827" text-anchor="middle">天空</text>
+<line x1="430" y1="158" x2="430" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="340" y="182" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="430.0" y="208.68" font-size="13" fill="#111827" text-anchor="middle">输出:是</text>
+<polyline points="522,204 560,204 560,134 598,134" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="600" y="112" width="180" height="44" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="690.0" y="138.68" font-size="13" fill="#111827" text-anchor="middle">是</text>
+<line x1="690" y1="158" x2="690" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="600" y="182" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="690.0" y="208.68" font-size="13" fill="#111827" text-anchor="middle">输出:蓝</text>
+<polyline points="782,204 820,204 820,134 858,134" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="860" y="112" width="180" height="44" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><text x="950.0" y="138.68" font-size="13" fill="#111827" text-anchor="middle">蓝</text>
+<text x="80" y="258" font-size="12" fill="#6b7280" text-anchor="start">位置 2 猜成「天空」,位置 3 的输入就是「天空」,后面全偏了;而且下一个输入要等上一个算完。</text>
+<text x="30" y="306" font-size="15" fill="#111827" text-anchor="start" font-weight="700">teacher forcing(训练时)</text>
+<rect x="80" y="318" width="180" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="170.0" y="344.68" font-size="13" fill="#111827" text-anchor="middle">今天</text>
+<line x1="170" y1="364" x2="170" y2="386" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="80" y="388" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="170.0" y="414.32" font-size="12" fill="#111827" text-anchor="middle">p(下一个|今天)</text>
+<rect x="340" y="318" width="180" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="430.0" y="344.68" font-size="13" fill="#111827" text-anchor="middle">天气</text>
+<line x1="430" y1="364" x2="430" y2="386" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="340" y="388" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="430.0" y="414.32" font-size="12" fill="#111827" text-anchor="middle">p(下一个|…天气)</text>
+<rect x="600" y="318" width="180" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="690.0" y="344.68" font-size="13" fill="#111827" text-anchor="middle">很</text>
+<line x1="690" y1="364" x2="690" y2="386" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="600" y="388" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="690.0" y="414.32" font-size="12" fill="#111827" text-anchor="middle">p(下一个|…很)</text>
+<rect x="860" y="318" width="180" height="44" rx="4" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/><text x="950.0" y="344.68" font-size="13" fill="#111827" text-anchor="middle">好</text>
+<line x1="950" y1="364" x2="950" y2="386" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="860" y="388" width="180" height="44" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="950.0" y="414.32" font-size="12" fill="#111827" text-anchor="middle">p(下一个|…好)</text>
+<text x="80" y="466" font-size="12" fill="#6b7280" text-anchor="start">输出之间没有箭头连回输入:模型在位置 2 猜成「天空」也没关系,位置 3 照样看到「天气」。四个位置互不依赖,所以能一次算完。</text>
+<text x="80" y="486" font-size="12" fill="#6b7280" text-anchor="start">代价是训练时从没见过自己的错误,推理时一旦偏了没练过怎么纠回来,这就是暴露偏差(下一节)。</text>
+<text x="30" y="530" font-size="12" fill="#6b7280" text-anchor="start">红 = 已经偏掉的输入,黄 = 模型输出,白 = 真实词</text>
+</svg>
