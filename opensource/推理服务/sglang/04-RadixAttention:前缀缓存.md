@@ -35,3 +35,46 @@
 4. **同一批里的同源请求。** vLLM 刻意不去重,一个哈希可以对应多块。SGLang 用模拟树在批内查重,prompt 只算一次。
 5. **换权重之后。** SGLang 给 RL 留了开关,权重更新后整棵树清空,旧 KV 一个不留。
 6. **树的形态。** SGLang 默认用统一树,一棵树里按层型分成全注意力、滑动窗口、Mamba 几个组件,每个组件自己的驱逐链;树核可以换成 Rust 实现。
+
+## 五、调参与观测
+
+**参数在哪调。** 树的开关、排队策略、驱逐策略都是启动参数,改了要重启;两个内部阈值和树核后端是环境变量;会话引用要客户端配合传 `session_id` 并调 `/close_session`。运行时能做的是 `/flush_cache` 清空整棵树,以及权重更新接口带 `flush_cache` 参数。
+
+| 参数 | 在哪调 | 默认 | 调了之后 | 怎么看 |
+|---|---|---|---|---|
+| `--disable-radix-cache` | 启动 | 关(树开着) | 关掉树:没有共享前缀的负载省下每轮匹配和插入,吞吐略升;有共享前缀的负载 TTFT 直接变差 | `Prefill batch` 行 `#cached-token` 归零 |
+| `--schedule-policy` | 启动 | lpm | lpm 按命中长度排,同源连着进,命中率高但每轮多一次匹配;fcfs 按到达;dfs-weight 按子树权重,RL rollout 和同文档多问更好;hrrn 防命中短的请求饿死 | `#cached-token` 与队列里长尾请求的等待时间 |
+| `--radix-eviction-policy` | 启动 | lru | lfu、slru:热点 prompt 不被一次性流量冲掉;tlru:多轮、agent 的尾 TTFT 优先于总命中率;priority:跟准入的优先级一致 | 换策略前后的 `#cached-token` 和 TTFT 分布 |
+| `--radix-eviction-policy-config` | 启动,JSON | 空 | slru 的 `protected_threshold`(默认 2),tlru 的 `threshold` 与 `next_prompt_estimate`;键写错启动就报错 | 启动是否成功 |
+| `--enable-session-radix-cache` | 启动 | 关 | 同一 `session_id` 的 KV 比无主的 KV 后被丢;是软保护,不够时照样丢 | 多轮负载显存紧张时的 TTFT |
+| `--disaggregation-decode-enable-radix-cache` | 启动 | 关 | PD 分离的 decode 端先匹配再收 KV;多轮走 PD 时开;与 HiSparse、推测解码不兼容 | decode 端的 `#cached-token` |
+| `--page-size` | 启动 | 1 | 别手调;被后端钉成 64 后命中只能到页边界 | `cached_tokens` 是否总是 64 的倍数 |
+| `--mem-fraction-static` | 启动 | 按显卡 | 树只用空闲显存;想要命中率就留余量 | `token usage` 贴着 1 时树已经被驱逐空 |
+| `SGLANG_UNIFIED_RADIX_TREE_CORE_BACKEND` | 环境变量 | python | 切 rust:匹配成 CPU 瓶颈时试;不支持策略参数 JSON | 调度一轮的耗时 |
+| 批内查重阈值 | 环境变量 | 32 / 32 | 命中多短才查、批内共享多长才降级;设 -1 关掉 | RL 同 prompt 多条时的 `#new-token` |
+| `SGLANG_RADIX_FORCE_MISS` | 环境变量 | 关 | 调试用,让匹配返回零命中,拿来对照「没有缓存会怎样」 | 对照前后的 TTFT |
+
+**怎么看。** `Prefill batch` 行的 `#new-token` 对 `#cached-token` 就是当前批的命中比;响应 `meta_info` 里的 `cached_tokens` 是这一条请求的命中数,开了三层缓存还会细分命中落在哪一层。`#queue-req` 超过 128 时 lpm 已经退回先来先服务。多轮负载看 TTFT 的分布而不是平均值,上一轮回答被丢的那一次会拉出一根长尾。
+
+| 症状 | 先查 | 然后 |
+|---|---|---|
+| 命中率突然掉一半 | 启动日志 page_size 是否被后端改;`#queue-req` 是否超过 128 | 换后端;限流或换 dfs-weight |
+| 多轮负载 TTFT 有长尾 | `token usage` 是否贴着 1,树被驱逐空 | 留余量、开 HiCache、tlru 或 session cache |
+| 同 prompt 的 64 条 rollout 全部重算 | 是否同批到达;批内查重阈值 | 换 dfs-weight |
+| 多 LoRA 服务命中率低 | 每个适配器各一棵子树,同样的 token 不共享 | 按适配器分实例 |
+| PD 分离下 P 每次全量传 | decode 端树默认关 | 开 `--disaggregation-decode-enable-radix-cache` |
+| 换策略后启动报错 | JSON 键名;rust 树核不接受 JSON | 对照文档的键 |
+
+## 六、常见误区
+
+- **命中率低就换驱逐策略。** 多数时候是在跑的请求把显存占满,树被驱逐空了,换什么策略都一样。先看 `token usage`,留余量或开三层缓存。
+- **全命中的请求 TTFT 应该接近 0。** 永远还要算最后 1 个 token,因为要拿它出 logits。
+- **prompt 完全一样就一定共享。** 不同 LoRA 适配器的请求各在一棵子树里,一个 token 都不共享。多模态的图片按内容哈希,同一张图才共享。
+- **lpm 一直在生效。** 等待队列超过 128 条它就退回先来先服务,日志不提示。压测时命中率随并发掉,先看 `#queue-req`。
+- **上一轮的回答和系统提示词一样安全。** 回答那一段是叶子,先被丢;系统提示词是根,最后丢。多轮负载显存紧张时长尾 TTFT 来自这里。
+- **PD 分离下前缀缓存自动生效。** decode 端默认关的,不开就是 P 端每次全量传。
+- **开了 session cache 就自动按会话保护。** 客户端要在每条请求带 `session_id`,会话结束要调 `/close_session`,错误和取消路径也要调,否则引用一直挂着。它是软保护,不是钉住。
+- **RL 换了权重树会自己失效。** 不会。权重更新接口不带 flush_cache 就是旧 KV 配新权重,没有任何报错。
+- **离线评测也该开树。** 随机采样的评测集没有共享前缀,树只增加每轮的匹配和插入,关掉更快。
+- **Rust 树核是默认。** 默认是 Python,rust 要环境变量切,而且不支持驱逐策略的参数 JSON。
+- **命中率要自己估。** 不用,响应里有 `cached_tokens`,想知道没缓存会怎样用强制未命中的开关跑一遍对照。
