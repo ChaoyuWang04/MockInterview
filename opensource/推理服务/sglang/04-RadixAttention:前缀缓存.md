@@ -42,17 +42,17 @@
 
 | 参数 | 在哪调 | 默认 | 调了之后 | 怎么看 |
 |---|---|---|---|---|
-| `--disable-radix-cache` | 启动 | 关(树开着) | 关掉树:没有共享前缀的负载省下每轮匹配和插入,吞吐略升;有共享前缀的负载 TTFT 直接变差 | `Prefill batch` 行 `#cached-token` 归零 |
-| `--schedule-policy` | 启动 | lpm | lpm 按命中长度排,同源连着进,命中率高但每轮多一次匹配;fcfs 按到达;dfs-weight 按子树权重,RL rollout 和同文档多问更好;hrrn 防命中短的请求饿死 | `#cached-token` 与队列里长尾请求的等待时间 |
-| `--radix-eviction-policy` | 启动 | lru | lfu、slru:热点 prompt 不被一次性流量冲掉;tlru:多轮、agent 的尾 TTFT 优先于总命中率;priority:跟准入的优先级一致 | 换策略前后的 `#cached-token` 和 TTFT 分布 |
-| `--radix-eviction-policy-config` | 启动,JSON | 空 | slru 的 `protected_threshold`(默认 2),tlru 的 `threshold` 与 `next_prompt_estimate`;键写错启动就报错 | 启动是否成功 |
-| `--enable-session-radix-cache` | 启动 | 关 | 同一 `session_id` 的 KV 比无主的 KV 后被丢;是软保护,不够时照样丢 | 多轮负载显存紧张时的 TTFT |
-| `--disaggregation-decode-enable-radix-cache` | 启动 | 关 | PD 分离的 decode 端先匹配再收 KV;多轮走 PD 时开;与 HiSparse、推测解码不兼容 | decode 端的 `#cached-token` |
-| `--page-size` | 启动 | 1 | 别手调;被后端钉成 64 后命中只能到页边界 | `cached_tokens` 是否总是 64 的倍数 |
-| `--mem-fraction-static` | 启动 | 按显卡 | 树只用空闲显存;想要命中率就留余量 | `token usage` 贴着 1 时树已经被驱逐空 |
-| `SGLANG_UNIFIED_RADIX_TREE_CORE_BACKEND` | 环境变量 | python | 切 rust:匹配成 CPU 瓶颈时试;不支持策略参数 JSON | 调度一轮的耗时 |
-| 批内查重阈值 | 环境变量 | 32 / 32 | 命中多短才查、批内共享多长才降级;设 -1 关掉 | RL 同 prompt 多条时的 `#new-token` |
-| `SGLANG_RADIX_FORCE_MISS` | 环境变量 | 关 | 调试用,让匹配返回零命中,拿来对照「没有缓存会怎样」 | 对照前后的 TTFT |
+| `--disable-radix-cache` · 关掉前缀树 | 启动 | 关(树开着) | 关掉树:没有共享前缀的负载省下每轮匹配和插入,吞吐略升;有共享前缀的负载 TTFT 直接变差 | `Prefill batch` 行 `#cached-token` 归零 |
+| `--schedule-policy` · 等待队列按什么排 | 启动 | lpm | lpm 按命中长度排,同源连着进,命中率高但每轮多一次匹配;fcfs 按到达;dfs-weight 按子树权重,RL rollout 和同文档多问更好;hrrn 防命中短的请求饿死 | `#cached-token` 与队列里长尾请求的等待时间 |
+| `--radix-eviction-policy` · 显存不够时先丢谁 | 启动 | lru | lfu、slru:热点 prompt 不被一次性流量冲掉;tlru:多轮、agent 的尾 TTFT 优先于总命中率;priority:跟准入的优先级一致 | 换策略前后的 `#cached-token` 和 TTFT 分布 |
+| `--radix-eviction-policy-config` · 驱逐策略的参数 | 启动,JSON | 空 | slru 的 `protected_threshold`(默认 2),tlru 的 `threshold` 与 `next_prompt_estimate`;键写错启动就报错 | 启动是否成功 |
+| `--enable-session-radix-cache` · 按会话保护缓存 | 启动 | 关 | 同一 `session_id` 的 KV 比无主的 KV 后被丢;是软保护,不够时照样丢 | 多轮负载显存紧张时的 TTFT |
+| `--disaggregation-decode-enable-radix-cache` · PD 分离的 decode 端开树 | 启动 | 关 | PD 分离的 decode 端先匹配再收 KV;多轮走 PD 时开;与 HiSparse、推测解码不兼容 | decode 端的 `#cached-token` |
+| `--page-size` · 分配的最小单位是几个 token | 启动 | 1 | 别手调;被后端钉成 64 后命中只能到页边界 | `cached_tokens` 是否总是 64 的倍数 |
+| `--mem-fraction-static` · 权重加 KV 占显存的比例 | 启动 | 按显卡 | 树只用空闲显存;想要命中率就留余量 | `token usage` 贴着 1 时树已经被驱逐空 |
+| `SGLANG_UNIFIED_RADIX_TREE_CORE_BACKEND` · 树用 Python 还是 Rust 实现 | 环境变量 | python | 切 rust:匹配成 CPU 瓶颈时试;不支持策略参数 JSON | 调度一轮的耗时 |
+| 批内查重阈值 · 同批同源多短才查、多长才让路 | 环境变量 | 32 / 32 | 命中多短才查、批内共享多长才降级;设 -1 关掉 | RL 同 prompt 多条时的 `#new-token` |
+| `SGLANG_RADIX_FORCE_MISS` · 强制所有请求不命中 | 环境变量 | 关 | 调试用,让匹配返回零命中,拿来对照「没有缓存会怎样」 | 对照前后的 TTFT |
 
 **怎么看。** `Prefill batch` 行的 `#new-token` 对 `#cached-token` 就是当前批的命中比;响应 `meta_info` 里的 `cached_tokens` 是这一条请求的命中数,开了三层缓存还会细分命中落在哪一层。`#queue-req` 超过 128 时 lpm 已经退回先来先服务。多轮负载看 TTFT 的分布而不是平均值,上一轮回答被丢的那一次会拉出一根长尾。
 
