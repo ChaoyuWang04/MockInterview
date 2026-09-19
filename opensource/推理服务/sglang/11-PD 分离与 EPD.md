@@ -4,7 +4,7 @@ prefill 为什么会打断 decode、拆开之后多出来的传输这件事、�
 
 ## 一、核心问题
 
-SGLang 的调度器一步只做一件事,有 prefill 批就先跑 prefill(04 章)。一条 8000 token 的 prompt 在 70B 模型上 prefill 要 200–800 毫秒,这一步里所有在跑的 decode 请求的下一个 token 都在等;并发 100–500、prompt 又长的负载下,TPOT 的 P99 从 30 毫秒跳到 500 毫秒以上,均值看着还行。DP attention 再放大一次:8 个 DP rank 每步要同步,只要 1 个 rank 在做 prefill,其他 7 个 rank 的 decode 都陪着等。多模态模型再多一层:ViT 编码 1–10 张图要 50–500 毫秒算力,和 prefill 在同一张卡上抢,图多的负载下所有请求的 TTFT 一起变差,而且 encoder 权重占着每张 decode 卡的显存。同一张卡上按 SM 分区的 PD 多路复用(`--enable-pdmux`,07 章)只能缓解,根治要把它们拆到不同的卡上。
+SGLang 的调度器一步只做一件事,有 prefill 批就先跑 prefill(02 章)。一条 8000 token 的 prompt 在 70B 模型上 prefill 要 200–800 毫秒,这一步里所有在跑的 decode 请求的下一个 token 都在等;并发 100–500、prompt 又长的负载下,TPOT 的 P99 从 30 毫秒跳到 500 毫秒以上,均值看着还行。DP attention 再放大一次:8 个 DP rank 每步要同步,只要 1 个 rank 在做 prefill,其他 7 个 rank 的 decode 都陪着等。多模态模型再多一层:ViT 编码 1–10 张图要 50–500 毫秒算力,和 prefill 在同一张卡上抢,图多的负载下所有请求的 TTFT 一起变差,而且 encoder 权重占着每张 decode 卡的显存。同一张卡上按 SM 分区的 PD 多路复用(`--enable-pdmux`,07 章)只能缓解,根治要把它们拆到不同的卡上。
 
 ## 二、解法:D 先腾地方,P 算完就推
 
