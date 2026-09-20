@@ -48,13 +48,13 @@ MLA 把 KV 压成 1 个头,TP 切不开它:TP=8 时 8 张卡各存一份完整 K
 | 参数 | 在哪调 | 默认 | 调了之后 | 怎么看 |
 |---|---|---|---|---|
 | `--ep-size` · 专家切几份 | 启动 | 1 | 大于 1 且后端 none:每卡少放专家,通信仍是 all-reduce;选了 all-to-all 后端被改成 tp | 日志 `The expert parallel size is adjusted from … to the tensor parallel size` |
-| `--moe-a2a-backend` · 用哪种 all-to-all | 启动 | none | deepep:走 dispatch 与 combine,ep=tp;flashinfer、flashinfer_megamoe、pplx 要求开 DP attention 且 dp=tp;deepep_v2 强制 deep_gemm 且不能开 TBO | 启动报错信息;`/get_server_info` |
+| `--moe-a2a-backend` · 用哪种 all-to-all | 启动 | none | deepep:走 dispatch 与 combine,ep=tp;flashinfer、flashinfer_megamoe、pplx 要求开 DP attention 且 dp=tp;deepep_v2 强制 deep_gemm 且不能开 TBO | 启动报错信息;`/server_info` |
 | `--moe-runner-backend` · 专家 GEMM 用哪个 kernel | 启动 | auto | 19 个选项;deepep 低时延模式下必须有 DeepGEMM;cutlass 的 FP8 只能 ep=1 | 启动断言 |
 | `--deepep-mode` · normal / low_latency / auto | 启动 | auto | normal:两个阶段的 CUDA graph 都关,TPOT 明显变长;low_latency:prefill 也走 masked 路径,受每 rank token 上限约束 | 日志 `Cuda graph is disabled because deepep_mode=` |
 | `--deepep-config` · DeepEP normal 模式的调优 JSON | 启动 | 无 | 给 normal_dispatch 与 normal_combine 各一组配置,两组 num_sms 必须相同;SM 数少于总 SM 数的 50% 时打警告 | 日志 `Only use … SMs for DeepEP communication` |
 | `SGLANG_DEEPEP_NUM_MAX_DISPATCH_TOKENS_PER_RANK` · low_latency 每 rank 每层缓冲多少 token | 环境变量 | 128 | 每 rank 一步派出的 token 数(decode 批乘草稿数)必须在它之内;调高缓冲显存涨,硬上限 1024 | 就绪前 `available_gpu_mem` |
 | `--enable-dp-attention` 加 `--dp-size` · 注意力按数据并行 | 启动 | 关;1 | 开:KV 不再重复,`max_total_num_tokens` 每卡翻到 tp/dp 倍量级;每步多一次 8 整数同步;块大小除以 dp、保守度乘 0.3(02 章);dp=1 时静默不生效 | 日志 `DP attention is enabled. chunked prefill size is adjusted`;每个调度进程的日志前缀 `DP0 TP0` |
-| `--enable-dp-lm-head` · lm head 在注意力 TP 组内切词表 | 启动 | 关 | 开:省掉跨 DP 的 all-gather;每卡批小时 GEMM 效率低 | `/get_server_info` |
+| `--enable-dp-lm-head` · lm head 在注意力 TP 组内切词表 | 启动 | 关 | 开:省掉跨 DP 的 all-gather;每卡批小时 GEMM 效率低 | `/server_info` |
 | `--enable-tp-lm-head-all-to-all` · lm head 用 all-to-all 代替 all-gather | 启动 | decode 节点且 dp=tp 时开 | 关:退回全词表 all-gather;和 dp-lm-head 互斥 | 同上 |
 | `--moe-dense-tp-size` · 稠密 MLP 层的 TP | 启动 | 无 | 大 TP 下稠密层维度太小报 GEMM 错时设 1;它改变 MoE 输入是 all-gather 还是 all-reduce | 启动报错 |
 | `--enable-two-batch-overlap` · 双批重叠 | 启动 | 关 | 开:decode 与 prefill 各按半批错开,吞吐上去;decode 图只录 TBO 版、桶对齐到 2;可断 prefill 图被关;不满足 4 种层报未实现 | `Prefill batch` 与 `Decode batch` 行的吞吐;`SGLANG_TBO_DEBUG` |
@@ -64,7 +64,7 @@ MLA 把 KV 压成 1 个头,TP 切不开它:TP=8 时 8 张卡各存一份完整 K
 | `--eplb-rebalance-num-iterations` · 多少步重排一次 | 启动 | 1000 | 调小:跟负载变化更紧,停服更频繁;必须不小于记录缓冲 | 同上出现的频率 |
 | `--eplb-rebalance-layers-per-chunk` · 一次搬几层 | 启动 | 无(全搬) | 设 4 或 8:每次前向只搬几层,单次停顿短,整轮重排拖长;设了就不打 `time=` | `time=` 是否出现 |
 | `--eplb-min-rebalancing-utilization-threshold` · 均衡度高于多少就不重排 | 启动 | 1.0 | 设 0.8:窗口均衡度已高于 0.8 时跳过;1.0 等于每次都重排且不记历史 | 日志 `Skipped ep rebalancing` |
-| `--eplb-algorithm` · 重排算法 | 启动 | auto | auto:专家分组数能被节点数整除选 deepseek_hierarchical,否则 deepseek;弹性 EP 强制 elasticity_aware | `/get_server_info` |
+| `--eplb-algorithm` · 重排算法 | 启动 | auto | auto:专家分组数能被节点数整除选 deepseek_hierarchical,否则 deepseek;弹性 EP 强制 elasticity_aware | `/server_info` |
 | `--ep-num-redundant-experts` · 多放几个冗余专家槽 | 启动 | 0 | 设 32:热门专家有地方复制,每卡多放 32/ep 个专家的权重;逻辑加冗余必须被 ep 整除 | 就绪前 `available_gpu_mem` |
 | `--ep-dispatch-algorithm` · token 落到哪个副本 | 启动 | 无 | static 固定表、dynamic 按行号轮转、lp 求解器;none 后端下 static 与 lp 报错 | 启动报错 |
 | `--init-expert-location` · 启动就按记录摆专家 | 启动 | trivial | 给 .pt 或 .json:含 physical_to_logical_map 直接用,含 logical_count 先算一次 EPLB | 日志 `init_expert_location from init_by_…` |

@@ -65,7 +65,7 @@ SGLang 自己加的东西:
 | `pinned` · 钉住不踢 | `--lora-paths` 的 JSON 或 `/load_lora_adapter` | false | 钉住的免搬运;最多槽数减 1;钉住的越多,给其他 adapter 剩的槽越少 | 报错 `not allowed to pin all slots` |
 | `lora_path` · 这条请求用哪个 adapter | 请求体;OpenAI 用 `model` 的 `base:adapter` | 空,走 base | 没装过的名字直接报错 | 响应错误 `has never been loaded` |
 
-**怎么看。** LoRA 没有任何 Prometheus 指标,只能靠日志和接口。info 级只有这些:启动时的后端行;装和卸各一对 `LoRA adapter loading starts / completes`,带 `avail mem`,前后相减就是这个 adapter 在显存里的大小;装完 `loaded weights for target modules [...]` 列出真正接上的模块;`max-loaded-loras` 触发的 `Unloading least recently used` 和 `Reloading evicted adapter`。踢槽、排空、重叠搬运全是 debug 级,排查槽位抖动要临时开 `--log-level debug`。`/v1/models` 列出当前注册的 adapter,`/get_server_info` 读回启动参数。稳态看 Decode batch 那一行:`#queue-req` 高、`#running-req` 低、`token usage` 也低,三者同时出现就是卡在槽,不是卡在 KV。
+**怎么看。** LoRA 没有任何 Prometheus 指标,只能靠日志和接口。info 级只有这些:启动时的后端行;装和卸各一对 `LoRA adapter loading starts / completes`,带 `avail mem`,前后相减就是这个 adapter 在显存里的大小;装完 `loaded weights for target modules [...]` 列出真正接上的模块;`max-loaded-loras` 触发的 `Unloading least recently used` 和 `Reloading evicted adapter`。踢槽、排空、重叠搬运全是 debug 级,排查槽位抖动要临时开 `--log-level debug`。`/v1/models` 列出当前注册的 adapter,`/server_info` 读回启动参数。稳态看 Decode batch 那一行:`#queue-req` 高、`#running-req` 低、`token usage` 也低,三者同时出现就是卡在槽,不是卡在 KV。
 
 | 症状 | 先查 | 然后 |
 |---|---|---|

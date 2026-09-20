@@ -41,7 +41,7 @@ TP 跨机器就撞上机间带宽,于是把层切成几段跨机器接力(PP)。
 
 ## 五、调参与观测
 
-**参数在哪调。** 并行度、通信实现、多机拓扑全是启动参数,改了要重启;通信相关的内部开关是环境变量。运行时只有一件事能改:`/set_internal_state` 改 `pp_max_micro_batch_size`,范围 1 到 `max_running_requests` 除以 pp_size。`/get_server_info` 能读回 `attn_tp_size` 这些派生出来的宽度。
+**参数在哪调。** 并行度、通信实现、多机拓扑全是启动参数,改了要重启;通信相关的内部开关是环境变量。运行时只有一件事能改:`/set_internal_state` 改 `pp_max_micro_batch_size`,范围 1 到 `max_running_requests` 除以 pp_size。`/server_info` 能读回 `attn_tp_size` 这些派生出来的宽度。
 
 | 参数 | 在哪调 | 默认 | 调了之后 | 怎么看 |
 |---|---|---|---|---|
@@ -93,7 +93,7 @@ TP 跨机器就撞上机间带宽,于是把层切成几段跨机器接力(PP)。
 - **开了 PP 吞吐降了,去查 GPU 利用率。** 第一层原因是重叠调度被关了,02 章那一行 warning 最常被略过;第二层是每微批并发上限被除以了 pp_size。PP 是给「TP 用满整机还装不下」和「128K 级 prompt 的 TTFT」的,短请求高并发换 TP。
 - **以为动态分块单机也能用。** 只有 pp 大于 1 才会构造它,pp 为 1 时旗标静默无效,日志里一个字都没有。
 - **以为 `--chunked-prefill-size` 在动态分块下还是「每块多大」。** 它变成了初始块和目标耗时的定义,后面的块从它往下缩到最少 1/4。按固定块的最优值直接开动态分块,块会太多太碎;文档说设成 2–3 倍。
-- **以为 `SGLANG_PP_LAYER_PARTITION` 是启动参数。** 它不在环境变量注册表里,是直接读进程环境的,`/get_server_info` 看不到;写错层数和直接报错,不会静默均分。
+- **以为 `SGLANG_PP_LAYER_PARTITION` 是启动参数。** 它不在环境变量注册表里,是直接读进程环境的,`/server_info` 看不到;写错层数和直接报错,不会静默均分。
 - **以为 prefill CP 省 KV 显存。** 名字里有「上下文」。它切的是 prefill 的计算,K/V 算完 all-gather 回每张卡;省显存的是 DCP,而 DCP 只切 MLA 的 KV。两个功能两个旗标。
 - **只给 `--attn-cp-size` 不给 `--enable-prefill-cp`。** 前者只建组、只影响 MoE 前的 token 共享;真正切序列要开关加策略,不给策略直接报错。
 - **以为 PP 和推测解码能一起开。** 默认断言拒绝;NPU 例外;CUDA 上只有实验环境变量,而且限单层 EAGLE、非重叠、非 PD、非自适应、非 DP attention。
