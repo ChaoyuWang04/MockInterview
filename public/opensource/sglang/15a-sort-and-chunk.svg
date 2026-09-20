@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+
+  <text x="40" y="36" font-size="19" font-weight="700" fill="#111827">一批 token 怎么变成线程组:两条分段路径</text>
+  <text x="40" y="60" font-size="13" fill="#6b7280">例子:同一步里 4 条请求 —— R1 用 adapter a、这一步有 48 个 token;R2 用 b、R3 用 a、R4 不带 adapter,各 1 个 token。块长 16。</text>
+  <text x="40" y="80" font-size="13" fill="#6b7280">绿 = adapter a 的活,紫 = adapter b 的活,灰 = 这一组进去就退。方框数就是线程组数。</text>
+
+  <text x="40" y="120" font-size="14" font-weight="700" fill="#111827">按请求分段(老路径):一条请求一组,组的高度取这一批最长的那条</text>
+
+  <!-- R1 -->
+  <rect x="60" y="134" width="200" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4"/>
+  <text x="160" y="153" font-size="12" fill="#111827" text-anchor="middle">R1 · adapter a · 48 token</text>
+  <rect x="60" y="170" width="200" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="160" y="190" font-size="11" fill="#111827" text-anchor="middle">第 1–16 行</text>
+  <rect x="60" y="208" width="200" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="160" y="228" font-size="11" fill="#111827" text-anchor="middle">第 17–32 行</text>
+  <rect x="60" y="246" width="200" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="160" y="266" font-size="11" fill="#111827" text-anchor="middle">第 33–48 行</text>
+
+  <!-- R2 -->
+  <rect x="320" y="134" width="200" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4"/>
+  <text x="420" y="153" font-size="12" fill="#111827" text-anchor="middle">R2 · adapter b · 1 token</text>
+  <rect x="320" y="170" width="200" height="32" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="420" y="190" font-size="11" fill="#111827" text-anchor="middle">第 1 行,只有这 1 行</text>
+  <rect x="320" y="208" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="420" y="228" font-size="11" fill="#6b7280" text-anchor="middle">超出这一段,退</text>
+  <rect x="320" y="246" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="420" y="266" font-size="11" fill="#6b7280" text-anchor="middle">超出这一段,退</text>
+
+  <!-- R3 -->
+  <rect x="580" y="134" width="200" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4"/>
+  <text x="680" y="153" font-size="12" fill="#111827" text-anchor="middle">R3 · adapter a · 1 token</text>
+  <rect x="580" y="170" width="200" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="680" y="190" font-size="11" fill="#111827" text-anchor="middle">第 1 行,只有这 1 行</text>
+  <rect x="580" y="208" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="680" y="228" font-size="11" fill="#6b7280" text-anchor="middle">超出这一段,退</text>
+  <rect x="580" y="246" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="680" y="266" font-size="11" fill="#6b7280" text-anchor="middle">超出这一段,退</text>
+
+  <!-- R4 -->
+  <rect x="840" y="134" width="200" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4"/>
+  <text x="940" y="153" font-size="12" fill="#111827" text-anchor="middle">R4 · base · 1 token</text>
+  <rect x="840" y="170" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="940" y="190" font-size="11" fill="#6b7280" text-anchor="middle">这一格 rank 是 0,整组退</text>
+  <rect x="840" y="208" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="940" y="228" font-size="11" fill="#6b7280" text-anchor="middle">这一格 rank 是 0,整组退</text>
+  <rect x="840" y="246" width="200" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="940" y="266" font-size="11" fill="#6b7280" text-anchor="middle">这一格 rank 是 0,整组退</text>
+
+  <text x="60" y="302" font-size="12" fill="#6b7280">组的高度由这一批最长的那条(48 个 token)定:12 个线程组开出去,只有 5 个真在算,另外 7 个进去就退。</text>
+
+  <text x="40" y="344" font-size="14" font-weight="700" fill="#111827">排序后切定长块(默认):51 个 token 先按身份排成一排,同身份的连成一片,每片按 16 个切</text>
+
+  <rect x="60" y="360" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="135" y="379" font-size="12" fill="#111827" text-anchor="middle">adapter a</text>
+  <text x="135" y="396" font-size="11" fill="#6b7280" text-anchor="middle">16 个 token</text>
+
+  <rect x="226" y="360" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="301" y="379" font-size="12" fill="#111827" text-anchor="middle">adapter a</text>
+  <text x="301" y="396" font-size="11" fill="#6b7280" text-anchor="middle">16 个 token</text>
+
+  <rect x="392" y="360" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="467" y="379" font-size="12" fill="#111827" text-anchor="middle">adapter a</text>
+  <text x="467" y="396" font-size="11" fill="#6b7280" text-anchor="middle">16 个 token</text>
+
+  <rect x="558" y="360" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="633" y="379" font-size="12" fill="#111827" text-anchor="middle">adapter a</text>
+  <text x="633" y="396" font-size="11" fill="#6b7280" text-anchor="middle">1 个 token</text>
+
+  <rect x="724" y="360" width="150" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="799" y="379" font-size="12" fill="#111827" text-anchor="middle">adapter b</text>
+  <text x="799" y="396" font-size="11" fill="#6b7280" text-anchor="middle">1 个 token</text>
+
+  <rect x="890" y="360" width="150" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="965" y="379" font-size="12" fill="#6b7280" text-anchor="middle">base</text>
+  <text x="965" y="396" font-size="11" fill="#6b7280" text-anchor="middle">1 个 token,退</text>
+
+  <text x="60" y="432" font-size="12" fill="#6b7280">块高固定是 16:一共 6 个线程组,只有装 base 的那一个空转。</text>
+  <text x="60" y="454" font-size="12" fill="#6b7280">组数跟这一批真实的 token 数走,和请求数、和最长那条有多长都无关。</text>
+  <text x="60" y="480" font-size="11" fill="#9ca3af">两条路径算出来的结果完全一样,差别只在开出去多少个线程组。</text>
+</svg>

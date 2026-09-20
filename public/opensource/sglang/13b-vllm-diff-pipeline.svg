@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+
+<rect x="30" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="163" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="296" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="429" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="562" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="695" y="150" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<rect x="30" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="163" y="330" width="123" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="296" y="330" width="123" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="429" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="562" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="695" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="828" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="961" y="330" width="123" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<rect x="30" y="436" width="1054" height="62" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="30" y1="108" x2="1090" y2="108" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="91" y1="238" x2="91" y2="256" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="224" y1="238" x2="91" y2="330" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="357" y1="238" x2="623" y2="330" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="490" y1="238" x2="889" y2="330" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="623" y1="238" x2="756" y2="330" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="756" y1="238" x2="1022" y2="330" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="91" y1="256" x2="490" y2="330" stroke="#8f8bd8" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+<text x="30" y="34" font-size="19" fill="#111827" font-weight="700">同一张分数表,两边的加工顺序:五件双方都要做的事,位置全错开了</text>
+<text x="30" y="58" font-size="11" fill="#6b7280">每条管线的格子按它自己的真实顺序从左往右排。绿 = 这一格在对面那条管线上找得到对位,紫 = 对面没有这一格。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280">虚线连的是两边的同一件事,线的斜度就是错位的大小;两条虚线交叉,说明这两件事的先后在两边是反的。</text>
+
+<text x="1084" y="140" font-size="13" fill="#111827" font-weight="700" text-anchor="end">vLLM</text>
+<text x="30" y="140" font-size="11" fill="#9ca3af">logprob 的快照取在这里 —— 任何加工开始之前</text>
+<text x="1084" y="320" font-size="13" fill="#111827" font-weight="700" text-anchor="end">SGLang</text>
+<text x="695" y="320" font-size="11" fill="#9ca3af" text-anchor="middle">logprob 默认取这一格之后那一份</text>
+
+<text x="91" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">划掉不该选的</text>
+<text x="91" y="202" font-size="10" fill="#6b7280" text-anchor="middle">白名单与禁词</text>
+<text x="91" y="218" font-size="10" fill="#6b7280" text-anchor="middle">是一对请求参数</text>
+<text x="224" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">惩罚</text>
+<text x="224" y="202" font-size="10" fill="#6b7280" text-anchor="middle">说过的词扣分</text>
+<text x="357" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">除温度</text>
+<text x="490" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">裁候选集</text>
+<text x="490" y="202" font-size="10" fill="#6b7280" text-anchor="middle">在分数空间</text>
+<text x="490" y="218" font-size="10" fill="#6b7280" text-anchor="middle">把淘汰的置负无穷</text>
+<text x="623" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">归一化</text>
+<text x="756" y="182" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">抽一个</text>
+
+<text x="91" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">惩罚</text>
+<text x="91" y="382" font-size="10" fill="#6b7280" text-anchor="middle">说过的词扣分</text>
+<text x="224" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">格式掩码</text>
+<text x="224" y="382" font-size="10" fill="#6b7280" text-anchor="middle">不合法的位置</text>
+<text x="224" y="398" font-size="10" fill="#6b7280" text-anchor="middle">置负无穷</text>
+<text x="357" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">偏置</text>
+<text x="357" y="382" font-size="10" fill="#6b7280" text-anchor="middle">给指定 token</text>
+<text x="357" y="398" font-size="10" fill="#6b7280" text-anchor="middle">加减分</text>
+<text x="490" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">自带的处理器</text>
+<text x="490" y="382" font-size="10" fill="#6b7280" text-anchor="middle">调用方给的</text>
+<text x="490" y="398" font-size="10" fill="#6b7280" text-anchor="middle">要服务开开关</text>
+<text x="623" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">除温度</text>
+<text x="756" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">归一化</text>
+<text x="889" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">裁候选集</text>
+<text x="889" y="382" font-size="10" fill="#6b7280" text-anchor="middle">在概率空间</text>
+<text x="889" y="398" font-size="10" fill="#6b7280" text-anchor="middle">置零再重新归一</text>
+<text x="1022" y="362" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">抽一个</text>
+
+<text x="291" y="284" font-size="11" fill="#8f8bd8" text-anchor="middle">同一件事,错开了 3 格</text>
+<text x="760" y="262" font-size="11" fill="#6b7280">两条虚线在这里交叉:裁候选集与归一化的先后反了</text>
+
+<text x="50" y="460" font-size="11" fill="#6b7280">紫色那两格在对面没有对位:vLLM 的掩码与偏置走的是另一套按注册顺序应用的处理器链,这张图不摆它们的位置。</text>
+<text x="50" y="482" font-size="11" fill="#6b7280">「划掉不该选的」在 vLLM 是一对请求参数、排在最前,在 SGLang 要服务开一个开关、排在掩码之后。图上不写参数名,两边的参数名都在第五节。</text>
+</svg>

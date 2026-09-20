@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="605" y1="106" x2="605" y2="634" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="130" x2="1090" y2="130" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="214" x2="1090" y2="214" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="298" x2="1090" y2="298" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="382" x2="1090" y2="382" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="466" x2="1090" y2="466" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="550" x2="1090" y2="550" stroke="#f3f4f6" stroke-width="1"/>
+<rect x="240" y="140" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="140" width="270" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="240" y="224" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="224" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="308" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="308" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="392" width="270" height="38" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="392" width="270" height="38" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="240" y="476" width="270" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="476" width="270" height="38" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="240" y="560" width="270" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="560" width="270" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="30" y="646" width="1060" height="38" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<polyline points="898,226 906,226 906,344 898,344" fill="none" stroke="#5fa886" stroke-width="1.4"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">六件事两边都要回答:每一行是一件必须有人做的事,左右两块就是各自的答法</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">颜色 = 这一侧为这件事投了多少工程:绿是默认就开着、不用配,黄是有这个东西但默认关着或要自己挑,灰是只做最低限度;白底虚线 = 这一侧根本没有这一层。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:右侧第二、三行外面那道括号,表示这两行在 SGLang 这边用的是同一个键;vLLM 那两行用的是两个不同的键。两边的参数名都在第五节。</text>
+<text x="375" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vLLM</text>
+<text x="755" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">SGLang</text>
+<text x="30" y="162" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 预处理的结果记不记</text>
+<text x="30" y="182" font-size="11" fill="#6b7280" text-anchor="start">同一张图第二次来</text>
+<text x="375" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">默认开,跨进程一对镜像</text>
+<text x="240" y="194" font-size="11" fill="#6b7280" text-anchor="start">对外进程只记大小,引擎进程存真张量</text>
+<text x="240" y="210" font-size="11" fill="#6b7280" text-anchor="start">命中时连跨进程传输都省了;配额按进程算</text>
+<text x="755" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">默认关,一个模型系例外</text>
+<text x="620" y="194" font-size="11" fill="#6b7280" text-anchor="start">只活在主进程里,不跨进程镜像</text>
+<text x="620" y="210" font-size="11" fill="#6b7280" text-anchor="start">预算还要按主进程个数均分,条数也有上限</text>
+<text x="30" y="246" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 编码器输出按什么键存</text>
+<text x="30" y="266" font-size="11" fill="#6b7280" text-anchor="start">这一级决定 ViT 跑不跑</text>
+<text x="375" y="248" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">媒体的内容标识</text>
+<text x="240" y="278" font-size="11" fill="#6b7280" text-anchor="start">挂了适配器要在键前加前缀:同一张图在不同</text>
+<text x="240" y="294" font-size="11" fill="#6b7280" text-anchor="start">适配器下输出不同。容量按 embedding 个数算</text>
+<text x="755" y="248" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">编码前那份特征张量的哈希</text>
+<text x="620" y="278" font-size="11" fill="#6b7280" text-anchor="start">取它的 sha256 前 8 字节</text>
+<text x="620" y="294" font-size="11" fill="#6b7280" text-anchor="start">容量按字节算,最近最少使用淘汰</text>
+<text x="914" y="252" font-size="11" fill="#5fa886" text-anchor="start">这两行</text>
+<text x="914" y="268" font-size="11" fill="#5fa886" text-anchor="start">共用一个键</text>
+<text x="30" y="330" font-size="14" fill="#111827" text-anchor="start" font-weight="700">③ 前缀缓存怎么认出图</text>
+<text x="30" y="350" font-size="11" fill="#6b7280" text-anchor="start">这一级决定 prefill 跑不跑</text>
+<text x="375" y="332" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">把媒体身份混进块哈希</text>
+<text x="240" y="362" font-size="11" fill="#6b7280" text-anchor="start">带上起始偏移,同一张图放在不同位置算不同的键</text>
+<text x="240" y="378" font-size="11" fill="#6b7280" text-anchor="start">只有盖住占位区的那几块被影响</text>
+<text x="755" y="332" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">占位 token 就是上一行那个数</text>
+<text x="620" y="362" font-size="11" fill="#6b7280" text-anchor="start">树里存的是图的内容(04 章)</text>
+<text x="620" y="378" font-size="11" fill="#6b7280" text-anchor="start">所以前缀一命中,塔就一定不跑</text>
+<text x="30" y="414" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 一步里最多编多少</text>
+<text x="30" y="434" font-size="11" fill="#6b7280" text-anchor="start">编码器和 decoder 同一步</text>
+<text x="375" y="416" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">一道闸:算力预算加缓存容量</text>
+<text x="240" y="446" font-size="11" fill="#6b7280" text-anchor="start">不够就给这条请求 0 个 token,等下一步再来</text>
+<text x="240" y="462" font-size="11" fill="#6b7280" text-anchor="start">这道闸就是为了不让塔拖慢同批的 decode</text>
+<text x="755" y="416" font-size="13" fill="#9ca3af" text-anchor="middle" font-weight="700">没有这一层</text>
+<text x="620" y="446" font-size="11" fill="#6b7280" text-anchor="start">批里有多少张图就编多少张</text>
+<text x="620" y="462" font-size="11" fill="#6b7280" text-anchor="start">能限的只有每请求的媒体数量和每张图的像素</text>
+<text x="30" y="498" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑤ 分块碰到一张图怎么切</text>
+<text x="30" y="518" font-size="11" fill="#6b7280" text-anchor="start">切不开的是塔本身</text>
+<text x="375" y="500" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">默认切开占位区</text>
+<text x="240" y="530" font-size="11" fill="#6b7280" text-anchor="start">每块只写本块要的那几行;塔那一次仍然整图算完</text>
+<text x="240" y="546" font-size="11" fill="#6b7280" text-anchor="start">也可以要求不许切开,让整张图落进下一步</text>
+<text x="755" y="500" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第一个碰到它的块整图编完</text>
+<text x="620" y="530" font-size="11" fill="#6b7280" text-anchor="start">后面每块只按位置切一段,没有「不许切开」这个选项</text>
+<text x="620" y="546" font-size="11" fill="#6b7280" text-anchor="start">另有 6 个架构一开多模态就自动关掉分块</text>
+<text x="30" y="582" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑥ 怎么才能不加载编码器</text>
+<text x="30" y="602" font-size="11" fill="#6b7280" text-anchor="start">省的是权重那份显存</text>
+<text x="375" y="584" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">把那个模态的上限设成 0</text>
+<text x="240" y="614" font-size="11" fill="#6b7280" text-anchor="start">编码器模块就不加载了</text>
+<text x="240" y="630" font-size="11" fill="#6b7280" text-anchor="start">预计算好的 embedding 仍能当输入喂进来</text>
+<text x="755" y="584" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">另有一个独立模式</text>
+<text x="620" y="614" font-size="11" fill="#6b7280" text-anchor="start">数量上限只拒请求、权重照加载</text>
+<text x="620" y="630" font-size="11" fill="#6b7280" text-anchor="start">那个模式压根不建塔,但只认 3 个架构,且和 PD 分离互斥</text>
+<text x="44" y="669" font-size="11" fill="#6b7280" text-anchor="start">名字不同其实是同一件事:第二行两边都叫「编码器缓存」,但键的来源不同 —— vLLM 取自媒体内容,SGLang 取自编码前那份特征张量。④ 这一行右侧空着,是 SGLang 真的没有这道闸,不是画不下。</text>
+</svg>

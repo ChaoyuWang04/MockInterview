@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+
+<rect x="30" y="108" width="440" height="384" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="540" y="108" width="550" height="384" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+
+<rect x="58" y="146" width="384" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="58" y="226" width="384" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="58" y="306" width="384" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="58" y="386" width="384" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+
+<rect x="566" y="150" width="240" height="80" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="826" y="150" width="240" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="826" y="330" width="240" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="566" y="330" width="240" height="80" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+
+<rect x="30" y="508" width="1060" height="62" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="30" y1="94" x2="1090" y2="94" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="250" y1="202" x2="250" y2="224" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="245,218 250,226 255,218" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="250" y1="282" x2="250" y2="304" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="245,298 250,306 255,298" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="250" y1="362" x2="250" y2="384" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="245,378 250,386 255,378" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<line x1="470" y1="414" x2="532" y2="414" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="526,409 534,414 526,419" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<line x1="806" y1="190" x2="824" y2="190" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="818,185 826,190 818,195" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="946" y1="230" x2="946" y2="328" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="941,322 946,330 951,322" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="826" y1="370" x2="808" y2="370" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="814,365 806,370 814,375" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="686" y1="330" x2="686" y2="232" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="681,238 686,230 691,238" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<text x="30" y="34" font-size="19" fill="#111827" font-weight="700">一条带约束的请求活在两个时间尺度上:编译只走一次,压掩码每一步都走</text>
+<text x="30" y="58" font-size="11" fill="#6b7280">颜色是这一步由谁做:黄 = 调度器进程的主循环(它占的时间会直接挤占调度),紫 = 后台线程池(不在主循环上),绿 = GPU,灰 = 请求的进出。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280">左边虚线框里的四步,一条约束一辈子只发生一次;右边实线框里的四站,每出一个 token 就要整个走一遍。</text>
+
+<text x="50" y="132" font-size="13" fill="#111827" font-weight="700">环外:一条约束只走一次</text>
+<text x="74" y="170" font-size="14" fill="#111827" font-weight="700">请求到达,带一段格式说明</text>
+<text x="74" y="188" font-size="11" fill="#6b7280">四种写法之一,一条请求只能选一种</text>
+<text x="74" y="250" font-size="14" fill="#111827" font-weight="700">进一条独立的文法队列</text>
+<text x="74" y="268" font-size="11" fill="#6b7280">不在等待队列里,日志里的队列长度数不到它</text>
+<text x="74" y="330" font-size="14" fill="#111827" font-weight="700">线程池把它编译成对整词表的自动机</text>
+<text x="74" y="348" font-size="11" fill="#6b7280">这条队列非空时,调度器每轮还要花最多 5 毫秒轮询它</text>
+<text x="74" y="410" font-size="14" fill="#111827" font-weight="700">产物进缓存,请求转入等待队列</text>
+<text x="74" y="428" font-size="11" fill="#6b7280">键是整串约束字符串;编译失败的结果也缓存</text>
+<text x="74" y="462" font-size="11" fill="#9ca3af">轮满 10000 次判编译超时,这条请求被判失败</text>
+
+<text x="506" y="404" font-size="11" fill="#9ca3af" text-anchor="middle">编完才进得来</text>
+
+<text x="560" y="132" font-size="13" fill="#111827" font-weight="700">环内:每一步走一遍</text>
+<text x="582" y="176" font-size="13" fill="#111827" font-weight="700">① 按行填一张位掩码</text>
+<text x="582" y="194" font-size="11" fill="#6b7280">调度器进程的 CPU,一行一个请求</text>
+<text x="582" y="210" font-size="11" fill="#6b7280">每 32 个 token 压成一位</text>
+<text x="842" y="176" font-size="13" fill="#111827" font-weight="700">② 拷到 GPU 上压掩码</text>
+<text x="842" y="194" font-size="11" fill="#6b7280">一个 kernel 把不允许的</text>
+<text x="842" y="210" font-size="11" fill="#6b7280">位置就地写成负无穷</text>
+<text x="842" y="356" font-size="13" fill="#111827" font-weight="700">③ 采样,出 1 个 token</text>
+<text x="842" y="374" font-size="11" fill="#6b7280">整条管线的最后一步</text>
+<text x="582" y="356" font-size="13" fill="#111827" font-weight="700">④ 回喂状态机,前进一格</text>
+<text x="582" y="374" font-size="11" fill="#6b7280">调度器进程的 CPU;状态机不认这个</text>
+<text x="582" y="390" font-size="11" fill="#6b7280">token,整条请求就此失败</text>
+<text x="816" y="275" font-size="13" fill="#111827" font-weight="700" text-anchor="middle">每一步都出 1 个 token</text>
+<text x="816" y="295" font-size="11" fill="#6b7280" text-anchor="middle">没有「一次跳过一段」的那条路</text>
+<text x="566" y="440" font-size="11" fill="#9ca3af">每步现分配一块锁页内存装掩码;复用缓冲的接口在代码里,没有调用者</text>
+<text x="566" y="462" font-size="11" fill="#9ca3af">三个文法库里只有一个自带原生的并行填,另外两个就是一个 Python 循环</text>
+
+<text x="50" y="532" font-size="11" fill="#6b7280">两个尺度的差距就是这张图的要点:拖慢第一条请求 TTFT 的是左边那一次编译,拖慢所有请求 TPOT 的是右边那四站,两者不是同一件事。</text>
+<text x="50" y="554" font-size="11" fill="#6b7280">「一次跳过一段固定字符」的三个接口方法在基类上摆着,调度器没有调用点。图上不写参数名,轮询间隔与上限这两个环境变量在第五节。</text>
+</svg>

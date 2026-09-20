@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<rect x="30" y="96" width="1060" height="136" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="30" y="388" width="1060" height="232" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="56" y="128" width="320" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="396" y="128" width="320" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="736" y="128" width="330" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="420" y="272" width="280" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="70" y="418" width="430" height="78" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="418" width="430" height="78" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="70" y="516" width="430" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="516" width="430" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="30" y="634" width="1060" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<polyline points="378,172 392,172" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="386,168 394,172 386,176" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="718,172 732,172" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="726,168 734,172 726,176" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="901,216 901,252 560,252 560,268" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="556,260 560,270 564,260" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="490,344 490,372 285,372 285,406" fill="none" stroke="#d4a24c" stroke-width="1.4"/>
+<polyline points="281,398 285,408 289,398" fill="none" stroke="#d4a24c" stroke-width="1.4"/>
+<polyline points="630,344 630,372 835,372 835,406" fill="none" stroke="#d4a24c" stroke-width="1.4"/>
+<polyline points="831,398 835,408 839,398" fill="none" stroke="#d4a24c" stroke-width="1.4"/>
+<polyline points="285,496 285,512" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="281,504 285,514 289,504" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="835,496 835,512" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="831,504 835,514 839,504" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="560,620 560,630" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="556,622 560,632 564,622" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一张图变成 embedding 的那条路:中间那个数,被两处各查一次</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">颜色 = 这一段在哪个进程:紫是主进程(收请求、切词、预处理),绿是调度器进程(它自己就握着这张卡),黄是那个数本身以及由它直接决定的两处查表,灰是语言模型。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:黄框只有一个,从它出去的两条黄箭头就是这一章的点——同一个数既回答「这段前缀见过没有」,也回答「这张图算过没有」。参数名都在第五节。</text>
+<text x="44" y="116" font-size="11" fill="#9ca3af" text-anchor="start">主进程:收请求、切词、预处理</text>
+<text x="216" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">① 下载与解码</text>
+<text x="68" y="176" font-size="11" fill="#6b7280" text-anchor="start">4 个 IO 线程并行;JPEG 默认走 GPU 解码,</text>
+<text x="68" y="194" font-size="11" fill="#6b7280" text-anchor="start">失败退回 CPU</text>
+<text x="556" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">② 缩放、归一化、切 patch</text>
+<text x="408" y="176" font-size="11" fill="#6b7280" text-anchor="start">1–2 个隔离线程,各持一份处理器的深拷贝;</text>
+<text x="408" y="194" font-size="11" fill="#6b7280" text-anchor="start">默认就在服务的那张卡上做</text>
+<text x="901" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">③ 把每张图展开成一段占位 token</text>
+<text x="748" y="176" font-size="11" fill="#6b7280" text-anchor="start">产出两样东西:特征张量,以及一串长度</text>
+<text x="748" y="194" font-size="11" fill="#6b7280" text-anchor="start">等于这张图 token 数的占位符</text>
+<text x="560" y="300" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">给这张图算一个数</text>
+<text x="560" y="322" font-size="11" fill="#6b7280" text-anchor="middle">CPU 上取 sha256 的前 8 字节</text>
+<text x="560" y="338" font-size="11" fill="#6b7280" text-anchor="middle">特征已经在 GPU 上时改用 GPU 核算</text>
+<text x="1076" y="406" font-size="11" fill="#9ca3af" text-anchor="end">调度器进程:调度、ViT、语言模型前向</text>
+<text x="285" y="444" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">④ 前缀树按这串数匹配</text>
+<text x="82" y="466" font-size="11" fill="#6b7280" text-anchor="start">占位 token 全部改写成这个数</text>
+<text x="82" y="484" font-size="11" fill="#6b7280" text-anchor="start">于是树看到的是图的内容,不是「这里有一张图」(04 章)</text>
+<text x="835" y="444" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">⑤ 编码器输出缓存按这个数查</text>
+<text x="632" y="466" font-size="11" fill="#6b7280" text-anchor="start">命中直接取那段 embedding,ViT 不跑</text>
+<text x="632" y="484" font-size="11" fill="#6b7280" text-anchor="start">按字节做最近最少使用淘汰,默认 100 MiB</text>
+<text x="285" y="542" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">命中多长就跳过多长</text>
+<text x="82" y="564" font-size="11" fill="#6b7280" text-anchor="start">占位区整个落在前缀里时,ViT 也一定不用跑</text>
+<text x="82" y="582" font-size="11" fill="#6b7280" text-anchor="start">因为这段前缀里的每个 token 就是那个数</text>
+<text x="835" y="542" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">没命中的图凑成一批</text>
+<text x="632" y="564" font-size="11" fill="#6b7280" text-anchor="start">全批所有请求的所有图按这个数去重,合成 1 次</text>
+<text x="632" y="582" font-size="11" fill="#6b7280" text-anchor="start">ViT 调用,结果再按图切开写回缓存</text>
+<text x="560" y="656" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">⑥ embedding 散回占位位置,语言模型照常前向</text>
+<text x="560" y="674" font-size="11" fill="#6b7280" text-anchor="middle">语言模型这一侧只看见一串普通 token,它不知道其中有过一张图</text>
+</svg>

@@ -23,8 +23,6 @@ const EXEMPT = new Set(['vllm'])
  * 只豁免「原理段无标识符」这一条,其余检查照常约束它们。
  */
 const PRINCIPLE_TODO = new Set([
-  'sglang/14-多模态.md',
-  'sglang/15-LoRA.md',
   'sglang/16-模型加载与权重缓存.md',
   'sglang/17-RL 训推一体:权重同步与显存让出.md',
   'sglang/18-Model Gateway:跨实例的缓存感知路由.md',

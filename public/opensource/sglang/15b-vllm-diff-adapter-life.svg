@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="510" viewBox="0 0 1120 510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="510" fill="#ffffff"/>
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <text x="24" y="36" font-size="19" font-weight="700" fill="#111827">一个 adapter 怎么进出:两边都必须做的三件事</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">每一行是两边都得做的一件事,同一行里左右各自的做法上下对齐。紫 = 内存里的一份,绿 = 显存里的一格,黄 = 被 base 占着的那一格。</text>
+  <text x="24" y="80" font-size="13" fill="#6b7280">灰虚线框是服务进程的边界;白底虚线 = 根本不在池子里的东西。两边的参数名都在第五节。</text>
+
+  <rect x="258" y="118" width="414" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="682" y="118" width="414" height="320" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <text x="465" y="110" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">vLLM</text>
+  <text x="889" y="110" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">SGLang</text>
+
+  <text x="24" y="168" font-size="12" font-weight="700" fill="#111827">① 从磁盘读进内存</text>
+  <text x="24" y="258" font-size="12" font-weight="700" fill="#111827">② 从内存搬进 GPU 的一格</text>
+  <text x="24" y="370" font-size="12" font-weight="700" fill="#111827">③ 被挤出内存之后,</text>
+  <text x="24" y="390" font-size="12" font-weight="700" fill="#111827">下次怎么回来</text>
+
+  <!-- row 1 -->
+  <rect x="272" y="136" width="386" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="288" y="159" font-size="14" font-weight="700" fill="#111827">内存里的一份</text>
+  <text x="288" y="180" font-size="11" fill="#6b7280">容量默认等于格数,满了淘汰最久没用的</text>
+
+  <rect x="696" y="136" width="386" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="712" y="159" font-size="14" font-weight="700" fill="#111827">内存里的一份</text>
+  <text x="712" y="180" font-size="11" fill="#6b7280">默认不限;设了上限才淘汰,先装新的再卸旧的</text>
+
+  <!-- row 2: vLLM -->
+  <rect x="272" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="325" y="232" width="333" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="339" y="251" font-size="11" fill="#6b7280">不用 adapter 的 token:索引里一个负数哨兵,</text>
+  <text x="339" y="268" font-size="11" fill="#6b7280">在池外,不占格</text>
+  <text x="272" y="296" font-size="11" fill="#6b7280">默认 1 格</text>
+
+  <!-- row 2: SGLang -->
+  <rect x="696" y="232" width="43" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text x="717" y="259" font-size="11" fill="#111827" text-anchor="middle">base</text>
+  <rect x="745" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="794" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="843" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="892" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="941" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="990" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="1039" y="232" width="43" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="696" y="296" font-size="11" fill="#6b7280">默认 8 格,其中一格常态被 base 占着;钉住的最多到 7 格</text>
+
+  <!-- row 3 -->
+  <rect x="272" y="350" width="386" height="56" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="288" y="373" font-size="14" font-weight="700" fill="#111827">客户端的请求</text>
+  <text x="288" y="394" font-size="11" fill="#6b7280">里面带着 adapter 的路径,服务照它重读磁盘</text>
+
+  <rect x="696" y="350" width="386" height="56" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="712" y="373" font-size="14" font-weight="700" fill="#111827">服务自己记着的名字到路径表</text>
+  <text x="712" y="394" font-size="11" fill="#6b7280">请求里只有名字,下次点名自动重装</text>
+
+  <path d="M658,378 L666,378 L666,165 L663,165" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <path d="M1082,378 L1090,378 L1090,165 L1087,165" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+
+  <text x="24" y="460" font-size="12" fill="#6b7280">第二行的方框数就是两边默认值的差别;第三行那条箭头从虚线框外发出还是从框里发出,决定了换 adapter 时客户端要不要一直带着路径。</text>
+  <text x="24" y="484" font-size="11" fill="#9ca3af">第一行的容器同样位于各自的服务进程里,图上省掉了它到第二行的那条箭头。</text>
+</svg>

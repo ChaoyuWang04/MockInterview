@@ -71,7 +71,7 @@ SGLang 的调度器一步只做一件事,有 prefill 批就先跑 prefill(02 章
 | `SGLANG_MOONCAKE_CUSTOM_MEM_POOL` · 走 NVLink | 两侧环境变量 | 无 | NVLINK 或 BAREX 用自定义显存池(03 章),按层并行发;INTRA_NODE_NVLINK 同机;元数据仍走 TCP | 启动日志 `Initialized custom memory pool` |
 | `SGLANG_DISAGG_STAGING_BUFFER` 与 `_POOL_SIZE_MB` · 两侧 TP 不同时的中转缓冲 | 两侧环境变量;池只在 D 侧分配 | 关 / 4096 MB | 异构 TP 吞吐 2–5 倍;MLA 模型开了 P 侧直接抛错;`--chunked-prefill-size` 要是页大小的倍数;PP 大于 1 时只有 Mooncake 支持;TP 相同自动跳过 | 启动 RuntimeError |
 | `SGLANG_DISAGG_PREFILL_EARLY_SEND_CACHED_PREFIX` · 命中的前缀先发 | P 环境变量 | 开 | 关掉后前缀和新算的一起在最后发,TTFT 长 | `kv_transfer_latency_ms` |
-| `--encoder-only` / `--language-only` / `--encoder-urls` · EPD 三件套 | encoder 端 / 语言端 / 语言端 | 关 / 关 / 空 | 语言端不给 urls 就等 encoder 用 `--encoder-register-urls` 来注册(端口 8997);只支持 Qwen-VL、Kimi、GLM 等 16 种架构 | 语言端日志 `Encoders are expected to register dynamically` |
+| `--encoder-only` / `--language-only` / `--encoder-urls` · EPD 三件套 | encoder 端 / 语言端 / 语言端 | 关 / 关 / 空 | 语言端不给 urls 就等 encoder 用 `--encoder-register-urls` 来注册(端口 8997);只支持 Qwen-VL、Kimi、GLM 等 16 种架构。**别和 `--language-model-only` 搞混**:那个是完全不加载编码器的独立模式,不属于 EPD,见 14 章 | 语言端日志 `Encoders are expected to register dynamically` |
 | `--encoder-transfer-backend` · embedding 怎么送 | 两端一致 | auto,解析为 zmq_to_scheduler(Kimi K3 且 TP 大于 1 是 zmq_to_tokenizer) | mooncake:RDMA 直写,要配 ib_device;`SGLANG_ENCODER_MM_RECEIVER_MODE=grpc` 时走 gRPC | 启动日志 `Encoder transfer backend auto-resolved to` |
 | `--enable-adaptive-dispatch-to-encoder` · 图少的本地算 | 语言端 | 关 | 开:少于 2 个媒体项(`SGLANG_ENCODER_DISPATCH_MIN_ITEMS`)本地编码,多的才发 encoder;批请求一律不发 | 警告 `not supported in EPD disaggregation mode` |
 | `--enable-mm-global-cache` · 跨实例复用 ViT 输出 | encoder 端 | 关 | 同一张图别的 encoder 算过就从 Mooncake 拿;和传输后端无关 | encoder 端命中日志 |
