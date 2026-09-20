@@ -23,8 +23,6 @@ const EXEMPT = new Set(['vllm'])
  * 只豁免「原理段无标识符」这一条,其余检查照常约束它们。
  */
 const PRINCIPLE_TODO = new Set([
-  'sglang/04-RadixAttention:前缀缓存.md',
-  'sglang/06-注意力后端.md',
   'sglang/07-执行与 CUDA graph.md',
   'sglang/08-推测解码.md',
   'sglang/09-并行:TP、PP、CP 与 DCP.md',
@@ -84,11 +82,12 @@ describe('开源解读页的硬约束', () => {
 
   /** 反引号好查,裸写的一样是名字:--chunked-prefill-size、SGLANG_XXX、mem_fraction_static */
   it('原理段(一到四)也不出现裸参数名', () => {
-    const BARE = /(?:^|[\s(（「,,])(--[a-z][a-z0-9-]{4,}|SGLANG_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/
+    // 前一个字符不能是标识符的一部分;中文标点、句读、行首都算边界
+    const BARE = /(?<![A-Za-z0-9_/.\-])(--[a-z][a-z0-9-]{4,}|SGLANG_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/g
     const bad = PAGES.flatMap((p) => {
       if (PRINCIPLE_TODO.has(label(p))) return []
-      const m = principle(p.text).match(BARE)
-      return m ? [`${label(p)}: ${m[1]}`] : []
+      const hits = [...new Set([...principle(p.text).matchAll(BARE)].map((m) => m[1]))]
+      return hits.map((h) => `${label(p)}: ${h}`)
     })
     expect(bad).toEqual([])
   })

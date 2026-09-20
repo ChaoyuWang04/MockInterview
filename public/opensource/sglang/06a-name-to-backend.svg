@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 616" width="1120" height="616" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="616" fill="#ffffff"/>
+<rect x="30" y="158" width="214" height="32" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="30" y="198" width="214" height="32" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="30" y="238" width="214" height="32" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="276" y="158" width="226" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="534" y="158" width="250" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="534" y="192" width="250" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="534" y="226" width="250" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="534" y="260" width="250" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="534" y="294" width="250" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="816" y="158" width="274" height="112" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="260" y="392" width="600" height="160" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="288" y="424" width="544" height="112" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="308" y="456" width="248" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="572" y="456" width="248" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="368" x2="1090" y2="368" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="248" y1="214" x2="268" y2="214" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="262,210 270,214 262,218" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="506" y1="214" x2="526" y2="214" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="520,210 528,214 520,218" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="788" y1="214" x2="808" y2="214" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="802,210 810,214 802,218" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="659" y1="184" x2="659" y2="192" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="659" y1="218" x2="659" y2="226" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="659" y1="252" x2="659" y2="260" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="659" y1="286" x2="659" y2="294" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个名字怎么变成一个后端实例:四道工序,只有最后一道会抛错</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">紫 = 用户给进来的字段,绿 = 解析出的名字与它最终变成的实例,黄 = 会改写名字或页大小的修正,红 = 唯一一次会抛错的校验,白底虚线 = 运行时才存在的包装层次。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">五道修正串行,后一道看到的是前一道改过的值;这五道全部发生在模型加载之前,所以「改写」永远比「抛错」先到。</text>
+<text x="30" y="122" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 入口</text>
+<text x="30" y="140" font-size="11" fill="#6b7280" text-anchor="start">三个字段,谁也不必填</text>
+<text x="137" y="178" font-size="11" fill="#111827" text-anchor="middle">--attention-backend</text>
+<text x="137" y="218" font-size="11" fill="#111827" text-anchor="middle">--prefill-attention-backend</text>
+<text x="137" y="258" font-size="11" fill="#111827" text-anchor="middle">--decode-attention-backend</text>
+<text x="30" y="292" font-size="11" fill="#9ca3af" text-anchor="start">两个覆盖为空就继承底;</text>
+<text x="30" y="308" font-size="11" fill="#9ca3af" text-anchor="start">都填同一个名字就直接当底。</text>
+<text x="276" y="122" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 决策树</text>
+<text x="276" y="140" font-size="11" fill="#6b7280" text-anchor="start">按 4 件事分叉,只吐一个名字</text>
+<text x="292" y="182" font-size="11" fill="#111827" text-anchor="start">· 卡代与 CUDA 版本</text>
+<text x="292" y="204" font-size="11" fill="#111827" text-anchor="start">· 模型是不是 MLA</text>
+<text x="292" y="226" font-size="11" fill="#111827" text-anchor="start">· 草稿宽度与页大小</text>
+<text x="292" y="248" font-size="11" fill="#111827" text-anchor="start">· 有没有 attention sink</text>
+<text x="276" y="292" font-size="11" fill="#9ca3af" text-anchor="start">个别模型在这之前就把名字定死,</text>
+<text x="276" y="308" font-size="11" fill="#9ca3af" text-anchor="start">确定性推理另走一棵树。</text>
+<text x="534" y="122" font-size="14" fill="#111827" text-anchor="start" font-weight="700">③ 修正链</text>
+<text x="534" y="140" font-size="11" fill="#6b7280" text-anchor="start">五道,每道都可能悄悄改掉答案</text>
+<text x="659" y="175" font-size="11" fill="#111827" text-anchor="middle">要整页的后端 → 改写页大小</text>
+<text x="659" y="209" font-size="11" fill="#111827" text-anchor="middle">KV 精度不匹配 → 换一个后端</text>
+<text x="659" y="243" font-size="11" fill="#111827" text-anchor="middle">只会 decode → 补一个 prefill 侧</text>
+<text x="659" y="277" font-size="11" fill="#111827" text-anchor="middle">平台缺指令集 → 退回软件实现</text>
+<text x="659" y="311" font-size="11" fill="#111827" text-anchor="middle">确定性模式 → 再限定一次名字</text>
+<text x="534" y="344" font-size="11" fill="#9ca3af" text-anchor="start">每道只打一行日志,都不抛错。</text>
+<text x="816" y="122" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 名字变实例</text>
+<text x="816" y="140" font-size="11" fill="#6b7280" text-anchor="start">整条路上唯一一次校验</text>
+<text x="832" y="182" font-size="11" fill="#111827" text-anchor="start">工厂函数当场断言:</text>
+<text x="832" y="204" font-size="11" fill="#111827" text-anchor="start">· 卡代对不对</text>
+<text x="832" y="226" font-size="11" fill="#111827" text-anchor="start">· 模型结构对不对</text>
+<text x="832" y="248" font-size="11" fill="#111827" text-anchor="start">· 和推测解码冲不冲突</text>
+<text x="816" y="292" font-size="11" fill="#9ca3af" text-anchor="start">不满足就抛错,服务起不来。</text>
+<text x="816" y="308" font-size="11" fill="#9ca3af" text-anchor="start">它发生在构造时,不在选择时。</text>
+<text x="30" y="396" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 的产物</text>
+<text x="30" y="418" font-size="11" fill="#6b7280" text-anchor="start">运行时实际被调用的</text>
+<text x="30" y="434" font-size="11" fill="#6b7280" text-anchor="start">是一层套一层</text>
+<text x="276" y="412" font-size="11" fill="#6b7280" text-anchor="start">模型包装层:混合与稀疏模型才有</text>
+<text x="304" y="444" font-size="11" fill="#6b7280" text-anchor="start">分发器:prefill 与 decode 不同时才有</text>
+<text x="432" y="484" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">prefill 侧后端</text>
+<text x="432" y="504" font-size="11" fill="#6b7280" text-anchor="middle">prefill,以及默认的 verify</text>
+<text x="696" y="484" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">decode 侧后端</text>
+<text x="696" y="504" font-size="11" fill="#6b7280" text-anchor="middle">decode 与空转</text>
+<text x="880" y="412" font-size="11" fill="#9ca3af" text-anchor="start">最外层每次前向先看这一步是什么</text>
+<text x="880" y="428" font-size="11" fill="#9ca3af" text-anchor="start">模式,再把这一层的 q、k、v 交给</text>
+<text x="880" y="444" font-size="11" fill="#9ca3af" text-anchor="start">里面的某一个。</text>
+<text x="880" y="472" font-size="11" fill="#9ca3af" text-anchor="start">两侧名字相同时中间这层不存在;</text>
+<text x="880" y="488" font-size="11" fill="#9ca3af" text-anchor="start">普通模型则连最外层也不存在。</text>
+<text x="30" y="580" font-size="11" fill="#6b7280" text-anchor="start">整条链处理的自始至终只是字符串:决策树吐出的是名字,五道修正改的还是名字,直到 ④ 才拿名字去字典里换一个类。所以「这套参数能不能跑」这个问题,在启动完成之前没有任何地方能回答。</text>
+</svg>
