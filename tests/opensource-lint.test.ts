@@ -82,6 +82,17 @@ describe('开源解读页的硬约束', () => {
     expect(bad.map(label)).toEqual([])
   })
 
+  /** 反引号好查,裸写的一样是名字:--chunked-prefill-size、SGLANG_XXX、mem_fraction_static */
+  it('原理段(一到四)也不出现裸参数名', () => {
+    const BARE = /(?:^|[\s(（「,,])(--[a-z][a-z0-9-]{4,}|SGLANG_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/
+    const bad = PAGES.flatMap((p) => {
+      if (PRINCIPLE_TODO.has(label(p))) return []
+      const m = principle(p.text).match(BARE)
+      return m ? [`${label(p)}: ${m[1]}`] : []
+    })
+    expect(bad).toEqual([])
+  })
+
   it('返工清单只减不增:清单里的页确实还没返工', () => {
     const done = [...PRINCIPLE_TODO].filter((k) => {
       const p = PAGES.find((x) => label(x) === k)

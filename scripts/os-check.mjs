@@ -14,6 +14,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { syncProjects } from './projects-sync.mjs';
+import { checkFile } from './svg-check.mjs';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
@@ -87,27 +88,9 @@ function checkPageAssets({ project, dir }) {
   if (refs) ok(`页面引用的 ${refs} 个产物文件都存在`);
 }
 
-// ---- 导出 SVG 里的文字互相遮挡 ----
-// archify 给每段文字配了一块精确的白底板(class="c-mask"),文字就画在它上面。
-// 两块底板一旦相交,后画的那块会把先画的文字盖掉一截——这是纯粹的 bug,没有正常情况。
-// archify 自己的 showcase 校验比的是文字本身的范围,底板比文字宽,所以它拦不住这一类(实测漏过两次)。
-function labelPlates(svg) {
-  const out = [];
-  for (const m of svg.matchAll(/<rect\b[^>]*class="c-mask"[^>]*?\/?>/g)) {
-    const a = Object.fromEntries([...m[0].matchAll(/([\w-]+)="([^"]*)"/g)].map((x) => [x[1], x[2]]));
-    if (!a.x || !a.width) continue;
-    // 只认「底板后面紧跟着 <text>」的那种,中间夹了别的 <rect> 的是节点或容器的底板,不算
-    const tail = svg.slice(m.index + m[0].length, m.index + m[0].length + 240);
-    const nextText = tail.indexOf('<text');
-    const nextRect = tail.indexOf('<rect');
-    if (nextText < 0 || (nextRect >= 0 && nextRect < nextText)) continue;
-    const t = tail.slice(nextText).match(/<text[^>]*>([^<]{1,60})/);
-    if (!t) continue;
-    out.push({ txt: t[1].trim(), x: +a.x, y: +a.y, w: +a.width, h: +a.height });
-  }
-  return out;
-}
-
+// ---- 手写 SVG 的三类碰撞 ----
+// 原来这里按 archify 的白底板(class="c-mask")判遮挡;全库的图早已全部改成手写,
+// 手写图没有底板,那段代码「找不到底板 → 直接报成功」,是假绿灯。现在统一走 scripts/svg-check.mjs。
 function checkLabelOverlap({ project }) {
   const pub = path.join(ROOT, 'public', 'opensource', project);
   if (!fs.existsSync(pub)) return;
@@ -115,21 +98,12 @@ function checkLabelOverlap({ project }) {
   if (!svgs.length) return;
   let hits = 0;
   for (const f of svgs) {
-    const plates = labelPlates(fs.readFileSync(path.join(pub, f), 'utf8'));
-    for (let i = 0; i < plates.length; i += 1) {
-      for (let j = i + 1; j < plates.length; j += 1) {
-        const a = plates[i];
-        const b = plates[j];
-        const ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
-        const oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
-        if (ox > 1 && oy > 1) {
-          hits += 1;
-          fail(`${f}: 「${a.txt}」与「${b.txt}」的文字底板重叠 ${ox.toFixed(0)}×${oy.toFixed(0)}px,有一段字会被盖住`);
-        }
-      }
+    for (const p of checkFile(path.join(pub, f))) {
+      hits += 1;
+      fail(`${f}: ${p}`);
     }
   }
-  if (!hits) ok(`${svgs.length} 张导出图的文字没有互相遮挡`);
+  if (!hits) ok(`${svgs.length} 张图没有越界、互压或被盖住的文字`);
 }
 
 // ---- 证据表核对 ----
