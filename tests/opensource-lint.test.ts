@@ -23,7 +23,6 @@ const EXEMPT = new Set(['vllm'])
  * 只豁免「原理段无标识符」这一条,其余检查照常约束它们。
  */
 const PRINCIPLE_TODO = new Set([
-  'sglang/02-调度器:缓存感知与零开销重叠.md',
   'sglang/04-RadixAttention:前缀缓存.md',
   'sglang/06-注意力后端.md',
   'sglang/07-执行与 CUDA graph.md',
