@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<line x1="30" y1="145" x2="1090" y2="145" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="330" y1="150" x2="330" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="420" y1="150" x2="420" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="560" y1="150" x2="560" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="720" y1="150" x2="720" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="860" y1="150" x2="860" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="970" y1="150" x2="970" y2="392" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="190" y="170" width="270" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="460" y="170" width="380" height="34" rx="6" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="840" y="170" width="250" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="190" y="228" width="310" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="500" y="228" width="300" height="34" rx="6" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="800" y="228" width="100" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="900" y="228" width="190" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="190" y="286" width="350" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="540" y="286" width="220" height="34" rx="6" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="760" y="286" width="330" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="190" y="350" width="900" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="30" y="490" width="1060" height="40" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">RL 一步里显存怎么交出去、怎么拿回来:三类各走各的,让出与拿回严格反序</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">绿 = 这块显存还在这个进程手里,白色虚线 = 已经还给驱动,红 = 地址拿回来了但里面是未初始化的垃圾,灰 = 不归标签管的东西。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:横向是时间,一条带子在哪一段是空的,就是那一段这块显存不在;让出按从上到下、拿回按从下到上,所以三个空档是套在一起的。</text>
+<text x="30" y="94" font-size="11" fill="#9ca3af" text-anchor="start">口径:带子的长度不代表真实耗时,真实耗时里训练那一段最长;让出与拿回本身只是还页与重新映射,不搬数据。</text>
+<text x="260" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">rollout 在跑</text>
+<text x="375" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">暂停</text>
+<text x="490" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">让出显存</text>
+<text x="640" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">训练占这批卡</text>
+<text x="790" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">拿回显存</text>
+<text x="915" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">推新权重</text>
+<text x="1030" y="134" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">继续 rollout</text>
+<text x="30" y="186" font-size="14" fill="#111827" text-anchor="start" font-weight="700">KV 池</text>
+<text x="30" y="202" font-size="11" fill="#6b7280" text-anchor="start">分页的 KV、索引表、前缀树</text>
+<text x="30" y="244" font-size="14" fill="#111827" text-anchor="start" font-weight="700">模型权重</text>
+<text x="30" y="260" font-size="11" fill="#6b7280" text-anchor="start">参数张量本身</text>
+<text x="30" y="302" font-size="14" fill="#111827" text-anchor="start" font-weight="700">图缓冲</text>
+<text x="30" y="318" font-size="11" fill="#6b7280" text-anchor="start">预录前向图占的那块</text>
+<text x="30" y="367" font-size="13" fill="#111827" text-anchor="start" font-weight="700">服务进程</text>
+<text x="325" y="191" font-size="11" fill="#111827" text-anchor="middle">旧权重算出来的 KV</text>
+<text x="650" y="191" font-size="11" fill="#9ca3af" text-anchor="middle">① 先放 KV:清空前缀树、整块池子还给驱动</text>
+<text x="965" y="191" font-size="11" fill="#111827" text-anchor="middle">⑥ 最后拿回,池子是空的</text>
+<text x="345" y="249" font-size="11" fill="#111827" text-anchor="middle">第 N 步的权重</text>
+<text x="650" y="249" font-size="11" fill="#9ca3af" text-anchor="middle">② 再放权重:常量表先另存到不带标签的显存</text>
+<text x="850" y="249" font-size="11" fill="#111827" text-anchor="middle">⑤ 拿回</text>
+<text x="995" y="249" font-size="11" fill="#111827" text-anchor="middle">推完才是第 N+1 步的权重</text>
+<text x="365" y="307" font-size="11" fill="#111827" text-anchor="middle">抓好的前向图</text>
+<text x="650" y="307" font-size="11" fill="#9ca3af" text-anchor="middle">③ 最后放图缓冲</text>
+<text x="925" y="307" font-size="11" fill="#111827" text-anchor="middle">④ 先拿回它,地址没变所以不用重抓</text>
+<text x="640" y="367" font-size="12" fill="#6b7280" text-anchor="middle">同一个进程从头到尾没退出:HTTP 端口、分词器、调度器都还在,只是不接活</text>
+<text x="424" y="412" font-size="11" fill="#6b7280" text-anchor="start">让出要求服务完全空闲:等待队列、PD 的三个队列、分层缓存在途的读写、语法队列,任何一样非空都不算</text>
+<text x="724" y="432" font-size="11" fill="#d9877a" text-anchor="start">默认没有备份,拿回来的权重是未初始化的显存,必须紧接着推一次</text>
+<text x="190" y="452" font-size="11" fill="#9ca3af" text-anchor="start">图缓冲那条带子的空档要另开一个开关才存在;不开的话这一段它是实心的,这块显存一点没省</text>
+<text x="46" y="507" font-size="11" fill="#6b7280" text-anchor="start">三类标签可以任意组合:只放 KV 不放权重、只放权重不放 KV 都是合法调用,引擎不检查你按没按这张图的顺序来。</text>
+<text x="46" y="523" font-size="11" fill="#6b7280" text-anchor="start">图里没画暂停的三种模式和换权重的四条通道:前者在第五节的参数表里,后者是下一张图。</text>
+</svg>

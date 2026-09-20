@@ -17,17 +17,6 @@ const ROOT = path.join(__dirname, '..', 'opensource')
 /** 讲稿转录的历史例外,永久豁免(06 第 1 组) */
 const EXEMPT = new Set(['vllm'])
 
-/**
- * 返工清单:2026-09-20 立新标准之前写的章页,原理段里还带着参数名。
- * **返工一章就从这里删一行**,清单空了就把这个常量和它的引用一起删掉。
- * 只豁免「原理段无标识符」这一条,其余检查照常约束它们。
- */
-const PRINCIPLE_TODO = new Set([
-  'sglang/16-模型加载与权重缓存.md',
-  'sglang/17-RL 训推一体:权重同步与显存让出.md',
-  'sglang/18-Model Gateway:跨实例的缓存感知路由.md',
-])
-
 type Page = { project: string; file: string; text: string }
 
 function chapterPages(): Page[] {
@@ -68,7 +57,7 @@ describe('开源解读页的硬约束', () => {
   })
 
   it('原理段(一到四)不出现反引号标识符', () => {
-    const bad = PAGES.filter((p) => !PRINCIPLE_TODO.has(label(p)) && principle(p.text).includes('`'))
+    const bad = PAGES.filter((p) => principle(p.text).includes('`'))
     expect(bad.map(label)).toEqual([])
   })
 
@@ -77,19 +66,10 @@ describe('开源解读页的硬约束', () => {
     // 前一个字符不能是标识符的一部分;中文标点、句读、行首都算边界
     const BARE = /(?<![A-Za-z0-9_/.\-])(--[a-z][a-z0-9-]{4,}|SGLANG_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/g
     const bad = PAGES.flatMap((p) => {
-      if (PRINCIPLE_TODO.has(label(p))) return []
       const hits = [...new Set([...principle(p.text).matchAll(BARE)].map((m) => m[1]))]
       return hits.map((h) => `${label(p)}: ${h}`)
     })
     expect(bad).toEqual([])
-  })
-
-  it('返工清单只减不增:清单里的页确实还没返工', () => {
-    const done = [...PRINCIPLE_TODO].filter((k) => {
-      const p = PAGES.find((x) => label(x) === k)
-      return p && !principle(p.text).includes('`')
-    })
-    expect(done, '这些页已经合标了,把它们从 PRINCIPLE_TODO 删掉').toEqual([])
   })
 
   it('不放代码块', () => {

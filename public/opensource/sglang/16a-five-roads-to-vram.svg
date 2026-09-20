@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 616" width="1120" height="616" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="616" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一份权重进显存,五条来路各自真正付出了多少</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">横向是从盘到显存的五段流水线,纵向是五条来路。绿 = 这一段本引擎进程自己从头做,黄 = 只做其中一部分或只做一次映射,灰 = 这一段本进程完全不做。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">一行里的绿格数就是这条来路真正付出的工作量:从上到下依次是 5、4、3、0、1 格。</text>
+<line x1="30" y1="98" x2="1090" y2="98" stroke="#e5e7eb" stroke-width="1"/>
+
+<text x="236" y="126" font-size="13" fill="#111827" text-anchor="end" font-weight="700">五条来路</text>
+<text x="328" y="126" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">① 读盘</text>
+<text x="328" y="144" font-size="11" fill="#6b7280" text-anchor="middle">把字节从存储取出来</text>
+<text x="498" y="126" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">② 进主机内存</text>
+<text x="498" y="144" font-size="11" fill="#6b7280" text-anchor="middle">页缓存与逐张量映射</text>
+<text x="668" y="126" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">③ 按并行度切片</text>
+<text x="668" y="144" font-size="11" fill="#6b7280" text-anchor="middle">每个 rank 取自己那段</text>
+<text x="838" y="126" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">④ 量化后处理</text>
+<text x="838" y="144" font-size="11" fill="#6b7280" text-anchor="middle">重排成 kernel 要的样子</text>
+<text x="1008" y="126" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">⑤ 落进显存</text>
+<text x="1008" y="144" font-size="11" fill="#6b7280" text-anchor="middle">张量最终就位</text>
+<line x1="30" y1="154" x2="1090" y2="154" stroke="#e5e7eb" stroke-width="1"/>
+
+<text x="236" y="186" font-size="13" fill="#111827" text-anchor="end" font-weight="700">冷读盘</text>
+<text x="236" y="204" font-size="11" fill="#6b7280" text-anchor="end">默认,什么都不借</text>
+<rect x="248" y="166" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="328" y="202" font-size="12" fill="#111827" text-anchor="middle">整份全读一遍</text>
+<rect x="418" y="166" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="498" y="202" font-size="12" fill="#111827" text-anchor="middle">逐张量映射</text>
+<rect x="588" y="166" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="668" y="202" font-size="12" fill="#111827" text-anchor="middle">自己切</text>
+<rect x="758" y="166" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="838" y="202" font-size="12" fill="#111827" text-anchor="middle">自己做</text>
+<rect x="928" y="166" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1008" y="202" font-size="12" fill="#111827" text-anchor="middle">自己拷进去</text>
+
+<text x="236" y="260" font-size="13" fill="#111827" text-anchor="end" font-weight="700">开预取</text>
+<text x="236" y="278" font-size="11" fill="#6b7280" text-anchor="end">同机多个 rank 分摊预热</text>
+<rect x="248" y="240" width="160" height="62" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="328" y="269" font-size="12" fill="#111827" text-anchor="middle">只预热其中</text>
+<text x="328" y="288" font-size="12" fill="#111827" text-anchor="middle">一份,邻居热其余</text>
+<rect x="418" y="240" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="498" y="276" font-size="12" fill="#111827" text-anchor="middle">命中页缓存</text>
+<rect x="588" y="240" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="668" y="276" font-size="12" fill="#111827" text-anchor="middle">自己切</text>
+<rect x="758" y="240" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="838" y="276" font-size="12" fill="#111827" text-anchor="middle">自己做</text>
+<rect x="928" y="240" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1008" y="276" font-size="12" fill="#111827" text-anchor="middle">自己拷进去</text>
+
+<text x="236" y="334" font-size="13" fill="#111827" text-anchor="end" font-weight="700">读落盘的预分片</text>
+<text x="236" y="352" font-size="11" fill="#6b7280" text-anchor="end">第二次起,配置得逐项对上</text>
+<rect x="248" y="314" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="328" y="350" font-size="12" fill="#111827" text-anchor="middle">只读自己那份</text>
+<rect x="418" y="314" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="498" y="350" font-size="12" fill="#111827" text-anchor="middle">逐张量映射</text>
+<rect x="588" y="314" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="753" y="350" font-size="12" fill="#6b7280" text-anchor="middle">盘上存的已经是切好、量化好的样子</text>
+<rect x="928" y="314" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1008" y="350" font-size="12" fill="#111827" text-anchor="middle">自己拷进去</text>
+
+<text x="236" y="408" font-size="13" fill="#111827" text-anchor="end" font-weight="700">接同卡的守护进程</text>
+<text x="236" y="426" font-size="11" fill="#6b7280" text-anchor="end">它独立启动,活得比引擎久</text>
+<rect x="248" y="388" width="670" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="583" y="416" font-size="12" fill="#6b7280" text-anchor="middle">这四段守护进程早就替你走完了,它手里那份权重一直躺在同一张卡的显存里</text>
+<text x="583" y="437" font-size="11" fill="#9ca3af" text-anchor="middle">引擎重启时它不动,所以这四段的时间直接归零</text>
+<rect x="928" y="388" width="160" height="62" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="1008" y="417" font-size="12" fill="#111827" text-anchor="middle">只把指针指过去</text>
+<text x="1008" y="436" font-size="11" fill="#6b7280" text-anchor="middle">零拷贝,不多占一字节</text>
+
+<text x="236" y="482" font-size="13" fill="#111827" text-anchor="end" font-weight="700">从跑着的实例直传</text>
+<text x="236" y="500" font-size="11" fill="#6b7280" text-anchor="end">并行策略必须完全一样</text>
+<rect x="248" y="462" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="413" y="498" font-size="12" fill="#6b7280" text-anchor="middle">这两段根本不存在:不落盘,也不过主机内存</text>
+<rect x="588" y="462" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="753" y="498" font-size="12" fill="#6b7280" text-anchor="middle">种子实例启动时就切好、量化好了</text>
+<rect x="928" y="462" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1008" y="491" font-size="12" fill="#111827" text-anchor="middle">直接收进显存</text>
+<text x="1008" y="510" font-size="11" fill="#6b7280" text-anchor="middle">每对 rank 一个通信组</text>
+
+<rect x="30" y="540" width="1060" height="64" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<text x="50" y="564" font-size="11" fill="#6b7280" text-anchor="start">省掉的段数就是借的距离:邻居 rank 只能替你把盘读热;同卡的守护进程能替你走完前四段;另一台机器上的实例连盘和主机内存都替你绕开了。</text>
+<text x="50" y="586" font-size="11" fill="#6b7280" text-anchor="start">代价按同一个方向排:灰格最多的那一行,权重根本不在自己手里,所有在线换权重的口子都得关掉,量化形态也只放行两种。</text>
+</svg>

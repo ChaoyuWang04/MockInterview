@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+<line x1="30" y1="150" x2="1090" y2="150" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="232" x2="1090" y2="232" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="308" x2="1090" y2="308" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="384" x2="1090" y2="384" stroke="#f3f4f6" stroke-width="1"/>
+<rect x="185" y="170" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="170" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="365" y="192" width="325" height="6" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="365" y="201" width="325" height="6" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="365" y="210" width="325" height="6" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="185" y="246" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="246" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="365" y="273" width="325" height="13" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="185" y="322" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="322" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="365" y="353" width="325" height="3" rx="1" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="185" y="398" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="398" width="170" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="365" y="425" width="76" height="13" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="448" y="425" width="76" height="13" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="531" y="425" width="76" height="13" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="614" y="425" width="76" height="13" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="365" y="444" width="325" height="3" rx="1" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<path d="M 700,204 l -10,-6 l 0,12 z" fill="#5fa886"/>
+<path d="M 700,279.5 l -10,-6 l 0,12 z" fill="#5fa886"/>
+<path d="M 700,354.5 l -10,-6 l 0,12 z" fill="#8f8bd8"/>
+<path d="M 700,431.5 l -10,-6 l 0,12 z" fill="#5fa886"/>
+<rect x="30" y="480" width="1060" height="42" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">换权重的 4 条通道:真正过线的是什么,决定了它能用在哪种部署里</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">绿 = 真正搬动的权重字节,条的厚度就是这一步过线的量;紫 = 只传句柄或握手消息,权重字节一个都没动;灰 = 参与方。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:一行就是一份权重走过的路;绿条叠了几层就是同一份权重被搬了几遍(图里按 3 个副本画),被切成几段就是这份权重拆给几台机各搬一片。</text>
+<text x="30" y="94" font-size="11" fill="#9ca3af" text-anchor="start">口径:厚度是相对的,只用来比四条通道之间的量级差,不是按 GB 画的刻度;也不代表耗时。</text>
+<text x="30" y="140" font-size="12" fill="#6b7280" text-anchor="start">通道</text>
+<text x="185" y="140" font-size="12" fill="#6b7280" text-anchor="start" font-weight="700">训练端</text>
+<text x="365" y="140" font-size="12" fill="#6b7280" text-anchor="start" font-weight="700">这一步真正过线的东西</text>
+<text x="710" y="140" font-size="12" fill="#6b7280" text-anchor="start" font-weight="700">推理引擎</text>
+<text x="900" y="140" font-size="12" fill="#6b7280" text-anchor="start" font-weight="700">草稿模型跟着换吗</text>
+<text x="30" y="186" font-size="14" fill="#111827" text-anchor="start" font-weight="700">读盘</text>
+<text x="30" y="204" font-size="11" fill="#6b7280" text-anchor="start">新副本扩容只能走这条</text>
+<text x="270" y="199" font-size="11" fill="#111827" text-anchor="middle">训练端存 checkpoint</text>
+<text x="365" y="186" font-size="11" fill="#6b7280" text-anchor="start">全量权重 × 副本数,每个副本各把盘读一遍</text>
+<text x="795" y="199" font-size="11" fill="#111827" text-anchor="middle">每个副本各读一份</text>
+<text x="900" y="199" font-size="12" fill="#111827" text-anchor="start">跟着换</text>
+<text x="30" y="262" font-size="14" fill="#111827" text-anchor="start" font-weight="700">集合通信广播</text>
+<text x="30" y="280" font-size="11" fill="#6b7280" text-anchor="start">训推各占一批卡</text>
+<text x="270" y="275" font-size="11" fill="#111827" text-anchor="middle">训练端 0 号 rank</text>
+<text x="365" y="262" font-size="11" fill="#6b7280" text-anchor="start">全量权重过一次网,默认一个张量起一次广播</text>
+<text x="795" y="275" font-size="11" fill="#111827" text-anchor="middle">每个 rank 收自己那份</text>
+<text x="900" y="275" font-size="12" fill="#d9877a" text-anchor="start" font-weight="700">不换</text>
+<text x="30" y="338" font-size="14" fill="#111827" text-anchor="start" font-weight="700">显存句柄</text>
+<text x="30" y="356" font-size="11" fill="#6b7280" text-anchor="start">训推同机</text>
+<text x="270" y="351" font-size="11" fill="#111827" text-anchor="middle">同机的训练进程</text>
+<text x="365" y="338" font-size="11" fill="#6b7280" text-anchor="start">只有进程间句柄,权重字节一个都没动</text>
+<text x="795" y="351" font-size="11" fill="#111827" text-anchor="middle">每个 rank 解自己那份</text>
+<text x="900" y="351" font-size="12" fill="#111827" text-anchor="start">跟着换,可跳过</text>
+<text x="30" y="414" font-size="14" fill="#111827" text-anchor="start" font-weight="700">参数服务器握手</text>
+<text x="30" y="432" font-size="11" fill="#6b7280" text-anchor="start">多机,独立组件</text>
+<text x="270" y="420" font-size="11" fill="#111827" text-anchor="middle">每台机各读</text>
+<text x="270" y="436" font-size="11" fill="#111827" text-anchor="middle">checkpoint 的一片</text>
+<text x="365" y="414" font-size="11" fill="#6b7280" text-anchor="start">每台机只搬自己读到的那一片,再横向补齐</text>
+<text x="795" y="420" font-size="11" fill="#111827" text-anchor="middle">引擎只提供 3 个回调</text>
+<text x="795" y="436" font-size="11" fill="#111827" text-anchor="middle">给那个独立组件</text>
+<text x="900" y="420" font-size="12" fill="#111827" text-anchor="start">跟着换</text>
+<text x="365" y="462" font-size="11" fill="#8f8bd8" text-anchor="start">细线是按卡的硬件 UUID 做的握手,认不出这张卡就整个失败</text>
+<text x="46" y="498" font-size="11" fill="#6b7280" text-anchor="start">四条通道的收尾是同一套:参数原地覆写、默认清空整棵前缀树、记下新版本号;它们的接口名与默认值在第五节。</text>
+<text x="46" y="514" font-size="11" fill="#6b7280" text-anchor="start">厚度只编码过线的字节量:读盘那条最粗不是因为文件大,而是因为每个副本都要各自把同一份权重再读一遍。</text>
+</svg>

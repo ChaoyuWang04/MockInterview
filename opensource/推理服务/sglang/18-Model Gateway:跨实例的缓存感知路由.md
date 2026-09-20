@@ -1,95 +1,113 @@
 # SGLang 18|Model Gateway:跨实例的缓存感知路由
 
-vLLM 解读没有对应章;单实例内的数据并行分发见本项目 01 章。这一页只说网关(SGLang Model Gateway,简称 SMG,一个独立的 Rust 进程)在多台实例之间怎么选实例、怎么给 PD 配对、代价是什么、和实例内的分发有什么不一样。每一条对应源码的哪个文件与符号,见代码索引页。
+跨实例这一层在参照项目 vLLM 的解读里没有对应章,所以这一页不和它比,只和单实例内的那套分发(01 章)比。这一页只说网关(SGLang Model Gateway,简称 SMG,一个独立的 Rust 进程)怎么在多台实例之间挑一台、PD 分离时怎么给一条请求配一对、代价落在哪。每一条对应源码的哪个文件与符号,见代码索引页。
 
 ## 一、核心问题
 
-一台实例的前缀树(04 章)只认自己算过的东西。8 台实例前面放一个普通的轮询负载均衡,同一个用户的第 2 轮对话有 7/8 的概率落到没算过第 1 轮的那台,树的命中率从单机的 60%–75% 掉到 20% 上下,prefill 算力翻倍,TTFT 跟着翻倍,GPU 显存里还存着 8 份互相看不见的重复前缀。多轮对话、agent 循环、共享 system prompt 的负载最惨,单条请求越长、轮数越多,浪费越大。
+一台实例的前缀树(04 章)只认自己算过的东西。8 台实例前面放一个轮询负载均衡,同一个用户第 2 轮对话有 7/8 的概率落到没算过第 1 轮的那台。官方在 8 卡 A100、8 个副本、多组长前缀的负载上量过这件事:轮询时缓存命中率 20%、吞吐 82665 token/s,换成缓存感知的网关之后是 75% 和 158596 token/s。差的那一截全是重复的 prefill,TTFT 跟着抬,显存里还并排存着 8 份互相看不见的同一段前缀。多轮对话、agent 循环、共享 system prompt 的负载最惨,单条请求越长、轮数越多,浪费越大。
 
-PD 分离(11 章)再加一层:一条请求要同时送到一台 P 和一台 D,两边还得拿着同一个房间号,普通负载均衡器做不了这件事。实例挂了、实例在加载模型、实例的显存被打满,这些也都要有人看着,DP 控制器(01 章)只在一个进程里,看不到别的机器。
+PD 分离(11 章)再加一层:一条请求要同时落到一台 P 和一台 D,两边还得拿着同一个房间号才对得上,普通负载均衡器做不了这件事。实例挂了、实例还在加载模型、实例的显存被打满,也都要有人盯着——01 章里那个分发环节活在单台实例的主进程里,看不见别的机器。
 
-## 二、解法:网关自己记一棵近似树,按前缀猜实例
+## 二、解法:网关自己记一棵近似树,按前缀猜
 
-最天然的直觉是「谁算过就发给谁」。网关照着做,只是它不去问实例「你缓存了什么」,而是**自己记下每条请求发去了哪台** :把请求的原文当成一条字符串插进一棵树,树上每个节点标着「这段字符哪几台实例见过」。新请求来了从根往下走,走到分叉为止,匹配到的字符数除以请求总字符数就是命中率;命中率超过 `cache_threshold` 就发给匹配最长的那台,否则发给当前在飞请求最少的那台。发完再把这条请求插回树里。
+最天然的直觉是「谁算过就发给谁」。难在「谁算过」这句话本身:要么每来一条请求就去问 8 台实例各自缓存了什么,一次路由决定换 8 次往返;要么让实例主动把缓存的增删推上来,实例多一条发布通路,网关还得跟着它的驱逐节奏跑。网关两条都不走,它**只记自己发过什么**。
 
-它是猜,不是查:按字符不按 token,不知道实例有没有把那段前缀驱逐掉。猜错的代价只是那台实例多算一次 prefill,和轮询一样,不会出错。猜对的收益是 prefill 少算一段,所以实际不吃亏。官方在 8 卡 A100、多组长前缀的负载上测出命中率 20% 到 75%,吞吐 82665 token/s 到 158596 token/s。
+![网关怎么猜:左边是网关自己维护的那棵字符树,根节点下面挂着系统提示、第 1 轮问订单、第 1 轮问退款、甲上一轮的回答四个节点,每个节点上记的不是 KV 槽号而是「哪几台实例见过」;右边是一条新请求进来的三步,先看两个失衡条件要不要直接发给最闲那台,再把原文放到树上走一遍按匹配字符占总字符的比例算命中率,命中率 0.97 时粘住树上记着的那台、命中率 0.05 时改发在飞请求最少的那台,最后不管走的是哪条都把这条原文插回树里](/opensource/sglang/18a-guess-by-prefix.svg)
 
-猜有一个副作用:同一批前缀会被持续送到同一台,那台越来越忙。所以每次选之前先看负载:所有实例里在飞请求最多的减去最少的超过 `balance_abs_threshold`,并且最多的超过最少的 `balance_rel_threshold` 倍,两条同时成立才算失衡,失衡时放弃命中、直接发给最闲的那台。两条要同时成立,是为了让「1 台在跑 3 条、1 台空着」这种小数字不触发,也让「100 条对 90 条」这种比例接近的不触发。
+把请求的原文当成一条字符串插进一棵树,树上每个节点记着「这段字符哪几台实例见过」。新请求来了从根往下走,走到不再匹配为止;匹配到的字符数除以请求总字符数,就是命中率。命中率超过阈值,发给这条路径上记着的那台;不超过,发给当前在飞请求最少的那台。选完,不管走的是哪一条,都把这条请求的原文插回树里,把被选中那台的名字挂到走过的每个节点上。
 
-PD 分离时网关给每条请求生成一个 63 位随机房间号,把 P 的地址、握手端口、房间号写进请求体,同一份请求同时发给一台 P 和一台 D;P 和 D 各用一套策略独立选,cache_aware 下 P 池和 D 池各有自己的树,互不驱逐。P 回了非 2xx 或连接失败,网关立刻断掉 D 那条连接并回 502,不让 D 干等 300 秒。
+它是猜,不是查:按字符存不按 token 存,省掉网关侧的一次切词;也不知道实例内部有没有把那段前缀驱逐掉。**敢猜是因为猜错不出错**——猜错的代价只是那台实例多算一次 prefill,和轮询一样差,不会更差;猜对省下的是一整段 prefill。一件没有下行风险、只有上行收益的事,不必求准。
+
+猜有个副作用:同一批前缀会被一直送去同一台,那台越来越忙。所以每次挑之前先看一眼负载:所有实例里在飞请求最多的减去最少的超过一个绝对阈值,**并且**最多的超过最少的若干倍,两条同时成立才算失衡;失衡时这一轮放弃命中,直接发给最闲的那台(仍然插树)。两条要同时成立,是为了让「1 台在跑 3 条、1 台空着」这种小数字不触发,也让「100 条对 90 条」这种比例接近的不触发。
+
+PD 分离时,网关给每条请求生成一个 63 位的随机房间号,把 P 的地址、握手端口和房间号写进请求体,同一份请求同时发往一台 P 和一台 D。P 池和 D 池各有自己的树、各用各的策略,互不驱逐。两条请求在同一个任务里并发发出:客户端断开,两条一起取消;P 先回而且不是 2xx(或者根本连不上),网关立刻丢掉 D 那条连接——否则 D 会一直卡在等 KV 上,直到 300 秒的超时才醒;连接一断,D 那边的引擎 4–8 秒就察觉到并中止。P 回的是 4xx 就按原状态码转出去,是 5xx 或传输错才统一回 502。
 
 ## 三、代价
 
-- **多一跳。** 每条请求多一次 HTTP 转发;流式响应经网关逐块转。gRPC 模式下切词、推理解析、工具调用解析都搬进网关做,网关 CPU 变成要盯的东西。
-- **树占网关内存。** 每台实例最多记 `max_tree_size` 个字符,默认 67108864,8 台就是 512 MB 量级的字符加节点开销;每 `eviction_interval` 秒扫一次全树按 LRU 删叶子,扫的时候要遍历整棵树。
-- **命中是猜的。** 实例内部驱逐了网关不知道;权重更新、`/flush_cache` 之后网关的树还在,继续把请求送去那台,只是命中数变 0。
-- **多个网关不共享树。** 网关横向扩成 3 个副本,每个副本各记各的,官方估命中率掉 10%–20%;mesh 同步只把插入操作发出去,接收端没有接线。
-- **负载看的是网关自己数的在飞请求数** ,不是实例的 token 数、队列长度。一条 100 token 的请求和一条 100000 token 的请求在网关眼里一样重。
+- **多一跳。** 每条请求多一次 HTTP 转发,流式响应要经网关逐块转。走 gRPC 的那套部署更重:切词、思考段解析、工具调用解析全搬进网关自己的进程做,网关的 CPU 从此是要盯的东西。
+- **树占网关内存。** 每台实例在树里最多留多少字符是可配的,默认 67108864 个字符;8 台实例就是 5 亿字符量级,再加上节点结构本身的开销。驱逐是一个定时线程做的:到点把整棵树遍历一遍、把叶子收进一个按时间排的堆,对超额的那台实例从最旧的叶子往回删,父节点变成叶子再入堆。
+- **命中是猜的,而且会越猜越旧。** 实例内部驱逐了网关不知道;权重换过、缓存清过之后,网关树里那些条目还在,只是再也命不中了。
+- **多个网关副本不共享树。** 网关横向扩成 3 个副本,每个副本各记各的,官方自己估命中率掉 10%–20%。副本互联功能只把树的插入和删除操作发出去,接收那一侧在基准上没有接线,源码注释自己是这么写的。
+- **负载是网关自己数的在飞请求数**,不是实例的 token 数或队列长度。一条 100 token 的请求和一条 100000 token 的请求,在网关眼里一样重。
 
-## 四、和实例内分发不一样的七处
+## 四、和同类常见做法不一样的地方
 
-1. **在哪。** DP 控制器(01 章)是主进程里的一个环节,只管本进程起的 dp_size 个 rank;网关是独立进程,管的是任意多台实例,实例可以在运行时用 `/workers` 加进来或摘掉,也可以让它去 Kubernetes 按标签自己找。官方文档已经把实例内的 DP 标成不推荐,让所有 DP 场景都走网关,`sglang_router.launch_server --dp-size 4` 起的就是 4 台单 DP 实例加 1 个网关。
-2. **树记什么。** 04 章的真树按 token 存,节点值是 KV 槽号,命中直接省 prefill;网关的树按字符存,节点值是「哪几台见过」,一个模型一棵多租户树,命中只是一个路由决定。字符和 token 的分界不一样,所以「命中率 0.3」和实例日志里的 `#cached-token` 不是一回事。
-3. **命中错了会怎样。** 真树错不了;网关猜错只多算一次。反过来网关也不知道真树里的前缀什么时候被踢,两边各驱逐各的。
-4. **驱逐怎么做。** 真树显存不够才踢;网关按每台实例的字符总数上限踢,定时线程扫,时间戳用一个自增计数器而不是时钟,并且只有 1/8 的匹配会刷新时间戳,LRU 是近似的。
-5. **负载是什么。** DP 控制器的 `total_tokens` 和 `total_requests` 读的是调度器发来的真实快照;网关的 cache_aware 读自己数的在飞请求数。`power_of_two` 本来每 30 秒去拉实例的 `/v1/loads` 想拿 token 数,但它读的是响应里的 `aggregate.total_tokens`,而实例返回的 JSON 里没有这个键,所以拉回来永远是 -1,退回在飞请求数比较;HTTP 非 PD 模式下只有 cache_aware 和 manual 两种策略会给实例计在飞请求,`power_of_two` 拿到的两台都是 0,选出来的就是随机抽到的第 1 台(PD 模式下非流式请求两边都计数,这一条不成立)。
-6. **失败处理。** DP 控制器没有:rank 挂了整个实例挂。网关每 60 秒探一次 `/health`,连错 3 次下线、连对 2 次回来;每台一个熔断器,窗口 120 秒内错 10 次就打开 60 秒;失败按退避重试最多 5 次,每次重试重新选实例;4xx 算客户端的错,不计入熔断。
-7. **PD 配对。** 实例内没有这件事;网关同时选 P 和 D,两套策略,两棵树,房间号由网关生成。
+这一层没有参照项目可比。天然的对照物是 01 章里单实例内的那套分发——它做的是同一件事的小一号版本:手上一堆等价的算力,一条请求该给谁。
+
+![两边都得回答的四个问题:第一行「谁来算这一条」,单实例内那套是轮流发或按在跑加排队的条数发、副本清单启动时定死,网关有六种挑法且默认按缓存亲和挑、实例清单运行时可增可减;第二行「它有多忙」,单实例内那套读调度器写下的真实快照,网关只数自己发出去还没回来的请求条数;第三行「它坏了怎么办」,单实例内那套没有这一层,网关有探活加熔断加退避重试;第四行「同一段前缀能不能回到同一个目标」,单实例内那套不能,网关靠自己记的那棵近似树能](/opensource/sglang/18b-dispatch-diff.svg)
+
+1. **在哪。** 单实例内的分发是主进程里的一个环节,只管本进程起的那几个副本;网关是独立进程,管任意多台实例,实例可以在运行时挂上来或摘掉,也可以让它去 Kubernetes 按标签自己找。官方文档已经把实例内的数据并行标成「强烈不推荐,只剩一些陈旧的 RL 框架还在用」,让所有数据并行场景都走网关;和实例一起起的那个启动器,你让它开 4 个副本,起出来的其实是 4 台各自单副本的实例加 1 个网关。
+2. **凭什么挑。** 实例内那套只有轮流发、按在跑加排队的条数发、按 token 数发三种,没有缓存亲和;网关默认就按缓存亲和挑,另外还有随机、轮流、抽两台比负载、按前缀哈希落一致性环、按请求头粘住几种。
+3. **树里记的是什么。** 04 章那棵真树按 token 存,节点挂着 KV 槽号,命中直接省掉一段 prefill;网关这棵按字符存,节点挂着「哪几台见过」,命中只是一个路由决定。字符和 token 的分界不一样,所以网关算出来的命中率和实例日志里那个缓存命中的 token 数不是一回事,不要拿来对。
+4. **错了会怎样。** 真树错不了,槽号对不上就是 bug;网关猜错只是多算一次 prefill。反过来网关也不知道真树什么时候把前缀踢掉了,两边各驱逐各的。
+5. **驱逐按什么。** 真树是显存不够才踢;网关按每台实例在树里占的字符总数踢,定时线程扫。而且它的时间戳不是时钟,是一个全局自增计数器,并且只有 1/8 的匹配会去刷新它——近似的 LRU,这也在预算之内。
+6. **坏了怎么办。** 实例内那套没有这一项:一个副本挂了整台实例跟着挂,官方文档写明它没有容错也没有熔断。网关给每台实例配一个熔断器和一条探活链路,失败按退避重试、每次重试重新挑一台,客户端自己的错不计入熔断。
+7. **配一对。** 实例内没有这件事。网关同时挑一台 P 和一台 D,两套策略、两棵树,房间号由它生成,一方失败另一方立刻取消。
 
 ## 五、调参与观测
 
-**参数在哪调。** 网关是独立进程,参数全是它自己的启动参数(Rust 二进制 `sgl-model-gateway` 或 Python 启动器 `python -m sglang_router.launch_router`;和实例一起起用 `sglang_router.launch_server`,网关参数加 `--router-` 前缀),改了要重启。运行时能动的只有实例列表:`POST /workers` 加一台(body 给 `url`,可选 `model_id`、`worker_type`、`bootstrap_port`、`labels`),`GET /workers` 看全部,`PUT` 和 `DELETE /workers/{id}` 改和摘;`/add_worker`、`/remove_worker`、`/list_workers` 是旧名字,基准上已经不在路由表里。策略本身运行时改不了。指标在另一个端口(默认 29000)的 `/metrics`。
+**参数在哪调。** 网关自己是一个进程,这一节的参数全是它的启动参数,改了要重启。起法有两条:Rust 二进制 `sgl-model-gateway`,或 Python 启动器 `python -m sglang_router.launch_router`;和实例一起起用 `sglang_router.launch_server`,网关那部分参数加 `--router-` 前缀。**两个启动器的参数名和默认值并不处处一致**,下表注明不一致的几处。运行时能动的只有实例列表:`POST /workers` 加一台(body 给 `url`,可选 `model_id`、`worker_type`、`bootstrap_port`、`labels`),`GET /workers` 看全部,`PUT` 与 `DELETE /workers/{id}` 改和摘;README 里还在用的 `/add_worker`、`/remove_worker`、`/list_workers` 基准上已经不在路由表里。策略本身运行时改不了。指标在另一个端口(默认 29000)的 `/metrics`。
 
 | 参数 · 一句话中文说明 | 在哪调 | 默认 | 调了之后(哪个指标往哪变) | 怎么看 |
 |---|---|---|---|---|
-| `--policy` · 选实例的策略 | 启动 | cache_aware | random、round_robin 无状态;power_of_two 抽 2 台比在飞数;prefix_hash 按前 256 个 token 的哈希上一致性环,只在 gRPC 模式下有 token;manual 按 `X-SMG-Routing-Key` 粘住;bucket 和 consistent_hashing 只有 Python 启动器接受 | `smg_worker_selection_total` 的 policy 标签 |
-| `--cache-threshold` · 命中率低于它就不按命中走 | 启动 | 0.3 | 调高(0.5):短前缀不再粘同一台,分布更匀,命中降;调低(0.1):更粘,单台容易过热 | 实例侧 `Prefill batch` 行的 `#cached-token` 与 `#new-token` 之比;各实例 `smg_worker_requests_active` 是否偏斜 |
-| `--balance-abs-threshold` · 最忙减最闲超过多少才算失衡 | 启动 | 64 | 调低(16):更早放弃命中去均衡,命中降、尾延迟稳;调高:反过来 | `smg_worker_requests_active` 各实例的差 |
-| `--balance-rel-threshold` · 最忙是最闲的几倍才算失衡 | 启动 | 1.5 | 和上一条同时成立才触发;某台完全空着时最闲是 0,倍数条件自动成立,只剩绝对差 | 同上 |
-| `--eviction-interval` · 多久扫一次树做 LRU 驱逐 | 启动 | 120 秒(Python 启动器 60 秒) | 调短:树更新鲜、扫描 CPU 更多;调长:树里留着实例早已踢掉的前缀,命中猜错变多 | debug 日志 `Cache eviction completed for` |
-| `--max-tree-size` · 每台实例在树里最多记多少字符 | 启动 | 67108864 | 调小:网关内存降,长会话早被踢出树;调大:反过来。它是字符数不是节点数 | 网关进程 RSS |
-| `--prefill-policy` / `--decode-policy` · PD 模式下 P 和 D 各用什么策略 | 启动,要 `--pd-disaggregation` | 不给就都用 `--policy` | P 用 cache_aware 让前缀粘 P,D 用 power_of_two 或 round_robin 摊开;D 的树没什么用 | `smg_worker_selection_total` 的 worker_type 标签 |
+| `--policy` · 选实例的策略 | 启动 | `cache_aware` | `random`、`round_robin` 无状态;`power_of_two` 抽 2 台比负载;`prefix_hash` 按前 256 个 token 的哈希落一致性环,只有 gRPC 模式下才有 token;`manual` 按 `X-SMG-Routing-Key` 粘住;`bucket` 与 `consistent_hashing` 只有 Python 启动器接受 | `smg_worker_selection_total` 的 policy 标签 |
+| `--cache-threshold` · 命中率低于它就不按命中走 | 启动 | 0.3 | 调高(0.5):短前缀不再粘同一台,分布更匀、命中降;调低(0.1):更粘,单台容易过热 | 实例侧 `Prefill batch` 行的 `#cached-token` 与 `#new-token` 之比;各实例 `smg_worker_requests_active` 是否偏斜 |
+| `--balance-abs-threshold` · 最忙减最闲超过多少才算失衡 | 启动 | 64 | 调低(16):更早放弃命中去均衡,命中降、尾延迟稳;调高反之 | `smg_worker_requests_active` 各实例的差 |
+| `--balance-rel-threshold` · 最忙是最闲的几倍才算失衡 | 启动 | 1.5 | 和上一条同时成立才触发;某台完全空着时最闲是 0,倍数条件自动成立,只剩绝对差在起作用 | 同上 |
+| `--eviction-interval` · 多久扫一次树做 LRU 驱逐 | 启动 | 120 秒;**Python 启动器叫 `--eviction-interval-secs`,默认 60 秒** | 调短:树更新鲜、扫描 CPU 更多;调长:树里留着实例早已踢掉的前缀,猜错变多 | debug 日志 `Cache eviction completed for` |
+| `--max-tree-size` · 每台实例在树里最多记多少字符 | 启动 | 67108864 | 调小:网关内存降,长会话早被踢出树;调大反之。它是字符数不是节点数 | 网关进程 RSS |
+| `--prefill-policy` / `--decode-policy` · PD 模式下 P 和 D 各用什么策略 | 启动,要 `--pd-disaggregation` | 不给就都用 `--policy` | P 用 `cache_aware` 让前缀粘 P,D 用 `round_robin` 摊开;D 的树没什么用 | `smg_worker_selection_total` 的 worker_type 标签 |
 | `--prefill URL [PORT]` / `--decode URL` · P 和 D 的地址 | 启动 | 空 | P 后面跟握手端口(11 章的 8998),不给就发 null 让实例用默认;运行时用 `/workers` 加 | `GET /workers` 的 `stats` |
-| `--dp-aware` · 一台多 DP 实例按 rank 拆成多台看 | 启动 | 关 | 开:去实例 `/server_info` 读 `dp_size`,注册成 `url@0`…`url@N-1`,请求体带 `data_parallel_rank`;实例侧会打一行「已弃用,用 routed_dp_rank」的警告 | `GET /workers` 里 URL 带 `@` |
-| `--worker-urls` / `--service-discovery` + `--selector` · 实例从哪来 | 启动 | 空 / 关 | 静态列表或 Kubernetes 按标签发现(PD 用 `--prefill-selector`、`--decode-selector`,P 的握手端口读 pod 注解 `sglang.ai/bootstrap-port`),每 60 秒同步一次 | `smg_discovery_workers_discovered` |
-| `--health-check-interval-secs` 与 `--health-failure-threshold` / `--health-success-threshold` · 探活频率与判定 | 启动 | 60 秒 / 3 / 2 | 每台 GET `/health`,5 秒超时;调短发现得快、实例多时探活流量多 | `smg_worker_health`;`smg_worker_health_checks_total` |
+| `--dp-aware` · 一台多副本实例按副本号拆成多台看 | 启动 | 关 | 开:去实例 `/server_info` 读 `dp_size`,注册成 `url@0`…`url@N-1`,请求体带 `data_parallel_rank`;实例侧会打一行「已弃用,改用 routed_dp_rank」的警告 | `GET /workers` 里 URL 带 `@` |
+| `--worker-urls` / `--service-discovery` + `--selector` · 实例从哪来 | 启动 | 空 / 关 | 静态列表,或 Kubernetes 按标签发现(PD 用 `--prefill-selector`、`--decode-selector`,P 的握手端口读 pod 注解 `sglang.ai/bootstrap-port`),每 60 秒同步一次 | `smg_discovery_workers_discovered` |
+| `--health-check-interval-secs` 与 `--health-failure-threshold` / `--health-success-threshold` · 探活频率与判定 | 启动 | 60 秒 / 3 / 2 | 每台 GET `/health`,5 秒超时;调短发现得快,实例多时探活流量也多 | `smg_worker_health`;`smg_worker_health_checks_total` |
 | `--cb-failure-threshold` 等 4 个 · 熔断 | 启动 | 10 次 / 3 次 / 60 秒 / 120 秒 | 调低:一台实例抖几下就被摘 60 秒;`--disable-circuit-breaker` 关掉 | `smg_worker_cb_state`;`smg_worker_cb_transitions_total` |
-| `--retry-max-retries` 等 5 个 · 重试 | 启动 | 5 次,50 毫秒起,×1.5,上限 30000 毫秒,抖动 0.2 | 只对 408、429、500、502、503、504 重试,每次重新选实例;非幂等的流式请求也会重发,`--disable-retries` 关掉 | `smg_worker_retries_total`;`smg_worker_retries_exhausted_total` |
-| `--max-concurrent-requests` / `--queue-size` / `--queue-timeout-secs` · 限流与排队 | 启动 | -1(不限)/ 100 / 60 秒 | 开了之后超过并发的进队列,队列满回 429,排队超时回 408 | `smg_http_rate_limit_total` |
-| `--request-timeout-secs` · 一条请求最长多久 | 启动 | 1800 秒 | 按最长生成时间给;太短长生成被网关掐断 | `smg_router_request_errors_total` |
-| `--model-path` / `--tokenizer-path` · 网关自己的分词器 | 启动 | 无 | gRPC 模式必给,网关在自己进程里切词、解析推理块和工具调用;HTTP 模式不用 | 启动日志;`/v1/tokenizers` |
+| `--retry-max-retries` 等 5 个 · 重试 | 启动 | 5 次,50 毫秒起,×1.5,上限 30000 毫秒,抖动 0.2 | 只对 408、429、500、502、503、504 重试,每次重新挑实例;流式请求也会重发,`--disable-retries` 关掉 | `smg_worker_retries_total`;`smg_worker_retries_exhausted_total` |
+| `--max-concurrent-requests` / `--queue-size` / `--queue-timeout-secs` · 限流与排队 | 启动 | -1(不限)/ 100 / 60 秒 | 开了之后超出并发的进队列,队列满回 429,排队超时回 408 | `smg_http_rate_limit_total` |
+| `--request-timeout-secs` · 一条请求最长多久 | 启动 | 1800 秒 | 按最长生成时间给;太短会把长生成掐断 | `smg_router_request_errors_total` |
+| `--model-path` / `--tokenizer-path` · 网关自己的分词器 | 启动 | 无 | gRPC 模式必给,网关在自己进程里切词、解析思考段和工具调用;HTTP 转发模式不用 | 启动日志;`GET /v1/tokenizers` |
 | `--prometheus-port` · 指标端口 | 启动 | 29000(Python 启动器要显式给) | 关不掉,只能换端口 | `curl :29000/metrics` |
-| `--enable-igw` · 一个网关服务多个模型 | 启动 | 关 | 开:按请求里的 `model` 字段找实例,每个模型第 1 台实例注册时 `labels.policy` 决定该模型的策略;这样建出来的 cache_aware 用的是代码里的另一组默认值(0.5 / 32 / 1.1 / 30 秒 / 10000 字符),不是命令行的 | `GET /workers` 的 `model_id` |
-| `--enable-mesh` / `--mesh-peer-urls` · 多网关互联 | 启动 | 关 / 空 | 开:网关之间同步实例状态与限流配置,树的插入只发不收 | `/ha/status`、`/ha/workers`、`/ha/policies` |
+| `--enable-igw` · 一个网关服务多个模型 | 启动 | 关 | 开:按请求里的 `model` 字段找实例,每个模型第 1 台实例注册时的 `labels.policy` 决定该模型的策略;这样建出来的 `cache_aware` 用的是代码里的另一组默认值(0.5 / 32 / 1.1 / 30 秒 / 10000 字符),不是命令行那一组 | `GET /workers` 的 `model_id` |
+| `--enable-mesh` / `--mesh-peer-urls` · 多网关互联 | 启动 | 关 / 空 | 开:网关之间同步实例状态与限流配置;树的操作只发不收 | `/ha/status`、`/ha/workers`、`/ha/policies` |
 
-**怎么看。** 网关自己的三处:`smg_worker_requests_active` 按实例看在飞数是否偏斜(cache_aware 生效的直接证据是「偏斜但没超过失衡阈值」);`smg_worker_selection_total` 按 policy 和 worker_type 看每次选择走了哪个策略;`smg_worker_health`、`smg_worker_cb_state` 看有没有实例被摘。`GET /workers` 是运行时最有用的接口,一行一台,带 `is_healthy` 和 `load`。网关没有命中率指标,命中要去实例日志 `Prefill batch` 行看 `#cached-token`,或者响应 `meta_info` 里的 `cached_tokens`。debug 级日志里 `Load balancing triggered | max: … | min: …` 是失衡分支被触发的痕迹,`Removed stale worker … from cache tree` 是树里的租户已经不在了。`/engine_metrics` 把所有实例的 `/metrics` 合并成一份,`/v1/loads` 把所有实例的负载拉一遍,`/flush_cache` 给所有 HTTP 实例各发一次。gRPC 模式多出 `smg_router_ttft_seconds` 和 `smg_router_tpot_seconds`,HTTP 转发模式没有。
+**怎么看。** 网关自己的三处:`smg_worker_requests_active` 按实例看在飞数偏不偏(缓存感知在起作用的直接证据是「偏斜但没越过失衡阈值」);`smg_worker_selection_total` 按 policy 和 worker_type 看每次选择走的是哪个策略;`smg_worker_health` 与 `smg_worker_cb_state` 看有没有实例被摘。`GET /workers` 是运行时最有用的接口,一行一台,带 `is_healthy` 和 `load`。**网关没有命中率指标**,命中要去实例日志 `Prefill batch` 行看 `#cached-token`,或者响应 `meta_info` 里的 `cached_tokens`;DP 指南里提到的 `sglang_cache_hit_rate` 不在网关代码里。debug 级日志里 `Load balancing triggered | max: … | min: …` 是失衡分支被触发的痕迹,`Removed stale worker … from cache tree` 是树里的那台实例已经不在了。`/engine_metrics` 把所有实例的 `/metrics` 合并成一份,`/v1/loads` 把所有实例的负载拉一遍,`/flush_cache` 只给 HTTP 实例各发一次。`smg_router_ttft_seconds` 与 `smg_router_tpot_seconds` 只有 gRPC 那条管线会写,HTTP 转发模式下这两个指标永远是空的。
+
+**典型配置。** 三套能直接抄走的起法,参数名和默认值都来自上表。组合与推荐值是按语义推的起点,不是实测最优。
+
+| 什么场景 | 在默认起法上加什么 | 拿什么换什么 |
+|---|---|---|
+| 4–8 台单副本实例,多轮对话或共享 system prompt | 只给 `--worker-urls`,其余全默认 | 默认就是缓存感知加两个失衡阈值这一档;代价是网关每台实例吃 67108864 个字符的树 |
+| PD 分离集群,P 少 D 多 | `--pd-disaggregation --prefill URL 8998 --decode URL --prefill-policy cache_aware --decode-policy round_robin --request-timeout-secs 3600` | 用「前缀粘 P、D 纯摊开」换 P 侧命中;代价是 D 侧那棵树白记一份,而且 P 一失败整对就 502 |
+| Kubernetes 上多副本网关,要高可用 | `--service-discovery --selector app=… --max-concurrent-requests 2048 --queue-size 512` | 用副本数换可用性;代价是每个副本各记各的树,官方估命中掉 10%–20%,要粘就在网关前面按用户 id 做会话亲和 |
 
 | 症状 | 先查 | 然后 |
 |---|---|---|
-| 加了网关命中率没变 | `--policy` 是不是 cache_aware;实例是否都注册在同一个 `model_id` 下 | 换策略;IGW 模式下核对 `labels.policy` |
+| 加了网关命中率没变 | `--policy` 是不是 `cache_aware`;实例是否都注册在同一个 `model_id` 下 | 换策略;IGW 模式下核对 `labels.policy` |
 | 1 台实例一直满、其他空着 | `smg_worker_requests_active` 的最大减最小是否一直没到 64 | 调低 `--balance-abs-threshold`;或调高 `--cache-threshold` |
-| 命中率高但尾延迟差 | 同上,是命中把负载堆到 1 台了 | 先动绝对阈值,别关 cache_aware |
-| 多轮对话第 2 轮还是全量 prefill | 请求原文的开头是否每轮都变(时间戳、随机 id 放在 system prompt 最前面) | 把变的部分挪到后面;树按字符从头匹配 |
+| 命中率高但尾延迟差 | 同上,是命中把负载堆到 1 台了 | 先动绝对阈值,别关缓存感知 |
+| 多轮对话第 2 轮还是全量 prefill | 请求原文的开头是不是每轮都变(时间戳、随机 id 放在 system prompt 最前面) | 把会变的部分挪到后面;树是从头按字符匹配的 |
 | 网关内存一直涨 | `--max-tree-size` × 实例数 | 调小;确认驱逐线程在跑(debug 日志) |
-| `power_of_two` 看着像随机 | 是否 HTTP 非 PD 模式;`/v1/loads` 拉回来是不是 -1 | 换 cache_aware,或换 gRPC 模式 |
+| `power_of_two` 看着像随机 | 它拉的 `/v1/loads` 里有没有 `aggregate.total_tokens` | 基准上没有,见第六节;换 `cache_aware` |
 | PD 模式请求 502 `prefill_server_error` | P 的状态;P 的握手端口对不对 | 看 P 日志;`--prefill URL PORT` 补端口 |
 | PD 模式 400 `without bootstrap room id` | 是不是绕过网关直发了 | 走网关 |
-| 实例明明活着却被摘 | `smg_worker_cb_state` 是 open 还是 `smg_worker_health` 是 0 | 熔断等 60 秒自动半开;探活看 `/health` 5 秒内回没回 |
+| 实例明明活着却被摘 | `smg_worker_cb_state` 是不是 open;`smg_worker_health` 是不是 0 | 熔断等 60 秒自动半开;探活看 `/health` 5 秒内回没回 |
 | 实例加载模型时网关报没可用实例 | 注册流程等 `/health` 200,最长 1800 秒 | 等;或调 `--worker-startup-timeout-secs` |
 | 429 | `--max-concurrent-requests` 和 `--queue-size` | 加大或设 -1 |
 | 长请求被掐断 | `--request-timeout-secs` | 按最长生成时间加大 |
-| `--dp-aware` 下实例日志刷警告 | 网关发的是 `data_parallel_rank`,实例要的是 `routed_dp_rank` | 基准上只是警告,功能正常;别关 |
+| `--dp-aware` 下实例日志刷警告 | 网关发的是 `data_parallel_rank`,实例要的是 `routed_dp_rank` | 基准上只是警告,功能正常,别为这个关掉它 |
 
 ## 六、常见误区
 
-- **「网关知道每台实例缓存了什么」。** 因为名字叫缓存感知。实际它只记自己发过什么,按字符猜;实例内部踢了什么、`/flush_cache` 清了什么、换权重之后旧前缀还在不在,它一概不知道。命中率要去实例日志看,网关没有这个指标。
-- **「命中率阈值 0.3 太低,调到 0.8 命中更高」。** 因为「阈值高等于要求高」。0.8 意味着请求前 80% 的字符都得见过才粘,多轮对话里每一轮新增的内容都会让比例掉下去,大部分请求走最闲实例,反而不粘了。要粘就调低,分布不均再用两个失衡阈值兜底。
-- **「`--max-tree-size` 是节点数」。** 文档这么写。代码比的是每台实例在树里的字符总数,67108864 就是 64 M 字符每台,8 台实例是 512 M 字符的上限。
+- **「网关知道每台实例缓存了什么」。** 因为名字叫缓存感知。实际它只记自己发过什么,按字符猜;实例内部踢了什么、`/flush_cache` 清了什么、换权重之后旧前缀还在不在,它一概不知道。命中率要去实例日志看,网关自己没有这个指标。
+- **「阈值 0.3 太低,调到 0.8 命中更高」。** 因为「阈值高等于要求高」。0.8 意味着请求前 80% 的字符都得见过才粘,而多轮对话里每一轮新增的内容都会把这个比例拉下去,结果是大部分请求走最闲实例,反而不粘了。要粘就调低,分布不均再用两个失衡阈值兜底。
+- **「`--max-tree-size` 是节点数」。** 文档的参数表就是这么写的。代码比的是每台实例在树里占的字符总数,67108864 就是每台 64 M 字符,8 台实例合起来 5 亿字符的上限。
 - **「两个失衡阈值任一成立就均衡」。** 因为文档写的是「before rebalancing」。代码是两条同时成立才触发,只调一条经常没反应;某台空着时倍数条件自动成立,这时只有绝对差在起作用。
-- **「`power_of_two` 比的是实例的 token 数」。** 文档说 Load Monitor 喂它实例负载。基准上它读的 `aggregate.total_tokens` 在实例的 `/v1/loads` 响应里不存在(那份 JSON 只有 timestamp、version、accelerator、num_accelerators、loads 5 个键),永远拿到 -1;HTTP 非 PD 模式下它连在飞请求数也没人给它数,两边都是 0,选出来的是随机抽到的第 1 台。PD 模式下非流式请求两边都计数,这时它比的是在飞请求数。
-- **「PD 模式下 D 也该用 cache_aware」。** 因为「都开总没错」。D 不做 prefill,D 侧树默认关着(11 章),网关给 D 建的那棵树只会把同前缀的请求往同一台 D 堆;D 用 power_of_two 或 round_robin。
-- **「代码里的默认值就是命令行默认值」。** 结构体默认是 0.5 / 32 / 1.1 / 30 秒 / 10000,命令行默认是 0.3 / 64 / 1.5 / 120 秒 / 67108864,Python 启动器的驱逐间隔又是 60 秒。IGW 模式按 `labels.policy` 建出来的策略走结构体默认。查生效值看启动日志,不看文档表。
-- **「多起几个网关副本树会同步」。** 因为有 `--enable-mesh`。mesh 同步的是实例状态、限流配置,树的插入只有发送端,接收端在基准上没有接线;每个副本各猜各的,官方自己估命中率掉 10%–20%。要粘就在网关前面按用户 id 做会话亲和。
-- **「重试是安全的」。** 因为默认开着。408、429、5xx 都重试、每次换一台,流式请求发到一半断了也会重发,客户端可能收到两份开头。对不能重复的请求用 `--disable-retries`。
-- **「网关的 `/health` 200 说明后面有实例」。** `/health` 和 `/liveness` 一样永远 200;要看有没有健康实例用 `/readiness`。
-- **「Rust 前端就是网关」。** 01 章说过一次:`SGLANG_RUST_SERVER` 是嵌在单实例里的 HTTP 层,网关是实例之间的独立进程,两者叠着用。`experimental/sgl-router` 是第 3 样东西:一个只服务 1 个模型的精简路由器,靠订阅实例发布的 KV 事件建索引而不是靠猜,和 llm-d 的路由器走同一条路;llm-d 是 Kubernetes 上的集群层,SGLang 给它发 KV 事件。跨实例这一层在基石解读里没有对应章,所以本页只和实例内的分发比,不和 vLLM 比。
+- **「照文档写的 `--eviction-interval-secs` 就能改驱逐间隔」。** 文档从示例到参数表都写这个名字,Python 启动器也确实叫它。但 Rust 二进制的参数叫 `--eviction-interval`,照抄文档会直接启动失败;而且两边默认值不同,一个 120 秒一个 60 秒。
+- **「`power_of_two` 比的是实例的 token 数」。** 文档说有个负载监视器在喂它实例负载。监视器确实每 5 秒去拉一遍实例的 `/v1/loads`,但它读的是响应里的 `aggregate.total_tokens`,而实例返回的 JSON 根本没有 `aggregate` 这个键(只有 timestamp、version、accelerator、num_accelerators、loads 5 个),取不到就填 -1。-1 是个有效值,不是缺失,所以策略认为「两台都拿到了 token 数」,不会退回在飞请求数;两台一样是 -1,比较时先手那台胜出,选出来的就是随机抽到的第 1 台。**监视器跑过第一轮之后,无论 PD 还是非 PD,这个策略都等于随机**;只有在它跑第一轮之前的那个窗口里,才会退回网关自己数的在飞请求数,而 HTTP 非 PD 模式下只有 `cache_aware` 和 `manual` 两种策略会给实例计在飞数,所以那个窗口里也是两台都为 0 的随机。
+- **「PD 模式下 D 也该用 `cache_aware`」。** 因为「都开总没错」。D 不做 prefill,D 侧的树默认关着(11 章),网关给 D 建的那棵树只会把同前缀的请求往同一台 D 上堆;D 用 `round_robin` 或 `power_of_two`。
+- **「代码里的默认值就是命令行默认值」。** 结构体默认是 0.5 / 32 / 1.1 / 30 秒 / 10000,命令行默认是 0.3 / 64 / 1.5 / 120 秒 / 67108864,Python 启动器的驱逐间隔又是 60 秒。按 `labels.policy` 给某个模型建出来的策略走的是结构体默认。查生效值看启动日志,不看文档表。
+- **「多起几个网关副本树会同步」。** 因为有 `--enable-mesh`。它同步的是实例状态和限流配置;树的插入与删除只有发送端,接收端在基准上没有接线,源码注释自己写着「receive path is not yet wired」。每个副本各猜各的,官方自己估命中率掉 10%–20%。要粘就在网关前面按用户 id 做会话亲和。
+- **「重试是安全的」。** 因为默认开着。408、429、5xx 都重试、每次换一台,流式请求发到一半断了也会重发,客户端可能收到两份开头。不能重复的请求用 `--disable-retries`。
+- **「网关的 `/health` 200 说明后面有实例」。** `/health` 就是 `/liveness` 的别名,永远 200;要看有没有健康实例用 `/readiness`,PD 模式下它还要求 P 和 D 各至少有一台健康的。
+- **「文档里的 `/add_worker` 还能用」。** README 的鉴权那一节还在拿它举例。基准的路由表里只有 `/workers` 这一组,旧路由已经摘掉,照 README 敲会得到 404。
+- **「Rust 前端就是网关」。** 01 章说过一次:那是嵌在单台实例里的 HTTP 层,网关是实例之间的独立进程,两者叠着用。`experimental/sgl-router` 是第 3 样东西:一个只服务 1 个模型的精简路由器,靠订阅实例发布的 KV 事件或外部索引建表,而不是靠猜,和 llm-d 的路由器走同一条路;llm-d 是 Kubernetes 上的集群层,SGLang 给它发 KV 事件。
