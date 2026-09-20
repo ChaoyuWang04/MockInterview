@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 530" width="1120" height="530" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="530" fill="#ffffff"/>
+<line x1="30" y1="110" x2="1090" y2="110" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="320" x2="1090" y2="320" stroke="#f3f4f6" stroke-width="1"/>
+<rect x="180" y="150" width="80" height="250" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="272" y="170" width="300" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="592" y="170" width="80" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="692" y="170" width="80" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="792" y="170" width="80" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="892" y="170" width="100" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="1010" y="170" width="80" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="272" y="350" width="88" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="370" y="350" width="100" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="480" y="350" width="92" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="582" y="350" width="400" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1000" y="350" width="90" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="30" y="456" width="1060" height="36" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="260" y1="188" x2="266" y2="188" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="260" y1="368" x2="266" y2="368" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M 272,188 l -8,-4.5 l 0,9 z" fill="#9ca3af"/>
+<path d="M 272,368 l -8,-4.5 l 0,9 z" fill="#9ca3af"/>
+<polyline points="526,350 526,300 592,300 592,214" fill="none" stroke="#8f8bd8" stroke-width="1.4"/>
+<path d="M 592,206 l -4.5,8 l 9,0 z" fill="#8f8bd8"/>
+<line x1="632" y1="206" x2="632" y2="342" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M 632,350 l -4.5,-8 l 9,0 z" fill="#9ca3af"/>
+<line x1="732" y1="206" x2="732" y2="342" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M 732,350 l -4.5,-8 l 9,0 z" fill="#9ca3af"/>
+<line x1="832" y1="206" x2="832" y2="342" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M 832,350 l -4.5,-8 l 9,0 z" fill="#9ca3af"/>
+<line x1="942" y1="206" x2="942" y2="342" stroke="#d4a24c" stroke-width="1.4" stroke-dasharray="4 3"/>
+<path d="M 942,350 l -4.5,-8 l 9,0 z" fill="#d4a24c"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一条请求在 P 和 D 之间:控制面先从 D 流向 P,数据面才从 P 流向 D</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">绿 = 真在算或真在分配资源,紫 = 一条控制消息,黄 = 写元数据,红 = 干等,灰 = 查表或等对端;白底虚线 = 网关,它不属于任何一台推理实例。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:横向是时间,方框长度就是这一步占多久;向上那支箭头是控制面,向下的三支实线加一支虚线是数据面,每支箭头对应一次批量 RDMA 写。</text>
+<text x="30" y="94" font-size="11" fill="#6b7280" text-anchor="start">数字口径:8000 token 的 prompt 在 70B GQA 模型上 KV 约 2.6 GB,400 Gb/s 网卡上要 50–100 毫秒;同一条 prompt 的 prefill 本身要 200–800 毫秒。</text>
+<text x="30" y="186" font-size="14" fill="#111827" text-anchor="start" font-weight="700">P · prefill 服务器</text>
+<text x="30" y="206" font-size="11" fill="#6b7280" text-anchor="start">只算 1 个 token 就交差</text>
+<text x="30" y="366" font-size="14" fill="#111827" text-anchor="start" font-weight="700">D · decode 服务器</text>
+<text x="30" y="386" font-size="11" fill="#6b7280" text-anchor="start">格子先占上,KV 后到</text>
+<text x="220" y="266" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">网关</text>
+<text x="220" y="284" font-size="11" fill="#6b7280" text-anchor="middle">18 章</text>
+<text x="422" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">卡在握手队列,什么也不算</text>
+<text x="632" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">前向 块1</text>
+<text x="732" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">前向 块2</text>
+<text x="832" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">前向 块3</text>
+<text x="942" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">写元数据</text>
+<text x="1050" y="193" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">回长度 0</text>
+<text x="316" y="373" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">查花名册</text>
+<text x="420" y="373" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">预分配格子</text>
+<text x="526" y="373" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">发落点</text>
+<text x="782" y="373" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">等 KV 到齐 · 这段时间 GPU 在给别的请求 decode</text>
+<text x="1045" y="373" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">合批 decode</text>
+<text x="272" y="268" font-size="11" fill="#6b7280" text-anchor="start">① 控制面:D 把落点发给 P,P 收到才开始算</text>
+<text x="272" y="418" font-size="11" fill="#6b7280" text-anchor="start">② 数据面:P 每算完一块就发一块,这一块的所有层合成一个批,一次 RDMA 写进 D 的显存;命中前缀树的那一段在前向之前就先发。</text>
+<text x="272" y="436" font-size="11" fill="#6b7280" text-anchor="start">虚线那支是最后一块之后补写的元数据:首 token、各级缓存的命中数、logprobs、推测解码的隐状态,按 64 字节对齐。</text>
+<text x="44" y="479" font-size="11" fill="#6b7280" text-anchor="start">两边的占用窗口不一样长:P 的格子从开算占到「传输确认」为止,D 的格子从「预分配」那一刻就开始占 —— 图上 D 的灰条有多长,就有多少显存在空转。参数名都在第五节。</text>
+</svg>

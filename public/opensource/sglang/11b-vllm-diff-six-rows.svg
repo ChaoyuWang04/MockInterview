@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="605" y1="106" x2="605" y2="528" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="130" x2="1090" y2="130" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="196" x2="1090" y2="196" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="262" x2="1090" y2="262" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="328" x2="1090" y2="328" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="394" x2="1090" y2="394" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="460" x2="1090" y2="460" stroke="#f3f4f6" stroke-width="1"/>
+<rect x="20" y="208" width="4" height="34" fill="#d9877a"/>
+<rect x="20" y="274" width="4" height="34" fill="#d9877a"/>
+<rect x="20" y="406" width="4" height="34" fill="#d9877a"/>
+<rect x="240" y="142" width="270" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="620" y="142" width="270" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="208" width="270" height="34" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="620" y="208" width="270" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="274" width="110" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="360" y="274" width="100" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="470" y="274" width="120" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="274" width="270" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="240" y="340" width="270" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="620" y="340" width="150" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="782" y="340" width="180" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="240" y="406" width="270" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="406" width="270" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="240" y="472" width="270" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="620" y="472" width="200" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="832" y="472" width="230" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="30" y="536" width="1060" height="34" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">六件事两边都躲不掉:每一行是一件必须有人做的事,左右两块就是各自的答法</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">颜色 = 这一侧为这件事投了多少工程:绿是专门建了一套机制,紫是只有一条路没有选项,黄是留了几个选项要自己挑,灰是不做或者交给外面;白底虚线 = 这一侧根本没有这一层。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:一行里的方框个数 = 这一侧为这件事提供了几条实现路径。左边带红杠的三行是差异最大的三处。两边的参数名都在第五节。</text>
+<text x="375" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vLLM</text>
+<text x="755" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">SGLang</text>
+<text x="30" y="160" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 谁把请求配成一对</text>
+<text x="30" y="178" font-size="11" fill="#6b7280" text-anchor="start">要同时落到一台 P 和一台 D</text>
+<text x="375" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">外部网关,先发 P 再发 D</text>
+<text x="240" y="192" font-size="11" fill="#6b7280" text-anchor="start">两次 HTTP;网关不在引擎里,要自己搭</text>
+<text x="755" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">自家网关,同时发 P 和 D</text>
+<text x="620" y="192" font-size="11" fill="#6b7280" text-anchor="start">一个 63 位随机房间号把两边串起来;P 那边失败立刻回 502,不让 D 干等到超时</text>
+<text x="30" y="226" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 两端怎么知道对方在哪</text>
+<text x="30" y="244" font-size="11" fill="#6b7280" text-anchor="start">传输层得知道往哪台机器写</text>
+<text x="375" y="230" font-size="13" fill="#9ca3af" text-anchor="middle" font-weight="700">没有这一层</text>
+<text x="240" y="258" font-size="11" fill="#6b7280" text-anchor="start">对端坐标随传输参数由网关捎带</text>
+<text x="755" y="230" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">P 起一个花名册服务</text>
+<text x="620" y="258" font-size="11" fill="#6b7280" text-anchor="start">每个 rank 启动时注册,D 查一次就缓存;页大小或 KV 精度对不上直接报错</text>
+<text x="30" y="292" font-size="14" fill="#111827" text-anchor="start" font-weight="700">③ KV 往哪个方向过网</text>
+<text x="30" y="310" font-size="11" fill="#6b7280" text-anchor="start">谁发起这次远程读写</text>
+<text x="295" y="296" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">D 读 P(默认)</text>
+<text x="410" y="296" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">P 写 D</text>
+<text x="530" y="296" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">经存储中转</text>
+<text x="240" y="324" font-size="11" fill="#6b7280" text-anchor="start">三套并行的实现,注册成不同的名字</text>
+<text x="755" y="296" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">只有 P 写 D</text>
+<text x="620" y="324" font-size="11" fill="#6b7280" text-anchor="start">全树找不到 D 去读 P 的实现;D 先分配好格子,再把页号推给 P</text>
+<text x="30" y="358" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 一次发多大一块</text>
+<text x="30" y="376" font-size="11" fill="#6b7280" text-anchor="start">能不能和计算重叠看这个</text>
+<text x="375" y="362" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">请求粒度整体搬</text>
+<text x="240" y="390" font-size="11" fill="#6b7280" text-anchor="start">逐层的钩子留着,默认没有实现真用它</text>
+<text x="695" y="362" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">每块算完就发</text>
+<text x="872" y="362" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">块内所有层一个批</text>
+<text x="620" y="390" font-size="11" fill="#6b7280" text-anchor="start">也不是逐层流水,两边在这一行的结论一致</text>
+<text x="30" y="424" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑤ 首 token 由谁产出</text>
+<text x="30" y="442" font-size="11" fill="#6b7280" text-anchor="start">它决定这笔时间记在谁头上</text>
+<text x="375" y="428" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">P 采,回传要显式打开</text>
+<text x="240" y="456" font-size="11" fill="#6b7280" text-anchor="start">只有一个实现提供这条回传</text>
+<text x="755" y="428" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">P 采,随元数据一起过网</text>
+<text x="620" y="456" font-size="11" fill="#6b7280" text-anchor="start">D 拿到直接吐,不重算;客户端看到的流全部来自 D</text>
+<text x="30" y="490" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑥ 出了事谁先发现</text>
+<text x="30" y="508" font-size="11" fill="#6b7280" text-anchor="start">两边都要有人兜底</text>
+<text x="375" y="494" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">调度器把失效的块退回重算</text>
+<text x="240" y="522" font-size="11" fill="#6b7280" text-anchor="start">探活只朝一个方向</text>
+<text x="720" y="494" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">D 用心跳探 P</text>
+<text x="947" y="494" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">P 靠会话失败探 D</text>
+<text x="620" y="522" font-size="11" fill="#6b7280" text-anchor="start">放弃一条请求时 D 给每个 P 发消息,P 回一条确认</text>
+<text x="44" y="557" font-size="11" fill="#6b7280" text-anchor="start">名字不同其实是同一件事:SGLang 的「花名册」与 vLLM 里由网关捎带的那组传输参数,回答的是同一个问题 —— 让传输层知道对端在哪。② 这一行左侧空着,是因为 vLLM 把它整个推给了网关。</text>
+</svg>

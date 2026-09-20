@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 918" width="1120" height="918" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="918" fill="#ffffff"/>
+<text x="46" y="40" font-size="19" fill="#111827" font-weight="700" text-anchor="start">一层 MoE 的三种摆法:专家落在哪张卡,token 怎么过去</text>
+<text x="46" y="66" font-size="13" fill="#6b7280" text-anchor="start">4 张卡、8 个逻辑专家。绿 = 本卡持有且这一步要算的槽,灰 = 不在本卡、编号置 -1 跳过的槽,红 = 被复制到多张卡的热门专家</text>
+<text x="46" y="86" font-size="13" fill="#6b7280" text-anchor="start">紫 = 一批 token,黄 = 跨卡通信。格子数就是槽数,紫条长度就是这张卡这一步要过的 token 量</text>
+<text x="46" y="126" font-size="14" fill="#111827" font-weight="700" text-anchor="start">① 默认路径:不点名后端,每张卡都跑全批 token,末尾 all-reduce</text>
+<rect x="46" y="140" width="240" height="124" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="58" y="162" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 0</text>
+<rect x="58" y="172" width="216" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="166" y="188" font-size="11" fill="#6b7280" text-anchor="middle">全批 token</text>
+<rect x="59" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="86" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="113" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="140" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="167" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="194" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="221" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="248" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="166" y="254" font-size="11" fill="#9ca3af" text-anchor="middle">8 个槽,本卡只算其中 2 个</text>
+<rect x="304" y="140" width="240" height="124" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="316" y="162" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 1</text>
+<rect x="316" y="172" width="216" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="424" y="188" font-size="11" fill="#6b7280" text-anchor="middle">全批 token</text>
+<rect x="317" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="344" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="371" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="398" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="425" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="452" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="479" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="506" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="424" y="254" font-size="11" fill="#9ca3af" text-anchor="middle">8 个槽,本卡只算其中 2 个</text>
+<rect x="562" y="140" width="240" height="124" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="574" y="162" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 2</text>
+<rect x="574" y="172" width="216" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="682" y="188" font-size="11" fill="#6b7280" text-anchor="middle">全批 token</text>
+<rect x="575" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="602" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="629" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="656" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="683" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="710" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="737" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="764" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="682" y="254" font-size="11" fill="#9ca3af" text-anchor="middle">8 个槽,本卡只算其中 2 个</text>
+<rect x="820" y="140" width="240" height="124" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="832" y="162" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 3</text>
+<rect x="832" y="172" width="216" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="940" y="188" font-size="11" fill="#6b7280" text-anchor="middle">全批 token</text>
+<rect x="833" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="860" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="887" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="914" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="941" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="968" y="212" width="24" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="995" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1022" y="212" width="24" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="940" y="254" font-size="11" fill="#9ca3af" text-anchor="middle">8 个槽,本卡只算其中 2 个</text>
+<rect x="46" y="280" width="1014" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="553" y="299" font-size="11" fill="#6b7280" text-anchor="middle">all-reduce:把 4 张卡的部分结果加起来</text>
+<text x="46" y="330" font-size="11" fill="#9ca3af" text-anchor="start">四条紫条一样长 —— 每张卡都拿到同一批完整 token;通信形状和纯张量并行一样,所以小规模下不吃亏</text>
+<text x="46" y="372" font-size="14" fill="#111827" font-weight="700" text-anchor="start">② 点名全交换后端之后:每张卡只拿自己那批 token,专家份数被强制等于张量并行度</text>
+<rect x="58" y="386" width="54" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="122" y="402" font-size="11" fill="#6b7280" text-anchor="start">卡 0 自己那批</text>
+<rect x="316" y="386" width="54" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="380" y="402" font-size="11" fill="#6b7280" text-anchor="start">卡 1 自己那批</text>
+<rect x="574" y="386" width="54" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="638" y="402" font-size="11" fill="#6b7280" text-anchor="start">卡 2 自己那批</text>
+<rect x="832" y="386" width="54" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="896" y="402" font-size="11" fill="#6b7280" text-anchor="start">卡 3 自己那批</text>
+<rect x="46" y="436" width="1014" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="553" y="453" font-size="11" fill="#6b7280" text-anchor="middle">dispatch:每张卡把自己那批 token 按路由拆开,发给持有对应专家的卡</text>
+<line x1="85" y1="470" x2="424" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="85" y1="470" x2="682" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="343" y1="470" x2="682" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="343" y1="470" x2="940" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="601" y1="470" x2="940" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="601" y1="470" x2="166" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="859" y1="470" x2="166" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="859" y1="470" x2="424" y2="520" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="46" y="520" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="58" y="542" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 0</text>
+<rect x="59" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="111" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 0</text>
+<rect x="169" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="221" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 1</text>
+<text x="166" y="606" font-size="11" fill="#9ca3af" text-anchor="middle">只算本卡持有的这 2 个</text>
+<rect x="304" y="520" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="316" y="542" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 1</text>
+<rect x="317" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="369" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 2</text>
+<rect x="427" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="479" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 3</text>
+<text x="424" y="606" font-size="11" fill="#9ca3af" text-anchor="middle">只算本卡持有的这 2 个</text>
+<rect x="562" y="520" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="574" y="542" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 2</text>
+<rect x="575" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="627" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 4</text>
+<rect x="685" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="737" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 5</text>
+<text x="682" y="606" font-size="11" fill="#9ca3af" text-anchor="middle">只算本卡持有的这 2 个</text>
+<rect x="820" y="520" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="832" y="542" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 3</text>
+<rect x="833" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="885" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 6</text>
+<rect x="943" y="554" width="104" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="995" y="573" font-size="11" fill="#6b7280" text-anchor="middle">专家 7</text>
+<text x="940" y="606" font-size="11" fill="#9ca3af" text-anchor="middle">只算本卡持有的这 2 个</text>
+<rect x="46" y="640" width="1014" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="553" y="657" font-size="11" fill="#6b7280" text-anchor="middle">combine:算完把每个 token 的结果送回它原来那张卡</text>
+<text x="46" y="688" font-size="11" fill="#9ca3af" text-anchor="start">紫条短了四分之三,灰槽不见了 —— 省下的计算换成每层两段跑在网上的通信,这两段里 SM 空转</text>
+<text x="46" y="730" font-size="14" fill="#111827" font-weight="700" text-anchor="start">③ 再加冗余槽与负载均衡:物理槽数 = 逻辑专家数 + 冗余数,最热的那个逻辑专家在多张卡上各放一份</text>
+<rect x="46" y="744" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="58" y="766" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 0</text>
+<rect x="59" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="93" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 0</text>
+<rect x="132" y="778" width="68" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="166" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 1</text>
+<rect x="205" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="239" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 3</text>
+<text x="166" y="830" font-size="11" fill="#9ca3af" text-anchor="middle">槽从 2 个变成 3 个</text>
+<rect x="304" y="744" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="316" y="766" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 1</text>
+<rect x="317" y="778" width="68" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="351" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 2</text>
+<rect x="390" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="424" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 3</text>
+<rect x="463" y="778" width="68" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="497" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 4</text>
+<text x="424" y="830" font-size="11" fill="#9ca3af" text-anchor="middle">槽从 2 个变成 3 个</text>
+<rect x="562" y="744" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="574" y="766" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 2</text>
+<rect x="575" y="778" width="68" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="609" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 5</text>
+<rect x="648" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="682" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 6</text>
+<rect x="721" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="755" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 3</text>
+<text x="682" y="830" font-size="11" fill="#9ca3af" text-anchor="middle">槽从 2 个变成 3 个</text>
+<rect x="820" y="744" width="240" height="104" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="832" y="766" font-size="14" fill="#111827" font-weight="700" text-anchor="start">卡 3</text>
+<rect x="833" y="778" width="68" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="867" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 7</text>
+<rect x="906" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="940" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 0</text>
+<rect x="979" y="778" width="68" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="1013" y="797" font-size="11" fill="#6b7280" text-anchor="middle">专家 6</text>
+<text x="940" y="830" font-size="11" fill="#9ca3af" text-anchor="middle">槽从 2 个变成 3 个</text>
+<text x="46" y="872" font-size="11" fill="#9ca3af" text-anchor="start">每卡多出一个槽,是因为冗余数从 0 变成 4:专家 3 占了 3 个槽,专家 0 与专家 6 各占 2 个,原来堆在一张卡上的 token 被摊开</text>
+</svg>
