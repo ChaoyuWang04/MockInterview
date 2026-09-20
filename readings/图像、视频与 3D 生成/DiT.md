@@ -260,7 +260,7 @@ $$
 - 训练在 TPU v3-256 上跑 XL/2；超参几乎不调，不代表换优化器或换数据仍零调参。
 - 与 U-Net 的对比建立在 LDM/ADM 的 Gflops 表上，不是逐层重实现所有前作。
 
-封面写 “Code and project page available here”，PDF 正文没有印出 URL。
+封面写 「Code and project page available here」，PDF 正文没有印出 URL。
 
 ## 可迁移启发
 

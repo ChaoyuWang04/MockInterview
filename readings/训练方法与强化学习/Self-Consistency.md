@@ -58,7 +58,7 @@ flowchart TB
 
 假设最终答案 $a_i$ 来自固定集合 $A$，$i=1,\ldots,m$。Self-consistency 引入隐变量 $r_i$（第 $i$ 条输出里的推理 token 序列），成对生成 $(r_i,a_i)$，且 $r_i\to a_i$：推理路径可选，只用来走到 $a_i$（PDF p.3）。图 1 Output 3 里，「She eats 3 for breakfast … 9 eggs * $2 = $18」是 $r_i$，最后一句「The answer is $18」解析出 $a_i=18$。
 
-解析器按任务写（PDF p.3 脚注 1）：算术题在模型写出 “The answer is ” 之后取 **第一段数字**；常识题取该标记后的 **整段字符串**。提示格式对齐时，多数输出是「{推理}。The answer is X.」。
+解析器按任务写（PDF p.3 脚注 1）：算术题在模型写出 「The answer is 」 之后取 **第一段数字**；常识题取该标记后的 **整段字符串**。提示格式对齐时，多数输出是「{推理}。The answer is X.」。
 
 对多条 $(r_i,a_i)$ 边际化 $r_i$，多数票：
 

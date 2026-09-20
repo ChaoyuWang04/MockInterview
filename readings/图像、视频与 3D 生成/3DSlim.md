@@ -91,7 +91,7 @@ $k_i$ 被夹在 $[k_{\min},k_{\max}]$。物体–物体掩码（PDF p. 4 式 3�
 
 人听到「桌子周围有几把椅子」会先盯桌子和椅子，而不是先无任务地扫完全屋（PDF p. 4–5）。因果掩码让物体 token 在编码阶段看不到指令。Inst Mask 只改物体–指令块：把原来的 $-\infty$ 改成 $0$（PDF p. 5 式 4）——$i\in\mathcal{O}$ 且 $j\in\mathcal{I}$ 时允许注意，其余位置保持原掩码。
 
-这一步不加层、不加投影。物体表示在进入后续层时已经带任务上下文，作者称为任务适配的场景表示（PDF p. 2）。附录可视化里，Chat-Scene 的 Obj→Inst 权重全是零；加上 Inst Mask 后，灯这个物体 token 会高亮 “above”“table” 一类词（PDF p. 11）。
+这一步不加层、不加投影。物体表示在进入后续层时已经带任务上下文，作者称为任务适配的场景表示（PDF p. 2）。附录可视化里，Chat-Scene 的 Obj→Inst 权重全是零；加上 Inst Mask 后，灯这个物体 token 会高亮 「above」「table」 一类词（PDF p. 11）。
 
 两块掩码都直接替换标准因果掩码对应子块，现成解码器不用改结构（PDF p. 1、p. 4）。
 
@@ -158,7 +158,7 @@ Chat-Scene → Chat-Scene + Ours（PDF p. 6 表 1）：
 
 图 4 把输出 token 对物体 token 的注意力对层、对头取平均（PDF p. 8）。问答「电视下面那张桌子旁边是什么」，真值 trash can；3D-SLIM 盯垃圾桶一带，Chat-Scene 盯 table / tv 这类显著名词，答成 bench。指代「白柜子左边的黑柜子」时场景里有两个黑柜，3D-SLIM 对上关系，Chat-Scene 孤立看一个黑柜，选错 ID。
 
-附录图 5 更直接（PDF p. 11–12）。指代两个红靠垫、要「右边还有另一个红靠垫」那一个：Chat-Scene 因因果掩码选了序列第一的 `<OBJ000>`，它对后续全部物体的 Obj→Obj 权重被置零，也几乎看不到指令；3D-SLIM 选对 `<OBJ016>`，邻居注意力落在目标区域，指令侧点亮 red / throw / pillow / couch / another。问答「墙上桌子上方是什么」，真值 White lamp：Chat-Scene 的灯 token 只能看序列里排在它前面的物体，注意力飘到远处，答成 Window；3D-SLIM 把灯和近邻绑在一起，并看 “above”“table”，答 Lamp。
+附录图 5 更直接（PDF p. 11–12）。指代两个红靠垫、要「右边还有另一个红靠垫」那一个：Chat-Scene 因因果掩码选了序列第一的 `<OBJ000>`，它对后续全部物体的 Obj→Obj 权重被置零，也几乎看不到指令；3D-SLIM 选对 `<OBJ016>`，邻居注意力落在目标区域，指令侧点亮 red / throw / pillow / couch / another。问答「墙上桌子上方是什么」，真值 White lamp：Chat-Scene 的灯 token 只能看序列里排在它前面的物体，注意力飘到远处，答成 Window；3D-SLIM 把灯和近邻绑在一起，并看 「above」「table」，答 Lamp。
 
 这是作者对「虚假顺序相关」的定性证据，不是定量指标。
 

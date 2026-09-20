@@ -178,7 +178,7 @@ Miniworld 方房间，彩色方块随机位置和速度；智能体离散动作�
 
 神经科学附录是类比不是证据：视觉皮层有自身运动调制和预测误差；海马位置细胞/网格细胞的相位随前进等变（PDF p.21）。不要当成 FloWM 的实验支持。
 
-致谢：Chan Zuckerberg Initiative Foundation 对 Kempner Institute 的捐赠（PDF p.11）。附录 I：偶尔用 LLM 润色句子（PDF p.34）。项目页在摘要末尾写了 “Project page”，正文多处 “here”，PDF 文本层没有印出 URL。
+致谢：Chan Zuckerberg Initiative Foundation 对 Kempner Institute 的捐赠（PDF p.11）。附录 I：偶尔用 LLM 润色句子（PDF p.34）。项目页在摘要末尾写了 「Project page」，正文多处 「here」，PDF 文本层没有印出 URL。
 
 ## 可迁移
 

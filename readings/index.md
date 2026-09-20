@@ -13,8 +13,8 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
-| Kaplan-Scaling-Laws | OpenAI | 损失随参数、数据与算力走幂律,跨七个数量级;结论是大模型更省样本,算力该压在模型规模上。arXiv 2001.08361,原件待取 |
-| Chinchilla | GoogleDeepMind | 同算力下参数与 token 应等比例放大:70B 配 1.4T token 打赢 280B 的 Gopher,直接修正 Kaplan 的配比结论。arXiv 2203.15556,原件待取 |
+| Chinchilla | DeepMind | 同算力下参数与 token 应等比例放大:70B 配 1.4T token 打赢 280B 的 Gopher,直接修正 Kaplan 的配比结论 |
+| Kaplan-Scaling-Laws | JohnsHopkins | 损失随参数、数据与算力走幂律;算力最优是训更大模型并提前停 |
 
 ## 注意力与长上下文
 
@@ -23,7 +23,13 @@
 | Topological Trouble With Transformers | GoogleDeepMind | Transformer 用扩张的上下文历史编码结构,这套表示在拓扑上存在固有困难 |
 | Attention-Sink-Survey | Tsinghua | **综述**:attention sink 怎么被利用、怎么被解释、怎么被消除,三支各自的代表工作 |
 | Latent-Space-Survey | NUS | **综述**:潜空间的基础、演化、机制、能力与展望 |
+| LatentMAS | Princeton | 多智能体共享潜工作记忆 |
+| Value-State-Gated-Attention | AntGroup | 在 value 上先门,打断注意力–value 抽干循环 |
+| Cache-to-Cache | Tsinghua | KV-cache 投影融合,协作从文本信道改到潜信道 |
+| Reasoning-by-Superposition | Berkeley | 连续 CoT 叠加态的形式解释 |
+| SoftCoT-Plus-Plus | NTU | 连续嵌入里多条并行路径做测试时缩放 |
 | TransMLA | PKU | 把已有的 GQA 模型等价转成 MLA,不重训就拿到 DeepSeek 那套 KV 压缩 |
+| Huginn | ELLIS | 循环深度做潜空间测试时算力,测试时 unroll 而不加长 CoT |
 | Mamba-2 | Princeton | 证明 Transformer 与 SSM 是对偶的,并给出结构化状态空间的高效算法 |
 | GLA | MIT | 带门控的线性注意力,配一套硬件高效的分块并行训练 |
 | Mamba | CMU | 选择性状态空间:让 SSM 的参数随输入变化,线性时间对上 Transformer 的质量 |
@@ -33,12 +39,6 @@
 | O1-Memory-Attention | Google | 注意力的内存可以做到常数级,为 FlashAttention 那条路铺前提 |
 | RoPE | Zhuiyi | 旋转位置编码:绝对位置进旋转角,相对距离出现在内积里 |
 | Linear-Attention | Idiap | 用核技巧把 softmax 注意力换成线性形式;自回归推理时它等价于一个 RNN |
-| Huginn | ELLIS | 循环深度做潜空间测试时算力。arXiv 2502.05171,来自 Latent-Space-Survey |
-| Reasoning-by-Superposition | Berkeley | 连续 CoT 叠加态的形式解释。arXiv 2505.12514,来自 Latent-Space-Survey |
-| SoftCoT-Plus-Plus | NTU | 连续嵌入里多条并行路径做测试时缩放。arXiv 2505.11484,来自 Latent-Space-Survey |
-| Cache-to-Cache | Tsinghua | KV-cache 投影融合,协作从文本信道改到潜信道。arXiv 2510.03215,来自 Latent-Space-Survey |
-| Value-State-Gated-Attention | AntGroup | 在 value 上先门,打断注意力–value 抽干循环。arXiv 2510.09017,来自 Attention-Sink-Survey |
-| LatentMAS | UIUC | 多智能体共享潜工作记忆。arXiv 2511.20639,来自 Latent-Space-Survey |
 
 ## 训练方法与强化学习
 
@@ -56,9 +56,11 @@
 | FlowRL | SJTU | 用流平衡去匹配完整的奖励分布,而不是最大化奖励;保住少见但正确的推理路径 |
 | RL-for-LRM-Survey | Tsinghua | **综述**:RL 如何把 LLM 变成 LRM,以及这条路上的算法、数据与基建全景 |
 | RLVR | MSRA | 可验证奖励的强化学习:用规则判对错取代人类偏好,长链推理的主流范式 |
+| ProRL | NVIDIA | 把强化学习拉长,才可能扩推理边界,而不只是把基座已有答案抽得更勤 |
 | RM-R1 | UIUC | 把奖励建模本身当成推理任务来做,评分前先写出理由 |
 | Criticize-RLVR | Tsinghua | 质疑 RLVR:大 k 下 pass@k 显示它并没有拓宽基座模型的推理边界,只是把分布收窄 |
 | Down-Sampling-Rollouts | CMU | rollout 生成易并行、策略更新吃通信,所以多采样再下采样,把这对不对称吃掉 |
+| Tulu-3 | AllenAI | 把开放后训练做成可复现配方,最后用程序化核对器做 RLVR |
 | VinePPO | Mila | 用蒙特卡洛回溯做逐步信用分配,替掉学出来的价值网络 |
 | Magpie | Washington | 只喂对齐模板的前缀让模型自己续写,把指令数据从对齐模型里「抽」出来 |
 | DEITA | ShanghaiTech | 系统研究指令微调的数据选择:复杂度、质量、多样性三个维度怎么自动打分 |
@@ -78,8 +80,6 @@
 | Evolution-Strategies | OpenAI | 黑盒进化策略当 RL 的替代:不用反传,极易并行 |
 | RL2 | Berkeley | 把 RL 算法本身学进 RNN 的隐状态,元学习式的快速适应 |
 | Knowledge-Distillation | Google | 知识蒸馏原始论文:用教师的软标签带温度去教学生 |
-| Tulu-3 | AllenAI | 用程序化核对器换奖励模型,综述把 RLVR 这个名字钉在这篇。arXiv 2411.15124,来自 RL-for-LRM-Survey |
-| ProRL | NVIDIA | 足够长、足够稳的 RL 能否把推理边界推过基座。arXiv 2505.24864,来自 RL-for-LRM-Survey |
 
 ## Agent 训练与工具使用
 
@@ -126,15 +126,19 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
-| PipeDream | MSR | 1F1B 流水线调度的出处:异步流水并行,气泡与显存的折中 |
-| Tectonic | Meta | Meta 的 EB 级分布式文件系统,FAST;把多套专用存储合并成一套 |
+| Tectonic | Facebook | Facebook 的 EB 级分布式文件系统,FAST;把多套专用存储合并成一套 |
+| PipeDream | CMU | 1F1B 流水线调度的出处:异步流水并行,气泡与显存的折中 |
 
 ## 多模态理解与 Omni
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
 | MM-LLMs-Survey | Tencent | **综述**:多模态 LLM 的模块化拆解与近期进展 |
+| VILA | NVIDIA | 线性投影、交错图文、纯文本指令回混 |
+| LLaVA-1.5 | Wisconsin | 投影换成 MLP,再加学术 VQA 与格式提示 |
 | ViT-Registers | Meta | ViT 特征图里的高范数伪影是模型在借 patch 当寄存器;显式给它几个 register token |
+| NExT-GPT | NUS | 任意模态端到端,轻量对齐对抗工具级联误差 |
+| InstructBLIP | Salesforce | 在 BLIP-2 上只更新 Q-Former 做指令感知视觉特征 |
 | LLaVA | Wisconsin | 一层投影把视觉特征接进 LLM,再用 GPT 生成的视觉指令数据微调 |
 | DINOv2 | Meta | 无监督学出的通用视觉特征,不微调就能直接当下游特征用 |
 | Segment Anything | Meta | 可提示分割的视觉基座 SAM,连带 SA-1B 数据引擎;分割任务被重述成 promptable 任务 |
@@ -146,10 +150,6 @@
 | CLIP | OpenAI | 四亿图文对的对比预训练,零样本迁移;此后所有多模态的地基 |
 | ViT | Google | 把图像切成 16×16 的 patch 当 token 喂给纯 Transformer,视觉侧的架构统一 |
 | MoCo | Meta | 动量编码器加队列维护大批负样本,对比学习的代表作 |
-| InstructBLIP | Salesforce | 在 BLIP-2 上只更新 Q-Former 做指令感知视觉特征。arXiv 2305.06500,来自 MM-LLMs-Survey |
-| NExT-GPT | NUS | 任意模态端到端,轻量对齐对抗工具级联误差。arXiv 2309.05519,来自 MM-LLMs-Survey |
-| LLaVA-1.5 | Wisconsin | 投影换成 MLP,再加学术 VQA 与格式提示。arXiv 2310.03744,来自 MM-LLMs-Survey |
-| VILA | NVIDIA | 线性投影、交错图文、纯文本指令回混。arXiv 2312.07533,来自 MM-LLMs-Survey |
 
 ## 图像、视频与 3D 生成
 
@@ -219,29 +219,29 @@
 | VLA-World-Model-Survey | Tongji | **综述**:按接到策略哪一侧切四刀——规划器、动作模型、合成器、仿真器 |
 | Flow-Equivariant-WM | Harvard | 感官流与自身运动耦合成连续对称性;让世界模型对这些流等变,记忆才稳 |
 | LeJEPA | Brown | 给 JEPA 一个可证明的目标,去掉那一堆防坍缩的启发式技巧 |
+| World-Env | SYSU | 把世界模型当 VLA 后训练虚拟环境 |
+| Genie-Envisioner | AgiBot | 同一套世界基础平台跨规划/合成/仿真复用 |
+| WorldVLA | Alibaba | 观测与动作串成一条自回归世界模型 |
 | RLVR-World | Tsinghua | 最大似然与世界模型真正在乎的转移预测指标不对齐,改用 RL 直接优化后者 |
+| DreamGen | NVIDIA | 先合成视觉轨迹再反推动作的数据引擎 |
 | DINO-WM | NYU | 在冻结的 DINO 视觉特征上建世界模型,零样本规划不用重训策略 |
 | JEPA-Position-Paper | ICFO | Les Houches 讲义:用能量模型与潜变量搭出 H-JEPA,不是 OpenReview 立场文本身 |
-| WorldVLA | Alibaba | arXiv 2506.21539,来自 VLA-World-Model-Survey;观测与动作串成一条自回归世界模型 |
-| DreamGen | NVIDIA | arXiv 2505.12705,来自 VLA-World-Model-Survey;先合成视觉轨迹再反推动作的数据引擎 |
-| World-Env | SYSU | arXiv 2509.24948,来自 VLA-World-Model-Survey;把世界模型当 VLA 后训练虚拟环境 |
-| Genie-Envisioner | AgiBot | arXiv 2508.05635,来自 VLA-World-Model-Survey;同一套世界基础平台跨规划/合成/仿真复用 |
 
 ## 自进化系统
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
-| Self-Evolving AI Agents Survey | Glasgow | 自进化的一张分类地图:抽出一个统一的反馈回路框架,再把技术切成单 agent 优化、多 agent 优化、领域优化三支 |
-| RSI Survey | UCR | 1250 篇语料切成两轴(改什么 × 回路闭合到什么程度),中心刀是「有界自我精修」对「开放式 RSI」,并指出治理级的度量是最空的一块 |
-| Idea2Story | MIT | 把研究概念自动展开成完整科学叙事的流水线 |
-| Self-Evolving-Agents-Survey-2 | Shanghai | **综述**:自进化 agent 的四问——进化什么、何时进化、怎么进化、在哪进化 |
+| RSI Survey | UCR | **综述**:1250 篇语料切成两轴(改什么 × 回路闭合到什么程度),中心刀是「有界自我精修」对「开放式 RSI」 |
+| Idea2Story | AgentAlpha | 把研究概念自动展开成完整科学叙事的流水线 |
+| Self-Evolving AI Agents Survey | Glasgow | **综述**:抽出统一反馈回路,再把技术切成模型/提示/记忆/工具/工作流/通信 |
+| Self-Evolving-Agents-Survey-2 | Tsinghua | **综述**:自进化 agent 的四问——进化什么、何时进化、怎么进化、在哪进化 |
 
 ## 可解释性与对齐
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
 | Scaling Monosemanticity | Anthropic | 稀疏自编码器在 Claude 3 Sonnet 上规模化,抽出可解释、可干预的单义特征 |
-| Refusal Direction | ETH | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
+| Refusal Direction | Independent | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
 
 ## 深度学习基石
 
@@ -269,13 +269,14 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
-| DPR | Meta | 双塔稠密检索取代 BM25,开放域问答的检索侧起点 |
-| ColBERT | Stanford | 后期交互:先各自编码再做 token 级 MaxSim,兼顾双塔的快与交叉编码的准 |
-| REALM | Google | 把检索器放进预训练一起端到端学,而不是事后接上去 |
-| RAG | Meta | RAG 这个名字的出处:检索器与生成器联合,知识密集任务不再全靠参数记忆 |
-| Atlas | Meta | 检索增强的少样本学习:小模型加检索能打过大得多的纯参数模型 |
-| Lost-in-the-Middle | Stanford | 长上下文里的信息放在中间就会被忽略,呈 U 形;检索排序因此不是无所谓的 |
 | RAG-Survey | TongjiUniversity | **综述**:RAG 从朴素到进阶再到模块化的三代划分,以及检索、增强、生成三段各自的技术谱 |
+| Lost-in-the-Middle | Stanford | 长上下文里的信息放在中间就会被忽略,呈 U 形;检索排序因此不是无所谓的 |
+| Atlas | Meta | 检索增强的少样本学习:小模型加检索能打过大得多的纯参数模型 |
+| RAG | Facebook | RAG 这个名字的出处:检索器与生成器联合,知识密集任务不再全靠参数记忆 |
+| ColBERT | Stanford | 后期交互:先各自编码再做 token 级 MaxSim,兼顾双塔的快与交叉编码的准 |
+| DPR | Facebook | 双塔稠密检索取代 BM25,开放域问答的检索侧起点 |
+| REALM | Google | 把检索器放进预训练一起端到端学,而不是事后接上去 |
+
 
 
 ## 评测与 Benchmark

@@ -187,7 +187,7 @@ Figure 2 左：DPO 在所有画出的 KL 上给出最高期望奖励，前沿严
 
 ### 6.3 分布外：CNN/DailyMail
 
-把 TL;DR 上训好的 PPO / DPO 策略拿到 CNN/DailyMail 测试新闻，温度用 TL;DR 上最好的 **0** 与 **0.25**。GPT-4 提示把 “forum post” 换成 “news article”。相对数据集真实摘要的胜率（PDF p.9 表 1）：
+把 TL;DR 上训好的 PPO / DPO 策略拿到 CNN/DailyMail 测试新闻，温度用 TL;DR 上最好的 **0** 与 **0.25**。GPT-4 提示把 「forum post」 换成 「news article」。相对数据集真实摘要的胜率（PDF p.9 表 1）：
 
 | 算法 | 温度 0 | 温度 0.25 |
 |---|---:|---:|

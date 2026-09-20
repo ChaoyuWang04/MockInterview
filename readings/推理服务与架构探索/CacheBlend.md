@@ -104,7 +104,7 @@ KV 存储：按应用切块（RAG 里检索块 + 用户问题），块哈希对�
 
 硬件：Runpod，128 GB RAM，2×A40，1TB NVMe 实测 4.8 GB/s。Mistral-7B、Yi-34B 单卡；Llama-70B 双卡。Yi-34B 与 Llama-70B 用 8-bit 权重量化（PDF p.10）。
 
-数据：2WikiMQA 200 条、Musique 150 条（标准答案不足 5 词，prompt 追加 “Answer within 5 words.”，PDF p.10 脚注 7）；SAMSum 200 条对话摘要；MultiNews 60 条。上下文切 512 token（SAMSum 用原来的 200–400）。另造扩展集：各抽 1500 问、GPT-4 再生成 3 条相近问、共 6000 条，按 L2 取 top-6（Llama-70B 输入上限能塞下的最大块数），随机序；前 1K 因仓库空着不报（PDF p.11）。QA 用词重叠 F1，摘要用 Rouge-L。
+数据：2WikiMQA 200 条、Musique 150 条（标准答案不足 5 词，prompt 追加 「Answer within 5 words.」，PDF p.10 脚注 7）；SAMSum 200 条对话摘要；MultiNews 60 条。上下文切 512 token（SAMSum 用原来的 200–400）。另造扩展集：各抽 1500 问、GPT-4 再生成 3 条相近问、共 6000 条，按 L2 取 top-6（Llama-70B 输入上限能塞下的最大块数），随机序；前 1K 因仓库空着不报（PDF p.11）。QA 用词重叠 F1，摘要用 Rouge-L。
 
 对照：完整重算；prefix caching（SGLang 思路，RAM+SSD，**假设 RAM/SSD→GPU 零加载时延**，对 prefix 有利）；完整复用（PromptCache 的位置缓冲，不用要人手工挑块的 scaffolding）；Langchain MapReduce / MapRerank（PDF p.11）。
 
