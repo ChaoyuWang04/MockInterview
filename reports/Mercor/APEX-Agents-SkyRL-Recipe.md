@@ -33,8 +33,8 @@
 
 **最后是几个算法名字，正文会各自展开，这里先各给一句：**
 
-- **GRPO（Group Relative Policy Optimization，组相对策略优化）**：同一个提示采多条轨迹，用组内相对好坏当优势信号，省掉单独的价值网络。出处是 DeepSeekMath，本库有[解读](../DeepSeek/DeepSeekMath.md)。
-- **DAPO**：在 GRPO 上做长思维链 RL 的一组工程改动，本文只用到它的损失归一化方式。本库有[解读](../ByteDance/DAPO.md)。
+- **GRPO（Group Relative Policy Optimization，组相对策略优化）**：同一个提示采多条轨迹，用组内相对好坏当优势信号，省掉单独的价值网络。出处是 DeepSeekMath，本库有 DeepSeekMath 一篇。
+- **DAPO**：在 GRPO 上做长思维链 RL 的一组工程改动，本文只用到它的损失归一化方式。本库有 DAPO 一篇。
 - **DPPO**：一种策略损失，靠「把训练端与推理端分歧太大的 token 直接屏蔽掉」来处理训推不一致。
 - **TIS（Truncated Importance Sampling，截断重要性采样）**：用重要性比修正「采样时的策略」和「更新时的策略」之间的偏差，比值太大就截断。
 - **TITO（token-in-token-out，进出都是 token）**：训练端拿到的 token 序列，必须与推理端当时真正生成的 token 序列逐个对齐，中间不许重新分词。这是本文 Step 1 的压轴内容。
@@ -365,7 +365,7 @@ ApexAgents-SkyRL-Recipe/
 
 环境和 harness 定下来之后，才轮到 RL 栈本身。
 
-长时程 agentic RL 的默认配置是**全异步训练 + in-flight 权重更新**，目的是把掉队者（straggler）的影响降到最小（原文 Step 2 开头，引用 [6][7]）。经外部核实，这两篇分别是 AReaL（arXiv:2505.24298，本库有[解读](../AntGroup/AReaL.md)）与 PipelineRL（arXiv:2509.19128）。
+长时程 agentic RL 的默认配置是**全异步训练 + in-flight 权重更新**，目的是把掉队者（straggler）的影响降到最小（原文 Step 2 开头，引用 [6][7]）。经外部核实，这两篇分别是 AReaL（arXiv:2505.24298，本库有 AReaL 一篇）与 PipelineRL（arXiv:2509.19128）。
 
 推理引擎用 vLLM，训练后端用 Megatron。调优严格按下面的顺序进行。
 
@@ -574,7 +574,7 @@ DPPO 与 GLM-5 loss 都在修正两件事：**训推不一致**，以及**全异
 
   「二值近似」的意思是不去算这个连续的距离值，而是化简成一个开关：分歧超过阈值就把这个 token 的梯度扔掉，否则照常算。他们是在 Tmax 论文给出正面报告之后才试的（原文引用 [1]，arXiv:2606.23321，经核实标题为 Tmax: A simple recipe for terminal agents）。DPPO 本身的出处是 arXiv:2602.04879，经核实标题为 Rethinking the Trust Region in LLM Reinforcement Learning。
 
-- **GLM-5 loss 则是截断重要性比**，出处是 GLM-5 报告的 3.3 节（arXiv:2602.15763，本库有[解读](../Z.ai/GLM-5.md)）。
+- **GLM-5 loss 则是截断重要性比**，出处是 GLM-5 报告的 3.3 节（arXiv:2602.15763，本库有 GLM-5 一篇）。
 
 两者的哲学差别可以这样说：**一个把不可信的样本丢掉，一个把不可信的样本压小。** 丢掉更干脆，但会损失数据；压小保留了全部数据，但可信度低的样本仍然参与更新。
 
@@ -696,7 +696,7 @@ apex_qwen35_397b_tito_rl_19h200_rightKey_072326
 
 这是全篇最能说明「这套增益到底有多结实」的一步。
 
-原文先摆出要检验的怀疑（原文 Step 6 开头）：**这个领域最近的经验表明，RL 的增益是绑在它训练时所用的那套 harness 上的**。这条引用经核实是 arXiv:2607.24653，标题为 Kimi K3: Open Frontier Intelligence（本库有[解读](../Moonshot/Kimi-K3.md)）。
+原文先摆出要检验的怀疑（原文 Step 6 开头）：**这个领域最近的经验表明，RL 的增益是绑在它训练时所用的那套 harness 上的**。这条引用经核实是 arXiv:2607.24653，标题为 Kimi K3: Open Frontier Intelligence（本库有 Kimi-K3 一篇）。
 
 ### 换 harness：从 MCP 换成纯代码
 
@@ -953,4 +953,4 @@ TITO 是这条原则在 RL 上的具体形态。分词器、序列化、模板�
 - **arXiv 编号核实**：原文引用的 13 个 arXiv 编号已逐个通过 arXiv API 核实，标题与原文的指称一致：[1] 2606.23321 Tmax、[3] 2601.14242 APEX-Agents、[6] 2505.24298 AReaL、[7] 2509.19128 PipelineRL、[8] 2602.04879 Rethinking the Trust Region in LLM Reinforcement Learning（DPPO）、[9] 2607.24653 Kimi K3、[10] 2602.15763 GLM-5、[12] 2503.14476 DAPO、[13] 2510.13786 ScaleRL、[14] 2503.20783 Understanding R1-Zero-Like Training（Dr. GRPO）、[15] 2402.03300 DeepSeekMath（GRPO）、[16] 2506.05256 Just Enough Thinking（ALP）、[17] 2603.24477 Composer 2。原文的 [2]、[4]、[5]、[11] 不是 arXiv 条目，分别是 together.ai、vllm.ai、Hugging Face 博客与一篇 Notion 笔记。
 - **本文标为「我们的观察」的地方**：原文 token 聚合一节的 run 编号应为 run 2 vs. 1；两个 28.69% 分属不同 harness 与不同训练状态；hero run 的熵曲线整体上升；换到 OpenCode 后后训练的 397B 与后训练的 35B 打平；run 5 不是 Table 1 里分数最高的一行；图例字符串里的 run 命名。这些都不是原文结论。
 - **本文标为外部补充的地方**：GDN 一般指 Gated DeltaNet；router replay 的含义；13 个 arXiv 编号对应的论文标题。这些用于帮助理解，不冒充原文内容。
-- **本库相关阅读**：[AReaL](../AntGroup/AReaL.md)（大规模异步 RL 系统）、[Laminar](../ByteDance/Laminar.md)（异步 RL 后训练框架）、[HybridFlow](../ByteDance/HybridFlow.md)（verl 的编程模型）、[DAPO](../ByteDance/DAPO.md)、[DeepSeekMath](../DeepSeek/DeepSeekMath.md)（GRPO 出处）、[GSPO](../Alibaba/GSPO.md)（序列级重要性比）、[Stabilizing-RL-with-LLMs](../Alibaba/Stabilizing-RL-with-LLMs.md)（训推不一致的形式化）、[GLM-5](../Z.ai/GLM-5.md)、[Kimi-K3](../Moonshot/Kimi-K3.md)。
+- **本库相关阅读**：AReaL（大规模异步 RL 系统）、Laminar（异步 RL 后训练框架）、HybridFlow（verl 的编程模型）、DAPO、DeepSeekMath（GRPO 出处）、GSPO（序列级重要性比）、Stabilizing-RL-with-LLMs（训推不一致的形式化）、GLM-5、Kimi-K3。

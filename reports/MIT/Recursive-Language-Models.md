@@ -497,7 +497,7 @@ Figure 9 比较 RLM(depth=1) 与各基线在同一批题上的对错并集（PDF
 
 - 官方论文页：[arXiv:2512.24601](https://arxiv.org/abs/2512.24601)。提交历史：v1 2025-12-31 03:43:41 UTC；v2 2026-01-28 18:59:39 UTC；v3 2026-05-11 15:26:31 UTC。网页摘要在「两个数量级」和 RLM-Qwen3-8B「平均 28.3%」上与 v3 PDF 封面摘要不一致，解读以 PDF 为准。
 - 官方代码仓：[alexzhang13/rlm](https://github.com/alexzhang13/rlm)。GitHub API：`created_at` 2025-12-20T23:12:43Z；首次提交 `a08dfb5152` 同日 23:12:44Z，内容只有 `.gitignore` 和两行 README；「Working RLM version」一类提交出现在 2025-12-26。**本文没有阅读该仓库源码，也不把源码现状写成论文结论。**
-- 更早的公开：作者博客 [Recursive Language Models](https://alexzhang13.github.io/blog/2025/rlm/)（文内自引 2025 年 10 月），以及同步的推文 [status/1978469116542337259](https://x.com/a1zhang/status/1978469116542337259)（Snowflake 时间戳 2025-10-15 14:32:50 UTC）。最小实现仓 [alexzhang13/rlm-minimal](https://github.com/alexzhang13/rlm-minimal) 创建于 2025-10-16，当天即有 “Minimal working version”。博客是想法与早期实验的公开，不是本篇 v3 论文；其中的 OOLONG / BrowseComp 数字、GPT-5-mini 对照，一律不当作本篇证据。
+- 更早的公开：作者博客 [Recursive Language Models](https://alexzhang13.github.io/blog/2025/rlm/)（文内自引 2025 年 10 月），以及同步的推文 [status/1978469116542337259](https://x.com/a1zhang/status/1978469116542337259)（Snowflake 时间戳 2025-10-15 14:32:50 UTC）。最小实现仓 [alexzhang13/rlm-minimal](https://github.com/alexzhang13/rlm-minimal) 创建于 2025-10-16，当天即有 「Minimal working version」。博客是想法与早期实验的公开，不是本篇 v3 论文；其中的 OOLONG / BrowseComp 数字、GPT-5-mini 对照，一律不当作本篇证据。
 
 ## 可迁移的六条
 

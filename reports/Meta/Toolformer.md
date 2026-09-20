@@ -571,7 +571,7 @@ Toolformer 最强的叙事不是「我们训练了一个会用工具的 GPT-J」
 
 - 原始依据：本地 `papers/Meta/Toolformer.pdf`，即 arXiv:2302.04761v1，页边日期 9 Feb 2023，共 17 页 A4。封面正式标题为 *Toolformer: Language Models Can Teach Themselves to Use Tools*。作者为 Timo Schick、Jane Dwivedi-Yu、Roberto Dessì†、Roberta Raileanu、Maria Lomeli、Luke Zettlemoyer、Nicola Cancedda、Thomas Scialom。归属 Meta AI Research，Dessì 另标 Universitat Pompeu Fabra。
 - 版本核验：[arXiv 论文页](https://arxiv.org/abs/2302.04761) 与 [arXiv API](https://export.arxiv.org/api/query?id_list=2302.04761)。提交历史只有 **[v1] 2023-02-09 16:49:57 UTC**。截至 2026-09-11 最新版本仍是 v1，与本地原件一致，不需要替换 PDF。解读以 v1 为准。 arXiv 标注的 202 KB 是源包大小，不是这份 17 页 PDF。
-- 一个摘要不一致：arXiv HTML / API 摘要写的是 “two different search engines”，PDF 摘要写的是 “a search engine”。正文第 3 节列出的是五种工具，搜索只有维基 BM25 一种。本文以 PDF 为准。
+- 一个摘要不一致：arXiv HTML / API 摘要写的是 「two different search engines」，PDF 摘要写的是 「a search engine」。正文第 3 节列出的是五种工具，搜索只有维基 BM25 一种。本文以 PDF 为准。
 - **`release-date` 取 2023-02-09**。理由：对象不是对外可用的模型，按流程取该技术首次官方公开日。已核查渠道里最早的是 arXiv v1。**为什么不是其他候选日**：① [Meta 研究页](https://ai.meta.com/research/publications/toolformer-language-models-can-teach-themselves-to-use-tools/) 标 February 22, 2024，晚于 arXiv，且作者名单已按 NeurIPS 相机就绪稿加入 Eric Hambro。② NeurIPS 2023 会期 2023-12-10 至 16 日，proceedings 条目见 [NIPS '23 Article 2997](https://dl.acm.org/doi/10.5555/3666122.3669119)，更晚，不回写。③ Hugging Face Papers 的页面日期不能当首发日。
 - 正式发表：NeurIPS 2023 Oral。本文**没有**逐页比对会议 PDF 与 arXiv v1；会议版作者多 Eric Hambro，页数也从 17 页预印本变成 proceedings 的 13 页（68539–68551）。本地这份是预印本。
 - 基座模型：GPT-J 6.7B 出自 Wang 与 Komatsuzaki 2021 年的开源发布，不是 Meta 预训练的。OPT 66B、GPT-3 175B 只作为对照，预训练配方不属于本 PDF。

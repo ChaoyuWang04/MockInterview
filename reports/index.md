@@ -16,12 +16,14 @@
 | DeepSeek-V4.1-Flash | DeepSeek | 552B CED,prefill 8B/decode 16B,CSA2+FP4 把全局 KV 压到 890 B/token |
 | Qwen3.8-Max | Alibaba | 2.4T/95B;真正的内容是 RL 系统——环境按 Task/Workspace/Harness 三轴解耦扩展、统一奖励系统、在线数据均衡器压批间梯度方差。**原件是网页**,见 qwen.ai/blog?id=qwen3.8 |
 | Kimi-K3 | Moonshot | 序列、深度、宽度一起扩的系统级设计 |
+| Hy3 | Tencent | 295B/21B,192 专家 top-8 加 3.8B MTP,256K 上下文;快慢思考融进同一个模型,不出独立 thinking 版。**原件是网页**,见 huggingface.co/tencent/Hy3 与 github.com/Tencent-Hunyuan/Hy3,只有 model card 与仓库 README,无技术报告 |
 | Nemotron-3-Ultra | NVIDIA | 550B/55B,Hybrid Mamba-Attention + LatentMoE + NVFP4;官方已出 65 页技术报告 |
 | ZAYA1-8B | Zyphra | CCA + top-1 专家,AMD GPU 训练 |
 | Laguna-M1-XS2 | Poolside | 逐层 query 头预算,编码向开放权重 |
 | DeepSeek-V4 | DeepSeek | 百万 Token 长上下文的成本重构(**写作标杆**) |
 | Ling-Ring-2.6 | AntGroup | 1T,Lightning + MLA 混合线性;靠架构迁移预训练而非从零训 |
 | Gemma-4 | Google | 小模型家族,原生多模态与 encoder-free |
+| Mistral-Small-4 | Mistral | 119B/6B,128 专家 top-4,256K;把 Magistral(推理)、Pixtral(多模态)、Devstral(编码)三条产品线并回一个模型。**原件是网页**,见 mistral.ai/news/mistral-small-4,训练数据、算力、超参与消融均未公开 |
 | GLM-5 | Z.ai | 从 vibe coding 到 agentic engineering 的全栈重设计 |
 | Qwen3-Coder-Next | Alibaba | 编码 agent 方向的 Qwen 分支 |
 | Step-3.5-Flash | StepFun | 196B/11B,SWA 3:1 + MTP-3 训推都用 |
@@ -30,17 +32,23 @@
 | MiMo-V2-Flash | Xiaomi | 309B/15B,128 窗口 SWA 5:1 + 注意力 sink,27T Token |
 | Nemotron-3 | NVIDIA | 权重、数据、recipe 一并公开;原件是 13 页白皮书,Nano 另有技术报告 |
 | Ministral-3 | Mistral | 参数高效的 dense 家族:从 24B 父模型级联剪枝蒸馏而来,14 页方法说明非完整报告 |
+| Mistral-Large-3 | Mistral | 675B/41B 稀疏 MoE,3000 张 H200 训练;与 Ministral-3 同场发布,但那篇 arXiv 论文只覆盖 Ministral。**原件是网页**,见 mistral.ai/news/mistral-3 与 HF mistralai/Mistral-Large-3-675B-Instruct-2512 |
 | INTELLECT-3 | PrimeIntellect | prime-rl 训练栈产出的模型 |
 | Olmo-3 | Ai2 | 完全开源路线:交付整条模型流水线而非只交权重(依据 arXiv v2,118 页) |
 | MiniMax-M2 | MiniMax | 掉头回全注意力 GQA 的反例,与 MiniMax-M1 的线性路线对着读 |
 | LongCat-Flash-Thinking | Meituan | 领域并行训练再融合,DORA 异步 rollout |
 | LongCat-Flash | Meituan | 560B,零计算专家做动态算力预算 + 快捷连接 MoE |
+| GPT-5-System-Card | OpenAI | 63 页里没有一个能力分数;主轴换成评估域、Preparedness 分级与缓解充分性论证(依据 arXiv v2,官方 CDN 版反而更旧) |
+| gpt-oss | OpenAI | 开源权重不是开关而是光谱:harmony 格式与风险评测写满,训练配方整段留白(依据 arXiv v1,35 页) |
 | GLM-4.5 | Z.ai | ARC 三能力先分开练,再蒸馏回一套权重 |
 | Kimi-K2 | Moonshot | 高质量数据见底后的 Token 与轨迹再利用 |
 | Qwen3 | Alibaba | 一套权重兼顾深思、快答与预算控制 |
 | Gemini-2.5 | Google | 闭源前沿少有的公开报告 |
+| Command-A | Cohere | 报告自述稠密、SWA 与全注意力 3:1 交错;企业能力靠六个后训练专家做参数合并,23 种语言(依据 arXiv v2,55 页) |
 | Gemma-3 | Google | SWA 5:1 与 496 KiB/token 的 KV cache 对照基准 |
 | DeepSeek-V3 | DeepSeek | 671B MoE,FP8、DualPipe、无辅助损失负载均衡 |
+| Phi-4 | Microsoft | 合成数据占到 55%、同一批读 13.8 轮不见过拟合;代价是纯合成伤知识(依据 arXiv v1,36 页) |
+| Nova | Amazon | 家族四员零参数量与架构披露;真写出来的是评测口径、307 项红队分类与 97% goodput 的基础设施(依据 arXiv v1,48 页) |
 | Qwen2.5 | Alibaba | Qwen 上一代:架构几乎不动,增量全在数据与后训练(依据 arXiv v2) |
 | Llama-3 | Meta | 405B dense,复杂度从架构挪到数据与运维 |
 | DeepSeek-V2 | DeepSeek | MLA 与 DeepSeekMoE 的出处 |
@@ -51,6 +59,21 @@
 | OPT | Meta | 175B 开源复现 GPT-3,附完整训练日志与故障记录(2022) |
 | GPT-3 | OpenAI | few-shot 学习与 scaling 的源头 |
 | BERT | Google | 双向编码器预训练,微调范式的起点(2018) |
+| Seed2.0-Model-Card | ByteDance | 字节旗舰基模 2.0 的模型卡:面向真实世界复杂度的能力与评测口径(arXiv 2607.00248) |
+| Seed1.5-Thinking | ByteDance | 豆包 1.5 推理线的 RL 配方与稳定化(arXiv 2504.13914) |
+| Gemini-3 | Google | 本组最新停在 2.5,补 3 代的卡与安全评估。**原件待核**(deepmind 的卡 PDF 本机抓不到) |
+| Llama-4 | Meta | Maverick 与 Scout 的 MoE,配 iRoPE、NoPE、MoD。**原件待核**(ai.meta.com 全域抓取失败) |
+| Muse-Spark | Meta | Superintelligence Labs 首个模型,含 Safety 与 Preparedness 报告。**原件待核** |
+| MAI-Thinking-1 | Microsoft | Building a Hill-Climbing Machine:MAI 自研推理基模的完整复盘。**原件待核**(PDF 未开) |
+| Phi-4-Reasoning | Microsoft | Divide and Conquer 课程化 RL 的 reasoning 专线报告(arXiv 2504.21318) |
+| Grok-4.6 | xAI | xAI 全线零收录,先补这一代模型卡。**原件待核**(x.ai 抓取失败) |
+| Step-3 | StepFun | 321B MoE 的模型-系统协同设计,低成本解码是主线(arXiv 2507.19427) |
+| Qwen3.5 | Alibaba | 主线在 3.8-Max 之前缺的一代。**原件待核**(qwen.ai 是 SPA,正文未抓到) |
+| Qwen3.7 | Alibaba | 晚于 3.5 的一代,同样是代际缺口。**原件待核** |
+| Intern-S1-Pro | ShanghaiAILab | 万亿规模科学多模态基模与知识图谱 RL(arXiv 2603.25040) |
+| Falcon-H1 | TII | Transformer-Mamba 混合头的开放权重家族;推理续作 H1R 见 arXiv 2601.02346 |
+| LFM2 | LiquidAI | 为端侧效率反推架构的开源小基模家族(arXiv 2511.23404) |
+| SmolLM3 | HuggingFace | 3B 长上下文多语推理,训练方法与配方全公开。**原件待核**(HF 博客抓取失败) |
 
 ## 注意力与长上下文
 
@@ -74,6 +97,9 @@
 | FlashAttention-2 | Stanford | 并行与工作划分改进 |
 | FlashAttention | Stanford | IO 感知的精确注意力:多算 FLOP 换少搬字节 |
 | Transformer | Google | 注意力机制的出处:Attention Is All You Need(2017) |
+| Hybrid-Architectures-for-LM | Meta | 线性与全注意力混合配比的系统性消融,41 页(FAIR 与 KAIST,arXiv 2510.04800) |
+| LongCat-Sparse-Attention | Meituan | 跨层索引的流式感知块稀疏注意力;同线还有 ZigZag(arXiv 2608.01662) |
+| RePo | Sakana | 上下文重定位:用检索替代 KV 复用(ICML 2026,arXiv 2512.14391) |
 
 ## 训练方法与强化学习
 
@@ -123,11 +149,20 @@
 | WizardLM | Microsoft | Evol-Instruct:让 LLM 自己把指令进化得更复杂 |
 | Constitutional-AI | Anthropic | 用原则和 AI 反馈替代人工有害性标注,RLAIF 的出处 |
 | InstructGPT | OpenAI | SFT → 奖励模型 → PPO 的三段式 RLHF 范式出处 |
+| Dr.GRPO | SeaAILab | 拆开 GRPO 的长度偏置与标准化偏置各自怎么毒害训练(arXiv 2503.20783) |
+| Jet-RL | NVIDIA | BF16 训练加 FP8 rollout 会崩,精度流要统一;与 FP16-Training-Inference-Mismatch 对着读(arXiv 2601.14243) |
+| RollArt | Alibaba | agentic RL 各阶段映射到最合适的硬件,省 1.35 到 2 倍(arXiv 2512.22560) |
+| KTO | ContextualAI | 无配对数据的对齐:用 Prospect Theory 做拒绝式优化(arXiv 2402.01306,ICML 2024) |
+| Pythia | EleutherAI | 154 个 checkpoint 的训练动力学与单元测试套件(arXiv 2304.01373,ICML 2023) |
+| DCLM | Stanford | 数据侧的 ImageNet 时刻:固定模型只比数据配方(arXiv 2406.11794,NeurIPS 2024) |
+| Nemotron-CLIMB | NVIDIA | 聚类迭代搜数据配方,用 512 个模型的网格反推预训练混合(arXiv 2504.13161) |
+| Nested-Learning | Google | 把「深度」重述为多尺度更新,连续学习的优化视角(arXiv 2512.24695,NeurIPS 2025) |
 
 ## Agent 训练与工具使用
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| Cordis | DeepSeek | DeepSeek Harness 底下的插件内核;把动态组合拆成时间(可完全撤销副作用)与空间(响应式依赖)两维并给出演算 |
 | DR-Venus | AntGroup | 只用 1 万条开放数据训边缘规模深研 agent |
 | Agent-World | ByteDance | 规模化合成真实环境,演化通用 agent(Seed,与人大合作) |
 | Beyond-Stochastic-Exploration | Alibaba | agentic 搜索的训练数据凭什么有价值(阿里云) |
@@ -145,7 +180,7 @@
 | Voyager | NVIDIA | Minecraft 里的终身学习 agent:技能库 + 自动课程 |
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
-| Cordis | DeepSeek | DeepSeek Harness 底下的插件内核;把动态组合拆成时间(可完全撤销副作用)与空间(响应式依赖)两维并给出演算 |
+| Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
 
 ## 推理服务与架构探索
 
@@ -160,11 +195,20 @@
 | DeepSeek-V3-Insights | DeepSeek | 从 V3 回看硬件与模型协同设计的取舍,ISCA 2025;与 DeepSeek-V3 报告互补不重复 |
 | Mooncake | Moonshot | Kimi 的 KVCache 中心 PD 分离服务架构 |
 | Sarathi-Serve | Microsoft | 分块预填充 + 无停顿调度,吞吐与延迟兼得(MSR India) |
+| DistServe | Peking | 把 prefill 与 decode 拆到不同实例,按 goodput 优化 LLM 服务 |
 | DeepSeekMoE | DeepSeek | 细粒度专家 + 共享专家,专家特化的出处;DeepSeek-V2 报告沿用 |
 | SGLang | Berkeley | RadixAttention 前缀缓存与结构化输出的服务框架(LMSYS) |
+| Splitwise | Microsoft | 把 prompt 计算与 token 生成拆到异构 GPU,按阶段配硬件 |
 | PagedAttention | Berkeley | vLLM 的论文,KV cache 的分页管理 |
 | Efficient-Large-Scale-MoE | Meta | MoE 与 dense 在零样本与微调上的对照研究(2022) |
 | Switch-Transformers | Google | top-1 路由把 MoE 扩到万亿参数 |
+| LMetric | Alibaba | 调度与 KV 命中率只用一个乘法指标就赢,OSDI 2026(SJTU IPADS 与阿里云) |
+| ECHO | Huawei | 稀疏注意力模型的 KV 换页为什么仍然打不满带宽,OSDI 2026 |
+| Strata | Stanford | 分层上下文缓存的碎片化把长上下文服务拖成 I/O bound(arXiv 2508.18572,OSDI 2026) |
+| NanoFlow | Washington | 整卡吞吐靠算子内并行而非实例内 batching(arXiv 2408.12757,OSDI 2025) |
+| EAGLE-3 | SafeAILab | 用训练期测试把草稿模型从特征拟合换成多层特征(arXiv 2503.01840) |
+| XGrammar | CMU | 约束解码的上下文无关文法执行开销吃掉整条延迟(arXiv 2411.15100,MLSys 2025) |
+| KTransformers | Tsinghua | CPU 与 GPU 混合推理 MoE,把内存当一层慢显存用(SOSP 2025) |
 
 ## 分布式训练与并行
 
@@ -178,6 +222,14 @@
 | ZeRO | Microsoft | 优化器状态、梯度、参数三级切分 |
 | Megatron-LM | NVIDIA | 张量并行的出处,层内切分训练十亿级模型 |
 | GPipe | Google | 微批流水线并行的出处 |
+| MegaScale | ByteDance | 万卡训练的故障定位与通信优化实战;续作 MegaScale-MoE、MegaScale-Omni 同系列并入(arXiv 2402.15627) |
+| FlashRecovery | iFlytek | 4800 卡故障恢复压到 150 秒(与 USTC、华为合作,arXiv 2509.03047) |
+| Tessera | Alibaba | 异构 MoE 千卡流水线的负载均衡与 bubble(OSDI 2026) |
+| Syncopate | UCSD | 多卡 kernel 里通信成为一阶瓶颈:chunk-centric 自动重叠(arXiv 2601.20595,OSDI 2026) |
+| Flexible-Context-Parallelism | Huawei | 数据异构下上下文并行的严重负载不均(arXiv 2602.21788) |
+| Pangu-Ultra | Huawei | 在 Ascend NPU 上训 dense 大模型的全栈工程;MoE 版见 arXiv 2505.04519 |
+| NVFP4-Pretraining | NVIDIA | 4-bit 浮点做预训练时梯度溢出与缩放怎么治(arXiv 2509.25149) |
+| Triton-distributed | ByteDance | 在 Triton 里写跨卡重叠 kernel,对标 DeepEP(arXiv 2504.19442;06 侧另列了收藏项目) |
 
 ## 多模态理解与 Omni
 
@@ -195,11 +247,20 @@
 | Qwen2.5-Omni | Alibaba | Thinker-Talker 全模态架构的出处 |
 | Chameleon | Meta | 早期融合的混合模态基模,图文统一 token(FAIR) |
 | Flamingo | Google | 冻结视觉编码器 + 冻结 LM 的少样本视觉语言模型(DeepMind) |
+| SenseNova-U1 | SenseTime | NEO-unify 架构统一多模态理解与生成;商汤此前两库零收录(arXiv 2605.12500) |
+| LongCat-Next | Meituan | 把各模态词法化为离散 token 的统一基模(arXiv 2603.27538) |
+| DeepSeek-OCR-2 | DeepSeek | 用视觉因果流做上下文压缩的下一代(arXiv 2601.20552) |
+| GLM-4.5V | Z.ai | 用可扩展的多阶段 RL 训视觉推理模型(arXiv 2507.01006) |
+| Keye-VL-2.0 | Kuaishou | 长视频与多图理解的 VLM 基模;1.0 见 arXiv 2507.01949 |
+| Molmo2 | Ai2 | 开放权重 VLM:视频理解加指点接地的数据机器(CVPR 2026,arXiv 2601.10611) |
+| DINOv3 | Meta | 稠密特征与 42 亿图蒸馏;日常研读侧只收了 DINOv2(arXiv 2508.10104) |
+| SAM-3 | Meta | 按概念提示做分割与追踪;日常研读侧只收了 Segment Anything(arXiv 2511.16719) |
 
 ## 图像、视频与 3D 生成
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| Qwen-Image-2.0-RL | Alibaba | 在 Qwen-Image-2.0 上做 RLHF + on-policy 蒸馏;组合奖励模型、GRPO 框架与混合 CFG,最后用 OPD 合并 T2I 与编辑两条策略 |
 | World-Tracing | WorldLabs | 生成像素对齐的几何,超出可见范围 |
 | Seed3D-2.0 | ByteDance | 仿真可用的高保真 3D 生成,统一 PBR 模型(Seed) |
 | Causal-Forcing | ShengShu | 自回归扩散蒸馏的正确做法,实时交互视频(生数,与清华合作) |
@@ -226,7 +287,13 @@
 | Transfusion | Meta | 一个模型同时做 next-token 与扩散 |
 | Stable-Diffusion-3 | StabilityAI | MMDiT + 校正流的文生图基模报告 |
 | FlexiCubes | NVIDIA | 可微等值面提取,基于梯度的网格优化 |
-| Qwen-Image-2.0-RL | Alibaba | 在 Qwen-Image-2.0 上做 RLHF + on-policy 蒸馏;组合奖励模型、GRPO 框架与混合 CFG,最后用 OPD 合并 T2I 与编辑两条策略 |
+| Seedance-1.0 | ByteDance | 视频基模的质量、效率、可控性三角与蒸馏;1.5 pro 与 2.0 同系列并入(arXiv 2506.09113) |
+| Wan | Alibaba | 开源视频基模的规模、数据与算力配方(arXiv 2503.20314;判定档案只拒过 Wan 2.7 的无原件) |
+| Qwen-Image-2.0 | Alibaba | 图像基模的母体,库内只收了它的 RL 续作(arXiv 2605.10730) |
+| LongCat-Video | Meituan | 开源视频生成的全流程技术报告(arXiv 2510.22200) |
+| Seedream-4.0 | ByteDance | 统一文生图与图像编辑的多模态生成(arXiv 2509.20427) |
+| Kling-Omni | Kuaishou | 统一多任务的视频生成框架(arXiv 2512.16776) |
+| Movie-Gen | Meta | 视频、图像、个性化与音频四件套媒体基模;Meta 生成线此前零收录(arXiv 2410.13720) |
 
 ## 音频
 
@@ -235,12 +302,15 @@
 | Step-Audio-R1.5 | StepFun | 听觉领域的思维链推理 |
 | StepAudio-2.5 | StepFun | 一个骨干带 ASR/TTS/Realtime 三种特化 |
 | Step-Audio-2 | StepFun | 带检索增强的音频理解与对话 |
+| Kimi-Audio | Moonshot | 同一段音频同时走离散语义 token 与连续 Whisper 特征;并行生成、垫 6 个 blank 延迟起声(依据 arXiv v1,26 页) |
 | Moshi | Kyutai | 全双工实时语音对话基模 |
 | DAC | Descript | 改进 RVQGAN 的高保真音频压缩 |
 | VALL-E | Microsoft | 把 TTS 当编解码语言建模,零样本音色克隆 |
 | EnCodec | Meta | 神经音频编解码器 |
 | Whisper | OpenAI | 大规模弱监督的鲁棒语音识别 |
 | AudioLM | Google | 用语言模型方法生成音频 |
+| Voxtral | Mistral | 开源多语语音-文本统一基模;Mistral 音频线零收录(arXiv 2507.13264) |
+| MiMo-Audio | Xiaomi | 音频语言模型的 few-shot 学习能力(arXiv 2512.23808) |
 
 ## 世界模型与 Agent
 
@@ -286,3 +356,34 @@
 | ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
 | Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
 | PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |
+
+## 可解释性与对齐
+
+| 报告 | 公司 | 一句话 |
+|---|---|---|
+| Chain-of-Thought-Monitorability | UK-AISI | 十余家机构联署的立场文:思维链在 RL 阶段是不受直接监督的潜变量,所以读得出来;四条训练与架构路径都能把它磨掉,而作者自认全篇零一手实验数字(依据 arXiv v2,11 页) |
+| CoT-Necessary-Evade-Monitors | Google | 把「能不能躲开读思维链的监控器」改写成「要外部给多少帮助才躲得开」:546 题筛出 59 道 CoT 必需的题、三个环境逐个压力测试,前两个躲不开,第 7 节用 10,000 步 RL 真躲开了——办法是外化一个错的中间值(依据 arXiv v1,70 页) |
+| CoT-Unfaithful-Reasoning | Anthropic | 把「说出来」量成百分比:四台模型 × 六类提示线索,推理模型的平均忠实性只有 25%(Claude 3.7)与 39%(R1),题一难再掉 44%/32%;结果监督 RL 先抬高再停滞,奖励黑客练到 >99% 会用线索时说出率不跟着涨(依据 arXiv v1,18 页) |
+| On-the-Biology-of-a-LLM | Anthropic | 给上线模型画「接线图」:3000 万特征的跨层转码器加归因图,十个案例逐个用干预实验兑现;作者自报只有约四分之一的提示能得到可用的图(**原件是网页**,依据 transformer-circuits.pub 2025-03-27) |
+| CoT-Monitoring-Obfuscation | OpenAI | 同一批环境里先量出「读思维链抓作弊」联合召回 95%(只看动作只有 60%),再把监控器接进奖励函数,召回塌到接近零;作者据此主张交一笔可监督性税(依据 arXiv v1,39 页) |
+| Alignment-Faking | Anthropic | 把生产模型放进「你正被训练成不再拒绝」的虚构情境:免费用户 14% 顺从、付费几乎从不,隐藏思维链里明写「这次先照做,好让以后还能拒绝」;RL 把这段推理从 12% 抬到 78%,而论文全程只用显现偏好口径(依据 arXiv v2,137 页) |
+| Gemma-Scope | Google | 把「训一整套全层全切面 SAE」这件贵到别人做不起的事做完再开源:2B 与 9B 每层每切面、27B 只有选中的三层,权重超过 2,000 个 SAE,连评测口径与宽度梯子一起交出去;不裁决架构之争,也不给任务级结果(依据 arXiv v2,26 页) |
+| WildGuard | Ai2 | 7B 的三任务审核器(提问恶意意图 / 回复风险 / 拒答判定):86,759 条训练配方逐桶可回算、5,299 条由三人独立标注的考卷;对抗性提问 85.5 对最佳开源 74.5,拒答判定 88.6 仍低于 GPT-4 的 92.4(依据 arXiv v3,38 页) |
+| CoT-Empowers-Serial-Problems | Stanford | 给 CoT 的能力增益称重量:常数深度加立刻舍入的 Transformer 连 O(log n) 步思维链也只能算 AC0(定点数那档是 TC0),而 T 步思维链配 Θ(log n) 嵌入就能算任意规模 T 的电路;唯一的严格分离要假设 TC0 ⊊ NC1,且构造里的思维链是 0/1 门真值、人类读不懂(依据 arXiv v4,38 页) |
+
+## 检索与 RAG
+
+| 报告 | 公司 | 一句话 |
+|---|---|---|
+| Qwen3-Embedding | Alibaba | 用基模造 embedding 与 reranker 的全流程配方(arXiv 2506.05176) |
+| BGE-M3 | BAAI | 多语、多粒度、多功能的自蒸馏嵌入(ACL 2024 Findings,arXiv 2402.03216) |
+| jina-embeddings-v4 | Jina | 单模型统一图文多语检索与多向量重排(ACL 2025,arXiv 2506.18902) |
+
+## 评测与 Benchmark
+
+| 报告 | 公司 | 一句话 |
+|---|---|---|
+| MMLU-Pro | TIGER-Lab | 把 MMLU 失效拆成地板太高、不考推理、数据有噪声三处分别修:干扰项扩到 10 个(83% 的题)、too-easy 靠 8 个小模型投票滤掉 42.23%,12,032 题 14 学科(依据 arXiv v6,24 页) |
+| WildBench | Ai2 | 考什么交给真实用户、怎么判交给一张 5 到 10 问的清单:1,024 题、用三个不同水平的基线合成 WB-Reward,与 Arena 人类 Elo 的头部 Pearson 0.984(依据 arXiv v2,19 页) |
+| SWE-bench | Princeton | 2,294 道真实 GitHub 缺陷:已合并且自带测试的 PR 同时给出题目、答案与验收标准;判分是 F2P 与 P2P 的与运算,当年最好的模型只解出 1.96%(依据 arXiv v3,52 页) |
+| Lessons-from-the-Trenches | EleutherAI | 可复现评测的方法学教训:打分口径怎么会错(arXiv 2405.14782) |

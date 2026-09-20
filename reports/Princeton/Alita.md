@@ -39,7 +39,7 @@ Alita 的主结果是：用 Claude-Sonnet-4 加 GPT-4o，在 GAIA **验证集** 
 
 「最小预定义」因此不是零工具。Manager 仍有 MCP Brainstorming、ScriptGeneratingTool、CodeRunningTool；Web Agent 仍有浏览器、翻页、Google 搜索和 GitHub 搜索；环境管理还有 TextInspectorTool 和 conda。论文自己写的是「一个用于直接解题的核心能力（web agent）+ 一小套通用模块」（PDF p. 2）。真正被拿掉的，是 YouTube 字幕爬虫、图片配文、路径分类器这类 **面向具体任务的工具**。
 
-这是本文对论文的归纳。论文用的口号是达芬奇那句 “Simplicity is the ultimate sophistication.”（PDF p. 2）它没有把「元工具」和「解题工具」写成这一对词，但 Figure 2 的上下对照、第 3 节的工具清单，就是这个意思。
+这是本文对论文的归纳。论文用的口号是达芬奇那句 「Simplicity is the ultimate sophistication.」（PDF p. 2）它没有把「元工具」和「解题工具」写成这一对词，但 Figure 2 的上下对照、第 3 节的工具清单，就是这个意思。
 
 ## 旧方法卡在哪：预定义工具库的三道墙
 
@@ -217,7 +217,7 @@ Octotools 被写成带 10 多张标准化 tool card、用来跑多工具工作�
 
 ### Figure 1：先按图读数，再和表对齐
 
-封面 Figure 1 是三组柱：Alita、manus.ai、OpenAI DeepResearch，按 GAIA Level 1 / 2 / 3 和 Average 画（PDF p. 1）。图注只写 “Performance of Alita, manus.ai, and OpenAI DeepResearch”，**没有写 pass@1 还是 pass@3**。下面这组数字是本文按图读出的，正文没有另给一份 Figure 1 数值表：
+封面 Figure 1 是三组柱：Alita、manus.ai、OpenAI DeepResearch，按 GAIA Level 1 / 2 / 3 和 Average 画（PDF p. 1）。图注只写 「Performance of Alita, manus.ai, and OpenAI DeepResearch」，**没有写 pass@1 还是 pass@3**。下面这组数字是本文按图读出的，正文没有另给一份 Figure 1 数值表：
 
 | | Alita | manus.ai | OpenAI DeepResearch |
 |---|---:|---:|---:|
@@ -269,7 +269,7 @@ Table 1（PDF p. 7）才是正文主结果。pass@k 按表注是跑 1 / 2 / 3 �
 
 **第一，主宣传数字 75.15% / 87.27% 是 Claude-Sonnet-4 配 GPT-4o，而且只在 GAIA 验证集上。** Mathvista 74、PathVQA 52 属于另一行配置（Claude 3.7 + GPT-4o），样本是各 100 道随机题，论文没给随机种子，也没给 Sonnet-4 在这两个视觉基准上的数字。
 
-**第二，表注写 “Alita outperforms all baseline agents across the GAIA levels”（PDF p. 7）。pass@1 的 Level 1 并不支持这句。** Claude-Sonnet-4 的 L1 pass@1 是 77.36，低于 OWL 的 84.91 和 A-World 的 86.79；Claude 3.7 的 L1 pass@1 是 81.13，同样低于这两行。Alita 真正拉开的是 Level 2、Level 3 和总分，尤其是 Sonnet-4 的 L3 pass@1 到了 65.38，而 OpenAI-DR 是 47.60、A-World 是 34.62。更硬的题上，当场造工具的收益更明显——这是表能支撑的判断。Level 1 上「全面超过」撑不住。
+**第二，表注写 「Alita outperforms all baseline agents across the GAIA levels」（PDF p. 7）。pass@1 的 Level 1 并不支持这句。** Claude-Sonnet-4 的 L1 pass@1 是 77.36，低于 OWL 的 84.91 和 A-World 的 86.79；Claude 3.7 的 L1 pass@1 是 81.13，同样低于这两行。Alita 真正拉开的是 Level 2、Level 3 和总分，尤其是 Sonnet-4 的 L3 pass@1 到了 65.38，而 OpenAI-DR 是 47.60、A-World 是 34.62。更硬的题上，当场造工具的收益更明显——这是表能支撑的判断。Level 1 上「全面超过」撑不住。
 
 **第三，换到 Sonnet-4 之后，Level 1 的 pass@1 从 81.13 掉到 77.36，pass@3 从 96.23 掉到 88.68，但 Level 3 从 46.15 涨到 65.38，总分因此更高。** 论文正文没有讨论这个交换。数字在表里，解释不在 12 页里。
 

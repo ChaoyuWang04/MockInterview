@@ -423,7 +423,7 @@ Figure 3 右是同一实验的进度图（PDF p. 7，读图）：
 - **工具**：更细的查看（按行）、更精确的编辑（字符串替换），不再总是看整文件、写整文件；
 - **工作流**：同一题尝试多次，用另一个基础模型评估并挑最好的；后续尝试会看前面的尝试。
 
-这就是摘要里写的 “better code editing tools, long-context window management, peer-review mechanisms”（PDF p. 1）。peer-review 对应「另一个模型来挑」；long-context 对应自动摘要。这些都不是新算法，是编码 agent 脚手架上早就该有、也被人手工做过的东西。DGM 的主张不是发明了它们，而是**没人手写，系统自己搜到了**。
+这就是摘要里写的 「better code editing tools, long-context window management, peer-review mechanisms」（PDF p. 1）。peer-review 对应「另一个模型来挑」；long-context 对应自动摘要。这些都不是新算法，是编码 agent 脚手架上早就该有、也被人手工做过的东西。DGM 的主张不是发明了它们，而是**没人手写，系统自己搜到了**。
 
 ### 同一目标，两种实现，分数可以差一倍
 

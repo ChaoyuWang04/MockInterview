@@ -10,7 +10,7 @@
 
 作者把超过 2000 次预训练铺在同一张网格上，最大模型大约 6.6B 总参数（PDF p.1、p.15）。结论出奇地收敛：真正推动质量的几乎只有两维，其余大多是次要扰动。
 
-封面四位作者里，Margaret Li、Sneha Kudugunta、Luke Zettlemoyer 挂 University of Washington；Danielle Rothermel 挂 New York University（PDF p.1）。目录按主要归属放在 `Washington`。代码与数据声明发布在 [github.com/hadasah/slicing_and_dicing](https://github.com/hadasah/slicing_and_dicing)（PDF p.2）；截至撰稿，仓库 README 仍写着 “Code and Data coming soon”，**论文声称开源，公开仓库里还没有可运行的实现。**
+封面四位作者里，Margaret Li、Sneha Kudugunta、Luke Zettlemoyer 挂 University of Washington；Danielle Rothermel 挂 New York University（PDF p.1）。目录按主要归属放在 `Washington`。代码与数据声明发布在 [github.com/hadasah/slicing_and_dicing](https://github.com/hadasah/slicing_and_dicing)（PDF p.2）；截至撰稿，仓库 README 仍写着 「Code and Data coming soon」，**论文声称开源，公开仓库里还没有可运行的实现。**
 
 ## 先把六个旋钮说成人话
 

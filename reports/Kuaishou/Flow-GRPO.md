@@ -14,7 +14,7 @@
 
 这篇论文踩在两条已经分开很远的路上。一条是今天文生图的主干，一条是大语言模型里突然好用的在线强化学习。读正文前，只把会反复出现的六个名字说清楚。
 
-**流匹配（flow matching）与校正流（rectified flow）**：不把图一步加噪成弯路，而是在「干净数据」和「高斯噪声」之间拉一条直线，让网络学这条线上每一点的速度。推理时从噪声出发，沿速度场走回去。本站 [Stable Diffusion 3 篇](../StabilityAI/Stable-Diffusion-3.md) 讲的就是这条直线怎么被选成文生图的默认目标。本篇实验的底板 **SD3.5 Medium（SD3.5-M）** 是同一条线上后来的中等规模模型，校正流加 MMDiT，本篇把它当已经训好的生成器来做强化学习，不再重讲架构。
+**流匹配（flow matching）与校正流（rectified flow）**：不把图一步加噪成弯路，而是在「干净数据」和「高斯噪声」之间拉一条直线，让网络学这条线上每一点的速度。推理时从噪声出发，沿速度场走回去。本站 Stable-Diffusion-3 讲的就是这条直线怎么被选成文生图的默认目标。本篇实验的底板 **SD3.5 Medium（SD3.5-M）** 是同一条线上后来的中等规模模型，校正流加 MMDiT，本篇把它当已经训好的生成器来做强化学习，不再重讲架构。
 
 **常微分方程（Ordinary Differential Equation，ODE）**：给定当前位置和速度，下一步被完全决定。同一份噪声加同一句提示词，走 ODE 永远得到同一张图。
 
@@ -24,7 +24,7 @@
 
 **优势（advantage）**：这次采样比「本来该期待的水平」好多少。强化学习更新参数靠的是这个差值，不是原始分数。
 
-**组相对策略优化（Group Relative Policy Optimization，GRPO）**：同一道题一次采一组回答，用组内平均分当基线，不再另训一个价值网络。它的出处是本站 [DeepSeekMath 篇](../DeepSeek/DeepSeekMath.md)。本篇只借用这个想法，不要把那边数学 LLM 的数字带过来。
+**组相对策略优化（Group Relative Policy Optimization，GRPO）**：同一道题一次采一组回答，用组内平均分当基线，不再另训一个价值网络。它的出处是本站 DeepSeekMath。本篇只借用这个想法，不要把那边数学 LLM 的数字带过来。
 
 ## 一句话先说清
 
@@ -525,7 +525,7 @@ ODE-to-SDE 让策略梯度的对数概率重新可写；Denoising Reduction 让�
 - T2I-CompBench++ 的 Texture 从 0.7338 降到 0.7236；
 - 未见 12 物体只有 0.12，与「强泛化」的措辞不完全同尺度。
 
-**跨篇：** 校正流、时间步抽样和 MMDiT 的源头见本站 [Stable Diffusion 3 篇](../StabilityAI/Stable-Diffusion-3.md)。GRPO 在数学 LLM 里被提出的原始形态见 [DeepSeekMath 篇](../DeepSeek/DeepSeekMath.md)；本篇不重复那边的语料流水线和 MATH 数字。
+**跨篇：** 校正流、时间步抽样和 MMDiT 的源头见本站 Stable-Diffusion-3。GRPO 在数学 LLM 里被提出的原始形态见 DeepSeekMath；本篇不重复那边的语料流水线和 MATH 数字。
 
 **外部补充**（均非本报告内容，不把后续工作的数字写进正文）：
 

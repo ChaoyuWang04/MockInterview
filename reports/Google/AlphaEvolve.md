@@ -408,7 +408,7 @@ Transformer 的核心是注意力，常见实现是 FlashAttention。在他们�
 
 白皮书的展望是：把发现的优化吸收进现有编译器的特定用例，或者更长期地把 AlphaEvolve 嵌进编译器工作流本身。它没有声称已经嵌进去了。
 
-**外部补充：** 博客写 “up to a 32.5% speedup for the FlashAttention kernel”。PDF 写 32%。以 PDF 为准。
+**外部补充：** 博客写 「up to a 32.5% speedup for the FlashAttention kernel」。PDF 写 32%。以 PDF 为准。
 
 ## 那条自进化闭环：改的不是权重，收益喂回训练它的模型
 
@@ -559,7 +559,7 @@ AlphaEvolve 做成的事情是清楚的，也是有边界的。
 - `release-date` 口径：这篇讲的是该技术首次官方公开日。DeepMind 博客 [AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) 标注 May 14, 2025，与白皮书 PDF 同步放出。后来的 arXiv:2506.13131 提交于 2025-06-16，不得回写首发日，也不用 arXiv 版替换或混页码。本地 PDF 的文件元数据 CreationDate 为 2025-06-17，与 arXiv 编译时间接近；附录 B.4 含「第一版稿件发布之后」对 Cohn 工作的补记（PDF p. 39）。解读仍以这份 44 页本地 PDF 为准。
 - 官方白皮书下载（外部补充，发布渠道）：<https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/AlphaEvolve.pdf>。
 - 伴随 Colab（白皮书脚注 2 指向，不是正文证据）：<https://colab.research.google.com/github/google-deepmind/alphaevolve_results/blob/master/mathematical_results.ipynb>。数学构造和矩阵乘分解放在这里。本文没有把仓库或笔记本的后续改动冒充白皮书结论。
-- 外部补充、且与 PDF 不一致、已按 PDF 取舍的数字：博客写 FlashAttention kernel “up to 32.5%”，PDF 写 32%（PDF p. 17）；博客写 kernel 优化时间「从数周到数天」，PDF 写「从数月专门工程投入到数天」（PDF p. 16）；博客写 Borg 启发式「已在生产超过一年」，PDF 只写全舰队部署与部署后测量（PDF p. 14）。一律以 PDF 为准。
+- 外部补充、且与 PDF 不一致、已按 PDF 取舍的数字：博客写 FlashAttention kernel 「up to 32.5%」，PDF 写 32%（PDF p. 17）；博客写 kernel 优化时间「从数周到数天」，PDF 写「从数月专门工程投入到数天」（PDF p. 16）；博客写 Borg 启发式「已在生产超过一年」，PDF 只写全舰队部署与部署后测量（PDF p. 14）。一律以 PDF 为准。
 - 外部补充、PDF 未写、不进入正文证据的：博客宣布与 People + AI Research 团队做交互界面、计划学术用户 Early Access，并放了意向表。这些是发布后的产品计划。
 - 跨篇对照：改 harness 见 [Darwin Gödel Machine](/reports/Sakana/Darwin-Godel-Machine) 与 [AIDE2](/reports/Weco/AIDE2)；改 prompt 见 [GEPA](/reports/Berkeley/GEPA)；固定元 agent 搜内层 agent 代码见 [ADAS](/reports/UBC/ADAS)。注意力 kernel 的人写算法见本站 FlashAttention 系列。这些对照是本站的阅读框架，不是白皮书自己的章节。
 - 本文标为「读图近似值」的地方：Figure 8 各条曲线的终点高低和转折位置；Figure 6 热力图黄/紫区的形状；Figure 5 卡片上与附录不一致的末位（Erdős 旧上界图上 0.380926、附录 0.380927；半径和图上 2.6358、附录 2.635）。正文另有精确数字的，以正文和附录为准。

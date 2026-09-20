@@ -15,7 +15,7 @@
 - **神经音频编解码器（neural audio codec）**：先把波形压成很低速率的离散码，再从码还原波形。本文用的是 SoundStream。
 - **残差向量量化（Residual Vector Quantization，RVQ）**：不是一次量化完，而是一层一层量化残差。第一层抓住最粗的形状，后面各层补越来越细的误差。
 - **自监督语音表示**：不靠转写，只靠音频自己的结构学特征。本文用的是 w2v-BERT：一边做对比学习，一边做掩码语言建模。
-- **ABX**：测「这两个音素三元组，模型能不能听出中间那个音素不一样」。越低越好。例如 “bit” 对 “bet”。
+- **ABX**：测「这两个音素三元组，模型能不能听出中间那个音素不一样」。越低越好。例如 「bit」 对 「bet」。
 - **ViSQOL**：用计算模型近似「听起来像不像原声」的重建质量分，越高越好。本文用的是 16 kHz 的 speech 模式。
 
 这篇论文自己反复出现的名字只有一套：
@@ -140,7 +140,7 @@ w2v-BERT XL 是 0.6B 参数的 Conformer，预训练目标是掩码语言建模�
 
 **这就是「一种码扛不住」的全部证据。** 码率不是瓶颈——同一码率下，两边的短板换不走。语义码本来就不是为可逆合成优化的，论文在相关工作里已经把这一点说死：这类表示「很难反演，因而不能直接用于合成」（PDF p. 2）。
 
-他们还做了一个更刺耳的对照：只在声学 token 上训一个只解码器 Transformer，用 4 秒 prompt 续写。录音条件和说话人能保住，语言内容却对不上，常常像咿呀学语（PDF p. 4）。项目页把这组样本单独标成 “Generation without semantic tokens”。**没有语义码，声学语言模型会记住音色，忘掉句子。**
+他们还做了一个更刺耳的对照：只在声学 token 上训一个只解码器 Transformer，用 4 秒 prompt 续写。录音条件和说话人能保住，语言内容却对不上，常常像咿呀学语（PDF p. 4）。项目页把这组样本单独标成 「Generation without semantic tokens」。**没有语义码，声学语言模型会记住音色，忘掉句子。**
 
 所以混合离散化不是把两种码拼成一条更长的序列，而是让它们分工：语义码保证长期一致，声学码在语义码的条件下保证能听（PDF p. 3–4）。
 
@@ -410,7 +410,7 @@ flowchart LR
 
 **以下全部是外部资料，不是 AudioLM 论文写的。**
 
-- **MusicLM**（[arXiv:2301.11325](https://arxiv.org/abs/2301.11325)，2023-01-26）把 AudioLM 的语义 / 声学分层接到文本条件上，用 MuLan 做音乐—文本联合嵌入，生成数分钟的 24 kHz 音乐。项目页写明 “Building on AudioLM”。AudioLM 论文结论里「接到编码器—解码器做有条件任务」这句话，MusicLM 是同一实验室几个月后交出的实例。本文不把 MusicLM 的分数写进来。
+- **MusicLM**（[arXiv:2301.11325](https://arxiv.org/abs/2301.11325)，2023-01-26）把 AudioLM 的语义 / 声学分层接到文本条件上，用 MuLan 做音乐—文本联合嵌入，生成数分钟的 24 kHz 音乐。项目页写明 「Building on AudioLM」。AudioLM 论文结论里「接到编码器—解码器做有条件任务」这句话，MusicLM 是同一实验室几个月后交出的实例。本文不把 MusicLM 的分数写进来。
 - **[VALL-E](/reports/Microsoft/VALL-E)** 沿用「神经 codec 上的语言建模」，但任务是 TTS：内容条件是音素，不是 w2v-BERT 语义码。
 - **[Moshi](/reports/Kyutai/Moshi)** 把语义和声学收进同一个生成模型，并明确拿 AudioLM 的三阶段当对照。
 - **[DAC](/reports/Descript/DAC)** 讨论 RVQ 加量化器 dropout 之后码会按从粗到细排列，并点名 AudioLM / MusicLM 这类分层音频语言模型是下游。

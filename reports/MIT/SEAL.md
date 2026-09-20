@@ -87,7 +87,7 @@ $\theta'$ 才拿去答 $\tau$。答得好，这份 $\mathrm{SE}$ 就得到正奖
 和两条邻近路线的差别，用一句话就够，不在这里展开：
 
 - 本站 [Self-Rewarding-LM](/reports/Meta/Self-Rewarding-LM)，改的也是权重，但奖励来自模型给自己打分；SEAL 的奖励来自「用 self-edit 更新之后，外部任务有没有做对」。
-- 本站 [AIDE2](../Weco/AIDE2.md) 改的是包在模型外面的 harness，不改权重。SEAL 改的是权重本身。
+- 本站 AIDE2 改的是包在模型外面的 harness，不改权重。SEAL 改的是权重本身。
 
 ## 旧方案卡在哪
 

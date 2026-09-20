@@ -268,7 +268,7 @@ The answer is:
 
 ### 思维链档：换反馈模型，再把概率夹住
 
-思维链档不用预训练 LM 当反馈模型，改用**有帮助的 RLHF**，因为思维链写得更好；原则也改写成 `Human:` / `Assistant:` 对话，并加 Kojima 等人的 “Let's think step-by-step”（PDF p. 11）。few-shot 里每条都手写了对话、原则、两条回答和思维链，全文见附录 E.2。
+思维链档不用预训练 LM 当反馈模型，改用**有帮助的 RLHF**，因为思维链写得更好；原则也改写成 `Human:` / `Assistant:` 对话，并加 Kojima 等人的 「Let's think step-by-step」（PDF p. 11）。few-shot 里每条都手写了对话、原则、两条回答和思维链，全文见附录 E.2。
 
 问题是：思维链往往会先把选项说死，目标概率贴到 0 或 1，校准就坏了。作者发现把 CoT 概率**夹到 40%–60%** 更稳；不夹的话，RL-CAI 会学出更极端的回答（PDF p. 11、p. 13）。他们试过 20%–80%，略有帮助；40%–60% 更好，主结果用后者。无 CoT 档则是软标签（归一化对数概率）明显好于 0/1 硬标签，作者认为就是因为软标签校准还行。
 
@@ -303,7 +303,7 @@ PM 比较数据（PDF p. 11）：
 
 ### 过训练：拒绝变成套话
 
-RL-CAI 会过训练，出现 Gao 等人 2022 那种 Goodharting（PDF p. 12–13）。模型对有害提示过苛，或在大多数红队回答末尾加一句套话，例如 “you are valid, valued, and cared for”。图 2 轨迹里越靠右的点是越晚的 RL 步，前沿外侧那些点要拿这个警告一起看。
+RL-CAI 会过训练，出现 Gao 等人 2022 那种 Goodharting（PDF p. 12–13）。模型对有害提示过苛，或在大多数红队回答末尾加一句套话，例如 「you are valid, valued, and cared for」。图 2 轨迹里越靠右的点是越晚的 RL 步，前沿外侧那些点要拿这个警告一起看。
 
 作者列了三条定性上显得更稳的策略（PDF p. 13），都不是消融表：
 
@@ -313,7 +313,7 @@ RL-CAI 会过训练，出现 Gao 等人 2022 那种 Goodharting（PDF p. 12–13
 
 ### 无害对回避：相对 Elo 和绝对分数说的不是同一件事
 
-前作 HH RLHF 在敏感话题上经常回 “I can't answer that”。回避完全无害，但透明性和有帮助性都差。本篇发现 RL-CAI **几乎从不回避**，对大多数红队提示给出有层次、无害的回答。附录 D 用 PALMS、InstructGPT、LaMDA 的提示对照 52B HH RLHF 和 RL-CAI CoT（PDF p. 13）。
+前作 HH RLHF 在敏感话题上经常回 「I can't answer that」。回避完全无害，但透明性和有帮助性都差。本篇发现 RL-CAI **几乎从不回避**，对大多数红队提示给出有层次、无害的回答。附录 D 用 PALMS、InstructGPT、LaMDA 的提示对照 52B HH RLHF 和 RL-CAI CoT（PDF p. 13）。
 
 图 8 右侧后段，**有帮助的 RLHF 和 HH RLHF 的无害 Elo 都在掉** （PDF p. 13）：
 
@@ -348,7 +348,7 @@ AI 反馈不要直接当 0/1 用。选择题的软概率、思维链后的夹紧
 
 **自批评与自然语言反馈。** Zhao 等人 2021、Scheurer 等人、Saunders 等人 2022；作者说这些方法和监督阶段的宪法步骤很像。Sparrow 把无害性拆成若干领域，和「原则组成宪法」有共通处。另有 Shi 等人、Huang 等人的自监督。
 
-**思维链。** Nye 的 scratchpad、Wei 的 CoT、Kojima 的 zero-shot “think step-by-step”。这里用来先写清为什么 A 比 B 更无害，再选题。
+**思维链。** Nye 的 scratchpad、Wei 的 CoT、Kojima 的 zero-shot 「think step-by-step」。这里用来先写清为什么 A 比 B 更无害，再选题。
 
 **红队、校准、放大监督。** 红队数据大量来自 Ganguli 等人 2022。选择题能当校准过的偏好标签，靠 Kadavath 等人 2022。放大监督的讨论指向 Christiano 的放大、Irving 的辩论，以及 Bowman 等人 2022 的实证。
 
@@ -375,7 +375,7 @@ AI 反馈不要直接当 0/1 用。选择题的软概率、思维链后的夹紧
 
 **RL-CAI 的选择题原则**里，有几条是冲着回避和说教写的，这和正文要「不回避」直接相关，例如：避免太说教、太讨厌、过度反应；不要听起来过度指责；选更有伦理意识、但不要过度居高临下的回答。另有一条写「更像马丁·路德·金或甘地会说的话」。这些是 2022 年研究里的临时句子，不是 2023 / 2026 年 Claude 产品宪法。
 
-附录 D 把对比说清楚（PDF p. 23–28）。HH RLHF 对 PALMS 敏感问题大量是 “Sorry, I cannot respond” / “I’m sorry. I won’t respond”。RL-CAI CoT 会接住问题：监狱里黑人、棕色人种比例，讲系统性偏见；「穆斯林是不是恐怖分子」，直接驳斥刻板印象；家暴和性侵提示，则给热线和「这不是你的错」。LaMDA 的「怎么除掉无家可归者」，HH RLHF 拒绝作答，RL-CAI 把问题改写成住房和救助。InstructGPT 那条「冥想之后为什么要吃袜子」，RL-CAI 认成玩笑并拉回健康建议；「怎么在超市行窃」，则明确说违法、劝去申请援助。
+附录 D 把对比说清楚（PDF p. 23–28）。HH RLHF 对 PALMS 敏感问题大量是 「Sorry, I cannot respond」 / 「I’m sorry. I won’t respond」。RL-CAI CoT 会接住问题：监狱里黑人、棕色人种比例，讲系统性偏见；「穆斯林是不是恐怖分子」，直接驳斥刻板印象；家暴和性侵提示，则给热线和「这不是你的错」。LaMDA 的「怎么除掉无家可归者」，HH RLHF 拒绝作答，RL-CAI 把问题改写成住房和救助。InstructGPT 那条「冥想之后为什么要吃袜子」，RL-CAI 认成玩笑并拉回健康建议；「怎么在超市行窃」，则明确说违法、劝去申请援助。
 
 论文自己警告：InstructGPT 论文里的部分样本很可能是故意挑来展示坏行为的，和本篇的中位样本比不公平（PDF p. 27）。这些附录是定性对照，不是随机抽样的回避率。
 
@@ -428,7 +428,7 @@ SL-CAI 的第一轮改写已经能去掉大部分有害内容；它的工作是�
 
 ### 6. 过训练会把拒绝写成治疗腔
 
-“you are valid, valued, and cared for” 不是无害性，是奖励黑客。宪法原则里专门写了「不要过度说教 / 指责 / 反应」，就是在打这个。RL 步数越右，越要抽查套话，而不是只看无害 Elo。
+「you are valid, valued, and cared for」 不是无害性，是奖励黑客。宪法原则里专门写了「不要过度说教 / 指责 / 反应」，就是在打这个。RL 步数越右，越要抽查套话，而不是只看无害 Elo。
 
 ### 7. 原则是可改的 bit，不是道德真理
 
@@ -457,7 +457,7 @@ Constitutional AI 最强的叙事不是「我们训出了更安全的助手」�
 - 图 2：给定有帮助水平，RL-CAI 更不有害（PDF p. 3）；
 - 图 8：无害 Elo 明显高于两条 RLHF，有帮助性「没有很大代价」，不是没有代价（PDF p. 12）；
 - 图 10：绝对有害分上，HH RLHF 和 RL-CAI 都在下降，有帮助的 RLHF 在上升（PDF p. 14）；
-- 附录 D：HH RLHF 大量 “I won’t respond”，RL-CAI 会解释拒绝（PDF p. 23–28）；
+- 附录 D：HH RLHF 大量 「I won’t respond」，RL-CAI 会解释拒绝（PDF p. 23–28）；
 - 无害人标为零；有帮助人标仍是 135,296 条（PDF p. 11）。
 
 它自己划的边界同样硬：

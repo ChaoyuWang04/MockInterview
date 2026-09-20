@@ -19,7 +19,7 @@
 - **Causal attention（因果注意力）与 bidirectional attention（双向注意力）**：前者规定每个位置只能看它左边；后者允许一块区域内互相都看。
 - **CFG（Classifier-Free Guidance，无分类器引导）**：推理时把「有提示词的预测」和「没提示词的预测」做对比外推，让图更贴文字，代价是每步算两遍。
 
-本模块里已经有一条把图像**量化成离散 token**、再用语言模型画图的路线，见 [Janus-Pro](../DeepSeek/Janus-Pro.md)。Transfusion 走的是相反选择：图像保持连续，用扩散来画。两边不是谁的续作，而是同一个矛盾的两种解法。后面会对照，但不按 Janus 的章节来讲这篇。
+本模块里已经有一条把图像**量化成离散 token**、再用语言模型画图的路线，见 Janus-Pro。Transfusion 走的是相反选择：图像保持连续，用扩散来画。两边不是谁的续作，而是同一个矛盾的两种解法。后面会对照，但不按 Janus 的章节来讲这篇。
 
 ## 先说矛盾：离散文字和连续图像，为什么难塞进同一个模型
 
@@ -138,7 +138,7 @@ Chameleon 相对 Llama 架构还多了几处为了稳住训练的改动：query-
 
 ### 和 Janus 路线的关系（外部对照，不是报告原文）
 
-[Janus-Pro](../DeepSeek/Janus-Pro.md) 把理解和生成的视觉编码器拆开，但生成侧仍然是 VQ tokenizer + 自回归。它解决的是「看图和画图共用一只眼睛」；Transfusion 解决的是「离散预测和连续扩散共用一个主干」。两个问题正交。HunyuanImage 3.0 后来在一个预训练 LLM 上**沿用了 Transfusion 的混合损失**，见 [HunyuanImage 3.0](../Tencent/HunyuanImage-3.0.md)；那是 2025 年的后续，本报告不可能讨论它。
+Janus-Pro 把理解和生成的视觉编码器拆开，但生成侧仍然是 VQ tokenizer + 自回归。它解决的是「看图和画图共用一只眼睛」；Transfusion 解决的是「离散预测和连续扩散共用一个主干」。两个问题正交。HunyuanImage 3.0 后来在一个预训练 LLM 上**沿用了 Transfusion 的混合损失**，见 HunyuanImage-3.0；那是 2025 年的后续，本报告不可能讨论它。
 
 ## 核心设计一：混合注意力掩码
 
@@ -220,7 +220,7 @@ VAE 已经把 256×256 像素压成 32×32×8 的 latent，相当于每个 8×8 
 1. **线性层**：就是一个矩阵乘法，参数量可以忽略（所有配置下额外参数都不到 0.5%）（PDF p. 6）。
 2. **U-Net 的 Down / Up 块**：带卷积和块内注意力，额外参数合计 0.27B。对 7B 主干只多 3.8%，和对嵌入矩阵的参数量几乎一样；对 0.16B 主干则是 +106.1%，等于再加一个同等大小的网络（PDF p. 6、p. 19）。
 
-$k$ 取 1、2、4、8 时，一张 256×256 的图在序列里分别占 1024、256、64、16 个位置（PDF p. 9、p. 18 脚注 7）。16 就是摘要里那句 “compress each image to just 16 patches” 的来源（PDF p. 1）。
+$k$ 取 1、2、4、8 时，一张 256×256 的图在序列里分别占 1024、256、64、16 个位置（PDF p. 9、p. 18 脚注 7）。16 就是摘要里那句 「compress each image to just 16 patches」 的来源（PDF p. 1）。
 
 压缩倍数和「每张图看到的算力」是一笔账。训练时文字/图像的 token 比例固定为 1:1，所以 $k$ 越大，同样的 0.5T token 预算里能塞进更多张图，但每张图分到的 Transformer 计算更少（PDF p. 18 脚注 7）。
 
@@ -536,7 +536,7 @@ Parti 的 FID 7.23 带一个「每条提示采 16 张再重排」的标记，和
 
 这张表证明的是「一个模型可以同时进入两张榜」，不是「在相同数据、相同算力下击败 SD 3」。Chameleon 官方模型用了 6T 文字和 50 亿张图，文字更多、FID 却是 26.74——和 §4.2 受控实验的方向一致，但不能和 0.5T 那一行混用。
 
-Figure 2、Figure 7–9 是这个 7B 模型的生成样例（PDF p. 3、p. 21–23）。能写黑板上的 “Transfusion”、能画玻璃球入水、能画「皇家浣熊国王」那种组合概念。它们是展示。报告没有说抽样协议，也没有失败案例。
+Figure 2、Figure 7–9 是这个 7B 模型的生成样例（PDF p. 3、p. 21–23）。能写黑板上的 「Transfusion」、能画玻璃球入水、能画「皇家浣熊国王」那种组合概念。它们是展示。报告没有说抽样协议，也没有失败案例。
 
 ## 图像编辑：预训练没见过的模态组合
 
@@ -629,14 +629,14 @@ token 比例锁死的时候，patch 越大，同一预算里图越多、每张�
 
 **本文依据**：ICLR 2025 camera-ready，24 页，标题 *Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model*。会议论文页：[ICLR 2025 Abstract](https://proceedings.iclr.cc/paper_files/paper/2025/hash/12678c3948153f4bc391f51e2082bd6e-Abstract-Conference.html)；PDF：[ICLR 2025 Paper](https://proceedings.iclr.cc/paper_files/paper/2025/file/12678c3948153f4bc391f51e2082bd6e-Paper-Conference.pdf)。
 
-**预印本**：arXiv:2408.11039v1，2024-08-20 提交，23 页，[abs](https://arxiv.org/abs/2408.11039)。作者单位在预印本里把 Arun Babu 写成 Waymo、部分人标注 “Work done while at Meta”；ICLR 版统一写成 “Work done at Meta”。分页不同，**不要混用页码**。
+**预印本**：arXiv:2408.11039v1，2024-08-20 提交，23 页，[abs](https://arxiv.org/abs/2408.11039)。作者单位在预印本里把 Arun Babu 写成 Waymo、部分人标注 「Work done while at Meta」；ICLR 版统一写成 「Work done at Meta」。分页不同，**不要混用页码**。
 
 **`release-date` 取 2024-08-20。** 这篇是训练配方，模型权重从未作为产品、API 或官方仓库开放使用。按流程：对象从未对外可用、文章只讲公开技术时，改用该技术首次官方公开日。候选里最早的官方公开事件是 arXiv v1 于 2024-08-20 提交；Meta 研究页标注 September 05, 2024（[ai.meta.com 论文页](https://ai.meta.com/research/publications/transfusion-predict-the-next-token-and-diffuse-images-with-one-multi-modal-model/)），更晚。Hugging Face Papers 的页面日期不是首发日。
 
 **外部补充，已标明、未冒充报告内容：**
 
-- 与 [Janus-Pro](../DeepSeek/Janus-Pro.md) 的「离散视觉 token 对连续扩散」对照；Janus-Pro 表里引用的 Transfusion GenEval 0.63 与本报告 Table 6 一致，但那张表不是本报告的实验；
-- [HunyuanImage 3.0](../Tencent/HunyuanImage-3.0.md) 后来沿用 Transfusion 的混合离散-连续损失，并把起点改成预训练 LLM——那是另一篇文章的内容；
+- 与 Janus-Pro 的「离散视觉 token 对连续扩散」对照；Janus-Pro 表里引用的 Transfusion GenEval 0.63 与本报告 Table 6 一致，但那张表不是本报告的实验；
+- HunyuanImage-3.0 后来沿用 Transfusion 的混合离散-连续损失，并把起点改成预训练 LLM——那是另一篇文章的内容；
 - 社区有非官方 PyTorch 复现（把扩散换成了流匹配）。它不是 Meta 发布的权重或官方代码，不能用来补这篇没写的实现细节。
 
 **同方向不要读串的：** 本篇的基线是报告自己复现的 Chameleon 配方；不要把 Table 1 的 FID 16.8（0.5T、线性、CFG=5、30k 图）和 Table 5 的 FID 16.0（U-Net、CFG=3、5k 图）或 Table 6 的 FID 6.78（2T 旗舰）当成同一个模型的三次测量。

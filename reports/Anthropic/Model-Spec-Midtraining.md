@@ -91,7 +91,7 @@ MSM 的想法就落在这个缝里：
 
 > 与其寄希望于示范数据自己把原则「暗示」出来，不如**在给示范之前，先把原则直接讲清楚**。之后的微调就不再是从零学习，而是在一个已有的先验上做确认和强化。
 
-作者自己的说法是，希望 MSM 让模型 “do the right thing for the right reasons”（做对的事，并且是出于对的理由）（PDF p.2）。
+作者自己的说法是，希望 MSM 让模型 「do the right thing for the right reasons」（做对的事，并且是出于对的理由）（PDF p.2）。
 
 ## 方法：在预训练和对齐微调之间插一段
 
@@ -189,7 +189,7 @@ AFT 数据的生成管线是四步（PDF p.3）：
 
 > **所有模型都是用 LoRA 微调的**，rank 64、alpha 128，作用在全部注意力与 MLP 投影层；训练 1 个 epoch，AdamW，学习率 1e-4，余弦调度，5% warmup，权重衰减 0.01。8B 用 1 张 H200（141 GB），14B 用 2 张，32B 用 4 张。最大序列长度 §4/§5 用 8192，§3 用 4096。
 
-这意味着：论文里的「中训练」并不是在全参数上做的持续预训练，而是**低秩适配**。论文用 “All models were fine-tuned using LoRA” 一句话覆盖了全部实验，**并没有单独说明 MSM 阶段是否用了不同的设置**——这是本文读到的一处含糊，不做补写。为什么这条重要：全参数中训练和 LoRA 中训练在「改动模型先验的深度」上很可能不等价，而这恰恰是 MSM 的核心机制假设。这条限制论文没有在正文里讨论。
+这意味着：论文里的「中训练」并不是在全参数上做的持续预训练，而是**低秩适配**。论文用 「All models were fine-tuned using LoRA」 一句话覆盖了全部实验，**并没有单独说明 MSM 阶段是否用了不同的设置**——这是本文读到的一处含糊，不做补写。为什么这条重要：全参数中训练和 LoRA 中训练在「改动模型先验的深度」上很可能不等价，而这恰恰是 MSM 的核心机制假设。这条限制论文没有在正文里讨论。
 
 另一个边界是算力总量：4 张 H200 就能跑 32B 的全套实验。**这是一篇能被小团队复现的论文**，代价是它没有触及大规模强化学习后训练那个量级——作者自己也把这列进了限制（PDF p.13）。
 
@@ -847,7 +847,7 @@ flowchart TB
 - arXiv 论文页：[arXiv:2605.02087](https://arxiv.org/abs/2605.02087)。截至 2026-09-06，提交历史为 v1（2026-05-03 23:16:14 UTC）与 v2（2026-05-22 00:10:04 UTC）。**本文依据 v1，未替换原件。** 已核对 v2 摘要与 v1 逐句一致，关键数字未变；已知差异是作者名单增加了 Nevan Wichers（v1 中他出现在致谢里，被记为训练代码与早期实验的初始贡献者，PDF p.14）。v2 正文的逐页差异**本文未核对**，因此本文的页码只对 v1 负责。
 - 官方发布：[Anthropic Alignment Science 博客的 MSM 页面](https://alignment.anthropic.com/2026/msm/)，页面标注日期为 2026-05-05，作者署名为五人版本。
 - 代码与数据：[github.com/chloeli-15/model_spec_midtraining](https://github.com/chloeli-15/model_spec_midtraining)。论文写明开源了完整的 MSM 与 AFT 流水线、各版 Model Spec 以及训练好的模型（PDF p.20）。本文**只依据 PDF 写作，没有读源码**，也没有把仓库里可能存在的、论文未写的细节当成论文结论。
-- 关于 `release-date` 取 2026-05-03：这项工作从未作为具名模型对外开放使用，按本模块约定改用**该技术首次官方公开日**。候选事件有两个——arXiv v1 提交（2026-05-03，PDF 每页左侧的 arXiv 戳记也印着 “3 May 2026”）与 Anthropic Alignment 博客（2026-05-05）。按「取最早的官方公开事件」，取前者；arXiv v2 是后续修订，不回写首发日。
+- 关于 `release-date` 取 2026-05-03：这项工作从未作为具名模型对外开放使用，按本模块约定改用**该技术首次官方公开日**。候选事件有两个——arXiv v1 提交（2026-05-03，PDF 每页左侧的 arXiv 戳记也印着 「3 May 2026」）与 Anthropic Alignment 博客（2026-05-05）。按「取最早的官方公开事件」，取前者；arXiv v2 是后续修订，不回写首发日。
 - 论文引用的两份规范原件：[Claude's Constitution](https://www.anthropic.com/constitution)（论文引作 Askell et al. 2026，访问日期 2026-03-31）与 [OpenAI Model Spec](https://model-spec.openai.com/2025-12-18.html)（论文引作 OpenAI 2025，访问日期同上）（PDF p.16）。这两份是**论文的参考文献**，本文没有据此补写论文没写的内容。
 - 论文对照的审慎对齐基线出自 [Deliberative alignment](https://arxiv.org/abs/2412.16339)（Guan et al. 2025），智能体式错位评测出自 [Agentic Misalignment](https://arxiv.org/abs/2510.05179)（Lynch et al. 2025），合成文档微调出自 [Modifying LLM beliefs with synthetic document finetuning](https://alignment.anthropic.com/2025/modifying-beliefs-via-sdf/)（Wang et al. 2025）（PDF p.15–16）。这些链接**只用于帮助读者定位背景**，本文没有引用它们的任何数字。
 - 本站相关篇目：[GLM-4.5](/reports/Z.ai/GLM-4.5)、[Kimi K2](/reports/Moonshot/Kimi-K2)、[DeepSeek-R1](/reports/DeepSeek/DeepSeek-R1)。它们讲的是能力侧后训练，与本篇的对齐泛化不是同一个问题，这里只作术语与背景的互相参照。

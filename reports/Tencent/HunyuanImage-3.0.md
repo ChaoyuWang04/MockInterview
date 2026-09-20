@@ -8,7 +8,7 @@
 
 ## 读之前：这一篇需要的几个词
 
-这是本模块第二篇图像生成方向的解读（第一篇是 [Janus-Pro](../DeepSeek/Janus-Pro.md)）。下面这些词只解释到**读懂本篇所需的程度**，不展开成教科书。
+这是本模块第二篇图像生成方向的解读（第一篇是 Janus-Pro）。下面这些词只解释到**读懂本篇所需的程度**，不展开成教科书。
 
 **自回归（autoregressive，AR）与 next-token prediction**：语言模型的工作方式。把句子切成一串符号，模型每次只预测下一个符号，预测完接到序列后面，再预测下一个。它天生是**串行**的，也天生是**离散**的——输出是从词表里挑一个。
 
@@ -102,7 +102,7 @@ HunyuanImage 3.0 把这道墙拆了。它不训练一个"会读文字的画图�
 
 > ...enables unified multimodal representation that supports both generation and understanding within a single sequence—a key different from previous unified models [33, 34, 35, 36], which often segregated visual features by task (e.g., using vision encoder features for understanding and VAE features for generation).
 
-这里点名的 [34] 就是 **Janus-Pro**（PDF p. 17 参考文献）。本模块已经有一篇 [Janus-Pro 解读](../DeepSeek/Janus-Pro.md)，那篇的核心论点是"看图和画图不能共用一只眼睛"——理解任务要的是高层语义，生成任务要的是低层细节，一个编码器同时伺候两个相反目标会互相拖累，所以要**解耦**成两个编码器，按任务分岔。
+这里点名的 [34] 就是 **Janus-Pro**（PDF p. 17 参考文献）。本模块已经有一篇 Janus-Pro 解读，那篇的核心论点是"看图和画图不能共用一只眼睛"——理解任务要的是高层语义，生成任务要的是低层细节，一个编码器同时伺候两个相反目标会互相拖累，所以要**解耦**成两个编码器，按任务分岔。
 
 HunyuanImage 3.0 承认要两个编码器，但**拒绝按任务分岔**：两个编码器的特征被**拼接**进同一条序列，任何时候都同时在场（PDF p. 6）。理由报告写了一句：这样才能在一段连续上下文里做"文字对话 → 生成图 → 理解图 → 编辑图"的交错交互，而不用在两条流水线之间切换。
 
@@ -922,4 +922,4 @@ OCR 和实体识别交给专门工具，描述组织交给 VLM，中间用双向
 
 **release-date 取证**：`2025-09-28`。依据是官方仓库 README 的 News 段落，其中两条同为 September 28, 2025——技术报告发布与"推理代码和模型权重公开"。旁证：GitHub 仓库首次代码提交为 2025-09-27T17:16:25Z，按腾讯所在的北京时间（UTC+8）即 2025-09-28 凌晨，与官方日志一致；arXiv v1 亦提交于 2025-09-28。Hugging Face 仓库 `createdAt` 为 2025-09-25、权重 LFS 文件提交于 2025-09-27（UTC），均早于公开发布，属发布前的仓库预建，按本模块规则不作为首发日。证据强度：**强**（官方日志 + 官方仓库提交时间双重佐证）。
 
-**本篇不覆盖的方向**：物体级 3D 资产生成见 Hunyuan3D-2.0，场景级 3D 世界生成见 HunyuanWorld-1.0，视频生成见 [HunyuanVideo-1.5](HunyuanVideo-1.5.md)。本报告未讨论图像能力如何被下游 3D 或世界生成复用。
+**本篇不覆盖的方向**：物体级 3D 资产生成见 Hunyuan3D-2.0，场景级 3D 世界生成见 HunyuanWorld-1.0，视频生成见 HunyuanVideo-1.5 一篇。本报告未讨论图像能力如何被下游 3D 或世界生成复用。

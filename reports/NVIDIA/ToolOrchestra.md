@@ -239,7 +239,7 @@ $$
 
 论文用 LLM 生成「偏好指令 $PI$ + 偏好向量 $P$」对，再用另一个 LLM 检查两者是否一致，然后拆成训练集和评测集（PDF p. 6）。训练时把 $PI$ 拼到题目前面，用式 2 和 $P$ 算奖励；评测时用附录 L 的式 6（PDF p. 6、p. 21）。
 
-附录 F 给了一条样本（PDF p. 16）。用户说自己是公司员工、服务器里有机密、有很多 GPU，希望尽量避免调 API。对应的向量是 $P=[0,1,1,1,0,0,0,0,0]$：六个工具里只给本地检索、Qwen3-235B-A22B、Llama-3.3-70B 打 1，网页搜索和 o3 / o3-mini 打 0，最后三维（准确率、成本、时延）也是 0。标题写成了 “Humane preference example”，应是 Human 的笔误。
+附录 F 给了一条样本（PDF p. 16）。用户说自己是公司员工、服务器里有机密、有很多 GPU，希望尽量避免调 API。对应的向量是 $P=[0,1,1,1,0,0,0,0,0]$：六个工具里只给本地检索、Qwen3-235B-A22B、Llama-3.3-70B 打 1，网页搜索和 o3 / o3-mini 打 0，最后三维（准确率、成本、时延）也是 0。标题写成了 「Humane preference example」，应是 Human 的笔误。
 
 ### 工作机制：组内相对好坏
 
@@ -308,7 +308,7 @@ ToolScale 分两步（PDF p. 5，Figure 4 在同一页）：
 
 ### ToolScale 有多大
 
-附录 J 的 Table 5 按 10 个领域列出工具数、库条目数和任务数（PDF p. 17）。领域名第一列印成了 “Finanace”，应是 Finance：
+附录 J 的 Table 5 按 10 个领域列出工具数、库条目数和任务数（PDF p. 17）。领域名第一列印成了 「Finanace」，应是 Finance：
 
 | | Finance | Sport | E-commerce | Medicine | Entertainment | Railway | Restaurant | Education | Travel | Weather |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -642,7 +642,7 @@ Table 1 里同一个 GPT-5，无工具 23.4、基础工具 35.1、扩大工具�
   - 作者宣布帖：[x.com/shizhediao/status/1994034482706567415](https://x.com/shizhediao/status/1994034482706567415)；
   - GeneralThought-430K 的 Hugging Face 地址是论文脚注给出的：<https://huggingface.co/datasets/natolambert/GeneralThought-430K-filtered>；
   - 站内对照：[Sakana Fugu](/reports/Sakana/Fugu) 同属编排器，本文只对齐「编排器」这个词，不拿 Fugu 的数字或机制补写本篇；GRPO 的算法出处见 [DeepSeekMath](/reports/DeepSeek/DeepSeekMath)。
-- **本文核对但存疑之处**：摘要「2.5 倍更高效」未定义分母，按 Table 1 更接近时延比 19.8/8.2≈2.41（PDF p. 1、p. 7）；Table 5 领域名 “Finanace” 应为 Finance（PDF p. 17）；附录 F 标题 “Humane” 应为 Human（PDF p. 16）；正文 p. 7 把 §3.3 写成了 “S3.3”；Table 15 把 Nemotron 印成 “Nemontron-49B”（PDF p. 21）；HLE 厂商自报用全集、本篇用纯文本子集（PDF p. 7 表注），两套分数不宜直接相减。
+- **本文核对但存疑之处**：摘要「2.5 倍更高效」未定义分母，按 Table 1 更接近时延比 19.8/8.2≈2.41（PDF p. 1、p. 7）；Table 5 领域名 「Finanace」 应为 Finance（PDF p. 17）；附录 F 标题 「Humane」 应为 Human（PDF p. 16）；正文 p. 7 把 §3.3 写成了 「S3.3」；Table 15 把 Nemotron 印成 「Nemontron-49B」（PDF p. 21）；HLE 厂商自报用全集、本篇用纯文本子集（PDF p. 7 表注），两套分数不宜直接相减。
 - **未公开 / 无法核实的缺口**：奖励消融、训练步数与墙钟、SFT 是否存在及如何与 RL 衔接、GRPO 的 $\epsilon$ 与 KL 系数、模型描述所用的 10 条任务、GPT-5 裁判与 GPT-5 工具的循环偏差、偏好遵守率、数学专家几乎不被调用的原因、递归编排器、代码生成与网页交互评测、权重在 2025-11-26 当晚是否已经解禁。
 - **图表说明**：本文所有 Mermaid 图均为重画的**机制示意图**，已在图下注明依据的 PDF 图号与页码，均不表示实测时长。Table 1、2、3、4、5、15、16 已转成原生表格。Figure 3 的柱高百分比为本文按图读出，并与附录 A 的 73%、98% 交叉核对；Figure 5 的饼图百分比用 Table 15 的次数复算后与图上标注一致。标注为「本文按表计算」的比值（30%、2.41 倍等）不能替代论文正文给出的数字。
 - **本文没有做的事**：没有补写论文未公开的实现（训练步数、SFT 配方、系统提示词、工具调用标记），没有把 GitHub 代码现状写进论文结论，没有把 NVIDIA 博客里的 552 / 1,296 当成论文数字，没有把项目页后来补充的限制写成 PDF 原文。论文说没写的地方，本文一律写明没写。

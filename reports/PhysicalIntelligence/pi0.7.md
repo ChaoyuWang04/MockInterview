@@ -543,7 +543,7 @@ flowchart TB
 1. 模型从未通过官方 Web、App、API 或权重向公众开放。Hugging Face 该论文页显示 citing models 为 0；Physical Intelligence 的 [openpi](https://github.com/Physical-Intelligence/openpi) 公开的是前代 π0 / π0-FAST 等 checkpoint，没有 π0.7。官网介绍页只提供论文 PDF 和演示视频，没有权重或 API 入口。
 2. 因此按本模块约定，改用该技术首次官方公开日。官网博客写明 **Published April 16, 2026**。
 3. 同一天的旁证：arXiv v1 时间戳为 2026-04-16 19:18:07 UTC；共同创始人 [Karol Hausman](https://x.com/hausman_k/status/2044852992873292191) 与 [Chelsea Finn](https://x.com/chelseabfinn/status/2044855691966554135) 在 2026-04-16 发帖，指向同一介绍页。这些是传播事件，首发日仍取官网标注的 4 月 16 日。
-4. Hugging Face Papers 卡片上的 “Published on Apr 24” 对应 arXiv v2，不是首次公开，也不采用。Hugging Face `createdAt` 按本模块规则不能当首发日；此处也没有可下载权重可核对文件提交时间。
+4. Hugging Face Papers 卡片上的 「Published on Apr 24」 对应 arXiv v2，不是首次公开，也不采用。Hugging Face `createdAt` 按本模块规则不能当首发日；此处也没有可下载权重可核对文件提交时间。
 
 **证据强度：中偏强。** 官方页面日期、arXiv v1、公司当日发帖三者对齐；「从未开放使用」是根据官网、openpi 与 Hugging Face 论文页交叉核对后的判断，报告正文没有单独写「不发布权重」。
 

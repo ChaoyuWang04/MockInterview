@@ -35,7 +35,7 @@ UNet 版 SD（SD 1.x / 2.x / SDXL）可以压成三句话：一张图先被压�
 
 **CFG（Classifier-Free Guidance，无分类器引导）**：推理时同一步跑两遍网络，一遍带提示词、一遍不带，再把两者的差放大，让图更贴字。训练时要随机把文字条件丢掉，推理才能做这件事。
 
-同方向已经有一篇 [HunyuanImage 3.0](../Tencent/HunyuanImage-3.0.md)，那篇把流匹配和 DiT 当成既有零件，讲的是「怎样把一个会说话的模型教会画画」。**本篇是这条线上把零件从 UNet 扩散里推出来的源头之一**：问题、公式和消融都在这里。两篇不要互相替代。Hunyuan 那篇的叙事这里不再重复。
+同方向已经有一篇 HunyuanImage-3.0，那篇把流匹配和 DiT 当成既有零件，讲的是「怎样把一个会说话的模型教会画画」。**本篇是这条线上把零件从 UNet 扩散里推出来的源头之一**：问题、公式和消融都在这里。两篇不要互相替代。Hunyuan 那篇的叙事这里不再重复。
 
 ## 一句话先说清
 
@@ -704,4 +704,4 @@ SSCD + 分块 $L_2$ + 团检测，测的是生成一致性，不是字符串相�
 
 **release-date 取证**：`2024-04-17`。判据是官方新闻「Stable Diffusion 3 and Stable Diffusion 3 Turbo are now available on the Stability AI Developer Platform API」。更早的 2 月 22 日原文否定了「已经广泛可用」；3 月 5 日只发论文；6 月 12 日是 Medium 权重，晚于 API。Hugging Face `createdAt` 不用。证据强度：**强**（stability.ai 官方新闻，日期与正文一致）。
 
-**同方向已有解读、但不构成本篇依据**：[Janus-Pro](../DeepSeek/Janus-Pro.md) 走自回归离散 token，和这篇的连续校正流不是一条实现路径；[HunyuanImage 3.0](../Tencent/HunyuanImage-3.0.md) 把流匹配和 DiT 当零件，讲的是语言模型原生多模态。后续具名 checkpoint 与代际不在本报告范围内。
+**同方向已有解读、但不构成本篇依据**：Janus-Pro 走自回归离散 token，和这篇的连续校正流不是一条实现路径；HunyuanImage-3.0 把流匹配和 DiT 当零件，讲的是语言模型原生多模态。后续具名 checkpoint 与代际不在本报告范围内。

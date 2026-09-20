@@ -33,7 +33,7 @@
 
 **它要比的两个对手：**
 
-- **GRPO（Group Relative Policy Optimization，组相对策略优化）**：用同一道题的一组回答做组内归一化，估 advantage，再更新权重。本站 [DeepSeek-R1](../DeepSeek/DeepSeek-R1.md) 与 [DAPO](../ByteDance/DAPO.md) 讲的就是这条线。GEPA 的主张是：同一套复合系统，改提示词可以比改权重更省样本。
+- **GRPO（Group Relative Policy Optimization，组相对策略优化）**：用同一道题的一组回答做组内归一化，估 advantage，再更新权重。本站 DeepSeek-R1 与 DAPO 讲的就是这条线。GEPA 的主张是：同一套复合系统，改提示词可以比改权重更省样本。
 - **MIPROv2**：当时 DSPy 生态里的主流提示词优化器，用贝叶斯优化同时搜指令和少样本示范（PDF p.25）。GEPA 只进化指令，不堆示范。
 
 这篇改的是 **prompt**，不是权重，也不是题库。跨篇对照可以先记在这里：[AIDE2](/reports/Weco/AIDE2) 改的是包在模型外面的 harness 代码；[Darwin Gödel Machine](/reports/Sakana/Darwin-Godel-Machine) 改的是系统自己的代码；[Alita](/reports/Princeton/Alita) 会自造 MCP 工具；更早的 PromptBreeder 也是提示词进化，但没有这篇的轨迹反思和按实例维护的帕累托前沿。这些都不是本篇原文，后文只用它们帮你定位，不拿它们给 GEPA 加分。
@@ -255,7 +255,7 @@ Figure 5 把同一过程画成 PUPA 上的一棵子树（PDF p.7；完整指令�
 
 ### 新设计：实例级帕累托前沿 + 按「赢了几道题」加权抽样
 
-Algorithm 2（PDF p.6 Figure 4 右）做的是论文所称的 Pareto-based “illumination” 策略，引用 Mouret & Clune 2015（PDF p.7）。步骤按人话是：
+Algorithm 2（PDF p.6 Figure 4 右）做的是论文所称的 Pareto-based 「illumination」 策略，引用 Mouret & Clune 2015（PDF p.7）。步骤按人话是：
 
 1. 对验证集里每一道题 $i$，记下目前所有候选在这道题上的最高分 $s^*[i]$，以及达到这个最高分的候选集合 $P^*[i]$；
 2. 把所有「至少在一道题上并列最好」的候选收进集合 $C$；
@@ -402,7 +402,7 @@ GPT-4.1 Mini 上跑完 Table 2 全部实验的费用不到 500 美元：GEPA 86�
 
 **「最多 35× 更少 rollout」**：不是用总预算 3,593 去除 24,000（那只有 6.7 倍）。Table 1 表注写：IFBench 上 GEPA **只花 678 次 rollout 就找到了最优提示词**，测试集 38.61，超过 GRPO 用 24,000 次得到的 35.88（PDF p.8）。$24000/678\approx 35.4$。Observation 1 把「达到最优测试性能」的倍数写成 4–35×（PDF p.9）：HotpotQA 6,871 对 24,000 大约是 3.5 倍，取整为 4；IFBench 的 678 是另一端。
 
-**「AIME-2025 +12%」**：不是相对 GRPO，是相对 MIPROv2。Qwen3 8B 上 GEPA 32.00 − MIPROv2 20.00 = **+12.00**。摘要原文是 “outperforms … MIPROv2, by over 10% (e.g., +12% accuracy on AIME-2025)”（PDF p.1）。同一格里 GEPA 相对 GRPO 是 **−6.00**（32 对 38）。把 +12% 说成「数学上也赢了强化学习」，与表格不符。
+**「AIME-2025 +12%」**：不是相对 GRPO，是相对 MIPROv2。Qwen3 8B 上 GEPA 32.00 − MIPROv2 20.00 = **+12.00**。摘要原文是 「outperforms … MIPROv2, by over 10% (e.g., +12% accuracy on AIME-2025)」（PDF p.1）。同一格里 GEPA 相对 GRPO 是 **−6.00**（32 对 38）。把 +12% 说成「数学上也赢了强化学习」，与表格不符。
 
 Observation 1 把相对 GRPO 的五场胜利写成 19.0%、2.73%、13.66%、5.19%、0.7%（PDF p.9），与上表逐列相减一致：
 
@@ -508,7 +508,7 @@ Figure 16 重复了 Wan et al. 的泛化间隙研究：测试分减最佳验证�
 | HoVer | 5,567 → 2.4× / 3.3× | 5,252 → 3.7× / 2.8× |
 | PUPA | 6,389 → 5.3× / 5.1× | 7,275 → 6.0× / **9.2×** |
 
-Observation 4 的「最多短 9.2 倍」就是 Qwen PUPA 上 Merge 那根柱（PDF p.11、Figure 18b）。Figure 17 的散点把合计分数对合计 prompt token 画在一起：GEPA 落在左上（更短、更高），MIPROv2 落在右下；图注写 GEPA 的提示词大约不到 MIPROv2 的 33% 大小（PDF p.30）。附录 I 另有一句 “around 33% shorter”（PDF p.27），按字面是「短了 33%」，和 Figure 17/18 的「只剩三分之一以下」不是同一个意思。**以带刻度的图为准。**
+Observation 4 的「最多短 9.2 倍」就是 Qwen PUPA 上 Merge 那根柱（PDF p.11、Figure 18b）。Figure 17 的散点把合计分数对合计 prompt token 画在一起：GEPA 落在左上（更短、更高），MIPROv2 落在右下；图注写 GEPA 的提示词大约不到 MIPROv2 的 33% 大小（PDF p.30）。附录 I 另有一句 「around 33% shorter」（PDF p.27），按字面是「短了 33%」，和 Figure 17/18 的「只剩三分之一以下」不是同一个意思。**以带刻度的图为准。**
 
 论文还观察到：合计表现更好的优化器，往往给出更短的提示词（PDF p.11）。MIPROv2 的长度主要来自同时使用多组示范；复杂任务上，一条示范本身就可能非常长（PDF p.11）。GEPA 的指令虽然比种子长很多（Figure 2 是典型），但仍然短过「示范优化」。
 
@@ -565,7 +565,7 @@ $\mu_f$ 在这里被用来按失败动态注入领域知识：根据编译报错
 - **语言空间里的学习**：Reflexion、Self-Refine、TextGrad、Trace、workflow memory、Dynamic Cheatsheet 等。GEPA 的用法是：用例子去**提出新指令**，得到任务级规则，而不是在测试时记住一组策略。
 - **复合系统优化**：DSPy 搜索/引导少样本；TextGrad 反传文字反馈；MIPROv2 用贝叶斯优化对齐指令和示范——这些大多依赖全局奖励。Optimas 引入与全局对齐的模块局部奖励。GEPA 把全局奖励、模块级环境文字、以及按数据实例维护的帕累托前沿合在一起。
 
-和本站已有报告的关系，用一句话就够：[DAPO](../ByteDance/DAPO.md) / R1 证明标量奖励 + 改权重可以训出长推理；GEPA 证明同一套可验证任务上，若你愿意把评测痕迹留成话，改提示词可以更省样本。两者不是互相取消。
+和本站已有报告的关系，用一句话就够：DAPO / R1 证明标量奖励 + 改权重可以训出长推理；GEPA 证明同一套可验证任务上，若你愿意把评测痕迹留成话，改提示词可以更省样本。两者不是互相取消。
 
 ## 它怎么支撑基模训练与推理
 

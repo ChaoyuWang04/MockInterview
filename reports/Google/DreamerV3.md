@@ -531,7 +531,7 @@ Supplementary Information 在 Nature 页面上随文提供，不在这 19 页本
 - 想象视野：主文 $T=16$（PDF p.3），表 5 的 $H=15$（PDF p.17）。
 - 主文一处写成 synexp two-hot（PDF p.4），其余地方是 symexp。
 - 表 4 表头写卷积通道 $=d/16$，但 100 万参数那一档是 16 不是 4（PDF p.16）。
-- 扩展数据图 1 图注有英文语法错误（“the predicts”）（PDF p.11），不影响内容。
+- 扩展数据图 1 图注有英文语法错误（「the predicts」）（PDF p.11），不影响内容。
 
 ## 可迁移启发
 

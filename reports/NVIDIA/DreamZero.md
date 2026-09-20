@@ -609,7 +609,7 @@ DreamZero 最强的叙事不是「我们做了一个 14B 机器人模型」，�
 
 本模块的规则是：取这篇文章所讲模型首次通过任一官方渠道向公众开放使用的日期。DreamZero 在论文里明确写了开源权重和推理代码（PDF p.3），因此不改用「论文首次公开日」。
 
-1. **作者公开宣布开源。** 项目共同负责人 Joel Jang 在 2026-02-04 16:19 UTC 发帖介绍 DreamZero，并写明开源模型权重与推理代码，指向 GitHub 与项目页（[帖子](https://x.com/jang_yoel/status/2019086869162811894)）。Yuke Zhu、Linxi “Jim” Fan 同日转发同一发布（[Yuke Zhu](https://x.com/yukez/status/2019096072690553112)、[Jim Fan](https://x.com/DrJimFan/status/2019112603637920237)）。
+1. **作者公开宣布开源。** 项目共同负责人 Joel Jang 在 2026-02-04 16:19 UTC 发帖介绍 DreamZero，并写明开源模型权重与推理代码，指向 GitHub 与项目页（[帖子](https://x.com/jang_yoel/status/2019086869162811894)）。Yuke Zhu、Linxi 「Jim」 Fan 同日转发同一发布（[Yuke Zhu](https://x.com/yukez/status/2019096072690553112)、[Jim Fan](https://x.com/DrJimFan/status/2019112603637920237)）。
 2. **GitHub 代码同日可克隆。** `dreamzero0/dreamzero` 仓库的首次 commit 时间为 2026-02-04 16:42:48 UTC，作者 seonghyeonye，包含推理服务与评测脚本。仓库创建于 2026-01-27，属于发布前预建，不取作首发日。
 3. **权重文件提交时间（不用仓库 `createdAt`）。** Hugging Face `GEAR-Dreams/DreamZero-DROID` 在 2026-02-04 09:59–10:06 UTC 连续多次 `Add files using upload-large-folder tool`，随后同日上传 `config.json` 等配置。这是权重文件的提交时间，不是仓库创建时间。AgiBot 检查点更晚（GitHub README 记为 02/27，HF 仓库 `GEAR-Dreams/DreamZero-AgiBot` 的文件提交从 2026-02-28 开始），是后续检查点，不回写家族首发日。
 

@@ -14,11 +14,11 @@
 
 ## 读这篇之前只需要这几个词
 
-这篇是本站 [Flow-GRPO 篇](../Kuaishou/Flow-GRPO.md) 的直接后续。Flow-GRPO 回答的是「确定的流模型怎么才能做在线强化学习」；本篇假设那件事已经成立，追问的是另一句更土的话：**每一步都随机、每一步都拿去优化，是不是买贵了。**
+这篇是本站 Flow-GRPO 的直接后续。Flow-GRPO 回答的是「确定的流模型怎么才能做在线强化学习」；本篇假设那件事已经成立，追问的是另一句更土的话：**每一步都随机、每一步都拿去优化，是不是买贵了。**
 
 没读过前作也可以从这里读。下面六个名字会反复出现，只解释到读懂本篇所需的程度。
 
-**流匹配（flow matching）与校正流（rectified flow）**：在干净图和噪声之间拉一条直线，网络学这条线上每一点的速度。推理时从噪声沿速度走回去。本站 [Stable Diffusion 3 篇](../StabilityAI/Stable-Diffusion-3.md) 讲这条直线怎么被选成文生图默认目标。本篇实验的主底板是 **FLUX.1-dev**，补充底板是 **SD3.5-M** 和混元自己的 HunyuanImage-3.0 / HunyuanVideo-1.5，都把流模型当已经训好的生成器来做强化学习。
+**流匹配（flow matching）与校正流（rectified flow）**：在干净图和噪声之间拉一条直线，网络学这条线上每一点的速度。推理时从噪声沿速度走回去。本站 Stable-Diffusion-3 讲这条直线怎么被选成文生图默认目标。本篇实验的主底板是 **FLUX.1-dev**，补充底板是 **SD3.5-M** 和混元自己的 HunyuanImage-3.0 / HunyuanVideo-1.5，都把流模型当已经训好的生成器来做强化学习。
 
 **常微分方程（Ordinary Differential Equation，ODE）**：给定当前位置和速度，下一步被完全决定。同一份噪声加同一句提示词，走 ODE 得到同一张图。
 
@@ -449,7 +449,7 @@ Table 3 换到底板 SD3.5-M，和其他对齐方法比（PDF p. 12）。设定�
 
 附录 14 把 MixGRPO 接到混元自己的 80B 文生图模型上，512 张 NVIDIA GPU（PDF p. 25–26）。正文只说「稳定优化、效率优势还在」（PDF p. 11）。附录给出的定量句是：相对 Flow-GRPO 或 DanceGRPO 这种全轨迹优化，**大约 70% 的加速**（PDF p. 25）。Figure 7 画了奖励曲线、每步秒数，以及「三只猴子」一类提示的盲测对比：MixGRPO 一边语义一致和写实美学打勾，全轨迹一边打叉（PDF p. 26，读自该图）。
 
-图上的精确坐标论文没有制成表。70% 是作者对图的概括，不是 Table 1 那种逐秒对照。也没有告诉你 80B 上的 $w,\tau,s$、组大小、奖励模型名字。本站 [HunyuanImage 3.0 篇](../Tencent/HunyuanImage-3.0.md) 把 MixGRPO 写成后训练流水线里的一站，并用的是自研奖励；那些细节属于那份技术报告，不要和本篇附录的 70% 混成同一组实验。
+图上的精确坐标论文没有制成表。70% 是作者对图的概括，不是 Table 1 那种逐秒对照。也没有告诉你 80B 上的 $w,\tau,s$、组大小、奖励模型名字。本站 HunyuanImage-3.0 把 MixGRPO 写成后训练流水线里的一站，并用的是自研奖励；那些细节属于那份技术报告，不要和本篇附录的 70% 混成同一组实验。
 
 ### HunyuanVideo-1.5
 
@@ -457,7 +457,7 @@ Table 3 换到底板 SD3.5-M，和其他对齐方法比（PDF p. 12）。设定�
 
 Figure 8 四条训练曲线：HPSv3、VideoAlign 的运动质量 MQ、视觉质量 VQ、文本对齐 TA（PDF p. 27，读自该图）。论文的读法：Flow-GRPO 在视频这种高维潜空间里不稳，VQ / TA / HPSv3 上涨得少，有的阶段还掉；MixGRPO 在美学、运动、视觉质量上更单调向上。图没有给出终点数字，正文也没有视频版 Table 1。
 
-本站 [HunyuanVideo 1.5 篇](../Tencent/HunyuanVideo-1.5.md) 把 MixGRPO 写成 I2V 在线 RL 的采样器名字。那是另一份报告里的产品流水线；本篇附录是方法论文自己的对照实验。两边都叫 MixGRPO，不要把那边的四个质量维度分数写进这里。
+本站 HunyuanVideo-1.5 把 MixGRPO 写成 I2V 在线 RL 的采样器名字。那是另一份报告里的产品流水线；本篇附录是方法论文自己的对照实验。两边都叫 MixGRPO，不要把那边的四个质量维度分数写进这里。
 
 ## 奖励黑客：训练算法解不掉，推理用混合采样挡一下
 
@@ -564,7 +564,7 @@ HPS 在 100% 仍最高，但 Unified Reward 从 3.411 掉到 3.378。论文选 *
 - Table 18 的 HPS 在 100% 最高，Unified Reward 在 80% 最高；
 - Figure 2 右图三档协方差迹 5.05 / 1.51 / 1.06 读自该图上的标注。
 
-**跨篇：** 流匹配为什么能接 GRPO，见 [Flow-GRPO](../Kuaishou/Flow-GRPO.md)。校正流的时间两端见 [Stable Diffusion 3](../StabilityAI/Stable-Diffusion-3.md)。MixGRPO 作为后训练工序出现在 [HunyuanImage 3.0](../Tencent/HunyuanImage-3.0.md) 和 [HunyuanVideo 1.5](../Tencent/HunyuanVideo-1.5.md)；那两篇是模型报告，本篇是方法论文，数字不要互相填。
+**跨篇：** 流匹配为什么能接 GRPO，见 Flow-GRPO。校正流的时间两端见 Stable-Diffusion-3。MixGRPO 作为后训练工序出现在 HunyuanImage-3.0 和 HunyuanVideo-1.5；那两篇是模型报告，本篇是方法论文，数字不要互相填。
 
 **外部补充**（均非本报告内容）：
 
