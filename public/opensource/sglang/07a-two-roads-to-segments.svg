@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 460" width="1120" height="460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="460" fill="#ffffff"/>
+
+<rect x="150" y="219" width="100" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+
+<rect x="290" y="149" width="180" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="510" y="149" width="180" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+
+<rect x="290" y="289" width="72" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="372" y="289" width="72" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="454" y="289" width="72" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="536" y="289" width="72" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="618" y="289" width="72" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+
+<rect x="730" y="158" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="810" y="158" width="38" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="852" y="158" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="932" y="158" width="38" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="974" y="158" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<rect x="730" y="298" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="810" y="298" width="38" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="852" y="298" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="932" y="298" width="38" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="974" y="298" width="76" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<rect x="30" y="382" width="1060" height="54" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+
+<polyline points="250,236 270,236 270,175 282,175" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="276,171 284,175 276,179" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="250,254 270,254 270,315 282,315" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="276,311 284,315 276,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<line x1="470" y1="175" x2="502" y2="175" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="496,171 504,175 496,179" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="690" y1="175" x2="722" y2="175" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="716,171 724,175 716,179" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<line x1="362" y1="315" x2="370" y2="315" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="366,311 372,315 366,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="444" y1="315" x2="452" y2="315" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="448,311 454,315 448,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="526" y1="315" x2="534" y2="315" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="530,311 536,315 530,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="608" y1="315" x2="616" y2="315" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="612,311 618,315 612,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="690" y1="315" x2="722" y2="315" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="716,311 724,315 716,319" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一份前向代码被切成图段的两条来路:上面一条两步到位,下面一条要先过一整条编译链</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">紫 = 可断图这条路上的步骤,黄 = 编译分段图这条路上的步骤,灰 = 两条路共同的输入;右边一排里绿 = 录进图的段,红 = 断点处留在图外现场发的算子。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">链上的方框个数本身就是信息:上面 2 个,下面 5 个。下面每多一个框,就多一处可能失败、也多一笔启动时间。</text>
+
+<text x="30" y="170" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 可断图</text>
+<text x="30" y="188" font-size="11" fill="#6b7280" text-anchor="start">CUDA 上的默认</text>
+
+<text x="30" y="310" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 编译分段图</text>
+<text x="30" y="328" font-size="11" fill="#6b7280" text-anchor="start">AMD 与昇腾上的默认</text>
+
+<text x="200" y="249" font-size="11" fill="#111827" text-anchor="middle">同一份前向代码</text>
+
+<text x="380" y="170" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">在层里挂标记</text>
+<text x="380" y="188" font-size="10" fill="#6b7280" text-anchor="middle">注意力 · all-to-all · Mamba</text>
+<text x="600" y="170" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">录图时按标记断开</text>
+<text x="600" y="188" font-size="10" fill="#6b7280" text-anchor="middle">标记之外连成段录进去</text>
+
+<text x="326" y="312" font-size="10" fill="#111827" text-anchor="middle">dynamo</text>
+<text x="326" y="328" font-size="10" fill="#111827" text-anchor="middle">追踪</text>
+<text x="408" y="312" font-size="10" fill="#111827" text-anchor="middle">得到</text>
+<text x="408" y="328" font-size="10" fill="#111827" text-anchor="middle">计算图</text>
+<text x="490" y="312" font-size="10" fill="#111827" text-anchor="middle">按注册</text>
+<text x="490" y="328" font-size="10" fill="#111827" text-anchor="middle">算子切段</text>
+<text x="572" y="312" font-size="10" fill="#111827" text-anchor="middle">每段</text>
+<text x="572" y="328" font-size="10" fill="#111827" text-anchor="middle">各编一份</text>
+<text x="654" y="312" font-size="10" fill="#111827" text-anchor="middle">逐段</text>
+<text x="654" y="328" font-size="10" fill="#111827" text-anchor="middle">录图</text>
+
+<text x="768" y="180" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="829" y="180" font-size="10" fill="#111827" text-anchor="middle">断</text>
+<text x="890" y="180" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="951" y="180" font-size="10" fill="#111827" text-anchor="middle">断</text>
+<text x="1012" y="180" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="1062" y="180" font-size="11" fill="#9ca3af" text-anchor="start">…</text>
+
+<text x="768" y="320" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="829" y="320" font-size="10" fill="#111827" text-anchor="middle">断</text>
+<text x="890" y="320" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="951" y="320" font-size="10" fill="#111827" text-anchor="middle">断</text>
+<text x="1012" y="320" font-size="10" fill="#111827" text-anchor="middle">段</text>
+<text x="1062" y="320" font-size="11" fill="#9ca3af" text-anchor="start">…</text>
+
+<text x="730" y="214" font-size="11" fill="#9ca3af" text-anchor="start">不碰编译器;每个红格在重放时多 1 次下发</text>
+<text x="730" y="354" font-size="11" fill="#9ca3af" text-anchor="start">红格落在哪由注册表决定,不用人去挂</text>
+
+<text x="50" y="406" font-size="11" fill="#6b7280" text-anchor="start">两条路录出来的形状相同——绿红格的位置和个数一模一样,来路却差着三步。这解释了为什么 CUDA 上默认走上面那条:标记还在,这张图就一定录得下来;编译那条要</text>
+<text x="50" y="424" font-size="11" fill="#6b7280" text-anchor="start">追得动、切得开、每段都编得过,官方文档自己说大部分问题出在追踪这一步。代价在最右边那行小字里:上面那条的断点得由写模型代码的人亲手挂,漏挂一个就录错。</text>
+</svg>

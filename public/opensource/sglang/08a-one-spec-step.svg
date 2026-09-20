@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<rect x="200" y="140" width="250" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="470" y="140" width="300" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="790" y="140" width="290" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="200" y="250" width="250" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="470" y="250" width="300" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="790" y="250" width="290" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="640" y="310" width="440" height="40" rx="8" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="200" y="392" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="228" y="392" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="256" y="392" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="284" y="392" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="312" y="392" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="340" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="368" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="396" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="424" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="452" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="480" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="508" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="536" y="392" width="26" height="26" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="200" y="432" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="228" y="432" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="256" y="432" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="284" y="432" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="312" y="432" width="26" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="340" y="432" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="368" y="432" width="26" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="30" y="505" width="1060" height="46" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="250" y1="178" x2="250" y2="186" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="300" y1="178" x2="300" y2="186" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="350" y1="178" x2="350" y2="186" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="400" y1="178" x2="400" y2="186" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="450" y1="163" x2="466" y2="163" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="460,159 468,163 460,167" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="770" y1="163" x2="786" y2="163" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="780,159 788,163 780,167" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="780" y1="132" x2="780" y2="238" stroke="#d4a24c" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="780" y1="296" x2="780" y2="310" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="394" y1="470" x2="562" y2="470" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="394" y1="464" x2="394" y2="476" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="562" y1="464" x2="562" y2="476" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个推测 decode 步:GPU 那条线一口气跑完三段,CPU 那条线上没有一格是「等」</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">从左到右是时间。紫 = 草稿模型在跑,绿 = 主模型在跑,灰 = CPU 这一侧的活与已经坐实的 KV,黄 = 已分配还没提交的 KV 格子,红 = 被去掉的那次等待。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">横向长度只表示先后与大致占比,不是实测时延;草稿框底下的刻度把它切成 5 段,就是「连猜 5 步」的那个 5。</text>
+<text x="30" y="160" font-size="14" fill="#111827" text-anchor="start" font-weight="700">GPU</text>
+<text x="30" y="178" font-size="11" fill="#6b7280" text-anchor="start">三段接着跑,中间不回 CPU</text>
+<text x="216" y="158" font-size="14" fill="#111827" text-anchor="start" font-weight="700">草稿:连猜 5 步</text>
+<text x="216" y="172" font-size="11" fill="#6b7280" text-anchor="start">整段捕成一张 CUDA graph</text>
+<text x="486" y="158" font-size="14" fill="#111827" text-anchor="start" font-weight="700">验证:主模型一次定宽前向</text>
+<text x="486" y="172" font-size="11" fill="#6b7280" text-anchor="start">固定宽度的 extend,自己一套图</text>
+<text x="806" y="158" font-size="14" fill="#111827" text-anchor="start" font-weight="700">追赶:草稿补上被接受的 KV</text>
+<text x="806" y="172" font-size="11" fill="#6b7280" text-anchor="start">下一步的草稿从这里接着猜</text>
+<text x="780" y="212" font-size="11" fill="#9ca3af" text-anchor="middle">这一刻写公告板、打事件</text>
+<text x="30" y="270" font-size="14" fill="#111827" text-anchor="start" font-weight="700">CPU</text>
+<text x="30" y="288" font-size="11" fill="#6b7280" text-anchor="start">同一段时间里只做这三件</text>
+<text x="216" y="270" font-size="14" fill="#111827" text-anchor="start" font-weight="700">按最坏情况预留 KV</text>
+<text x="216" y="286" font-size="11" fill="#6b7280" text-anchor="start">每请求每步 2 倍草稿宽度</text>
+<text x="486" y="270" font-size="14" fill="#111827" text-anchor="start" font-weight="700">准备下一批的形状</text>
+<text x="486" y="286" font-size="11" fill="#6b7280" text-anchor="start">只算格子数,不看数值</text>
+<text x="806" y="270" font-size="14" fill="#111827" text-anchor="start" font-weight="700">按格子号取下一步的输入</text>
+<text x="806" y="286" font-size="11" fill="#6b7280" text-anchor="start">全程没碰过接受数</text>
+<text x="656" y="330" font-size="14" fill="#111827" text-anchor="start" font-weight="700">被去掉的那次等待</text>
+<text x="656" y="346" font-size="11" fill="#6b7280" text-anchor="start">换成同步做法,CPU 必须在这一刻停下,把接受数拷回来再决定下一步</text>
+<text x="30" y="384" font-size="14" fill="#111827" text-anchor="start" font-weight="700">KV 的两个长度</text>
+<text x="30" y="409" font-size="11" fill="#6b7280" text-anchor="start">分配(撑开)</text>
+<text x="30" y="449" font-size="11" fill="#6b7280" text-anchor="start">提交(坐实)</text>
+<text x="580" y="409" font-size="11" fill="#6b7280" text-anchor="start">每步先按 2 倍草稿宽度撑开,图上 4 × 2 = 8 格</text>
+<text x="580" y="449" font-size="11" fill="#6b7280" text-anchor="start">验证之后才跟上,这一步只坐实 2 格</text>
+<text x="478" y="490" font-size="11" fill="#9ca3af" text-anchor="middle">这段落差 = 没接受的 + 双缓冲</text>
+<text x="46" y="526" font-size="11" fill="#6b7280" text-anchor="start">KV 那两行里一格是一个 token 的槽,左边 5 格灰的是已经算好的历史;图上取草稿宽度 4、这一步接受 2 个。</text>
+<text x="46" y="542" font-size="11" fill="#6b7280" text-anchor="start">整张图要读的是三条线的起止:GPU 那条中间没有断点,CPU 那条没有等待格,KV 那两行之间始终留着一段没坐实的余量。</text>
+</svg>

@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 680" width="1120" height="680" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="680" fill="#ffffff"/>
+<rect x="300" y="166" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="360" y="166" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="420" y="166" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="480" y="166" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="795" y="150" width="110" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="746" y="184" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="826" y="184" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="906" y="184" width="48" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="300" y="248" width="130" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="300" y="282" width="130" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="470" y="265" width="130" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="248" width="130" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="710" y="282" width="130" height="26" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="880" y="265" width="160" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="328" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="356" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="384" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="412" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="710" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="738" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="766" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="794" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="822" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="850" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="878" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="906" y="352" width="26" height="24" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="300" y="430" width="160" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="470" width="160" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="710" y="430" width="180" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="470" width="180" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="300" y="528" width="140" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="549" width="140" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="300" y="570" width="140" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="730" y="522" width="120" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="730" y="543" width="120" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="730" y="564" width="120" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="730" y="585" width="120" height="18" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="30" y="616" width="1060" height="40" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="104" x2="1090" y2="104" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="645" y1="140" x2="645" y2="608" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="280" y1="234" x2="1090" y2="234" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="280" y1="328" x2="1090" y2="328" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="280" y1="422" x2="1090" y2="422" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="280" y1="516" x2="1090" y2="516" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="348" y1="178" x2="360" y2="178" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="408" y1="178" x2="420" y2="178" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="468" y1="178" x2="480" y2="178" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="850,174 770,184" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="850" y1="174" x2="850" y2="184" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="850,174 930,184" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="430,261 462,270" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="430,295 462,286" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="456,266 464,270 456,274" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="840,261 872,270" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="866,266 874,270 866,274" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="292" y1="462" x2="600" y2="462" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="702" y1="462" x2="1090" y2="462" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="380" y1="470" x2="380" y2="458" stroke="#d9877a" stroke-width="1.4"/>
+<polyline points="376,464 380,456 384,464" fill="none" stroke="#d9877a" stroke-width="1.4"/>
+<line x1="800" y1="470" x2="800" y2="466" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="795" y1="457" x2="805" y2="467" stroke="#d9877a" stroke-width="1.4"/>
+<line x1="805" y1="457" x2="795" y2="467" stroke="#d9877a" stroke-width="1.4"/>
+<line x1="716" y1="528" x2="716" y2="597" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="712,534 716,526 720,534" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="712,591 716,599 720,591" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">两边都必须做的五件事各占一行,左右两格填各自的做法</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">紫 = 草稿这一侧的东西,绿 = 主模型这一侧的东西,黄 = 给草稿留的 KV 格子,灰 = 调度这一侧的东西,红 = 只在一边发生的那次拷贝,白底虚线 = 这一格在这一边根本不存在。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">方框数与格子数本身就是答案:① 左边 4 个连成一串,右边 1 个分出 3 个;③ 左边 5 格,右边 8 格。④ 那一行里,每列上半是 CPU 侧、下半是 GPU 侧,虚线就是那条界。</text>
+<text x="30" y="94" font-size="11" fill="#6b7280" text-anchor="start">② 的「只看主模型分布」不等于有损:左边的草稿默认也是贪心的,接受判据同样退化成主模型概率;拒绝之后那个 token 从哪份概率里采两边不同,正文有说明。两边的参数名都在第五节。</text>
+<text x="440" y="128" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vLLM</text>
+<text x="850" y="128" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">SGLang</text>
+<text x="30" y="172" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ①</text>
+<text x="30" y="192" font-size="11" fill="#6b7280" text-anchor="start">先猜出一组候选</text>
+<text x="324" y="182" font-size="11" fill="#111827" text-anchor="middle">1</text>
+<text x="384" y="182" font-size="11" fill="#111827" text-anchor="middle">2</text>
+<text x="444" y="182" font-size="11" fill="#111827" text-anchor="middle">3</text>
+<text x="504" y="182" font-size="11" fill="#111827" text-anchor="middle">4</text>
+<text x="850" y="166" font-size="11" fill="#111827" text-anchor="middle">起点</text>
+<text x="770" y="200" font-size="11" fill="#111827" text-anchor="middle">1</text>
+<text x="850" y="200" font-size="11" fill="#111827" text-anchor="middle">2</text>
+<text x="930" y="200" font-size="11" fill="#111827" text-anchor="middle">3</text>
+<text x="300" y="222" font-size="11" fill="#6b7280" text-anchor="start">一条链:4 个位置摊平成连续 4 行</text>
+<text x="710" y="222" font-size="11" fill="#6b7280" text-anchor="start">一棵树:同层兄弟一次验完,图上每层 3 个分支</text>
+<text x="30" y="266" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ②</text>
+<text x="30" y="286" font-size="11" fill="#6b7280" text-anchor="start">判每个候选收不收</text>
+<text x="310" y="265" font-size="11" fill="#111827" text-anchor="start">主模型分布</text>
+<text x="310" y="299" font-size="11" fill="#111827" text-anchor="start">草稿分布</text>
+<text x="480" y="282" font-size="11" fill="#111827" text-anchor="start">比两者的比值</text>
+<text x="720" y="265" font-size="11" fill="#111827" text-anchor="start">主模型分布</text>
+<text x="720" y="299" font-size="11" fill="#9ca3af" text-anchor="start">没有这一格</text>
+<text x="890" y="282" font-size="11" fill="#111827" text-anchor="start">只看主模型概率</text>
+<text x="30" y="360" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ③</text>
+<text x="30" y="380" font-size="11" fill="#6b7280" text-anchor="start">给这一步的草稿留格子</text>
+<text x="300" y="398" font-size="11" fill="#6b7280" text-anchor="start">按这一步的草稿数加 1 留</text>
+<text x="710" y="398" font-size="11" fill="#6b7280" text-anchor="start">按最坏情况的 2 倍草稿宽度留,多出的那倍是双缓冲</text>
+<text x="30" y="456" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ④</text>
+<text x="30" y="476" font-size="11" fill="#6b7280" text-anchor="start">得有人知道这步收了几个</text>
+<text x="310" y="447" font-size="11" fill="#111827" text-anchor="start">CPU 读到它</text>
+<text x="310" y="487" font-size="11" fill="#111827" text-anchor="start">GPU 算出这个数</text>
+<text x="470" y="487" font-size="11" fill="#6b7280" text-anchor="start">每步拷一次回 CPU</text>
+<text x="720" y="447" font-size="11" fill="#111827" text-anchor="start">CPU 只拿格子号</text>
+<text x="720" y="487" font-size="11" fill="#111827" text-anchor="start">接受数留在公告板上</text>
+<text x="910" y="487" font-size="11" fill="#6b7280" text-anchor="start">这一步不过线</text>
+<text x="30" y="546" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ⑤</text>
+<text x="30" y="566" font-size="11" fill="#6b7280" text-anchor="start">决定这一步猜几个</text>
+<text x="310" y="541" font-size="11" fill="#111827" text-anchor="start">小批</text>
+<text x="310" y="562" font-size="11" fill="#111827" text-anchor="start">中批</text>
+<text x="310" y="583" font-size="11" fill="#111827" text-anchor="start">大批</text>
+<text x="460" y="549" font-size="11" fill="#6b7280" text-anchor="start">按并发查一张写死的表</text>
+<text x="460" y="567" font-size="11" fill="#6b7280" text-anchor="start">查到哪个数就一直是它</text>
+<text x="740" y="535" font-size="11" fill="#111827" text-anchor="start">7 步</text>
+<text x="740" y="556" font-size="11" fill="#111827" text-anchor="start">5 步</text>
+<text x="740" y="577" font-size="11" fill="#111827" text-anchor="start">3 步</text>
+<text x="740" y="598" font-size="11" fill="#111827" text-anchor="start">1 步</text>
+<text x="870" y="540" font-size="11" fill="#6b7280" text-anchor="start">按观测到的接受长度上下走</text>
+<text x="870" y="558" font-size="11" fill="#6b7280" text-anchor="start">并发更大的档候选更少</text>
+<text x="870" y="576" font-size="11" fill="#6b7280" text-anchor="start">最低一级 0 步,就是不猜</text>
+<text x="46" y="636" font-size="11" fill="#6b7280" text-anchor="start">五行的上下顺序不表示先后,只是「两边都得做的事」的清单;同一行里左右两格对应的是同一件事的两种做法。</text>
+<text x="46" y="652" font-size="11" fill="#6b7280" text-anchor="start">⑤ 右边的阶梯画的是并发最小那一档的候选步数;算法清单、三个旋钮、运行时能改的阈值这三处差异没有形状,只在正文里。</text>
+</svg>

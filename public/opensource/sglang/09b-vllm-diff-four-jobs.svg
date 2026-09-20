@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<rect x="240" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="310" y="150" width="110" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="620" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="678" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="736" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="794" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="852" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="910" y="150" width="52" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="968" y="150" width="110" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="240" y="236" width="300" height="46" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="254" y="242" width="150" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="620" y="236" width="108" height="46" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="632" y="242" width="84" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="738" y="236" width="108" height="46" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="750" y="242" width="84" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="856" y="236" width="108" height="46" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="868" y="242" width="84" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="974" y="236" width="108" height="46" rx="8" fill="none" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="986" y="242" width="84" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="240" y="376" width="78" height="20" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="324" y="367" width="78" height="29" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="408" y="358" width="78" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="492" y="349" width="78" height="47" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="620" y="362" width="124" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="750" y="362" width="88" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="844" y="362" width="62" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="912" y="362" width="44" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="240" y="446" width="170" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="416" y="446" width="170" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="620" y="446" width="230" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="856" y="446" width="230" height="34" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="30" y="524" width="1060" height="34" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="600" y1="106" x2="600" y2="560" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="30" y1="216" x2="1090" y2="216" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="314" x2="1090" y2="314" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="426" x2="1090" y2="426" stroke="#f3f4f6" stroke-width="1"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">两边都必须做的四件事各占一行:同一行里,左右盖住的是同一件事</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">紫 = 拼回激活时可选的加速路,绿 = 跑在自己进程里的循环,黄 = 切 prefill 序列的机制,红 = 切 KV 的机制,灰 = 兜底的通用通信库;白底虚线 = 一个进程的边界。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">编码:第一行数方框个数,第三行宽度是块多大、高度是这块算多久,第四行的条带长度是它盖住的阶段。两边的参数名都在第五节。</text>
+<text x="415" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vLLM</text>
+<text x="855" y="120" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">SGLang</text>
+<text x="30" y="168" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ①</text>
+<text x="30" y="188" font-size="11" fill="#6b7280" text-anchor="start">每层把切开的激活拼回完整</text>
+<text x="266" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">1</text>
+<text x="365" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">通用库兜底</text>
+<text x="240" y="202" font-size="11" fill="#6b7280" text-anchor="start">1 条自写的快路</text>
+<text x="646" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">1</text>
+<text x="704" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2</text>
+<text x="762" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">3</text>
+<text x="820" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">4</text>
+<text x="878" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">5</text>
+<text x="936" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">6</text>
+<text x="1023" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">通用库兜底</text>
+<text x="620" y="202" font-size="11" fill="#6b7280" text-anchor="start">6 条加速路,按固定顺序查,第一个满足的接管;只有最左那条能跨机器</text>
+<text x="30" y="254" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ②</text>
+<text x="30" y="274" font-size="11" fill="#6b7280" text-anchor="start">让分段之后的各级别空转</text>
+<text x="329" y="264" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">一个调度循环</text>
+<text x="416" y="264" font-size="11" fill="#6b7280" text-anchor="start">一条在飞的队列</text>
+<text x="240" y="300" font-size="11" fill="#6b7280" text-anchor="start">调度只有一份;队列长度是级数,或级数加一</text>
+<text x="674" y="264" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">循环</text>
+<text x="792" y="264" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">循环</text>
+<text x="910" y="264" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">循环</text>
+<text x="1028" y="264" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">循环</text>
+<text x="620" y="300" font-size="11" fill="#6b7280" text-anchor="start">每一级各一个调度器进程,各跑自己的事件循环,请求逐级转发</text>
+<text x="30" y="352" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ③</text>
+<text x="30" y="372" font-size="11" fill="#6b7280" text-anchor="start">把长 prompt 的 prefill 切成块</text>
+<text x="240" y="414" font-size="11" fill="#6b7280" text-anchor="start">块等宽,但前缀越长算得越慢,气泡一级级往下传</text>
+<text x="620" y="414" font-size="11" fill="#6b7280" text-anchor="start">块按一条启动时拟合的曲线越缩越窄,每块耗时相等,气泡不再传播</text>
+<text x="30" y="464" font-size="14" fill="#111827" text-anchor="start" font-weight="700">必须做的事 ④</text>
+<text x="30" y="484" font-size="11" fill="#6b7280" text-anchor="start">长上下文的算力和显存分头解决</text>
+<text x="325" y="468" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">切 prefill 序列</text>
+<text x="501" y="468" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">切 decode 的 KV</text>
+<text x="240" y="498" font-size="11" fill="#6b7280" text-anchor="start">两条独立的开关,前者不省显存,后者才省</text>
+<text x="735" y="468" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">切 prefill 序列</text>
+<text x="971" y="468" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">切 decode 的 KV</text>
+<text x="620" y="498" font-size="11" fill="#6b7280" text-anchor="start">同样两条开关、同样的分工;差别在切法数、能配的后端与模型</text>
+<text x="46" y="546" font-size="11" fill="#6b7280" text-anchor="start">第四行两边同形:名字不同,但盖住的阶段和省下的东西完全一样,所以它不是一处差异,而是本章最容易被记反的那条共识。</text>
+</svg>

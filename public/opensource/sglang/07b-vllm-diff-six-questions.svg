@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+
+<rect x="300" y="127" width="380" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="300" y="199" width="380" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="300" y="271" width="380" height="118" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="300" y="415" width="380" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="300" y="487" width="380" height="46" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+
+<rect x="720" y="127" width="370" height="118" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="720" y="271" width="370" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="720" y="343" width="370" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="720" y="415" width="370" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="720" y="487" width="370" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<rect x="30" y="551" width="1060" height="54" rx="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="30" y1="96" x2="1090" y2="96" stroke="#e5e7eb" stroke-width="1"/>
+<line x1="700" y1="106" x2="700" y2="541" stroke="#e5e7eb" stroke-width="1"/>
+
+<line x1="30" y1="186" x2="690" y2="186" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="258" x2="1090" y2="258" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="330" x2="280" y2="330" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="710" y1="330" x2="1090" y2="330" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="402" x2="1090" y2="402" stroke="#f3f4f6" stroke-width="1"/>
+<line x1="30" y1="474" x2="1090" y2="474" stroke="#f3f4f6" stroke-width="1"/>
+
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">CUDA graph 这件事上两边都必须回答的 6 个问题:vLLM 多在启动期量出来,SGLang 多在配置期算死</text>
+<text x="30" y="58" font-size="11" fill="#6b7280" text-anchor="start">颜色是这件事发生的时刻:紫 = 配置期(启动参数解析完就定了),黄 = 启动期(真跑一遍才知道),绿 = 运行时每步判一次,白底虚线 = 这一边没有这一格。</text>
+<text x="30" y="76" font-size="11" fill="#6b7280" text-anchor="start">一个方框纵向盖住两行,表示这一边用同一个机制同时回答了这两个问题——所以那两行之间的横线是断的。图上不写参数名,两边的参数名都在第五节。</text>
+
+<text x="490" y="114" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">vLLM</text>
+<text x="905" y="114" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">SGLang</text>
+
+<text x="30" y="146" font-size="13" fill="#111827" text-anchor="start" font-weight="700">① 谁说了算</text>
+<text x="30" y="163" font-size="10" fill="#6b7280" text-anchor="start">用不用图、用哪种形态</text>
+<text x="490" y="144" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">一个档位枚举,五个成员</text>
+<text x="490" y="162" font-size="10" fill="#6b7280" text-anchor="middle">两个复合档在配置期声明两种批形各用哪一档</text>
+
+<text x="30" y="218" font-size="13" fill="#111827" text-anchor="start" font-weight="700">② prefill 怎么录</text>
+<text x="30" y="235" font-size="10" fill="#6b7280" text-anchor="start">token 数每步都变,图要形状固定</text>
+<text x="490" y="216" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">借编译器把整个前向追踪成一张计算图</text>
+<text x="490" y="234" font-size="10" fill="#6b7280" text-anchor="middle">再按注意力类算子切开,每段各编一份</text>
+
+<text x="905" y="170" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">两个阶段各挑一个后端,四选一</text>
+<text x="905" y="192" font-size="10" fill="#6b7280" text-anchor="middle">选了哪个后端,就等于选了 prefill 怎么录</text>
+<text x="905" y="210" font-size="10" fill="#6b7280" text-anchor="middle">默认那种不碰编译器,断点写在层里</text>
+
+<text x="30" y="290" font-size="13" fill="#111827" text-anchor="start" font-weight="700">③ 按什么分桶</text>
+<text x="30" y="307" font-size="10" fill="#6b7280" text-anchor="start">一张图对应哪些形状</text>
+<text x="905" y="288" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">两条轴:decode 数请求,prefill 数 token</text>
+<text x="905" y="306" font-size="10" fill="#6b7280" text-anchor="middle">一个请求只出 1 个 token 时两者才相等</text>
+
+<text x="30" y="362" font-size="13" fill="#111827" text-anchor="start" font-weight="700">④ 不在桶上怎么办</text>
+<text x="30" y="379" font-size="10" fill="#6b7280" text-anchor="start">实际形状没有正好命中的图</text>
+<text x="490" y="314" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">一条轴:token 总数</text>
+<text x="490" y="336" font-size="10" fill="#6b7280" text-anchor="middle">建表时把桶之间的整数全铺平</text>
+<text x="490" y="354" font-size="10" fill="#6b7280" text-anchor="middle">查表一次直接命中,没有「找最近的桶」这一步</text>
+<text x="905" y="360" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">运行时二分找最小的够用的桶,补齐</text>
+<text x="905" y="378" font-size="10" fill="#6b7280" text-anchor="middle">prefill 多一道:补齐超过 2 倍就不用图</text>
+
+<text x="30" y="434" font-size="13" fill="#111827" text-anchor="start" font-weight="700">⑤ 显存数从哪来</text>
+<text x="30" y="451" font-size="10" fill="#6b7280" text-anchor="start">图要吃多少,这个数怎么得到</text>
+<text x="490" y="432" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">录最大的两张图,前后各量一次</text>
+<text x="490" y="450" font-size="10" fill="#6b7280" text-anchor="middle">再按这个单价外推剩下所有桶的成本</text>
+<text x="905" y="432" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">按最大档乘系数预扣一笔</text>
+<text x="905" y="450" font-size="10" fill="#6b7280" text-anchor="middle">录完不回填;有个开关能录完再量,默认关</text>
+
+<text x="30" y="506" font-size="13" fill="#111827" text-anchor="start" font-weight="700">⑥ 权重换了怎么办</text>
+<text x="30" y="523" font-size="10" fill="#6b7280" text-anchor="start">图里录着 kernel 序列与地址</text>
+<text x="490" y="514" font-size="11" fill="#9ca3af" text-anchor="middle">参照项目那一章没有这条路径</text>
+<text x="905" y="504" font-size="11" fill="#111827" text-anchor="middle" font-weight="700">换权重的请求里要求重录</text>
+<text x="905" y="522" font-size="10" fill="#6b7280" text-anchor="middle">就地重录 decode 图;切换 PD 角色时也补录</text>
+
+<text x="50" y="575" font-size="11" fill="#6b7280" text-anchor="start">两边把同样的工作量放在了不同的时刻。vLLM 的黄格多:建表、跑编译器、实测显存都发生在启动期,换来运行时查表就命中、显存数是真量出来的。SGLang 的紫格多:</text>
+<text x="50" y="593" font-size="11" fill="#6b7280" text-anchor="start">后端、两条轴、显存预算在解析完启动参数时就算死了,启动短、路径也短,代价是显存预算只是个估计,而且运行时每步还得自己二分找桶、自己判这一步值不值得用图。</text>
+</svg>

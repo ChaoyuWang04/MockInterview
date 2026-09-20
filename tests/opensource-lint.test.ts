@@ -23,9 +23,6 @@ const EXEMPT = new Set(['vllm'])
  * 只豁免「原理段无标识符」这一条,其余检查照常约束它们。
  */
 const PRINCIPLE_TODO = new Set([
-  'sglang/07-执行与 CUDA graph.md',
-  'sglang/08-推测解码.md',
-  'sglang/09-并行:TP、PP、CP 与 DCP.md',
   'sglang/10-大规模 MoE:EP、DeepEP、DP attention、TBO 与 EPLB.md',
   'sglang/11-PD 分离与 EPD.md',
   'sglang/12-量化.md',
@@ -127,7 +124,8 @@ describe('开源解读页的硬约束', () => {
    * 页头回指、典型配置的免责句这类结构性重复是设计如此,放行。
    */
   it('同一项目内不同章没有一模一样的长句', () => {
-    const BOILER = [/^每一条对应源码的哪个文件与符号/, /^这一页只说/, /^三套能直接抄走的起法/, /^组合与推荐值是按语义推的起点/, /^这一页的参数全是启动参数/]
+    // 结构性重复,设计如此:页头回指、典型配置的免责句、调参入口那句
+    const BOILER = [/^每一条对应源码的哪个文件与符号/, /^这一页只说/, /不是实测最优/, /能直接抄走的起法/, /^这一页的参数全是启动参数/]
     const seen = new Map<string, Set<string>>()
     for (const p of PAGES) {
       const body = p.text.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\|.*?\|/g, '')
