@@ -121,6 +121,27 @@ describe('开源解读页的硬约束', () => {
     expect(bad).toEqual([])
   })
 
+  /**
+   * 跨章重复:并行派出去的子 agent 互相看不见,同一个机制很容易被两章各讲一遍。
+   * 只拦「一模一样的长句」——概念层面的重复要人判断,在主线程验收时看。
+   * 页头回指、典型配置的免责句这类结构性重复是设计如此,放行。
+   */
+  it('同一项目内不同章没有一模一样的长句', () => {
+    const BOILER = [/^每一条对应源码的哪个文件与符号/, /^这一页只说/, /^三套能直接抄走的起法/, /^组合与推荐值是按语义推的起点/, /^这一页的参数全是启动参数/]
+    const seen = new Map<string, Set<string>>()
+    for (const p of PAGES) {
+      const body = p.text.replace(/!\[.*?\]\(.*?\)/g, '').replace(/\|.*?\|/g, '')
+      for (const raw of body.split(/[。;\n]/)) {
+        const s = raw.replace(/[\s*`—·]/g, '').trim()
+        if (s.length < 20 || BOILER.some((b) => b.test(s))) continue
+        if (!seen.has(s)) seen.set(s, new Set())
+        seen.get(s)!.add(label(p))
+      }
+    }
+    const bad = [...seen.entries()].filter(([, v]) => v.size > 1).map(([s, v]) => `${[...v].join(' / ')}: ${s.slice(0, 40)}`)
+    expect(bad).toEqual([])
+  })
+
   it('每张表各行列数一致', () => {
     const bad = PAGES.flatMap((p) =>
       (p.text.match(/(?:^\|.*\n)+/gm) ?? [])
