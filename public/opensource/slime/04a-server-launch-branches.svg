@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar04" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">起生成服务:四条分支都汇到路由器加引擎,不走进引擎调度器内部</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">灰 = 入口与路由器;绿 = 外部已起好的引擎;黄 = 默认一体组;紫 = 预填充与解码分离;红 = 编码器先行再注入</text>
+
+  <rect x="310" y="78" width="500" height="64" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="560" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">起生成服务</text>
+  <text x="560" y="126" font-size="11" fill="#6b7280" text-anchor="middle">先看要不要接已有服务;否则解析配置再选拓扑</text>
+
+  <rect x="30" y="188" width="250" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="155" y="222" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">外部引擎</text>
+  <text x="155" y="246" font-size="11" fill="#6b7280" text-anchor="middle">不占本地卡,只登记地址</text>
+
+  <rect x="300" y="188" width="250" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="425" y="222" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">默认一体组</text>
+  <text x="425" y="246" font-size="11" fill="#6b7280" text-anchor="middle">预填充与解码在同一组卡</text>
+
+  <rect x="570" y="188" width="250" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="695" y="222" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">预填充 / 解码分离</text>
+  <text x="695" y="246" font-size="11" fill="#6b7280" text-anchor="middle">两组卡,路由器开分离模式</text>
+
+  <rect x="840" y="188" width="250" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="965" y="222" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">编码器先行</text>
+  <text x="965" y="246" font-size="11" fill="#6b7280" text-anchor="middle">先起编码器,地址注入后续组</text>
+
+  <line x1="480" y1="142" x2="155" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <line x1="530" y1="142" x2="425" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <line x1="590" y1="142" x2="695" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <line x1="640" y1="142" x2="965" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+
+  <rect x="30" y="330" width="1060" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="560" y="360" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">路由器</text>
+  <text x="560" y="384" font-size="11" fill="#6b7280" text-anchor="middle">每个模型一台;从第二个模型起强制新开;编码器不登记</text>
+
+  <line x1="155" y1="276" x2="200" y2="330" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <line x1="425" y1="276" x2="425" y2="330" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <line x1="695" y1="276" x2="695" y2="330" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+
+  <rect x="30" y="448" width="1060" height="112" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="50" y="476" font-size="13" fill="#6b7280">引擎(只画对外入口,不画调度器 / 前缀树 / KV 池)</text>
+
+  <rect x="70" y="492" width="220" height="48" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="180" y="522" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎 · 节点 0 对外</text>
+
+  <rect x="330" y="492" width="220" height="48" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="440" y="522" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎 · 可多节点无头</text>
+
+  <rect x="590" y="492" width="220" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="700" y="522" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">预填充或解码组</text>
+
+  <rect x="850" y="492" width="200" height="48" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="950" y="522" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">编码器组 · 不进路由</text>
+
+  <line x1="560" y1="402" x2="560" y2="448" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar04)"/>
+  <text x="560" y="596" font-size="11" fill="#9ca3af" text-anchor="middle">拓扑怎么变,对外仍是路由器加一组引擎;权重怎么送、请求怎么发不在这张图上</text>
+</svg>

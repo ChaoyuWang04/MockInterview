@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">共卡与分卡占哪些 GPU 槽：同一段还是首尾相接</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 训练槽；黄 = 生成槽；共卡时两色叠在同一格；灰虚线 = 一张物理卡</text>
+
+  <text x="30" y="96" font-size="14" fill="#111827" font-weight="700">共卡 · 总卡数 = 两侧较大者 · 生成偏移 0 · 槽位重叠,显存默认轮流</text>
+  <rect x="30" y="112" width="1060" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="50" y="132" width="230" height="110" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <text x="165" y="154" font-size="11" fill="#9ca3af" text-anchor="middle">卡 0</text>
+  <rect x="62" y="164" width="206" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="165" y="185" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练</text>
+  <rect x="62" y="200" width="206" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="165" y="221" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成</text>
+
+  <rect x="300" y="132" width="230" height="110" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <text x="415" y="154" font-size="11" fill="#9ca3af" text-anchor="middle">卡 1</text>
+  <rect x="312" y="164" width="206" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="415" y="185" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练</text>
+  <rect x="312" y="200" width="206" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="415" y="221" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成</text>
+
+  <rect x="550" y="132" width="230" height="110" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <text x="665" y="154" font-size="11" fill="#9ca3af" text-anchor="middle">卡 2</text>
+  <rect x="562" y="164" width="206" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="665" y="185" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练</text>
+  <rect x="562" y="200" width="206" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="665" y="221" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成</text>
+
+  <rect x="800" y="132" width="230" height="110" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <text x="915" y="154" font-size="11" fill="#9ca3af" text-anchor="middle">卡 3</text>
+  <rect x="812" y="164" width="206" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="915" y="185" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练</text>
+  <rect x="812" y="200" width="206" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="915" y="221" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成</text>
+
+  <text x="30" y="298" font-size="14" fill="#111827" font-weight="700">分卡 · 总卡数相加 · 生成从训练槽之后开始</text>
+  <rect x="30" y="314" width="1060" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="50" y="334" width="230" height="110" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="165" y="378" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练 · 卡 0</text>
+  <text x="165" y="400" font-size="11" fill="#6b7280" text-anchor="middle">前半段槽位</text>
+
+  <rect x="300" y="334" width="230" height="110" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="415" y="378" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练 · 卡 1</text>
+  <text x="415" y="400" font-size="11" fill="#6b7280" text-anchor="middle">前半段槽位</text>
+
+  <rect x="550" y="334" width="230" height="110" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="665" y="378" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成 · 卡 2</text>
+  <text x="665" y="400" font-size="11" fill="#6b7280" text-anchor="middle">偏移之后</text>
+
+  <rect x="800" y="334" width="230" height="110" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="915" y="378" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">生成 · 卡 3</text>
+  <text x="915" y="400" font-size="11" fill="#6b7280" text-anchor="middle">偏移之后</text>
+
+  <text x="560" y="498" font-size="11" fill="#9ca3af" text-anchor="middle">价值网络没有自己的槽，永远跟训练那一段；图上 4 格只示意切法，不是默认卡数</text>
+</svg>

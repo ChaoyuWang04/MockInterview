@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">权重通路怎么选：增量不能进共卡，共卡走张量，分卡走集合通信或盘</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 共卡张量；紫 = 分卡集合通信；黄 = 盘（全量或增量）；红 = 拒（增量与共卡互斥）</text>
+
+  <rect x="380" y="80" width="360" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="560" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训完要推一次权重</text>
+  <text x="560" y="124" font-size="11" fill="#6b7280" text-anchor="middle">工厂先看增量，再看盘，再看共卡</text>
+
+  <rect x="380" y="176" width="360" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="560" y="207" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">要不要只传变了的字节？</text>
+
+  <line x1="560" y1="136" x2="560" y2="176" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+
+  <!-- 增量 yes: left, cannot enter green -->
+  <rect x="40" y="268" width="280" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="180" y="299" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">增量：是不是共卡？</text>
+
+  <rect x="40" y="360" width="280" height="72" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="180" y="388" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">拒</text>
+  <text x="180" y="410" font-size="11" fill="#6b7280" text-anchor="middle">共卡只交句柄，比对是纯开销</text>
+
+  <rect x="40" y="468" width="280" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="180" y="500" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">增量盘</text>
+  <text x="180" y="522" font-size="11" fill="#6b7280" text-anchor="middle">必须盘；本机检查点打补丁</text>
+  <text x="180" y="540" font-size="11" fill="#6b7280" text-anchor="middle">第一次只钉基准，不发补丁</text>
+
+  <line x1="380" y1="202" x2="320" y2="202" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="320" y1="202" x2="320" y2="268" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="348" y="196" font-size="11" fill="#9ca3af">增量</text>
+
+  <line x1="180" y1="320" x2="180" y2="360" stroke="#d9877a" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="196" y="348" font-size="11" fill="#d9877a">共卡</text>
+  <line x1="180" y1="432" x2="180" y2="468" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="196" y="456" font-size="11" fill="#9ca3af">分卡</text>
+
+  <!-- 非增量 -->
+  <rect x="720" y="268" width="360" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="900" y="299" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">全量：走盘还是走网？</text>
+
+  <line x1="740" y1="202" x2="900" y2="202" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="900" y1="202" x2="900" y2="268" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="748" y="196" font-size="11" fill="#9ca3af">全量（默认）</text>
+
+  <rect x="720" y="360" width="360" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="900" y="388" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">全量盘</text>
+  <text x="900" y="410" font-size="11" fill="#6b7280" text-anchor="middle">写下完整检查点再让引擎读盘；杀进程档必须走这条</text>
+
+  <line x1="900" y1="320" x2="900" y2="360" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="916" y="348" font-size="11" fill="#9ca3af">盘</text>
+
+  <rect x="560" y="468" width="240" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="680" y="500" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">共卡张量</text>
+  <text x="680" y="522" font-size="11" fill="#6b7280" text-anchor="middle">同卡句柄直交</text>
+  <text x="680" y="540" font-size="11" fill="#6b7280" text-anchor="middle">增量箭头不到这里</text>
+
+  <rect x="840" y="468" width="240" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="960" y="500" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">分卡集合通信</text>
+  <text x="960" y="522" font-size="11" fill="#6b7280" text-anchor="middle">默认：全量分块广播</text>
+  <text x="960" y="540" font-size="11" fill="#6b7280" text-anchor="middle">不写盘、不走增量</text>
+
+  <line x1="780" y1="320" x2="680" y2="468" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="700" y="400" font-size="11" fill="#9ca3af">网 · 共卡</text>
+  <line x1="1020" y1="320" x2="960" y2="468" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="990" y="400" font-size="11" fill="#9ca3af">网 · 分卡</text>
+
+  <text x="560" y="596" font-size="11" fill="#9ca3af" text-anchor="middle">四条通路互斥选一；红框没有进绿框的边</text>
+</svg>

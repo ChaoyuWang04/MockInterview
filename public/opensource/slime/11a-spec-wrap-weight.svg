@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar11" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">新架构怎么进 Megatron:换规格、包官方实现、两张权重大门</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = Megatron 层规格;黄 = HuggingFace 包装器;绿 = 权重名字映射;灰 = 未改的并行骨架</text>
+
+  <rect x="40" y="84" width="1040" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="560" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Megatron 并行骨架不动</text>
+  <text x="560" y="142" font-size="11" fill="#6b7280" text-anchor="middle">流水线、专家、Transformer Engine 线性层仍走上游</text>
+
+  <rect x="40" y="204" width="320" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="200" y="248" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">1 层规格</text>
+  <text x="200" y="272" font-size="11" fill="#6b7280" text-anchor="middle">只改需要换的那一层</text>
+  <text x="200" y="292" font-size="11" fill="#6b7280" text-anchor="middle">常见是自注意力</text>
+
+  <rect x="400" y="204" width="320" height="120" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="560" y="248" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">2 HuggingFace 包装器</text>
+  <text x="560" y="272" font-size="11" fill="#6b7280" text-anchor="middle">先对齐并行,再调官方模块</text>
+  <text x="560" y="292" font-size="11" fill="#6b7280" text-anchor="middle">这一层内部不切张量并行</text>
+
+  <rect x="760" y="204" width="320" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="920" y="248" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">3 两张映射表</text>
+  <text x="920" y="272" font-size="11" fill="#6b7280" text-anchor="middle">加载: HuggingFace → Megatron</text>
+  <text x="920" y="292" font-size="11" fill="#6b7280" text-anchor="middle">推出: Megatron → 生成侧名字</text>
+
+  <line x1="360" y1="264" x2="400" y2="264" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+  <line x1="720" y1="264" x2="760" y2="264" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <rect x="40" y="360" width="500" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="290" y="394" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">加载</text>
+  <text x="290" y="418" font-size="11" fill="#6b7280" text-anchor="middle">有迭代号走 Megatron 检查点;否则类型在表里才折切</text>
+
+  <rect x="580" y="360" width="500" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="830" y="394" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">推给生成侧</text>
+  <text x="830" y="418" font-size="11" fill="#6b7280" text-anchor="middle">先映射名字,再交给权重通路选路</text>
+
+  <line x1="920" y1="324" x2="290" y2="360" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+  <line x1="920" y1="324" x2="830" y2="360" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <text x="560" y="492" font-size="11" fill="#9ca3af" text-anchor="middle">灰骨架不进黄框内部;绿表缺类型就报不支持,不从灰框长出一条「猜映射」</text>
+  <text x="560" y="530" font-size="11" fill="#9ca3af" text-anchor="middle">算子内核与离线转换脚本不在这张图上</text>
+</svg>
