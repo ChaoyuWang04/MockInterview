@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 680" width="1120" height="680" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar5" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="680" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">热层写完才异步落冷层；查找模块不换，插件只换后面</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 引擎与查找，绿 = 热层，黄 = 后台落盘与预取，红 = 可插拔冷层。实线 = 代码会进的路径，虚线 = 未配冷层则跳过。</text>
+
+  <rect x="24" y="78" width="200" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="124" y="112" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎 GPU</text>
+  <text x="124" y="134" font-size="11" fill="#6b7280" text-anchor="middle">登记、查找、取回、存新块</text>
+  <text x="124" y="154" font-size="11" fill="#6b7280" text-anchor="middle">不直接碰冷层介质</text>
+
+  <rect x="268" y="78" width="828" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="682" y="112" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">查找模块（还是第三章那一套）</text>
+  <text x="682" y="134" font-size="11" fill="#6b7280" text-anchor="middle">先问热层有没有；未命中再把漏掉的键交给预取，不因换盘、换远端而换查找入口</text>
+  <text x="682" y="154" font-size="11" fill="#6b7280" text-anchor="middle">插件只出现在存储管理器后面，查找键的算法不变</text>
+
+  <line x1="224" y1="128" x2="264" y2="128" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+
+  <rect x="24" y="204" width="1072" height="96" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="560" y="240" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">热层：写完成才通知后台，驱逐环仍只丢掉不下沉</text>
+  <text x="560" y="264" font-size="11" fill="#6b7280" text-anchor="middle">新块先进热层。水位环每秒赶人，丢掉就是丢掉。冷层靠另一条「写完再拷」的环，不是热层驱逐的目的地。</text>
+
+  <line x1="682" y1="178" x2="560" y2="202" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+
+  <rect x="24" y="328" width="520" height="140" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="284" y="360" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">落盘环：热层写完唤醒</text>
+  <text x="284" y="384" font-size="11" fill="#6b7280" text-anchor="middle">默认：每个已配插件都收下同一批键</text>
+  <text x="284" y="404" font-size="11" fill="#6b7280" text-anchor="middle">默认写完不删热层；也可改成热层只当缓冲</text>
+  <text x="284" y="424" font-size="11" fill="#6b7280" text-anchor="middle">没配插件：这条环空转，数据只活在热层</text>
+  <text x="284" y="444" font-size="11" fill="#6b7280" text-anchor="middle">不跟推理抢同一条 Python 线程</text>
+
+  <rect x="568" y="328" width="528" height="140" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="832" y="360" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">预取环：热层未命中才问冷层</text>
+  <text x="832" y="384" font-size="11" fill="#6b7280" text-anchor="middle">先查并锁，再按策略挑谁把块搬回热层</text>
+  <text x="832" y="404" font-size="11" fill="#6b7280" text-anchor="middle">默认：多个插件都有时，取下标最小的那个</text>
+  <text x="832" y="424" font-size="11" fill="#6b7280" text-anchor="middle">同时在飞的预取默认最多 8 个</text>
+  <text x="832" y="444" font-size="11" fill="#6b7280" text-anchor="middle">默认搬回热层后当临时块，读完可清</text>
+
+  <line x1="284" y1="300" x2="284" y2="326" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+  <line x1="832" y1="300" x2="832" y2="326" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+
+  <rect x="24" y="496" width="1072" height="152" rx="8" fill="#ffffff" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="40" y="524" font-size="13" fill="#6b7280">冷层：工厂按类型名现装插件，查找入口不换</text>
+
+  <rect x="40" y="540" width="248" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="164" y="572" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">本机文件 / 块设备</text>
+  <text x="164" y="594" font-size="11" fill="#6b7280" text-anchor="middle">盘、原生文件系统、裸块</text>
+
+  <rect x="308" y="540" width="248" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="432" y="572" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">远端对象与库</text>
+  <text x="432" y="594" font-size="11" fill="#6b7280" text-anchor="middle">对象存储、键值、Bigtable</text>
+
+  <rect x="576" y="540" width="248" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="700" y="572" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">可挂 Mooncake Store</text>
+  <text x="700" y="594" font-size="11" fill="#6b7280" text-anchor="middle">冷层适配器之一，不是本章主体</text>
+
+  <rect x="844" y="540" width="232" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="960" y="572" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">未配冷层</text>
+  <text x="960" y="594" font-size="11" fill="#6b7280" text-anchor="middle">预取与落盘都不提交</text>
+
+  <line x1="284" y1="468" x2="164" y2="538" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+  <line x1="832" y1="468" x2="700" y2="538" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar5)"/>
+  <line x1="960" y1="468" x2="960" y2="538" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar5)"/>
+</svg>

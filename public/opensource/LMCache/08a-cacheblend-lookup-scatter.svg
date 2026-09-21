@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 780" width="1120" height="780" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+    <marker id="ar-g" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+    <marker id="ar-y" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d4a24c"/></marker>
+    <marker id="ar-p" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="780" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">非前缀命中：先查指纹，再转位置编码，缺口由引擎补算</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">灰 = 未开非前缀引擎类型，停在普通前缀查找。绿 = 已开时才进的非前缀模块。黄 = 拼进分页 KV。紫 = 引擎补算缺口。没有从默认路径指向非前缀模块的箭头。</text>
+
+  <rect x="30" y="84" width="280" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="170" y="122" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">推理引擎</text>
+  <text x="170" y="144" font-size="11" fill="#6b7280" text-anchor="middle">发统一查找，再发取回</text>
+  <text x="170" y="162" font-size="11" fill="#6b7280" text-anchor="middle">缺口自己算，不是服务代算</text>
+
+  <rect x="360" y="84" width="360" height="100" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="540" y="122" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">组合器：引擎类型分支</text>
+  <text x="540" y="144" font-size="11" fill="#6b7280" text-anchor="middle">默认：不装非前缀模块</text>
+  <text x="540" y="162" font-size="11" fill="#6b7280" text-anchor="middle">非前缀类型：才把模块挂进列表</text>
+
+  <rect x="780" y="84" width="310" height="100" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="935" y="122" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">默认：只走前缀查找</text>
+  <text x="935" y="144" font-size="11" fill="#6b7280" text-anchor="middle">RAG 段落不在头上</text>
+  <text x="935" y="162" font-size="11" fill="#6b7280" text-anchor="middle">整段 miss，TTFT 回全量 prefill</text>
+
+  <line x1="310" y1="134" x2="356" y2="134" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="720" y1="134" x2="776" y2="134" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="750" y="118" font-size="11" fill="#9ca3af">未开</text>
+
+  <rect x="30" y="228" width="1060" height="430" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="48" y="256" font-size="13" fill="#6b7280">已开非前缀引擎类型（且传输不是「只开引擎自己搬」）才进入下面绿框</text>
+
+  <line x1="540" y1="184" x2="540" y2="226" stroke="#5fa886" stroke-width="1.8" marker-end="url(#ar-g)"/>
+  <text x="556" y="210" font-size="11" fill="#5fa886">已开</text>
+
+  <rect x="56" y="276" width="300" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="206" y="314" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">统一查找：前缀腿</text>
+  <text x="206" y="336" font-size="11" fill="#6b7280" text-anchor="middle">先报连续前缀覆盖了多少 token</text>
+  <text x="206" y="354" font-size="11" fill="#6b7280" text-anchor="middle">和普通查找同一条前缀账</text>
+  <text x="206" y="372" font-size="11" fill="#6b7280" text-anchor="middle">前缀盖住的块不进稀疏腿</text>
+
+  <rect x="400" y="276" width="300" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="550" y="314" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">指纹匹配：任意偏移</text>
+  <text x="550" y="336" font-size="11" fill="#6b7280" text-anchor="middle">存块时登记指纹，查时滚动探测</text>
+  <text x="550" y="354" font-size="11" fill="#6b7280" text-anchor="middle">命中可以不在序列开头</text>
+  <text x="550" y="372" font-size="11" fill="#6b7280" text-anchor="middle">可选问协调器目录，默认只本地</text>
+
+  <rect x="744" y="276" width="316" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="902" y="314" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">稀疏预取进热层</text>
+  <text x="902" y="336" font-size="11" fill="#6b7280" text-anchor="middle">前缀之外的命中一次性预取</text>
+  <text x="902" y="354" font-size="11" fill="#6b7280" text-anchor="middle">两腿都进热层才返回结果</text>
+  <text x="902" y="372" font-size="11" fill="#6b7280" text-anchor="middle">没东西可取回则到此结束</text>
+
+  <line x1="356" y1="336" x2="396" y2="336" stroke="#5fa886" stroke-width="1.8" marker-end="url(#ar-g)"/>
+  <line x1="700" y1="336" x2="740" y2="336" stroke="#5fa886" stroke-width="1.8" marker-end="url(#ar-g)"/>
+
+  <rect x="56" y="440" width="472" height="132" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="292" y="478" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">取回：散进分页 KV</text>
+  <text x="292" y="500" font-size="11" fill="#6b7280" text-anchor="middle">位置没变：原样写入</text>
+  <text x="292" y="518" font-size="11" fill="#6b7280" text-anchor="middle">位置变了：先转旋转位置编码再写</text>
+  <text x="292" y="536" font-size="11" fill="#6b7280" text-anchor="middle">不是「块对块直接拼」；半截槽位也按 token 写</text>
+  <text x="292" y="554" font-size="11" fill="#6b7280" text-anchor="middle">散失败则整次失败，引擎改全量重算</text>
+
+  <rect x="588" y="440" width="472" height="132" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="824" y="478" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎补算缺口</text>
+  <text x="824" y="500" font-size="11" fill="#6b7280" text-anchor="middle">没命中的 token、块边界、分段前缀的洞</text>
+  <text x="824" y="518" font-size="11" fill="#6b7280" text-anchor="middle">进程内遗留路径还会按层挑一小段重算</text>
+  <text x="824" y="536" font-size="11" fill="#6b7280" text-anchor="middle">推荐多进程路径：缺口在引擎前向里补</text>
+  <text x="824" y="554" font-size="11" fill="#6b7280" text-anchor="middle">补完才是能接着 decode 的 KV</text>
+
+  <line x1="902" y1="396" x2="292" y2="436" stroke="#d4a24c" stroke-width="1.8" marker-end="url(#ar-y)"/>
+  <line x1="528" y1="506" x2="584" y2="506" stroke="#8f8bd8" stroke-width="1.8" marker-end="url(#ar-p)"/>
+
+  <text x="560" y="700" font-size="11" fill="#9ca3af" text-anchor="middle">未开非前缀类型时，组合器右边停在灰框，绿框不出现在控制流上</text>
+  <text x="560" y="722" font-size="11" fill="#9ca3af" text-anchor="middle">只开引擎自己搬那条传输时，启动直接拒绝，不会装上绿框再降级</text>
+  <text x="560" y="752" font-size="11" fill="#9ca3af" text-anchor="middle">黄线只从稀疏预取进入取回；紫线只从取回到引擎补算，不从灰框出发</text>
+</svg>

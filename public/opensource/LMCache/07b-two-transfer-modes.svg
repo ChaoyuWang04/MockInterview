@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">块进出独立进程：谁动手搬</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 引擎侧。绿 = 缓存服务。左列默认：服务看见显存后自己搬。右列：引擎先准备再提交。这是同机存取，不是预填充到译码。</text>
+
+  <rect x="24" y="78" width="528" height="400" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="104" font-size="13" fill="#6b7280">默认：缓存服务驱动</text>
+
+  <rect x="56" y="128" width="464" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="288" y="158" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎：登记这块显存</text>
+  <text x="288" y="178" font-size="11" fill="#6b7280" text-anchor="middle">之后发存、取两条请求</text>
+
+  <rect x="56" y="248" width="464" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="288" y="280" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">服务：自己从登记过的显存拷</text>
+  <text x="288" y="302" font-size="11" fill="#6b7280" text-anchor="middle">假定本进程能看见那块 GPU 或主机共享内存</text>
+  <text x="288" y="320" font-size="11" fill="#6b7280" text-anchor="middle">空块不当成能命中的键</text>
+
+  <rect x="56" y="380" width="464" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="288" y="418" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">热层落块 / 回填显存</text>
+
+  <line x1="288" y1="200" x2="288" y2="244" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+  <line x1="288" y1="336" x2="288" y2="376" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+
+  <rect x="568" y="78" width="528" height="400" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="584" y="104" font-size="13" fill="#6b7280">另一条：引擎驱动</text>
+
+  <rect x="600" y="128" width="464" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="832" y="166" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎：登记非 GPU 上下文</text>
+
+  <rect x="600" y="224" width="216" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="708" y="256" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">准备</text>
+  <text x="708" y="276" font-size="11" fill="#6b7280" text-anchor="middle">服务留槽或给共享内存</text>
+
+  <rect x="848" y="224" width="216" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="956" y="256" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎自己拷</text>
+  <text x="956" y="276" font-size="11" fill="#6b7280" text-anchor="middle">再提交</text>
+
+  <rect x="600" y="348" width="464" height="96" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="832" y="384" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">服务：提交后才进热层</text>
+  <text x="832" y="406" font-size="11" fill="#6b7280" text-anchor="middle">共享内存够用走槽位，否则回退序列化</text>
+  <text x="832" y="424" font-size="11" fill="#6b7280" text-anchor="middle">非前缀复用拒绝只开这一条</text>
+
+  <line x1="832" y1="192" x2="832" y2="220" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+  <line x1="708" y1="304" x2="708" y2="344" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+  <line x1="956" y1="304" x2="956" y2="344" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+  <line x1="816" y1="264" x2="844" y2="264" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar2)"/>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">按块做键：查找只回答命中到哪</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 对齐的块和滚动哈希，紫 = 查找（只问到哪），黄 = 取回（另一条请求才搬 KV），红 = 对不齐丢掉的尾块。箭头是控制流。</text>
+
+  <rect x="24" y="78" width="1072" height="168" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="102" font-size="13" fill="#6b7280">token 序列切成固定长度的块；每一块的键吃进前一块的哈希，切偏或哈希漂了，后面整段都对不上</text>
+
+  <rect x="48" y="124" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="148" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">块 0</text>
+  <text x="148" y="176" font-size="11" fill="#6b7280" text-anchor="middle">token 0–255</text>
+
+  <rect x="280" y="124" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="380" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">块 1</text>
+  <text x="380" y="176" font-size="11" fill="#6b7280" text-anchor="middle">token 256–511</text>
+
+  <rect x="512" y="124" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="612" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">块 2</text>
+  <text x="612" y="176" font-size="11" fill="#6b7280" text-anchor="middle">token 512–767</text>
+
+  <rect x="744" y="124" width="200" height="72" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="844" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">尾段丢掉</text>
+  <text x="844" y="176" font-size="11" fill="#6b7280" text-anchor="middle">不够一块，不能命中</text>
+
+  <rect x="976" y="124" width="96" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="1024" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">空哈希</text>
+  <text x="1024" y="176" font-size="11" fill="#6b7280" text-anchor="middle">链的起点</text>
+
+  <line x1="248" y1="160" x2="276" y2="160" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="480" y1="160" x2="508" y2="160" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="712" y1="160" x2="740" y2="160" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <text x="380" y="224" font-size="11" fill="#9ca3af" text-anchor="middle">滚动：块 1 的键含块 0 的哈希，块 2 含块 1 的哈希</text>
+
+  <rect x="24" y="266" width="520" height="260" rx="8" fill="#ffffff" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="40" y="292" font-size="13" fill="#6b7280">查找：提交块键，只拿回「前缀命中了几块」</text>
+  <rect x="48" y="312" width="224" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="160" y="344" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">引擎发查找</text>
+  <text x="160" y="366" font-size="11" fill="#6b7280" text-anchor="middle">不搬 KV</text>
+  <rect x="304" y="312" width="216" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="412" y="344" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">查找模块</text>
+  <text x="412" y="366" font-size="11" fill="#6b7280" text-anchor="middle">哈希、提交预取、轮询</text>
+  <rect x="48" y="420" width="472" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="284" y="452" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">回答：命中 2 块（512 token）</text>
+  <text x="284" y="474" font-size="11" fill="#6b7280" text-anchor="middle">未命中停在引擎自己算，不会指向不存在的数据</text>
+  <line x1="272" y1="352" x2="300" y2="352" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="412" y1="392" x2="284" y2="418" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+
+  <rect x="568" y="266" width="528" height="260" rx="8" fill="#ffffff" stroke="#d4a24c" stroke-width="1.4"/>
+  <text x="584" y="292" font-size="13" fill="#6b7280">取回是另一条请求；查找结束不等于块已经进显存</text>
+  <rect x="592" y="312" width="480" height="80" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="832" y="344" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">取回请求</text>
+  <text x="832" y="366" font-size="11" fill="#6b7280" text-anchor="middle">只搬已经命中、已经锁住的那些块</text>
+  <rect x="592" y="420" width="480" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="832" y="452" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">没有从查找到取回的箭头</text>
+  <text x="832" y="474" font-size="11" fill="#6b7280" text-anchor="middle">引擎必须再发一次，才能搬砖</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">两种部署：缓存和引擎是不是同一个进程</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 推理引擎，绿 = 独立缓存服务（推荐），黄 = 遗留的进程内缓存，灰 = 客户端与可选协调器。实线 = 存取，虚线 = 探活或可选。</text>
+
+  <rect x="24" y="78" width="1072" height="268" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="102" font-size="13" fill="#6b7280">推荐：引擎和缓存各一个进程，同机多份引擎可以连同一份服务</text>
+
+  <rect x="48" y="128" width="168" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="132" y="158" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">客户端</text>
+  <text x="132" y="178" font-size="11" fill="#6b7280" text-anchor="middle">只跟引擎说话</text>
+
+  <rect x="268" y="120" width="240" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="388" y="148" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">推理引擎进程</text>
+  <text x="388" y="170" font-size="11" fill="#6b7280" text-anchor="middle">调度、前向、采样</text>
+  <text x="388" y="188" font-size="11" fill="#6b7280" text-anchor="middle">连接器只负责问缓存</text>
+
+  <rect x="560" y="112" width="512" height="168" rx="8" fill="#ffffff" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="576" y="134" font-size="13" fill="#6b7280">独立缓存服务进程</text>
+  <rect x="576" y="148" width="232" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="692" y="172" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">请求服务</text>
+  <text x="692" y="190" font-size="11" fill="#6b7280" text-anchor="middle">按请求类型分发给模块</text>
+  <rect x="820" y="148" width="232" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="936" y="172" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">探活与指标口</text>
+  <text x="936" y="190" font-size="11" fill="#6b7280" text-anchor="middle">不走存取热路径</text>
+  <rect x="576" y="216" width="232" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="692" y="246" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">模块组合器</text>
+  <rect x="820" y="216" width="232" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="936" y="246" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">主机热层</text>
+
+  <rect x="48" y="248" width="168" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="132" y="276" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">协调器</text>
+  <text x="132" y="296" font-size="11" fill="#6b7280" text-anchor="middle">可选，不存 KV</text>
+
+  <line x1="216" y1="164" x2="264" y2="164" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="508" y1="164" x2="556" y2="164" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="692" y1="204" x2="692" y2="214" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="808" y1="240" x2="818" y2="240" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="216" y1="284" x2="560" y2="284" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="388" y="304" font-size="11" fill="#9ca3af" text-anchor="middle">多机时才连，成员关系不是热路径</text>
+  <text x="532" y="154" font-size="11" fill="#9ca3af" text-anchor="middle">存取</text>
+
+  <rect x="24" y="364" width="1072" height="252" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="388" font-size="13" fill="#6b7280">遗留：缓存嵌在引擎进程里，引擎一崩，热层一起没</text>
+
+  <rect x="48" y="408" width="1024" height="184" rx="8" fill="#ffffff" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="64" y="432" font-size="13" fill="#6b7280">同一个推理引擎进程</text>
+  <rect x="80" y="452" width="280" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="220" y="492" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">调度与前向</text>
+  <text x="220" y="514" font-size="11" fill="#6b7280" text-anchor="middle">哈希和落盘跟推理抢线程</text>
+  <rect x="400" y="452" width="280" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="540" y="492" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">进程内缓存引擎</text>
+  <text x="540" y="514" font-size="11" fill="#6b7280" text-anchor="middle">按实例名单例，不跨进程</text>
+  <rect x="720" y="452" width="320" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="880" y="492" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">进程内分层存储</text>
+  <text x="880" y="514" font-size="11" fill="#6b7280" text-anchor="middle">另一套代码，不是独立服务那套</text>
+  <line x1="360" y1="508" x2="396" y2="508" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="680" y1="508" x2="716" y2="508" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+</svg>

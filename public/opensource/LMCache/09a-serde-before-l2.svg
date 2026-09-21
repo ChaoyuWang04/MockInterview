@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar9" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">进冷层之前可变换：按插件选择加入，不是整份服务一份</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 热层块，黄 = 可选变换，红 = 冷层插件。实线 = 代码会进的路径。灰虚线 = CacheGen 未实现或遗留，不进入推荐热路径。</text>
+
+  <rect x="24" y="84" width="1072" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="560" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">热层里的块（仍是引擎那份精度）</text>
+  <text x="560" y="142" font-size="11" fill="#6b7280" text-anchor="middle">查找、上锁不进变换。写入某条插件之前，才决定要不要换形状。</text>
+
+  <rect x="24" y="204" width="520" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="40" y="232" font-size="13" fill="#6b7280">插件甲：规格里写了变换</text>
+
+  <rect x="48" y="252" width="472" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="284" y="284" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">可选变换（包装器）</text>
+  <text x="284" y="306" font-size="11" fill="#6b7280" text-anchor="middle">先变再交给里面的插件；读回先解开</text>
+  <text x="284" y="324" font-size="11" fill="#6b7280" text-anchor="middle">量化有损；加密只罩冷层，不是默认开</text>
+
+  <rect x="48" y="368" width="472" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="284" y="404" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">冷层插件甲</text>
+  <text x="284" y="428" font-size="11" fill="#6b7280" text-anchor="middle">盘或远端，只看见变换后的字节</text>
+
+  <rect x="576" y="204" width="520" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="592" y="232" font-size="13" fill="#6b7280">插件乙：规格里没有变换</text>
+
+  <rect x="600" y="310" width="472" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="836" y="346" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">冷层插件乙</text>
+  <text x="836" y="370" font-size="11" fill="#6b7280" text-anchor="middle">满精度直入；不多分配、不多线程</text>
+
+  <line x1="284" y1="172" x2="284" y2="250" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar9)"/>
+  <line x1="284" y1="340" x2="284" y2="366" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar9)"/>
+  <line x1="836" y1="172" x2="836" y2="308" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar9)"/>
+
+  <rect x="24" y="512" width="1072" height="84" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="560" y="544" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">CacheGen：多进程尚未实现；进程内遗留另有一份</text>
+  <text x="560" y="568" font-size="11" fill="#6b7280" text-anchor="middle">虚线框，没有箭头进入上面两条推荐路径。不要当成已落地的热路径步骤。</text>
+</svg>

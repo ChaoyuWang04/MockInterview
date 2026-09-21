@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar6" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">本机 miss 之后：问名单、锁邻居、一侧读进自己热层</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 本机缓存服务，紫 = 邻居，灰 = 协调器只答谁活着，黄 = 传输读。虚线不带 KV；实线才搬块。协调器没有指向热层的箭头。</text>
+
+  <rect x="24" y="80" width="1072" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="104" font-size="13" fill="#6b7280">成员关系：心跳间隔去拉名单，有人来就接适配器，连续三次名单里没有才拆</text>
+
+  <rect x="48" y="124" width="280" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="188" y="158" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">点对点控制器</text>
+  <text x="188" y="180" font-size="11" fill="#6b7280" text-anchor="middle">轮询实例列表</text>
+  <text x="188" y="198" font-size="11" fill="#6b7280" text-anchor="middle">给每个活着的邻居开适配器</text>
+  <text x="188" y="216" font-size="11" fill="#6b7280" text-anchor="middle">自己不出现在邻居集合里</text>
+
+  <rect x="420" y="140" width="280" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="560" y="174" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">协调器</text>
+  <text x="560" y="196" font-size="11" fill="#6b7280" text-anchor="middle">只登记心跳与广告地址</text>
+  <text x="560" y="214" font-size="11" fill="#6b7280" text-anchor="middle">不看块、不参加查找</text>
+
+  <rect x="792" y="140" width="272" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="928" y="174" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">邻居适配器表</text>
+  <text x="928" y="196" font-size="11" fill="#6b7280" text-anchor="middle">一人一块只读适配器</text>
+  <text x="928" y="214" font-size="11" fill="#6b7280" text-anchor="middle">从不往邻居写</text>
+
+  <line x1="328" y1="184" x2="416" y2="184" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar6)"/>
+  <text x="372" y="172" font-size="11" fill="#9ca3af" text-anchor="middle">名单</text>
+  <line x1="700" y1="184" x2="788" y2="184" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar6)"/>
+  <text x="744" y="172" font-size="11" fill="#9ca3af" text-anchor="middle">对账</text>
+
+  <rect x="24" y="300" width="1072" height="196" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="324" font-size="13" fill="#6b7280">热路径：本机热层没有，才问已经接上的邻居；读进自己的热层，拥有方不被打断去 serve</text>
+
+  <rect x="48" y="348" width="200" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="148" y="386" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">本机热层 miss</text>
+  <text x="148" y="408" font-size="11" fill="#6b7280" text-anchor="middle">只查本机已钉住的块</text>
+  <text x="148" y="426" font-size="11" fill="#6b7280" text-anchor="middle">未命中才走出本机</text>
+
+  <rect x="300" y="348" width="220" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="410" y="386" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">邻居：锁并定位</text>
+  <text x="410" y="408" font-size="11" fill="#6b7280" text-anchor="middle">只锁邻居热层里已有的</text>
+  <text x="410" y="426" font-size="11" fill="#6b7280" text-anchor="middle">回偏移和长度，缺的标无效</text>
+
+  <rect x="572" y="348" width="220" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="682" y="386" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">一侧读</text>
+  <text x="682" y="408" font-size="11" fill="#6b7280" text-anchor="middle">本机发起 READ</text>
+  <text x="682" y="426" font-size="11" fill="#6b7280" text-anchor="middle">写进本机热层地址</text>
+
+  <rect x="844" y="348" width="220" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="954" y="386" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">本机热层命中</text>
+  <text x="954" y="408" font-size="11" fill="#6b7280" text-anchor="middle">引擎从本机取回</text>
+  <text x="954" y="426" font-size="11" fill="#6b7280" text-anchor="middle">读完再让邻居松锁</text>
+
+  <line x1="248" y1="404" x2="296" y2="404" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar6)"/>
+  <line x1="520" y1="404" x2="568" y2="404" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar6)"/>
+  <line x1="792" y1="404" x2="840" y2="404" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar6)"/>
+</svg>

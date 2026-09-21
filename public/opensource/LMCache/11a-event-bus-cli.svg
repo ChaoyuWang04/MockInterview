@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 680" width="1120" height="680" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ar11" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="680" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">同一条事件总线：模块入队，后台分给指标和日志</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 热路径模块。绿 = 事件总线。黄 = 默认订阅。灰虚线 = 跟踪要另开且要有导出地址。红 = 探活口。命令行只打探活口，不连总线。网页控制台无箭头。</text>
+
+  <rect x="24" y="80" width="250" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="104" font-size="13" fill="#6b7280">热路径只入队</text>
+  <rect x="44" y="124" width="210" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="149" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">查找</text>
+  <rect x="44" y="184" width="210" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="149" y="214" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">热层 / 冷层</text>
+  <rect x="44" y="244" width="210" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="149" y="274" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">传输</text>
+  <text x="149" y="336" font-size="11" fill="#6b7280" text-anchor="middle">不在热路径上格式化指标</text>
+
+  <rect x="310" y="124" width="280" height="200" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="450" y="168" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">事件总线</text>
+  <text x="450" y="192" font-size="11" fill="#6b7280" text-anchor="middle">热路径 append，后台线程排空</text>
+  <text x="450" y="214" font-size="11" fill="#6b7280" text-anchor="middle">默认开；关掉则发布空操作</text>
+  <text x="450" y="236" font-size="11" fill="#6b7280" text-anchor="middle">队列满了丢新事件，不堵推理</text>
+  <text x="450" y="258" font-size="11" fill="#6b7280" text-anchor="middle">默认最多 10000 条</text>
+
+  <line x1="274" y1="148" x2="306" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+  <line x1="274" y1="208" x2="306" y2="208" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+  <line x1="274" y1="268" x2="306" y2="236" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <rect x="628" y="80" width="236" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="746" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">指标订阅</text>
+  <text x="746" y="140" font-size="11" fill="#6b7280" text-anchor="middle">默认装；写入注册表</text>
+  <text x="746" y="158" font-size="11" fill="#6b7280" text-anchor="middle">序列要先有存取才出现</text>
+
+  <rect x="628" y="196" width="236" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="746" y="232" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">日志订阅</text>
+  <text x="746" y="254" font-size="11" fill="#6b7280" text-anchor="middle">默认装</text>
+
+  <rect x="628" y="300" width="236" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="746" y="336" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">跟踪订阅</text>
+  <text x="746" y="358" font-size="11" fill="#6b7280" text-anchor="middle">默认关；没导出地址则跳过</text>
+
+  <line x1="590" y1="180" x2="624" y2="130" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+  <line x1="590" y1="224" x2="624" y2="240" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <rect x="888" y="80" width="208" height="204" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="992" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">探活口</text>
+  <text x="992" y="142" font-size="11" fill="#6b7280" text-anchor="middle">健康检查 / 状态</text>
+  <text x="992" y="164" font-size="11" fill="#6b7280" text-anchor="middle">指标路由读注册表</text>
+  <text x="992" y="186" font-size="11" fill="#6b7280" text-anchor="middle">不是请求口</text>
+  <text x="992" y="208" font-size="11" fill="#6b7280" text-anchor="middle">推荐入口关掉 9090</text>
+  <text x="992" y="248" font-size="11" fill="#6b7280" text-anchor="middle">命令行只打这里</text>
+
+  <line x1="864" y1="130" x2="884" y2="130" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <rect x="24" y="400" width="520" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="284" y="444" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">命令行</text>
+  <text x="284" y="468" font-size="11" fill="#6b7280" text-anchor="middle">探活打健康检查；摘要打状态路径</text>
+  <text x="284" y="490" font-size="11" fill="#6b7280" text-anchor="middle">不订阅事件总线</text>
+
+  <line x1="888" y1="220" x2="544" y2="460" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar11)"/>
+
+  <rect x="576" y="400" width="520" height="120" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="836" y="444" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">网页控制台</text>
+  <text x="836" y="468" font-size="11" fill="#6b7280" text-anchor="middle">要插件子进程 + 发现服务</text>
+  <text x="836" y="490" font-size="11" fill="#6b7280" text-anchor="middle">默认启动不装；没有从总线指出的箭头</text>
+
+  <text x="560" y="560" font-size="11" fill="#9ca3af" text-anchor="middle">跟踪盒没有从总线指出的实线：没开或没导出地址时初始化跳过</text>
+  <text x="560" y="582" font-size="11" fill="#9ca3af" text-anchor="middle">健康检查只问引擎对象在不在，不经过事件总线</text>
+  <text x="560" y="640" font-size="11" fill="#9ca3af" text-anchor="middle">进程内统计库不在这张图上，那是遗留路径</text>
+</svg>
