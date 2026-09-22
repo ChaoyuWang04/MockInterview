@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="680" viewBox="0 0 1120 680" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Arial, sans-serif">
+<rect width="1120" height="680" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1L9 5L0 9" fill="#89939f"/></marker></defs>
+<text x="24" y="32" font-size="19" fill="#17212f">进程边界:文本生成引擎与多阶段运行时</text>
+<text x="24" y="58" font-size="12" fill="#526171">左:常规单副本文本服务,不展开 TP / PP / DP / PD。右:Qwen 默认语音配置。方框或框内分组明确标注进程数。</text>
+<text x="36" y="96" font-size="18" fill="#17212f">SGLang</text>
+<text x="595" y="96" font-size="18" fill="#17212f">SGLang-Omni</text>
+<rect x="36" y="112" width="480" height="68" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="52" y="137" font-size="15" fill="#526171">服务主进程 · TokenizerManager</text>
+<text x="52" y="161" font-size="12" fill="#526171">接请求、应用模板、tokenization、返回结果</text>
+<rect x="36" y="224" width="480" height="110" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="52" y="251" font-size="15" fill="#526171">Scheduler 进程 · 图示单 rank</text>
+<text x="52" y="275" font-size="12" fill="#526171">选择 batch、管理 KV cache、调用 ModelRunner</text>
+<text x="52" y="302" font-size="12" fill="#526171">自回归循环在这里执行</text>
+<rect x="36" y="378" width="480" height="68" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="52" y="405" font-size="15" fill="#526171">Detokenizer 进程</text>
+<text x="52" y="428" font-size="12" fill="#526171">token → 文本,再交主进程返回</text>
+<path d="M276 180 L276 222" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M276 334 L276 376" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M36 412 L20 412 L20 146 L34 146" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="595" y="112" width="489" height="68" rx="7" fill="#fdf1dc" stroke="#b8c4d0"/>
+<text x="611" y="137" font-size="15" fill="#526171">服务主进程 · HTTP / Client / Coordinator</text>
+<text x="611" y="161" font-size="12" fill="#526171">提交入口、接收流式块与最终结果、处理中止</text>
+<rect x="595" y="224" width="489" height="64" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="611" y="250" font-size="15" fill="#526171">preprocessing · 1 个 CPU 进程</text>
+<text x="611" y="274" font-size="12" fill="#526171">tokenization 与媒体输入准备</text>
+<rect x="595" y="322" width="489" height="105" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="611" y="348" font-size="14" fill="#526171">image_encoder / audio_encoder / thinker / talker_ar</text>
+<text x="611" y="374" font-size="12" fill="#526171">4 个 GPU 阶段进程;按模型路由,并非简单串行</text>
+<text x="611" y="400" font-size="12" fill="#526171">各有对应 Scheduler,AR 阶段使用 ModelRunner</text>
+<rect x="595" y="468" width="235" height="72" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="611" y="494" font-size="14" fill="#526171">decode · 1 个 CPU 进程</text>
+<text x="611" y="520" font-size="12" fill="#526171">token → 文本</text>
+<rect x="850" y="468" width="234" height="72" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="866" y="494" font-size="13" fill="#526171">code2wav · 1 个 GPU 进程</text>
+<text x="866" y="520" font-size="12" fill="#526171">Vocoder:音频码 → 波形</text>
+<path d="M839 180 L839 222" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M839 288 L839 320" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M712 427 L712 466" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M967 427 L967 466" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="611" y="454" font-size="11" fill="#526171">Thinker → decode</text>
+<text x="866" y="454" font-size="11" fill="#526171">Talker → code2wav</text>
+<text x="36" y="582" font-size="12" fill="#526171">灰 = CPU;绿 = GPU;黄 = Omni 服务主进程。右侧共 7 个阶段进程,另有 1 个服务主进程。</text>
+<text x="36" y="608" font-size="12" fill="#526171">Omni 中间阶段直接交接,Coordinator 不转发每一跳;最终两端输出回到主进程(图中省略返回线)。</text>
+<text x="36" y="634" font-size="12" fill="#526171">进程职责示意不替代完整拓扑图:省略 fan-in 与流边。阶段也可配置同进程,单阶段内部还可使用 TP。</text>
+</svg>

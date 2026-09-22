@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Arial, sans-serif">
+<rect width="1120" height="610" fill="white"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1L9 5L0 9" fill="#89939f"/></marker></defs>
+<text x="24" y="32" font-size="19" fill="#17212f">同一请求:流式交付允许下游提前开始</text>
+<text x="24" y="58" font-size="12" fill="#526171">定性时序,无时间刻度,条长不代表实测。绿色 = 自回归;紫色 = Vocoder;灰色 = 输入准备。</text>
+<path d="M 200 86 L 1080 86" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="1010" y="78" font-size="11" fill="#526171">时间 →</text>
+<text x="24" y="158" font-size="16" fill="#526171">流式路径</text>
+<text x="24" y="183" font-size="11" fill="#526171">满足 partial-start</text>
+<text x="24" y="201" font-size="11" fill="#526171">与攒块条件</text>
+<rect x="200" y="108" width="110" height="27" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="208" y="126" font-size="12" fill="#526171">preprocessing</text>
+<rect x="310" y="143" width="110" height="27" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="318" y="161" font-size="12" fill="#526171">Encoder</text>
+<rect x="420" y="178" width="355" height="27" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="428" y="196" font-size="12" fill="#526171">Thinker</text>
+<rect x="490" y="213" width="355" height="27" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="498" y="231" font-size="12" fill="#526171">Talker</text>
+<rect x="560" y="248" width="355" height="27" rx="7" fill="#ecebfb" stroke="#b8c4d0"/>
+<text x="568" y="266" font-size="12" fill="#526171">Vocoder</text>
+<path d="M 490 205 L 490 211" fill="none" stroke="#89939f" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="852" y="231" font-size="11" fill="#526171">先攒码再解码</text>
+<path d="M 625 242 L 625 298" stroke="#c16e60" stroke-dasharray="4 3"/>
+<text x="635" y="294" font-size="12" fill="#a6574b">首次解码完成 → 首音频</text>
+<text x="24" y="372" font-size="16" fill="#526171">整段交付</text>
+<text x="24" y="395" font-size="11" fill="#526171">假想对照</text>
+<rect x="200" y="324" width="110" height="27" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="208" y="342" font-size="12" fill="#526171">preprocessing</text>
+<rect x="310" y="359" width="110" height="27" rx="7" fill="#edf1f5" stroke="#b8c4d0"/>
+<text x="318" y="377" font-size="12" fill="#526171">Encoder</text>
+<rect x="420" y="394" width="260" height="27" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="428" y="412" font-size="12" fill="#526171">Thinker</text>
+<rect x="680" y="429" width="260" height="27" rx="7" fill="#e3f4ec" stroke="#b8c4d0"/>
+<text x="688" y="447" font-size="12" fill="#526171">Talker</text>
+<rect x="940" y="464" width="150" height="27" rx="7" fill="#ecebfb" stroke="#b8c4d0"/>
+<text x="948" y="482" font-size="12" fill="#526171">Vocoder</text>
+<path d="M 1005 457 L 1005 517" stroke="#c16e60" stroke-dasharray="4 3"/>
+<text x="818" y="534" font-size="12" fill="#a6574b">上游整段交付后才开始解码、输出</text>
+<text x="24" y="569" font-size="12" fill="#526171">Encoder 行合并表示输入编码工作,不同 Encoder 可以并行;Thinker 需等待所需输入齐备。</text>
+<text x="24" y="590" font-size="12" fill="#526171">流式路径允许 Thinker、Talker、Vocoder 重叠。Qwen 共置配置关闭 partial start,不能直接套用上半图。</text>
+</svg>
