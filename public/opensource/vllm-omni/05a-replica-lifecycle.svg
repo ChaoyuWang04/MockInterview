@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="596" viewBox="0 0 1120 596">
+<rect width="1120" height="596" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="35" font-size="19" font-weight="700" fill="#111827">副本先就绪,请求再绑定;请求结束不等于副本退出</text>
+<text x="32" y="62" font-size="13" fill="#6b7280">紫色为初始化计划,绿色为可服务副本,黄色为请求绑定,红色为副本丢失后的处理</text>
+<rect x="32" y="94" width="1056" height="132" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="50" y="119" font-size="14" font-weight="700" fill="#111827">StageRuntime：准备容量</text>
+<rect x="55" y="140" width="222" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="341" y="140" width="250" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="655" y="140" width="197" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="916" y="140" width="147" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="70" y="165" font-size="14" font-weight="700" fill="#111827">逻辑阶段 → 副本计划</text><text x="70" y="186" font-size="11" fill="#6b7280">解析每个副本的设备与引擎配置</text>
+<text x="356" y="165" font-size="14" font-weight="700" fill="#111827">按设备重叠分组启动</text><text x="356" y="186" font-size="11" fill="#6b7280">默认本地 LLM：组内串行、组间并行</text>
+<text x="670" y="165" font-size="14" font-weight="700" fill="#111827">加载与就绪握手</text><text x="670" y="186" font-size="11" fill="#6b7280">启动失败回收已有资源</text>
+<text x="931" y="165" font-size="14" font-weight="700" fill="#111827">接入 StagePool</text><text x="931" y="186" font-size="11" fill="#6b7280">可供请求选择</text>
+<path d="M277 171 H341 M591 171 H655 M852 171 H916" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="450" y="263" width="342" height="218" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="468" y="290" font-size="14" font-weight="700" fill="#111827">同一逻辑阶段的 StagePool</text>
+<rect x="475" y="313" width="292" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="475" y="398" width="292" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="493" y="338" font-size="14" font-weight="700" fill="#111827">Replica A</text><text x="493" y="359" font-size="11" fill="#6b7280">保留当前请求的执行状态</text>
+<text x="493" y="423" font-size="14" font-weight="700" fill="#111827">Replica B</text><text x="493" y="444" font-size="11" fill="#6b7280">可承接另一个请求</text>
+<rect x="32" y="313" width="263" height="145" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="50" y="340" font-size="14" font-weight="700" fill="#111827">请求的阶段提交</text><text x="50" y="365" font-size="11" fill="#6b7280">首次选择 A,记录绑定</text><text x="50" y="386" font-size="11" fill="#6b7280">后续输入与取消沿绑定找到 A</text><text x="50" y="424" font-size="11" fill="#6b7280">其他请求可以选择 B</text>
+<path d="M295 343 H475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="320" y="330" font-size="11" fill="#9ca3af">同一请求持续绑定</text>
+<rect x="849" y="282" width="239" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="864" y="308" font-size="14" font-weight="700" fill="#111827">请求正常结束</text><text x="864" y="331" font-size="11" fill="#6b7280">释放绑定,A 继续留池服务</text>
+<rect x="849" y="390" width="239" height="91" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="864" y="416" font-size="14" font-weight="700" fill="#111827">A 死亡或失联</text><text x="864" y="438" font-size="11" fill="#6b7280">摘除 A,使受影响请求失败并清理</text><text x="864" y="460" font-size="11" fill="#6b7280">B 不自动继承 A 的请求状态</text>
+<path d="M767 335 H813 V318 H849 M767 352 H813 V432 H849" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)"/>
+<text x="32" y="524" font-size="13" fill="#6b7280">分布式派发另有门槛：成员状态健康 + head 已接入客户端,注册到地址本身还不够。</text>
+<text x="32" y="549" font-size="11" fill="#9ca3af">图中 2 个副本仅演示绑定与故障隔离,不是 Qwen3-Omni 默认副本数;正常停机由资源所有者回收引擎。</text>
+<text x="32" y="572" font-size="11" fill="#9ca3af">本地 Diffusion 使用独立串行初始化组;显式同卡并发初始化走预算准入与阶段锁保护的另一条路径。</text>
+</g></svg>

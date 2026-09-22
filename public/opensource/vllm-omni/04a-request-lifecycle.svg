@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="590" viewBox="0 0 1120 590">
+<rect width="1120" height="590" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="35" font-size="19" font-weight="700" fill="#111827">阶段可以先结束,请求要等所需终端齐全</text>
+<text x="32" y="61" font-size="13" fill="#6b7280">Qwen3-Omni 同时请求文本与音频 · 紫色为请求状态,绿色为计算,黄色为对外输出</text>
+<path d="M225 97 H1058" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="36" y="102" font-size="14" font-weight="700" fill="#111827">时间向右</text>
+<text x="228" y="121" font-size="11" fill="#9ca3af">接收请求与预提交</text><text x="570" y="121" font-size="11" fill="#9ca3af">文本终端完成</text><text x="906" y="121" font-size="11" fill="#9ca3af">音频终端完成</text>
+<rect x="215" y="140" width="255" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="550" y="140" width="220" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="875" y="140" width="215" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<path d="M470 180 H550 M770 180 H875" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="32" y="175" font-size="14" font-weight="700" fill="#111827">Orchestrator</text>
+<text x="232" y="165" font-size="14" font-weight="700" fill="#111827">登记同一请求</text>
+<text x="232" y="187" font-size="11" fill="#6b7280">所需终端：Thinker、Code2Wav</text><text x="232" y="205" font-size="11" fill="#6b7280">StagePool 绑定各段副本</text>
+<text x="567" y="165" font-size="14" font-weight="700" fill="#111827">已完成：Thinker</text><text x="567" y="188" font-size="11" fill="#6b7280">继续等待 Code2Wav</text><text x="567" y="205" font-size="11" fill="#6b7280">不重复提交流式下游</text>
+<text x="892" y="165" font-size="14" font-weight="700" fill="#111827">所需终端齐全</text><text x="892" y="188" font-size="11" fill="#6b7280">标记请求结束</text><text x="892" y="205" font-size="11" fill="#6b7280">释放绑定与请求状态</text>
+<text x="32" y="273" font-size="14" font-weight="700" fill="#111827">Thinker</text>
+<text x="32" y="295" font-size="11" fill="#6b7280">文本终端</text>
+<rect x="215" y="243" width="445" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="235" y="269" font-size="14" font-weight="700" fill="#111827">理解输入与生成文本</text><text x="235" y="289" font-size="11" fill="#6b7280">边计算边向下游供给分块</text>
+<path d="M660 243 V220" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="32" y="350" font-size="14" font-weight="700" fill="#111827">Talker</text><text x="32" y="372" font-size="11" fill="#6b7280">非终端</text>
+<rect x="300" y="322" width="530" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="320" y="348" font-size="14" font-weight="700" fill="#111827">生成音频码</text><text x="320" y="368" font-size="11" fill="#6b7280">已有预提交请求,收到可用分块后工作</text>
+<text x="32" y="432" font-size="14" font-weight="700" fill="#111827">Code2Wav</text><text x="32" y="454" font-size="11" fill="#6b7280">音频终端</text>
+<rect x="405" y="401" width="578" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="425" y="427" font-size="14" font-weight="700" fill="#111827">分块生成波形</text><text x="425" y="447" font-size="11" fill="#6b7280">音频可逐块返回,最终完成才补齐终端集合</text>
+<path d="M983 401 V220" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="32" y="517" font-size="14" font-weight="700" fill="#111827">入口输出</text>
+<rect x="550" y="484" width="220" height="59" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="875" y="484" width="215" height="59" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="567" y="509" font-size="14" font-weight="700" fill="#111827">文本阶段已完成</text><text x="567" y="529" font-size="11" fill="#6b7280">整条请求尚未结束</text>
+<text x="892" y="509" font-size="14" font-weight="700" fill="#111827">最终音频输出</text><text x="892" y="529" font-size="11" fill="#6b7280">携带请求结束信号</text>
+<text x="215" y="574" font-size="11" fill="#9ca3af">示意重叠与完成关系,条长不是实测耗时;省略中间输出包、分块传输和取消分支。</text>
+</g></svg>

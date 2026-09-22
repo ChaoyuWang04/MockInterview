@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="582" viewBox="0 0 1120 582">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="582" fill="#fff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">共享内存交接：名字相同,数据可取,资源有人回收</text>
+<text x="28" y="59" font-size="13" fill="#6b7280">绿：收发动作　紫：定位信息　黄：共享载荷　灰：资源回收　外框表示同一主机</text>
+<rect x="20" y="80" width="1080" height="384" rx="8" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="109" font-size="14" font-weight="700" fill="#111827">发送进程</text><text x="438" y="109" font-size="14" font-weight="700" fill="#111827">本机 POSIX 共享内存</text><text x="830" y="109" font-size="14" font-weight="700" fill="#111827">接收进程</text>
+<rect x="40" y="133" width="250" height="69" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><text x="56" y="158" font-size="14" font-weight="700" fill="#111827">生成 key</text><text x="56" y="181" font-size="11" fill="#6b7280">请求身份 + 来源阶段 + 块序号</text>
+<rect x="426" y="133" width="280" height="69" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><text x="444" y="158" font-size="14" font-weight="700" fill="#111827">同一份数据的定位</text><text x="444" y="181" font-size="11" fill="#6b7280">按 key 查找,或使用 SHM 名称与长度</text>
+<rect x="830" y="133" width="250" height="69" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><text x="846" y="158" font-size="14" font-weight="700" fill="#111827">使用匹配的 key / metadata</text><text x="846" y="181" font-size="11" fill="#6b7280">无需传递上游 Python 对象地址</text>
+<rect x="40" y="237" width="250" height="79" rx="6" fill="#e3f4ec" stroke="#5fa886"/><text x="56" y="262" font-size="14" font-weight="700" fill="#111827">put：序列化并写入</text><text x="56" y="285" font-size="11" fill="#6b7280">对象 → 字节；Tensor 转到 CPU</text><text x="56" y="304" font-size="11" fill="#6b7280">成功不表示接收端已经消费</text>
+<rect x="426" y="237" width="280" height="79" rx="6" fill="#fdf1dc" stroke="#d4a24c"/><text x="444" y="263" font-size="14" font-weight="700" fill="#111827">payload 字节</text><text x="444" y="286" font-size="11" fill="#6b7280">hidden states / 音频码 / 其他对象</text><text x="444" y="305" font-size="11" fill="#6b7280">保留到读取或清理</text>
+<rect x="830" y="237" width="250" height="79" rx="6" fill="#e3f4ec" stroke="#5fa886"/><text x="846" y="262" font-size="14" font-weight="700" fill="#111827">get：取字节并还原对象</text><text x="846" y="285" font-size="11" fill="#6b7280">尚未就绪可返回 None,上层继续尝试</text><text x="846" y="304" font-size="11" fill="#6b7280">取到载荷后才能交给后续执行</text>
+<rect x="426" y="365" width="280" height="71" rx="6" fill="#eeeeee" stroke="#b9b9b9"/><text x="444" y="391" font-size="14" font-weight="700" fill="#111827">共享段被释放</text><text x="444" y="414" font-size="11" fill="#6b7280">正常读取回收；未消费段由清理兜底</text>
+<rect x="40" y="365" width="250" height="71" rx="6" fill="#eeeeee" stroke="#b9b9b9"/><text x="56" y="391" font-size="14" font-weight="700" fill="#111827">cleanup / close</text><text x="56" y="414" font-size="11" fill="#6b7280">请求清理或整体关闭时回收残留</text>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"><path d="M290 167H426"/><path d="M706 167H830"/><path d="M165 202V237"/><path d="M955 202V237"/><path d="M290 276H426"/><path d="M706 276H830"/><path d="M955 316V400H706"/><path d="M290 400H426"/></g>
+<text x="748" y="386" font-size="11" fill="#9ca3af">读取字节后 unlink</text>
+<rect x="20" y="486" width="1080" height="74" rx="8" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="514" font-size="14" font-weight="700" fill="#111827">跨节点边界</text><text x="40" y="539" font-size="11" fill="#6b7280">必须换成支持远端的后端,并有可达的发送端信息；SHM key 或本机地址本身无法跨机器定位数据。</text>
+<text x="701" y="514" font-size="14" font-weight="700" fill="#111827">设备路径随后端与载荷变化</text><text x="701" y="539" font-size="11" fill="#6b7280">主机池、GPU 池、NPU 池不能画成同一条拷贝路径。</text>
+</g></svg>

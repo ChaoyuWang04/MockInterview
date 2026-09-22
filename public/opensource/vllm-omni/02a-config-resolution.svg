@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="500" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="35" font-size="19" font-weight="700" fill="#111827">结构保持一致，部署按阶段附着</text>
+<text x="28" y="60" font-size="13" fill="#6b7280">紫：模型结构　黄：部署与覆写　绿：解析结果；下方设备框表示放置，不表示进程</text>
+<rect x="28" y="85" width="310" height="125" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="46" y="112" font-size="14" font-weight="700" fill="#111827">注册的 Qwen3-Omni pipeline</text>
+<text x="46" y="140" font-size="13" fill="#111827">Thinker → Talker → Code2Wav</text>
+<text x="46" y="166" font-size="11" fill="#6b7280">阶段身份、执行类型、输入来源与终端</text>
+<text x="46" y="190" font-size="11" fill="#6b7280">先选择结构，设备安排不增删 stage</text>
+<rect x="382" y="85" width="320" height="125" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="400" y="112" font-size="14" font-weight="700" fill="#111827">部署继承 → 当前平台 → 显式覆写</text>
+<text x="400" y="140" font-size="11" fill="#6b7280">按 stage_id 匹配预算、设备与引擎字段</text>
+<text x="400" y="166" font-size="11" fill="#6b7280">这是普通引擎字段的合并主线</text>
+<text x="400" y="190" font-size="11" fill="#6b7280">分块兼容性、模型采样约束另行处理</text>
+<rect x="746" y="85" width="346" height="125" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="764" y="112" font-size="14" font-weight="700" fill="#111827">每段的结构化运行配置</text>
+<text x="764" y="140" font-size="11" fill="#6b7280">Thinker：结构 + 本段部署 + 合法覆写</text>
+<text x="764" y="166" font-size="11" fill="#6b7280">Talker：结构 + 本段部署 + 合法覆写</text>
+<text x="764" y="190" font-size="11" fill="#6b7280">Code2Wav：结构 + 本段部署 + 合法覆写</text>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)"><path d="M338 148H378"/><path d="M702 148H742"/></g>
+<text x="28" y="251" font-size="14" font-weight="700" fill="#111827">同一阶段结构，两种随仓放置</text>
+<rect x="28" y="272" width="516" height="182" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="570" y="272" width="522" height="182" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="299" font-size="14" font-weight="700" fill="#111827">CUDA 配方</text>
+<text x="588" y="299" font-size="14" font-weight="700" fill="#111827">NPU 平台分支</text>
+<rect x="46" y="321" width="205" height="108" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="275" y="321" width="250" height="108" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="62" y="345" font-size="11" fill="#6b7280">设备 0</text><text x="62" y="379" font-size="14" font-weight="700" fill="#111827">Thinker</text>
+<text x="291" y="345" font-size="11" fill="#6b7280">设备 1：共卡</text><text x="291" y="379" font-size="14" font-weight="700" fill="#111827">Talker + Code2Wav</text>
+<rect x="588" y="321" width="222" height="108" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="834" y="321" width="240" height="108" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<path d="M699 355V414" stroke="#d4a24c" stroke-dasharray="5 4"/>
+<text x="604" y="345" font-size="11" fill="#6b7280">设备 0、1：TP = 2</text><text x="604" y="379" font-size="14" font-weight="700" fill="#111827">Thinker</text>
+<text x="850" y="345" font-size="11" fill="#6b7280">设备 2：共卡</text><text x="850" y="379" font-size="14" font-weight="700" fill="#111827">Talker + Code2Wav</text>
+<text x="28" y="481" font-size="11" fill="#9ca3af">设备与 TP 来自随仓 qwen3_omni_moe.yaml；本图不表示性能测量或显存占用比例。</text>
+</g></svg>
