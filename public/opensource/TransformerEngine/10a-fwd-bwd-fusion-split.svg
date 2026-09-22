@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect id="te10bg" x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+  <text id="te10title" x="40" y="40" font-size="19" font-weight="700" fill="#111827">同一条管线：前向和反向融成不同的核</text>
+  <text id="te10sub" x="40" y="64" font-size="13" fill="#6b7280">灰 = 用户交出的基础算子；绿 = 前向拼法；紫 = 反向拼法；黄 = 三遍融合的顺序。autograd 挂在整条管线，因为两向切分可以不同</text>
+
+  <rect id="te10user" x="40" y="88" width="1040" height="112" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te10user-h" x="56" y="112" font-size="14" font-weight="700" fill="#111827">用户管线（顺序容器里的四步）</text>
+
+  <rect id="te10u1" x="64" y="128" width="220" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te10u1-t" x="174" y="150" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">层归一化</text>
+  <text id="te10u1-s" x="174" y="168" font-size="11" fill="#6b7280" text-anchor="middle">基础算子 0</text>
+
+  <rect id="te10u2" x="324" y="128" width="220" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te10u2-t" x="434" y="150" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线性</text>
+  <text id="te10u2-s" x="434" y="168" font-size="11" fill="#6b7280" text-anchor="middle">基础算子 1</text>
+
+  <rect id="te10u3" x="584" y="128" width="220" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te10u3-t" x="694" y="150" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">激活</text>
+  <text id="te10u3-s" x="694" y="168" font-size="11" fill="#6b7280" text-anchor="middle">基础算子 2</text>
+
+  <rect id="te10u4" x="844" y="128" width="212" height="52" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te10u4-t" x="950" y="150" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线性</text>
+  <text id="te10u4-s" x="950" y="168" font-size="11" fill="#6b7280" text-anchor="middle">基础算子 3</text>
+
+  <defs>
+    <marker id="te10arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line id="te10e1" x1="284" y1="154" x2="316" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te10arr)"/>
+  <line id="te10e2" x1="544" y1="154" x2="576" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te10arr)"/>
+  <line id="te10e3" x1="804" y1="154" x2="836" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te10arr)"/>
+
+  <rect id="te10fwd" x="40" y="220" width="700" height="128" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te10fwd-h" x="56" y="244" font-size="14" font-weight="700" fill="#5fa886">前向拼法（前向融合函数）</text>
+
+  <rect id="te10f1" x="64" y="260" width="160" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text id="te10f1-t" x="144" y="282" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">层归一化</text>
+  <text id="te10f1-s" x="144" y="300" font-size="11" fill="#6b7280" text-anchor="middle">仍单独</text>
+
+  <rect id="te10f2" x="256" y="260" width="300" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text id="te10f2-t" x="406" y="282" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线性加偏置加激活</text>
+  <text id="te10f2-s" x="406" y="300" font-size="11" fill="#6b7280" text-anchor="middle">一次 launch，盖住 1 和 2</text>
+
+  <rect id="te10f3" x="588" y="260" width="128" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text id="te10f3-t" x="652" y="282" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线性</text>
+  <text id="te10f3-s" x="652" y="300" font-size="11" fill="#6b7280" text-anchor="middle">基础算子 3</text>
+
+  <text id="te10fwd-n" x="56" y="332" font-size="11" fill="#9ca3af">行切分时通信紧跟矩阵乘，偏置加激活这条前向融合不走</text>
+
+  <rect id="te10bwd" x="40" y="368" width="700" height="128" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te10bwd-h" x="56" y="392" font-size="14" font-weight="700" fill="#8f8bd8">反向拼法（反向融合函数，切分可以不同）</text>
+
+  <rect id="te10b1" x="64" y="408" width="160" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te10b1-t" x="144" y="430" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">层归一化反向</text>
+  <text id="te10b1-s" x="144" y="448" font-size="11" fill="#6b7280" text-anchor="middle">可与加和再融</text>
+
+  <rect id="te10b2" x="256" y="408" width="220" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te10b2-t" x="366" y="430" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">激活加偏置反向</text>
+  <text id="te10b2-s" x="366" y="448" font-size="11" fill="#6b7280" text-anchor="middle">盖住与前向不同的边界</text>
+
+  <rect id="te10b3" x="508" y="408" width="208" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te10b3-t" x="612" y="430" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线性加加和反向</text>
+  <text id="te10b3-s" x="612" y="448" font-size="11" fill="#6b7280" text-anchor="middle">反向另一套窗口</text>
+
+  <rect id="te10note" x="760" y="220" width="320" height="276" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te10note-t" x="920" y="252" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">三遍融合</text>
+  <text id="te10note-s1" x="920" y="284" font-size="11" fill="#6b7280" text-anchor="middle">1. 前后向成对（先）</text>
+  <text id="te10note-s2" x="920" y="308" font-size="11" fill="#6b7280" text-anchor="middle">2. 只改前向</text>
+  <text id="te10note-s3" x="920" y="332" font-size="11" fill="#6b7280" text-anchor="middle">3. 只改反向</text>
+  <text id="te10note-s4" x="920" y="368" font-size="11" fill="#6b7280" text-anchor="middle">普通框架模块切开管线</text>
+  <text id="te10note-s5" x="920" y="392" font-size="11" fill="#6b7280" text-anchor="middle">通道不能跨融合器</text>
+  <text id="te10note-s6" x="920" y="428" font-size="11" fill="#6b7280" text-anchor="middle">现成融合层仍见 05 章</text>
+  <text id="te10note-s7" x="920" y="452" font-size="11" fill="#6b7280" text-anchor="middle">本页是自下而上第二条 API</text>
+</svg>

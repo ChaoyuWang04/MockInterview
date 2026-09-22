@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="430" viewBox="0 0 1120 430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect id="te04bg" x="0" y="0" width="1120" height="430" fill="#ffffff"/>
+  <text id="te04title" x="40" y="40" font-size="19" font-weight="700" fill="#111827">专家侧矩阵乘：一次分组，还是 N 次小乘</text>
+  <text id="te04sub" x="40" y="64" font-size="13" fill="#6b7280">绿 = 一次分组矩阵乘；红 = 每个专家各开一次小矩阵乘；紫 = 量化开关已开且量化器非空，才能进对应精度的 Tensor Core</text>
+
+  <rect id="te04in" x="40" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="140" y="126" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">按专家切开的 token</text>
+  <text x="140" y="148" font-size="11" fill="#6b7280" text-anchor="middle">切分长度交给线性层</text>
+
+  <defs>
+    <marker id="te04arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line x1="240" y1="132" x2="288" y2="132" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te04arr)"/>
+
+  <rect id="te04gate" x="296" y="96" width="220" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="406" y="126" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">准备前向读全局开关</text>
+  <text x="406" y="148" font-size="11" fill="#6b7280" text-anchor="middle">关着则量化器全空</text>
+
+  <line x1="516" y1="118" x2="572" y2="118" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te04arr)"/>
+  <line x1="516" y1="146" x2="572" y2="250" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te04arr)"/>
+
+  <rect id="te04grouped" x="580" y="88" width="500" height="120" rx="8" fill="#ffffff" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="830" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">分组线性层：一次分组矩阵乘</text>
+  <rect id="te04g1" x="604" y="132" width="140" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="674" y="154" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">专家 0…N</text>
+  <text x="674" y="172" font-size="11" fill="#6b7280" text-anchor="middle">同一 launch</text>
+  <rect id="te04g2" x="768" y="132" width="140" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="838" y="154" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">cuBLASLt 分组</text>
+  <text x="838" y="172" font-size="11" fill="#6b7280" text-anchor="middle">走 Tensor Core</text>
+  <rect id="te04g3" x="932" y="132" width="124" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="994" y="154" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">量化器非空</text>
+  <text x="994" y="172" font-size="11" fill="#6b7280" text-anchor="middle">才是八位核</text>
+
+  <rect id="te04n" x="580" y="228" width="500" height="120" rx="8" fill="#ffffff" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="830" y="254" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">普通线性层 × N：N 次小矩阵乘</text>
+  <rect id="te04n0" x="604" y="272" width="108" height="52" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="658" y="294" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">专家 0</text>
+  <text x="658" y="312" font-size="11" fill="#6b7280" text-anchor="middle">一次 GEMM</text>
+  <rect id="te04n1" x="732" y="272" width="108" height="52" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="786" y="294" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">专家 1</text>
+  <text x="786" y="312" font-size="11" fill="#6b7280" text-anchor="middle">又一次</text>
+  <rect id="te04n2" x="860" y="272" width="108" height="52" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="914" y="294" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">专家 N</text>
+  <text x="914" y="312" font-size="11" fill="#6b7280" text-anchor="middle">再一次</text>
+  <text x="1010" y="302" font-size="11" fill="#9ca3af">启动开销叠在小 M 上</text>
+
+  <text id="te04note" x="40" y="380" font-size="11" fill="#9ca3af">分组线性层默认仍可能走切分量化再进分组矩阵乘；原生分组张量路径要显式打开，且 delayed 配方、校准、调试、CPU offload、输出量化会把它打回切分路径</text>
+  <text id="te04note2" x="40" y="404" font-size="11" fill="#9ca3af">张量并行切分与通信重叠见 08 章；本图只画单卡上矩阵乘有没有合成一次</text>
+</svg>

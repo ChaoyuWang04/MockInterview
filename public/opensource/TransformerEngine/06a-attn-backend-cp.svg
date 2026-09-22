@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+  <text x="40" y="40" font-size="19" font-weight="700" fill="#111827">长序列先切上下文并行,再按卡代挑核</text>
+  <text x="40" y="64" font-size="13" fill="#6b7280">黄 = 序列被切成两段、两卡各拿一段;绿 = 还能走的融合或 Flash 核;紫 = Hopper 及以上优先融合;红 = 未融合核,开了上下文并行直接丢掉;灰旁注 = 每条序列长度必须能被并行度乘 2 整除</text>
+
+  <rect id="te06-seq" x="40" y="88" width="1040" height="88" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="56" y="112" font-size="14" font-weight="700" fill="#111827">一条长序列(自注意力,默认双段对调负载均衡)</text>
+  <rect id="te06-chunk0" x="72" y="128" width="200" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text x="172" y="149" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">前半段</text>
+  <rect id="te06-chunk1" x="288" y="128" width="200" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text x="388" y="149" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">后半段</text>
+  <text x="520" y="149" font-size="11" fill="#6b7280">两卡各拿一段;因果下对角与反对角负载不均,所以默认把两端对调再分</text>
+
+  <defs>
+    <marker id="te06a-arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line x1="560" y1="176" x2="560" y2="204" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te06a-arr)"/>
+
+  <rect id="te06-rank0" x="40" y="212" width="500" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="290" y="240" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">卡 0 上的局部注意力</text>
+  <text x="290" y="262" font-size="11" fill="#6b7280" text-anchor="middle">本卡 Q 对本地 KV 先算一块</text>
+  <text x="290" y="284" font-size="11" fill="#6b7280" text-anchor="middle">点对点:环形换 KV 块,和计算重叠</text>
+  <text x="290" y="306" font-size="11" fill="#6b7280" text-anchor="middle">全收集:先拿到完整 KV 再算,不能重叠</text>
+
+  <rect id="te06-rank1" x="580" y="212" width="500" height="120" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="830" y="240" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">卡 1 上的局部注意力</text>
+  <text x="830" y="262" font-size="11" fill="#6b7280" text-anchor="middle">同样先算本地,再换或收集 KV</text>
+  <text x="830" y="284" font-size="11" fill="#6b7280" text-anchor="middle">全到全:把头打散、把整段 QKV 收回来</text>
+  <text x="830" y="306" font-size="11" fill="#6b7280" text-anchor="middle">全到全加点对点:组内全到全,组间再换 KV</text>
+
+  <line x1="540" y1="272" x2="572" y2="272" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te06a-arr)"/>
+  <line x1="580" y1="288" x2="548" y2="288" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te06a-arr)"/>
+
+  <line x1="560" y1="332" x2="560" y2="360" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te06a-arr)"/>
+
+  <rect id="te06-filter" x="40" y="368" width="320" height="96" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="200" y="400" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">先按环境与形状过滤</text>
+  <text x="200" y="422" font-size="11" fill="#6b7280" text-anchor="middle">三条开关默认都开;不够格的核关掉</text>
+  <text x="200" y="444" font-size="11" fill="#6b7280" text-anchor="middle">未融合核不支持上下文并行</text>
+
+  <rect id="te06-pick" x="400" y="368" width="320" height="96" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="560" y="400" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">再按卡代挑一个</text>
+  <text x="560" y="422" font-size="11" fill="#6b7280" text-anchor="middle">Hopper 及以上:融合优先于 Flash</text>
+  <text x="560" y="444" font-size="11" fill="#6b7280" text-anchor="middle">更早的卡:Flash 优先于融合</text>
+
+  <rect id="te06-unfused" x="760" y="368" width="320" height="96" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text x="920" y="400" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">未融合核</text>
+  <text x="920" y="422" font-size="11" fill="#6b7280" text-anchor="middle">开了上下文并行:直接禁用</text>
+  <text x="920" y="444" font-size="11" fill="#6b7280" text-anchor="middle">只剩原生 softmax,显存与速度都会炸</text>
+</svg>

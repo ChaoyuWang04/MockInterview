@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect id="te08bg" x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <text id="te08title" x="40" y="36" font-size="19" font-weight="700" fill="#111827">列切 / 行切,以及通信盖进矩阵乘</text>
+  <text id="te08sub" x="40" y="58" font-size="13" fill="#6b7280">紫 = 切分;绿 = 用户缓冲重叠;红 = 串行集合通信;黄 = 矩阵乘。并列两行切法不是同一层同时切两次</text>
+
+  <rect id="te08colbox" x="40" y="78" width="520" height="168" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te08colh" x="56" y="102" font-size="14" font-weight="700" fill="#8f8bd8">列切（切开输出特征）</text>
+  <rect id="te08col-in" x="56" y="118" width="140" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te08col-int" x="126" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">本卡输入片</text>
+  <text id="te08col-ins" x="126" y="158" font-size="11" fill="#6b7280" text-anchor="middle">序列并行则先 gather</text>
+  <rect id="te08col-g" x="228" y="118" width="140" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te08col-gt" x="298" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">矩阵乘</text>
+  <text id="te08col-gs" x="298" y="158" font-size="11" fill="#6b7280" text-anchor="middle">权重输出维已切</text>
+  <rect id="te08col-out" x="400" y="118" width="140" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te08col-outt" x="470" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">本卡输出</text>
+  <text id="te08col-outs" x="470" y="158" font-size="11" fill="#6b7280" text-anchor="middle">序列维按世界放大</text>
+  <text id="te08coln" x="56" y="196" font-size="11" fill="#9ca3af">不重叠时 all-gather 走普通第一维 gather,再进矩阵乘</text>
+  <text id="te08coln2" x="56" y="214" font-size="11" fill="#9ca3af">重叠时同一条 all-gather 交给用户缓冲,盖进矩阵乘</text>
+
+  <rect id="te08rowbox" x="580" y="78" width="500" height="168" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te08rowh" x="596" y="102" font-size="14" font-weight="700" fill="#8f8bd8">行切（切开输入特征）</text>
+  <rect id="te08row-in" x="596" y="118" width="140" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te08row-int" x="666" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">本卡输入</text>
+  <text id="te08row-ins" x="666" y="158" font-size="11" fill="#6b7280" text-anchor="middle">输入特征已切</text>
+  <rect id="te08row-g" x="768" y="118" width="140" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te08row-gt" x="838" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">矩阵乘</text>
+  <text id="te08row-gs" x="838" y="158" font-size="11" fill="#6b7280" text-anchor="middle">局部乘完再汇合</text>
+  <rect id="te08row-out" x="940" y="118" width="120" height="52" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te08row-outt" x="1000" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">汇合输出</text>
+  <text id="te08row-outs" x="1000" y="158" font-size="11" fill="#6b7280" text-anchor="middle">SP 则 RS</text>
+  <text id="te08rown" x="596" y="196" font-size="11" fill="#9ca3af">序列并行开:乘完 reduce-scatter;关:all-reduce</text>
+  <text id="te08rown2" x="596" y="214" font-size="11" fill="#9ca3af">重叠只认行切加序列并行的 reduce-scatter</text>
+
+  <defs>
+    <marker id="te08arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line id="te08e1" x1="196" y1="144" x2="220" y2="144" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te08arr)"/>
+  <line id="te08e2" x1="368" y1="144" x2="392" y2="144" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te08arr)"/>
+  <line id="te08e3" x1="736" y1="144" x2="760" y2="144" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te08arr)"/>
+  <line id="te08e4" x1="908" y1="144" x2="932" y2="144" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te08arr)"/>
+
+  <text id="te08bot" x="40" y="276" font-size="14" font-weight="700" fill="#111827">同一条列切前向:串行 vs 重叠</text>
+
+  <rect id="te08ser" x="40" y="292" width="1040" height="108" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te08serh" x="56" y="316" font-size="14" font-weight="700" fill="#d9877a">串行:通信占关键路径</text>
+  <rect id="te08ser-ag" x="56" y="332" width="360" height="48" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text id="te08ser-agt" x="236" y="352" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-gather 输入</text>
+  <text id="te08ser-ags" x="236" y="370" font-size="11" fill="#6b7280" text-anchor="middle">Tensor Core 空等</text>
+  <rect id="te08ser-ge" x="456" y="332" width="360" height="48" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te08ser-get" x="636" y="352" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">矩阵乘</text>
+  <text id="te08ser-ges" x="636" y="370" font-size="11" fill="#6b7280" text-anchor="middle">等通信结束后才开工</text>
+  <line id="te08e5" x1="416" y1="356" x2="448" y2="356" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te08arr)"/>
+
+  <rect id="te08ov" x="40" y="420" width="1040" height="116" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te08ovh" x="56" y="444" font-size="14" font-weight="700" fill="#5fa886">重叠:用户缓冲把 all-gather 盖进矩阵乘</text>
+  <rect id="te08ov-ag" x="56" y="460" width="480" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text id="te08ov-agt" x="296" y="482" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-gather 分块进行</text>
+  <text id="te08ov-ags" x="296" y="500" font-size="11" fill="#6b7280" text-anchor="middle">与矩阵乘同一段墙钟</text>
+  <rect id="te08ov-ge" x="560" y="460" width="496" height="52" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te08ov-nt" x="808" y="482" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">矩阵乘吃已到的块</text>
+  <text id="te08ov-ns" x="808" y="500" font-size="11" fill="#6b7280" text-anchor="middle">先初始化用户缓冲,列切加序列并行才生效</text>
+</svg>

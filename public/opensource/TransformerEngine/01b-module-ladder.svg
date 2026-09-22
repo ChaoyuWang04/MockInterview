@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="400" fill="#ffffff"/>
+  <text x="40" y="40" font-size="19" font-weight="700" fill="#111827">官方上手阶梯：先换积木,再打开量化,最后才融合</text>
+  <text x="40" y="64" font-size="13" fill="#6b7280">灰 = 还没换成库里的东西;绿 = 积木已换上;紫 = 量化上下文已套上。每一级都能单独跑,不是必须一次跳到最右</text>
+
+  <rect x="40" y="96" width="188" height="220" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="134" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">0 原生一层</text>
+  <text x="134" y="168" font-size="13" fill="#6b7280" text-anchor="middle">框架自己的</text>
+  <text x="134" y="190" font-size="13" fill="#6b7280" text-anchor="middle">线性层、归一化</text>
+  <text x="134" y="212" font-size="13" fill="#6b7280" text-anchor="middle">自己写的注意力</text>
+  <text x="134" y="248" font-size="11" fill="#9ca3af" text-anchor="middle">对照基线</text>
+  <text x="134" y="268" font-size="11" fill="#9ca3af" text-anchor="middle">没有低精度开关</text>
+
+  <rect x="252" y="96" width="188" height="220" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="346" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">1 换积木</text>
+  <text x="346" y="168" font-size="13" fill="#6b7280" text-anchor="middle">线性层、归一化</text>
+  <text x="346" y="190" font-size="13" fill="#6b7280" text-anchor="middle">换成库里的模块</text>
+  <text x="346" y="226" font-size="11" fill="#9ca3af" text-anchor="middle">还没开量化</text>
+  <text x="346" y="246" font-size="11" fill="#9ca3af" text-anchor="middle">走较高精度的核</text>
+
+  <rect x="464" y="96" width="188" height="220" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="558" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">2 换注意力</text>
+  <text x="558" y="168" font-size="13" fill="#6b7280" text-anchor="middle">点积注意力</text>
+  <text x="558" y="190" font-size="13" fill="#6b7280" text-anchor="middle">自动挑后端</text>
+  <text x="558" y="226" font-size="11" fill="#9ca3af" text-anchor="middle">后端怎么选见 06 章</text>
+
+  <rect x="676" y="96" width="188" height="220" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="770" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">3 套上上下文</text>
+  <text x="770" y="168" font-size="13" fill="#6b7280" text-anchor="middle">只包前向</text>
+  <text x="770" y="190" font-size="13" fill="#6b7280" text-anchor="middle">配方可显式传入</text>
+  <text x="770" y="226" font-size="11" fill="#9ca3af" text-anchor="middle">这一级才打开低精度</text>
+  <text x="770" y="246" font-size="11" fill="#9ca3af" text-anchor="middle">配方细节见 02 章</text>
+
+  <rect x="888" y="96" width="188" height="220" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="982" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">4 融合或现成一层</text>
+  <text x="982" y="168" font-size="13" fill="#6b7280" text-anchor="middle">归一化加线性</text>
+  <text x="982" y="190" font-size="13" fill="#6b7280" text-anchor="middle">归一化加 MLP</text>
+  <text x="982" y="212" font-size="13" fill="#6b7280" text-anchor="middle">或直接用现成一层</text>
+  <text x="982" y="248" font-size="11" fill="#9ca3af" text-anchor="middle">单卡收益有限</text>
+  <text x="982" y="268" font-size="11" fill="#9ca3af" text-anchor="middle">多卡时 launch 更值钱</text>
+
+  <defs>
+    <marker id="te01b-arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line x1="228" y1="206" x2="248" y2="206" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te01b-arr)"/>
+  <line x1="440" y1="206" x2="460" y2="206" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te01b-arr)"/>
+  <line x1="652" y1="206" x2="672" y2="206" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te01b-arr)"/>
+  <line x1="864" y1="206" x2="884" y2="206" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te01b-arr)"/>
+
+  <text x="40" y="356" font-size="11" fill="#9ca3af">现成一层内部已经是多头注意力加融合 MLP,等于从第 4 级起步,量化仍然要靠外面的上下文,不会因为换了现成一层就自动打开</text>
+  <text x="40" y="380" font-size="11" fill="#9ca3af">JAX 必须在量化上下文里初始化模型,才会有量化 collection;PyTorch 建模块不必包在上下文里,打开低精度发生在前向</text>
+</svg>

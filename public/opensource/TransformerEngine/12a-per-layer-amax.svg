@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="420" viewBox="0 0 1120 420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect id="te12bg" x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+  <text id="te12title" x="40" y="40" font-size="19" font-weight="700" fill="#111827">没有层统计只能整网猜;开了调试就能按层读绝对值最大值</text>
+  <text id="te12sub" x="40" y="64" font-size="13" fill="#6b7280">灰 = 只能猜;紫 = 检查器插进层、日志出绝对值最大值;绿 = 只关一层量化;黄 = 每步冲刷</text>
+
+  <rect id="te12guess" x="40" y="88" width="320" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te12guess-l" x="56" y="114" font-size="14" font-weight="700" fill="#6b7280">没有层内统计</text>
+  <rect id="te12g1" x="64" y="136" width="272" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te12g1t" x="200" y="160" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">整网都在量化</text>
+  <text id="te12g1d" x="200" y="180" font-size="11" fill="#6b7280" text-anchor="middle">日志没有按层峰值</text>
+  <rect id="te12g2" x="64" y="212" width="272" height="56" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <text id="te12g2t" x="200" y="236" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">loss 炸了只能猜</text>
+  <text id="te12g2d" x="200" y="256" font-size="11" fill="#6b7280" text-anchor="middle">哪一层溢出不知道</text>
+  <rect id="te12g3" x="64" y="288" width="272" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text id="te12g3t" x="200" y="312" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">整网改回较高精度</text>
+  <text id="te12g3d" x="200" y="332" font-size="11" fill="#6b7280" text-anchor="middle">重训一遍,问题层仍看不见</text>
+
+  <rect id="te12dbg" x="400" y="88" width="680" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text id="te12dbg-l" x="416" y="114" font-size="14" font-weight="700" fill="#8f8bd8">开了精度调试</text>
+
+  <rect id="te12l0" x="424" y="136" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te12l0t" x="524" y="164" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">第 0 层</text>
+  <text id="te12l0d" x="524" y="186" font-size="11" fill="#6b7280" text-anchor="middle">日志:绝对值最大值</text>
+
+  <rect id="te12l1" x="648" y="136" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text id="te12l1t" x="748" y="164" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">第 1 层 · 关掉量化</text>
+  <text id="te12l1d" x="748" y="186" font-size="11" fill="#6b7280" text-anchor="middle">对照:这一层走较高精度</text>
+
+  <rect id="te12l2" x="872" y="136" width="184" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text id="te12l2t" x="964" y="164" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">第 2 层</text>
+  <text id="te12l2d" x="964" y="186" font-size="11" fill="#6b7280" text-anchor="middle">仍走八位</text>
+
+  <rect id="te12flush" x="424" y="232" width="632" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text id="te12flusht" x="740" y="256" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">每步冲刷:统计才落进按 rank 的日志</text>
+  <text id="te12flushd" x="740" y="276" font-size="11" fill="#6b7280" text-anchor="middle">没开功能的层按正常速度跑;统计间隔拉大可降开销</text>
+
+  <text id="te12note" x="424" y="320" font-size="11" fill="#9ca3af">配置按层名或层类型选;一层只进一个配置段;检查器必须在第一块积木之前初始化</text>
+  <text id="te12note2" x="424" y="342" font-size="11" fill="#9ca3af">目前只支持 PyTorch;调试与激活卸数互斥</text>
+
+  <defs>
+    <marker id="te12arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <line id="te12e1" x1="360" y1="228" x2="392" y2="228" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#te12arr)"/>
+</svg>
