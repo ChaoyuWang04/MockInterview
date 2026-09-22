@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 780" width="1120" height="780" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#9ca3af"/></marker></defs>
+<rect width="1120" height="780" fill="#ffffff"/>
+<text x="32" y="38" font-size="19" font-weight="700" fill="#111827">Megatron：参考循环编排，Core 提供执行能力</text>
+<text x="32" y="63" font-size="13" font-weight="400" fill="#6b7280">绿＝参考层编排 · 紫＝Core 能力 · 黄＝启用条件或扩展 · 实线＝执行顺序或调用 · 虚线＝能力参与</text>
+<rect x="32" y="88" width="1056" height="208" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="113" font-size="14" font-weight="700" fill="#111827">Megatron-LM：启动一次，随后重复训练步</text>
+<rect x="48" y="130" width="220" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<text x="60" y="155" font-size="14" font-weight="700" fill="#111827">启动与恢复</text>
+<text x="60" y="177" font-size="13" font-weight="400" fill="#6b7280">校验配置、初始化并行环境</text>
+<text x="60" y="196" font-size="13" font-weight="400" fill="#6b7280">构造模型与优化器</text>
+<text x="60" y="215" font-size="13" font-weight="400" fill="#6b7280">恢复状态、准备数据</text>
+<rect x="300" y="130" width="326" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<text x="312" y="155" font-size="14" font-weight="700" fill="#111827">一次 iteration</text>
+<text x="312" y="177" font-size="13" font-weight="400" fill="#6b7280">清梯度 → microbatch 前向 / 反向</text>
+<text x="312" y="196" font-size="13" font-weight="400" fill="#6b7280">完成梯度处理 → optimizer step</text>
+<text x="312" y="215" font-size="13" font-weight="400" fill="#6b7280">推进学习率与训练进度</text>
+<rect x="658" y="130" width="410" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<text x="670" y="155" font-size="14" font-weight="700" fill="#111827">步间编排</text>
+<text x="670" y="177" font-size="13" font-weight="400" fill="#6b7280">记录日志；按条件评估与保存 checkpoint</text>
+<text x="670" y="196" font-size="13" font-weight="400" fill="#6b7280">满足退出条件则收尾；否则进入下一步</text>
+<path d="M268 195 L300 195" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M626 195 L658 195" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M1010 260 V281 H460 V260" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="690" y="277" font-size="11" font-weight="400" fill="#6b7280">继续下一次 iteration</text>
+<rect x="32" y="332" width="1056" height="208" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="357" font-size="14" font-weight="700" fill="#111827">Megatron Core：被参考循环或第三方循环调用</text>
+<rect x="48" y="374" width="220" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<text x="60" y="399" font-size="14" font-weight="700" fill="#111827">并行与模型构件</text>
+<text x="60" y="421" font-size="13" font-weight="400" fill="#6b7280">进程组、TP / PP / CP / EP</text>
+<text x="60" y="440" font-size="13" font-weight="400" fill="#6b7280">Transformer 构件与配置</text>
+<rect x="300" y="374" width="326" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<text x="312" y="399" font-size="14" font-weight="700" fill="#111827">调度与更新能力</text>
+<text x="312" y="421" font-size="13" font-weight="400" fill="#6b7280">microbatch 调度、梯度同步</text>
+<text x="312" y="440" font-size="13" font-weight="400" fill="#6b7280">DDP / FSDP、优化器</text>
+<rect x="658" y="374" width="410" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<text x="670" y="399" font-size="14" font-weight="700" fill="#111827">状态的分布式保存与恢复</text>
+<text x="670" y="421" font-size="13" font-weight="400" fill="#6b7280">分片元数据、存储与加载策略</text>
+<text x="670" y="440" font-size="13" font-weight="400" fill="#6b7280">兼容范围内按目标布局恢复</text>
+<path d="M158 296 L158 374" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<path d="M463 296 L463 374" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<path d="M863 296 L863 374" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+<text x="48" y="519" font-size="13" font-weight="400" fill="#6b7280">启用梯度通信 overlap：反向过程中发起部分通信，更新参数前完成所需同步。</text>
+<rect x="32" y="566" width="510" height="105" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<text x="44" y="591" font-size="14" font-weight="700" fill="#111827">贯穿执行的可选优化</text>
+<text x="44" y="613" font-size="13" font-weight="400" fill="#6b7280">重算 / offload、FP8 / FP4、融合算子、CUDA Graph</text>
+<text x="44" y="632" font-size="13" font-weight="400" fill="#6b7280">按模型、硬件和配置选择</text>
+<rect x="570" y="566" width="518" height="105" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<text x="582" y="591" font-size="14" font-weight="700" fill="#111827">可选扩展：resharding / refit</text>
+<text x="582" y="613" font-size="13" font-weight="400" fill="#6b7280">训练布局 → 推理布局，直接搬运权重</text>
+<text x="582" y="632" font-size="13" font-weight="400" fill="#6b7280">主要用于 RL 训推循环；与落盘恢复是不同路径</text>
+<text x="32" y="712" font-size="14" font-weight="700" fill="#111827">复用方式：第三方可以自写循环，同时按需调用 Core 与参考层辅助函数。</text>
+<text x="32" y="745" font-size="13" font-weight="400" fill="#6b7280">本系列聚焦训练系统；推理引擎、elastification 与 export 不在本轮主线。</text>
+</svg>

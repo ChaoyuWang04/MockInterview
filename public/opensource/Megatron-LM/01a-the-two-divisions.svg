@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#9ca3af"/></marker></defs>
+<rect width="1120" height="580" fill="#ffffff"/>
+<text x="32" y="38" font-size="19" font-weight="700" fill="#111827">两本账：rank 怎样分，global batch 怎样拆</text>
+<text x="32" y="63" font-size="13" font-weight="400" fill="#6b7280">常规路径：固定 global batch，无额外 GTP remat 轴；绿＝输入 · 紫＝派生结果 · 黄＝比较前提</text>
+<rect x="32" y="92" width="1056" height="145" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="117" font-size="14" font-weight="700" fill="#111827">第一本账：确定 DP</text>
+<rect x="48" y="140" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<text x="60" y="165" font-size="14" font-weight="700" fill="#111827">总卡数 W</text>
+<text x="272" y="184" font-size="24" font-weight="700" fill="#111827">÷</text>
+<rect x="310" y="140" width="360" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+<text x="322" y="165" font-size="14" font-weight="700" fill="#111827">一份模型的并行范围</text>
+<text x="322" y="187" font-size="13" font-weight="400" fill="#6b7280">TP × PP × CP</text>
+<text x="699" y="184" font-size="24" font-weight="700" fill="#111827">=</text>
+<rect x="738" y="140" width="330" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<text x="750" y="165" font-size="14" font-weight="700" fill="#111827">DP = W / (TP × PP × CP)</text>
+
+<text x="680" y="274" font-size="13" font-weight="400" fill="#6b7280">派生的 DP 继续参与 batch 划分</text>
+<rect x="32" y="289" width="1056" height="145" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="314" font-size="14" font-weight="700" fill="#111827">第二本账：确定一次更新的 microbatch 数</text>
+<rect x="48" y="337" width="200" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<text x="60" y="362" font-size="14" font-weight="700" fill="#111827">global batch B</text>
+<text x="272" y="381" font-size="24" font-weight="700" fill="#111827">÷</text>
+<rect x="310" y="337" width="360" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+<text x="322" y="362" font-size="14" font-weight="700" fill="#111827">一次覆盖的样本数</text>
+<text x="322" y="384" font-size="13" font-weight="400" fill="#6b7280">microbatch size b × DP</text>
+<text x="699" y="381" font-size="24" font-weight="700" fill="#111827">=</text>
+<rect x="738" y="337" width="330" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<text x="750" y="362" font-size="14" font-weight="700" fill="#111827">microbatch 数 = B / (b × DP)</text>
+<rect x="32" y="465" width="1056" height="86" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<text x="44" y="490" font-size="14" font-weight="700" fill="#111827">例子：W=64、TP=2、CP=1、B=128、b=1 保持不变</text>
+<text x="44" y="512" font-size="13" font-weight="400" fill="#6b7280">PP：4 → 8；DP：8 → 4；microbatch 数：16 → 32。全局每步仍是 128 个样本，局部调度改变。</text>
+<path d="M902 212 V282 H500 V337" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+</svg>
