@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="560" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="35" font-size="19" font-weight="700" fill="#111827">先等到输入，再安排本轮计算</text>
+<text x="28" y="60" font-size="13" fill="#6b7280">紫：阶段调度　黄：等待输入　绿：模型执行　灰：结果；箭头表示同一阶段的循环，不是跨段路由</text>
+<rect x="28" y="89" width="334" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="46" y="117" font-size="14" font-weight="700" fill="#111827">消费输入就绪通知与元数据</text>
+<text x="46" y="146" font-size="11" fill="#6b7280">整份载荷：输入协调器</text>
+<text x="46" y="174" font-size="11" fill="#6b7280">分块载荷：分块适配器</text>
+<rect x="408" y="89" width="310" height="112" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="426" y="117" font-size="14" font-weight="700" fill="#111827">本轮是否已有可计算输入？</text>
+<text x="426" y="146" font-size="11" fill="#6b7280">就绪后参与排队与预算分配</text>
+<text x="426" y="174" font-size="11" fill="#6b7280">收到请求本身不等于输入就绪</text>
+<rect x="766" y="89" width="326" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="784" y="117" font-size="14" font-weight="700" fill="#111827">没有：等待，不执行占位工作</text>
+<text x="784" y="146" font-size="11" fill="#6b7280">新载荷到达后再参与选批</text>
+<text x="784" y="174" font-size="11" fill="#6b7280">超时则结束为错误</text>
+<rect x="28" y="255" width="1064" height="235" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="283" font-size="14" font-weight="700" fill="#111827">已有输入：按执行类型走对应路径，均受预算与容量限制</text>
+<rect x="46" y="305" width="270" height="66" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="46" y="397" width="270" height="66" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="365" y="305" width="310" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="365" y="397" width="310" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="724" y="305" width="350" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="724" y="397" width="350" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="62" y="330" font-size="14" font-weight="700" fill="#111827">AR：调用 vLLM 选批</text>
+<text x="62" y="353" font-size="11" fill="#6b7280">保留上游调度语义</text>
+<text x="62" y="422" font-size="14" font-weight="700" fill="#111827">Generation：安排可用输入</text>
+<text x="62" y="445" font-size="11" fill="#6b7280">下一块未到时暂不继续</text>
+<text x="381" y="330" font-size="14" font-weight="700" fill="#111827">AR runner：准备输入 → 前向 → 采样</text>
+<text x="381" y="353" font-size="11" fill="#6b7280">token、embedding 与模型附加数据对齐</text>
+<text x="381" y="422" font-size="14" font-weight="700" fill="#111827">Generation runner：生成并整理载荷</text>
+<text x="381" y="445" font-size="11" fill="#6b7280">例如将当前音频码变成波形</text>
+<text x="740" y="330" font-size="14" font-weight="700" fill="#111827">采样 token / 多模态结果</text>
+<text x="740" y="353" font-size="11" fill="#6b7280">按请求推进状态并判断结束</text>
+<text x="740" y="422" font-size="14" font-weight="700" fill="#111827">多模态结果 / 输入消费进度</text>
+<text x="740" y="445" font-size="11" fill="#6b7280">输入处理完成且流结束后完成请求</text>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)">
+<path d="M362 145H404"/><path d="M718 145H762"/>
+<path d="M560 201V250"/>
+<path d="M316 338H360"/><path d="M316 430H360"/>
+<path d="M675 338H719"/><path d="M675 430H719"/>
+<path d="M930 89V76H194V85"/>
+<path d="M1092 480H1103V526H15V145H23"/>
+</g>
+<text x="579" y="229" font-size="11" fill="#6b7280">有输入</text>
+<text x="245" y="520" font-size="11" fill="#6b7280">结果更新后继续下一轮；载荷到达元数据在下一次选批前消费，避免重复重置进度</text>
+<text x="28" y="548" font-size="11" fill="#9ca3af">只画阶段内调度与执行边界；张量传输、模型转换与缓存策略分别见对应章节。</text>
+</g></svg>

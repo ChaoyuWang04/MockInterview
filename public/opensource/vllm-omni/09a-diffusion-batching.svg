@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="650" viewBox="0 0 1120 650">
+<rect width="1120" height="650" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="35" font-size="19" font-weight="700" fill="#111827">新请求什么时候能加入计算？看调度边界</text>
+<text x="32" y="61" font-size="13" fill="#6b7280">绿色为执行中的请求,黄色为等待;虚线表示控制权回到调度器。下图均假设请求相容、容量为 2。</text>
+<text x="32" y="104" font-size="14" font-weight="700" fill="#111827">整请求：完整调用返回后,才能安排下一轮</text>
+<path d="M222 132 H1066" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="34" y="165" font-size="14" font-weight="700" fill="#111827">请求 A 先到</text>
+<rect x="225" y="147" width="510" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="242" y="170" font-size="14" font-weight="700" fill="#111827">A：编码 → 全部 denoise → 解码</text><text x="242" y="190" font-size="11" fill="#6b7280">一次完整 pipeline 调用</text>
+<text x="34" y="248" font-size="14" font-weight="700" fill="#111827">请求 B 后到</text>
+<rect x="370" y="224" width="365" height="55" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="765" y="224" width="290" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="387" y="247" font-size="14" font-weight="700" fill="#111827">B 等待</text><text x="387" y="267" font-size="11" fill="#6b7280">空余容量不能插进已开始的调用</text>
+<text x="782" y="247" font-size="14" font-weight="700" fill="#111827">下一轮执行 B</text><text x="782" y="267" font-size="11" fill="#6b7280">可与此时已有的相容请求合批</text>
+<path d="M750 142 V290" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="665" y="309" font-size="11" fill="#9ca3af">A 完成,重新调度</text>
+<text x="32" y="354" font-size="14" font-weight="700" fill="#111827">逐步：每次 denoise 返回后,检查空位并接纳相容请求</text>
+<path d="M222 381 H1066" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="34" y="415" font-size="14" font-weight="700" fill="#111827">请求 A 先到</text>
+<rect x="225" y="397" width="170" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="425" y="397" width="180" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="635" y="397" width="180" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="242" y="420" font-size="14" font-weight="700" fill="#111827">准备 A + 推进一步</text><text x="242" y="440" font-size="11" fill="#6b7280">保留请求状态</text>
+<text x="442" y="429" font-size="14" font-weight="700" fill="#111827">A 继续推进</text>
+<text x="652" y="420" font-size="14" font-weight="700" fill="#111827">A 继续推进</text><text x="652" y="440" font-size="11" fill="#6b7280">完成后解码、退出</text>
+<text x="34" y="504" font-size="14" font-weight="700" fill="#111827">请求 B 后到</text>
+<rect x="330" y="478" width="65" height="55" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="425" y="478" width="180" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="635" y="478" width="180" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="845" y="478" width="210" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="343" y="508" font-size="11" fill="#6b7280">B 等待</text>
+<text x="442" y="501" font-size="14" font-weight="700" fill="#111827">准备 B + 推进一步</text><text x="442" y="522" font-size="11" fill="#6b7280">与 A 组成同一轮 denoise</text>
+<text x="652" y="508" font-size="14" font-weight="700" fill="#111827">B 继续推进</text>
+<text x="862" y="501" font-size="14" font-weight="700" fill="#111827">B 留下继续</text><text x="862" y="522" font-size="11" fill="#6b7280">空位可用于其他相容请求</text>
+<path d="M410 390 V544 M620 390 V544 M830 390 V544" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="425" y="566" font-size="11" fill="#9ca3af">同一列属于一轮执行,请求不必处在相同进度;批量 denoise 后分别更新各自状态。</text>
+<text x="32" y="604" font-size="11" fill="#9ca3af">仅示意接纳边界,条长和格数不表示实测耗时或固定采样步数;多状态推进要求 pipeline 真正支持批量逐步执行。</text>
+<text x="32" y="627" font-size="11" fill="#9ca3af">若 B 与 A 不相容,或容量已满,逐步模式也不能在此接纳 B。</text>
+</g></svg>
