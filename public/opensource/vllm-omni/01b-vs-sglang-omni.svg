@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="516" viewBox="0 0 1120 516" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="516" fill="#ffffff"/>
+
+  <text x="40" y="34" font-size="19" font-weight="700" fill="#111827">两个 omni 运行时:四项处理职责的对照</text>
+  <text x="40" y="56" font-size="13" fill="#6b7280">按共同任务分行;框内描述各自的处理路径,不将模型声明与框架规则划成互斥类别</text>
+
+  <text x="40" y="112" font-size="14" font-weight="700" fill="#111827">双方都要回答的问题</text>
+  <text x="316" y="112" font-size="14" font-weight="700" fill="#111827">vLLM-Omni</text>
+  <text x="716" y="112" font-size="14" font-weight="700" fill="#111827">sglang-omni</text>
+  <path d="M40,124 L1080,124" stroke="#9ca3af" stroke-width="1.4"/>
+
+  <!-- 行 1 -->
+  <text x="40" y="160" font-size="14" font-weight="700" fill="#111827">下一段是谁</text>
+  <text x="40" y="180" font-size="11" fill="#6b7280">一段算完之后,结果该交给谁</text>
+  <rect x="300" y="136" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="318" y="160" font-size="14" font-weight="700" fill="#111827">Orchestrator 推进相邻阶段</text>
+  <text x="318" y="178" font-size="11" fill="#6b7280">普通完成时转发按下一阶段号推进;</text>
+  <text x="318" y="193" font-size="11" fill="#6b7280">配置中的来源关系不等于任意 DAG 调度</text>
+  <rect x="700" y="136" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="718" y="160" font-size="14" font-weight="700" fill="#111827">Stage Runtime 选择下一跳</text>
+  <text x="718" y="178" font-size="11" fill="#6b7280">按阶段路由交付结果;Coordinator 仍掌握</text>
+  <text x="718" y="193" font-size="11" fill="#6b7280">入口、终端与副本信息</text>
+
+  <!-- 行 2 -->
+  <text x="40" y="250" font-size="14" font-weight="700" fill="#111827">段间变换放在哪</text>
+  <text x="40" y="270" font-size="11" fill="#6b7280">上游的隐藏态不能直接当下游输入</text>
+  <rect x="300" y="226" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="318" y="250" font-size="14" font-weight="700" fill="#111827">模型处理函数接入交接路径</text>
+  <text x="318" y="268" font-size="11" fill="#6b7280">分别处理整份交接与分块交接,</text>
+  <text x="318" y="283" font-size="11" fill="#6b7280">并按模型需要准备下游输入</text>
+  <rect x="700" y="226" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="718" y="250" font-size="14" font-weight="700" fill="#111827">放在下游阶段的输入侧</text>
+  <text x="718" y="268" font-size="11" fill="#6b7280">框架把上游产物递过去,由接收方自己</text>
+  <text x="718" y="283" font-size="11" fill="#6b7280">决定怎么拼进这一步的输入</text>
+
+  <!-- 行 3 -->
+  <text x="40" y="340" font-size="14" font-weight="700" fill="#111827">流式打开后控制面还管不管</text>
+  <text x="40" y="360" font-size="11" fill="#6b7280">两边都靠边算边吐来压首包延迟</text>
+  <rect x="300" y="316" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="318" y="340" font-size="14" font-weight="700" fill="#111827">预提交下游,再供给分块</text>
+  <text x="318" y="358" font-size="11" fill="#6b7280">Orchestrator 先提交并绑定;OmniConnector</text>
+  <text x="318" y="373" font-size="11" fill="#6b7280">持续供给数据,避免完成时重复转发</text>
+  <rect x="700" y="316" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="718" y="340" font-size="14" font-weight="700" fill="#111827">流边与结果边并行,各走各的</text>
+  <text x="718" y="358" font-size="11" fill="#6b7280">上游一边把小块流给下游,一边把结果按</text>
+  <text x="718" y="373" font-size="11" fill="#6b7280">路由交付;控制面仍参与请求管理</text>
+
+  <!-- 行 4 -->
+  <text x="40" y="430" font-size="14" font-weight="700" fill="#111827">对外能干什么谁说了算</text>
+  <text x="40" y="450" font-size="11" fill="#6b7280">这个服务支持文本、语音还是别的</text>
+  <rect x="300" y="406" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="318" y="430" font-size="14" font-weight="700" fill="#111827">阶段能力 + 端点策略</text>
+  <text x="318" y="448" font-size="11" fill="#6b7280">先从阶段推导支持的任务,再用端点策略</text>
+  <text x="318" y="463" font-size="11" fill="#6b7280">约束公开接口,两者不能混为一谈</text>
+  <rect x="700" y="406" width="384" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="718" y="430" font-size="14" font-weight="700" fill="#111827">模型能力声明</text>
+  <text x="718" y="448" font-size="11" fill="#6b7280">模型架构的能力声明参与服务接口选择;</text>
+  <text x="718" y="463" font-size="11" fill="#6b7280">执行能力与公开接口仍需分别看</text>
+
+  <text x="40" y="500" font-size="11" fill="#9ca3af">比较基准:vLLM-Omni 4d877780d3 · sglang-omni 89e60d0bf2。仅比较上述路径,不推导哪一方整体更灵活。</text>
+</svg>

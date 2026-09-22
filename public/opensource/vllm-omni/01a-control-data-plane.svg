@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="474" viewBox="0 0 1120 474" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="474" fill="#ffffff"/>
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="ahg" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#cbd2d9"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="34" font-size="19" font-weight="700" fill="#111827">Qwen3-Omni:整份交接与流式分块</text>
+  <text x="40" y="56" font-size="13" fill="#6b7280">紫 = Orchestrator · 绿 = 执行阶段 · 黄 = OmniConnector 传输的数据</text>
+
+  <!-- ============ 左:默认 ============ -->
+  <rect x="32" y="78" width="508" height="318" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="48" y="102" font-size="14" font-weight="700" fill="#111827">关闭分块:上游完成后再提交下游</text>
+
+  <rect x="48" y="122" width="476" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="286" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Orchestrator</text>
+  <text x="286" y="156" font-size="11" fill="#6b7280" text-anchor="middle">上游完成 → 提交下游请求</text>
+
+  <path d="M290,164 L290,222" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="298" y="196" font-size="11" fill="#9ca3af">提交</text>
+  <path d="M468,164 L468,222" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="476" y="196" font-size="11" fill="#9ca3af">提交</text>
+
+  <rect x="48" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="112" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Thinker</text>
+  <text x="112" y="266" font-size="11" fill="#6b7280" text-anchor="middle">AR Decode</text>
+  <text x="112" y="281" font-size="11" fill="#6b7280" text-anchor="middle">完成后交付条件</text>
+
+  <rect x="226" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="290" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Talker</text>
+  <text x="290" y="266" font-size="11" fill="#6b7280" text-anchor="middle">AR Decode</text>
+  <text x="290" y="281" font-size="11" fill="#6b7280" text-anchor="middle">等上一段交付才起步</text>
+
+  <rect x="404" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="468" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Code2Wav</text>
+  <text x="468" y="266" font-size="11" fill="#6b7280" text-anchor="middle">按块还原</text>
+  <text x="468" y="281" font-size="11" fill="#6b7280" text-anchor="middle">等整句的码</text>
+
+  <path d="M112,290 L112,332 L169,332" stroke="#9ca3af" stroke-width="1.4" fill="none"/>
+  <path d="M233,332 L268,332 L268,292" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+  <rect x="169" y="320" width="64" height="24" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="201" y="336" font-size="11" fill="#6b7280" text-anchor="middle">整份</text>
+  <path d="M312,290 L312,332 L347,332" stroke="#9ca3af" stroke-width="1.4" fill="none"/>
+  <path d="M411,332 L468,332 L468,292" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+  <rect x="347" y="320" width="64" height="24" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="379" y="336" font-size="11" fill="#6b7280" text-anchor="middle">整份</text>
+  <text x="48" y="374" font-size="11" fill="#9ca3af">首个音频包要等整句的码生成完</text>
+
+  <!-- ============ 右:流式分块 ============ -->
+  <rect x="572" y="78" width="516" height="318" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="588" y="102" font-size="14" font-weight="700" fill="#111827">开启分块:预提交下游,数据持续到达(本例默认)</text>
+
+  <rect x="588" y="122" width="484" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="830" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Orchestrator</text>
+  <text x="830" y="156" font-size="11" fill="#6b7280" text-anchor="middle">预提交并绑定下游;持续跟踪、取消与收尾</text>
+
+  <path d="M834,164 L834,222" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="842" y="196" font-size="11" fill="#9ca3af">预提交</text>
+  <path d="M1012,164 L1012,222" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="1020" y="196" font-size="11" fill="#9ca3af">预提交</text>
+
+  <rect x="592" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="656" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Thinker</text>
+  <text x="656" y="266" font-size="11" fill="#6b7280" text-anchor="middle">AR Decode</text>
+  <text x="656" y="281" font-size="11" fill="#6b7280" text-anchor="middle">逐步交付条件</text>
+
+  <rect x="770" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="834" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Talker</text>
+  <text x="834" y="266" font-size="11" fill="#6b7280" text-anchor="middle">收到块就起步</text>
+  <text x="834" y="281" font-size="11" fill="#6b7280" text-anchor="middle">攒够帧再往下吐</text>
+
+  <rect x="948" y="224" width="128" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="1012" y="248" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Code2Wav</text>
+  <text x="1012" y="266" font-size="11" fill="#6b7280" text-anchor="middle">按块还原</text>
+  <text x="1012" y="281" font-size="11" fill="#6b7280" text-anchor="middle">第一批帧就出声</text>
+
+  <path d="M656,290 L656,332 L713,332" stroke="#9ca3af" stroke-width="1.4" fill="none"/>
+  <path d="M777,332 L812,332 L812,292" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+  <rect x="713" y="320" width="64" height="24" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="745" y="336" font-size="11" fill="#6b7280" text-anchor="middle">小块</text>
+  <path d="M856,290 L856,332 L891,332" stroke="#9ca3af" stroke-width="1.4" fill="none"/>
+  <path d="M955,332 L1012,332 L1012,292" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#ah)"/>
+  <rect x="891" y="320" width="64" height="24" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="923" y="336" font-size="11" fill="#6b7280" text-anchor="middle">小块</text>
+  <text x="588" y="374" font-size="11" fill="#9ca3af">第一批帧可用就开始生成音频,不再等整句</text>
+
+  <text x="40" y="414" font-size="11" fill="#9ca3af">关键差异是下游请求何时提交、数据何时交付;流式路径跳过重复的完成时转发,没有取消控制面的职责。</text>
+  <text x="40" y="438" font-size="13" fill="#6b7280">终端输出:Thinker → 文本;Code2Wav → 音频。Talker 交付中间音频码,不是文本终端。</text>
+  <text x="40" y="458" font-size="11" fill="#9ca3af">实际返回的模态由请求决定;Orchestrator 跟踪本次请求所需终端的完成情况。</text>
+</svg>
