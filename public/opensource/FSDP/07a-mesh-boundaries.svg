@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="580" viewBox="0 0 1120 580">
+<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto-start-reverse"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="580" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="36" font-size="19" font-weight="700" fill="#111827">2 × 4 HSDP：横向分片，纵向复制</text>
+<text x="32" y="62" font-size="13" fill="#6b7280">绿色是本卡常驻参数；灰色虚框表示其余参数；箭头表示通信参与关系，不表示物理连线</text>
+<rect x="174" y="99" width="914" height="166" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="174" y="309" width="914" height="166" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<g font-size="14" font-weight="700" fill="#111827"><text x="32" y="163">节点 A</text><text x="32" y="373">节点 B</text></g>
+<g stroke="#9ca3af" stroke-width="1.4" marker-start="url(#arrow)" marker-end="url(#arrow)">
+<path d="M305 211 V336"/><path d="M515 211 V336"/><path d="M725 211 V336"/><path d="M935 211 V336"/>
+<path d="M230 240 H1010"/><path d="M230 450 H1010"/>
+</g>
+<g font-size="11" fill="#6b7280"><text x="32" y="280">复制方向</text><text x="32" y="298">梯度 all-reduce</text></g>
+<g font-size="14" font-weight="700" fill="#111827">
+<text x="250" y="153">rank 0</text><text x="460" y="153">rank 1</text><text x="670" y="153">rank 2</text><text x="880" y="153">rank 3</text>
+<text x="250" y="363">rank 4</text><text x="460" y="363">rank 5</text><text x="670" y="363">rank 6</text><text x="880" y="363">rank 7</text>
+</g>
+<g fill="#ffffff" stroke="#b9b9b9" stroke-dasharray="5 4">
+<rect x="225" y="170" width="160" height="34" rx="6"/><rect x="435" y="170" width="160" height="34" rx="6"/><rect x="645" y="170" width="160" height="34" rx="6"/><rect x="855" y="170" width="160" height="34" rx="6"/>
+<rect x="225" y="380" width="160" height="34" rx="6"/><rect x="435" y="380" width="160" height="34" rx="6"/><rect x="645" y="380" width="160" height="34" rx="6"/><rect x="855" y="380" width="160" height="34" rx="6"/>
+</g>
+<g fill="#e3f4ec" stroke="#5fa886">
+<rect x="225" y="170" width="40" height="34" rx="6"/><rect x="475" y="170" width="40" height="34" rx="6"/><rect x="725" y="170" width="40" height="34" rx="6"/><rect x="975" y="170" width="40" height="34" rx="6"/>
+<rect x="225" y="380" width="40" height="34" rx="6"/><rect x="475" y="380" width="40" height="34" rx="6"/><rect x="725" y="380" width="40" height="34" rx="6"/><rect x="975" y="380" width="40" height="34" rx="6"/>
+</g>
+<g font-size="11" fill="#6b7280"><text x="191" y="118">分片方向：参数 all-gather ＋ 梯度 reduce-scatter</text><text x="191" y="328">分片方向：参数 all-gather ＋ 梯度 reduce-scatter</text></g>
+<text x="32" y="514" font-size="14" font-weight="700" fill="#111827">一列是同一分片的副本；一行凑出完整参数。均匀分片示例，未叠加 TP / EP。</text>
+<text x="32" y="543" font-size="13" fill="#6b7280">改成一维 8 卡网格时，分片更小，但参数 all-gather 的参与者也跨越节点 A 与 B。</text>
+</g></svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="400" fill="#ffffff"/>
+
+  <rect x="40" y="100" width="160" height="68" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="260" y="100" width="160" height="68" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="480" y="100" width="160" height="68" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="700" y="100" width="160" height="68" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="920" y="100" width="160" height="68" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+
+  <rect x="306" y="217" width="276" height="40" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="706" y="217" width="364" height="40" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="56" y="225" width="128" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="324" y="225" width="32" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="544" y="225" width="32" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="716" y="225" width="128" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="936" y="225" width="128" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+
+  <rect x="40" y="306" width="1040" height="76" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <polyline points="202,142 250,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M250 137.5 L258 142 L250 146.5 Z" fill="#9ca3af"/>
+  <polyline points="422,142 470,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M470 137.5 L478 142 L470 146.5 Z" fill="#9ca3af"/>
+  <polyline points="642,142 690,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M690 137.5 L698 142 L690 146.5 Z" fill="#9ca3af"/>
+  <polyline points="862,142 910,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M910 137.5 L918 142 L910 146.5 Z" fill="#9ca3af"/>
+
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">一个参数的五种形态,以及中间两道可替换的变换</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">灰 = 分片做完就被回收,绿 = 本卡常驻,紫 = 凑齐的时候才存在;下排色条的长度按 4 张卡时这一形态实际占的数据量画</text>
+
+  <text x="120" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">原始参数</text>
+  <text x="120" y="150" font-size="11" fill="#6b7280" text-anchor="middle">你建模型时的那个</text>
+  <text x="120" y="165" font-size="11" fill="#6b7280" text-anchor="middle">分片做完就回收</text>
+
+  <text x="340" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">分片参数</text>
+  <text x="340" y="150" font-size="11" fill="#6b7280" text-anchor="middle">本卡常驻的那一段</text>
+  <text x="340" y="165" font-size="11" fill="#6b7280" text-anchor="middle">带分布信息,优化器吃它</text>
+
+  <text x="560" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-gather input</text>
+  <text x="560" y="150" font-size="11" fill="#6b7280" text-anchor="middle">交给通信的一维数据</text>
+  <text x="560" y="165" font-size="11" fill="#6b7280" text-anchor="middle">默认与分片参数同一块</text>
+
+  <text x="780" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-gather output</text>
+  <text x="780" y="150" font-size="11" fill="#6b7280" text-anchor="middle">通信写回来的一维数据</text>
+  <text x="780" y="165" font-size="11" fill="#6b7280" text-anchor="middle">被反复伸缩的就是它</text>
+
+  <text x="1000" y="128" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">完整参数</text>
+  <text x="1000" y="150" font-size="11" fill="#6b7280" text-anchor="middle">按原形状摆出来的那份</text>
+  <text x="1000" y="165" font-size="11" fill="#6b7280" text-anchor="middle">autograd 的叶子</text>
+
+  <text x="230" y="126" font-size="11" fill="#9ca3af" text-anchor="middle">切开</text>
+  <text x="450" y="126" font-size="11" fill="#9ca3af" text-anchor="middle">前置变换</text>
+  <text x="670" y="126" font-size="11" fill="#9ca3af" text-anchor="middle">all-gather</text>
+  <text x="890" y="126" font-size="11" fill="#9ca3af" text-anchor="middle">后置变换</text>
+
+  <text x="120" y="272" font-size="11" fill="#9ca3af" text-anchor="middle">完整大小</text>
+  <text x="340" y="272" font-size="11" fill="#9ca3af" text-anchor="middle">完整大小的 1/4</text>
+  <text x="560" y="272" font-size="11" fill="#9ca3af" text-anchor="middle">完整大小的 1/4</text>
+  <text x="780" y="272" font-size="11" fill="#9ca3af" text-anchor="middle">完整大小</text>
+  <text x="1000" y="272" font-size="11" fill="#9ca3af" text-anchor="middle">完整大小</text>
+
+  <text x="444" y="292" font-size="11" fill="#9ca3af" text-anchor="middle">默认路径下是同一块数据</text>
+  <text x="888" y="292" font-size="11" fill="#9ca3af" text-anchor="middle">完整参数只是输出的另一种摆法</text>
+
+  <text x="64" y="336" font-size="14" font-weight="700" fill="#111827">扩展口子:前置与后置变换成对替换</text>
+  <text x="64" y="362" font-size="11" fill="#6b7280">自定义张量类型把这两道变换成对实现之后,一个参数可以变成多份凑齐输入 —— 压缩后的数据一份、还原用的 scale 一份;通信包含量化数据与所需 scale,后置变换再还原成完整参数</text>
+</svg>

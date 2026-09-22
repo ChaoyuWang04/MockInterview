@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="440" viewBox="0 0 1120 440">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="440" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="36" font-size="19" font-weight="700" fill="#111827">精度沿两条路径切换,更新落回原始分片</text>
+<text x="32" y="61" font-size="13" fill="#6b7280">实例而非默认:原始 FP32、计算 BF16、归约 FP32；绿 = FP32,紫 = BF16</text>
+<rect x="322" y="91" width="334" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="342" y="115" font-size="13" fill="#6b7280">模块计算边界</text>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)">
+<path d="M264 179H350"/><path d="M624 179H748"/>
+<path d="M1020 179H1070V308H1020"/><path d="M884 350V382H152V350"/>
+<path d="M152 266V216"/><path d="M486 266V216"/>
+</g>
+<rect x="40" y="142" width="224" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="350" y="142" width="274" height="74" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="748" y="142" width="272" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="40" y="266" width="224" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="350" y="266" width="274" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="748" y="266" width="272" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<g font-size="14" font-weight="700" fill="#111827">
+<text x="60" y="171">常驻分片参数 · FP32</text><text x="370" y="171">完整计算参数 · BF16</text>
+<text x="768" y="171">梯度归约 · FP32</text><text x="60" y="295">优化器更新</text>
+<text x="370" y="293">浮点输入 / 激活 · BF16</text><text x="768" y="295">归约后的分片梯度 · FP32</text>
+</g>
+<g font-size="11" fill="#6b7280">
+<text x="60" y="195">保留原始 dtype,不随计算降精度</text><text x="370" y="195">前向 / 反向使用,AG 也传 BF16</text>
+<text x="768" y="195">反向梯度转入 FP32 通信缓冲</text><text x="60" y="320">直接更新上方常驻分片</text>
+<text x="370" y="316">输入在进入模块时转换</text><text x="768" y="320">交给优化器前匹配原始 dtype</text>
+<text x="276" y="136">转换后 AG</text><text x="662" y="136">反向 → 升精度</text>
+<text x="392" y="246">模块内算子可自行高精度累加</text>
+</g>
+<text x="32" y="401" font-size="13" fill="#6b7280">输出可另设 dtype 衔接下一模块；若改用 BF16 归约,归约结果再升回原始 FP32。</text>
+<text x="32" y="423" font-size="11" fill="#9ca3af">分区编码计算边界,颜色编码 dtype；方框尺寸不表示显存占用,图中未展开优化器状态。</text>
+</g></svg>

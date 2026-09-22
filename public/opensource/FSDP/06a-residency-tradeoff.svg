@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="636" viewBox="0 0 1120 636">
+<rect width="1120" height="636" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">前向之后,模块手里留哪一份参数?</text>
+<text x="28" y="61" font-size="13" fill="#6b7280">原始分片规模 8 · 同 dtype、均匀切分 · 绿 = GPU 参数视图,黄 = CPU 参数视图</text>
+<text x="28" y="100" font-size="14" font-weight="700" fill="#111827">保留策略</text>
+<text x="280" y="100" font-size="14" font-weight="700" fill="#111827">前向后注册到模块的本地数据</text>
+<text x="755" y="100" font-size="14" font-weight="700" fill="#111827">反向要用时</text>
+<text x="28" y="149" font-size="14" font-weight="700" fill="#111827">立即重分片</text>
+<text x="28" y="174" font-size="11" fill="#6b7280">reshard_after_forward=True</text>
+<rect x="280" y="130" width="320" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="280" y="130" width="40" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="280" y="201" font-size="11" fill="#6b7280">GPU · 1/8 完整参数量</text>
+<path d="M 631 154 H 728 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="755" y="159" font-size="14" font-weight="700" fill="#111827">8 rank all-gather</text>
+<text x="28" y="259" font-size="14" font-weight="700" fill="#111827">中间档</text>
+<text x="28" y="284" font-size="11" fill="#6b7280">reshard_after_forward=4</text>
+<rect x="280" y="240" width="320" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="280" y="240" width="80" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="280" y="311" font-size="11" fill="#6b7280">GPU · 1/4 完整参数量</text>
+<path d="M 631 264 H 728 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="755" y="269" font-size="14" font-weight="700" fill="#111827">4 rank all-gather</text>
+<text x="28" y="369" font-size="14" font-weight="700" fill="#111827">完整保留</text>
+<text x="28" y="394" font-size="11" fill="#6b7280">reshard_after_forward=False</text>
+<rect x="280" y="350" width="320" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="280" y="350" width="320" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="280" y="421" font-size="11" fill="#6b7280">GPU · 1 完整参数量</text>
+<path d="M 631 374 H 728 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="755" y="379" font-size="14" font-weight="700" fill="#111827">直接用完整参数</text>
+<text x="28" y="479" font-size="14" font-weight="700" fill="#111827">CPU offload + 立即重分片</text>
+<text x="28" y="504" font-size="11" fill="#6b7280">CPUOffloadPolicy() + True</text>
+<rect x="280" y="460" width="320" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="280" y="460" width="40" height="48" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="280" y="531" font-size="11" fill="#6b7280">CPU · 1/8 完整参数量</text>
+<path d="M 631 484 H 728 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="755" y="489" font-size="14" font-weight="700" fill="#111827">H2D → 8 rank all-gather</text>
+<text x="28" y="582" font-size="13" fill="#6b7280">条长只比较模块当前参数视图:虚线全长为完整参数,不是总显存。</text>
+<text x="28" y="608" font-size="11" fill="#9ca3af">未画原始分片底座、梯度、优化器状态、激活与通信缓冲;中间档与完整保留时,原始分片仍存在。</text>
+</g></svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="570" viewBox="0 0 1120 570">
+<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="570" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="36" font-size="19" font-weight="700" fill="#111827">两套接入方式，共享状态连接点</text>
+<text x="32" y="62" font-size="13" fill="#6b7280">紫：FSDP 接管机制；绿：模型；黄：各自的优化器；灰：统一状态接口。两边是独立实例。</text>
+<text x="52" y="105" font-size="14" font-weight="700" fill="#111827">FSDP1：外层包装持有模型</text>
+<text x="622" y="105" font-size="14" font-weight="700" fill="#111827">FSDP2：原模型加入 hooks 与方法</text>
+<rect x="52" y="125" width="436" height="178" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="72" y="153" font-size="14" font-weight="700" fill="#111827">wrapper</text>
+<rect x="94" y="174" width="352" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="114" y="205" font-size="14" font-weight="700" fill="#111827">原模型</text>
+<text x="114" y="231" font-size="11" fill="#6b7280">暴露 flat 参数，或暴露原参数视图</text>
+<text x="114" y="253" font-size="11" fill="#6b7280">由包装选项决定优化器看到什么</text>
+<rect x="622" y="125" width="436" height="178" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="642" y="153" font-size="14" font-weight="700" fill="#111827">同一个模型对象</text>
+<rect x="644" y="174" width="392" height="38" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="660" y="198" font-size="14" font-weight="700" fill="#111827">加入 hooks 与分片方法</text>
+<text x="642" y="240" font-size="11" fill="#6b7280">逐参数 DTensor，保留原来的完整参数名</text>
+<text x="642" y="265" font-size="11" fill="#6b7280">模型身份不变，不代表参数对象不变</text>
+<path d="M270 309 V337" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M840 309 V337" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="94" y="346" width="352" height="54" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="664" y="346" width="352" height="54" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="114" y="379" font-size="14" font-weight="700" fill="#111827">建立优化器，绑定处理后的参数</text>
+<text x="684" y="379" font-size="14" font-weight="700" fill="#111827">建立优化器，绑定处理后的参数</text>
+<path d="M270 400 V448 H420" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M840 400 V448 H700" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="428" y="421" width="264" height="65" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="448" y="446" font-size="14" font-weight="700" fill="#111827">统一状态字典入口</text>
+<text x="448" y="470" font-size="11" fill="#6b7280">模型 ＋ 优化器，按规范参数名连接</text>
+<text x="32" y="525" font-size="13" fill="#6b7280">共享入口帮助取写状态；不表示两代直接嵌套，也不保证任意旧 checkpoint 文件无需转换即可加载。</text>
+<text x="32" y="550" font-size="11" fill="#9ca3af">两边的具体参数名与迁移配置都在第五节。</text>
+</g></svg>

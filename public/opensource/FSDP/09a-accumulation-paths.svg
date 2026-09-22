@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="590" viewBox="0 0 1120 590">
+<rect width="1120" height="590" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">梯度累积:省哪一次通信,就得留下哪一种梯度</text>
+<text x="28" y="60" font-size="13" fill="#6b7280">同一个 HSDP 参数组 · 分片规模 2、复制规模 2 · 绿 = 梯度,紫 = reduce-scatter,黄 = all-reduce</text>
+<text x="270" y="99" font-size="14" font-weight="700" fill="#111827">microbatch 1</text>
+<text x="530" y="99" font-size="14" font-weight="700" fill="#111827">microbatch 2</text>
+<text x="790" y="99" font-size="14" font-weight="700" fill="#111827">microbatch 3</text>
+<text x="28" y="151" font-size="14" font-weight="700" fill="#111827">每次都同步</text>
+<text x="28" y="177" font-size="11" fill="#6b7280">3 次 RS + 3 次 AR</text>
+<rect x="270" y="127" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="295" y="147" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="360" y="127" width="74" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="385" y="147" font-size="14" font-weight="700" fill="#111827">AR</text>
+<rect x="270" y="174" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="270" y="174" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="405" y="191" font-size="11" fill="#6b7280">1/2</text>
+<rect x="530" y="127" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="555" y="147" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="620" y="127" width="74" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="645" y="147" font-size="14" font-weight="700" fill="#111827">AR</text>
+<rect x="530" y="174" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="530" y="174" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="665" y="191" font-size="11" fill="#6b7280">1/2</text>
+<rect x="790" y="127" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="815" y="147" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="880" y="127" width="74" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="905" y="147" font-size="14" font-weight="700" fill="#111827">AR</text>
+<rect x="790" y="174" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="790" y="174" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="925" y="191" font-size="11" fill="#6b7280">1/2</text>
+<path d="M 453 188 H 506 m -7 -5 l 7 5 -7 5 M 713 188 H 766 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="28" y="278" font-size="14" font-weight="700" fill="#111827">完全推迟归约</text>
+<text x="28" y="304" font-size="11" fill="#6b7280">1 次 RS + 1 次 AR</text>
+<text x="270" y="275" font-size="13" fill="#6b7280">本次不归约</text>
+<rect x="270" y="301" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="270" y="301" width="120" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="405" y="318" font-size="11" fill="#6b7280">完整</text>
+<text x="530" y="275" font-size="13" fill="#6b7280">本次不归约</text>
+<rect x="530" y="301" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="530" y="301" width="120" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="665" y="318" font-size="11" fill="#6b7280">完整</text>
+<rect x="790" y="254" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="815" y="274" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="880" y="254" width="74" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="905" y="274" font-size="14" font-weight="700" fill="#111827">AR</text>
+<rect x="790" y="301" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="790" y="301" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="925" y="318" font-size="11" fill="#6b7280">1/2</text>
+<path d="M 453 315 H 506 m -7 -5 l 7 5 -7 5 M 713 315 H 766 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="28" y="405" font-size="14" font-weight="700" fill="#111827">只推迟 all-reduce</text>
+<text x="28" y="431" font-size="11" fill="#6b7280">3 次 RS + 1 次 AR</text>
+<rect x="270" y="381" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="295" y="401" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="270" y="428" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="270" y="428" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="405" y="445" font-size="11" fill="#6b7280">1/2</text>
+<rect x="530" y="381" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="555" y="401" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="530" y="428" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="530" y="428" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="665" y="445" font-size="11" fill="#6b7280">1/2</text>
+<rect x="790" y="381" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="815" y="401" font-size="14" font-weight="700" fill="#111827">RS</text>
+<rect x="880" y="381" width="74" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="905" y="401" font-size="14" font-weight="700" fill="#111827">AR</text>
+<rect x="790" y="428" width="120" height="24" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="790" y="428" width="60" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="925" y="445" font-size="11" fill="#6b7280">1/2</text>
+<path d="M 453 442 H 506 m -7 -5 l 7 5 -7 5 M 713 442 H 766 m -7 -5 l 7 5 -7 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="28" y="510" font-size="13" fill="#6b7280">绿条表示该次反向后留待累积/更新的本卡梯度元素量,不是累计 microbatch 数,也不是总显存。</text>
+<text x="28" y="537" font-size="11" fill="#9ca3af">同 dtype、均匀分片;虚线全长是完整梯度。计数限本组每个 rank 的逻辑归约,不含其他组或参数 all-gather。</text>
+<text x="28" y="564" font-size="11" fill="#9ca3af">3 次反向之后才做 1 次 optimizer step;图中位置表示先后顺序,不表示耗时。</text>
+</g></svg>

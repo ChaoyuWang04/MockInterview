@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500">
+<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="500" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="36" font-size="19" font-weight="700" fill="#111827">可替换边界覆盖两端：分配缓冲区 ＋ 发起通信</text>
+<text x="32" y="62" font-size="13" fill="#6b7280">绿：普通分配；紫：进程组分配；黄：对称内存池；灰：FSDP 调度与标准 collective 入口</text>
+<rect x="32" y="98" width="362" height="314" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="718" y="98" width="370" height="314" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<g font-size="14" font-weight="700" fill="#111827"><text x="52" y="125">通信对象：allocate</text><text x="738" y="125">通信对象：__call__</text></g>
+<rect x="52" y="148" width="322" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="52" y="236" width="322" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="52" y="324" width="322" height="62" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="454" y="148" width="190" height="238" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="738" y="148" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="738" y="236" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="738" y="324" width="330" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"><path d="M374 179 H448"/><path d="M374 267 H448"/><path d="M374 355 H448"/><path d="M644 179 H732"/><path d="M644 267 H732"/><path d="M644 355 H732"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="68" y="172">普通 allocator（默认）</text><text x="68" y="260">ProcessGroup allocator</text><text x="68" y="348">symmetric memory pool</text><text x="474" y="249">FSDP 填入数据</text><text x="758" y="172">标准 AG / RS</text><text x="758" y="260">标准 AG / RS</text><text x="758" y="348">rendezvous → 标准 AG / RS</text></g>
+<g font-size="11" fill="#6b7280"><text x="68" y="193">torch.empty，可由 caching allocator 复用</text><text x="68" y="281">backend 不支持时回退普通分配</text><text x="68" y="369">内存池复用缓冲，减少分配与映射开销</text><text x="474" y="272">时机与数据布局</text><text x="474" y="294">仍由上层管理</text><text x="758" y="193">调用分布式通信入口</text><text x="758" y="281">分配变化，调用入口不变</text><text x="758" y="369">RS 切换要求先开启强制 SUM</text></g>
+<text x="32" y="446" font-size="14" font-weight="700" fill="#111827">自定义对象可替换左右两端；内置路径保持标准 collective 调用。</text>
+<text x="32" y="473" font-size="13" fill="#6b7280">图中三行是可选路径，不是依次执行的阶段，也不是三种网络算法。硬件路径仍取决于通信库与环境。</text>
+</g></svg>

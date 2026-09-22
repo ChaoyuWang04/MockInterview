@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="430" viewBox="0 0 1120 430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="430" fill="#ffffff"/>
+
+  <rect x="220" y="126" width="220" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="520" y="126" width="220" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="820" y="126" width="220" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="230" y="186" width="200" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="530" y="186" width="200" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="830" y="186" width="200" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="500" y="224" width="260" height="32" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+  <rect x="800" y="224" width="260" height="32" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.4"/>
+
+  <rect x="220" y="281" width="220" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="520" y="281" width="220" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="820" y="281" width="220" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="230" y="341" width="200" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="530" y="341" width="10" height="26" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="830" y="341" width="200" height="26" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="500" y="379" width="260" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="800" y="379" width="260" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">释放完整参数:换对象行不通,改存储大小才行</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">三列是三个时刻,每格从上到下依次是参数对象、它脚下的存储、这一步的结果;存储条的长度就是它占的显存</text>
+  <text x="40" y="90" font-size="13" fill="#6b7280">紫 = 完整参数还活着,灰 = 对象已经不是原来那个,红 = 这一步出了问题,绿 = 这一步成立</text>
+
+  <text x="330" y="112" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">① 前向算完</text>
+  <text x="630" y="112" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">② 前向结束,释放</text>
+  <text x="930" y="112" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">③ 反向重新凑齐</text>
+
+  <text x="170" y="148" font-size="14" font-weight="700" fill="#111827" text-anchor="end">天真做法</text>
+  <text x="170" y="168" font-size="11" fill="#6b7280" text-anchor="end">扔掉对象,下轮另建一个</text>
+
+  <text x="330" y="148" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">完整参数 · 对象 A</text>
+  <text x="330" y="166" font-size="11" fill="#6b7280" text-anchor="middle">autograd 存着它的一个视图</text>
+  <text x="630" y="148" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">对象 A 被丢弃</text>
+  <text x="630" y="166" font-size="11" fill="#6b7280" text-anchor="middle">可 autograd 还引着它</text>
+  <text x="930" y="148" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">另建了对象 B</text>
+  <text x="930" y="166" font-size="11" fill="#6b7280" text-anchor="middle">autograd 引的还是 A</text>
+
+  <text x="330" y="203" font-size="11" fill="#6b7280" text-anchor="middle">存储:完整大小</text>
+  <text x="630" y="203" font-size="11" fill="#6b7280" text-anchor="middle">存储还在,没还回去</text>
+  <text x="930" y="203" font-size="11" fill="#6b7280" text-anchor="middle">新存储:完整大小</text>
+
+  <text x="330" y="244" font-size="11" fill="#9ca3af" text-anchor="middle">这一刻两种做法还一样</text>
+  <text x="630" y="244" font-size="11" fill="#6b7280" text-anchor="middle">引用计数归不了零,显存一点没降</text>
+  <text x="930" y="244" font-size="11" fill="#6b7280" text-anchor="middle">新对象不能恢复已保存的引用</text>
+
+  <text x="170" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="end">实际做法</text>
+  <text x="170" y="323" font-size="11" fill="#6b7280" text-anchor="end">对象不动,只改存储大小</text>
+
+  <text x="330" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">完整参数 · 对象 X</text>
+  <text x="330" y="321" font-size="11" fill="#6b7280" text-anchor="middle">autograd 存着它的一个视图</text>
+  <text x="630" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">还是对象 X</text>
+  <text x="630" y="321" font-size="11" fill="#6b7280" text-anchor="middle">autograd 的视图原样有效</text>
+  <text x="930" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">还是对象 X</text>
+  <text x="930" y="321" font-size="11" fill="#6b7280" text-anchor="middle">autograd 的视图指着同一块</text>
+
+  <text x="330" y="358" font-size="11" fill="#6b7280" text-anchor="middle">存储:完整大小</text>
+  <text x="550" y="358" font-size="11" fill="#6b7280">缩到 0 字节,显存已还</text>
+  <text x="930" y="358" font-size="11" fill="#6b7280" text-anchor="middle">撑回完整大小,原地写入</text>
+
+  <text x="330" y="399" font-size="11" fill="#9ca3af" text-anchor="middle">这一刻两种做法还一样</text>
+  <text x="630" y="399" font-size="11" fill="#6b7280" text-anchor="middle">对象与别名原样保留,显存真的还了</text>
+  <text x="930" y="399" font-size="11" fill="#6b7280" text-anchor="middle">保留别名,反向前恢复所需数据</text>
+</svg>

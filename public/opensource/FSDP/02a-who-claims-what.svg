@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="400" viewBox="0 0 1120 400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="400" fill="#ffffff"/>
+
+  <rect x="60" y="100" width="1000" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="240" y="140" width="200" height="140" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="460" y="140" width="200" height="140" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="680" y="140" width="200" height="140" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="80" y="190" width="140" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="900" y="190" width="140" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+
+  <rect x="256" y="176" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="256" y="226" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="476" y="176" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="476" y="226" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="696" y="176" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <rect x="696" y="226" width="168" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">一次调用收走谁:自底向上,后调的只拿得到剩下的</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">绿 = 被层上那 3 次调用认领走的参数,紫 = 剩给根上最后那一次的;虚线框是一次调用圈出的范围,框上的编号是调用顺序</text>
+
+  <text x="76" y="124" font-size="12" fill="#6b7280">④ 根模块上最后这一次:范围是整棵树</text>
+
+  <text x="252" y="164" font-size="12" fill="#6b7280">① 层 1</text>
+  <text x="472" y="164" font-size="12" fill="#6b7280">② 层 2</text>
+  <text x="692" y="164" font-size="12" fill="#6b7280">③ 层 3</text>
+
+  <text x="150" y="216" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Embedding</text>
+  <text x="150" y="238" font-size="11" fill="#6b7280" text-anchor="middle">没人认领,归根组</text>
+  <text x="970" y="216" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">LM Head</text>
+  <text x="970" y="238" font-size="11" fill="#6b7280" text-anchor="middle">没人认领,归根组</text>
+
+  <text x="340" y="203" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Attention</text>
+  <text x="340" y="253" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">MLP</text>
+  <text x="560" y="203" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Attention</text>
+  <text x="560" y="253" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">MLP</text>
+  <text x="780" y="203" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Attention</text>
+  <text x="780" y="253" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">MLP</text>
+
+  <text x="40" y="336" font-size="11" fill="#9ca3af">调用顺序 ① ② ③ ④:每一次都从这个模块往下找,碰到已经分好片的子树就不再往里走,所以后调的那次自动只拿到剩下的</text>
+  <text x="40" y="358" font-size="11" fill="#9ca3af">根上那一次不是可有可无的收尾:不调它,嵌入与输出头就不属于任何一组,不切、不搬设备、反向也不归约</text>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="490" viewBox="0 0 1120 490">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="490" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="36" font-size="19" font-weight="700" fill="#111827">存档区块不必等于恢复后的分片</text>
+<text x="32" y="61" font-size="13" fill="#6b7280">12 元素的示意张量:3 路保存 → 2 路恢复；绿 = 保存布局,紫 = 恢复布局</text>
+<text x="32" y="105" font-size="14" font-weight="700" fill="#111827">保存时</text>
+<text x="32" y="127" font-size="11" fill="#6b7280">各 rank 只持有本地分片</text>
+<g fill="#e3f4ec" stroke="#5fa886">
+<rect x="220" y="90" width="240" height="65" rx="6"/><rect x="480" y="90" width="240" height="65" rx="6"/><rect x="740" y="90" width="240" height="65" rx="6"/>
+</g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="238" y="116">rank 0 · [0, 4)</text><text x="498" y="116">rank 1 · [4, 8)</text><text x="758" y="116">rank 2 · [8, 12)</text></g>
+<g font-size="11" fill="#6b7280"><text x="238" y="139">4 个元素</text><text x="498" y="139">4 个元素</text><text x="758" y="139">4 个元素</text></g>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)"><path d="M340 155V212"/><path d="M600 155V212"/><path d="M860 155V212"/></g>
+<text x="32" y="233" font-size="14" font-weight="700" fill="#111827">checkpoint</text><text x="32" y="255" font-size="11" fill="#6b7280">同一参数名 + 区块位置</text>
+<rect x="210" y="195" width="780" height="104" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<g fill="#e3f4ec" stroke="#5fa886"><rect x="220" y="218" width="240" height="38" rx="6"/><rect x="480" y="218" width="240" height="38" rx="6"/><rect x="740" y="218" width="240" height="38" rx="6"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="238" y="242">区块 A</text><text x="498" y="242">区块 B</text><text x="758" y="242">区块 C</text></g>
+<path d="M600 213V265" stroke="#8f8bd8" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="495" y="283" font-size="11" fill="#6b7280">B 的前半与后半分开读取</text>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)"><path d="M340 299V350"/><path d="M535 299L475 350"/><path d="M665 299L725 350"/><path d="M860 299V350"/></g>
+<text x="32" y="373" font-size="14" font-weight="700" fill="#111827">恢复时</text><text x="32" y="395" font-size="11" fill="#6b7280">按目标范围生成读取计划</text>
+<g fill="#ecebfb" stroke="#8f8bd8"><rect x="220" y="353" width="370" height="70" rx="6"/><rect x="610" y="353" width="370" height="70" rx="6"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="238" y="380">新 rank 0 · [0, 6)</text><text x="628" y="380">新 rank 1 · [6, 12)</text></g>
+<g font-size="11" fill="#6b7280"><text x="238" y="404">A 全部 + B 前半,共 6 个元素</text><text x="628" y="404">B 后半 + C 全部,共 6 个元素</text></g>
+<text x="32" y="457" font-size="13" fill="#6b7280">横向位置按同一张量的全局范围排列；中间一排表示逻辑区块,不表示汇总到某个 rank 或单个文件。</text>
+<text x="32" y="479" font-size="11" fill="#9ca3af">元素数量与分片数均为教学示例,不是框架默认；优化器中的分片张量也按其目标布局恢复。</text>
+</g></svg>

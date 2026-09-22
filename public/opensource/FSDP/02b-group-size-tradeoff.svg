@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+
+  <rect x="173" y="143" width="404" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="173" y="243" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="255" y="243" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="337" y="243" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="419" y="243" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="501" y="243" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="173" y="343" width="76" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="255" y="343" width="158" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="419" y="343" width="158" height="58" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <rect x="180" y="150" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="262" y="150" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="344" y="150" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="426" y="150" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="508" y="150" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+
+  <rect x="180" y="250" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="262" y="250" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="344" y="250" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="426" y="250" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="508" y="250" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+
+  <rect x="180" y="350" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="262" y="350" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="344" y="350" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="426" y="350" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="508" y="350" width="62" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+
+  <rect x="900" y="161" width="150" height="22" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="900" y="261" width="30" height="22" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="900" y="361" width="60" height="22" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">组划得粗还是细:组数与单次参数聚合量的取舍</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">灰块 = 模型里等大的一段参数,虚线框 = 一次调用圈出的通信组,紫条 = 最大的那个组一次凑齐要拉进来多少完整参数</text>
+
+  <text x="700" y="124" font-size="11" fill="#9ca3af" text-anchor="middle">组数</text>
+  <text x="900" y="124" font-size="11" fill="#9ca3af">一次凑齐最多拉进来多少</text>
+
+  <text x="40" y="168" font-size="13" font-weight="700" fill="#111827">只在根上调一次</text>
+  <text x="40" y="188" font-size="11" fill="#9ca3af">仍要聚合完整模型参数</text>
+  <text x="40" y="268" font-size="13" font-weight="700" fill="#111827">逐层调,根上最后</text>
+  <text x="40" y="288" font-size="11" fill="#9ca3af">正常用法</text>
+  <text x="40" y="368" font-size="13" font-weight="700" fill="#111827">每 2 层并成一组</text>
+  <text x="40" y="388" font-size="11" fill="#9ca3af">层小、层多时</text>
+
+  <text x="211" y="178" font-size="11" font-weight="700" fill="#111827" text-anchor="middle">Embedding</text>
+  <text x="293" y="178" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 1</text>
+  <text x="375" y="178" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 2</text>
+  <text x="457" y="178" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 3</text>
+  <text x="539" y="178" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 4</text>
+
+  <text x="211" y="278" font-size="11" font-weight="700" fill="#111827" text-anchor="middle">Embedding</text>
+  <text x="293" y="278" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 1</text>
+  <text x="375" y="278" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 2</text>
+  <text x="457" y="278" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 3</text>
+  <text x="539" y="278" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 4</text>
+
+  <text x="211" y="378" font-size="11" font-weight="700" fill="#111827" text-anchor="middle">Embedding</text>
+  <text x="293" y="378" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 1</text>
+  <text x="375" y="378" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 2</text>
+  <text x="457" y="378" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 3</text>
+  <text x="539" y="378" font-size="13" font-weight="700" fill="#111827" text-anchor="middle">层 4</text>
+
+  <text x="375" y="216" font-size="11" fill="#9ca3af" text-anchor="middle">整个模型就是一个组</text>
+  <text x="211" y="316" font-size="11" fill="#9ca3af" text-anchor="middle">根组</text>
+  <text x="211" y="416" font-size="11" fill="#9ca3af" text-anchor="middle">根组</text>
+
+  <text x="700" y="178" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">1</text>
+  <text x="700" y="278" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">5</text>
+  <text x="700" y="378" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">3</text>
+
+
+  <text x="40" y="450" font-size="11" fill="#9ca3af">根上那一次收的是剩下的:各层都被前面几次认领走了,只剩嵌入归它,所以它也是一个组</text>
+  <text x="40" y="472" font-size="11" fill="#9ca3af">紫条只表示最大单组参数量,不是总显存;整步通信还取决于反向重聚合和模块调用方式。</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="558" viewBox="0 0 1120 558" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="558" fill="#ffffff"/>
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">同一件事,三条路线各排在第几步</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">示意四路均匀分片;各列按所示初始化路径比较,不代表全部参数或整步显存峰值</text>
+  <text x="40" y="92" font-size="11" fill="#9ca3af">虚框 = 这一步过后meta:只有形状、无数据;灰 = 卡上只剩本卡那一段;紫 = 卡上躺着完整形状的一整份</text>
+
+  <text x="405" y="126" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">先切开,再填数</text>
+  <text x="405" y="148" font-size="11" fill="#9ca3af" text-anchor="middle">本章讲的这一条</text>
+  <text x="687" y="126" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">先造好,再切开</text>
+  <text x="687" y="148" font-size="11" fill="#9ca3af" text-anchor="middle">老一代与 Megatron 自带的全分片</text>
+  <text x="969" y="126" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">生来就是切好的</text>
+  <text x="969" y="148" font-size="11" fill="#9ca3af" text-anchor="middle">Megatron 的 GPU TP 层</text>
+
+  <rect x="839" y="168" width="260" height="302" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="855" y="196" font-size="11" fill="#9ca3af">第 1 步</text>
+  <rect x="855" y="208" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="855" y="208" width="55" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="855" y="254" font-size="11" fill="#6b7280">尺寸在构造函数里按并行度算好</text>
+  <text x="855" y="272" font-size="11" fill="#6b7280">分配与写初值都在同一步完成</text>
+  <text x="855" y="290" font-size="11" fill="#6b7280">左边四件事在这里合成一件</text>
+
+  <text x="255" y="212" font-size="14" font-weight="700" fill="#111827" text-anchor="end">搭出结构与参数对象</text>
+  <text x="275" y="186" font-size="11" fill="#9ca3af">第 1 步</text>
+  <rect x="275" y="194" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="275" y="234" font-size="11" fill="#6b7280">meta 参数:有形状、无数据</text>
+  <text x="557" y="186" font-size="11" fill="#9ca3af">第 1 步</text>
+  <rect x="557" y="194" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="557" y="234" font-size="11" fill="#6b7280">先用 meta 搭出结构</text>
+
+  <text x="255" y="288" font-size="14" font-weight="700" fill="#111827" text-anchor="end">定下本卡持有哪一段</text>
+  <text x="275" y="262" font-size="11" fill="#9ca3af">第 2 步</text>
+  <rect x="275" y="270" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="275" y="310" font-size="11" fill="#6b7280">切法与归属定下来,仍然没有字节</text>
+  <text x="557" y="262" font-size="11" fill="#9ca3af">第 3 步</text>
+  <rect x="557" y="270" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="557" y="270" width="55" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="557" y="310" font-size="11" fill="#6b7280">切的时候才留下本卡那一段</text>
+
+  <text x="255" y="364" font-size="14" font-weight="700" fill="#111827" text-anchor="end">为本卡那一段分配内存</text>
+  <text x="275" y="338" font-size="11" fill="#9ca3af">第 3 步</text>
+  <rect x="275" y="346" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="275" y="346" width="55" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="275" y="386" font-size="11" fill="#6b7280">只为本卡那一段分配</text>
+  <text x="557" y="338" font-size="11" fill="#9ca3af">第 3 步</text>
+  <rect x="557" y="346" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="557" y="346" width="55" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="557" y="386" font-size="11" fill="#6b7280">和上一格是同一步</text>
+
+  <text x="255" y="440" font-size="14" font-weight="700" fill="#111827" text-anchor="end">写入初值</text>
+  <text x="275" y="414" font-size="11" fill="#9ca3af">第 4 步</text>
+  <rect x="275" y="422" width="220" height="24" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="275" y="422" width="55" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="275" y="462" font-size="11" fill="#6b7280">直接在这一段上写初值</text>
+  <text x="557" y="414" font-size="11" fill="#9ca3af">第 2 步</text>
+  <rect x="557" y="422" width="220" height="24" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="785" y="438" font-size="11" fill="#9ca3af">← 峰值</text>
+  <text x="557" y="462" font-size="11" fill="#6b7280">完整一份先整个落到卡上</text>
+
+  <text x="255" y="506" font-size="14" font-weight="700" fill="#111827" text-anchor="end">图示参数的驻留量</text>
+  <text x="275" y="506" font-size="11" fill="#6b7280">切开之后的那一份</text>
+  <text x="557" y="506" font-size="11" fill="#6b7280">一个分片单元的完整一份</text>
+  <text x="855" y="506" font-size="11" fill="#6b7280">切开之后的那一份</text>
+
+  <text x="40" y="536" font-size="11" fill="#9ca3af">同一行是三条路线都必须做的同一件事,不是同一个时刻;三条路线各自的参数名都在第五节</text>
+</svg>
