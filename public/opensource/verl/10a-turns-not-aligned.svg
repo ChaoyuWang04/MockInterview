@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+
+  <!-- ===== 上半:各走各的 ===== -->
+  <rect x="108" y="104" width="240" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+
+  <rect x="108" y="148" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="198" y="148" width="60" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="258" y="148" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="348" y="148" width="60" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="408" y="148" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+
+  <rect x="108" y="192" width="150" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="258" y="192" width="120" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="378" y="192" width="180" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+
+  <rect x="720" y="96" width="368" height="144" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+
+  <!-- ===== 下半:按轮对齐 ===== -->
+  <rect x="108" y="314" width="240" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="348" y="314" width="450" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+
+  <rect x="108" y="358" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="198" y="358" width="150" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="348" y="358" width="60" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="408" y="358" width="60" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="468" y="358" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="558" y="358" width="90" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="648" y="358" width="60" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="708" y="358" width="90" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+
+  <rect x="108" y="402" width="150" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="258" y="402" width="90" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="348" y="402" width="120" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="468" y="402" width="180" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="648" y="402" width="150" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+
+  <!-- 连线与关卡 -->
+  <polyline points="354,121 712,121" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <polyline points="504,165 712,165" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <polyline points="564,209 712,209" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+
+  <line x1="558" y1="100" x2="558" y2="242" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="32" y1="276" x2="1088" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+
+  <line x1="348" y1="310" x2="348" y2="440" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="468" y1="310" x2="468" y2="440" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="648" y1="310" x2="648" y2="440" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="708" y1="310" x2="708" y2="440" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="558" y1="310" x2="558" y2="440" stroke="#e5e7eb" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <line x1="798" y1="306" x2="798" y2="444" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <!-- ===== 文字 ===== -->
+  <text x="32" y="38" font-size="19" font-weight="700" fill="#111827">三条轨迹,各走各的轮数</text>
+  <text x="32" y="62" font-size="13" fill="#6b7280">绿 = 模型在生成,黄 = 工具在跑,灰 = 停下来干等;横轴是时间,段数与长度为示意</text>
+
+  <text x="32" y="96" font-size="14" font-weight="700" fill="#111827">各走各的(当前)</text>
+  <text x="32" y="125" font-size="11" fill="#6b7280">轨迹 A</text>
+  <text x="32" y="169" font-size="11" fill="#6b7280">轨迹 B</text>
+  <text x="32" y="213" font-size="11" fill="#6b7280">轨迹 C</text>
+
+  <text x="228" y="125" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="153" y="169" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="228" y="169" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="303" y="169" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="378" y="169" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="453" y="169" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="183" y="213" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="318" y="213" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="468" y="213" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+
+  <text x="558" y="258" font-size="11" fill="#9ca3af" text-anchor="middle">最后一条到这里</text>
+
+  <text x="744" y="126" font-size="14" font-weight="700" fill="#111827">TransferQueue</text>
+  <text x="744" y="150" font-size="11" fill="#6b7280">谁先跑完谁先落库,一条轨迹一个键</text>
+  <text x="744" y="172" font-size="11" fill="#6b7280">键里带着题目编号、会话号与序号</text>
+  <text x="744" y="194" font-size="11" fill="#6b7280">题目那一级的状态标记,要等它底下</text>
+  <text x="744" y="212" font-size="11" fill="#6b7280">所有会话都落定才写终态</text>
+
+  <text x="32" y="304" font-size="14" font-weight="700" fill="#111827">按轮对齐会怎样(对照)</text>
+  <text x="32" y="335" font-size="11" fill="#6b7280">轨迹 A</text>
+  <text x="32" y="379" font-size="11" fill="#6b7280">轨迹 B</text>
+  <text x="32" y="423" font-size="11" fill="#6b7280">轨迹 C</text>
+
+  <text x="228" y="335" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="360" y="335" font-size="11" fill="#6b7280">已经收尾了,还得陪着整批走完</text>
+  <text x="153" y="379" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="273" y="379" font-size="11" fill="#6b7280" text-anchor="middle">干等</text>
+  <text x="378" y="379" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="438" y="379" font-size="11" fill="#6b7280" text-anchor="middle">干等</text>
+  <text x="513" y="379" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="603" y="379" font-size="11" fill="#6b7280" text-anchor="middle">干等</text>
+  <text x="678" y="379" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="753" y="379" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="183" y="423" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="303" y="423" font-size="11" fill="#6b7280" text-anchor="middle">干等</text>
+  <text x="408" y="423" font-size="11" fill="#6b7280" text-anchor="middle">工具</text>
+  <text x="558" y="423" font-size="11" fill="#6b7280" text-anchor="middle">生成</text>
+  <text x="723" y="423" font-size="11" fill="#6b7280" text-anchor="middle">干等</text>
+
+  <text x="512" y="458" font-size="11" fill="#9ca3af" text-anchor="middle">上半张在这里已全部交卷</text>
+  <text x="798" y="458" font-size="11" fill="#d9877a" text-anchor="middle">整批到这里才算完</text>
+
+  <text x="32" y="484" font-size="11" fill="#9ca3af">每一轮的关卡按「这一轮里最慢那条」定,于是整批的时长是各轮最大值之和,而不是最长那条轨迹自己的长度。</text>
+</svg>
