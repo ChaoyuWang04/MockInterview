@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="850" viewBox="0 0 1120 850">
+<rect width="1120" height="850" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Helvetica Neue, Microsoft YaHei, Arial, sans-serif">
+<text x="24" y="33" font-size="19" font-weight="700" fill="#111827">自回归 omni：在线继承训练骨架，离线另写循环</text>
+<text x="24" y="58" font-size="13" font-weight="400" fill="#6b7280">绿＝继承的在线调度　紫＝本仓模型适配　黄＝本仓离线循环　灰＝数据与执行阶段</text>
+<text x="24" y="79" font-size="11" font-weight="400" fill="#6b7280">虚线箭头＝类继承；实线箭头＝数据或权重流。各行按真实路径组织，不表示模块一一对应。</text>
+<rect x="22" y="97" width="1076" height="196" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="124" font-size="14" font-weight="700" fill="#111827">在线同步 · 共卡轮换</text>
+<rect x="40" y="141" width="260" height="57" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="54" y="166" font-size="14" font-weight="700" fill="#111827">verl · PPOTrainerSync</text>
+<rect x="375" y="141" width="265" height="57" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="389" y="166" font-size="14" font-weight="700" fill="#111827">OmniPPOTrainerSync</text>
+<text x="389" y="187" font-size="11" font-weight="400" fill="#6b7280">补 Tokenizer / Processor 与恢复钩子</text>
+<path d="M300 168 H375" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<rect x="40" y="217" width="190" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="54" y="242" font-size="14" font-weight="700" fill="#111827">多模态提示词</text>
+<text x="54" y="263" font-size="11" font-weight="400" fill="#6b7280">媒体条件与提示 Token</text>
+<rect x="275" y="217" width="225" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="289" y="242" font-size="14" font-weight="700" fill="#111827">Rollout → Reward</text>
+<text x="289" y="263" font-size="11" font-weight="400" fill="#6b7280">vLLM-Omni 返回策略序列</text>
+<rect x="545" y="217" width="255" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="559" y="242" font-size="14" font-weight="700" fill="#111827">log-prob → Advantage</text>
+<text x="559" y="263" font-size="11" font-weight="400" fill="#6b7280">按算法执行所需前向</text>
+<rect x="845" y="217" width="225" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="859" y="242" font-size="14" font-weight="700" fill="#111827">Actor 更新</text>
+<text x="859" y="263" font-size="11" font-weight="400" fill="#6b7280">随后同步权重给 Rollout</text>
+<path d="M230 245 H275" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M500 245 H545" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M800 245 H845" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="22" y="312" width="1076" height="330" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="340" font-size="14" font-weight="700" fill="#111827">在线分卡异步 · 独立 Rollout 与更新重叠</text>
+<rect x="40" y="356" width="295" height="57" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="54" y="381" font-size="14" font-weight="700" fill="#111827">verl · PPOTrainerSeparateAsync</text>
+<rect x="410" y="356" width="320" height="57" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="424" y="381" font-size="14" font-weight="700" fill="#111827">OmniPPOTrainerSeparateAsync</text>
+<text x="424" y="402" font-size="11" font-weight="400" fill="#6b7280">补 LoRA 同步与 Actor 快照能力</text>
+<path d="M335 383 H410" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<rect x="40" y="438" width="220" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="54" y="463" font-size="14" font-weight="700" fill="#111827">独立 Rollout</text>
+<text x="54" y="484" font-size="11" font-weight="400" fill="#6b7280">持续接收多模态提示词</text>
+<rect x="315" y="438" width="220" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="329" y="463" font-size="14" font-weight="700" fill="#111827">完成样本与 Reward</text>
+<text x="329" y="484" font-size="11" font-weight="400" fill="#6b7280">提交给采样缓冲区</text>
+<rect x="595" y="438" width="220" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="609" y="463" font-size="14" font-weight="700" fill="#111827">缓冲区取样</text>
+<text x="609" y="484" font-size="11" font-weight="400" fill="#6b7280">检查样本陈旧程度</text>
+<rect x="865" y="438" width="205" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="879" y="463" font-size="14" font-weight="700" fill="#111827">Actor 更新</text>
+<text x="879" y="484" font-size="11" font-weight="400" fill="#6b7280">训练 GPU 池</text>
+<path d="M260 466 H315" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M535 466 H595" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M815 466 H865" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M967 495 V518 H150 V495" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="395" y="512" font-size="11" font-weight="400" fill="#6b7280">新权重回传；在途请求先中断并暂停接单</text>
+<rect x="40" y="545" width="270" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="54" y="570" font-size="14" font-weight="700" fill="#111827">已生成前缀</text>
+<text x="54" y="591" font-size="11" font-weight="400" fill="#6b7280">保留 Token 与已有 log-prob</text>
+<rect x="370" y="545" width="290" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="384" y="570" font-size="14" font-weight="700" fill="#111827">同步后续跑</text>
+<text x="384" y="591" font-size="11" font-weight="400" fill="#6b7280">原提示词 + 前缀；扣除已用预算</text>
+<rect x="720" y="545" width="350" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="734" y="570" font-size="14" font-weight="700" fill="#111827">完整回答可能跨权重版本</text>
+<text x="734" y="591" font-size="11" font-weight="400" fill="#6b7280">记录起止版本；当前恢复范围为单阶段 Thinker</text>
+<path d="M310 573 H370" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M660 573 H720" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="40" y="624" font-size="11" font-weight="400" fill="#6b7280">训练 GPU 上的共卡副本仍参与初始采样与验证，训练阶段 sleep；分卡不等于删除这些副本。</text>
+<rect x="22" y="662" width="1076" height="164" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="690" font-size="14" font-weight="700" fill="#111827">离线 Direct Preference · 本仓独立训练器，不继承上述在线循环</text>
+<rect x="40" y="711" width="240" height="65" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="54" y="736" font-size="14" font-weight="700" fill="#111827">已给定的偏好对</text>
+<text x="54" y="757" font-size="11" font-weight="400" fill="#6b7280">chosen / rejected 保持相邻</text>
+<rect x="340" y="711" width="340" height="65" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="354" y="736" font-size="14" font-weight="700" fill="#111827">Actor + Reference Model</text>
+<text x="354" y="757" font-size="11" font-weight="400" fill="#6b7280">分别计算回答的 log-prob</text>
+<rect x="740" y="711" width="330" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="754" y="736" font-size="14" font-weight="700" fill="#111827">DPO 损失 → Actor 更新</text>
+<text x="754" y="757" font-size="11" font-weight="400" fill="#6b7280">OmniDirectPreferenceRayTrainer</text>
+<path d="M280 744 H340" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M680 744 H740" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="40" y="806" font-size="11" font-weight="400" fill="#6b7280">此路径不启动在线 Rollout 与 Reward 服务；图中不表达 GPU 数量、吞吐或时间比例。</text>
+</g></svg>

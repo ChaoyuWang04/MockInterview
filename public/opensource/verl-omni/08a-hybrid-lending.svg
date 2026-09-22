@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="650" viewBox="0 0 1120 650">
+<rect width="1120" height="650" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">独立 Rollout 持续供货,共卡资源在周期边界借出与收回</text>
+<text x="28" y="58" font-size="13" fill="#6b7280">绿 = Rollout　紫 = Actor　黄 = 权重或资源交接　灰 = 缓冲控制;示意顺序,长度不表示耗时</text>
+<path d="M 165 96 H 1086" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="170" y="86" font-size="11" fill="#9ca3af">当前周期</text><text x="680" y="86" font-size="11" fill="#9ca3af">下一周期</text><text x="1050" y="86" font-size="11" fill="#9ca3af">时间</text>
+<text x="28" y="148" font-size="14" font-weight="700" fill="#111827">独立 GPU</text>
+<rect x="165" y="117" width="285" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="465" y="117" width="135" height="55" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="615" y="117" width="470" height="55" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="185" y="142" font-size="14" font-weight="700" fill="#111827">Rollout</text><text x="185" y="160" font-size="11" fill="#6b7280">Actor 训练时仍可生成</text>
+<text x="482" y="141" font-size="14" font-weight="700" fill="#111827">同步新权重</text><text x="482" y="159" font-size="11" fill="#6b7280">周期边界</text>
+<text x="635" y="142" font-size="14" font-weight="700" fill="#111827">Rollout 继续生成</text><text x="635" y="160" font-size="11" fill="#6b7280">收回共卡副本后,仍由独立池接手任务</text>
+<text x="28" y="243" font-size="14" font-weight="700" fill="#111827">共卡 GPU</text>
+<rect x="165" y="207" width="285" height="65" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="465" y="207" width="135" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="615" y="207" width="170" height="65" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="207" width="115" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="930" y="207" width="155" height="65" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="185" y="234" font-size="14" font-weight="700" fill="#111827">Actor 子批训练</text><text x="185" y="254" font-size="11" fill="#6b7280">周期内不反复借出</text>
+<text x="482" y="233" font-size="14" font-weight="700" fill="#111827">决定借出</text><text x="482" y="253" font-size="11" fill="#6b7280">装权重 → 恢复</text>
+<text x="635" y="233" font-size="14" font-weight="700" fill="#111827">Rollout 帮忙</text><text x="635" y="253" font-size="11" fill="#6b7280">恢复后才加入路由</text>
+<text x="815" y="233" font-size="14" font-weight="700" fill="#111827">收回</text><text x="815" y="253" font-size="11" fill="#6b7280">abort → sleep</text>
+<text x="946" y="233" font-size="14" font-weight="700" fill="#111827">Actor 开训</text><text x="946" y="253" font-size="11" fill="#6b7280">每个子批仍须够数</text>
+<path d="M 700 272 V 306" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 922 172 V 294 H 850 V 306" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="165" y="313" width="920" height="68" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="185" y="339" font-size="14" font-weight="700" fill="#111827">TransferQueue 存轨迹　→　ReplayBuffer 筛完整题组　→　Actor 按子批消费</text>
+<text x="185" y="363" font-size="11" fill="#6b7280">完成且未被淘汰才算库存;默认剔除提交年龄超限与失败组,等量补入新提示词</text>
+<rect x="28" y="408" width="518" height="136" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="568" y="408" width="517" height="136" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="46" y="434" font-size="14" font-weight="700" fill="#111827">何时借出?</text>
+<text x="46" y="458" font-size="13" fill="#6b7280">先同步独立池,再检查下一周期的可用库存。</text>
+<text x="46" y="482" font-size="13" fill="#6b7280">未到最后一轮 + 库存未达门槛 + 预计收益超过往返成本。</text>
+<text x="46" y="510" font-size="11" fill="#9ca3af">尚无收益或成本历史时允许尝试;开关默认关闭。</text>
+<text x="586" y="434" font-size="14" font-weight="700" fill="#111827">何时收回?</text>
+<text x="586" y="458" font-size="13" fill="#6b7280">可用题组达到「收回比例 × 整批提示词数」。</text>
+<text x="586" y="482" font-size="13" fill="#6b7280">取整并钳在一个子批与整批之间;默认比例 0.4。</text>
+<text x="586" y="510" font-size="11" fill="#9ca3af">等待期间按年龄策略处理;wait 还可能阻塞在途旧组。</text>
+<text x="28" y="578" font-size="13" fill="#6b7280">收回不是瞬时:先移出路由,再 abort、sleep;引擎可能先执行完正在处理的生成批。</text>
+<text x="28" y="605" font-size="13" fill="#6b7280">被中断的扩散请求在剩余副本上从原始输入整条重试,不从去噪中间步续跑。</text>
+<text x="28" y="633" font-size="11" fill="#9ca3af">适用:已开启动态借卡与训推重叠,未启用 Rollout disaggregation;默认值据 v0.2.0 配置。</text>
+</g></svg>

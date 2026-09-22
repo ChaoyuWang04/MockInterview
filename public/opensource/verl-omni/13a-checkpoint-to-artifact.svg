@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="780" viewBox="0 0 1120 780"><rect width="1120" height="780" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="24" y="30" font-size="19" fill="#111827" font-weight="700">重建 Actor 权重，再组装推理产物</text>
+<text x="24" y="55" font-size="13" fill="#6b7280">绿＝训练所得权重；紫＝底模资产；黄＝转换与校验；红＝拒绝；灰＝产物容器。</text>
+<rect x="24" y="86" width="310" height="228" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="38" y="111" font-size="14" fill="#111827" font-weight="700">Actor Checkpoint</text>
+<text x="38" y="135" font-size="11" fill="#6b7280">fsdp_config.json + Actor config</text>
+<text x="38" y="156" font-size="11" fill="#6b7280">rank 文件包含各参数的局部分片</text>
+<rect x="44" y="168" width="126" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="58" y="193" font-size="14" fill="#111827" font-weight="700">rank A</text>
+<text x="58" y="217" font-size="11" fill="#6b7280">W 的局部切片</text>
+<rect x="188" y="168" width="126" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="202" y="193" font-size="14" fill="#111827" font-weight="700">rank B</text>
+<text x="202" y="217" font-size="11" fill="#6b7280">W 的局部切片</text>
+<text x="44" y="259" font-size="11" fill="#6b7280">两个 rank 仅为分片结构示意,不是默认规模。</text>
+<text x="44" y="283" font-size="11" fill="#6b7280">优化器、调度器与随机状态不进入推理产物。</text>
+<rect x="386" y="86" width="330" height="228" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="400" y="111" font-size="14" fill="#111827" font-weight="700">按参数逐个重建</text>
+<text x="400" y="135" font-size="11" fill="#6b7280">校验完整键集合、shape、dtype 与布局</text>
+<text x="400" y="156" font-size="11" fill="#6b7280">Shard：按 mesh 顺序沿记录维度拼接</text>
+<text x="400" y="177" font-size="11" fill="#6b7280">Replicate：逐值一致后保留一份</text>
+<rect x="414" y="229" width="134" height="33" fill="#e3f4ec" stroke="#5fa886"/><rect x="548" y="229" width="134" height="33" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="441" y="250" font-size="11" fill="#6b7280">W 的切片 A</text>
+<text x="575" y="250" font-size="11" fill="#6b7280">W 的切片 B</text>
+<text x="414" y="289" font-size="11" fill="#6b7280">恢复完整 W；不是融合 LoRA 增量。</text>
+<path d="M334 190 H386" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="766" y="86" width="330" height="228" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="780" y="111" font-size="14" fill="#111827" font-weight="700">写入新 safetensors</text>
+<text x="780" y="135" font-size="11" fill="#6b7280">每个 Tensor 完整写出</text>
+<text x="780" y="156" font-size="11" fill="#6b7280">按输出预算重新分文件,不按 rank 分</text>
+<text x="780" y="177" font-size="11" fill="#6b7280">写后读回,核对值、shape 和 dtype</text>
+<text x="780" y="198" font-size="11" fill="#6b7280">必要时转换原生 H3 名称与布局</text>
+<path d="M716 190 H766" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="24" y="350" width="310" height="110" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="38" y="375" font-size="14" fill="#111827" font-weight="700">LoRA / adapter 输入</text>
+<text x="38" y="399" font-size="11" fill="#6b7280">发现 LoRA 元信息或 adapter 参数</text>
+<text x="38" y="420" font-size="11" fill="#6b7280">当前出口拒绝；没有自动融合支路</text>
+<rect x="24" y="504" width="310" height="152" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="38" y="529" font-size="14" fill="#111827" font-weight="700">兼容本地底模</text>
+<text x="38" y="553" font-size="11" fill="#6b7280">配置 + 原有 transformer 权重</text>
+<text x="38" y="574" font-size="11" fill="#6b7280">VAE / text encoder / tokenizer 等</text>
+<text x="38" y="595" font-size="11" fill="#6b7280">训练组件的旧权重只供结构检查</text>
+<text x="38" y="616" font-size="11" fill="#6b7280">不会用于补全缺失 Actor 参数</text>
+<rect x="386" y="350" width="330" height="110" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="400" y="375" font-size="14" fill="#111827" font-weight="700">共同校验与暂存发布</text>
+<text x="400" y="399" font-size="11" fill="#6b7280">源/底模指纹 + 输出文件清单</text>
+<text x="400" y="420" font-size="11" fill="#6b7280">校验通过后才发布新目录</text>
+<path d="M931 314 V329 H551 V350" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M334 535 H358 V407 H386" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="766" y="350" width="330" height="110" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="780" y="375" font-size="14" fill="#111827" font-weight="700">单独组件产物</text>
+<text x="780" y="399" font-size="11" fill="#6b7280">config.json + 新 safetensors</text>
+<text x="780" y="420" font-size="11" fill="#6b7280">merge_manifest.json</text>
+<path d="M716 405 H766" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="766" y="504" width="330" height="152" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="780" y="529" font-size="14" fill="#111827" font-weight="700">完整 Pipeline 产物</text>
+<text x="780" y="553" font-size="11" fill="#6b7280">transformer/：新权重与配置</text>
+<text x="780" y="574" font-size="11" fill="#6b7280">其他组件：从底模复制</text>
+<text x="780" y="595" font-size="11" fill="#6b7280">model_index.json + merge_manifest.json</text>
+<text x="780" y="616" font-size="11" fill="#6b7280">Wan 可保留底模的 transformer_2</text>
+<path d="M716 427 H742 V554 H766" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M334 598 H766" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="411" y="587" font-size="11" fill="#8f8bd8">只复制未被新权重替换的底模资产</text>
+<rect x="386" y="691" width="710" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="400" y="716" font-size="14" fill="#111827" font-weight="700">验证边界</text>
+<text x="400" y="740" font-size="11" fill="#6b7280">文件完整性通过；runtime = not_run，加载、固定输入前向与生成质量另验。</text>
+<path d="M931 656 V691" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="24" y="730" font-size="11" fill="#6b7280">线表示文件/张量来源。</text>
+<text x="24" y="752" font-size="11" fill="#6b7280">框大小不代表字节数或耗时。</text>
+</g></svg>

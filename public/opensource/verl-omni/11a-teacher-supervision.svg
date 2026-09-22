@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="690" viewBox="0 0 1120 690">
+<rect width="1120" height="690" fill="#ffffff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">Teacher 监督学生实际走过的去噪状态,并不另造一批标准答案</text>
+<text x="28" y="58" font-size="13" fill="#6b7280">绿 = 学生轨迹　紫 = Actor　黄 = Teacher　灰 = 其他信号或数据处理;箭头表示数据流</text>
+<rect x="28" y="91" width="1064" height="69" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="48" y="119" font-size="14" font-weight="700" fill="#111827">学生 Rollout:同一批保存的状态、时间步与条件</text>
+<text x="48" y="143" font-size="11" fill="#6b7280">Teacher 看的是学生已经访问的状态;只重放保存的训练片段,不要求覆盖完整生成链。</text>
+<path d="M250 160 V208" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M800 160 V208" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="28" y="212" width="435" height="170" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="48" y="242" font-size="14" font-weight="700" fill="#111827">Actor:可训练</text>
+<text x="48" y="268" font-size="13" fill="#6b7280">在保存的状态上重新前向</text>
+<text x="48" y="305" font-size="14" font-weight="700" fill="#111827">学生下一步转移均值</text>
+<text x="48" y="331" font-size="13" fill="#6b7280">以及该步噪声标准差</text>
+<text x="48" y="361" font-size="11" fill="#6b7280">梯度只沿学生这侧反传</text>
+<rect x="510" y="212" width="582" height="170" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="530" y="242" font-size="14" font-weight="700" fill="#111827">Teacher:冻结、只前向</text>
+<text x="530" y="268" font-size="13" fill="#6b7280">单 Teacher:全部样本送入同一个模型</text>
+<text x="530" y="294" font-size="13" fill="#6b7280">多 Teacher:按来源拆批 → 分别前向 → 恢复行顺序</text>
+<text x="530" y="331" font-size="14" font-weight="700" fill="#111827">每条样本获得对应 Teacher 的下一步转移均值</text>
+<text x="530" y="361" font-size="11" fill="#6b7280">一个样本选一个 Teacher,不对多个预测取平均</text>
+<path d="M250 382 V416 H445 V446" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+<path d="M800 382 V416 H675 V446" stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#a)"/>
+<rect x="280" y="450" width="560" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="300" y="478" font-size="14" font-weight="700" fill="#111827">蒸馏损失:转移均值差的平方,按噪声方差归一</text>
+<text x="300" y="502" font-size="11" fill="#6b7280">作为主目标,或按系数加入任务目标;更新 Actor,不更新 Teacher。</text>
+<rect x="28" y="450" width="225" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="46" y="478" font-size="14" font-weight="700" fill="#111827">Reward Model</text>
+<text x="46" y="502" font-size="11" fill="#6b7280">给任务分数,不提供转移均值目标</text>
+<rect x="867" y="450" width="225" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="885" y="478" font-size="14" font-weight="700" fill="#111827">Reference Model</text>
+<text x="885" y="502" font-size="11" fill="#6b7280">约束策略变化,是另一条可选损失</text>
+<rect x="28" y="548" width="1064" height="110" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="48" y="575" font-size="14" font-weight="700" fill="#111827">物理部署不改变上面的监督关系</text>
+<text x="48" y="603" font-size="13" fill="#6b7280">默认共卡:Teacher 引擎放在 Actor worker 内,额外占用模型状态与前向资源。</text>
+<text x="48" y="631" font-size="13" fill="#6b7280">独立池:按 Teacher 分配 GPU;默认仍按步骤等待,需专门错步调度才与 Actor 更新重叠。</text>
+</g></svg>

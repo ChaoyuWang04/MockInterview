@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="704" viewBox="0 0 1120 704">
+<rect width="1120" height="704" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="24" y="30" font-size="19" fill="#111827" font-weight="700">不同样本形状，共用批接口</text>
+<text x="24" y="55" font-size="13" fill="#6b7280">绿＝在线原始消息；紫＝离线模型输入；黄＝转换；灰＝共用容器。字段为源码名称，B 表示逻辑行数。</text>
+<rect x="24" y="90" width="290" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="38" y="115" font-size="14" fill="#111827" font-weight="700">在线扩散 · 每行一个生成条件</text>
+<text x="38" y="139" font-size="11" fill="#6b7280">prompt: [{role, content}]</text>
+<text x="38" y="160" font-size="11" fill="#6b7280">negative_prompt: [{role, content}]</text>
+<text x="38" y="181" font-size="11" fill="#6b7280">可选媒体 + reward_model / extra_info</text>
+<rect x="348" y="90" width="310" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="362" y="115" font-size="14" fill="#111827" font-weight="700">默认数据集 → collate</text>
+<text x="362" y="139" font-size="11" fill="#6b7280">raw_prompt / raw_negative_prompt</text>
+<text x="362" y="160" font-size="11" fill="#6b7280">结构化消息保持为对象数组</text>
+<text x="362" y="181" font-size="11" fill="#6b7280">媒体占位符按原顺序嵌入消息</text>
+<path d="M314 146 H348" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="24" y="226" width="290" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="38" y="251" font-size="14" fill="#111827" font-weight="700">在线 Omni · 每行一个问答条件</text>
+<text x="38" y="275" font-size="11" fill="#6b7280">prompt: [{role, content}]</text>
+<text x="38" y="296" font-size="11" fill="#6b7280">images / videos / audios</text>
+<text x="38" y="317" font-size="11" fill="#6b7280">候选回答尚未生成</text>
+<rect x="348" y="226" width="310" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="362" y="251" font-size="14" fill="#111827" font-weight="700">媒体解析钩子 → AgentLoop 调用</text>
+<text x="362" y="275" font-size="11" fill="#6b7280">raw_prompt 保留结构化媒体消息</text>
+<text x="362" y="296" font-size="11" fill="#6b7280">Qwen 解析媒体并对齐音频</text>
+<text x="362" y="317" font-size="11" fill="#6b7280">NExT-QA 可补同源音轨</text>
+<path d="M314 282 H348" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="24" y="370" width="290" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="38" y="395" font-size="14" fill="#111827" font-weight="700">离线扩散 · 每行一对图片</text>
+<text x="38" y="419" font-size="11" fill="#6b7280">img_win / img_lose + 两份 latent</text>
+<text x="38" y="440" font-size="11" fill="#6b7280">prompt_embeds + mask / pooled</text>
+<text x="38" y="461" font-size="11" fill="#6b7280">win_score / lose_score</text>
+<rect x="348" y="370" width="310" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="362" y="395" font-size="14" fill="#111827" font-weight="700">读取预计算张量 → 成对展开</text>
+<text x="362" y="419" font-size="11" fill="#6b7280">[chosen, rejected] 共用 uid</text>
+<text x="362" y="440" font-size="11" fill="#6b7280">latents_clean / prompt_embeds</text>
+<text x="362" y="461" font-size="11" fill="#6b7280">sample_level_scores / is_chosen</text>
+<path d="M314 430 H348" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="24" y="520" width="290" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="38" y="545" font-size="14" fill="#111827" font-weight="700">离线 Omni · 每行一对回答</text>
+<text x="38" y="569" font-size="11" fill="#6b7280">prompt + 媒体上下文</text>
+<text x="38" y="590" font-size="11" fill="#6b7280">chosen / rejected</text>
+<text x="38" y="611" font-size="11" fill="#6b7280">同一条件，两个回答分支</text>
+<rect x="348" y="520" width="310" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="362" y="545" font-size="14" fill="#111827" font-weight="700">分别转换回答 → 成对展开</text>
+<text x="362" y="569" font-size="11" fill="#6b7280">input_ids / labels / position_ids</text>
+<text x="362" y="590" font-size="11" fill="#6b7280">multi_modal_inputs + 共用 uid</text>
+<text x="362" y="611" font-size="11" fill="#6b7280">[chosen, rejected]；单批同一模态</text>
+<path d="M314 580 H348" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="706" y="90" width="390" height="550" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="720" y="115" font-size="14" fill="#111827" font-weight="700">共用批接口 · 内容随路径变化</text>
+<rect x="726" y="138" width="350" height="92" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="740" y="163" font-size="14" fill="#111827" font-weight="700">在线：B 条原始条件</text>
+<text x="740" y="187" font-size="11" fill="#6b7280">non-tensor: 消息、元信息</text>
+<text x="740" y="208" font-size="11" fill="#6b7280">tensor: dummy_tensor（占位）</text>
+<path d="M658 146 H706" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M658 282 H706" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="726" y="252" width="350" height="92" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="740" y="277" font-size="14" fill="#111827" font-weight="700">在线后续编码</text>
+<text x="740" y="301" font-size="11" fill="#6b7280">AgentLoop 调用 Tokenizer / Processor</text>
+<text x="740" y="322" font-size="11" fill="#6b7280">生成后再补 Token、轨迹或模型条件</text>
+<rect x="726" y="384" width="350" height="102" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="740" y="409" font-size="14" fill="#111827" font-weight="700">离线：2B 条候选</text>
+<text x="740" y="433" font-size="11" fill="#6b7280">tensor: latent 或 Token / labels</text>
+<text x="740" y="454" font-size="11" fill="#6b7280">non-tensor: uid、路径、元信息</text>
+<text x="740" y="475" font-size="11" fill="#6b7280">按对应 collate 组织，不是相同字段</text>
+<path d="M658 430 H706" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M658 580 H706" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="726" y="527" font-size="11" fill="#6b7280">形状示意：</text>
+<rect x="726" y="541" width="81" height="35" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="731" y="563" font-size="10" fill="#6b7280">chosen A</text>
+<rect x="813" y="541" width="81" height="35" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="818" y="563" font-size="10" fill="#6b7280">rejected A</text>
+<rect x="900" y="541" width="81" height="35" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="905" y="563" font-size="10" fill="#6b7280">chosen B</text>
+<rect x="987" y="541" width="81" height="35" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="992" y="563" font-size="10" fill="#6b7280">rejected B</text>
+<text x="726" y="603" font-size="11" fill="#6b7280">B → 2B 来自每行两个分支；四格仅举两对示例。</text>
+<text x="24" y="683" font-size="13" fill="#6b7280">读取与转换保留各自语义；共用接口并不把在线消息、扩散 latent 和 Omni Token 变成同一种内容。</text>
+</g></svg>
