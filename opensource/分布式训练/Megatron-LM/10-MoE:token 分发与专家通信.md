@@ -32,9 +32,15 @@ Megatron 把往返拆成准备、dispatch、专家前处理、专家计算、com
 
 ## 四、和同类常见做法不一样的地方
 
-DeepSpeed 的 MoE 层也有「整理输入—EP all-to-all—专家计算—EP all-to-all—还原」主线。Megatron 的组织特点是把通信前后处理做成统一 dispatcher 接口:同一 MoE 层可以接聚集、目的地交换或融合后端,专家模块仍消费按专家分组的输入与计数。
+DeepSpeed MoE也有“整理输入—EP交换—专家计算—返回—还原”的链路。Megatron的dispatcher抽象把本地重排和跨rank通信方案分开,便于在同一MoE层下更换数据搬运路线。
 
-这使优化可以落在不同位置:只融合本地重排,更换跨 rank 传输后端,或改用 grouped expert 执行。比较时应固定模型、路由结果与负载,分别测这些阶段,不能把换了后端的总收益全部算到 all-to-all 本身。
+| 对比维度 | DeepSpeed已核MoE层路径 | Megatron MoE路径 |
+|---|---|---|
+| 跨EP的数据流 | 整理专家输入后all-to-all,专家结果再all-to-all返回 | 可选聚集、目的地交换或融合dispatcher,不固定为同一通信路线 |
+| 输入如何交给专家 | gating分发信息用于组织专家及capacity维度 | dispatcher提供按专家分组的输入与计数,专家实现消费这一约定 |
+| 本地处理与通信 | 分发/组合与EP交换在MoE层主链衔接 | dispatcher负责重排及逆变换,融合后端可以接管其中部分阶段 |
+
+本地重排、跨rank传输、grouped expert执行都可能影响收益。对照时固定路由结果与负载,分别观察阶段耗时,避免把所有收益归给all-to-all。
 
 ## 五、调参与观测
 

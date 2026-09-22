@@ -32,7 +32,16 @@ CSA的indexer有自己的压缩表示,用于检索;主attention使用另一个co
 
 ## 四、和同类常见做法不一样的地方
 
-PyTorch FSDP主要改变参数、梯度和optimizer状态的分布,并不替模型决定哪些token参与attention。Megatron这里把候选选择、辅助loss、压缩KV、模型spec和kernel后端放在同一条实现链上。判断接入是否正确,需要核对这条链的语义与限制,不能只检查外层训练引擎能否包住模型。
+同样面对长序列,DeepSpeed Ulysses与本章的稀疏/压缩attention处理的是不同维度:前者重新分布计算,后者改变参与计算的候选表示。这个对照用于区分并行化与模型算法变化,不作性能排名。
+
+| 对比维度 | DeepSpeed Ulysses路径 | Megatron本章DSA/CSA路径 |
+|---|---|---|
+| 改变什么 | 在序列与head切分布局间交换数据,交给attention计算 | DSA选择原始位置,CSA组合压缩位置与局部窗口 |
+| 是否引入新的候选选择 | 布局交换本身不引入本章的top-k indexer或压缩KV | 选择器、compressor及辅助训练共同决定候选集合 |
+| 主要增加的工作 | 跨rank布局交换及其通信约束 | indexer评分、top-k、压缩与辅助loss,还受后端限制 |
+| 验证的重点 | 布局转换前后attention语义与通信代价 | 候选语义、训练质量及选择成本,不能只看稀疏比例 |
+
+两种思路在概念上可以组合,但本基准的DSv4路径限制TP和CP均为1;不能由这个对照推导出它已支持Ulysses或任意序列并行。
 
 ## 五、调参与观测
 

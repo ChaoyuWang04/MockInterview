@@ -30,7 +30,15 @@ CUDA graph先warmup,再capture一段可重复的GPU工作,后续把新数据放�
 
 ## 四、和同类常见做法不一样的地方
 
-PyTorch FSDP的分片路线主要回答状态怎样分布在设备上;本章的Megatron路径回答设备拿到数据后怎样执行。Megatron把Transformer Engine模块、recipe与训练调度中的capture/replay接在一起,所以检查优化是否生效,既要看模块后端,也要看训练循环实际包住了哪段工作。分片和本章的执行优化可以组合,但不能互相证明已经生效。
+DeepSpeed训练引擎也管理混合精度,不能把低精度视为Megatron独有能力。这里比较的是已核的FP16/BF16训练管理与Megatron构件侧优化的接合位置,不是两套框架的精度能力全集。
+
+| 对比维度 | DeepSpeed训练引擎的对照点 | Megatron本章的重点 |
+|---|---|---|
+| 精度设置落在哪里 | 引擎选择混合精度路径,FP16路径管理loss scaling等训练状态 | TE模块与recipe决定选中计算的量化,参数存储另行配置 |
+| 优化应沿哪条链核对 | 从引擎的精度与优化器包装追实际更新路径 | 从构件后端、fusion边界追到调度中的capture/replay范围 |
+| 如何判断是否获益 | 引擎阶段计时与FLOPs profiler辅助定位开销 | 同时检查量化、kernel间隙、graph启动成本与稳态iteration时间 |
+
+这些是接入和排查侧重点,不表示DeepSpeed缺少融合或graph能力。两边都要在相同数值目标和工作负载下验证,单看dtype名称不能推导总显存或加速比。
 
 ## 五、调参与观测
 

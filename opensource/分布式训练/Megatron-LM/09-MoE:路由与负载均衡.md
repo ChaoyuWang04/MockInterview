@@ -32,7 +32,15 @@ shared expert也是单独的支路,不参加这里的top-k竞争;它可以有自
 
 ## 四、和同类常见做法不一样的地方
 
-DeepSpeed的top-k gating也有aux loss、capacity和可关闭的token dropping,这些不是Megatron独有的能力。Megatron本章值得关注的组织方式是:router同时给出选择图和计算权重,负载控制又分为梯度式aux loss与训练步末的bias更新。读配置时要分别确认这几项,不能用“开了MoE”推断它们全在工作。
+DeepSpeed的MoE gating也有aux loss、capacity和token dropping,这些不是Megatron独有的能力。对比应围绕选择、权重与负载反馈分别进行,而不是把“开了MoE”当成一套固定行为。
+
+| 对比维度 | DeepSpeed已核top-k gating路径 | Megatron本章router路径 |
+|---|---|---|
+| 交给后续执行的信息 | gating结果包含组合权重、分发信息、辅助损失与专家计数 | router给出选择关系和计算权重,dispatcher据此整理token |
+| 容量与丢弃 | capacity与是否drop token共同决定哪些分配保留 | 容量约束与选择策略分别配置,丢弃还会改变实际计算量 |
+| 负载反馈的阅读重点 | 查看gating中的aux loss及capacity处理 | 分开查看梯度式aux loss和训练步末bias更新;选择bias不直接成为最终权重 |
+
+同样的top-k并不保证相同的有效token分配。比较质量或吞吐前,应先对齐容量、丢弃策略和实际专家负载。
 
 ## 五、调参与观测
 

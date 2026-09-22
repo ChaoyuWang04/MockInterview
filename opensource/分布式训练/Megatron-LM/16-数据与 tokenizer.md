@@ -30,9 +30,16 @@ tokenizer 负责把内容变成 token ID,数据集负责决定取哪些 ID、如
 
 ## 四、和同类常见做法不一样的地方
 
-从 PyTorch FSDP 的模型外部分片路线看,模型状态怎样分片和输入样本怎样生成是不同职责。Megatron 这里把数据组织也纳入训练配方:预先保存可定位的序列、构建可复用的样本映射,再由了解 DP 分工的sampler取batch。
+DeepSpeed引擎可以接收调用方的Dataset,并据batch与并行信息构造DataLoader。Megatron本章则进一步提供面向语言模型的样本组织:从已编码文档建立索引,再把样本分给DP rank。
 
-这种安排使长文档切分、短文档拼接与样本shuffle不必反复修改底层内容。代价是数据缓存与 tokenizer 配方必须和训练配置一起管理;分片训练本身不会替用户保证文档边界或词表语义正确。
+| 对比维度 | DeepSpeed引擎的数据接入路径 | Megatron GPT数据路径 |
+|---|---|---|
+| 接入的数据抽象 | 调用方提供Dataset,可提供sampler与collate函数 | indexed dataset存内容,GPT数据集建立文档、样本与shuffle映射 |
+| 样本语义由谁决定 | Dataset与collate定义具体训练样本 | GPT路径实现跨文档取片、额外token和移位labels,其他任务另有数据集 |
+| DP分工如何接入 | DataLoader构造使用batch大小与数据并行信息 | sampler结合已消费样本数、microbatch与DP rank分配编号 |
+| 启动时重点检查什么 | Dataset初始化、sampler及worker设置 | 还要检查索引缓存命中、构建rank与barrier参与关系 |
+
+这里比较的是引擎入口与GPT数据管线,不概括DeepSpeed全部数据处理工具。两边都需要调用方保持tokenizer、词表和任务语义一致。
 
 ## 五、调参与观测
 
