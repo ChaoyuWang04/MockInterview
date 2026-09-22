@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+
+  <rect x="286" y="134" width="402" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="704" y="134" width="392" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="286" y="222" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="222" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="286" y="310" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="310" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="286" y="398" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="398" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="286" y="486" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="486" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">自回归ModelRunner这一层,五件事各自怎么排</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 这一层都必须做的 5 件事;方框 = 各自的做法,去盖这些行。颜色 = 这一行两边是不是同一件事(绿 = 同一件事,紫 = 不是)</text>
+
+  <text x="487" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">SGLang-Omni</text>
+  <text x="900" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">vLLM-Omni</text>
+
+  <text x="24" y="167" font-size="11" fill="#6b7280">一步的通用骨架归谁</text>
+  <text x="24" y="185" font-size="11" fill="#6b7280">建前向批、前向、采样、拆输出</text>
+  <text x="302" y="160" font-size="14" font-weight="700" fill="#111827">都在ModelRunner这一层</text>
+  <text x="302" y="181" font-size="11" fill="#6b7280">基类拥有建前向批、前向、采样、按请求拆输出与</text>
+  <text x="302" y="198" font-size="11" fill="#6b7280">生成步数记账,模型只往钩子里填东西</text>
+  <text x="720" y="160" font-size="14" font-weight="700" fill="#111827">都在ModelRunner这一层</text>
+  <text x="720" y="181" font-size="11" fill="#6b7280">承接上游那套两段式的执行与采样,自己加的是每</text>
+  <text x="720" y="198" font-size="11" fill="#6b7280">条请求的隐藏态与多模态输出</text>
+
+  <text x="24" y="255" font-size="11" fill="#6b7280">模型专属的那段代码</text>
+  <text x="24" y="273" font-size="11" fill="#6b7280">挂在哪</text>
+  <text x="302" y="248" font-size="14" font-weight="700" fill="#111827">按需派生 ModelRunner 子类</text>
+  <text x="302" y="269" font-size="11" fill="#6b7280">钩子在基类上声明好:前向之前、前向本身、前向</text>
+  <text x="302" y="286" font-size="11" fill="#6b7280">之后,prefill 与 decode 各一套</text>
+  <text x="720" y="248" font-size="14" font-weight="700" fill="#111827">模型对象上的可选方法</text>
+  <text x="720" y="269" font-size="11" fill="#6b7280">ModelRunner类按执行形态固定下来,模型专属那段由运</text>
+  <text x="720" y="286" font-size="11" fill="#6b7280">行器按名字一个个试探出来</text>
+
+  <text x="24" y="343" font-size="11" fill="#6b7280">采样之后那次</text>
+  <text x="24" y="361" font-size="11" fill="#6b7280">再算一次拿到码本</text>
+  <text x="302" y="336" font-size="14" font-weight="700" fill="#111827">解码之后的钩子里克隆</text>
+  <text x="302" y="357" font-size="11" fill="#6b7280">从模型的两块固定缓冲区各整批克隆一份:码走流</text>
+  <text x="302" y="374" font-size="11" fill="#6b7280">式边,反馈留在本进程的队列里等下一步</text>
+  <text x="720" y="336" font-size="14" font-weight="700" fill="#111827">采样之后的可选钩子</text>
+  <text x="720" y="357" font-size="11" fill="#6b7280">把刚采出的那个 token 连同隐藏态喂回模型换出码,</text>
+  <text x="720" y="374" font-size="11" fill="#6b7280">并进这一步的多模态输出;一次只许采一个</text>
+
+  <text x="24" y="440" font-size="11" fill="#6b7280">这一步的产物怎么交出去</text>
+  <text x="302" y="424" font-size="14" font-weight="700" fill="#111827">放一条带目标名的消息</text>
+  <text x="302" y="445" font-size="11" fill="#6b7280">ModelRunner只把消息放进发件箱,怎么搬归阶段壳</text>
+  <text x="302" y="462" font-size="11" fill="#9ca3af">两边都写明ModelRunner不得自己挑下一段</text>
+  <text x="720" y="424" font-size="14" font-weight="700" fill="#111827">自己持有Connector</text>
+  <text x="720" y="445" font-size="11" fill="#6b7280">排一条带下一段编号与键的任务给后台线程发</text>
+  <text x="720" y="462" font-size="11" fill="#9ca3af">两边都写明ModelRunner不得自己挑下一段</text>
+
+  <text x="24" y="519" font-size="11" fill="#6b7280">这一步的收尾</text>
+  <text x="24" y="537" font-size="11" fill="#6b7280">怎么不挡住下一步</text>
+  <text x="302" y="512" font-size="14" font-weight="700" fill="#111827">一条流上劈成两半</text>
+  <text x="302" y="533" font-size="11" fill="#6b7280">发射把前向与采样排上去、记个事件就回来,回收</text>
+  <text x="302" y="550" font-size="11" fill="#6b7280">等事件读缓冲;能不能走这条路按批判</text>
+  <text x="720" y="512" font-size="14" font-weight="700" fill="#111827">拷贝流加后台线程</text>
+  <text x="720" y="533" font-size="11" fill="#6b7280">采样结果走一条单独的拷贝流回主机,每一步起一</text>
+  <text x="720" y="550" font-size="11" fill="#6b7280">个后台线程攒输出对象,要用时再等它</text>
+
+  <text x="24" y="584" font-size="11" fill="#9ca3af">只写两边在同一个问题上的取舍,不评优劣;这一层的参数名与默认值都在第五节</text>
+</svg>

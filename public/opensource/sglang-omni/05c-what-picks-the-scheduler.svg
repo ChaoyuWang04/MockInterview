@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" width="1120" height="720" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="720" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">同样是给每一段配Scheduler,选法与接法都不一样</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 两边都必须回答的 4 个问题;方框 = 各自在这一行上跑的东西,高度一致不表示对等</text>
+  <text x="24" y="76" font-size="13" fill="#6b7280">颜色:黄 = 选择入口;紫 = 复用上游逻辑;绿 = 自有循环。最后一行比较不同扩散范围,不表示能力对等</text>
+
+  <text x="490" y="112" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">SGLang-Omni</text>
+  <text x="902" y="112" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">vLLM-Omni</text>
+
+  <line x1="24" y1="124" x2="1096" y2="124" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="24" y1="240" x2="1096" y2="240" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="24" y1="356" x2="1096" y2="356" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="24" y1="472" x2="1096" y2="472" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="24" y1="588" x2="1096" y2="588" stroke="#e5e7eb" stroke-width="1"/>
+
+  <rect x="300" y="132" width="380" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="712" y="132" width="380" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="24" y="186" font-size="11" fill="#6b7280">决定这一段用哪种Scheduler</text>
+  <text x="316" y="160" font-size="14" font-weight="700" fill="#111827">阶段表里的一条工厂路径</text>
+  <text x="316" y="182" font-size="11" fill="#6b7280">工厂返回什么对象,这一段就用什么</text>
+  <text x="316" y="199" font-size="11" fill="#6b7280">框架里没有一处按Scheduler类型分派</text>
+  <text x="316" y="216" font-size="11" fill="#6b7280">工厂可按参数换类;没有统一的类选择项</text>
+  <text x="728" y="160" font-size="14" font-weight="700" fill="#111827">一个三值的执行形态枚举</text>
+  <text x="728" y="182" font-size="11" fill="#6b7280">按枚举解析出这一段的Scheduler类</text>
+  <text x="728" y="199" font-size="11" fill="#6b7280">自回归还有同步与异步两个类,由</text>
+  <text x="728" y="216" font-size="11" fill="#6b7280">部署文件里的一个开关决定用哪个</text>
+
+  <rect x="300" y="248" width="380" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="712" y="248" width="380" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="302" font-size="11" fill="#6b7280">让自回归段接上各自的上游引擎</text>
+  <text x="316" y="276" font-size="14" font-weight="700" fill="#111827">普通类,按名字借上游的方法</text>
+  <text x="316" y="298" font-size="11" fill="#6b7280">查不到的名字去上游Scheduler类上取</text>
+  <text x="316" y="315" font-size="11" fill="#6b7280">未绑定的那个函数,绑到本实例再调</text>
+  <text x="316" y="332" font-size="11" fill="#6b7280">本地适配入口、出口及批状态</text>
+  <text x="728" y="276" font-size="14" font-weight="700" fill="#111827">上游Scheduler的子类,外加一个混入</text>
+  <text x="728" y="298" font-size="11" fill="#6b7280">上游构造函数设的状态由父类初始化</text>
+  <text x="728" y="315" font-size="11" fill="#6b7280">异步那一个在它上面再继承一层</text>
+
+  <rect x="300" y="364" width="380" height="100" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="712" y="364" width="380" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="418" font-size="11" fill="#6b7280">轻量段与一次性生成怎么排</text>
+  <text x="316" y="392" font-size="14" font-weight="700" fill="#111827">三种轻量Scheduler,没有 KV 这条路</text>
+  <text x="316" y="414" font-size="11" fill="#6b7280">取一条算一条的、带线程池的、带流式</text>
+  <text x="316" y="431" font-size="11" fill="#6b7280">入口的;取一条、算一次、出结果</text>
+  <text x="728" y="392" font-size="14" font-weight="700" fill="#111827">仍然是上游Scheduler的子类</text>
+  <text x="728" y="414" font-size="11" fill="#6b7280">一次性生成段排一批,照样过 KV</text>
+  <text x="728" y="431" font-size="11" fill="#6b7280">管理器去分配块</text>
+
+  <rect x="300" y="480" width="380" height="100" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="712" y="480" width="380" height="100" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="24" y="534" font-size="11" fill="#6b7280">扩散那一类怎么排</text>
+  <text x="316" y="508" font-size="14" font-weight="700" fill="#111827">DLLM 分块去噪</text>
+  <text x="316" y="530" font-size="11" fill="#111827">LLaDA2-Uni 已接入;带 KV 与等待队列</text>
+  <text x="728" y="508" font-size="14" font-weight="700" fill="#111827">自成一套的扩散调度</text>
+  <text x="728" y="530" font-size="11" fill="#6b7280">请求级与步级两个Scheduler,自己的</text>
+  <text x="728" y="547" font-size="11" fill="#6b7280">KV 管理与「谁能和谁同批」的判定</text>
+
+  <text x="24" y="620" font-size="14" font-weight="700" fill="#111827">怎么读这张图</text>
+  <text x="24" y="644" font-size="11" fill="#6b7280">第一行是分歧的起点:一边把执行形态枚举出来、按枚举解析出Scheduler类,于是「换一种Scheduler」是配置层的一个动作;另一边根本没有这个枚举,</text>
+  <text x="24" y="661" font-size="11" fill="#6b7280">这边由 Stage 工厂返回对象,也可按参数选不同类;例如预处理按并发设置选择 SimpleScheduler 或 ThreadedSimpleScheduler。</text>
+  <text x="24" y="678" font-size="11" fill="#6b7280">第三行只比较轻量处理与一次性生成;不能推导所有非 AR 路径都没有 KV。</text>
+  <text x="24" y="695" font-size="11" fill="#6b7280">第四行区分 Diffusion LLM 与多模态 Diffusion 的范围:本项目有 DLLM,但两边并不是同一套调度与模型覆盖。</text>
+</svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+
+  <line x1="299" y1="100" x2="299" y2="446" stroke="#eeeeee" stroke-width="1"/>
+  <line x1="459" y1="100" x2="459" y2="446" stroke="#eeeeee" stroke-width="1"/>
+  <line x1="619" y1="100" x2="619" y2="446" stroke="#eeeeee" stroke-width="1"/>
+  <line x1="779" y1="100" x2="779" y2="446" stroke="#eeeeee" stroke-width="1"/>
+
+  <rect x="140" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="156" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="172" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="188" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="204" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="220" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="236" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="252" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="268" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="284" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="300" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="316" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="332" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="348" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="364" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="380" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="396" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="412" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="428" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="444" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="460" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="476" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="492" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="508" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="524" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="540" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="556" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="572" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="588" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="604" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="620" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="636" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="652" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="668" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="684" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="700" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="716" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="732" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="748" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="764" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="780" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="796" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="812" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="828" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="844" y="104" width="15" height="22" rx="2" fill="#ffffff" stroke="#cbd2d9"/>
+  <rect x="860" y="104" width="15" height="22" rx="2" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="140" y="150" width="159" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="140" y="180" width="159" height="10" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="140" y="212" width="159" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="300" y="212" width="159" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="300" y="242" width="159" height="10" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="140" y="274" width="319" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="460" y="274" width="159" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="460" y="304" width="159" height="10" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="220" y="336" width="399" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="620" y="336" width="159" height="24" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="620" y="366" width="159" height="10" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="380" y="398" width="399" height="24" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="780" y="398" width="79" height="24" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="780" y="428" width="79" height="10" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111827">Vocoder这一端:攒多少解一次、回看多少、尾巴怎么收</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">同一条码帧轴上的五次解码。绿 = 这一次新出声的帧,灰 = 重新喂一遍的上文,紫 = 真正发出去的那一块波形,黄 = 结束标记和它触发的最后一次</text>
+  <text x="24" y="80" font-size="13" fill="#6b7280">Qwen3-Omni 默认步长 10、回看 25;假设每次累积 10 帧,最后余 5 帧。按帧数等比,不是时间轴</text>
+  <text x="24" y="119" font-size="11" fill="#6b7280">码帧到手</text>
+  <text x="884" y="119" font-size="11" fill="#9ca3af">结束标记</text>
+  <text x="24" y="166" font-size="11" fill="#6b7280">第 1 次</text>
+  <text x="24" y="183" font-size="11" fill="#9ca3af">攒够 10 帧</text>
+  <text x="952" y="166" font-size="11" fill="#111827">窗口 10 帧</text>
+  <text x="952" y="183" font-size="11" fill="#6b7280">出声 10 帧</text>
+  <text x="24" y="228" font-size="11" fill="#6b7280">第 2 次</text>
+  <text x="24" y="245" font-size="11" fill="#9ca3af">又攒够 10 帧</text>
+  <text x="952" y="228" font-size="11" fill="#111827">窗口 20 帧</text>
+  <text x="952" y="245" font-size="11" fill="#6b7280">出声 10 帧</text>
+  <text x="24" y="290" font-size="11" fill="#6b7280">第 3 次</text>
+  <text x="24" y="307" font-size="11" fill="#9ca3af">又攒够 10 帧</text>
+  <text x="952" y="290" font-size="11" fill="#111827">窗口 30 帧</text>
+  <text x="952" y="307" font-size="11" fill="#6b7280">出声 10 帧</text>
+  <text x="24" y="352" font-size="11" fill="#6b7280">第 4 次起</text>
+  <text x="24" y="369" font-size="11" fill="#9ca3af">上文封顶 25 帧</text>
+  <text x="952" y="352" font-size="11" fill="#111827">窗口 35 帧,稳态</text>
+  <text x="952" y="369" font-size="11" fill="#6b7280">出声 10 帧</text>
+  <text x="24" y="414" font-size="11" fill="#6b7280">冲刷</text>
+  <text x="24" y="431" font-size="11" fill="#9ca3af">结束标记触发</text>
+  <text x="952" y="414" font-size="11" fill="#111827">窗口 30 帧</text>
+  <text x="952" y="431" font-size="11" fill="#6b7280">出声 5 帧</text>
+  <text x="140" y="472" font-size="11" fill="#9ca3af">每一次只把新帧那一段波形发出去;重喂的上文算完就丢,不会在音频里出现第二遍</text>
+  <text x="140" y="490" font-size="11" fill="#9ca3af">冲刷之后还有一条终端结果消息:流式请求里它只带采样率这类元数据,非流式请求里才装整段波形</text>
+</svg>

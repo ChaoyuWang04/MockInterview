@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">同一层「只搬数据」的东西,五件事各自归谁</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 两边都必须做的 5 件事;方框 = 各自的做法,去盖这些行。颜色 = 这一行两边是不是同一件事(绿 = 同一件事,紫 = 不是)</text>
+
+  <text x="487" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">SGLang-Omni</text>
+  <text x="900" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">vLLM-Omni</text>
+
+  <rect x="286" y="134" width="402" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="704" y="134" width="392" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="24" y="167" font-size="11" fill="#6b7280">搬数据的这一层</text>
+  <text x="24" y="185" font-size="11" fill="#6b7280">要不要挑下一段</text>
+  <text x="302" y="160" font-size="14" font-weight="700" fill="#111827">不归这一层</text>
+  <text x="302" y="181" font-size="11" fill="#6b7280">后端不路由请求、不做扇入、不挑下游,</text>
+  <text x="302" y="198" font-size="11" fill="#6b7280">也不解释载荷</text>
+  <text x="720" y="160" font-size="14" font-weight="700" fill="#111827">不归这一层</text>
+  <text x="720" y="181" font-size="11" fill="#6b7280">模块设计文档把它列成第一条不变量:</text>
+  <text x="720" y="198" font-size="11" fill="#6b7280">不得挑下一段,不得实现模型专属策略</text>
+
+  <rect x="286" y="222" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="222" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="264" font-size="11" fill="#6b7280">这条边用哪个后端</text>
+  <text x="302" y="248" font-size="14" font-weight="700" fill="#111827">运行时推出来</text>
+  <text x="302" y="269" font-size="11" fill="#6b7280">路由器按位置、Tensor 设备与可用条件</text>
+  <text x="302" y="286" font-size="11" fill="#6b7280">选路;不提供任意点名后端的配置</text>
+  <text x="720" y="248" font-size="14" font-weight="700" fill="#111827">部署配置里点名</text>
+  <text x="720" y="269" font-size="11" fill="#6b7280">一张「从哪一段到哪一段」到具名Connector的</text>
+  <text x="720" y="286" font-size="11" fill="#6b7280">表,外加兜底;96 份部署配置里 53 份写了</text>
+
+  <rect x="286" y="310" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="310" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="344" font-size="11" fill="#6b7280">把要传的东西变成</text>
+  <text x="24" y="362" font-size="11" fill="#6b7280">可搬的字节</text>
+  <text x="302" y="336" font-size="14" font-weight="700" fill="#111827">后端之上统一打包</text>
+  <text x="302" y="357" font-size="11" fill="#6b7280">递归抽出张量、留占位符、拼成一个连续的</text>
+  <text x="302" y="374" font-size="11" fill="#6b7280">字节缓冲;后端只看见缓冲和一段元数据</text>
+  <text x="720" y="336" font-size="14" font-weight="700" fill="#111827">Connector自己序列化</text>
+  <text x="720" y="357" font-size="11" fill="#6b7280">接口直接收下整个对象,序列化归Connector;</text>
+  <text x="720" y="374" font-size="11" fill="#6b7280">能直搬原始字节的后端可以声明跳过</text>
+
+  <rect x="286" y="398" width="402" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="704" y="398" width="392" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="24" y="440" font-size="11" fill="#6b7280">把字节从这头搬到那头</text>
+  <text x="302" y="424" font-size="14" font-weight="700" fill="#111827">可插拔的一组后端</text>
+  <text x="302" y="445" font-size="11" fill="#6b7280">换一种搬法不牵动上面任何一层</text>
+  <text x="302" y="462" font-size="11" fill="#9ca3af">名字不同,这一行两边是同一件事</text>
+  <text x="720" y="424" font-size="14" font-weight="700" fill="#111827">可插拔的一组Connector</text>
+  <text x="720" y="445" font-size="11" fill="#6b7280">换一种搬法不牵动上面任何一层</text>
+  <text x="720" y="462" font-size="11" fill="#9ca3af">名字不同,这一行两边是同一件事</text>
+
+  <rect x="286" y="486" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="486" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="528" font-size="11" fill="#6b7280">让接收端知道可以读了</text>
+  <text x="302" y="512" font-size="14" font-weight="700" fill="#111827">发消息叫醒对面</text>
+  <text x="302" y="533" font-size="11" fill="#6b7280">发送端写完就发一条就绪消息把对面叫醒,</text>
+  <text x="302" y="550" font-size="11" fill="#6b7280">relay 路径读后回 ACK;直传不走这套确认</text>
+  <text x="720" y="512" font-size="14" font-weight="700" fill="#111827">接收端按键去取</text>
+  <text x="720" y="533" font-size="11" fill="#6b7280">拿着键去取,取不到就返回空,由上层隔一</text>
+  <text x="720" y="550" font-size="11" fill="#6b7280">会儿再来取一次</text>
+
+  <text x="24" y="584" font-size="11" fill="#9ca3af">只写两边在同一个问题上的取舍,不评优劣;两边的参数名、后端名与具体取值都在第五节</text>
+</svg>

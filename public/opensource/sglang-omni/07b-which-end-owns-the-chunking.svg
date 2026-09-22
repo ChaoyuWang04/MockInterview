@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">码块攒成一次解码,五件事各自落在边的哪一端</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 两边都必须做的 5 件事;方框 = 各自的做法,去盖这些行。颜色 = 这一行两边是不是同一件事(绿 = 同一件事,紫 = 不是)</text>
+
+  <text x="487" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">SGLang-Omni</text>
+  <text x="900" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">vLLM-Omni</text>
+
+  <rect x="286" y="134" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="134" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="167" font-size="11" fill="#6b7280">攒够一个窗口才解一次</text>
+  <text x="24" y="185" font-size="11" fill="#6b7280">这件事在哪一端判</text>
+  <text x="302" y="160" font-size="14" font-weight="700" fill="#111827">收的那一端自己数</text>
+  <text x="302" y="181" font-size="11" fill="#6b7280">Vocoder数手上攒了多少帧,够一个步长就</text>
+  <text x="302" y="198" font-size="11" fill="#6b7280">解一次;到货粒度也可能改变实际窗口</text>
+  <text x="720" y="160" font-size="14" font-weight="700" fill="#111827">发的那一端攒好再投</text>
+  <text x="720" y="181" font-size="11" fill="#6b7280">上一段的交接函数攒到整数倍才投出去,</text>
+  <text x="720" y="198" font-size="11" fill="#6b7280">连这一块该带多长上文也由它算好一起投</text>
+
+  <rect x="286" y="222" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="222" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="255" font-size="11" fill="#6b7280">不满一个窗口的尾巴</text>
+  <text x="24" y="273" font-size="11" fill="#6b7280">谁把它放出来</text>
+  <text x="302" y="248" font-size="14" font-weight="700" fill="#111827">收的那一端冲刷</text>
+  <text x="302" y="269" font-size="11" fill="#6b7280">结束信号一到,Vocoder不看攒够没攒够,</text>
+  <text x="302" y="286" font-size="11" fill="#6b7280">先解余数;终端结果仍等最终载荷到齐</text>
+  <text x="720" y="248" font-size="14" font-weight="700" fill="#111827">发的那一端补投</text>
+  <text x="720" y="269" font-size="11" fill="#6b7280">请求跑完时由交接函数把不满一块的余数</text>
+  <text x="720" y="286" font-size="11" fill="#6b7280">投出去,并在载荷里标上已结束</text>
+
+  <rect x="286" y="310" width="402" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="704" y="310" width="392" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="24" y="344" font-size="11" fill="#6b7280">窗口带不带回看</text>
+  <text x="24" y="362" font-size="11" fill="#6b7280">输出怎么裁</text>
+  <text x="302" y="336" font-size="14" font-weight="700" fill="#111827">回看一段,再裁掉</text>
+  <text x="302" y="357" font-size="11" fill="#6b7280">重喂出过声的那几帧当上文,只留新帧</text>
+  <text x="302" y="374" font-size="11" fill="#9ca3af">说法不同,这一行两边是同一件事</text>
+  <text x="720" y="336" font-size="14" font-weight="700" fill="#111827">回看一段,再裁掉</text>
+  <text x="720" y="357" font-size="11" fill="#6b7280">重叠块加上文避免边界杂音,按上文长度切</text>
+  <text x="720" y="374" font-size="11" fill="#9ca3af">说法不同,这一行两边是同一件事</text>
+
+  <rect x="286" y="398" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="398" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="431" font-size="11" fill="#6b7280">段与段之间要不要流</text>
+  <text x="24" y="449" font-size="11" fill="#6b7280">谁能关掉</text>
+  <text x="302" y="424" font-size="14" font-weight="700" fill="#111827">模型说了算,用户关不掉</text>
+  <text x="302" y="445" font-size="11" fill="#6b7280">流边写在模型的阶段表里,属于用户源写</text>
+  <text x="302" y="462" font-size="11" fill="#6b7280">不了的那一组;只有一个家族在请求里给了开关</text>
+  <text x="720" y="424" font-size="14" font-weight="700" fill="#111827">部署配置里一个总开关</text>
+  <text x="720" y="445" font-size="11" fill="#6b7280">顶层一个布尔,可以按段再覆写,一条边两</text>
+  <text x="720" y="462" font-size="11" fill="#6b7280">端必须一致;96 份里 42 份开、45 份关、9 份没写</text>
+
+  <rect x="286" y="486" width="402" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="704" y="486" width="392" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="24" y="528" font-size="11" fill="#6b7280">攒块的几何写在哪一层</text>
+  <text x="302" y="512" font-size="14" font-weight="700" fill="#111827">Vocoder阶段自己的构造块</text>
+  <text x="302" y="533" font-size="11" fill="#6b7280">一块多少帧、回看多少帧、第一块多大,</text>
+  <text x="302" y="550" font-size="11" fill="#6b7280">都写在这一段自己的构造参数里</text>
+  <text x="720" y="512" font-size="14" font-weight="700" fill="#111827">传输那一层的附加配置</text>
+  <text x="720" y="533" font-size="11" fill="#6b7280">同样这三项写在Connector的附加配置块里,</text>
+  <text x="720" y="550" font-size="11" fill="#6b7280">和它的等待、重试参数并排</text>
+
+  <text x="24" y="582" font-size="11" fill="#9ca3af">攒块与裁剪以两边 Qwen3-Omni 为例;开关按框架配置比较,不是所有模型的统一实现</text>
+</svg>

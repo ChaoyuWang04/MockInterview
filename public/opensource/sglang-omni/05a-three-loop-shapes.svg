@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 690" width="1120" height="690" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="690" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">三种排法:一条请求在Scheduler里活多久不一样</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 一种Scheduler的循环;横轴 = 循环转过的轮次,只表示先后,不表示时长</text>
+  <text x="24" y="72" font-size="13" fill="#6b7280">绿 = 一条请求待在这个Scheduler手里的那一段;黄 = 它占着 KV 的那一段;紫 = 这一轮循环体做的事;灰 = 怎么判定一条请求算完了</text>
+
+  <line x1="344" y1="106" x2="344" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="436" y1="106" x2="436" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="528" y1="106" x2="528" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="620" y1="106" x2="620" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="712" y1="106" x2="712" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="804" y1="106" x2="804" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="896" y1="106" x2="896" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="988" y1="106" x2="988" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+  <line x1="1080" y1="106" x2="1080" y2="546" stroke="#e5e7eb" stroke-width="1"/>
+
+  <text x="320" y="100" font-size="11" fill="#9ca3af" text-anchor="end">轮次</text>
+  <text x="390" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">1</text>
+  <text x="482" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">2</text>
+  <text x="574" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">3</text>
+  <text x="666" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">4</text>
+  <text x="758" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">5</text>
+  <text x="850" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">6</text>
+  <text x="942" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">7</text>
+  <text x="1034" y="100" font-size="11" fill="#9ca3af" text-anchor="middle">8</text>
+
+  <rect x="24" y="140" width="296" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="436" y="138" width="644" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="436" y="172" width="644" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="344" y="206" width="736" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="24" y="130" font-size="14" font-weight="700" fill="#111827">自回归段(Thinker、Talker)</text>
+  <text x="38" y="162" font-size="11" fill="#6b7280">收请求 → 准入 → 选一批 → 跑一批</text>
+  <text x="38" y="179" font-size="11" fill="#6b7280">→ 处理结果</text>
+  <text x="24" y="208" font-size="11" fill="#9ca3af">一条请求从准入待到出结束标记,</text>
+  <text x="24" y="225" font-size="11" fill="#9ca3af">中间每一轮都在这个Scheduler的账上</text>
+  <text x="448" y="156" font-size="11" fill="#6b7280">同一条请求,一直待在这里</text>
+  <text x="448" y="190" font-size="11" fill="#6b7280">这一条占着的 KV,直到它结束才放</text>
+  <text x="356" y="224" font-size="11" fill="#6b7280">算完的判定:采样出结束标记</text>
+
+  <rect x="24" y="292" width="296" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="352" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="444" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="536" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="628" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="720" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="812" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="904" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="996" y="290" width="76" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="344" y="324" width="736" height="26" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="344" y="358" width="736" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="24" y="282" font-size="14" font-weight="700" fill="#111827">一次性段(预处理、Encoder、聚合)</text>
+  <text x="38" y="314" font-size="11" fill="#6b7280">取一条、或受上限与预算约束攒批</text>
+  <text x="38" y="331" font-size="11" fill="#6b7280">→ 出结果</text>
+  <text x="24" y="360" font-size="11" fill="#9ca3af">一条请求只活一轮,算完就走;</text>
+  <text x="24" y="377" font-size="11" fill="#9ca3af">同时看条数上限、开销预算与队列供给</text>
+  <text x="356" y="342" font-size="11" fill="#9ca3af">没有 KV 这条路</text>
+  <text x="356" y="376" font-size="11" fill="#6b7280">算完的判定:这一次前向返回</text>
+
+  <rect x="24" y="444" width="296" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <rect x="436" y="442" width="644" height="26" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="436" y="476" width="644" height="26" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="344" y="510" width="736" height="26" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="24" y="434" font-size="14" font-weight="700" fill="#111827">流式段(Vocoder、文本解码)</text>
+  <text x="38" y="466" font-size="11" fill="#6b7280">收一份载荷或收一块 → 够一小段就</text>
+  <text x="38" y="483" font-size="11" fill="#6b7280">算一步 → 吐一段</text>
+  <text x="24" y="512" font-size="11" fill="#9ca3af">块可以比载荷先到,这一段要先把</text>
+  <text x="24" y="529" font-size="11" fill="#9ca3af">块接住,等载荷来了再认领</text>
+  <text x="448" y="460" font-size="11" fill="#6b7280">同一条请求,块一块块地进来,每轮吐一小段</text>
+  <text x="448" y="494" font-size="11" fill="#9ca3af">没有 KV 这条路</text>
+  <text x="356" y="528" font-size="11" fill="#6b7280">算完的判定:上游说结束,尾巴冲刷完</text>
+
+  <text x="24" y="576" font-size="14" font-weight="700" fill="#111827">怎么读这张图</text>
+  <text x="24" y="600" font-size="11" fill="#6b7280">三行的横向长度是同一件事的三种答案:一条请求在这个Scheduler手里要待几轮。自回归那一行从准入一直画到画面右边,一次性那一行每轮各是一条新的,</text>
+  <text x="24" y="617" font-size="11" fill="#6b7280">流式那一行跨越多轮,按块接收、够条件再输出;不保证每轮都有音频。这里只画三类典型循环,不含 DLLM。</text>
+  <text x="24" y="634" font-size="11" fill="#6b7280">黄色那一行只有自回归段有,另外两行是虚线空格——不是「小一点的 KV」,是根本没有这条路。三行最底下那个灰条解释了为什么一个循环写不下这三种排法:</text>
+  <text x="24" y="651" font-size="11" fill="#6b7280">连「一条请求算完了」的判定都不是同一件事,写在一起就是每接一个模型多一条分支。</text>
+</svg>

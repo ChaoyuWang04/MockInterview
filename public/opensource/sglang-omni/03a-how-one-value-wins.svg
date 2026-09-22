@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 630" width="1120" height="630" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="630" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">一个值从写下到生效,要过三道关</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">按来源层级与具体度决定优先级;同排名冲突报错。绿 = 模型,紫 = 用户源,黄 = 合并校验,灰 = 派生,红 = 报错</text>
+
+  <text x="24" y="86" font-size="14" font-weight="700" fill="#111827">来源:五个,按应用顺序从上到下</text>
+  <text x="384" y="86" font-size="14" font-weight="700" fill="#111827">第一关:编译成一条点号路径</text>
+  <text x="724" y="86" font-size="14" font-weight="700" fill="#111827">第二关起:排队、校验、派生</text>
+
+  <rect x="24" y="104" width="320" height="58" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="40" y="128" font-size="14" font-weight="700" fill="#111827">模型的管线配置类</text>
+  <text x="40" y="148" font-size="11" fill="#6b7280">阶段表与全部默认值;它是底,不是一条写入</text>
+
+  <rect x="24" y="178" width="320" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="40" y="202" font-size="14" font-weight="700" fill="#111827">配置文件 · 选择器条目</text>
+  <text x="40" y="222" font-size="11" fill="#6b7280">一条写进选中的那几段,按角色算</text>
+
+  <rect x="24" y="252" width="320" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="40" y="276" font-size="14" font-weight="700" fill="#111827">配置文件 · 逐段与顶层</text>
+  <text x="40" y="296" font-size="11" fill="#6b7280">按阶段名嵌套,每个叶子拆成一条</text>
+
+  <rect x="24" y="326" width="320" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="40" y="350" font-size="14" font-weight="700" fill="#111827">命令行 · 广播开关</text>
+  <text x="40" y="370" font-size="11" fill="#6b7280">一把撒给所有引擎段</text>
+
+  <rect x="24" y="400" width="320" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="40" y="424" font-size="14" font-weight="700" fill="#111827">命令行 · 点号覆写</text>
+  <text x="40" y="444" font-size="11" fill="#6b7280">从阶段名开头,一次只写一个叶子</text>
+
+  <text x="24" y="482" font-size="11" fill="#9ca3af">先比在第几层:模型默认 &lt; 配置文件 &lt; 命令行。同层再比有多具体:广播 &lt; 按角色选中 &lt; 逐条写明。</text>
+  <text x="24" y="499" font-size="11" fill="#9ca3af">所以命令行上那个广播开关,盖得住配置文件里逐段写明的值。</text>
+
+  <rect x="384" y="104" width="300" height="354" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="400" y="128" font-size="14" font-weight="700" fill="#111827">每条写入先过这道门</text>
+  <text x="400" y="148" font-size="11" fill="#6b7280">对着这个模型的字段表逐段编译</text>
+
+  <rect x="400" y="166" width="268" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="414" y="190" font-size="14" font-weight="700" fill="#111827">字段名不在表上</text>
+  <text x="414" y="210" font-size="11" fill="#6b7280">当场挂,附上几个相近的候选</text>
+
+  <rect x="400" y="244" width="268" height="80" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="414" y="268" font-size="14" font-weight="700" fill="#111827">命中 14 条可见性规则</text>
+  <text x="414" y="288" font-size="11" fill="#6b7280">当场挂,并说出这条路径</text>
+  <text x="414" y="305" font-size="11" fill="#6b7280">为什么归模型管</text>
+
+  <rect x="400" y="340" width="268" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="414" y="364" font-size="14" font-weight="700" fill="#111827">过关的才算一条写入</text>
+  <text x="414" y="384" font-size="11" fill="#6b7280">带着它自己的层与具体度</text>
+
+  <text x="400" y="428" font-size="11" fill="#9ca3af">路径是对着字段表编译的,不是对着一份字典走的</text>
+
+  <rect x="724" y="104" width="372" height="86" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="740" y="128" font-size="14" font-weight="700" fill="#111827">第二关:排队</text>
+  <text x="740" y="148" font-size="11" fill="#6b7280">按层、具体度、路径深度、出现次序排好</text>
+  <text x="740" y="165" font-size="11" fill="#6b7280">弱的先写,强的后写</text>
+  <text x="740" y="182" font-size="11" fill="#6b7280">同排名两条值不同,不决胜负,报错让人挑一个</text>
+
+  <rect x="724" y="206" width="372" height="86" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="740" y="230" font-size="14" font-weight="700" fill="#111827">第三关:整份重新校验</text>
+  <text x="740" y="250" font-size="11" fill="#6b7280">不是只看被改的那几格</text>
+  <text x="740" y="267" font-size="11" fill="#6b7280">互斥的两个字段、超出范围的值、</text>
+  <text x="740" y="284" font-size="11" fill="#6b7280">对不上的卡号列表,都在这里挂</text>
+
+  <rect x="724" y="308" width="372" height="86" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="740" y="332" font-size="14" font-weight="700" fill="#111827">然后才是派生</text>
+  <text x="740" y="352" font-size="11" fill="#6b7280">入口段、终端段、放置图、进程分组、</text>
+  <text x="740" y="369" font-size="11" fill="#6b7280">可选的 Coordinator 在途上限由声明派生,</text>
+  <text x="740" y="386" font-size="11" fill="#6b7280">不另外维护</text>
+
+  <rect x="724" y="410" width="372" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="740" y="432" font-size="14" font-weight="700" fill="#111827">冻进每个子进程的启动记录</text>
+  <text x="740" y="451" font-size="11" fill="#6b7280">整个作业期间不再变</text>
+
+  <line x1="344" y1="292" x2="372" y2="292" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M382 292 L370 287 L370 297 Z" fill="#9ca3af"/>
+  <line x1="684" y1="292" x2="712" y2="292" stroke="#9ca3af" stroke-width="1.4"/>
+  <path d="M722 292 L710 287 L710 297 Z" fill="#9ca3af"/>
+
+  <text x="24" y="534" font-size="14" font-weight="700" fill="#111827">怎么读这张图</text>
+  <text x="24" y="558" font-size="11" fill="#6b7280">五个来源里只有最上面那个是模型的,其余四个是用户的两种拼写。四个用户源不管从哪进来,都先被归约成同一种东西:某条路径等于某个值、来自某个源。</text>
+  <text x="24" y="575" font-size="11" fill="#6b7280">于是「谁盖谁」不再取决于代码里哪个入口先跑,而是每条写入自带的两个序号。</text>
+  <text x="24" y="598" font-size="11" fill="#6b7280">中间那道门就是「只能覆写不能增删」的落点:阶段名、路由、扇入、流边这些路径永远过不去,写了当场挂;落哪张卡、占多少显存、批多大,过得去。</text>
+  <text x="24" y="615" font-size="11" fill="#6b7280">右边的派生是这套设计的另一半——表是唯一的事实,放置图与进程分组都是它的函数,所以改一个格子的影响面可能远超这个格子。</text>
+</svg>

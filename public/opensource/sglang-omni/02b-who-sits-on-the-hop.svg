@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+
+  <text x="24" y="32" font-size="19" font-weight="700" fill="#111827">一次跨段交接,这四件事落在谁身上</text>
+  <text x="24" y="54" font-size="13" fill="#6b7280">行 = 两边都必须做的 4 件事,方框盖住它负责的行。绿 = 参与这一跳的阶段自己做,紫 = 居中的那个部件做。图上不写字段名,本项目这一侧在第五节</text>
+
+  <text x="250" y="92" font-size="14" font-weight="700" fill="#111827">SGLang-Omni</text>
+  <text x="680" y="92" font-size="14" font-weight="700" fill="#111827">vLLM-Omni</text>
+
+  <text x="24" y="146" font-size="11" fill="#6b7280">决定下一段是谁</text>
+  <text x="24" y="230" font-size="11" fill="#6b7280">把上游产物变成下一段的输入</text>
+  <text x="24" y="314" font-size="11" fill="#6b7280">把活交给下一段</text>
+  <text x="24" y="398" font-size="11" fill="#6b7280">收终端结果</text>
+
+  <rect x="680" y="110" width="390" height="316" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+
+  <rect x="250" y="110" width="380" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="266" y="134" font-size="14" font-weight="700" fill="#111827">上游 Stage自己算</text>
+  <text x="266" y="152" font-size="11" fill="#6b7280">调模型给的路由函数</text>
+  <text x="266" y="169" font-size="11" fill="#6b7280">返回值必须落在阶段表声明的下一跳里</text>
+
+  <rect x="250" y="194" width="380" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="266" y="218" font-size="14" font-weight="700" fill="#111827">发送端投影,接收端汇合</text>
+  <text x="266" y="236" font-size="11" fill="#6b7280">project_payload 在发送端;fan-in 在接收端</text>
+  <text x="266" y="253" font-size="11" fill="#6b7280">接收端由 InputHandler 调用合并函数</text>
+
+  <rect x="250" y="278" width="380" height="64" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="266" y="302" font-size="14" font-weight="700" fill="#111827">上游 Stage直接发给下游</text>
+  <text x="266" y="320" font-size="11" fill="#6b7280">这一跳不经过Coordinator</text>
+  <text x="266" y="337" font-size="11" fill="#6b7280">同进程走对象引用,跨进程走传输</text>
+
+  <rect x="250" y="362" width="380" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="266" y="386" font-size="14" font-weight="700" fill="#111827">Coordinator</text>
+  <text x="266" y="404" font-size="11" fill="#6b7280">只收终端段的结果</text>
+  <text x="266" y="421" font-size="11" fill="#6b7280">多个终端时等齐再合并</text>
+
+  <text x="696" y="134" font-size="14" font-weight="700" fill="#111827">Orchestrator</text>
+  <text x="696" y="158" font-size="11" fill="#6b7280">下一段 = 当前段号加一,请求各带一个末段号</text>
+  <text x="696" y="224" font-size="11" fill="#6b7280">调下游客户端的方法构造下一段的输入</text>
+  <text x="696" y="308" font-size="11" fill="#6b7280">提交给下一段的那一组副本</text>
+  <text x="696" y="396" font-size="11" fill="#6b7280">主循环按段、按副本取输出,从中认出终端结果</text>
+
+  <text x="24" y="458" font-size="11" fill="#9ca3af">图示控制侧请求编排;vLLM-Omni 的 async-chunk 数据可经 ModelRunner 与 Connector 直接交接</text>
+</svg>
