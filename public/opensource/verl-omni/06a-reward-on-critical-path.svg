@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="750" viewBox="0 0 1120 750" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><rect width="1120" height="750" fill="#fff"/>
+<text x="28" y="36" font-size="19" fill="#111827" font-weight="700">样本级流式 Reward:减少等待,仍有尾部</text>
+<text x="28" y="64" font-size="13" fill="#6b7280">紫 = Rollout　黄 = Reward　绿 = Actor 更新;时间仅为示意,不代表实测提速</text>
+<text x="28" y="88" font-size="13" fill="#6b7280">两图使用相同假设:4 条样本、1 个打分槽位,每条打分耗时相同;整批完成后才更新。</text>
+<text x="28" y="130" font-size="15" fill="#111827" font-weight="700">整批 Rollout 完成后再打分</text>
+<text x="40" y="173" font-size="13" fill="#111827">样本 1</text>
+<rect x="140" y="154" width="170" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="550" y="154" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="562" y="172" font-size="11" fill="#111827">评分</text>
+<text x="40" y="207" font-size="13" fill="#111827">样本 2</text>
+<rect x="140" y="188" width="250" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="610" y="188" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="622" y="206" font-size="11" fill="#111827">评分</text>
+<text x="40" y="241" font-size="13" fill="#111827">样本 3</text>
+<rect x="140" y="222" width="330" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="670" y="222" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="682" y="240" font-size="11" fill="#111827">评分</text>
+<text x="40" y="275" font-size="13" fill="#111827">样本 4</text>
+<rect x="140" y="256" width="410" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="730" y="256" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="742" y="274" font-size="11" fill="#111827">评分</text>
+<rect x="790" y="296" width="130" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="806" y="319" font-size="13" fill="#111827">Actor 更新</text>
+<path d="M 790 146 V 291" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="140" y="321" font-size="12" fill="#6b7280">同一时间轴 →</text>
+<text x="28" y="429" font-size="15" fill="#111827" font-weight="700">每条完成即送打分,与剩余 Rollout 重叠</text>
+<text x="40" y="472" font-size="13" fill="#111827">样本 1</text>
+<rect x="140" y="453" width="170" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="310" y="453" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="322" y="471" font-size="11" fill="#111827">评分</text>
+<text x="40" y="506" font-size="13" fill="#111827">样本 2</text>
+<rect x="140" y="487" width="250" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="390" y="487" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="402" y="505" font-size="11" fill="#111827">评分</text>
+<text x="40" y="540" font-size="13" fill="#111827">样本 3</text>
+<rect x="140" y="521" width="330" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="470" y="521" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="482" y="539" font-size="11" fill="#111827">评分</text>
+<text x="40" y="574" font-size="13" fill="#111827">样本 4</text>
+<rect x="140" y="555" width="410" height="25" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="550" y="555" width="60" height="25" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="562" y="573" font-size="11" fill="#111827">评分</text>
+<rect x="610" y="595" width="130" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="626" y="618" font-size="13" fill="#111827">Actor 更新</text>
+<path d="M 610 445 V 590" stroke="#9ca3af" stroke-dasharray="4 4"/>
+<text x="140" y="620" font-size="12" fill="#6b7280">同一时间轴 →</text>
+<text x="28" y="363" font-size="13" fill="#6b7280">上图 4 份 Reward 排队在 Rollout 后;下图前 3 份已被覆盖,最后一份仍在尾部。</text>
+<text x="28" y="694" font-size="13" fill="#6b7280">流式条件:无受管 Reward Model,或旧单模型使用独立资源池;命名 Reward Model 不适用。</text>
+<text x="28" y="723" font-size="13" fill="#6b7280">纯函数与外部服务可以组合为多项 Reward;这与命名模型不是同一个限制。</text>
+</svg>

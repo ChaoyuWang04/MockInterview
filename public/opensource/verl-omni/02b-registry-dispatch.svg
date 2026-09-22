@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 656" width="1120" height="656">
+<rect x="0" y="0" width="1120" height="656" fill="#ffffff"/>
+<text x="28" y="36" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="19" font-weight="700" fill="#111827">注册键:一个架构名加一个算法名,落到一对适配器</text>
+<text x="28" y="60" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="13" font-weight="400" fill="#6b7280">格子左半填绿 = Rollout 侧注册了,右半填紫 = 训练侧注册了,两半齐全才算一对适配器;空格 = 这个组合没有注册,配上去启动就报错;黄 = 偏离主路的两条岔路。</text>
+<rect x="28" y="78" width="330" height="48" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.2"/>
+<text x="40" y="98" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">架构名</text>
+<text x="40" y="115" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">启动时读模型目录里的索引文件,自动探测</text>
+<rect x="372" y="78" width="330" height="48" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.2"/>
+<text x="384" y="98" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">算法名</text>
+<text x="384" y="115" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">配置里的一项;它同时是Advantage 估计器的默认名</text>
+<text x="722" y="98" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">两个字符串合成一个二元组,</text>
+<text x="722" y="115" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">训练侧与Rollout 侧的两张表各查一次</text>
+<path d="M 150 126 L 150 142" stroke="#9ca3af" stroke-width="1.4" fill="none"/><path d="M 146 142 L 154 142 L 150 149 Z" fill="#9ca3af"/>
+<path d="M 520 126 L 520 142" stroke="#9ca3af" stroke-width="1.4" fill="none"/><path d="M 516 142 L 524 142 L 520 149 Z" fill="#9ca3af"/>
+<text x="334" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">flow_grpo</text>
+<text x="422" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">mix_grpo</text>
+<text x="510" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">diffusion_nft</text>
+<text x="598" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">dpo</text>
+<text x="686" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">dance_grpo</text>
+<text x="774" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280" text-anchor="middle">dual_grpo</text>
+<text x="28" y="164" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">架构 ↓ / 算法 →</text>
+<rect x="292" y="174" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="174" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="174" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="177" x2="334" y2="195" stroke="#ffffff" stroke-width="1.4"/>
+<rect x="380" y="174" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="422" y="174" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="380" y="174" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="422" y1="177" x2="422" y2="195" stroke="#ffffff" stroke-width="1.4"/>
+<rect x="468" y="174" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="510" y="174" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="468" y="174" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="510" y1="177" x2="510" y2="195" stroke="#ffffff" stroke-width="1.4"/>
+<rect x="556" y="174" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="598" y="174" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="556" y="174" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="598" y1="177" x2="598" y2="195" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="678" y1="186" x2="694" y2="186" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="732" y="174" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="732" y="174" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<text x="28" y="190" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">QwenImagePipeline</text>
+<rect x="292" y="204" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="204" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="204" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="207" x2="334" y2="225" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="216" x2="430" y2="216" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="216" x2="518" y2="216" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="216" x2="606" y2="216" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="678" y1="216" x2="694" y2="216" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="216" x2="782" y2="216" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="220" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">QwenImageEditPlusPipeline</text>
+<rect x="292" y="234" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="234" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="234" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="237" x2="334" y2="255" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="246" x2="430" y2="246" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="246" x2="518" y2="246" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="598" y="234" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="556" y="234" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="678" y1="246" x2="694" y2="246" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="246" x2="782" y2="246" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="250" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">StableDiffusion3Pipeline</text>
+<rect x="292" y="264" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="264" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="264" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="267" x2="334" y2="285" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="276" x2="430" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="276" x2="518" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="276" x2="606" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="678" y1="276" x2="694" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="276" x2="782" y2="276" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="280" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">BooguImagePipeline</text>
+<rect x="292" y="294" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="294" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="294" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="297" x2="334" y2="315" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="306" x2="430" y2="306" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="468" y="294" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="510" y="294" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="468" y="294" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="510" y1="297" x2="510" y2="315" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="590" y1="306" x2="606" y2="306" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="678" y1="306" x2="694" y2="306" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="306" x2="782" y2="306" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="310" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">MiniMaxH3Pipeline</text>
+<rect x="292" y="324" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="324" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="324" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="327" x2="334" y2="345" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="336" x2="430" y2="336" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="336" x2="518" y2="336" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="336" x2="606" y2="336" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="678" y1="336" x2="694" y2="336" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="336" x2="782" y2="336" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="340" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">LTX2Pipeline</text>
+<rect x="292" y="354" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="334" y="354" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="292" y="354" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="334" y1="357" x2="334" y2="375" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="414" y1="366" x2="430" y2="366" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="366" x2="518" y2="366" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="366" x2="606" y2="366" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="678" y1="366" x2="694" y2="366" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="766" y1="366" x2="782" y2="366" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="370" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">OmniBagelForConditionalGeneration</text>
+<line x1="326" y1="396" x2="342" y2="396" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="414" y1="396" x2="430" y2="396" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="396" x2="518" y2="396" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="396" x2="606" y2="396" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="644" y="384" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="686" y="384" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="644" y="384" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="686" y1="387" x2="686" y2="405" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="766" y1="396" x2="782" y2="396" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">WanPipeline</text>
+<line x1="326" y1="426" x2="342" y2="426" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="414" y1="426" x2="430" y2="426" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="502" y1="426" x2="518" y2="426" stroke="#e5e7eb" stroke-width="1.4"/>
+<line x1="590" y1="426" x2="606" y2="426" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="644" y="414" width="42" height="24" rx="4" fill="#e3f4ec" stroke="none"/>
+<rect x="686" y="414" width="42" height="24" rx="4" fill="#ecebfb" stroke="none"/>
+<rect x="644" y="414" width="84" height="24" rx="4" fill="none" stroke="#b9b9b9" stroke-width="1.2"/>
+<line x1="686" y1="417" x2="686" y2="435" stroke="#ffffff" stroke-width="1.4"/>
+<line x1="766" y1="426" x2="782" y2="426" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="28" y="430" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#111827">FluxPipeline</text>
+<text x="292" y="456" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">只填了左半的那一格:Rollout 侧注册了,当前没有任何配方走它。只填了右半的那一格:离线偏好,一步里根本没有生成这一段。</text>
+<text x="292" y="474" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">同一个架构的第二个算法,适配器往往只是继承第一个再覆写一两个方法——最薄的那个训练侧适配器只有一行类声明,没有方法体。</text>
+<rect x="28" y="490" width="520" height="128" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<text x="44" y="514" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">岔路一:标准扩散库载不进来的模型</text>
+<text x="44" y="536" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练侧适配器覆写「这个模块怎么造出来」的钩子:返回空就走标准库自动加载;</text>
+<text x="44" y="553" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">返回一个自写模块,引擎就直接拿它用。那个模块继承另一条基类,自己负责</text>
+<text x="44" y="570" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">加载权重、声明分片边界、接LoRA、存盘。</text>
+<text x="44" y="587" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">没有索引文件可探测,所以架构名必须在命令行上显式给。</text>
+<text x="44" y="604" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">引擎会为此打一行警告:它那一层的钩子可能只部分生效。</text>
+<rect x="572" y="490" width="520" height="128" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<text x="588" y="514" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">岔路二:全模态那条线换了一套键</text>
+<text x="588" y="536" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">自回归模型的适配器和算法无关——算法走 verl 已有的配置字段,于是训练侧</text>
+<text x="588" y="553" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">的键换成「架构名 + 阶段」:同一个模型训哪一段,才是要分发的那个维度。</text>
+<text x="588" y="570" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">Rollout 注册表更松:键只有一个流水线名,查不到返回空而不报错,它是可选的。</text>
+<text x="588" y="587" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">当前注册了两个架构,各一个阶段。</text>
+</svg>

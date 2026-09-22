@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="1040" viewBox="0 0 1120 1040" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><rect width="1120" height="1040" fill="#fff"/>
+<text x="28" y="36" font-size="19" fill="#111827" font-weight="700">两条训练器线,四种代表性路径</text>
+<text x="28" y="65" font-size="13" fill="#6b7280">紫 = 本路径会执行　黄 = 依算法 / 配置出现　白色虚线 = 不执行;颜色不表示代码是否复用</text>
+<text x="28" y="90" font-size="13" fill="#6b7280">Direct Preference 内部也不同:DPO 用样本对,NFT 默认用逐样本权重。</text>
+<text x="232" y="126" font-size="15" fill="#111827" font-weight="700">FlowGRPO · 在线</text>
+<text x="450" y="126" font-size="15" fill="#111827" font-weight="700">DPO · 在线</text>
+<text x="668" y="126" font-size="15" fill="#111827" font-weight="700">NFT · 在线</text>
+<text x="886" y="126" font-size="15" fill="#111827" font-weight="700">DPO · 离线</text>
+<text x="28" y="180" font-size="14" fill="#111827" font-weight="700">输入</text>
+<rect x="220" y="148" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="177" font-size="12" fill="#111827">提示词</text>
+<text x="230" y="201" font-size="12" fill="#111827">按组展开</text>
+<rect x="438" y="148" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="177" font-size="12" fill="#111827">提示词</text>
+<text x="448" y="201" font-size="12" fill="#111827">按组展开</text>
+<rect x="656" y="148" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="177" font-size="12" fill="#111827">提示词</text>
+<text x="666" y="201" font-size="12" fill="#111827">按组展开</text>
+<rect x="874" y="148" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="884" y="177" font-size="12" fill="#111827">离线偏好样本对</text>
+<text x="884" y="201" font-size="12" fill="#111827">含现成评分</text>
+<text x="28" y="268" font-size="14" fill="#111827" font-weight="700">Rollout</text>
+<rect x="220" y="236" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="265" font-size="12" fill="#111827">成品 + 选中训练片段</text>
+<text x="230" y="289" font-size="12" fill="#111827">log-prob 按配置返回</text>
+<rect x="438" y="236" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="265" font-size="12" fill="#111827">最终隐变量</text>
+<text x="448" y="289" font-size="12" fill="#111827">不保存整条去噪链</text>
+<rect x="656" y="236" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="265" font-size="12" fill="#111827">最终隐变量</text>
+<text x="666" y="289" font-size="12" fill="#111827">不保存整条去噪链</text>
+<rect x="874" y="236" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="884" y="265" font-size="12" fill="#6b7280">不创建 Rollout 角色</text>
+<text x="28" y="356" font-size="14" fill="#111827" font-weight="700">Reward</text>
+<rect x="220" y="324" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="353" font-size="12" fill="#111827">给成品打分</text>
+<text x="230" y="377" font-size="12" fill="#111827">满足条件时流式</text>
+<rect x="438" y="324" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="353" font-size="12" fill="#111827">给成品打分</text>
+<text x="448" y="377" font-size="12" fill="#111827">用于选出样本对</text>
+<rect x="656" y="324" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="353" font-size="12" fill="#111827">给成品打分</text>
+<text x="666" y="377" font-size="12" fill="#111827">用于逐样本权重</text>
+<rect x="874" y="324" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="884" y="353" font-size="12" fill="#6b7280">读取数据中的评分</text>
+<text x="28" y="444" font-size="14" fill="#111827" font-weight="700">旧策略 log-prob</text>
+<rect x="220" y="412" width="207" height="76" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="230" y="441" font-size="12" fill="#111827">默认重算</text>
+<text x="230" y="465" font-size="12" fill="#111827">bypass 时复用 Rollout</text>
+<rect x="438" y="412" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="448" y="441" font-size="12" fill="#6b7280">不需要</text>
+<rect x="656" y="412" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="666" y="441" font-size="12" fill="#6b7280">不需要</text>
+<rect x="874" y="412" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="884" y="441" font-size="12" fill="#6b7280">不需要</text>
+<text x="28" y="532" font-size="14" fill="#111827" font-weight="700">准备损失输入</text>
+<rect x="220" y="500" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="529" font-size="12" fill="#111827">计算样本间 Advantage</text>
+<text x="230" y="553" font-size="12" fill="#111827">选中训练步共享</text>
+<rect x="438" y="500" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="529" font-size="12" fill="#111827">批准备钩子</text>
+<text x="448" y="553" font-size="12" fill="#111827">挑 chosen / rejected</text>
+<rect x="656" y="500" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="529" font-size="12" fill="#111827">批准备钩子</text>
+<text x="666" y="553" font-size="12" fill="#111827">构造权重与训练时间步</text>
+<rect x="874" y="500" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="884" y="529" font-size="12" fill="#111827">使用已备好的样本对</text>
+<text x="28" y="620" font-size="14" fill="#111827" font-weight="700">Reference Model</text>
+<rect x="220" y="588" width="207" height="76" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="230" y="617" font-size="12" fill="#111827">参考约束启用时</text>
+<text x="230" y="641" font-size="12" fill="#111827">Teacher 蒸馏另按配置</text>
+<rect x="438" y="588" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="617" font-size="12" fill="#111827">单点噪声预测</text>
+<text x="448" y="641" font-size="12" fill="#111827">DPO 目标需要</text>
+<rect x="656" y="588" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="617" font-size="12" fill="#111827">在 Actor 内取参考预测</text>
+<text x="666" y="641" font-size="12" fill="#111827">是否加入损失由系数决定</text>
+<rect x="874" y="588" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="884" y="617" font-size="12" fill="#111827">单点噪声预测</text>
+<text x="884" y="641" font-size="12" fill="#111827">DPO 目标需要</text>
+<text x="28" y="708" font-size="14" fill="#111827" font-weight="700">Actor 更新</text>
+<rect x="220" y="676" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="705" font-size="12" fill="#111827">微批 × 选中训练步</text>
+<rect x="438" y="676" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="705" font-size="12" fill="#111827">按微批单次计算</text>
+<text x="448" y="729" font-size="12" fill="#111827">成对数据保持配对</text>
+<rect x="656" y="676" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="705" font-size="12" fill="#111827">微批 × 选中训练步</text>
+<text x="666" y="729" font-size="12" fill="#111827">加权正向过程目标</text>
+<rect x="874" y="676" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="884" y="705" font-size="12" fill="#111827">按微批单次计算</text>
+<text x="28" y="796" font-size="14" fill="#111827" font-weight="700">刷新旧适配器</text>
+<rect x="220" y="764" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="230" y="793" font-size="12" fill="#6b7280">没有这项刷新</text>
+<rect x="438" y="764" width="207" height="76" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="448" y="793" font-size="12" fill="#111827">仅配置 old adapter 时</text>
+<text x="448" y="817" font-size="12" fill="#111827">按间隔及衰减策略刷新</text>
+<rect x="656" y="764" width="207" height="76" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="666" y="793" font-size="12" fill="#111827">配置 old adapter 时刷新</text>
+<text x="666" y="817" font-size="12" fill="#111827">官方配方使用该路径</text>
+<rect x="874" y="764" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="884" y="793" font-size="12" fill="#6b7280">离线循环不做这项刷新</text>
+<text x="28" y="884" font-size="14" fill="#111827" font-weight="700">同步至 Rollout</text>
+<rect x="220" y="852" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="230" y="881" font-size="12" fill="#111827">更新后同步权重</text>
+<rect x="438" y="852" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="448" y="881" font-size="12" fill="#111827">更新后同步权重</text>
+<rect x="656" y="852" width="207" height="76" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="666" y="881" font-size="12" fill="#111827">更新后同步权重</text>
+<rect x="874" y="852" width="207" height="76" rx="5" fill="#fff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="884" y="881" font-size="12" fill="#6b7280">无在线 Rollout</text>
+<text x="28" y="978" font-size="13" fill="#6b7280">矩阵比较典型路径,不靠亮格数量推断固定阶段数;验证、存档等生命周期工作未展开。</text>
+<text x="28" y="1007" font-size="13" fill="#6b7280">在线旧适配器刷新取决于是否配置旧适配器;后端与模型仍须支持所选算法。</text>
+</svg>

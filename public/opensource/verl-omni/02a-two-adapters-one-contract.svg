@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 596" width="1120" height="596">
+<rect x="0" y="0" width="1120" height="596" fill="#ffffff"/>
+<text x="28" y="36" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="19" font-weight="700" fill="#111827">接一个模型:两侧适配器如何对齐(以 FlowGRPO 为例)</text>
+<text x="28" y="60" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="13" font-weight="400" fill="#6b7280">绿 = Rollout 运行时做的事,紫 = 训练侧运行时做的事,黄 = 两侧必须逐条对齐的契约项,红 = 这一项对不上会看到什么,灰 = 上游依赖</text>
+<text x="28" y="80" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="13" font-weight="400" fill="#6b7280">默认路径依赖两个上游;训练侧可由自定义模块补足 Diffusers 未覆盖的架构。</text>
+<rect x="28" y="100" width="300" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.2"/>
+<text x="40" y="120" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">上游:推理引擎里的模型流水线</text>
+<text x="40" y="137" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">Rollout 适配器继承它,不另起炉灶</text>
+<rect x="582" y="100" width="300" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.2"/>
+<text x="594" y="120" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">上游:标准扩散库里的 transformer</text>
+<text x="594" y="137" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练侧默认加载,也可自定义构建</text>
+<path d="M 178 146 L 178 160" stroke="#9ca3af" stroke-width="1.4" fill="none"/><path d="M 174 160 L 182 160 L 178 167 Z" fill="#9ca3af"/>
+<path d="M 732 146 L 732 160" stroke="#9ca3af" stroke-width="1.4" fill="none"/><path d="M 728 160 L 736 160 L 732 167 Z" fill="#9ca3af"/>
+<rect x="28" y="172" width="300" height="58" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<text x="40" y="192" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">Rollout 运行时</text>
+<text x="40" y="209" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">多模态推理引擎进程,跑完整条带噪采样循环</text>
+<text x="40" y="224" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">要写 vllm_omni_rollout_adapter.py</text>
+<rect x="340" y="172" width="230" height="58" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<text x="352" y="192" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">必须逐条对齐的契约</text>
+<text x="352" y="209" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">注册表只查键在不在,</text>
+<text x="352" y="224" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">不查下面这六行对不对得上</text>
+<rect x="582" y="172" width="300" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<text x="594" y="192" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">训练侧运行时</text>
+<text x="594" y="209" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练引擎进程,只把轨迹上选中的一步重算</text>
+<text x="594" y="224" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">要写 diffusers_training_adapter.py</text>
+<rect x="894" y="172" width="198" height="58" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="906" y="192" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">对不上会看到什么</text>
+<text x="906" y="213" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">并非所有错都在启动时报出</text>
+<rect x="28" y="244" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="244" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="244" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="244" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="270" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">架构名与算法名</text>
+<text x="40" y="270" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">两个装饰器上写死这两个字符串</text>
+<text x="594" y="270" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">写同样的两个字符串</text>
+<text x="906" y="270" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练侧报错;Rollout 回退</text>
+<rect x="28" y="292" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="292" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="292" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="292" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="318" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">采样调度器</text>
+<text x="40" y="318" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">把上游的确定性调度器换成带噪的</text>
+<text x="594" y="318" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">建同一个,时间步照上游算法算</text>
+<text x="906" y="318" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">不同则概率没法比</text>
+<rect x="28" y="340" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="340" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="340" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="340" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">提示词编码</text>
+<text x="40" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">按 token 编号编码,交回补齐的张量与掩码</text>
+<text x="594" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">直接拿来用,训练侧从不重新编码</text>
+<text x="906" y="366" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">重编码是静默偏差</text>
+<rect x="28" y="388" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="388" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="388" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="388" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="414" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">轨迹字段名</text>
+<text x="40" y="414" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练片段、log-prob、时间步按契约交回</text>
+<text x="594" y="414" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">按同样的名字取,切出当前这一步</text>
+<text x="906" y="414" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">改名就取不到</text>
+<rect x="28" y="436" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="436" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="436" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="436" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">数值精度</text>
+<text x="40" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">隐变量存单精度,前向前才转模型精度</text>
+<text x="594" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">状态与概率计算用 FP32</text>
+<text x="906" y="462" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">存低精度则比值第一步就偏</text>
+<rect x="28" y="484" width="300" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+<rect x="340" y="484" width="230" height="42" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+<rect x="582" y="484" width="300" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+<rect x="894" y="484" width="198" height="42" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1.2"/>
+<text x="352" y="510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">注意力实现</text>
+<text x="40" y="510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">Rollout 侧选一个后端</text>
+<text x="594" y="510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">训练侧必须选配对的那个</text>
+<text x="906" y="510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#6b7280">不成对启动校验拦下</text>
+<text x="28" y="550" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">一个包的标准构成就是这两个适配器文件,加一个放两侧都要用的东西的公共文件——噪声时间表、提示词模板这一类。</text>
+<text x="28" y="568" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" font-size="11" font-weight="400" fill="#9ca3af">标准扩散库载不进来的模型,只换掉「训练侧那个模块是怎么造出来的」这一步,上面六行契约一条不变。</text>
+</svg>
