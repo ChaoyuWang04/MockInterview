@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="380" viewBox="0 0 1120 380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="380" fill="#ffffff"/>
+  <text x="40" y="46" font-size="19" font-weight="700" fill="#111827">同样 4 张卡,显存里常驻的东西不一样</text>
+  <text x="40" y="72" font-size="13" fill="#6b7280">灰 = 参数,黄 = 梯度,紫 = 优化器状态;各行独立归一化,不比较三类状态的字节数;实心为本卡分片,虚框为完整大小</text>
+
+  <text x="196" y="112" font-size="14" font-weight="700" fill="#111827">每张卡各存一整份</text>
+  <text x="648" y="112" font-size="14" font-weight="700" fill="#111827">切开之后,一人一段</text>
+
+  <text x="243" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 0</text>
+  <text x="345" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 1</text>
+  <text x="447" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 2</text>
+  <text x="549" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 3</text>
+  <text x="695" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 0</text>
+  <text x="797" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 1</text>
+  <text x="899" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 2</text>
+  <text x="1001" y="136" font-size="11" fill="#9ca3af" text-anchor="middle">卡 3</text>
+
+  <text x="178" y="173" font-size="14" font-weight="700" fill="#111827" text-anchor="end">参数</text>
+  <rect x="196" y="150" width="94" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="298" y="150" width="94" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="400" y="150" width="94" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="502" y="150" width="94" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="648" y="150" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="750" y="150" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="852" y="150" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="954" y="150" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="648" y="150" width="24" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="750" y="150" width="24" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="852" y="150" width="24" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <rect x="954" y="150" width="24" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+
+  <text x="178" y="219" font-size="14" font-weight="700" fill="#111827" text-anchor="end">梯度</text>
+  <rect x="196" y="196" width="94" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="298" y="196" width="94" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="400" y="196" width="94" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="502" y="196" width="94" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="648" y="196" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="750" y="196" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="852" y="196" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="954" y="196" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="648" y="196" width="24" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="750" y="196" width="24" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="852" y="196" width="24" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <rect x="954" y="196" width="24" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+
+  <text x="178" y="265" font-size="14" font-weight="700" fill="#111827" text-anchor="end">优化器状态</text>
+  <rect x="196" y="242" width="94" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="298" y="242" width="94" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="400" y="242" width="94" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="502" y="242" width="94" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="648" y="242" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="750" y="242" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="852" y="242" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="954" y="242" width="94" height="36" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect x="648" y="242" width="24" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="750" y="242" width="24" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="852" y="242" width="24" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <rect x="954" y="242" width="24" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+
+  <text x="196" y="308" font-size="11" fill="#9ca3af">四份一模一样的东西;卡加得再多,单卡的占用一点不变</text>
+  <text x="648" y="308" font-size="11" fill="#9ca3af">三样都只留自己那一段;卡越多,每张卡留得越少</text>
+  <text x="196" y="344" font-size="11" fill="#9ca3af">示意 4 卡均匀分片的常驻模型状态;不含激活、通信缓冲和计算时的完整参数</text>
+</svg>
