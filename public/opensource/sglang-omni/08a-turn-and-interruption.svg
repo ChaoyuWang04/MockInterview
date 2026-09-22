@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="510" viewBox="0 0 1120 510">
+<rect width="1120" height="510" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="30" y="35" font-size="19" font-weight="700" fill="#111827">插话可以先停回答,但下一轮仍要等历史补齐</text>
+<text x="30" y="60" font-size="13" fill="#6b7280">绿:用户输入　紫:模型回答　黄:转写与历史　红:取消　横向是先后顺序,不按时长比例</text>
+<path d="M190 96H1080" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<g font-size="11" fill="#6b7280"><text x="192" y="85">第一轮结束</text><text x="483" y="85">用户插话</text><text x="699" y="85">第二轮结束</text><text x="926" y="85">历史就绪</text></g>
+<g stroke="#cbd2d9" stroke-dasharray="5 4"><path d="M205 100V440"/><path d="M510 100V440"/><path d="M745 100V440"/><path d="M950 100V440"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="30" y="150">WebSocket 输入</text><text x="30" y="235">回答请求</text><text x="30" y="320">转写请求</text><text x="30" y="405">会话队列</text></g>
+<rect x="180" y="120" width="95" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="510" y="120" width="235" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="275" y="205" width="235" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="515" y="205" width="150" height="48" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<rect x="950" y="205" width="135" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="665" y="290" width="285" height="48" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="745" y="375" width="205" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<g font-size="14" font-weight="700" fill="#111827" text-anchor="middle"><text x="227" y="149">VAD 收轮</text><text x="627" y="149">接收第二轮声音</text><text x="392" y="234">第一轮音频回答</text><text x="590" y="234">标记取消并中止</text><text x="1017" y="234">第二轮回答</text><text x="807" y="319">转写第一轮,补用户历史</text><text x="847" y="404">第二轮已提交,等前轮</text></g>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#a)"><path d="M275 145V190H300V205"/><path d="M510 168V205"/><path d="M665 253V275H685V290"/><path d="M745 168V375"/><path d="M950 314H975V253"/><path d="M950 399H1095V267H1050V253"/></g>
+<text x="30" y="467" font-size="13" fill="#6b7280">取消只针对旧回答;其用户转写仍可补入上下文。下一轮同时受「前轮结束」与「当前讲话结束」约束。</text>
+<text x="30" y="491" font-size="11" fill="#9ca3af">客户端另行停止已缓存的播放音频;本图不表示模型在第一轮回答时已经处理第二轮音频。</text>
+</g></svg>

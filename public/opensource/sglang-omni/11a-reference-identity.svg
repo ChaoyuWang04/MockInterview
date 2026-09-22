@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="490" viewBox="0 0 1120 490">
+<rect width="1120" height="490" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="30" y="34" font-size="19" font-weight="700" fill="#111827">相同计算只做一次,音色换版则走新的身份</text>
+<text x="30" y="60" font-size="13" fill="#6b7280">绿:请求　紫:编码　黄:可复用产物　灰:等待或持久记录　两条路径以 Qwen3-TTS 为例</text>
+<rect x="25" y="85" width="1070" height="194" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="25" y="301" width="1070" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="43" y="110" font-size="14" font-weight="700" fill="#111827">临时参考:同一参考编码服务实例</text>
+<text x="43" y="326" font-size="14" font-weight="700" fill="#111827">注册音色:名称加版本,内存缓存各属所在进程</text>
+<g stroke-width="1.4" fill="none" stroke="#9ca3af" marker-end="url(#a)"><path d="M213 158H320"/><path d="M213 234H267V171H320"/><path d="M505 160H580"/><path d="M505 160H540V235H580"/><path d="M770 160H850"/><path d="M770 235H823V189H850"/><path d="M235 383H290"/><path d="M470 383H540"/><path d="M730 383H825"/></g>
+<rect x="45" y="135" width="168" height="47" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="45" y="210" width="168" height="47" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="135" width="185" height="55" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="580" y="135" width="190" height="55" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="580" y="210" width="190" height="47" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="850" y="135" width="220" height="69" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="45" y="357" width="190" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="290" y="357" width="180" height="57" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="540" y="357" width="190" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="825" y="357" width="245" height="57" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<g font-size="14" font-weight="700" fill="#111827" text-anchor="middle"><text x="129" y="164">先到的同键请求</text><text x="129" y="239">后来同键请求</text><text x="412" y="157">查缓存与在途表</text><text x="675" y="157">仅首个请求编码</text><text x="675" y="239">其余请求等结果</text><text x="960" y="160">同一份结果</text><text x="140" y="380">音色旧版</text><text x="380" y="380">同名覆盖上传</text><text x="635" y="380">音色新版</text><text x="947" y="380">新版本键未命中则重编码</text></g>
+<g font-size="11" fill="#6b7280" text-anchor="middle"><text x="412" y="177">完整计算身份相同才合并</text><text x="675" y="177">产物生成后复核输入身份</text><text x="960" y="181">身份未变才保留在 LRU</text><text x="140" y="400">旧请求携带旧版本键</text><text x="380" y="400">替换持久文件与注册记录</text><text x="635" y="400">新请求携带新版本键</text><text x="947" y="400">这条路径不经过上方的同键等待</text></g>
+<text x="850" y="238" font-size="11" fill="#6b7280">失败:移除在途项,等待者收到错误</text>
+<text x="30" y="475" font-size="11" fill="#9ca3af">覆盖会清理当前进程的该音色缓存;不表示跨进程广播删除。图中箭头表达复用关系与版本先后。</text>
+</g></svg>

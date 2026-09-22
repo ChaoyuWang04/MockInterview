@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560">
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs><rect width="1120" height="560" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">模型适配器跨过输入、输出边界，公共 Scheduler 保持同一套生命周期</text>
+<text x="28" y="61" font-size="13" fill="#6b7280">绿：模型装配　紫：模型专属转换　黄：公共运行时　灰：跨阶段载荷</text>
+<rect x="260" y="84" width="600" height="108" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="280" y="111" font-size="14" font-weight="700" fill="#111827">Qwen3-Omni 配置 → Thinker 工厂 → Scheduler 装配</text>
+<text x="280" y="138" font-size="13" fill="#6b7280">配置选择工厂；工厂创建计算资源并提供本家的输入、输出适配器</text>
+<text x="280" y="163" font-size="11" fill="#6b7280">这是启动期的装配关系，不是每条请求都重新构造模型。</text>
+<rect x="280" y="226" width="560" height="262" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="300" y="254" font-size="14" font-weight="700" fill="#111827">Thinker Stage 的模型适配边界</text>
+<rect x="28" y="282" width="207" height="120" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="46" y="309" font-size="14" font-weight="700" fill="#111827">进入阶段的载荷</text>
+<text x="46" y="338" font-size="13" fill="#6b7280">请求身份、请求设置</text><text x="46" y="363" font-size="13" fill="#6b7280">提示词与 Encoder 结果</text><text x="46" y="387" font-size="11" fill="#6b7280">阶段状态按普通字典传递</text>
+<rect x="306" y="282" width="230" height="82" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="324" y="309" font-size="14" font-weight="700" fill="#111827">请求构造器</text><text x="324" y="339" font-size="11" fill="#6b7280">状态视图 → 自回归请求数据</text>
+<rect x="584" y="282" width="230" height="82" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="602" y="309" font-size="14" font-weight="700" fill="#111827">OmniScheduler</text><text x="602" y="339" font-size="11" fill="#6b7280">调度 / 中止 / 驱动模型执行</text>
+<rect x="584" y="400" width="230" height="66" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="602" y="426" font-size="14" font-weight="700" fill="#111827">结果适配器</text><text x="602" y="450" font-size="11" fill="#6b7280">写回状态，保留原请求身份</text>
+<rect x="888" y="389" width="204" height="92" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="906" y="417" font-size="14" font-weight="700" fill="#111827">返回阶段载荷</text><text x="906" y="443" font-size="13" fill="#6b7280">普通字典中的生成结果</text><text x="906" y="465" font-size="11" fill="#6b7280">后续投影与路由继续使用它</text>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#a)"><path d="M560 192V210H699V278"/><path d="M235 323H302"/><path d="M536 323H580"/><path d="M699 364V396"/><path d="M814 435H884"/></g>
+<text x="28" y="527" font-size="13" fill="#6b7280">模型变化主要落在紫色转换和绿色装配；这里展示完整载荷的适配，流式输出另有对应适配路径。</text>
+</g></svg>

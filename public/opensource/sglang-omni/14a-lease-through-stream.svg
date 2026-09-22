@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="480" viewBox="0 0 1120 480"><rect width="1120" height="480" fill="#ffffff"/>
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="30" y="35" font-size="19" font-weight="700" fill="#111827">聊天 HTTP 路径示例:响应头返回后仍持有额度</text>
+<text x="30" y="60" font-size="13" fill="#6b7280">绿:准入额度　紫:Worker 在途占用　黄:响应数据　灰:选路准备　横轴只表示顺序</text>
+<path d="M180 104H1075" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<g font-size="11" fill="#6b7280" text-anchor="middle"><text x="200" y="90">请求获准</text><text x="445" y="90">选定 Worker</text><text x="650" y="90">响应头</text><text x="805" y="90">音频块</text><text x="1030" y="90">响应体终止</text></g>
+<g stroke="#cbd2d9" stroke-dasharray="5 4"><path d="M200 110V375"/><path d="M445 110V375"/><path d="M650 110V375"/><path d="M1030 110V375"/></g>
+<rect x="200" y="130" width="225" height="65" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="312" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="#111827">按能力与健康选路</text>
+<text x="312" y="178" text-anchor="middle" font-size="11" fill="#6b7280">等价候选可直通,否则先分类</text>
+<rect x="650" y="130" width="110" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="780" y="130" width="85" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="885" y="130" width="85" height="65" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<g font-size="14" font-weight="700" fill="#111827" text-anchor="middle"><text x="705" y="168">头部返回</text><text x="822" y="168">数据块</text><text x="927" y="168">数据块</text></g>
+<path d="M445 163H640" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="535" y="150" text-anchor="middle" font-size="11" fill="#6b7280">发给已运行的 Worker</text>
+<text x="30" y="248" font-size="14" font-weight="700" fill="#111827">全局及类别额度</text>
+<rect x="200" y="222" width="830" height="42" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="615" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#111827">持续持有</text>
+<text x="30" y="309" font-size="14" font-weight="700" fill="#111827">Worker 在途负载</text>
+<rect x="445" y="283" width="585" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="737" y="309" text-anchor="middle" font-size="14" font-weight="700" fill="#111827">从选定时计入,到流终止才减去</text>
+<path d="M1030 195V345" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="710" y="363" font-size="13" fill="#6b7280">读到末尾 / 上游报错 / 客户端取消:释放</text>
+<path d="M1010 398H670" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="838" y="421" text-anchor="middle" font-size="13" fill="#6b7280">下游继续读取,才推进上游响应体读取</text>
+<text x="30" y="457" font-size="11" fill="#9ca3af">条长编码资源持有区间,不是耗时测量;失败若发生在响应头之前,额度也随错误返回而释放。</text>
+</g></svg>

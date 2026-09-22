@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610">
+<defs><marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="610" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">全体就绪才开放服务；进入计算前先把工作交给各 Rank</text>
+<text x="28" y="60" font-size="13" fill="#6b7280">绿：启动准备　紫：进程与执行　黄：对外控制　虚线：同一 TP Stage 的进程边界集合</text>
+<g fill="#e3f4ec" stroke="#5fa886"><rect x="28" y="90" width="220" height="65" rx="6"/><rect x="290" y="90" width="230" height="65" rx="6"/><rect x="562" y="90" width="230" height="65" rx="6"/><rect x="834" y="90" width="258" height="65" rx="6"/></g>
+<g fill="#111827" font-size="14" font-weight="700"><text x="46" y="115">解析进程启动记录</text><text x="308" y="115">Coordinator 先绑定端点</text><text x="580" y="115">拉起本波全部 Worker</text><text x="852" y="115">全部就绪 → 登记 Stage</text></g>
+<g fill="#6b7280" font-size="11"><text x="46" y="138">身份、设备、Rank、工厂、队列</text><text x="308" y="138">先准备接收完成通知</text><text x="580" y="138">构造 Scheduler → 启动 Stage</text><text x="852" y="138">此后启动器才报告启动成功</text></g>
+<g stroke="#9ca3af" fill="none" stroke-width="1.4" marker-end="url(#a)"><path d="M248 122H286"/><path d="M520 122H558"/><path d="M792 122H830"/></g>
+<text x="28" y="184" font-size="13" fill="#6b7280">默认只有一波；权重共享有依赖时，先等导出方与无依赖进程就绪，再起引用方。</text>
+<rect x="270" y="220" width="822" height="350" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="288" y="246" font-size="14" font-weight="700" fill="#111827">TP Stage 示例：2 个 Rank，各占 1 个操作系统进程</text>
+<rect x="28" y="281" width="187" height="80" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="46" y="309" font-size="14" font-weight="700" fill="#111827">Coordinator</text><text x="46" y="333" font-size="11" fill="#6b7280">注册 Rank 0 的控制端点</text>
+<rect x="295" y="279" width="302" height="90" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><rect x="759" y="279" width="302" height="90" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<g font-size="14" font-weight="700" fill="#111827"><text x="315" y="308">Rank 0 / Worker</text><text x="779" y="308">Rank 1 / Worker</text></g>
+<g font-size="11" fill="#6b7280"><text x="315" y="333">Stage 对外接收控制与载荷</text><text x="315" y="351">内部扩散控制消息</text><text x="779" y="333">内部队列接收控制</text><text x="779" y="351">中止另走专用队列</text></g>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#a)"><path d="M215 320H291"/><path d="M597 320H755"/></g><text x="621" y="308" font-size="11" fill="#6b7280">关闭 / 管理 / 剖析</text>
+<rect x="295" y="414" width="766" height="126" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="315" y="439" font-size="14" font-weight="700" fill="#111827">工作载荷选择一条扩散路径</text>
+<text x="315" y="466" font-size="13" fill="#6b7280">Scheduler 声明需要复制：Rank 0 通过内部队列投递给其他 Rank</text>
+<text x="315" y="491" font-size="13" fill="#6b7280">OmniScheduler：由自回归调度循环自身广播，不在 Stage 层重复复制</text>
+<text x="315" y="519" font-size="11" fill="#6b7280">拿到工作后，各 Rank 才能参与相应的前向与集合通信；这里的箭头不表示张量传输路径。</text>
+<path d="M446 369V410" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="28" y="594" font-size="11" fill="#9ca3af">示意中的 2 个 Rank 只用于展示控制关系；实际进程数由阶段配置与进程拓扑共同决定。</text>
+</g></svg>

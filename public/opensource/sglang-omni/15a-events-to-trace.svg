@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="555" viewBox="0 0 1120 555">
+<rect width="1120" height="555" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="30" y="32" font-size="19" font-weight="700" fill="#111827">先把请求串起来,再定位到底层轨迹</text>
+<text x="30" y="56" font-size="13" fill="#6b7280">绿色:事件文件 · 紫色:离线视图 · 黄色:torch trace · 连线表示数据归并或关联,没有实测时长</text>
+<rect x="30" y="80" width="1060" height="425" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="48" y="106" font-size="14" font-weight="700" fill="#111827">同一采集会话 · 示例请求 R</text>
+<rect x="50" y="129" width="350" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="67" y="153" font-size="14" font-weight="700" fill="#111827">Coordinator 进程的 JSONL</text><text x="67" y="177" font-size="11" fill="#6b7280">R:准入 / 收流式块 / 收终端完成消息</text>
+<rect x="50" y="211" width="350" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="67" y="235" font-size="14" font-weight="700" fill="#111827">Thinker 进程的 JSONL</text><text x="67" y="259" font-size="11" fill="#6b7280">R:排队 / 首批执行 / 向 Talker 发块 C</text>
+<rect x="50" y="293" width="350" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="67" y="317" font-size="14" font-weight="700" fill="#111827">Talker 进程的 JSONL</text><text x="67" y="341" font-size="11" fill="#6b7280">R:从 Thinker 收块 C / 构建 / 排队 / 首次产出</text>
+<rect x="503" y="145" width="550" height="197" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="523" y="174" font-size="14" font-weight="700" fill="#111827">按请求编号归并,再按事件关系配对</text>
+<text x="523" y="207" font-size="14" font-weight="700" fill="#111827">请求时间线</text><text x="662" y="207" font-size="11" fill="#6b7280">把所有进程的 R 事件按时间排序</text>
+<text x="523" y="247" font-size="14" font-weight="700" fill="#111827">阶段区间</text><text x="662" y="247" font-size="11" fill="#6b7280">同一 Stage 内,如入队 → 首批执行</text>
+<text x="523" y="287" font-size="14" font-weight="700" fill="#111827">跨阶段交接</text><text x="662" y="287" font-size="11" fill="#6b7280">R + Thinker → Talker + 块 C 配对</text>
+<text x="523" y="321" font-size="11" fill="#6b7280">区间可以重叠;跨度不能直接解释为 GPU 计算或纯传输耗时</text>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"><path d="M400 162H448V244H503"/><path d="M400 244H503"/><path d="M400 326H448V244H503"/></g>
+<rect x="50" y="403" width="1003" height="77" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="67" y="429" font-size="14" font-weight="700" fill="#111827">对应 Stage 进程 / rank 的 torch trace</text>
+<text x="67" y="452" font-size="11" fill="#6b7280">CPU活动、设备kernel与同步调用:检查选中窗口里的执行细节;每个进程分别导出</text>
+<text x="67" y="470" font-size="11" fill="#6b7280">不是把 JSONL 自动转换成 kernel,也不是只保留请求 R 的独占执行轨迹</text>
+<path d="M778 342V403" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="793" y="380" font-size="11" fill="#6b7280">按会话、进程和窗口关联</text>
+<text x="30" y="532" font-size="11" fill="#9ca3af">图省略其他 Stage 与请求。若多个 Stage 同进程,它们共用 JSONL,按每行 Stage 归属区分;R 与 C 是示意标识。</text>
+</g></svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540">
+<rect width="1120" height="540" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="30" y="32" font-size="19" font-weight="700" fill="#111827">同一服务,两条抵达已有 Stage 的路径</text>
+<text x="30" y="56" font-size="13" fill="#6b7280">绿色:生成 · 紫色:管理 · 灰色:共用组件 · 分支表示职责,不表示额外进程或额外 Stage</text>
+<rect x="30" y="92" width="178" height="78" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="44" y="119" font-size="14" font-weight="700" fill="#111827">聊天 / 语音 / 转录</text><text x="44" y="143" font-size="11" fill="#6b7280">解析协议与模型能力校验</text>
+<rect x="30" y="292" width="178" height="78" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="44" y="319" font-size="14" font-weight="700" fill="#111827">管理请求</text><text x="44" y="343" font-size="11" fill="#6b7280">凭据、目标、操作与超时</text>
+<rect x="248" y="92" width="125" height="278" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="270" y="209" font-size="14" font-weight="700" fill="#111827">Client</text><text x="265" y="235" font-size="11" fill="#6b7280">统一调用入口</text>
+<rect x="413" y="80" width="262" height="304" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="435" y="105" font-size="14" font-weight="700" fill="#111827">Coordinator</text>
+<rect x="433" y="120" width="222" height="67" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="450" y="145" font-size="14" font-weight="700" fill="#111827">生成准入 → 请求跟踪</text><text x="450" y="169" font-size="11" fill="#6b7280">上限有效且已满:提交前拒绝</text>
+<rect x="433" y="281" width="222" height="79" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="450" y="306" font-size="14" font-weight="700" fill="#111827">按目标发送管理操作</text><text x="450" y="329" font-size="11" fill="#6b7280">独立操作编号与等待结果</text><text x="450" y="348" font-size="11" fill="#6b7280">不占生成请求的在途名额</text>
+<rect x="733" y="80" width="357" height="304" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="753" y="105" font-size="14" font-weight="700" fill="#111827">已有 Stage / Scheduler</text>
+<rect x="753" y="120" width="317" height="67" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="771" y="145" font-size="14" font-weight="700" fill="#111827">入口段 → 生成图 → 终端结果</text><text x="771" y="169" font-size="11" fill="#6b7280">流式块可以先于终端结果返回</text>
+<rect x="753" y="281" width="317" height="79" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="771" y="306" font-size="14" font-weight="700" fill="#111827">管理处理器 → 引擎操作</text><text x="771" y="329" font-size="11" fill="#6b7280">无管理能力的 Stage 报告跳过</text><text x="771" y="348" font-size="11" fill="#6b7280">OmniScheduler 在线时排入管理队列</text>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"><path d="M208 131H248"/><path d="M208 331H248"/><path d="M373 153H433"/><path d="M373 321H433"/><path d="M655 153H753"/><path d="M655 321H753"/>
+<path d="M911 187V217H119V170"/><path d="M911 360V417H119V370"/></g>
+<text x="690" y="208" font-size="11" fill="#6b7280">生成结果经 Coordinator 与 Client 编码为响应</text>
+<text x="558" y="409" font-size="11" fill="#6b7280">逐 Stage 结果汇总;更新全跳过为失败,部分支持须看明细</text>
+<rect x="30" y="457" width="1060" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="48" y="480" font-size="14" font-weight="700" fill="#111827">批量语音沿上支逐项提交;管理广播沿下支逐 Stage 执行</text>
+<text x="48" y="500" font-size="11" fill="#6b7280">两者都可能出现部分成功,都不能从一次 HTTP 调用推导出跨请求或跨阶段的原子事务。</text>
+</g></svg>
