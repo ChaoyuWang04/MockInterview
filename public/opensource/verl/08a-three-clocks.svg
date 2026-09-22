@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 530" width="1120" height="530" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="530" fill="#ffffff"/>
+
+<rect x="180" y="140" width="900" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="180" y="140" width="200" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="380" y="140" width="90" height="46" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="470" y="140" width="130" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="140" width="30" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="630" y="140" width="200" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="830" y="140" width="90" height="46" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="920" y="140" width="130" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1050" y="140" width="30" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+
+<rect x="180" y="244" width="900" height="46" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="180" y="244" width="290" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="470" y="244" width="130" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="600" y="244" width="30" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="630" y="244" width="290" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="920" y="244" width="130" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="1050" y="244" width="30" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+
+<rect x="180" y="348" width="900" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="180" y="348" width="60" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="240" y="348" width="40" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="280" y="348" width="410" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="690" y="348" width="40" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="730" y="348" width="350" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+
+<rect x="180" y="392" width="900" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="180" y="392" width="60" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="240" y="392" width="40" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="280" y="392" width="350" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="630" y="392" width="60" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<rect x="690" y="392" width="40" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="730" y="392" width="350" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+
+<polyline points="630,140 630,432" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"/>
+
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">三种调度的稳态形状:等待与重叠发生在哪里</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">黄 = 生成在满负荷产出;红 = 卡占着却几乎没有产出;绿 = 训练在算;紫 = 换权重那一下</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">前两种是 V1 模式,第三种是独立实验入口;横向只表示先后与重叠,不表示实际耗时</text>
+<text x="405" y="108" font-size="11" fill="#9ca3af" text-anchor="middle">第 N 步</text>
+<text x="855" y="108" font-size="11" fill="#9ca3af" text-anchor="middle">第 N+1 步</text>
+
+<text x="180" y="132" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第一种 · V1 严格同步:一直等到这一批最后一条写完</text>
+<text x="170" y="168" font-size="12" fill="#111827" text-anchor="end" font-weight="700">同一批卡</text>
+<text x="280" y="167" font-size="11" fill="#111827" text-anchor="middle">生成第 N 批</text>
+<text x="425" y="167" font-size="11" fill="#111827" text-anchor="middle">长尾</text>
+<text x="535" y="167" font-size="11" fill="#111827" text-anchor="middle">训练第 N 批</text>
+<text x="730" y="167" font-size="11" fill="#111827" text-anchor="middle">生成第 N+1 批</text>
+<text x="875" y="167" font-size="11" fill="#111827" text-anchor="middle">长尾</text>
+<text x="985" y="167" font-size="11" fill="#111827" text-anchor="middle">训练第 N+1 批</text>
+<text x="180" y="206" font-size="11" fill="#9ca3af" text-anchor="start">这一步训的样本出自上一步末尾推过去的那份权重,滞后 0 个版本;长尾那一段是纯亏损</text>
+
+<text x="180" y="236" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第二种 · V1 共卡异步:够一批就中断,剩下的下一步接着写</text>
+<text x="170" y="272" font-size="12" fill="#111827" text-anchor="end" font-weight="700">同一批卡</text>
+<text x="325" y="271" font-size="11" fill="#111827" text-anchor="middle">生成:本批余下与下一批提前跑</text>
+<text x="535" y="271" font-size="11" fill="#111827" text-anchor="middle">训练第 N 批</text>
+<text x="775" y="271" font-size="11" fill="#111827" text-anchor="middle">同上,第 N+1 批</text>
+<text x="985" y="271" font-size="11" fill="#111827" text-anchor="middle">训练第 N+1 批</text>
+<text x="180" y="310" font-size="11" fill="#9ca3af" text-anchor="start">取够已完成题组即可训练;被中断的轨迹可跨权重版本续跑,不要求固定取上一批</text>
+
+<text x="180" y="340" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第三种 · 一步离策:独立 Rollout 池与训练流水线重叠</text>
+<text x="170" y="373" font-size="12" fill="#111827" text-anchor="end" font-weight="700">生成卡</text>
+<text x="485" y="372" font-size="11" fill="#111827" text-anchor="middle">写第 N+1 批</text>
+<text x="905" y="372" font-size="11" fill="#111827" text-anchor="middle">写第 N+2 批</text>
+<text x="170" y="417" font-size="12" fill="#111827" text-anchor="end" font-weight="700">训练卡</text>
+<text x="210" y="416" font-size="11" fill="#111827" text-anchor="middle">等</text>
+<text x="455" y="416" font-size="11" fill="#111827" text-anchor="middle">训练第 N 批</text>
+<text x="660" y="416" font-size="11" fill="#111827" text-anchor="middle">等</text>
+<text x="905" y="416" font-size="11" fill="#111827" text-anchor="middle">训练第 N+1 批</text>
+<text x="180" y="452" font-size="11" fill="#9ca3af" text-anchor="start">正常更新的稳态下使用上一轮策略样本;仍有同步与等待边界,首批预热不套用此示意</text>
+
+<text x="180" y="482" font-size="11" fill="#9ca3af" text-anchor="start">第一档的红段与第二档的黄段占同一块时间:卡都在生成,区别只在那段时间里有没有第二批活可干</text>
+<text x="180" y="504" font-size="11" fill="#9ca3af" text-anchor="start">第二档的中断点落在「够一批」那一刻,不是落在某条轨迹写完那一刻,这是它减少整批长尾等待的关键</text>
+</svg>

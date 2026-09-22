@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 690" width="1120" height="690" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker></defs><rect x="0" y="0" width="1120" height="690" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个算法变体要填的口子,落在一步训练的哪几处</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = 控制器进程里填的口子;绿 = worker 进程里填的口子;黄 = 两张表装不下、只能另开开关的要求;灰 = 算法与相关配置决定是否启用的角色</text>
+<rect x="40" y="88" width="1024" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="1048" y="110" font-size="13" fill="#6b7280" text-anchor="end">控制器进程(单个):算法控制流</text>
+<rect x="64" y="132" width="290" height="82" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="209" y="166" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">一批回答与得分到齐</text>
+<text x="209" y="188" font-size="11" fill="#6b7280" text-anchor="middle">这一段不是口子</text>
+<rect x="384" y="132" width="290" height="82" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="529" y="166" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子① KL 罚不罚进奖励</text>
+<text x="529" y="188" font-size="11" fill="#6b7280" text-anchor="middle">打开就必须有一份参考概率</text>
+<rect x="704" y="132" width="336" height="82" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="872" y="166" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子② 按名字取优势估计</text>
+<text x="872" y="188" font-size="11" fill="#6b7280" text-anchor="middle">两个最常用的走硬编码分支,其余才查表</text>
+<polyline points="358,173 380,173" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="678,173 700,173" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="704" y="278" width="336" height="66" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="872" y="306" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">优势估计注册表</text>
+<text x="872" y="327" font-size="11" fill="#6b7280" text-anchor="middle">装饰器在模块导入时把名字登记进来</text>
+<polyline points="872,274 872,218" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="64" y="278" width="226" height="66" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="177" y="306" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">策略损失注册表</text>
+<text x="177" y="327" font-size="11" fill="#6b7280" text-anchor="middle">同一套登记方式,另一个字典</text>
+<polyline points="177,348 177,424" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="318" y="304" font-size="11" fill="#9ca3af" text-anchor="start">两张表在两个进程里各查一次,各选各的</text>
+<text x="318" y="326" font-size="11" fill="#9ca3af" text-anchor="start">可选组合是乘出来的:同一个优势估计能配不同的损失</text>
+<rect x="40" y="384" width="1024" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="1048" y="406" font-size="13" fill="#6b7280" text-anchor="end">worker 进程(每张卡一个):神经网络计算流</text>
+<rect x="64" y="428" width="226" height="82" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="177" y="462" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子③ 按名字取策略损失</text>
+<text x="177" y="484" font-size="11" fill="#6b7280" text-anchor="middle">更新策略时在这里查表</text>
+<rect x="320" y="428" width="226" height="82" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="433" y="462" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子④ KL 加不加进损失</text>
+<text x="433" y="484" font-size="11" fill="#6b7280" text-anchor="middle">和口子①分属两处,可同时开</text>
+<rect x="576" y="428" width="216" height="82" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="684" y="462" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子⑤ 熵项系数</text>
+<text x="684" y="484" font-size="11" fill="#6b7280" text-anchor="middle">非零时加入熵正则</text>
+<rect x="822" y="428" width="218" height="82" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="931" y="462" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">口子⑥ 怎么聚合成标量</text>
+<text x="931" y="484" font-size="11" fill="#6b7280" text-anchor="middle">五个取值;有的损失会忽略它</text>
+<polyline points="294,469 316,469" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="550,469 572,469" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="796,469 818,469" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="64" y="558" font-size="11" fill="#9ca3af" text-anchor="start">下面一排不是流水线的一段:它们由算法与相关配置共同决定,上下对齐的是同一条线</text>
+<rect x="64" y="574" width="252" height="84" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="190" y="602" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">填不进两张表的要求</text>
+<text x="190" y="623" font-size="11" fill="#6b7280" text-anchor="middle">多吐一个中间量;一题多生成几条</text>
+<text x="190" y="642" font-size="11" fill="#6b7280" text-anchor="middle">丢掉得分全同的组</text>
+<rect x="346" y="574" width="330" height="84" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="511" y="602" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">是否启用 Reference</text>
+<text x="511" y="623" font-size="11" fill="#6b7280" text-anchor="middle">两个 KL 口子任开一个就需要</text>
+<text x="511" y="642" font-size="11" fill="#6b7280" text-anchor="middle">角色不等于独立进程</text>
+<rect x="706" y="574" width="334" height="84" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="873" y="602" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">是否启用 Critic</text>
+<text x="873" y="623" font-size="11" fill="#6b7280" text-anchor="middle">显式开关优先;留空时看优势估计的名字</text>
+<text x="873" y="642" font-size="11" fill="#6b7280" text-anchor="middle">而默认的那个估计器恰好要它</text>
+</svg>

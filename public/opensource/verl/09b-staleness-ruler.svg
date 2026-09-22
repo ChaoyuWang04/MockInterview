@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="820" viewBox="0 0 1120 820" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#9ca3af"/></marker></defs><rect width="1120" height="820" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" font-weight="700" fill="#111827" text-anchor="start">提交年龄控制与轨迹版本指标:先分清对象,再比较数字</text>
+<text x="30" y="60" font-size="13" font-weight="400" fill="#6b7280" text-anchor="start">黄 = 在途;绿 = 已完成;红 = 拒绝或暂停取样;紫 = 轨迹版本的独立观测。两例互不连续。</text>
+<text x="30" y="105" font-size="14" font-weight="700" fill="#111827" text-anchor="start">A · drop 检查已完成题组:超过阈值就淘汰</text>
+<path d="M290 137 L290 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="290" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">5</text>
+<path d="M370 137 L370 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="370" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">6</text>
+<path d="M450 137 L450 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="450" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">7</text>
+<path d="M530 137 L530 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="530" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">8</text>
+<path d="M610 137 L610 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="610" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">9</text>
+<path d="M690 137 L690 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="690" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">10</text>
+<path d="M770 137 L770 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="770" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">11</text>
+<path d="M850 137 L850 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="850" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">12</text>
+<path d="M930 137 L930 145" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="930" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="middle">13</text>
+<path d="M290 137 L930 137" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="985" y="164" font-size="12" font-weight="400" fill="#111827" text-anchor="start">训练步</text>
+<rect x="290" y="185" width="240" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="410" y="215" font-size="13" font-weight="400" fill="#111827" text-anchor="middle">提交后生成</text>
+<rect x="530" y="185" width="400" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="730" y="215" font-size="13" font-weight="400" fill="#111827" text-anchor="middle">已完成,等待候选检查</text>
+<text x="290" y="259" font-size="12" font-weight="400" fill="#111827" text-anchor="start">第 5 步提交</text>
+<text x="870" y="259" font-size="12" font-weight="400" fill="#111827" text-anchor="start">第 13 步检查</text>
+<rect x="30" y="286" width="1060" height="68" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="50" y="313" font-size="15" font-weight="700" fill="#111827" text-anchor="start">提交年龄 = 13 − 5 + 1 = 9 &gt; 阈值 8 → 拒绝并补题</text>
+<text x="50" y="337" font-size="12" font-weight="400" fill="#111827" text-anchor="start">这条候选不会进入本步训练;不能把它画成默认 drop 策略已经接受的样本。</text>
+<rect x="30" y="374" width="1060" height="110" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="50" y="402" font-size="14" font-weight="700" fill="#111827" text-anchor="start">独立的版本观测:假设该轨迹实际用过权重版本 5–7</text>
+<text x="50" y="429" font-size="13" font-weight="400" fill="#111827" text-anchor="start">跨度 = 7 − 5 + 1 = 3;按第 13 步的指标公式,最新 / 最旧版本滞后分别为 5 / 7。</text>
+<text x="50" y="456" font-size="12" font-weight="400" fill="#111827" text-anchor="start">这里只演示公式区别;被拒绝的候选不计入本步已训练样本的三项汇总指标。</text>
+<text x="30" y="524" font-size="14" font-weight="700" fill="#111827" text-anchor="start">B · wait 检查在途题组:达到阈值就暂停取样</text>
+<rect x="290" y="551" width="560" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="570" y="581" font-size="13" font-weight="400" fill="#111827" text-anchor="middle">另一题组:从第 5 步提交,到第 12 步仍待发或在跑</text>
+<text x="290" y="625" font-size="13" font-weight="400" fill="#111827" text-anchor="start">提交年龄 = 12 − 5 + 1 = 8,达到阈值</text>
+<path d="M850 576 L965 576" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="966" y="551" width="124" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="1028" y="581" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">暂停取样</text>
+<text x="30" y="670" font-size="13" font-weight="400" fill="#111827" text-anchor="start">等在途组完成或失败后重新检查;已完成的组无需再“等它跑完”。</text>
+<text x="30" y="702" font-size="13" font-weight="400" fill="#111827" text-anchor="start">wait 避免因陈旧度主动淘汰,仍可能因生成失败或无信号过滤而丢弃。</text>
+<text x="30" y="763" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">提交年龄回答“何时提交”;版本指标回答“实际用了哪几版权重”。两者相关,需要结合读,不能直接相等。</text>
+</svg>

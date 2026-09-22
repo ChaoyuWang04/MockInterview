@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+
+  <!-- 合并前 -->
+  <rect x="150" y="114" width="270" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="420" y="114" width="340" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="760" y="114" width="70" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+
+  <rect x="150" y="162" width="270" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="420" y="162" width="340" height="28" rx="6" fill="#ffffff" stroke="#5fa886"/>
+  <rect x="760" y="162" width="70" height="28" rx="6" fill="#ffffff" stroke="#d9877a"/>
+
+  <!-- 合并后 -->
+  <rect x="150" y="274" width="270" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="420" y="274" width="340" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <rect x="760" y="274" width="50" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <rect x="810" y="274" width="180" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <rect x="990" y="274" width="90" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+
+  <rect x="150" y="322" width="270" height="28" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="420" y="322" width="340" height="28" rx="6" fill="#ffffff" stroke="#5fa886"/>
+  <rect x="760" y="322" width="50" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+  <rect x="810" y="322" width="180" height="28" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+  <rect x="990" y="322" width="90" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+
+  <line x1="795" y1="112" x2="795" y2="98" stroke="#d9877a" stroke-width="1.4"/>
+  <polyline points="250,200 250,266" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah2)"/>
+
+  <!-- 文字 -->
+  <text x="32" y="38" font-size="19" font-weight="700" fill="#111827">工具结果怎么并回 token 流:需要边界修正的模型示例</text>
+  <text x="32" y="62" font-size="13" fill="#6b7280">灰 = 模板渲染出来的,绿 = 模型自己生成的,黄 = 工具消息渲染出来的,红 = 这次合并要撤掉的;下面一行是与之一格对一格的掩码</text>
+
+  <text x="32" y="104" font-size="14" font-weight="700" fill="#111827">合并前</text>
+  <text x="795" y="92" font-size="11" fill="#d9877a" text-anchor="middle">此例有重复边界,先撤掉</text>
+
+  <text x="142" y="138" font-size="11" fill="#9ca3af" text-anchor="end">token</text>
+  <text x="142" y="181" font-size="11" fill="#9ca3af" text-anchor="end">掩码</text>
+
+  <text x="285" y="138" font-size="11" fill="#6b7280" text-anchor="middle">题目提示与工具描述</text>
+  <text x="590" y="138" font-size="11" fill="#6b7280" text-anchor="middle">上一轮模型自己生成的 token</text>
+  <text x="795" y="138" font-size="11" fill="#6b7280" text-anchor="middle">分界</text>
+
+  <text x="285" y="181" font-size="11" fill="#9ca3af" text-anchor="middle">不计入响应</text>
+  <text x="590" y="181" font-size="11" fill="#6b7280" text-anchor="middle">全是 1,算损失</text>
+  <text x="795" y="181" font-size="11" fill="#6b7280" text-anchor="middle">随之删掉</text>
+
+  <text x="270" y="236" font-size="11" fill="#6b7280">工具返回之后不重套整段模板,只把新增的那几条消息渲染成 token 增量并进来</text>
+
+  <text x="32" y="264" font-size="14" font-weight="700" fill="#111827">合并后</text>
+
+  <text x="142" y="298" font-size="11" fill="#9ca3af" text-anchor="end">token</text>
+  <text x="142" y="341" font-size="11" fill="#9ca3af" text-anchor="end">掩码</text>
+
+  <text x="285" y="298" font-size="11" fill="#6b7280" text-anchor="middle">题目提示与工具描述</text>
+  <text x="590" y="298" font-size="11" fill="#6b7280" text-anchor="middle">上一轮模型自己生成的 token</text>
+  <text x="785" y="298" font-size="11" fill="#6b7280" text-anchor="middle">边界</text>
+  <text x="900" y="298" font-size="11" fill="#6b7280" text-anchor="middle">工具消息渲染出来的</text>
+  <text x="1035" y="298" font-size="11" fill="#6b7280" text-anchor="middle">生成提示</text>
+
+  <text x="285" y="341" font-size="11" fill="#9ca3af" text-anchor="middle">不计入响应</text>
+  <text x="590" y="341" font-size="11" fill="#6b7280" text-anchor="middle">全是 1,算损失</text>
+  <text x="785" y="341" font-size="11" fill="#6b7280" text-anchor="middle">0</text>
+  <text x="900" y="341" font-size="11" fill="#6b7280" text-anchor="middle">全是 0,不算损失</text>
+  <text x="1035" y="341" font-size="11" fill="#6b7280" text-anchor="middle">0</text>
+
+  <text x="150" y="376" font-size="11" fill="#9ca3af">接缝上有三种编辑:撤掉几个、补进几个、追加几个;token、掩码与 logprob 三条并排的东西要跟着同一份编辑一起改。</text>
+  <text x="32" y="402" font-size="11" fill="#9ca3af">各段长度不对应真实 token 数。基础实现可直接拼接;是否撤掉或补入边界由模型族决定。</text>
+</svg>

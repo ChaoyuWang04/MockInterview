@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="670" viewBox="0 0 1120 670" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#9ca3af"/></marker></defs><rect width="1120" height="670" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" font-weight="700" fill="#111827" text-anchor="start">提前生成多少,与允许样本多旧:控制关系不能用同一把尺</text>
+<text x="30" y="60" font-size="13" font-weight="400" fill="#6b7280" text-anchor="start">紫 = 数量预算;绿 = 版本年龄控制;黄 = 同时影响两者。连线表示控制依赖,不表示数值大小。</text>
+<text x="170" y="104" font-size="14" font-weight="700" fill="#111827" text-anchor="start">配置如何作用</text>
+<text x="750" y="104" font-size="14" font-weight="700" fill="#111827" text-anchor="start">数量预算 / 年龄边界</text>
+<text x="30" y="165" font-size="16" font-weight="700" fill="#111827" text-anchor="start">VeRL</text>
+<rect x="170" y="128" width="340" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="161" font-size="14" font-weight="700" fill="#111827" text-anchor="start">预热批次</text>
+<rect x="170" y="200" width="340" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="190" y="233" font-size="14" font-weight="700" fill="#111827" text-anchor="start">提交年龄阈值与处理策略</text>
+<rect x="700" y="128" width="390" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="720" y="161" font-size="14" font-weight="400" fill="#111827" text-anchor="start">开训前额外提交多少题组</text>
+<rect x="700" y="200" width="390" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="720" y="233" font-size="14" font-weight="400" fill="#111827" text-anchor="start">按年龄丢弃,或等在途题组落定</text>
+<path d="M510 155 L696 155" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M510 227 L696 227" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="170" y="282" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">V1 两项分别配置;增加预热量不等于必须提高年龄阈值。</text>
+<text x="30" y="359" font-size="16" font-weight="700" fill="#111827" text-anchor="start">slime</text>
+<rect x="170" y="322" width="340" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="357" font-size="14" font-weight="700" fill="#111827" text-anchor="start">异步生成函数的在途池</text>
+<rect x="700" y="322" width="390" height="58" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="720" y="357" font-size="14" font-weight="400" fill="#111827" text-anchor="start">并发与已完成队列共同影响产出</text>
+<path d="M510 351 L696 351" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="700" y="396" width="390" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="720" y="427" font-size="14" font-weight="400" fill="#111827" text-anchor="start">未设权重版本年龄硬界限</text>
+<text x="170" y="422" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">有限并发不能推出有限版本年龄。</text>
+<text x="30" y="544" font-size="16" font-weight="700" fill="#111827" text-anchor="start">ROLL</text>
+<rect x="170" y="510" width="340" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="190" y="553" font-size="14" font-weight="700" fill="#111827" text-anchor="start">提前生成比例</text>
+<rect x="700" y="484" width="390" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="720" y="517" font-size="14" font-weight="400" fill="#111827" text-anchor="start">影响允许提前安排的题目预算</text>
+<rect x="700" y="556" width="390" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="720" y="589" font-size="14" font-weight="400" fill="#111827" text-anchor="start">经取整影响可接受的提交步号</text>
+<path d="M510 546 L605 546" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M605 546 L605 511" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M605 511 L696 511" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M605 546 L605 583" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M605 583 L696 583" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="30" y="648" font-size="11" font-weight="400" fill="#9ca3af" text-anchor="start">对照对应正文所述路径,不代表三家所有训练器;参数名见第五节与各项目配置。</text>
+</svg>
