@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="520" viewBox="0 0 1120 520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><rect width="1120" height="520" fill="#ffffff"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#9ca3af"/></marker></defs>
+<text x="30" y="36" font-size="19" fill="#111827" text-anchor="start" font-weight="700">FlowGRPO:样本之间比较,同一轨迹的选中步共享 Advantage</text>
+<text x="30" y="63" font-size="13" fill="#6b7280" text-anchor="start">紫 = 样本 Reward　绿 = 参与更新的步　白色虚线 = 未选中;数字仅为示意</text>
+<text x="40" y="118" font-size="14" fill="#111827" text-anchor="start" font-weight="700">同一提示词</text>
+<text x="224" y="118" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Reward</text>
+<text x="405" y="118" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Advantage</text>
+<text x="620" y="118" font-size="14" fill="#111827" text-anchor="start" font-weight="700">这条轨迹的生成步(示意)</text>
+<text x="650" y="151" font-size="13" fill="#6b7280" text-anchor="middle">1</text>
+<text x="718" y="151" font-size="13" fill="#6b7280" text-anchor="middle">2</text>
+<text x="786" y="151" font-size="13" fill="#6b7280" text-anchor="middle">3</text>
+<text x="854" y="151" font-size="13" fill="#6b7280" text-anchor="middle">4</text>
+<text x="922" y="151" font-size="13" fill="#6b7280" text-anchor="middle">5</text>
+<text x="990" y="151" font-size="13" fill="#6b7280" text-anchor="middle">6</text>
+<text x="40" y="206" font-size="14" fill="#111827" text-anchor="start" font-weight="700">样本 A</text>
+<rect x="208" y="176" width="100" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="258" y="209" font-size="16" fill="#111827" text-anchor="middle">1</text>
+<path d="M318,203 L383,203" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="395" y="176" width="132" height="54" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="461" y="209" font-size="16" fill="#111827" text-anchor="middle">−1</text>
+<path d="M537,203 L610,203" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="622" y="176" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="690" y="176" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="758" y="176" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="786" y="209" font-size="16" fill="#111827" text-anchor="middle">−1</text>
+<rect x="826" y="176" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="854" y="209" font-size="16" fill="#111827" text-anchor="middle">−1</text>
+<rect x="894" y="176" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="962" y="176" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="290" font-size="14" fill="#111827" text-anchor="start" font-weight="700">样本 B</text>
+<rect x="208" y="260" width="100" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="258" y="293" font-size="16" fill="#111827" text-anchor="middle">2</text>
+<path d="M318,287 L383,287" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="395" y="260" width="132" height="54" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="461" y="293" font-size="16" fill="#111827" text-anchor="middle">0</text>
+<path d="M537,287 L610,287" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="622" y="260" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="690" y="260" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="758" y="260" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="786" y="293" font-size="16" fill="#111827" text-anchor="middle">0</text>
+<rect x="826" y="260" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="854" y="293" font-size="16" fill="#111827" text-anchor="middle">0</text>
+<rect x="894" y="260" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="962" y="260" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="374" font-size="14" fill="#111827" text-anchor="start" font-weight="700">样本 C</text>
+<rect x="208" y="344" width="100" height="54" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="258" y="377" font-size="16" fill="#111827" text-anchor="middle">3</text>
+<path d="M318,371 L383,371" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="395" y="344" width="132" height="54" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="461" y="377" font-size="16" fill="#111827" text-anchor="middle">+1</text>
+<path d="M537,371 L610,371" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="622" y="344" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="690" y="344" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="758" y="344" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="786" y="377" font-size="16" fill="#111827" text-anchor="middle">+1</text>
+<rect x="826" y="344" width="56" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="854" y="377" font-size="16" fill="#111827" text-anchor="middle">+1</text>
+<rect x="894" y="344" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="962" y="344" width="56" height="54" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="40" y="456" font-size="13" fill="#6b7280" text-anchor="start">示例:组均值为 2,缩放标准差取 1;选中第 3、4 步,不是逐步重新评分。</text>
+<text x="40" y="485" font-size="13" fill="#6b7280" text-anchor="start">默认先组内中心化,再以全批标准差缩放;文本 GRPO 也可以在一个回答内共享 Advantage。</text>
+</svg>

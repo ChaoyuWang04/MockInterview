@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="1040" viewBox="0 0 860 1040" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><rect width="860" height="1040" fill="#ffffff"/><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#9ca3af"/></marker></defs>
+<text x="30" y="36" font-size="19" fill="#111827" text-anchor="start" font-weight="700">在线扩散 Policy Gradient:一步怎样走完</text>
+<text x="30" y="64" font-size="13" fill="#6b7280" text-anchor="start">共卡基线路径;颜色表示逻辑职责,不表示独立进程或 GPU</text>
+<text x="30" y="88" font-size="13" fill="#6b7280" text-anchor="start">紫 = 控制器　黄 = Rollout　红 = Reward / Teacher　绿 = 训练　灰 = 跨角色</text>
+<rect x="100" y="116" width="660" height="74" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="122" y="144" font-size="14" fill="#111827" text-anchor="start" font-weight="700">取一批提示词</text>
+<text x="122" y="169" font-size="13" fill="#6b7280" text-anchor="start">同一提示词展开为一组样本</text>
+<path d="M430,190 L430,206" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="210" width="660" height="74" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="122" y="238" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Rollout</text>
+<text x="122" y="263" font-size="13" fill="#6b7280" text-anchor="start">返回成品、训练片段与条件;log-prob 按配置返回</text>
+<path d="M430,284 L430,300" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="304" width="660" height="74" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="122" y="332" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Reward</text>
+<text x="122" y="357" font-size="13" fill="#6b7280" text-anchor="start">可用规则、服务或模型;满足条件时与剩余 Rollout 重叠</text>
+<path d="M430,378 L430,394" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="398" width="660" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-dasharray="5 4"/>
+<text x="122" y="426" font-size="14" fill="#111827" text-anchor="start" font-weight="700">旧策略 log-prob</text>
+<text x="122" y="451" font-size="13" fill="#6b7280" text-anchor="start">默认重算;启用 bypass 时复用 Rollout 返回值</text>
+<path d="M430,472 L430,488" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="492" width="660" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-dasharray="5 4"/>
+<text x="122" y="520" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Reference Model</text>
+<text x="122" y="545" font-size="13" fill="#6b7280" text-anchor="start">需要参考约束时前向</text>
+<path d="M430,566 L430,582" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="586" width="660" height="74" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-dasharray="5 4"/>
+<text x="122" y="614" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Teacher</text>
+<text x="122" y="639" font-size="13" fill="#6b7280" text-anchor="start">蒸馏预测;可复用 Actor worker 或独立部署</text>
+<path d="M430,660 L430,676" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="680" width="660" height="74" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="122" y="708" font-size="14" fill="#111827" text-anchor="start" font-weight="700">计算 Advantage</text>
+<text x="122" y="733" font-size="13" fill="#6b7280" text-anchor="start">同提示词样本间比较;每条轨迹的选中步共享</text>
+<path d="M430,754 L430,770" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="774" width="660" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="122" y="802" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Actor 更新</text>
+<text x="122" y="827" font-size="13" fill="#6b7280" text-anchor="start">在选中的训练步上前向、反向与更新</text>
+<path d="M430,848 L430,864" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="100" y="868" width="660" height="74" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="122" y="896" font-size="14" fill="#111827" text-anchor="start" font-weight="700">同步权重</text>
+<text x="122" y="921" font-size="13" fill="#6b7280" text-anchor="start">更新后的参数交给 Rollout,准备下一批</text>
+<text x="100" y="986" font-size="13" fill="#6b7280" text-anchor="start">虚线阶段按配置出现;Teacher 不等于 Reward Model。</text>
+<text x="100" y="1012" font-size="13" fill="#6b7280" text-anchor="start">Direct Preference 与分卡异步使用不同流程,不套用本图。</text>
+</svg>
