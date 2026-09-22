@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker></defs><rect width="1120" height="700" fill="#fff"/>
+<text x="30" y="36" font-size="19" fill="#111827" font-weight="700">Rollout:暂停请求与恢复显存是两件事</text>
+<text x="30" y="62" font-size="13" fill="#111827">绿 = 可生成;灰 = 睡眠;黄 = 恢复与更新。按共卡交接示意,浅睡策略随后端变化。</text>
+<rect x="40" y="105" width="300" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="58" y="134" font-size="14" fill="#111827" font-weight="700">服务中</text>
+<text x="58" y="159" font-size="13" fill="#111827">权重与 KV cache 可用</text>
+<text x="58" y="182" font-size="13" fill="#111827">同步路径:等本批取样结束</text>
+<text x="58" y="205" font-size="13" fill="#111827">异步路径:可能中断当前请求</text>
+<rect x="410" y="105" width="300" height="130" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="428" y="134" font-size="14" fill="#111827" font-weight="700">停止当前请求（按需）</text>
+<text x="428" y="159" font-size="13" fill="#111827">按后端关闭准入 / abort</text>
+<text x="428" y="182" font-size="13" fill="#111827">客户端可保留已有 token</text>
+<text x="428" y="205" font-size="13" fill="#111827">与 logprob,之后携前缀重试</text>
+<rect x="780" y="105" width="300" height="130" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="798" y="134" font-size="14" fill="#111827" font-weight="700">睡眠</text>
+<text x="798" y="159" font-size="13" fill="#111827">让出本阶段可释放的内存</text>
+<text x="798" y="182" font-size="13" fill="#111827">权重如何卸载或保留</text>
+<text x="798" y="205" font-size="13" fill="#111827">取决于后端与睡眠深度</text>
+<polyline points="340,169 410,169" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="710,169 780,169" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="930,235 930,315" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="780" y="315" width="300" height="132" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="798" y="344" font-size="14" fill="#111827" font-weight="700">先恢复权重内存</text>
+<text x="798" y="369" font-size="13" fill="#111827">准备接收新权重</text>
+<text x="798" y="392" font-size="13" fill="#111827">此时尚未恢复 KV cache</text>
+<text x="798" y="415" font-size="13" fill="#111827">保留了权重的路径可跳过恢复</text>
+<rect x="410" y="315" width="300" height="132" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="428" y="344" font-size="14" fill="#111827" font-weight="700">更新权重</text>
+<text x="428" y="369" font-size="13" fill="#111827">接收并应用新参数</text>
+<text x="428" y="392" font-size="13" fill="#111827">清理旧权重对应的缓存</text>
+<text x="428" y="415" font-size="13" fill="#111827">轨迹可跨版本,需记录版本范围</text>
+<rect x="40" y="315" width="300" height="132" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="58" y="344" font-size="14" fill="#111827" font-weight="700">按配置卸载 Actor 参数</text>
+<text x="58" y="369" font-size="13" fill="#111827">清理设备缓存</text>
+<text x="58" y="392" font-size="13" fill="#111827">等待所有训练 rank 完成</text>
+<text x="58" y="415" font-size="13" fill="#111827">之后再恢复 KV cache</text>
+<polyline points="780,381 710,381" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="410,381 340,381" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="190,447 190,520" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="40" y="520" width="300" height="94" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="58" y="549" font-size="14" fill="#111827" font-weight="700">恢复生成</text>
+<text x="58" y="574" font-size="13" fill="#111827">使用新权重接收或继续请求</text>
+<text x="400" y="550" font-size="13" fill="#111827">同步取样结束后可直接进入睡眠,无需每步都 abort。</text>
+<text x="400" y="578" font-size="13" fill="#111827">中断单次请求不等于丢弃整条轨迹。</text>
+<text x="40" y="661" font-size="14" fill="#111827" font-weight="700">恢复顺序:权重内存 → 更新权重 → Actor 按配置卸载 / 全体等待 → KV cache。</text>
+</svg>

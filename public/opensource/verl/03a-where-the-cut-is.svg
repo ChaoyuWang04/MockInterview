@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" width="1120" height="650" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker></defs><rect width="1120" height="650" fill="#fff"/>
+<text x="30" y="36" font-size="19" fill="#111827" font-weight="700">统一生命周期隔离后端差异,适配代码仍在 VeRL</text>
+<text x="30" y="62" font-size="13" fill="#111827">紫 = 训练编排;绿 = VeRL Engine adapter;灰 = 底层框架。箭头表示调用方向。</text>
+<rect x="45" y="100" width="1030" height="106" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="63" y="129" font-size="14" fill="#111827" font-weight="700">训练循环与 worker</text>
+<text x="63" y="154" font-size="13" fill="#111827">安排角色与训练批次,组织 loss、更新次数和指标</text>
+<text x="63" y="177" font-size="13" fill="#111827">Actor、可选 Critic 与 Reference 通过统一契约调用计算能力</text>
+<polyline points="560,206 560,250" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="585" y="234" font-size="12" fill="#111827">初始化 / 计算 / 更新 / 装卸 / 存档 / 参数导出</text>
+<rect x="45" y="250" width="1030" height="174" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="63" y="279" font-size="14" fill="#111827" font-weight="700">VeRL Engine adapter</text>
+<text x="63" y="304" font-size="13" fill="#111827">对接模型构造、并行包装、优化器与 scheduler</text>
+<text x="63" y="327" font-size="13" fill="#111827">实现后端所需的微批处理、梯度裁剪、checkpoint 与参数导出</text>
+<text x="63" y="350" font-size="13" fill="#111827">报告数据并行分组与输出 rank,供控制器分发和收集</text>
+<text x="63" y="373" font-size="13" fill="#111827">这些适配代码属于 VeRL;并非整层外包</text>
+<polyline points="560,424 560,468" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="45" y="468" width="1030" height="111" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="63" y="497" font-size="14" fill="#111827" font-weight="700">底层训练框架与模型实现</text>
+<text x="63" y="522" font-size="13" fill="#111827">PyTorch FSDP / HuggingFace · Megatron-LM / MindSpeed</text>
+<text x="63" y="545" font-size="13" fill="#111827">TorchTitan · VeOmni · NeMo Automodel:各自提供并行与模型能力</text>
+<text x="45" y="620" font-size="13" fill="#111827">注册表选择适配类;共用接口不代表各后端支持的模型、并行方式与配置完全相同。</text>
+</svg>

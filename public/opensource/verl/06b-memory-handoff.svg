@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker></defs><rect width="1120" height="640" fill="#fff"/>
+<text x="30" y="36" font-size="19" fill="#111827" font-weight="700">共卡权重交接:参数卸载与优化器卸载分开看</text>
+<text x="30" y="62" font-size="13" fill="#111827">紫 = Actor 参数;黄 = Rollout 权重;绿 = KV cache。示意普通全权重同步,不按容量比例绘制。</text>
+<rect x="40" y="112" width="190" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="58" y="141" font-size="14" fill="#111827" font-weight="700">1 恢复权重内存</text>
+<polyline points="230,151 258,151" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="258" y="112" width="190" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="276" y="141" font-size="14" fill="#111827" font-weight="700">2 导出并更新</text>
+<polyline points="448,151 476,151" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="476" y="112" width="190" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="494" y="141" font-size="14" fill="#111827" font-weight="700">3 按配置卸载参数</text>
+<polyline points="666,151 694,151" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="694" y="112" width="190" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="712" y="141" font-size="14" fill="#111827" font-weight="700">4 等待全部 rank</text>
+<polyline points="884,151 912,151" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="912" y="112" width="190" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="930" y="141" font-size="14" fill="#111827" font-weight="700">5 恢复 KV cache</text>
+<rect x="40" y="240" width="1040" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="58" y="269" font-size="14" fill="#111827" font-weight="700">Actor 参数:是否卸载由参数 offload 配置决定</text>
+<text x="58" y="294" font-size="13" fill="#111827">开启:Engine 按需装载 / 导出,更新后卸回 CPU;关闭:参数继续驻留</text>
+<text x="58" y="317" font-size="13" fill="#111827">导出是否取回整份、分片或逐张量处理,由训练后端决定;临时缓冲也需要显存</text>
+<rect x="40" y="383" width="620" height="94" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="58" y="412" font-size="14" fill="#111827" font-weight="700">Rollout 权重</text>
+<text x="58" y="437" font-size="13" fill="#111827">先恢复所需内存,再接收新参数,之后用于生成</text>
+<rect x="694" y="383" width="386" height="94" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="712" y="412" font-size="14" fill="#111827" font-weight="700">KV cache</text>
+<text x="712" y="437" font-size="13" fill="#111827">等 Actor 清理与全体等待后再恢复</text>
+<text x="40" y="525" font-size="14" fill="#111827" font-weight="700">优化器状态由独立的 optimizer offload 配置控制;梯度另有生命周期。</text>
+<text x="40" y="555" font-size="13" fill="#111827">图中不包含优化器、梯度、激活与通信缓冲,不能把这些方块相加当作显存峰值。</text>
+<text x="40" y="585" font-size="13" fill="#111827">重点观测更新区间的重叠占用;启动成功不保证换权重时一定有足够余量。</text>
+</svg>
