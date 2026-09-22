@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="810" viewBox="0 0 1120 810" font-family="-apple-system, BlinkMacSystemFont, PingFang SC, Microsoft YaHei, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/></marker></defs>
+<rect width="1120" height="810" fill="white"/>
+<text x="30" y="34" font-size="21" fill="#172033" text-anchor="start" font-weight="700">默认同步一步：先让出显存，再训练，最后交接新权重</text>
+<text x="30" y="63" font-size="14" fill="#475569" text-anchor="start">V1 sync，默认每个训练批经过一次子循环；箭头表示先后，不表示真实耗时。</text>
+<rect x="35" y="115" width="320" height="130" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="50" y="144" font-size="17" fill="#172033" text-anchor="start" font-weight="700">1 · 提交与取样</text>
+<text x="50" y="178" font-size="13" fill="#172033" text-anchor="start">Agent Loop → Rollout</text>
+<text x="50" y="206" font-size="13" fill="#172033" text-anchor="start">规则 / 独立 Reward 随轨迹打分</text>
+<rect x="400" y="115" width="320" height="130" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="415" y="144" font-size="17" fill="#172033" text-anchor="start" font-weight="700">2 · Rollout 睡眠</text>
+<text x="415" y="178" font-size="13" fill="#172033" text-anchor="start">等待让出训练所需显存</text>
+<text x="415" y="206" font-size="13" fill="#172033" text-anchor="start">取样等待与睡眠同计入 gen</text>
+<rect x="765" y="115" width="320" height="130" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="780" y="144" font-size="17" fill="#172033" text-anchor="start" font-weight="700">3 · 准备训练数据</text>
+<text x="780" y="178" font-size="13" fill="#172033" text-anchor="start">共卡 Reward：此时打分（按需）</text>
+<text x="780" y="206" font-size="13" fill="#172033" text-anchor="start">控制器做长度均衡</text>
+<rect x="35" y="315" width="320" height="130" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="50" y="344" font-size="17" fill="#172033" text-anchor="start" font-weight="700">4 · 准备模型输出</text>
+<text x="50" y="378" font-size="13" fill="#172033" text-anchor="start">Actor old logprob</text>
+<text x="50" y="406" font-size="13" fill="#172033" text-anchor="start">Reference logprob / Critic value（按需）</text>
+<rect x="400" y="315" width="320" height="130" rx="8" fill="#ecebfb" stroke="#94a3b8"/>
+<text x="415" y="344" font-size="17" fill="#172033" text-anchor="start" font-weight="700">5 · 优势与模型更新</text>
+<text x="415" y="378" font-size="13" fill="#172033" text-anchor="start">控制器计算优势，worker 执行更新</text>
+<text x="415" y="406" font-size="13" fill="#172033" text-anchor="start">Critic 按需；Actor 受预热条件控制</text>
+<rect x="765" y="315" width="320" height="130" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="780" y="344" font-size="17" fill="#172033" text-anchor="start" font-weight="700">6 · 权重交接与恢复</text>
+<text x="780" y="378" font-size="13" fill="#172033" text-anchor="start">恢复权重内存 → 写入新权重</text>
+<text x="780" y="406" font-size="13" fill="#172033" text-anchor="start">训练侧按配置卸载 → 恢复 KV cache</text>
+<polyline points="355,180 398,180" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<polyline points="720,180 763,180" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<polyline points="925,245 925,274 195,274 195,313" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<polyline points="355,380 398,380" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<polyline points="720,380 763,380" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="35" y="493" font-size="17" fill="#172033" text-anchor="start" font-weight="700">Rollout 显存交接</text>
+<rect x="35" y="520" width="240" height="90" rx="8" fill="#fdf1dc" stroke="#94a3b8"/>
+<text x="47" y="552" font-size="16" fill="#172033" text-anchor="start" font-weight="700">生成中</text>
+<text x="47" y="582" font-size="13" fill="#172033" text-anchor="start">持有生成所需内存</text>
+<rect x="275" y="520" width="230" height="90" rx="8" fill="#fff7ed" stroke="#94a3b8"/>
+<text x="287" y="552" font-size="16" fill="#172033" text-anchor="start" font-weight="700">睡眠过程</text>
+<text x="287" y="582" font-size="13" fill="#172033" text-anchor="start">按后端策略释放 / 卸载</text>
+<rect x="505" y="520" width="290" height="90" rx="8" fill="#e3f4ec" stroke="#94a3b8"/>
+<text x="517" y="552" font-size="16" fill="#172033" text-anchor="start" font-weight="700">训练计算</text>
+<text x="517" y="582" font-size="13" fill="#172033" text-anchor="start">让出的显存供训练使用</text>
+<rect x="795" y="520" width="290" height="90" rx="8" fill="#fdf1dc" stroke="#94a3b8"/>
+<text x="807" y="552" font-size="16" fill="#172033" text-anchor="start" font-weight="700">权重交接</text>
+<text x="807" y="582" font-size="13" fill="#172033" text-anchor="start">恢复权重，再恢复缓存</text>
+<text x="35" y="647" font-size="14" fill="#172033" text-anchor="start">只画共卡交替的主线：睡眠不一定释放全部权重，具体策略见 04、06 章。</text>
+<rect x="35" y="681" width="1050" height="93" rx="8" fill="#f8fafc" stroke="#94a3b8"/>
+<text x="55" y="710" font-size="15" fill="#172033" text-anchor="start" font-weight="700">阶段边界</text>
+<text x="55" y="735" font-size="14" fill="#172033" text-anchor="start">前五个框涵盖取样至更新的九个逻辑阶段；提交与步末权重交接属于外层训练步。</text>
+<text x="55" y="758" font-size="14" fill="#172033" text-anchor="start">配置多次子循环时，重复取样至更新；整批提交与步末权重同步不随每次子循环重复。</text>
+</svg>
