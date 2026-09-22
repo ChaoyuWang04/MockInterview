@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="490" viewBox="0 0 1120 490" role="img"><title>结果校验失败后的诊断分支</title><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs><rect width="1120" height="490" fill="#ffffff"/><g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><text x="32" y="33" font-size="19" font-weight="700" fill="#111827">结果校验失败后的诊断分支</text><text x="32" y="57" font-size="13" fill="#6b7280">限定 fatal 校验；黄色 = 诊断重跑　紫色 = 保存 / 恢复　灰色 = 诊断后退出；相同指容差内一致</text>
+<rect x="30" y="105" width="220" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="42" y="130" font-size="14" font-weight="700" fill="#111827">初次结果被检查拒绝</text>
+<rect x="295" y="105" width="265" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="307" y="130" font-size="14" font-weight="700" fill="#111827">同 GPU、同输入重跑</text>
+<path d="M252 132 L293 132" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="680" y="80" width="390" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="692" y="105" font-size="14" font-weight="700" fill="#111827">不相同 → 可能瞬态错误,退出</text>
+<path d="M562 119 L678 107" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="680" y="181" width="390" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="692" y="206" font-size="14" font-weight="700" fill="#111827">相同 → 保存诊断 checkpoint 并退出</text>
+<path d="M562 148 L678 206" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="680" y="278" width="390" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="692" y="303" font-size="14" font-weight="700" fill="#111827">从 checkpoint 恢复,换 GPU 重跑</text>
+<path d="M875 239 L875 276" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="30" y="278" width="270" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="42" y="303" font-size="14" font-weight="700" fill="#111827">仍是原 GPU → 再次调度</text>
+<path d="M678 306 L302 306" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="390" y="390" width="315" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="402" y="415" font-size="14" font-weight="700" fill="#111827">不相同 → 可能持久设备错误</text>
+<rect x="755" y="390" width="315" height="57" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="767" y="415" font-size="14" font-weight="700" fill="#111827">相同 → 结果可能来自应用</text>
+<path d="M810 336 L550 388" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M963 336 L963 388" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="32" y="213" font-size="13" font-weight="400" fill="#111827">重跑前恢复 RNG / 额外状态,回退数据迭代器。</text>
+<text x="32" y="237" font-size="13" font-weight="400" fill="#111827">首次正常执行通过校验则继续,此图省略该分支。</text>
+<text x="32" y="474" font-size="13" font-weight="400" fill="#111827">两种换 GPU 诊断结果在 fatal 路径均退出；这些是可能原因,不是硬件故障的最终证明。</text>
+</g></svg>

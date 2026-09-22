@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="640" rx="0" fill="#ffffff" stroke="#ffffff" stroke-width="1"/>
+<rect x="200" y="152" width="418" height="76" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="648" y="152" width="418" height="76" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="212" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="262" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="312" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="362" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="412" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="462" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="512" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="562" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="660" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="760" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="860" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="910" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="960" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1010" y="180" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="633" y1="152" x2="633" y2="330" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="4 4"/>
+<line x1="234" y1="212" x2="234" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="284" y1="212" x2="284" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="334" y1="212" x2="334" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="384" y1="212" x2="384" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="434" y1="212" x2="434" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="484" y1="212" x2="484" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="534" y1="212" x2="534" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="584" y1="212" x2="584" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="682" y1="212" x2="682" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="732" y1="212" x2="732" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="782" y1="212" x2="782" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="832" y1="212" x2="832" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="882" y1="212" x2="882" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="932" y1="212" x2="932" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="982" y1="212" x2="982" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="1032" y1="212" x2="1032" y2="310" stroke="#eef0f2" stroke-width="1"/>
+<line x1="234" y1="250" x2="284" y2="250" stroke="#5fa886" stroke-width="1.4"/>
+<circle cx="234" cy="250" r="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<circle cx="284" cy="250" r="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="234" y1="284" x2="334" y2="284" stroke="#8f8bd8" stroke-width="1.4"/>
+<circle cx="234" cy="284" r="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<circle cx="334" cy="284" r="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<line x1="234" y1="318" x2="882" y2="318" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="234" cy="318" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="434" cy="318" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="682" cy="318" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="882" cy="318" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<rect x="200" y="424" width="418" height="76" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="648" y="424" width="418" height="76" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="212" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="262" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="312" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="362" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="412" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="462" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="512" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="562" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="660" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="710" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="760" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="810" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="860" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="910" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="960" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1010" y="452" width="44" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="633" y1="424" x2="633" y2="602" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="4 4"/>
+<line x1="234" y1="484" x2="234" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="284" y1="484" x2="284" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="334" y1="484" x2="334" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="384" y1="484" x2="384" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="434" y1="484" x2="434" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="484" y1="484" x2="484" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="534" y1="484" x2="534" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="584" y1="484" x2="584" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="682" y1="484" x2="682" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="732" y1="484" x2="732" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="782" y1="484" x2="782" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="832" y1="484" x2="832" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="882" y1="484" x2="882" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="932" y1="484" x2="932" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="982" y1="484" x2="982" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="1032" y1="484" x2="1032" y2="582" stroke="#eef0f2" stroke-width="1"/>
+<line x1="234" y1="522" x2="284" y2="522" stroke="#5fa886" stroke-width="1.4"/>
+<circle cx="234" cy="522" r="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<circle cx="284" cy="522" r="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="234" y1="556" x2="682" y2="556" stroke="#8f8bd8" stroke-width="1.4"/>
+<circle cx="234" cy="556" r="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<circle cx="682" cy="556" r="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+<line x1="234" y1="590" x2="534" y2="590" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="234" cy="590" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="334" cy="590" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="434" cy="590" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<circle cx="534" cy="590" r="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+<text x="40" y="44" font-size="19" fill="#111827" font-weight="700">同一套并行度,两种合法摆位</text>
+<text x="40" y="68" font-size="13" fill="#6b7280">16 张卡、两台 8 卡机,张量并行 2 × 流水线并行 4 × 数据并行 2。绿=张量并行组,紫=数据并行组,黄=流水线组。</text>
+<text x="40" y="88" font-size="13" fill="#6b7280">每一维只画含 0 号卡的那一组;红色表示这一组的成员分在两台机器上。</text>
+<text x="40" y="128" font-size="14" fill="#111827" font-weight="700">默认摆位</text>
+<text x="40" y="146" font-size="11" fill="#6b7280">顺序串 tp-cp-ep-dp-pp</text>
+<text x="212" y="172" font-size="11" fill="#9ca3af">机器 0 · 卡 0–7</text>
+<text x="660" y="172" font-size="11" fill="#9ca3af">机器 1 · 卡 8–15</text>
+<text x="234" y="200" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<text x="284" y="200" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<text x="334" y="200" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
+<text x="384" y="200" font-size="12" fill="#6b7280" text-anchor="middle">3</text>
+<text x="434" y="200" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<text x="484" y="200" font-size="12" fill="#6b7280" text-anchor="middle">5</text>
+<text x="534" y="200" font-size="12" fill="#6b7280" text-anchor="middle">6</text>
+<text x="584" y="200" font-size="12" fill="#6b7280" text-anchor="middle">7</text>
+<text x="682" y="200" font-size="12" fill="#6b7280" text-anchor="middle">8</text>
+<text x="732" y="200" font-size="12" fill="#6b7280" text-anchor="middle">9</text>
+<text x="782" y="200" font-size="12" fill="#6b7280" text-anchor="middle">10</text>
+<text x="832" y="200" font-size="12" fill="#6b7280" text-anchor="middle">11</text>
+<text x="882" y="200" font-size="12" fill="#6b7280" text-anchor="middle">12</text>
+<text x="932" y="200" font-size="12" fill="#6b7280" text-anchor="middle">13</text>
+<text x="982" y="200" font-size="12" fill="#6b7280" text-anchor="middle">14</text>
+<text x="1032" y="200" font-size="12" fill="#6b7280" text-anchor="middle">15</text>
+<text x="633" y="145" font-size="11" fill="#d9877a" text-anchor="middle">机间链路</text>
+<text x="186" y="254" font-size="12" fill="#111827" font-weight="700" text-anchor="end">张量并行组</text>
+<text x="306" y="254" font-size="11" fill="#9ca3af">机内 {0, 1}</text>
+<text x="186" y="288" font-size="12" fill="#111827" font-weight="700" text-anchor="end">数据并行组</text>
+<text x="356" y="288" font-size="11" fill="#9ca3af">机内 {0, 2}</text>
+<text x="186" y="322" font-size="12" fill="#111827" font-weight="700" text-anchor="end">流水线组</text>
+<text x="904" y="322" font-size="11" fill="#d9877a">跨机 {0, 4, 8, 12}</text>
+<text x="40" y="400" font-size="14" fill="#111827" font-weight="700">对调后的摆位</text>
+<text x="40" y="418" font-size="11" fill="#6b7280">顺序串 tp-cp-ep-pp-dp</text>
+<text x="212" y="444" font-size="11" fill="#9ca3af">机器 0 · 卡 0–7</text>
+<text x="660" y="444" font-size="11" fill="#9ca3af">机器 1 · 卡 8–15</text>
+<text x="234" y="472" font-size="12" fill="#6b7280" text-anchor="middle">0</text>
+<text x="284" y="472" font-size="12" fill="#6b7280" text-anchor="middle">1</text>
+<text x="334" y="472" font-size="12" fill="#6b7280" text-anchor="middle">2</text>
+<text x="384" y="472" font-size="12" fill="#6b7280" text-anchor="middle">3</text>
+<text x="434" y="472" font-size="12" fill="#6b7280" text-anchor="middle">4</text>
+<text x="484" y="472" font-size="12" fill="#6b7280" text-anchor="middle">5</text>
+<text x="534" y="472" font-size="12" fill="#6b7280" text-anchor="middle">6</text>
+<text x="584" y="472" font-size="12" fill="#6b7280" text-anchor="middle">7</text>
+<text x="682" y="472" font-size="12" fill="#6b7280" text-anchor="middle">8</text>
+<text x="732" y="472" font-size="12" fill="#6b7280" text-anchor="middle">9</text>
+<text x="782" y="472" font-size="12" fill="#6b7280" text-anchor="middle">10</text>
+<text x="832" y="472" font-size="12" fill="#6b7280" text-anchor="middle">11</text>
+<text x="882" y="472" font-size="12" fill="#6b7280" text-anchor="middle">12</text>
+<text x="932" y="472" font-size="12" fill="#6b7280" text-anchor="middle">13</text>
+<text x="982" y="472" font-size="12" fill="#6b7280" text-anchor="middle">14</text>
+<text x="1032" y="472" font-size="12" fill="#6b7280" text-anchor="middle">15</text>
+<text x="633" y="417" font-size="11" fill="#d9877a" text-anchor="middle">机间链路</text>
+<text x="186" y="526" font-size="12" fill="#111827" font-weight="700" text-anchor="end">张量并行组</text>
+<text x="306" y="526" font-size="11" fill="#9ca3af">机内 {0, 1}</text>
+<text x="186" y="560" font-size="12" fill="#111827" font-weight="700" text-anchor="end">数据并行组</text>
+<text x="704" y="560" font-size="11" fill="#d9877a">跨机 {0, 8}</text>
+<text x="186" y="594" font-size="12" fill="#111827" font-weight="700" text-anchor="end">流水线组</text>
+<text x="556" y="594" font-size="11" fill="#9ca3af">机内 {0, 2, 4, 6}</text>
+<text x="40" y="626" font-size="11" fill="#9ca3af">两种摆法都合法、都跑得起来;差别只在哪一类通信落到机间链路上。开关名在第五节。</text>
+</svg>

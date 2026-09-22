@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" role="img"><title>在线 refit：规划交换的是元数据，执行搬运的是权重切片</title><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs><rect width="1120" height="470" fill="#ffffff"/><g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><text x="32" y="33" font-size="19" font-weight="700" fill="#111827">在线 refit：规划交换的是元数据，执行搬运的是权重切片</text><text x="32" y="57" font-size="13" fill="#6b7280">绿色 = 训练源分片　紫色 = 推理目标分片　黄色 = 规划；灰色 = 已复用计划</text>
+<rect x="32" y="91" width="244" height="68" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="44" y="116" font-size="14" font-weight="700" fill="#111827">训练源 rank 0：列 [0, 4)</text>
+<text x="44" y="141" font-size="11" font-weight="400" fill="#111827">局部权重 + TP / PP / EP 元数据</text>
+<rect x="32" y="287" width="244" height="68" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="44" y="312" font-size="14" font-weight="700" fill="#111827">训练源 rank 1：列 [4, 8)</text>
+<text x="44" y="337" font-size="11" font-weight="400" fill="#111827">同一个逻辑权重 W 的另一半</text>
+<rect x="330" y="91" width="410" height="68" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="342" y="116" font-size="14" font-weight="700" fill="#111827">各 rank all-gather 元数据</text>
+<text x="342" y="141" font-size="11" font-weight="400" fill="#111827">各自计算一致计划,只保留本 rank 的发送 / 接收</text>
+<path d="M277 116 L328 116" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M277 309 L310 309" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M310 309 L310 164" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M310 164 L330 148" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="820" y="87" width="266" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="832" y="112" font-size="14" font-weight="700" fill="#111827">推理目标 rank 2：列 [0, 2)</text>
+<rect x="820" y="163" width="266" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="832" y="188" font-size="14" font-weight="700" fill="#111827">推理目标 rank 3：列 [2, 4)</text>
+<rect x="820" y="239" width="266" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="832" y="264" font-size="14" font-weight="700" fill="#111827">推理目标 rank 4：列 [4, 6)</text>
+<rect x="820" y="315" width="266" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="832" y="340" font-size="14" font-weight="700" fill="#111827">推理目标 rank 5：列 [6, 8)</text>
+<path d="M276 151 L350 206 L770 206 L818 115" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M276 151 L350 230 L770 230 L818 191" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M276 346 L380 306 L770 306 L818 267" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M276 346 L380 330 L770 330 L818 343" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="433" y="193" font-size="14" font-weight="700" fill="#111827">按逻辑交集发送权重切片</text>
+<rect x="430" y="252" width="296" height="39" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="442" y="277" font-size="14" font-weight="700" fill="#111827">同布局后续 refit 复用计划</text>
+<text x="32" y="407" font-size="13" font-weight="400" fill="#111827">演示：2 个源 rank → 4 个目标 rank,均为同一矩阵的列分片；箭头不表示耗时、网络拓扑或分片文件。</text>
+<text x="32" y="435" font-size="13" font-weight="400" fill="#111827">目标写入自身参数 / 持久 buffer；不落盘,不把 optimizer 状态一起搬入推理模型。</text>
+<path d="M1000 85 L1000 74 L700 74 L700 89" fill="none" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a)"/>
+</g></svg>

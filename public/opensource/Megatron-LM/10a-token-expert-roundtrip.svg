@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="800" viewBox="0 0 1120 800" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect width="1120" height="800" fill="#ffffff"/>
+<defs><marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#9ca3af"/></marker></defs>
+<text x="40" y="40" font-size="19" fill="#111827" font-weight="700">token 往返:送去的是配对,回来的已是加权贡献</text>
+<text x="40" y="66" font-size="13" fill="#6b7280">alltoall dispatcher · EP=2、专家 TP=1、每 token 选 2 个专家 · 灰=原 token · 黄=配对与权重 · 绿=专家计算 · 紫=通信</text>
+<rect x="40" y="91" width="480" height="159" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="56" y="115" font-size="14" fill="#111827" font-weight="700">来源 rank 0</text>
+<rect x="56" y="129" width="120" height="38" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="72" y="153" font-size="14" fill="#111827" font-weight="700">token A</text>
+<line x1="180" y1="148" x2="222" y2="148" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<text x="233" y="153" font-size="11" fill="#6b7280">本地 permutation:展开并按目标排</text>
+<rect x="56" y="184" width="214" height="43" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="68" y="211" font-size="13" fill="#111827" font-weight="700">A → E0   权重 0.75</text>
+<rect x="282" y="184" width="220" height="43" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="294" y="211" font-size="13" fill="#111827" font-weight="700">A → E1   权重 0.25</text>
+<line x1="280" y1="252" x2="280" y2="270" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="600" y="91" width="480" height="159" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="616" y="115" font-size="14" fill="#111827" font-weight="700">来源 rank 1</text>
+<rect x="616" y="129" width="120" height="38" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="632" y="153" font-size="14" fill="#111827" font-weight="700">token B</text>
+<line x1="740" y1="148" x2="782" y2="148" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<text x="793" y="153" font-size="11" fill="#6b7280">本地 permutation:展开并按目标排</text>
+<rect x="616" y="184" width="214" height="43" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="628" y="211" font-size="13" fill="#111827" font-weight="700">B → E0   权重 0.40</text>
+<rect x="842" y="184" width="220" height="43" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="854" y="211" font-size="13" fill="#111827" font-weight="700">B → E1   权重 0.60</text>
+<line x1="840" y1="252" x2="840" y2="270" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="40" y="278" width="1040" height="45" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="56" y="306" font-size="14" fill="#111827" font-weight="700">dispatch:EP all-to-all 把 hidden states 与权重送到目标专家;同 rank 配对也保留在通信布局中</text>
+<line x1="280" y1="325" x2="280" y2="343" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="40" y="351" width="480" height="211" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="56" y="375" font-size="14" fill="#111827" font-weight="700">rank 0 的专家 E0</text>
+<rect x="56" y="389" width="448" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="68" y="413" font-size="13" fill="#111827" font-weight="700">按本地专家排: A / 0.75    B / 0.40</text>
+<rect x="56" y="440" width="448" height="49" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="68" y="461" font-size="13" fill="#111827" font-weight="700">FC1 → 激活 → 乘各配对的 router 权重 → FC2</text>
+<text x="68" y="479" font-size="11" fill="#6b7280">图取常规后乘、无 bias 示例;实际实现也处理加权 bias</text>
+<text x="56" y="520" font-size="13" fill="#111827" font-weight="700">返回贡献: u0A = 0.75·E0(A), u0B = 0.40·E0(B)</text>
+<text x="56" y="545" font-size="11" fill="#6b7280">有多个本地专家时,返回前先恢复接收时的分组顺序</text>
+<line x1="280" y1="564" x2="280" y2="583" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<line x1="840" y1="325" x2="840" y2="343" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="600" y="351" width="480" height="211" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="616" y="375" font-size="14" fill="#111827" font-weight="700">rank 1 的专家 E1</text>
+<rect x="616" y="389" width="448" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="628" y="413" font-size="13" fill="#111827" font-weight="700">按本地专家排: A / 0.25    B / 0.60</text>
+<rect x="616" y="440" width="448" height="49" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="628" y="461" font-size="13" fill="#111827" font-weight="700">FC1 → 激活 → 乘各配对的 router 权重 → FC2</text>
+<text x="628" y="479" font-size="11" fill="#6b7280">图取常规后乘、无 bias 示例;实际实现也处理加权 bias</text>
+<text x="616" y="520" font-size="13" fill="#111827" font-weight="700">返回贡献: u1A = 0.25·E1(A), u1B = 0.60·E1(B)</text>
+<text x="616" y="545" font-size="11" fill="#6b7280">有多个本地专家时,返回前先恢复接收时的分组顺序</text>
+<line x1="840" y1="564" x2="840" y2="583" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="40" y="591" width="1040" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="56" y="618" font-size="14" fill="#111827" font-weight="700">combine:逆向 EP all-to-all,把每份加权贡献送回 token 的来源 rank</text>
+<line x1="280" y1="636" x2="280" y2="654" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="40" y="662" width="480" height="87" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="56" y="687" font-size="14" fill="#111827" font-weight="700">rank 0:unpermutation 回到 token A 的位置</text>
+<text x="56" y="714" font-size="14" fill="#111827" font-weight="700">yA = u0A + u1A</text>
+<text x="56" y="736" font-size="11" fill="#6b7280">按原位置累加,此处不再乘一次 router 权重</text>
+<line x1="840" y1="636" x2="840" y2="654" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+<rect x="600" y="662" width="480" height="87" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="616" y="687" font-size="14" fill="#111827" font-weight="700">rank 1:unpermutation 回到 token B 的位置</text>
+<text x="616" y="714" font-size="14" fill="#111827" font-weight="700">yB = u0B + u1B</text>
+<text x="616" y="736" font-size="11" fill="#6b7280">按原位置累加,此处不再乘一次 router 权重</text>
+<text x="40" y="781" font-size="11" fill="#6b7280">A/B、专家数和权重都是演示假设;图不表示耗时,省略反向、容量/padding、共享专家及专家 TP 通信。</text>
+</svg>

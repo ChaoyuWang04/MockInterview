@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500">
+<rect width="1120" height="500" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="32" font-size="19" font-weight="700" fill="#111827">activation 的去处,由前向与反向之间的生命周期决定</text>
+<text x="32" y="56" font-size="13" fill="#6b7280">绿 = GPU 保存　紫 = CPU 保存　黄 = 计算　灰 = 该中间结果未保存；横向仅表示顺序,不是耗时比例</text>
+<g stroke="#cbd2d9" stroke-dasharray="5 4"><path d="M340 98V446"/><path d="M800 98V446"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="220" y="90">前向产生</text><text x="497" y="90">等待对应反向</text><text x="866" y="90">反向消费</text></g>
+<g stroke="#5fa886" fill="#e3f4ec"><rect x="208" y="119" width="596" height="48" rx="6"/><rect x="208" y="254" width="596" height="28" rx="6"/></g>
+<g stroke="#d4a24c" fill="#fdf1dc"><rect x="841" y="119" width="240" height="48" rx="6"/><rect x="815" y="206" width="115" height="48" rx="6"/><rect x="957" y="206" width="124" height="48" rx="6"/><rect x="957" y="323" width="124" height="48" rx="6"/></g>
+<rect x="352" y="206" width="433" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="208" y="323" width="110" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="407" y="384" width="346" height="42" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="815" y="323" width="115" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<g stroke="#9ca3af" stroke-width="1.4" fill="none" marker-end="url(#arrow)"><path d="M804 143H836"/><path d="M785 223H810"/><path d="M930 230H952"/><path d="M318 348H360V405H402"/><path d="M753 405H782V348H810"/><path d="M930 348H952"/></g>
+<g font-size="14" font-weight="700" fill="#111827"><text x="32" y="147">保留</text><text x="32" y="235">重算</text><text x="32" y="351">卸载</text><text x="422" y="148">保存反向需要的 activation</text><text x="929" y="148">反向</text><text x="849" y="235">重跑前向</text><text x="1002" y="235">反向</text><text x="235" y="352">GPU</text><text x="852" y="352">GPU</text><text x="1002" y="352">反向</text><text x="528" y="411">CPU 暂存数值</text></g>
+<g font-size="11" fill="#6b7280"><text x="32" y="166">始终占用 GPU</text><text x="32" y="254">反向前重建</text><text x="32" y="370">搬走后再搬回</text><text x="484" y="227">中间结果不留存</text><text x="424" y="273">边界输入仍需保留 + 随机数状态</text><text x="345" y="335">D2H</text><text x="762" y="335">H2D</text><text x="423" y="450">释放须遵守流依赖;CPU 缓冲与 GPU 恢复空间仍有成本</text></g>
+<text x="32" y="482" font-size="13" fill="#6b7280">图示一个符合条件的 activation 组。offload 不涵盖所有张量,预取未完成时反向必须等待。</text>
+</g></svg>

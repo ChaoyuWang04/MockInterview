@@ -1,0 +1,411 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect width="1120" height="640" fill="#ffffff"/>
+<text x="32" y="36" font-size="19" fill="#111827" font-weight="700">每个 rank 的动作次序:先 warmup,再 steady,最后 cooldown</text>
+<text x="32" y="62" font-size="13" fill="#6b7280" font-weight="400">绿 = warmup · 紫 = steady · 黄 = cooldown；F = 前向,B = 反向</text>
+<text x="32" y="84" font-size="13" fill="#6b7280" font-weight="400">每行独立从左往右读；同列不表示同时执行,格宽不表示时长,省略通信与等待。</text>
+<text x="32" y="132" font-size="14" fill="#111827" font-weight="700">非交错:每 rank 1 个 model chunk · PP4 / 8 microbatch</text>
+<text x="32" y="174" font-size="13" fill="#111827" font-weight="400">PP rank 0</text>
+<rect x="140" y="152" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="152" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="152" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="197" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="222" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="247" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="265" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="272" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="290" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="315" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="340" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="365" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="390" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="415" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="172" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="440" y="152" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="465" y="152" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="472" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="152" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="497" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="515" y="152" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="522" y="172" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="172" font-size="11" fill="#6b7280" font-weight="400">warmup 3 次</text>
+<text x="32" y="217" font-size="13" fill="#111827" font-weight="400">PP rank 1</text>
+<rect x="140" y="195" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="195" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="197" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="222" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="240" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="247" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="272" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="290" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="340" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="390" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="215" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="195" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="195" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="497" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="515" y="195" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="522" y="215" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="215" font-size="11" fill="#6b7280" font-weight="400">warmup 2 次</text>
+<text x="32" y="260" font-size="13" fill="#111827" font-weight="400">PP rank 2</text>
+<rect x="140" y="238" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="172" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="197" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="215" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="222" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="247" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="265" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="272" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="290" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="315" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="340" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="365" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="390" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="415" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="440" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="465" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="258" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="490" y="238" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="515" y="238" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="522" y="258" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="258" font-size="11" fill="#6b7280" font-weight="400">warmup 1 次</text>
+<text x="32" y="303" font-size="13" fill="#111827" font-weight="400">PP rank 3</text>
+<rect x="140" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="147" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="172" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="190" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="197" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="222" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="240" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="247" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="272" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="290" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="340" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="390" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="301" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="515" y="281" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="522" y="301" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="301" font-size="11" fill="#6b7280" font-weight="400">warmup 0 次</text>
+<text x="140" y="339" font-size="11" fill="#6b7280" font-weight="400">每个 F/B 覆盖该 rank 的全部层</text>
+<text x="32" y="376" font-size="14" fill="#111827" font-weight="700">交错:每 rank 2 个 model chunk · PP4 / 8 microbatch / group4</text>
+<text x="32" y="418" font-size="13" fill="#111827" font-weight="400">PP rank 0</text>
+<rect x="140" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="197" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="222" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="247" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="272" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="290" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="297" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="322" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="340" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="347" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="396" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="372" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="390" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="515" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="522" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="540" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="547" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="565" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="572" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="590" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="597" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="615" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="622" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="640" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="647" y="416" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="665" y="396" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="672" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="690" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="697" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="715" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="722" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="740" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="747" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="765" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="772" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="790" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="797" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="815" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="822" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="840" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="847" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="865" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="872" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="890" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="897" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="915" y="396" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="922" y="416" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="416" font-size="11" fill="#6b7280" font-weight="400">warmup 10 次</text>
+<text x="32" y="461" font-size="13" fill="#111827" font-weight="400">PP rank 1</text>
+<rect x="140" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="197" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="222" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="247" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="272" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="290" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="297" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="439" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="322" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="340" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="390" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="515" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="522" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="540" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="547" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="565" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="572" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="590" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="597" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="615" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="622" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="640" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="647" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="665" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="672" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="690" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="697" y="459" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="715" y="439" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="722" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="740" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="747" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="765" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="772" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="790" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="797" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="815" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="822" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="840" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="847" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="865" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="872" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="890" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="897" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="915" y="439" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="922" y="459" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="459" font-size="11" fill="#6b7280" font-weight="400">warmup 8 次</text>
+<text x="32" y="504" font-size="13" fill="#111827" font-weight="400">PP rank 2</text>
+<rect x="140" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="197" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="222" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="247" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="482" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="272" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="290" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="340" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="390" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="515" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="522" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="540" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="547" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="565" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="572" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="590" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="597" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="615" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="622" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="640" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="647" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="665" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="672" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="690" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="697" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="715" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="722" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="740" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="747" y="502" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="765" y="482" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="772" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="790" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="797" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="815" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="822" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="840" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="847" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="865" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="872" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="890" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="897" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="915" y="482" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="922" y="502" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="502" font-size="11" fill="#6b7280" font-weight="400">warmup 6 次</text>
+<text x="32" y="547" font-size="13" fill="#111827" font-weight="400">PP rank 3</text>
+<rect x="140" y="525" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="147" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="165" y="525" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="190" y="525" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="197" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="215" y="525" width="22" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="222" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="240" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="247" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="265" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="272" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="290" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="297" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="315" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="322" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="340" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="347" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="365" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="390" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="397" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="415" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="422" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="440" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="447" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="465" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="472" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="490" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="497" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="515" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="522" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="540" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="547" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="565" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="572" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="590" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="597" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="615" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="622" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="640" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="647" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="665" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="672" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="690" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="697" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="715" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="722" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="740" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="747" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="765" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="772" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="790" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="797" y="545" font-size="11" fill="#111827" font-weight="400">F</text>
+<rect x="815" y="525" width="22" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="822" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="840" y="525" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="847" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="865" y="525" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="872" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="890" y="525" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="897" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<rect x="915" y="525" width="22" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="922" y="545" font-size="11" fill="#111827" font-weight="400">B</text>
+<text x="957" y="545" font-size="11" fill="#6b7280" font-weight="400">warmup 4 次</text>
+<text x="140" y="583" font-size="11" fill="#6b7280" font-weight="400">每个 F/B 只处理其中 1 个 chunk；chunk 与 microbatch 由调度表选择</text>
+<text x="32" y="620" font-size="11" fill="#9ca3af" font-weight="400">warmup 次数来自源码公式；这里只比较动作组织,不估算 bubble 时长、加速比或显存容量。</text>
+</svg>

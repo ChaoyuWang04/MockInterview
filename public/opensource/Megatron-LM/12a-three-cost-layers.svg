@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="900" viewBox="0 0 1120 900" role="img" aria-labelledby="title desc"><title id="title">三层执行优化作用于不同边界</title><desc id="desc">以GEMM、bias、GELU、GEMM链为示意。低精度缩小选中操作数payload。fusion移除bias与GELU之间的中间tensor边界。CUDA graph保持kernel节点并用一次replay提交。不是实测kernel数量或时间比例。</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#64748b"/></marker></defs><rect width="1120" height="900" rx="16" fill="#f8fafc"/>
+<text x="32" y="43" font-family="Arial, PingFang SC, sans-serif" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">同一条计算链，三种不同的成本</text>
+<text x="32" y="75" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">示意链：GEMM → bias → GELU → GEMM；分别观察三种机制，不表示默认全开。</text>
+<rect x="24" y="98" width="1072" height="225" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="44" y="131" font-family="Arial, PingFang SC, sans-serif" font-size="21" fill="#1e40af" font-weight="700" text-anchor="start">1  低精度：缩小选中操作数的 payload</text>
+<text x="44" y="160" font-family="Arial, PingFang SC, sans-serif" font-size="16" fill="#334155" font-weight="400" text-anchor="start">4 个值的纯数据部分</text>
+<text x="44" y="197" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">BF16</text>
+<rect x="113.0" y="179" width="48.0" height="24" rx="0" fill="#93c5fd" stroke="#fff"/>
+<rect x="161.0" y="179" width="48.0" height="24" rx="0" fill="#93c5fd" stroke="#fff"/>
+<rect x="209.0" y="179" width="48.0" height="24" rx="0" fill="#93c5fd" stroke="#fff"/>
+<rect x="257.0" y="179" width="48.0" height="24" rx="0" fill="#93c5fd" stroke="#fff"/>
+<text x="320" y="197" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">8 B</text>
+<text x="44" y="235" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">FP8</text>
+<rect x="113.0" y="217" width="24.0" height="24" rx="0" fill="#60a5fa" stroke="#fff"/>
+<rect x="137.0" y="217" width="24.0" height="24" rx="0" fill="#60a5fa" stroke="#fff"/>
+<rect x="161.0" y="217" width="24.0" height="24" rx="0" fill="#60a5fa" stroke="#fff"/>
+<rect x="185.0" y="217" width="24.0" height="24" rx="0" fill="#60a5fa" stroke="#fff"/>
+<text x="320" y="235" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">4 B</text>
+<text x="44" y="273" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">FP4</text>
+<rect x="113.0" y="255" width="12.0" height="24" rx="0" fill="#2563eb" stroke="#fff"/>
+<rect x="125.0" y="255" width="12.0" height="24" rx="0" fill="#2563eb" stroke="#fff"/>
+<rect x="137.0" y="255" width="12.0" height="24" rx="0" fill="#2563eb" stroke="#fff"/>
+<rect x="149.0" y="255" width="12.0" height="24" rx="0" fill="#2563eb" stroke="#fff"/>
+<text x="320" y="273" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">2 B</text>
+<rect x="440" y="190" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="505.0" y="218" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<rect x="600" y="190" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="665.0" y="218" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">bias</text>
+<rect x="760" y="190" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="825.0" y="218" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GELU</text>
+<rect x="920" y="190" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="985.0" y="218" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<path d="M573 212 L595 212" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M733 212 L755 212" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M893 212 L915 212" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="440" y="174" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">选中的 GEMM 使用 recipe；其他状态单独配置</text>
+<text x="440" y="265" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#1e40af" font-weight="400" text-anchor="start">scale、量化和对齐也有成本</text>
+<text x="440" y="294" font-family="Arial, PingFang SC, sans-serif" font-size="16" fill="#334155" font-weight="400" text-anchor="start">左侧不计 scale / padding，不代表总显存或加速比例。</text>
+<rect x="24" y="339" width="1072" height="225" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="44" y="373" font-family="Arial, PingFang SC, sans-serif" font-size="21" fill="#166534" font-weight="700" text-anchor="start">2  fusion：移除中间边界</text>
+<text x="44" y="419" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="start">分开执行</text>
+<rect x="440" y="393" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="505.0" y="421" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<rect x="600" y="393" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="665.0" y="421" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">bias</text>
+<rect x="760" y="393" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="825.0" y="421" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GELU</text>
+<rect x="920" y="393" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="985.0" y="421" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<path d="M573 415 L595 415" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M733 415 L755 415" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M893 415 L915 415" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="709" y="445" width="72" height="28" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="745" y="465" font-family="Arial, PingFang SC, sans-serif" font-size="14" fill="#334155" font-weight="400" text-anchor="middle">中间值</text>
+<path d="M665 439 L706 453" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M783 453 L817 439" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="44" y="514" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="start">融合区域</text>
+<rect x="440" y="485" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="505.0" y="513" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<rect x="600" y="485" width="290" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="745.0" y="513" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">bias + GELU</text>
+<rect x="920" y="485" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="985.0" y="513" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<path d="M573 507 L595 507" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M893 507 L915 507" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="440" y="548" font-family="Arial, PingFang SC, sans-serif" font-size="16" fill="#334155" font-weight="400" text-anchor="start">bias 与 GELU 在同一区域计算，减少中间结果的显存往返。</text>
+<rect x="24" y="580" width="1072" height="260" rx="12" fill="#fff" stroke="#cbd5e1"/>
+<text x="44" y="615" font-family="Arial, PingFang SC, sans-serif" font-size="21" fill="#7c3aed" font-weight="700" text-anchor="start">3  CUDA graph：减少 CPU 提交</text>
+<text x="44" y="656" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="start">eager 提交</text>
+<rect x="470" y="639" width="70" height="27" rx="4" fill="#ede9fe" stroke="#a78bfa"/>
+<text x="505" y="658" font-family="Arial, PingFang SC, sans-serif" font-size="14" fill="#334155" font-weight="400" text-anchor="middle">launch</text>
+<path d="M505 668 L505 680" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="630" y="639" width="70" height="27" rx="4" fill="#ede9fe" stroke="#a78bfa"/>
+<text x="665" y="658" font-family="Arial, PingFang SC, sans-serif" font-size="14" fill="#334155" font-weight="400" text-anchor="middle">launch</text>
+<path d="M665 668 L665 680" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="790" y="639" width="70" height="27" rx="4" fill="#ede9fe" stroke="#a78bfa"/>
+<text x="825" y="658" font-family="Arial, PingFang SC, sans-serif" font-size="14" fill="#334155" font-weight="400" text-anchor="middle">launch</text>
+<path d="M825 668 L825 680" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="950" y="639" width="70" height="27" rx="4" fill="#ede9fe" stroke="#a78bfa"/>
+<text x="985" y="658" font-family="Arial, PingFang SC, sans-serif" font-size="14" fill="#334155" font-weight="400" text-anchor="middle">launch</text>
+<path d="M985 668 L985 680" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="440" y="683" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="505.0" y="711" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<rect x="600" y="683" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="665.0" y="711" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">bias</text>
+<rect x="760" y="683" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="825.0" y="711" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GELU</text>
+<rect x="920" y="683" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="985.0" y="711" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<path d="M573 705 L595 705" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M733 705 L755 705" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M893 705 L915 705" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="44" y="777" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="start">graph replay</text>
+<rect x="217" y="754" width="143" height="40" rx="8" fill="#ede9fe" stroke="#a78bfa"/>
+<text x="288" y="780" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="middle">一次 replay</text>
+<rect x="425" y="744" width="642" height="71" rx="10" fill="none" stroke="#a78bfa"/>
+<path d="M362 774 L424 774" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="440" y="757" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="505.0" y="785" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<rect x="600" y="757" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="665.0" y="785" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">bias</text>
+<rect x="760" y="757" width="130" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+<text x="825.0" y="785" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GELU</text>
+<rect x="920" y="757" width="130" height="44" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+<text x="985.0" y="785" font-family="Arial, PingFang SC, sans-serif" font-size="18" fill="#334155" font-weight="400" text-anchor="middle">GEMM</text>
+<path d="M573 779 L595 779" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M733 779 L755 779" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M893 779 L915 779" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="440" y="832" font-family="Arial, PingFang SC, sans-serif" font-size="16" fill="#334155" font-weight="400" text-anchor="start">节点及依赖仍在；capture 本身不把它们融合。</text>
+<text x="32" y="871" font-family="Arial, PingFang SC, sans-serif" font-size="17" fill="#334155" font-weight="400" text-anchor="start">框宽不表示耗时；kernel 分区为机制示意，实际数量由后端、编译结果与模型决定。</text>
+</svg>

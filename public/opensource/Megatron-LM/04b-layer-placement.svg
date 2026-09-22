@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 432" width="1120" height="432" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="432" fill="#ffffff"/>
+  <text x="40" y="44" font-size="19" font-weight="700" fill="#111827">层落到哪个格子里:平分、交错、手写</text>
+  <text x="40" y="68" font-size="13" fill="#6b7280">紫=decoder 层 · 绿=embedding · 黄=loss · 灰=MTP</text>
+  <text x="40" y="88" font-size="13" fill="#6b7280">左边是 16 层平分到 4 段的两种排法,右边是官方文档给出的不匀模型例子</text>
+  <rect x="40" y="104" width="544" height="264" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="56" y="128" font-size="14" font-weight="700" fill="#111827">模型均匀时:16 层、4 段,框里写的是层号</text>
+  <text x="117" y="152" text-anchor="middle" font-size="11" fill="#9ca3af">段 0</text>
+  <text x="247" y="152" text-anchor="middle" font-size="11" fill="#9ca3af">段 1</text>
+  <text x="377" y="152" text-anchor="middle" font-size="11" fill="#9ca3af">段 2</text>
+  <text x="507" y="152" text-anchor="middle" font-size="11" fill="#9ca3af">段 3</text>
+  <text x="56" y="176" font-size="11" fill="#6b7280">不开交错:一段一块,层号连着</text>
+  <rect x="56" y="186" width="122" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="117" y="211" text-anchor="middle" font-size="11" fill="#111827">L0–L3</text>
+  <rect x="186" y="186" width="122" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="247" y="211" text-anchor="middle" font-size="11" fill="#111827">L4–L7</text>
+  <rect x="316" y="186" width="122" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="377" y="211" text-anchor="middle" font-size="11" fill="#111827">L8–L11</text>
+  <rect x="446" y="186" width="122" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="507" y="211" text-anchor="middle" font-size="11" fill="#111827">L12–L15</text>
+  <text x="56" y="256" font-size="11" fill="#6b7280">开交错:一段两块,层号跳着走</text>
+  <text x="56" y="288" font-size="11" fill="#9ca3af">chunk 0</text>
+  <text x="56" y="332" font-size="11" fill="#9ca3af">chunk 1</text>
+  <rect x="104" y="268" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="159" y="290" text-anchor="middle" font-size="11" fill="#111827">L0–L1</text>
+  <rect x="224" y="268" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="279" y="290" text-anchor="middle" font-size="11" fill="#111827">L2–L3</text>
+  <rect x="344" y="268" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="399" y="290" text-anchor="middle" font-size="11" fill="#111827">L4–L5</text>
+  <rect x="464" y="268" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="519" y="290" text-anchor="middle" font-size="11" fill="#111827">L6–L7</text>
+  <rect x="104" y="312" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="159" y="334" text-anchor="middle" font-size="11" fill="#111827">L8–L9</text>
+  <rect x="224" y="312" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="279" y="334" text-anchor="middle" font-size="11" fill="#111827">L10–L11</text>
+  <rect x="344" y="312" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="399" y="334" text-anchor="middle" font-size="11" fill="#111827">L12–L13</text>
+  <rect x="464" y="312" width="110" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="519" y="334" text-anchor="middle" font-size="11" fill="#111827">L14–L15</text>
+  <rect x="616" y="104" width="464" height="264" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="632" y="128" font-size="14" font-weight="700" fill="#111827">模型不匀时:手写布局</text>
+  <text x="632" y="148" font-size="11" fill="#6b7280">官方例子 —— 61 层decoder加 1 层MTP,PP16 / VPP2</text>
+  <text x="812" y="172" text-anchor="middle" font-size="11" fill="#9ca3af">chunk 0</text>
+  <text x="982" y="172" text-anchor="middle" font-size="11" fill="#9ca3af">chunk 1</text>
+  <text x="632" y="204" font-size="11" fill="#111827">段 0</text>
+  <rect x="730" y="182" width="72" height="34" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.4"/>
+  <text x="766" y="204" text-anchor="middle" font-size="11" fill="#111827">embedding</text>
+  <rect x="808" y="182" width="86" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="851" y="204" text-anchor="middle" font-size="11" fill="#111827">decoder × 3</text>
+  <rect x="900" y="182" width="164" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="982" y="204" text-anchor="middle" font-size="11" fill="#111827">decoder × 2</text>
+  <text x="632" y="248" font-size="11" fill="#111827">段 1–13</text>
+  <rect x="730" y="226" width="164" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="812" y="248" text-anchor="middle" font-size="11" fill="#111827">decoder × 2</text>
+  <rect x="900" y="226" width="164" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="982" y="248" text-anchor="middle" font-size="11" fill="#111827">decoder × 2</text>
+  <text x="632" y="292" font-size="11" fill="#111827">段 14</text>
+  <rect x="730" y="270" width="164" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="812" y="292" text-anchor="middle" font-size="11" fill="#111827">decoder × 2</text>
+  <rect x="900" y="270" width="164" height="34" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1.4"/>
+  <text x="982" y="292" text-anchor="middle" font-size="11" fill="#111827">MTP</text>
+  <text x="632" y="336" font-size="11" fill="#111827">段 15</text>
+  <rect x="730" y="314" width="164" height="34" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.4"/>
+  <text x="812" y="336" text-anchor="middle" font-size="11" fill="#111827">decoder × 2</text>
+  <rect x="900" y="314" width="164" height="34" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.4"/>
+  <text x="982" y="336" text-anchor="middle" font-size="11" fill="#111827">loss</text>
+  <text x="40" y="392" font-size="11" fill="#9ca3af">左边:每个 rank 都负责 4 层；交错后分成 2 个 model chunk,完整模型按 chunk 0 各段 → chunk 1 各段连接。</text>
+  <text x="40" y="410" font-size="11" fill="#9ca3af">右边:官方布局展示不同层类型如何放进 chunk；这是分配示例,均衡效果仍需测量各 rank 的实际耗时。</text>
+</svg>

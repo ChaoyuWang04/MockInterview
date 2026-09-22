@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" role="img"><title>三类索引把一个样本定位到文档片段</title><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs><rect width="1120" height="470" fill="#ffffff"/><g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><text x="32" y="33" font-size="19" font-weight="700" fill="#111827">三类索引把一个样本定位到文档片段</text><text x="32" y="57" font-size="13" fill="#6b7280">黄色 = 索引　绿色 = 存储 token　紫色 = 返回样本；演示序列长度 4,默认额外读取 1 个 token</text>
+<rect x="32" y="90" width="240" height="63" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="44" y="115" font-size="14" font-weight="700" fill="#111827">shuffle：外部编号 → 样本 j</text>
+<rect x="318" y="90" width="344" height="63" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="330" y="115" font-size="14" font-weight="700" fill="#111827">sample：j / j+1 → 起止位置</text>
+<rect x="707" y="90" width="380" height="63" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="719" y="115" font-size="14" font-weight="700" fill="#111827">document：文档顺序位置 → A / B</text>
+<path d="M274 120 L316 120" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M664 120 L705 120" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="329" y="140" font-size="11" font-weight="400" fill="#111827">本例从 A 的偏移 0 到 B 的偏移 1</text>
+<rect x="160" y="199" width="360" height="57" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="172" y="224" font-size="14" font-weight="700" fill="#111827">文档 A：a　b　EOD</text>
+<rect x="550" y="199" width="420" height="57" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="562" y="224" font-size="14" font-weight="700" fill="#111827">文档 B：c　d　e …</text>
+<path d="M899 155 L760 196" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M340 258 L450 307" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M755 258 L600 307" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="300" y="310" width="520" height="49" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="312" y="335" font-size="14" font-weight="700" fill="#111827">读出 5 个 token：a　b　EOD　c　d</text>
+<rect x="160" y="390" width="360" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="172" y="415" font-size="14" font-weight="700" fill="#111827">输入：a　b　EOD　c</text>
+<rect x="550" y="390" width="420" height="46" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="562" y="415" font-size="14" font-weight="700" fill="#111827">labels：b　EOD　c　d</text>
+<path d="M440 361 L340 387" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M680 361 L750 387" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+</g></svg>

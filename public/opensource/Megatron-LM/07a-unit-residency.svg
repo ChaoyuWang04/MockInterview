@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect width="1120" height="620" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#9ca3af"/></marker></defs>
+<text x="32" y="36" font-size="19" fill="#111827" font-weight="700" text-anchor="start">Megatron-FSDP:完整参数只在管理单元计算时出现</text>
+<text x="32" y="61" font-size="13" fill="#6b7280" font-weight="400" text-anchor="start">限定:默认实现 v1 / optim_grads_params / 2 个 DP rank / 普通前反向,省略预取和激活</text>
+<text x="32" y="83" font-size="13" fill="#6b7280" font-weight="400" text-anchor="start">紫 = 计算参数 · 黄 = 梯度 · 绿 = optimizer state / main weight；W0 / W1 是同一单元的两片</text>
+<text x="154" y="122" font-size="14" fill="#111827" font-weight="700" text-anchor="start">分片常驻</text>
+<text x="394" y="122" font-size="14" fill="#111827" font-weight="700" text-anchor="start">前向:完整参数</text>
+<text x="634" y="122" font-size="14" fill="#111827" font-weight="700" text-anchor="start">释放完整副本</text>
+<text x="874" y="122" font-size="14" fill="#111827" font-weight="700" text-anchor="start">反向:再次聚合</text>
+<text x="32" y="172" font-size="14" fill="#111827" font-weight="700" text-anchor="start">DP rank 0</text>
+<rect x="154" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="191" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="234" y="146" width="74" height="40" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="394" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="431" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="474" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="511" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<rect x="634" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="671" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="714" y="146" width="74" height="40" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="874" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="911" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="954" y="146" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="991" y="171" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<text x="32" y="230" font-size="14" fill="#111827" font-weight="700" text-anchor="start">DP rank 1</text>
+<rect x="154" y="204" width="74" height="40" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="234" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="271" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<rect x="394" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="431" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="474" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="511" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<rect x="634" y="204" width="74" height="40" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="714" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="751" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<rect x="874" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="911" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W0</text>
+<rect x="954" y="204" width="74" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="991" y="229" font-size="13" fill="#111827" font-weight="400" text-anchor="middle">W1</text>
+<path d="M316 172 L381 172" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="349" y="144" font-size="11" fill="#6b7280" font-weight="400" text-anchor="middle">all-gather</text>
+<path d="M556 172 L621 172" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="589" y="144" font-size="11" fill="#6b7280" font-weight="400" text-anchor="middle">回收</text>
+<path d="M796 172 L861 172" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="829" y="144" font-size="11" fill="#6b7280" font-weight="400" text-anchor="middle">all-gather</text>
+<text x="394" y="275" font-size="11" fill="#6b7280" font-weight="400" text-anchor="start">参数就绪 → forward</text>
+<text x="634" y="275" font-size="11" fill="#6b7280" font-weight="400" text-anchor="start">只留下本地分片</text>
+<text x="874" y="275" font-size="11" fill="#6b7280" font-weight="400" text-anchor="start">参数就绪 → backward</text>
+<path d="M952 286 L952 321" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="32" y="324" font-size="14" fill="#111827" font-weight="700" text-anchor="start">反向产生的局部梯度,归约后只保留本rank负责的片段</text>
+<text x="32" y="373" font-size="13" fill="#111827" font-weight="400" text-anchor="start">DP rank 0</text>
+<rect x="154" y="348" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="191" y="372" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">g0 / r0</text>
+<rect x="234" y="348" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="271" y="372" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">g1 / r0</text>
+<rect x="634" y="348" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="671" y="372" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">归约 g0</text>
+<text x="32" y="429" font-size="13" fill="#111827" font-weight="400" text-anchor="start">DP rank 1</text>
+<rect x="154" y="404" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="191" y="428" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">g0 / r1</text>
+<rect x="234" y="404" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="271" y="428" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">g1 / r1</text>
+<rect x="714" y="404" width="74" height="38" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="751" y="428" font-size="11" fill="#111827" font-weight="400" text-anchor="middle">归约 g1</text>
+<path d="M329 391 L607 391" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="407" y="377" font-size="13" fill="#111827" font-weight="400" text-anchor="start">reduce-scatter</text>
+<text x="790" y="380" font-size="13" fill="#111827" font-weight="400" text-anchor="start">累积本地梯度分片</text>
+<text x="790" y="402" font-size="11" fill="#6b7280" font-weight="400" text-anchor="start">本单元完整参数可回收</text>
+<rect x="32" y="478" width="1056" height="98" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="48" y="502" font-size="14" fill="#111827" font-weight="700" text-anchor="start">optimizer state / main weight 按分片常驻,用归约后的本地梯度更新</text>
+<rect x="48" y="518" width="300" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="62" y="541" font-size="13" fill="#111827" font-weight="400" text-anchor="start">rank 0:state 0 + main weight 0</text>
+<rect x="393" y="518" width="300" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="407" y="541" font-size="13" fill="#111827" font-weight="400" text-anchor="start">rank 1:state 1 + main weight 1</text>
+<text x="756" y="534" font-size="13" fill="#111827" font-weight="400" text-anchor="start">更新后刷新计算参数分片</text>
+<text x="756" y="555" font-size="11" fill="#6b7280" font-weight="400" text-anchor="start">无需聚合完整 optimizer state</text>
+<text x="32" y="603" font-size="11" fill="#9ca3af" font-weight="400" text-anchor="start">这是单元生命周期示意,不是时长或显存比例图；重算会延后释放,持久buffer可回收复用而不退还内存。</text>
+</svg>

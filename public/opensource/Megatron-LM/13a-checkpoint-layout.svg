@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="430" viewBox="0 0 1120 430" role="img"><title>落盘恢复：目标按逻辑坐标取回自己的切片</title><defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs><rect width="1120" height="430" fill="#ffffff"/><g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif"><text x="32" y="33" font-size="19" font-weight="700" fill="#111827">落盘恢复：目标按逻辑坐标取回自己的切片</text><text x="32" y="57" font-size="13" fill="#6b7280">绿色 = 源分片　黄色 = 存档逻辑区域　紫色 = 目标分片；演示同一矩阵沿列由 2 份改为 4 份</text>
+<rect x="140" y="94" width="400" height="53" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="152" y="119" font-size="14" font-weight="700" fill="#111827">源 rank 0　列 [0, 4)</text>
+<path d="M340 148 L340 197" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="580" y="94" width="400" height="53" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="592" y="119" font-size="14" font-weight="700" fill="#111827">源 rank 1　列 [4, 8)</text>
+<path d="M780 148 L780 197" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="140" y="200" width="840" height="58" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="152" y="225" font-size="14" font-weight="700" fill="#111827">同一逻辑权重 W：全局 8 列 + 各存储分片的偏移 / 形状</text>
+<text x="152" y="245" font-size="11" font-weight="400" fill="#111827">这是存档中的逻辑坐标视图,不是先在某张 GPU 上物化完整矩阵。</text>
+<path d="M230 259 L230 302" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="140" y="305" width="180" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="152" y="330" font-size="14" font-weight="700" fill="#111827">目标 rank 0</text>
+<text x="152" y="351" font-size="11" font-weight="400" fill="#111827">请求列 [0, 2)</text>
+<path d="M450 259 L450 302" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="360" y="305" width="180" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="372" y="330" font-size="14" font-weight="700" fill="#111827">目标 rank 1</text>
+<text x="372" y="351" font-size="11" font-weight="400" fill="#111827">请求列 [2, 4)</text>
+<path d="M670 259 L670 302" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="580" y="305" width="180" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="592" y="330" font-size="14" font-weight="700" fill="#111827">目标 rank 2</text>
+<text x="592" y="351" font-size="11" font-weight="400" fill="#111827">请求列 [4, 6)</text>
+<path d="M890 259 L890 302" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="800" y="305" width="180" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="812" y="330" font-size="14" font-weight="700" fill="#111827">目标 rank 3</text>
+<text x="812" y="351" font-size="11" font-weight="400" fill="#111827">请求列 [6, 8)</text>
+<text x="140" y="400" font-size="13" font-weight="400" fill="#111827">新模型先声明目标分片；加载策略读取相交区域。optimizer / RNG 等训练状态另按其格式与恢复条件处理。</text>
+</g></svg>

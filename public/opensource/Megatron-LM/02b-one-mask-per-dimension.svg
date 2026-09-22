@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="520" rx="0" fill="#ffffff" stroke="#ffffff" stroke-width="1"/>
+<rect x="260" y="108" width="76" height="74" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+<rect x="342" y="108" width="76" height="74" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+<rect x="424" y="108" width="76" height="74" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+<rect x="506" y="108" width="76" height="74" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+<rect x="588" y="108" width="76" height="74" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+<rect x="260" y="208" width="806" height="66" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="260" y="300" width="76" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="342" y="300" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="424" y="300" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="506" y="300" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="588" y="300" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="672" y1="322" x2="694" y2="322" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="688,318 694,322 688,326" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="706" y="300" width="360" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="260" y="356" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="342" y="356" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="424" y="356" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="506" y="356" width="76" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="588" y="356" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="672" y1="378" x2="694" y2="378" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="688,374 694,378 688,382" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="706" y="356" width="360" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="260" y="412" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="342" y="412" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="424" y="412" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="506" y="412" width="76" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="588" y="412" width="76" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="672" y1="434" x2="694" y2="434" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="688,430 694,434 688,438" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="706" y="412" width="360" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="40" y="44" font-size="19" fill="#111827" font-weight="700">一个掩码函数切出所有维度的组</text>
+<text x="40" y="68" font-size="13" fill="#6b7280">例:16 卡,张量并行 2 × 上下文并行 1 × 专家并行 1 × 数据并行 2 × 流水线并行 4,顺序串 tp-cp-ep-dp-pp。</text>
+<text x="40" y="88" font-size="13" fill="#6b7280">紫 = 这一维当组内序号,灰 = 这一维当组号,绿 = 6 号卡所在的那一组。</text>
+<text x="60" y="140" font-size="13" fill="#111827" font-weight="700">① 顺序串定坐标系</text>
+<text x="60" y="158" font-size="11" fill="#6b7280">靠左的步长小</text>
+<text x="298" y="132" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">tp</text>
+<text x="298" y="152" font-size="11" fill="#6b7280" text-anchor="middle">大小 2</text>
+<text x="298" y="170" font-size="11" fill="#6b7280" text-anchor="middle">步长 1</text>
+<text x="380" y="132" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">cp</text>
+<text x="380" y="152" font-size="11" fill="#6b7280" text-anchor="middle">大小 1</text>
+<text x="380" y="170" font-size="11" fill="#6b7280" text-anchor="middle">步长 2</text>
+<text x="462" y="132" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">ep</text>
+<text x="462" y="152" font-size="11" fill="#6b7280" text-anchor="middle">大小 1</text>
+<text x="462" y="170" font-size="11" fill="#6b7280" text-anchor="middle">步长 2</text>
+<text x="544" y="132" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">dp</text>
+<text x="544" y="152" font-size="11" fill="#6b7280" text-anchor="middle">大小 2</text>
+<text x="544" y="170" font-size="11" fill="#6b7280" text-anchor="middle">步长 2</text>
+<text x="626" y="132" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">pp</text>
+<text x="626" y="152" font-size="11" fill="#6b7280" text-anchor="middle">大小 4</text>
+<text x="626" y="170" font-size="11" fill="#6b7280" text-anchor="middle">步长 4</text>
+<text x="60" y="240" font-size="13" fill="#111827" font-weight="700">② 编号拆成坐标</text>
+<text x="60" y="258" font-size="11" fill="#6b7280">以 6 号卡为例</text>
+<text x="280" y="236" font-size="14" fill="#111827">6 号卡 = 0×1 + 0×2 + 0×2 + 1×2 + 1×4</text>
+<text x="280" y="258" font-size="11" fill="#6b7280">→ 张量并行第 0 位、上下文与专家并行第 0 位、数据并行第 1 位、流水线第 1 位</text>
+<text x="60" y="322" font-size="13" fill="#111827" font-weight="700">③ 掩码一标</text>
+<text x="60" y="340" font-size="11" fill="#6b7280">紫的当组内序号</text>
+<text x="60" y="356" font-size="11" fill="#6b7280">灰的当组号</text>
+<text x="298" y="327" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">tp</text>
+<text x="380" y="327" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">cp</text>
+<text x="462" y="327" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">ep</text>
+<text x="544" y="327" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">dp</text>
+<text x="626" y="327" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">pp</text>
+<text x="722" y="320" font-size="14" fill="#111827" font-weight="700">张量并行组 {6, 7}</text>
+<text x="722" y="337" font-size="11" fill="#6b7280">同一层被切开的两张卡</text>
+<text x="298" y="383" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">tp</text>
+<text x="380" y="383" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">cp</text>
+<text x="462" y="383" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">ep</text>
+<text x="544" y="383" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">dp</text>
+<text x="626" y="383" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">pp</text>
+<text x="722" y="376" font-size="14" fill="#111827" font-weight="700">数据并行组 {4, 6}</text>
+<text x="722" y="393" font-size="11" fill="#6b7280">每步梯度归约的对象</text>
+<text x="298" y="439" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">tp</text>
+<text x="380" y="439" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">cp</text>
+<text x="462" y="439" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">ep</text>
+<text x="544" y="439" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">dp</text>
+<text x="626" y="439" font-size="12" fill="#111827" font-weight="700" text-anchor="middle">pp</text>
+<text x="722" y="432" font-size="14" fill="#111827" font-weight="700">流水线组 {2, 6, 10, 14}</text>
+<text x="722" y="449" font-size="11" fill="#6b7280">一条流水线的四段</text>
+<text x="40" y="492" font-size="11" fill="#9ca3af">同一个函数,换一个掩码;要张量并行 × 数据并行这样的合并组,就把两维一起标紫。启动时依配置建立各类进程组。</text>
+</svg>
