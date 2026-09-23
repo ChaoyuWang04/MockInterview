@@ -106,6 +106,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| IER-OPD | MBZUAI | 稀疏 on-policy 蒸馏选哪些 token:用信噪分解定义信息效率比 IER 衡量梯度估计的可靠性,与已有有用性分数组合后,0.1%–1% 的 token 预算即可匹配全量 OPD |
 | Repulsive-Self-Distillation | ETH | 特权信息同时改了教师「知道什么」与「怎么表现」:吸引式与排斥式自蒸馏引起相反的行为偏移,两者对比组合后偏移相消,只剩更贴近正确性的 token 级信号 |
 | Privileged-Info-OPSD | NUS | on-policy 自蒸馏里给教师看答案到底多加了什么:5,319 题六种推理视角的 AMPLE-Math 对照无参考蒸馏,发现大部分提升来自蒸馏本身,参考信息的额外收益有限且依赖学生 |
 | Score-Centering | TogetherAI | 训推不一致下 RL 失稳主要来自逐步累积的漂移:加一项可加的 score centering 修正抵消它,0.6B 到 30B 上单用即可比肩或超过重要性采样,还能与之叠加 |
@@ -161,7 +162,6 @@
 | DCLM | Stanford | 数据侧的 ImageNet 时刻:固定模型只比数据配方(arXiv 2406.11794,NeurIPS 2024) |
 | Nemotron-CLIMB | NVIDIA | 聚类迭代搜数据配方,用 512 个模型的网格反推预训练混合(arXiv 2504.13161) |
 | Nested-Learning | Google | 把「深度」重述为多尺度更新,连续学习的优化视角(arXiv 2512.24695,NeurIPS 2025) |
-| IER-OPD | MBZUAI | 稀疏 on-policy 蒸馏选哪些 token:用信噪分解定义信息效率比 IER 衡量梯度估计的可靠性,与已有有用性分数组合后,0.1%–1% 的 token 预算即可匹配全量 OPD |
 | Value-Flattening | SJTU | PPO critic 的系统性失效:真实状态价值沿回答剧烈变化,critic 预测却几乎是平的;SP3O 每条回答只在几个相隔较远的状态上算价值损失来缓解 |
 
 ## Agent 训练与工具使用
@@ -169,6 +169,7 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | Skill2Env | NVIDIA | 把 3.4k 个公开 Agent Skills 转成 8k 个带程序化测试与行为 rubric 的终端环境,300 步 RL 让 Qwen-3.8 27B 在 Terminal-Bench 2.1 上涨 4.7 个点 |
+| CodeMidas | Xiaomi | 只用源码本身造编码 RL 环境:agent 探索已实现功能、写行为规格与测试并反复验证,得到 3,185 个仓库的 5,545 个任务 |
 | RetireOPD | ZJU | 多轮 agent 的自蒸馏:先用环境奖励优化带技能的教师,再让学生 RL 加 OPD 联合训练,差距不再缩小且达到目标成功率就自行退掉教师 |
 | ScienceIDE | Oxford | 让 agent 按专家定义的案例与验收标准把科学代码仓改造成可执行环境,用于 SFT、RL 与评测,并训出 PhAI-IDE 72B/9B/4B |
 | Cordis | DeepSeek | DeepSeek Harness 底下的插件内核;把动态组合拆成时间(可完全撤销副作用)与空间(响应式依赖)两维并给出演算 |
@@ -190,7 +191,6 @@
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
-| CodeMidas | Xiaomi | 只用源码本身造编码 RL 环境:agent 探索已实现功能、写行为规格与测试并反复验证,得到 3,185 个仓库的 5,545 个任务 |
 
 ## 推理服务与架构探索
 

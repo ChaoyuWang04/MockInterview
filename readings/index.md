@@ -85,6 +85,7 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Coding-Harness-Design | UMass Amherst | 固定执行循环、逐个换规划、动作空间与上下文管理三个组件,在 SWE-Bench Verified 与 Terminal-Bench 2.1 上跑 176 组对照,拆开看编码 harness 的哪部分真有用 |
 | RAGEN-2 | Northwestern | 多轮 agent 的 RL 训练天生不稳;这一篇盯住「推理坍缩」这个具体失效 |
 | HGPO | NTU | 组的层级化:长时程 agentic 任务里逐步分组仍太粗,改成分层的组 |
 | Agentic-Reasoning-Survey | UIUC | **综述**:LLM 在封闭世界推理很强、开放动态环境里不行;agentic reasoning 把思考与行动接起来 |
@@ -103,7 +104,6 @@
 | ToolLLM | Tsinghua | 1.6 万真实 API 上的工具调用数据与模型,配 DFSDT 搜索 |
 | ReAct | Princeton | 推理与行动交错:想一步、做一步、看结果再想;agent 提示范式的源头 |
 | TALM | Google | 工具增强语言模型的早期形态:文本接口调工具,自举扩数据 |
-| Coding-Harness-Design | UMass Amherst | 固定执行循环、逐个换规划、动作空间与上下文管理三个组件,在 SWE-Bench Verified 与 Terminal-Bench 2.1 上跑 176 组对照,拆开看编码 harness 的哪部分真有用 |
 
 ## 推理服务与架构探索
 
