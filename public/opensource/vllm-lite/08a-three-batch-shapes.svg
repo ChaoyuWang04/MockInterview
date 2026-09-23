@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一份编译产物,三种批形状各走一条路</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">灰 = Inductor 编好的段(不录图时逐个下发),黄 = 图外按真实长度现场下发的注意力与写 KV,</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">绿 = 录在图里整体重放,紫 = 补齐出来的空行;四行的段与注意力上下对齐,横向宽度只示意结构。</text>
+<rect x="20" y="96" width="1080" height="118" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="30" y="126" font-size="14" fill="#111827" text-anchor="start" font-weight="700">启动时编译一次</text>
+<text x="30" y="144" font-size="11" fill="#6b7280" text-anchor="start">Dynamo 抓整张前向,</text>
+<text x="30" y="160" font-size="11" fill="#6b7280" text-anchor="start">只有 token 数是变量;</text>
+<text x="30" y="176" font-size="11" fill="#6b7280" text-anchor="start">在注意力处切成 N+1 段</text>
+<rect x="262" y="138" width="150" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="412" y="138" width="46" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="458" y="138" width="150" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="608" y="138" width="46" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="654" y="138" width="150" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="804" y="138" width="46" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="892" y="138" width="46" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="938" y="138" width="150" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="337.0" y="159" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">段 0</text>
+<text x="337.0" y="176" font-size="11" fill="#6b7280" text-anchor="middle">嵌入到第 1 层 QKV</text>
+<text x="435.0" y="159" font-size="11" fill="#111827" text-anchor="middle">注意力</text>
+<text x="435.0" y="175" font-size="11" fill="#111827" text-anchor="middle">写 KV</text>
+<text x="533.0" y="159" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">段 1</text>
+<text x="533.0" y="176" font-size="11" fill="#6b7280" text-anchor="middle">O 投影到下一层 QKV</text>
+<text x="631.0" y="159" font-size="11" fill="#111827" text-anchor="middle">注意力</text>
+<text x="631.0" y="175" font-size="11" fill="#111827" text-anchor="middle">写 KV</text>
+<text x="729.0" y="159" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">段 2</text>
+<text x="729.0" y="176" font-size="11" fill="#6b7280" text-anchor="middle">同上,编一次复用</text>
+<text x="827.0" y="159" font-size="11" fill="#111827" text-anchor="middle">注意力</text>
+<text x="827.0" y="175" font-size="11" fill="#111827" text-anchor="middle">写 KV</text>
+<text x="871.0" y="168" font-size="13" fill="#6b7280" text-anchor="middle">…</text>
+<text x="915.0" y="159" font-size="11" fill="#111827" text-anchor="middle">注意力</text>
+<text x="915.0" y="175" font-size="11" fill="#111827" text-anchor="middle">写 KV</text>
+<text x="1013.0" y="159" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">段 N</text>
+<text x="1013.0" y="176" font-size="11" fill="#6b7280" text-anchor="middle">最后一层 MLP 与 norm</text>
+<text x="262" y="124" font-size="11" fill="#6b7280" text-anchor="start">每段交给 Inductor 按 1–8192 个 token 编一份,运行时任何批大小共用;注意力是不透明算子,不编译</text>
+<text x="262" y="206" font-size="11" fill="#9ca3af" text-anchor="start">编译在接请求之前做完,产物落盘,第二次启动直接加载</text>
+<text x="30" y="262" font-size="14" fill="#111827" text-anchor="start" font-weight="700">纯 decode 批</text>
+<text x="30" y="280" font-size="11" fill="#6b7280" text-anchor="start">13 条请求各 1 个 token,</text>
+<text x="30" y="296" font-size="11" fill="#6b7280" text-anchor="start">补到 16 档,走整图</text>
+<rect x="30" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="41" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="52" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="63" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="74" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="85" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="96" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="107" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="118" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="129" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="140" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="151" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="162" y="300" width="9" height="9" rx="2" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="173" y="300" width="9" height="9" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="184" y="300" width="9" height="9" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="195" y="300" width="9" height="9" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="262" y="250" width="820" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<line x1="412" y1="276" x2="412" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="458" y1="276" x2="458" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="608" y1="276" x2="608" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="654" y1="276" x2="654" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="804" y1="276" x2="804" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="850" y1="276" x2="850" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="892" y1="276" x2="892" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="938" y1="276" x2="938" y2="292" stroke="#5fa886" stroke-width="1.4" stroke-dasharray="3 3"/>
+<text x="672.0" y="269" font-size="13" fill="#111827" text-anchor="middle">1 张整图:整次前向连注意力一起录进去,CPU 每步只发 1 次重放</text>
+<text x="262" y="313" font-size="11" fill="#9ca3af" text-anchor="start">只有每条请求 token 数相同的批才进整图;推测解码时每条是 1 加草稿数(09 章)</text>
+<text x="30" y="358" font-size="14" fill="#111827" text-anchor="start" font-weight="700">混合批</text>
+<text x="30" y="376" font-size="11" fill="#6b7280" text-anchor="start">1 个 280 token 的 prefill 块</text>
+<text x="30" y="392" font-size="11" fill="#6b7280" text-anchor="start">加 20 条 decode,共 300,</text>
+<text x="30" y="408" font-size="11" fill="#6b7280" text-anchor="start">补到 304 档,走分段图</text>
+<rect x="262" y="346" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="412" y="346" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="458" y="346" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="608" y="346" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="654" y="346" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="804" y="346" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="892" y="346" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="938" y="346" width="150" height="46" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="337.0" y="374.0" font-size="12" fill="#111827" text-anchor="middle">1 张分段图</text>
+<text x="533.0" y="374.0" font-size="12" fill="#111827" text-anchor="middle">1 张分段图</text>
+<text x="729.0" y="374.0" font-size="12" fill="#111827" text-anchor="middle">1 张分段图</text>
+<text x="871.0" y="374.0" font-size="13" fill="#6b7280" text-anchor="middle">…</text>
+<text x="1013.0" y="374.0" font-size="12" fill="#111827" text-anchor="middle">1 张分段图</text>
+<text x="262" y="409" font-size="11" fill="#9ca3af" text-anchor="start">注意力的元数据每步都变,留在图外才能按每条请求的真实长度算;每层只多这一处下发</text>
+<text x="30" y="454" font-size="14" fill="#111827" text-anchor="start" font-weight="700">大批</text>
+<text x="30" y="472" font-size="11" fill="#6b7280" text-anchor="start">8192 token 的 prefill 块,</text>
+<text x="30" y="488" font-size="11" fill="#6b7280" text-anchor="start">超过最大档 512,不用图</text>
+<rect x="267" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="279" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="291" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="303" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="315" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="327" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="339" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="351" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="363" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="375" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="387" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="399" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="412" y="442" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="463" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="475" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="487" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="499" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="511" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="523" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="535" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="547" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="559" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="571" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="583" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="595" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="608" y="442" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="659" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="671" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="683" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="695" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="707" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="719" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="731" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="743" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="755" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="767" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="779" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="791" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="804" y="442" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="871.0" y="470.0" font-size="13" fill="#6b7280" text-anchor="middle">…</text>
+<rect x="892" y="442" width="46" height="46" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="943" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="955" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="967" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="979" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="991" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1003" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1015" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1027" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1039" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1051" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1063" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="1075" y="450" width="7" height="30" rx="2" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="262" y="505" font-size="11" fill="#9ca3af" text-anchor="start">逐个下发编好的融合 kernel;批这么大,每个 kernel 都算得够久,下发藏在计算后面</text>
+<text x="30" y="566" font-size="14" fill="#111827" text-anchor="start" font-weight="700">录图的档位</text>
+<text x="30" y="584" font-size="11" fill="#6b7280" text-anchor="start">H100 在线服务默认 51 档,</text>
+<text x="30" y="600" font-size="11" fill="#6b7280" text-anchor="start">每档整图、分段图各录一遍</text>
+<rect x="902.0" y="568" width="180.0" height="30" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="262" y1="590" x2="902.0" y2="590" stroke="#6b7280" stroke-width="1.4"/>
+<line x1="263.25" y1="576" x2="263.25" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="264.5" y1="576" x2="264.5" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="267.0" y1="576" x2="267.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="272.0" y1="576" x2="272.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="282.0" y1="576" x2="282.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="292.0" y1="576" x2="292.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="302.0" y1="576" x2="302.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="312.0" y1="576" x2="312.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="322.0" y1="576" x2="322.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="332.0" y1="576" x2="332.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="342.0" y1="576" x2="342.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="352.0" y1="576" x2="352.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="362.0" y1="576" x2="362.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="372.0" y1="576" x2="372.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="382.0" y1="576" x2="382.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="392.0" y1="576" x2="392.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="402.0" y1="576" x2="402.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="412.0" y1="576" x2="412.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="422.0" y1="576" x2="422.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="432.0" y1="576" x2="432.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="442.0" y1="576" x2="442.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="452.0" y1="576" x2="452.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="462.0" y1="576" x2="462.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="472.0" y1="576" x2="472.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="482.0" y1="576" x2="482.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="492.0" y1="576" x2="492.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="502.0" y1="576" x2="502.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="512.0" y1="576" x2="512.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="522.0" y1="576" x2="522.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="532.0" y1="576" x2="532.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="542.0" y1="576" x2="542.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="552.0" y1="576" x2="552.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="562.0" y1="576" x2="562.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="572.0" y1="576" x2="572.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="582.0" y1="576" x2="582.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="602.0" y1="576" x2="602.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="622.0" y1="576" x2="622.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="642.0" y1="576" x2="642.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="662.0" y1="576" x2="662.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="682.0" y1="576" x2="682.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="702.0" y1="576" x2="702.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="722.0" y1="576" x2="722.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="742.0" y1="576" x2="742.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="762.0" y1="576" x2="762.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="782.0" y1="576" x2="782.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="802.0" y1="576" x2="802.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="822.0" y1="576" x2="822.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="842.0" y1="576" x2="842.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="862.0" y1="576" x2="862.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="882.0" y1="576" x2="882.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<line x1="902.0" y1="576" x2="902.0" y2="590" stroke="#5fa886" stroke-width="1.4"/>
+<text x="262" y="606" font-size="11" fill="#6b7280" text-anchor="middle">0</text>
+<text x="582.0" y="606" font-size="11" fill="#6b7280" text-anchor="middle">256</text>
+<text x="902.0" y="606" font-size="11" fill="#6b7280" text-anchor="middle">512</text>
+<text x="422.0" y="622" font-size="11" fill="#6b7280" text-anchor="middle">1、2、4,之后每 8 个 token 一档</text>
+<text x="742.0" y="622" font-size="11" fill="#6b7280" text-anchor="middle">每 16 个 token 一档</text>
+<text x="992.0" y="587" font-size="12" fill="#111827" text-anchor="middle">超过最大档:不用图</text>
+<line x1="282.0" y1="554" x2="282.0" y2="574" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="282.0" y="550" font-size="11" fill="#111827" text-anchor="middle">13 → 16</text>
+<line x1="642.0" y1="554" x2="642.0" y2="574" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="642.0" y="550" font-size="11" fill="#111827" text-anchor="middle">300 → 304</text>
+<text x="992.0" y="614" font-size="11" fill="#111827" text-anchor="middle">8192 →</text>
+<text x="30" y="668" font-size="11" fill="#9ca3af" text-anchor="start">档位上限默认取「最大并发 × 2」与 512 的小者(数据中心 Blackwell 是 1024),再不超过一步的 token 预算;H100 在线服务默认最大并发 1024,</text>
+<text x="30" y="686" font-size="11" fill="#9ca3af" text-anchor="start">所以 513–1024 条的 decode 批也落在「不用图」那一格。刻度上的横向位置按 token 数等比例画。</text>
+</svg>

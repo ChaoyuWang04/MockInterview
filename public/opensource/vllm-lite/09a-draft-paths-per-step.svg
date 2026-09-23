@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 562" width="1120" height="562" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="562" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一步推测解码:四类猜法各在哪里跑、验完之后还要多跑什么(每步猜 3 个)</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = 目标模型前向(每条请求 1+3 个位置一起算),灰 = 拒绝采样验证,绿 = 草稿器在 GPU 上的前向,黄 = CPU 上的活,红虚框 = GPU 空等。</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">四行用同一条时间轴,从这一步的目标前向画到下一步目标前向开始;横向长度是示意比例,不是实测。</text>
+<text x="30" y="122" font-size="13" fill="#111827" text-anchor="start" font-weight="700">EAGLE / EAGLE3 / MTP</text>
+<text x="30" y="139" font-size="11" fill="#6b7280" text-anchor="start">挂在目标隐状态上的草稿头</text>
+<rect x="300" y="110" width="230" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="415.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">目标前向:每条 1 + 3 个位置</text>
+<rect x="530" y="110" width="34" height="30" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="547.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">验证</text>
+<rect x="564" y="110" width="56" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="592.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">草稿 ①</text>
+<rect x="620" y="110" width="30" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="635.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">②</text>
+<rect x="650" y="110" width="30" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="665.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">③</text>
+<rect x="680" y="110" width="90" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="725.0" y="128.96" font-size="11" fill="#111827" text-anchor="middle">下一步目标前向</text>
+<text x="780" y="129.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="300" y="158" font-size="11" fill="#9ca3af" text-anchor="start">① 吃目标这一步的隐状态,批的形状和注意力元数据照搬目标那一次;② ③ 每条请求只喂 1 个 token。</text>
+<text x="300" y="174" font-size="11" fill="#9ca3af" text-anchor="start">Model Runner V2,异步开;草稿层有自己的 KV;每条请求多留 3 个 KV 槽位给草稿写。</text>
+<line x1="30" y1="188" x2="1090" y2="188" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="217" font-size="13" fill="#111827" text-anchor="start" font-weight="700">DFlash / DSpark</text>
+<text x="30" y="234" font-size="11" fill="#6b7280" text-anchor="start">块草稿:一次前向出整块</text>
+<rect x="300" y="205" width="230" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="415.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">目标前向:每条 1 + 3 个位置</text>
+<rect x="530" y="205" width="34" height="30" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="547.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">验证</text>
+<rect x="564" y="205" width="72" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="600.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">草稿 ×1</text>
+<rect x="636" y="205" width="90" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="681.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">下一步目标前向</text>
+<text x="736" y="224.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="300" y="253" font-size="11" fill="#9ca3af" text-anchor="start">每条请求喂 1 个真 token 加 3 个掩码位,非因果注意力,一次出 3 个草稿;不再逐个追。</text>
+<text x="300" y="269" font-size="11" fill="#9ca3af" text-anchor="start">Model Runner V2,异步开;DSpark 只有 V2 做了;它开自适应验证时,还会按置信度逐请求少验几个。</text>
+<line x1="30" y1="283" x2="1090" y2="283" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="312" font-size="13" fill="#111827" text-anchor="start" font-weight="700">独立草稿模型</text>
+<text x="30" y="329" font-size="11" fill="#6b7280" text-anchor="start">同词表的小模型</text>
+<rect x="300" y="300" width="230" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="415.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">目标前向:每条 1 + 3 个位置</text>
+<rect x="530" y="300" width="34" height="30" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="547.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">验证</text>
+<rect x="564" y="300" width="60" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="594.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">草稿模型 ①</text>
+<rect x="624" y="300" width="44" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="646.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">②</text>
+<rect x="668" y="300" width="44" height="30" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="690.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">③</text>
+<rect x="712" y="300" width="90" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="757.0" y="318.96" font-size="11" fill="#111827" text-anchor="middle">下一步目标前向</text>
+<text x="812" y="319.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="300" y="348" font-size="11" fill="#9ca3af" text-anchor="start">每次都是一个完整小模型的前向,不吃目标的隐状态;它的每一层都要占 KV。</text>
+<text x="300" y="364" font-size="11" fill="#9ca3af" text-anchor="start">退回 Model Runner V1,异步仍开。</text>
+<line x1="30" y1="378" x2="1090" y2="378" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="407" font-size="13" fill="#111827" text-anchor="start" font-weight="700">n-gram / suffix</text>
+<text x="30" y="424" font-size="11" fill="#6b7280" text-anchor="start">在已有 token 里查表</text>
+<rect x="300" y="395" width="230" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="415.0" y="413.96" font-size="11" fill="#111827" text-anchor="middle">目标前向:每条 1 + 3 个位置</text>
+<rect x="530" y="395" width="34" height="30" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="547.0" y="413.96" font-size="11" fill="#111827" text-anchor="middle">验证</text>
+<text x="288" y="458" font-size="11" fill="#6b7280" text-anchor="end">CPU</text>
+<text x="288" y="414" font-size="11" fill="#6b7280" text-anchor="end">GPU</text>
+<rect x="564" y="439" width="110" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="619.0" y="455.96" font-size="11" fill="#111827" text-anchor="middle">拷回后查表出 3 个</text>
+<rect x="674" y="439" width="76" height="26" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="712.0" y="455.96" font-size="11" fill="#111827" text-anchor="middle">调度与准备</text>
+<rect x="564" y="395" width="186" height="30" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="657.0" y="414.0" font-size="11" fill="#6b7280" text-anchor="middle">GPU 空等</text>
+<rect x="750" y="395" width="90" height="30" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="795.0" y="413.96" font-size="11" fill="#111827" text-anchor="middle">下一步目标前向</text>
+<text x="850" y="414.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="300" y="483" font-size="11" fill="#9ca3af" text-anchor="start">查表要用 CPU 上的 token 历史,采样结果得先拷回;查完、排好下一步,GPU 才有活干,这段里空转。</text>
+<text x="300" y="499" font-size="11" fill="#9ca3af" text-anchor="start">退回 Model Runner V1,异步自动关;GPU 版 n-gram 把查表挪到 GPU 上,异步保住,但仍走 V1。</text>
+<line x1="30" y1="513" x2="1090" y2="513" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="540" font-size="11" fill="#9ca3af" text-anchor="start">目标前向与草稿器的开销每步照付;这一步产出的 token 数是「收下的草稿数 + 1」,在 1 到 4 之间,所以接受率低时这一步比不开推测更贵。</text>
+</svg>
