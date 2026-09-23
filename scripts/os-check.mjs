@@ -29,6 +29,10 @@ const ok = (msg) => console.log('  ✓ ' + msg);
 let warnings = 0;
 const warn = (msg) => { warnings += 1; console.log('  ! ' + msg); };
 
+// 解读目录名与源码仓目录名不一致时在这里登记:解读目录名 → projects/<主题>/ 下的源码仓目录名
+const REPO_ALIAS = { 'vllm-lite': 'vllm' };
+const repoName = (project) => REPO_ALIAS[project] || project;
+
 function listProjects() {
   const out = [];
   const osRoot = path.join(ROOT, 'opensource');
@@ -47,7 +51,7 @@ function checkDiagrams({ topic, project, dir }) {
   const dDir = path.join(dir, 'diagrams');
   if (!fs.existsSync(dDir)) return;
   const pub = path.join(ROOT, 'public', 'opensource', project);
-  const repoRoot = path.join(ROOT, 'projects', topic, project);
+  const repoRoot = path.join(ROOT, 'projects', topic, repoName(project));
   for (const f of fs.readdirSync(dDir).filter((x) => x.endsWith('.json') && !x.startsWith('_')).sort()) {
     const spec = path.join(dDir, f);
     const slug = f.replace(/\.json$/, '');
@@ -144,8 +148,8 @@ function parseRefs(rowText, repoRoot) {
 const isRefLike = (raw) => /^[\w./-]+\.py(:[\d,、/ -]*)?$/.test(raw) || /^:[\d,、/ -]+$/.test(raw);
 
 function checkEvidence({ topic, project, dir }) {
-  const repoRoot = path.join(ROOT, 'projects', topic, project);
-  if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${project} 不存在,跳过证据表核对`); return; }
+  const repoRoot = path.join(ROOT, 'projects', topic, repoName(project));
+  if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${repoName(project)} 不存在,跳过证据表核对`); return; }
   for (const f of fs.readdirSync(dir).filter((x) => /^_\d+.*evidence\.md$/.test(x)).sort()) {
     const lines = fs.readFileSync(path.join(dir, f), 'utf8').split('\n');
     let rows = 0, snippets = 0; const misses = [];
@@ -235,8 +239,8 @@ function changedHunks(git, base, file) {
 }
 
 function checkBaseline({ topic, project, dir }) {
-  const repoRoot = path.join(ROOT, 'projects', topic, project);
-  if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${project} 不存在,跳过基准核对`); return; }
+  const repoRoot = path.join(ROOT, 'projects', topic, repoName(project));
+  if (!fs.existsSync(repoRoot)) { console.log(`  · projects/${topic}/${repoName(project)} 不存在,跳过基准核对`); return; }
   const overview = fs.readdirSync(dir).filter((f) => /^00-.*\.md$/.test(f))[0];
   if (!overview) { warn(`没有 00- 总览页,无法核对源码基准`); return; }
   const md = fs.readFileSync(path.join(dir, overview), 'utf8');
@@ -245,7 +249,7 @@ function checkBaseline({ topic, project, dir }) {
   const git = (a) => execFileSync('git', ['-C', repoRoot, ...a], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim();
   let head;
   try { head = git(['rev-parse', 'HEAD']); }
-  catch (e) { fail(`读不到 projects/${topic}/${project} 的 HEAD(${(e.message || '').split('\n')[0]})`); return; }
+  catch (e) { fail(`读不到 projects/${topic}/${repoName(project)} 的 HEAD(${(e.message || '').split('\n')[0]})`); return; }
   const recorded = m[1];
   if (head.startsWith(recorded)) { ok(`源码基准 ${recorded.slice(0, 12)} 与工作树 HEAD 一致`); return; }
 
@@ -298,7 +302,7 @@ const projects = listProjects();
 
 if (!skipSync) {
   console.log('== 同步 projects/ 下被检查的源码仓到上游最新');
-  const names = new Set(projects.map((p) => p.project));
+  const names = new Set(projects.map((p) => repoName(p.project)));
   const results = syncProjects({ filter: names, log: (m) => console.log(m) });
   for (const r of results) {
     if (['dirty', 'ahead', 'detached', 'no-upstream', 'fetch-failed', 'error'].includes(r.state)) {
