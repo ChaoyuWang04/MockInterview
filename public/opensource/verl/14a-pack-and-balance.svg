@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="390" viewBox="0 0 1120 390">
+<rect width="1120" height="390" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="34" font-size="19" font-weight="700" fill="#111827">packing 减少白算,均衡减少等待</text>
+<text x="32" y="59" font-size="13" fill="#6b7280">绿色 = 有效 token;灰色 = padding。条长按 token 数编码,字母标记样本;只是示意,不是性能测量。</text>
+<rect x="24" y="83" width="310" height="245" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="405" y="83" width="310" height="245" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="786" y="83" width="310" height="245" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="42" y="110" font-size="14" font-weight="700" fill="#111827">按最长样本补齐</text>
+<text x="423" y="110" font-size="14" font-weight="700" fill="#111827">去 padding,还没有均衡</text>
+<text x="804" y="110" font-size="14" font-weight="700" fill="#111827">长短搭配给 rank</text>
+<g stroke-width="1">
+<rect x="84" y="133" width="128" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="84" y="173" width="128" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="84" y="173" width="96" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="84" y="213" width="128" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="84" y="213" width="32" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="84" y="253" width="128" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="84" y="253" width="64" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="446" y="163" width="128" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="574" y="163" width="96" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="446" y="251" width="32" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="478" y="251" width="64" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="827" y="163" width="128" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="955" y="163" width="32" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="827" y="251" width="96" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="923" y="251" width="64" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+</g>
+<g font-size="11" fill="#6b7280">
+<text x="43" y="151">A</text><text x="43" y="191">B</text><text x="43" y="231">C</text><text x="43" y="271">D</text>
+<text x="143" y="151">8</text><text x="126" y="191">6</text><text x="96" y="231">2</text><text x="110" y="271">4</text>
+<text x="446" y="148">rank 0 · 14 token</text><text x="446" y="236">rank 1 · 6 token</text>
+<text x="498" y="183">A · 8</text><text x="609" y="183">B · 6</text><text x="457" y="271">C</text><text x="498" y="271">D · 4</text>
+<text x="827" y="148">rank 0 · 10 token</text><text x="827" y="236">rank 1 · 10 token</text>
+<text x="879" y="183">A · 8</text><text x="966" y="183">C</text><text x="862" y="271">B · 6</text><text x="943" y="271">D · 4</text>
+<text x="43" y="307">4 行都占 8 格,共 32 格</text><text x="423" y="307">有效 token 共 20,但两边仍不均</text><text x="804" y="307">仍是 20 token,改变的是分配</text>
+</g>
+<g fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"><path d="M343 207 H394"/><path d="M724 207 H775"/></g>
+<text x="341" y="190" font-size="11" fill="#6b7280">去 padding</text><text x="729" y="190" font-size="11" fill="#6b7280">再均衡</text>
+<text x="32" y="361" font-size="13" fill="#6b7280">实际默认流程先在控制器均衡、再由引擎组 micro-batch 和 packed 输入;图将两种收益拆开说明。</text>
+<text x="32" y="381" font-size="11" fill="#9ca3af">实际工作量估计还包含长度平方,所以长度总和接近不等于真实耗时完全相同。</text>
+</g></svg>

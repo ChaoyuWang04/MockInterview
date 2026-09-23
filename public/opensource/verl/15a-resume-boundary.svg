@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="526" viewBox="0 0 1120 526">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="526" fill="#ffffff"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="34" font-size="19" font-weight="700" fill="#111827">V1 续训的边界：接回训练与题目，不接回生成现场</text>
+<text x="32" y="59" font-size="13" fill="#6b7280">绿：训练状态　紫：控制器进度　黄：异步队列　红：丢弃后重做　左侧为同一步的保存内容</text>
+<rect x="30" y="85" width="440" height="403" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="50" y="112" font-size="14" font-weight="700" fill="#111827">global_step_N</text>
+<rect x="50" y="131" width="400" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="68" y="158" font-size="14" font-weight="700" fill="#111827">Actor / 可选 Critic</text>
+<text x="68" y="181" font-size="11" fill="#6b7280">模型、optimizer、学习率调度器、随机状态</text>
+<text x="68" y="198" font-size="11" fill="#6b7280">由各训练后端按自己的格式保存</text>
+<rect x="50" y="230" width="400" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="68" y="255" font-size="14" font-weight="700" fill="#111827">dataloader + 步数</text>
+<text x="68" y="277" font-size="11" fill="#6b7280">data.pt 保存游标，恢复步数取自目录名</text>
+<rect x="50" y="311" width="400" height="154" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="68" y="338" font-size="14" font-weight="700" fill="#111827">TransferQueue（仅异步模式）</text>
+<text x="68" y="369" font-size="11" fill="#6b7280">已完成的 trajectory</text>
+<path d="M68 389H430" stroke="#d4a24c"/>
+<text x="68" y="416" font-size="11" fill="#6b7280">pending / running 的 prompt 及关联数据</text>
+<text x="68" y="445" font-size="11" fill="#6b7280">这些题目已离开 dataloader，尚未进入当前权重</text>
+<path d="M470 171H592" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M470 261H592" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M470 365H592" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M470 419H592" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="503" y="105" font-size="13" fill="#6b7280">重启后</text>
+<rect x="605" y="131" width="483" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="625" y="158" font-size="14" font-weight="700" fill="#111827">加载训练状态</text>
+<text x="625" y="183" font-size="11" fill="#6b7280">Megatron 是否采用保存的调度器状态另有开关</text>
+<rect x="605" y="230" width="483" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="625" y="255" font-size="14" font-weight="700" fill="#111827">恢复取数位置与训练步数</text>
+<text x="625" y="277" font-size="11" fill="#6b7280">避免把“权重加载成功”误当成“进度恢复完整”</text>
+<rect x="605" y="331" width="483" height="58" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="625" y="355" font-size="14" font-weight="700" fill="#111827">完成轨迹按队列存档恢复</text>
+<text x="625" y="378" font-size="11" fill="#6b7280">保留结果，后续由训练调度消费</text>
+<rect x="605" y="405" width="483" height="83" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="625" y="432" font-size="14" font-weight="700" fill="#111827">清旧 trajectory → 重发 prompt → 重新生成</text>
+<text x="625" y="458" font-size="11" fill="#6b7280">不会恢复 KV cache，也不保证回答逐 token 相同</text>
+<text x="32" y="514" font-size="11" fill="#9ca3af">图示是状态恢复关系；不表示各文件一次原子提交，也不表示 Actor 的完成标记能覆盖整个作业。</text>
+</g></svg>
