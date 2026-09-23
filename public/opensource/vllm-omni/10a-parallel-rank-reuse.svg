@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="590" viewBox="0 0 1120 590">
+<rect width="1120" height="590" fill="#ffffff"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",Arial,sans-serif;fill:#111827}.title{font-size:19px;font-weight:700}.sub{font-size:13px;fill:#6b7280}.label{font-size:14px;font-weight:700}.small{font-size:11px;fill:#6b7280}</style>
+<text x="28" y="34" class="title">新增 rank 与复用 rank：不要把七种并行盲乘</text>
+<text x="28" y="59" class="sub">绿：序列工作  ·  紫：驻留权重分片  ·  黄：VAE tile  ·  灰：物理 rank；仅示意支持该组合的模型</text>
+<rect x="240" y="85" width="174" height="430" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="250" y="98" width="154" height="35" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="270" y="121" class="label">GPU / rank 0</text>
+<rect x="440" y="85" width="174" height="430" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="450" y="98" width="154" height="35" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="470" y="121" class="label">GPU / rank 1</text>
+<rect x="640" y="85" width="174" height="430" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="650" y="98" width="154" height="35" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="670" y="121" class="label">GPU / rank 2</text>
+<rect x="840" y="85" width="174" height="430" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="850" y="98" width="154" height="35" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="870" y="121" class="label">GPU / rank 3</text>
+<text x="28" y="163" class="label">Denoise</text>
+<text x="28" y="189" class="small">SP × CFG 展开作业</text>
+<text x="28" y="211" class="small">2 × 2 = 4 个 rank</text>
+<rect x="250" y="154" width="154" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="263" y="181" class="label">条件分支</text>
+<text x="263" y="208" class="small">序列前半</text>
+<rect x="450" y="154" width="154" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="463" y="181" class="label">条件分支</text>
+<text x="463" y="208" class="small">序列后半</text>
+<rect x="650" y="154" width="154" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="663" y="181" class="label">无条件分支</text>
+<text x="663" y="208" class="small">序列前半</text>
+<rect x="850" y="154" width="154" height="84" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="863" y="181" class="label">无条件分支</text>
+<text x="863" y="208" class="small">序列后半</text>
+<text x="28" y="287" class="label">同一批 rank 上</text>
+<text x="28" y="310" class="small">HSDP 分片权重</text>
+<text x="28" y="333" class="small">需要时聚合</text>
+<rect x="251" y="271" width="34" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="288" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="325" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="362" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="262" y="338" class="small">分片 1（共 4 份）</text>
+<rect x="451" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="488" y="271" width="34" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="525" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="562" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="462" y="338" class="small">分片 2（共 4 份）</text>
+<rect x="651" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="688" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="725" y="271" width="34" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="762" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="662" y="338" class="small">分片 3（共 4 份）</text>
+<rect x="851" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="888" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="925" y="271" width="34" height="43" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="962" y="271" width="34" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="862" y="338" class="small">分片 4（共 4 份）</text>
+<text x="240" y="370" class="small">HSDP 覆盖已有 WORLD；这里不再增加 GPU</text>
+<text x="28" y="419" class="label">Denoise 结束后</text>
+<text x="28" y="445" class="small">VAE 复用 WORLD</text>
+<text x="28" y="470" class="small">按 tile 分配工作</text>
+<rect x="250" y="394" width="154" height="94" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="264" y="408" width="33" height="24" rx="6" fill="#d4a24c" stroke="#d4a24c"/>
+<rect x="302" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="264" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="302" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<text x="344" y="447" class="small">decode</text>
+<rect x="450" y="394" width="154" height="94" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="464" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="502" y="408" width="33" height="24" rx="6" fill="#d4a24c" stroke="#d4a24c"/>
+<rect x="464" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="502" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<text x="544" y="447" class="small">decode</text>
+<rect x="650" y="394" width="154" height="94" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="664" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="702" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="664" y="436" width="33" height="24" rx="6" fill="#d4a24c" stroke="#d4a24c"/>
+<rect x="702" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<text x="744" y="447" class="small">decode</text>
+<rect x="850" y="394" width="154" height="94" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="864" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="902" y="408" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="864" y="436" width="33" height="24" rx="6" fill="#ffffff" stroke="#d4a24c"/>
+<rect x="902" y="436" width="33" height="24" rx="6" fill="#d4a24c" stroke="#d4a24c"/>
+<text x="944" y="447" class="small">decode</text>
+<path d="M 327 516 V 538 H 927 V 516 M 527 516 V 538 M 727 516 V 538" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="420" y="568" class="sub">收集 tile → rank 0 合并；不是再开 4 张 GPU</text>
+</svg>
