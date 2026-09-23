@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">占比管的是整卡总量,KV 只拿扣完之后剩下的那一段</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">示意:条的全长是整卡总显存,除「KV 预算 40 GiB」外各段长度只表比例,不是实测值。模型沿用正文手算的例子。</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">灰 = 占比之外、不归本实例,黄 = 实测后扣掉的占用,紫 = 估计后扣掉的 CUDA graph,绿 = KV 预算以及由它切出的块。</text>
+<text x="30" y="163" font-size="14" fill="#111827" text-anchor="start" font-weight="700">默认占比 0.92</text>
+<text x="30" y="180" font-size="11" fill="#6b7280" text-anchor="start">启动时量一次</text>
+<polyline points="201.0,142 201.0,134 1008.6,134 1008.6,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="604.8" y="127" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">整卡总量 × 0.92 = 本实例最多能用的</text>
+<polyline points="1010.6,142 1010.6,134 1079.0,134 1079.0,142" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="1044.8" y="127" font-size="11" fill="#6b7280" text-anchor="middle">1 − 0.92</text>
+<rect x="200.0" y="146" width="246.39999999999998" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="323.2" y="171.0" font-size="13" fill="#111827" text-anchor="middle">权重</text>
+<rect x="446.4" y="146" width="61.60000000000002" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="477.2" y="171.0" font-size="13" fill="#111827" text-anchor="middle">激活峰值</text>
+<rect x="508.0" y="146" width="35.200000000000045" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="543.2" y="146" width="35.19999999999993" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="578.4" y="146" width="431.20000000000005" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="794.0" y="171.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">KV 预算 40 GiB</text>
+<rect x="1009.6" y="146" width="70.39999999999998" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="525.6" y1="188" x2="465.6" y2="203" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="465.6" y="216" font-size="11" fill="#6b7280" text-anchor="middle">非 PyTorch 占用(NCCL 等)</text>
+<line x1="560.8" y1="188" x2="630.8" y2="203" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="630.8" y="216" font-size="11" fill="#6b7280" text-anchor="middle">CUDA graph(估计值)</text>
+<text x="1044.8" y="216" font-size="11" fill="#6b7280" text-anchor="middle">卡上别的进程</text>
+<text x="200.0" y="238" font-size="11" fill="#9ca3af" text-anchor="start">权重、激活峰值、非 PyTorch 占用:用假输入按每步 token 上限跑一次前向实测</text>
+<text x="30" y="309" font-size="14" fill="#111827" text-anchor="start" font-weight="700">占比调到 0.95</text>
+<text x="30" y="326" font-size="11" fill="#6b7280" text-anchor="start">其余不变</text>
+<polyline points="201.0,288 201.0,280 1035.0,280 1035.0,288" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="618.0" y="273" font-size="12" fill="#111827" text-anchor="middle" font-weight="700">整卡总量 × 0.95</text>
+<rect x="200.0" y="292" width="246.39999999999998" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="323.2" y="317.0" font-size="13" fill="#111827" text-anchor="middle">权重</text>
+<rect x="446.4" y="292" width="61.60000000000002" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="477.2" y="317.0" font-size="13" fill="#111827" text-anchor="middle">激活峰值</text>
+<rect x="508.0" y="292" width="35.200000000000045" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<rect x="543.2" y="292" width="35.19999999999993" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="578.4" y="292" width="457.6" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="807.2" y="317.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">KV 预算</text>
+<rect x="1036.0" y="292" width="44.0" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<line x1="1009.6" y1="186" x2="1009.6" y2="340" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3 3"/>
+<polyline points="1009.6,336 1009.6,344 1036.0,344 1036.0,336" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="1036.0" y="364" font-size="12" fill="#111827" text-anchor="end" font-weight="700">多出的是整卡的 3%,全部进 KV;不是 KV 的 3%</text>
+<text x="200.0" y="364" font-size="11" fill="#6b7280" text-anchor="start">黄、紫几段是实测或估计出来的,不随占比变</text>
+<rect x="24" y="404" width="1072" height="216" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="40" y="428" font-size="14" fill="#111827" text-anchor="start" font-weight="700">KV 预算按一块的字节数切成等大的块</text>
+<text x="40" y="446" font-size="11" fill="#6b7280" text-anchor="start">一块的字节数由模型形状和块大小算出;块数 = 预算 ÷ 一块的字节数,启动后不再变</text>
+<text x="44" y="485" font-size="14" fill="#111827" text-anchor="start" font-weight="700">一块</text>
+<text x="44" y="502" font-size="11" fill="#6b7280" text-anchor="start">块大小 16 个 token</text>
+<rect x="200" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="252.0" y="493" font-size="13" fill="#111827" text-anchor="middle">32 层</text>
+<text x="313" y="493" font-size="13" fill="#6b7280" text-anchor="middle">×</text>
+<rect x="322" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="374.0" y="493" font-size="13" fill="#111827" text-anchor="middle">16 个 token</text>
+<text x="435" y="493" font-size="13" fill="#6b7280" text-anchor="middle">×</text>
+<rect x="444" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="496.0" y="486" font-size="13" fill="#111827" text-anchor="middle">2</text>
+<text x="496.0" y="501" font-size="11" fill="#6b7280" text-anchor="middle">K 和 V</text>
+<text x="557" y="493" font-size="13" fill="#6b7280" text-anchor="middle">×</text>
+<rect x="566" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="618.0" y="493" font-size="13" fill="#111827" text-anchor="middle">8 个 KV 头</text>
+<text x="679" y="493" font-size="13" fill="#6b7280" text-anchor="middle">×</text>
+<rect x="688" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="740.0" y="486" font-size="13" fill="#111827" text-anchor="middle">128 维</text>
+<text x="740.0" y="501" font-size="11" fill="#6b7280" text-anchor="middle">头维</text>
+<text x="801" y="493" font-size="13" fill="#6b7280" text-anchor="middle">×</text>
+<rect x="810" y="468" width="104" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="862.0" y="486" font-size="13" fill="#111827" text-anchor="middle">2 字节</text>
+<text x="862.0" y="501" font-size="11" fill="#6b7280" text-anchor="middle">BF16</text>
+<text x="926" y="493" font-size="14" fill="#111827" text-anchor="start" font-weight="700">= 2 MiB</text>
+<text x="44" y="557" font-size="14" fill="#111827" text-anchor="start" font-weight="700">块池</text>
+<text x="44" y="574" font-size="11" fill="#6b7280" text-anchor="start">40 GiB ÷ 2 MiB</text>
+<rect x="200" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="226" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="252" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="278" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="304" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="330" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="356" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="382" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="408" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="434" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="460" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="486" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="512" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="538" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="564" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="590" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="616" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="642" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="668" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="694" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="720" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="746" y="546" width="22" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="778" y="565" font-size="14" fill="#6b7280" text-anchor="start">…</text>
+<text x="802" y="565" font-size="14" fill="#111827" text-anchor="start" font-weight="700">共 20480 块 = 327680 个 token</text>
+<text x="200" y="598" font-size="11" fill="#9ca3af" text-anchor="start">多卡时各卡按同样的算法各量一遍,取最小的块数;所有卡按这个块数建池。</text>
+</svg>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 612" width="1120" height="612" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="612" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">双批重叠:一步的批切成两个微批,一个的 token 在网上时,另一个在算</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">绿 = 微批 0,紫 = 微批 1(方框落在哪一行,就在哪儿跑);灰 = CPU 线程睡着等对方让出;黄底 = DeepEP 高吞吐的通信 kernel 被限定的 SM。</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">排程照官方设计文档写明的当前做法(MLA 模型),画的是一层 MoE 的稳定状态;各段长短是示意,CPU 发 kernel 与 GPU 执行画在同一列只表先后。</text>
+<text x="30" y="133" font-size="13" fill="#111827" text-anchor="start" font-weight="700">一步的批</text>
+<text x="30" y="149" font-size="11" fill="#6b7280" text-anchor="start">按 token 数对半切</text>
+<rect x="236" y="116" width="180.0" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="326.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r1</text>
+<rect x="416.0" y="116" width="150.0" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="491.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r2</text>
+<rect x="566.0" y="116" width="78.0" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="644" y="116" width="172.0" height="26" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="605.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r3 前半</text>
+<text x="730.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r3 后半</text>
+<rect x="816.0" y="116" width="140.0" height="26" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="886.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r4</text>
+<rect x="956.0" y="116" width="96.0" height="26" rx="3" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="1004.0" y="133" font-size="11" fill="#111827" text-anchor="middle">r5</text>
+<line x1="644" y1="108" x2="644" y2="150" stroke="#111827" stroke-width="1.4"/>
+<text x="644" y="104" font-size="11" fill="#111827" text-anchor="middle">切点 = token 数的一半;一条请求可能被劈到两边</text>
+<text x="236" y="160" font-size="11" fill="#5fa886" text-anchor="start">微批 0</text>
+<text x="1052" y="160" font-size="11" fill="#8f8bd8" text-anchor="end">微批 1</text>
+<line x1="30" y1="184" x2="1090" y2="184" stroke="#e5e7eb" stroke-width="1.4"/>
+<rect x="230" y="358" width="828" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="30" y="238.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">CPU 线程 0</text>
+<text x="30" y="253.0" font-size="11" fill="#6b7280" text-anchor="start">只跑微批 0</text>
+<text x="30" y="276.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">CPU 线程 1</text>
+<text x="30" y="291.0" font-size="11" fill="#6b7280" text-anchor="start">只跑微批 1</text>
+<text x="30" y="330.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">GPU 计算流</text>
+<text x="30" y="345.0" font-size="11" fill="#6b7280" text-anchor="start">其余 SM</text>
+<text x="30" y="384.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">GPU 通信流</text>
+<text x="30" y="399.0" font-size="11" fill="#6b7280" text-anchor="start">高吞吐时限 20 个 SM</text>
+<line x1="236" y1="204" x2="236" y2="412" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="440" y1="204" x2="440" y2="412" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="644" y1="204" x2="644" y2="412" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="848" y1="204" x2="848" y2="412" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="3 3"/>
+<line x1="1052" y1="204" x2="1052" y2="412" stroke="#d1d5db" stroke-width="1.4" stroke-dasharray="3 3"/>
+<text x="338.0" y="214" font-size="11" fill="#6b7280" text-anchor="middle">第 1 段</text>
+<text x="542.0" y="214" font-size="11" fill="#6b7280" text-anchor="middle">第 2 段</text>
+<text x="746.0" y="214" font-size="11" fill="#6b7280" text-anchor="middle">第 3 段</text>
+<text x="950.0" y="214" font-size="11" fill="#6b7280" text-anchor="middle">第 4 段</text>
+<rect x="237" y="312" width="72" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="273.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">投影 0</text>
+<rect x="311" y="312" width="128" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="375.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">注意力 0</text>
+<rect x="441" y="312" width="202" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="542.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">专家 1</text>
+<rect x="645" y="312" width="68" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="679.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">共享 1</text>
+<rect x="715" y="312" width="132" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="781.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">专家 0</text>
+<rect x="849" y="312" width="60" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="879.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">共享 0</text>
+<rect x="911" y="312" width="58" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="940.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">投影 1</text>
+<rect x="971" y="312" width="80" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="1011.0" y="333.0" font-size="11" fill="#111827" text-anchor="middle">注意力 1</text>
+<rect x="237" y="366" width="202" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="338.0" y="387.0" font-size="11" fill="#111827" text-anchor="middle">分发 1 在网上</text>
+<rect x="441" y="366" width="202" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="542.0" y="387.0" font-size="11" fill="#111827" text-anchor="middle">分发 0 在网上</text>
+<rect x="645" y="366" width="202" height="34" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="746.0" y="387.0" font-size="11" fill="#111827" text-anchor="middle">合并 1 在网上</text>
+<rect x="849" y="366" width="202" height="34" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="950.0" y="387.0" font-size="11" fill="#111827" text-anchor="middle">合并 0 在网上</text>
+<rect x="237" y="222" width="814" height="30" rx="5" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="237" y="260" width="814" height="30" rx="5" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="237" y="222" width="202" height="30" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="441" y="260" width="272" height="30" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="715" y="222" width="194" height="30" rx="5" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<rect x="911" y="260" width="140" height="30" rx="5" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<line x1="440" y1="252" x2="440" y2="259" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="714" y1="260" x2="714" y2="253" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="910" y1="252" x2="910" y2="259" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="338.0" y="241.0" font-size="11" fill="#111827" text-anchor="middle">发投影 0、注意力 0,发起分发 0</text>
+<text x="577.0" y="279.0" font-size="11" fill="#111827" text-anchor="middle">发专家 1,发起合并 1,发共享 1</text>
+<text x="812.0" y="241.0" font-size="11" fill="#111827" text-anchor="middle">发专家 0,发起合并 0,发共享 0</text>
+<text x="981.0" y="273" font-size="11" fill="#111827" text-anchor="middle">发投影 1、注意力 1</text>
+<text x="981.0" y="286" font-size="11" fill="#111827" text-anchor="middle">发起分发 1</text>
+<text x="1062" y="272" font-size="11" fill="#6b7280" text-anchor="start">接下一层</text>
+<text x="1062" y="287" font-size="11" fill="#6b7280" text-anchor="start">的第 1 段</text>
+<text x="236" y="430" font-size="11" fill="#9ca3af" text-anchor="start">箭头 = 让出:线程发起分发或合并后睡下,叫醒另一个线程接着发它的计算。投影 = MLA 的 qkv 投影;注意力 = 核心注意力、输出投影与 MoE 门控;</text>
+<text x="236" y="446" font-size="11" fill="#9ca3af" text-anchor="start">专家 = 路由专家的计算;共享 = 共享专家,插在自己那次合并还在网上时算。</text>
+<line x1="30" y1="456" x2="1090" y2="456" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="478" font-size="14" fill="#111827" text-anchor="start" font-weight="700">什么时候整步不切</text>
+<text x="30" y="496" font-size="11" fill="#6b7280" text-anchor="start">照常一批跑;各副本每步一起定,任一副本不切,全体都不切</text>
+<rect x="30" y="508" width="281" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="44" y="525" font-size="11" fill="#111827" text-anchor="start">纯 decode 批不到 32 个 token</text>
+<rect x="323" y="508" width="314" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="337" y="525" font-size="11" fill="#111827" text-anchor="start">带 prefill 的批不到 512 个 token</text>
+<rect x="30" y="544" width="314" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="44" y="561" font-size="11" fill="#111827" text-anchor="start">补齐到最忙副本后,token 最少那个副本不超过一半</text>
+<rect x="356" y="544" width="259" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="370" y="561" font-size="11" fill="#111827" text-anchor="start">批里有请求要读另一条请求这一步才写的前缀块</text>
+<text x="30" y="594" font-size="11" fill="#9ca3af" text-anchor="start">DeepEP 低延迟和 NIXL EP 的通信本来就不占 SM,不用限;双批只录整图 CUDA graph,录好以后回放不再需要两个线程来回切。</text>
+</svg>

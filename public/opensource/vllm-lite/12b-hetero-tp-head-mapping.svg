@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 636" width="1120" height="636" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="636" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">PD 两边 TP 不同时,D 的每张卡去 P 的哪几张卡读哪几个 KV 头</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">示意模型有 8 个 KV 头,两边 TP 差 2 倍,以默认的 NIXL 连接器为例。灰 = 某张卡上存的 KV 头,绿 = D 发起的一次连续读取,</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">红 = 换成 token 在外的块内排法后,同样几个头被拆成的碎片,紫 = MLA 模型各卡相同的那一份 KV;虚线框 = 一张卡。</text>
+<text x="30" y="110" font-size="14" fill="#111827" text-anchor="start" font-weight="700">情形一:D 的 TP 大于 P(P 2 张卡,D 4 张卡)</text>
+<rect x="80.0" y="142" width="176" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="88.0" y="136" font-size="11" fill="#6b7280" text-anchor="start">P 卡 0</text>
+<rect x="90.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="108.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头0</text>
+<rect x="130.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="148.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头1</text>
+<rect x="170.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="188.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头2</text>
+<rect x="210.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="228.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头3</text>
+<rect x="90.0" y="198" width="76.0" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="128.0" y="212" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<polyline points="128.0,218 128.0,226 108.0,226 108.0,238" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="170.0" y="198" width="76.0" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="208.0" y="212" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<polyline points="208.0,218 208.0,226 228.0,226 228.0,238" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="320.0" y="142" width="176" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="328.0" y="136" font-size="11" fill="#6b7280" text-anchor="start">P 卡 1</text>
+<rect x="330.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="348.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头4</text>
+<rect x="370.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="388.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头5</text>
+<rect x="410.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头6</text>
+<rect x="450.0" y="152" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="468.0" y="170.32" font-size="12" fill="#111827" text-anchor="middle">头7</text>
+<rect x="330.0" y="198" width="76.0" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="368.0" y="212" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<polyline points="368.0,218 368.0,226 348.0,226 348.0,238" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="410.0" y="198" width="76.0" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="448.0" y="212" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<polyline points="448.0,218 448.0,226 468.0,226 468.0,238" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="60" y="256" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="68" y="250" font-size="11" fill="#6b7280" text-anchor="start">D 卡 0</text>
+<rect x="70" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="88.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头0</text>
+<rect x="110" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="128.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头1</text>
+<rect x="180" y="256" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="188" y="250" font-size="11" fill="#6b7280" text-anchor="start">D 卡 1</text>
+<rect x="190" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="208.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头2</text>
+<rect x="230" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="248.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头3</text>
+<rect x="300" y="256" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="308" y="250" font-size="11" fill="#6b7280" text-anchor="start">D 卡 2</text>
+<rect x="310" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="328.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头4</text>
+<rect x="350" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="368.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头5</text>
+<rect x="420" y="256" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="428" y="250" font-size="11" fill="#6b7280" text-anchor="start">D 卡 3</text>
+<rect x="430" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="448.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头6</text>
+<rect x="470" y="266" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="488.0" y="284.32" font-size="12" fill="#111827" text-anchor="middle">头7</text>
+<text x="546" y="164" font-size="11" fill="#6b7280" text-anchor="start">几张 D 卡读同一张 P 卡:</text>
+<text x="546" y="180" font-size="11" fill="#6b7280" text-anchor="start">每张 D 卡按自己的序号在 P 卡的</text>
+<text x="546" y="196" font-size="11" fill="#6b7280" text-anchor="start">每块里跳过前面几份头,只取属于</text>
+<text x="546" y="212" font-size="11" fill="#6b7280" text-anchor="start">自己的那一份,每层每块读 1 段。</text>
+<text x="546" y="236" font-size="11" fill="#6b7280" text-anchor="start">P 卡收齐 2 张 D 卡的通知才还块。</text>
+<text x="546" y="264" font-size="11" fill="#9ca3af" text-anchor="start">TP 相同时是它的特例:1 张 D 卡</text>
+<text x="546" y="280" font-size="11" fill="#9ca3af" text-anchor="start">整块读 1 张 P 卡。</text>
+<line x1="30" y1="318" x2="690" y2="318" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="346" font-size="14" fill="#111827" text-anchor="start" font-weight="700">情形二:P 的 TP 大于 D(P 4 张卡,D 2 张卡)</text>
+<rect x="60" y="378" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="68" y="372" font-size="11" fill="#6b7280" text-anchor="start">P 卡 0</text>
+<rect x="70" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="88.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头0</text>
+<rect x="110" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="128.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头1</text>
+<rect x="70" y="434" width="76" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="108.0" y="448" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<rect x="180" y="378" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="188" y="372" font-size="11" fill="#6b7280" text-anchor="start">P 卡 1</text>
+<rect x="190" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="208.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头2</text>
+<rect x="230" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="248.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头3</text>
+<rect x="190" y="434" width="76" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="228.0" y="448" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<rect x="300" y="378" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="308" y="372" font-size="11" fill="#6b7280" text-anchor="start">P 卡 2</text>
+<rect x="310" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="328.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头4</text>
+<rect x="350" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="368.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头5</text>
+<rect x="310" y="434" width="76" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="348.0" y="448" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<rect x="420" y="378" width="96" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="428" y="372" font-size="11" fill="#6b7280" text-anchor="start">P 卡 3</text>
+<rect x="430" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="448.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头6</text>
+<rect x="470" y="388" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="488.0" y="406.32" font-size="12" fill="#111827" text-anchor="middle">头7</text>
+<rect x="430" y="434" width="76" height="20" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="468.0" y="448" font-size="11" fill="#111827" text-anchor="middle">读 1 段</text>
+<rect x="80.0" y="498" width="176" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="88.0" y="492" font-size="11" fill="#6b7280" text-anchor="start">D 卡 0</text>
+<rect x="90.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="108.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头0</text>
+<rect x="130.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="148.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头1</text>
+<rect x="170.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="188.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头2</text>
+<rect x="210.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="228.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头3</text>
+<line x1="168.0" y1="502" x2="168.0" y2="542" stroke="#6b7280" stroke-width="1.4" stroke-dasharray="3 3"/>
+<polyline points="108.0,454 108.0,468 128.0,468 128.0,480" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="228.0,454 228.0,468 208.0,468 208.0,480" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="320.0" y="498" width="176" height="48" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="328.0" y="492" font-size="11" fill="#6b7280" text-anchor="start">D 卡 1</text>
+<rect x="330.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="348.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头4</text>
+<rect x="370.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="388.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头5</text>
+<rect x="410.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="428.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头6</text>
+<rect x="450.0" y="508" width="36" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><text x="468.0" y="526.32" font-size="12" fill="#111827" text-anchor="middle">头7</text>
+<line x1="408.0" y1="502" x2="408.0" y2="542" stroke="#6b7280" stroke-width="1.4" stroke-dasharray="3 3"/>
+<polyline points="348.0,454 348.0,468 368.0,468 368.0,480" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="468.0,454 468.0,468 448.0,468 448.0,480" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="546" y="400" font-size="11" fill="#6b7280" text-anchor="start">一张 D 卡读好几张 P 卡:</text>
+<text x="546" y="416" font-size="11" fill="#6b7280" text-anchor="start">D 把自己每块的头那一段切成 2 份,</text>
+<text x="546" y="432" font-size="11" fill="#6b7280" text-anchor="start">各从一张 P 卡读 1 段,拼齐 4 个头。</text>
+<text x="546" y="464" font-size="11" fill="#9ca3af" text-anchor="start">P 的卡数多于 KV 头数时,相邻几张</text>
+<text x="546" y="480" font-size="11" fill="#9ca3af" text-anchor="start">P 卡存的是同一个头,D 只读其中</text>
+<text x="546" y="496" font-size="11" fill="#9ca3af" text-anchor="start">一张;普通的非 MLA 模型不许在这时</text>
+<text x="546" y="512" font-size="11" fill="#9ca3af" text-anchor="start">让 D 的卡数更少(第六节)。</text>
+<rect x="730" y="96" width="360" height="356" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="744" y="120" font-size="14" fill="#111827" text-anchor="start" font-weight="700">为什么非 MLA 模型要改块内排法</text>
+<text x="744" y="140" font-size="11" fill="#6b7280" text-anchor="start">情形一里 P 卡 0 的一层一块,块内只画 4 个 token 位;</text>
+<text x="744" y="156" font-size="11" fill="#6b7280" text-anchor="start">D 卡 0 要从中取头 0、头 1</text>
+<text x="744" y="186" font-size="13" fill="#111827" text-anchor="start" font-weight="700">默认:token 在外、头在内</text>
+<rect x="750" y="200" width="40" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><line x1="770" y1="205" x2="770" y2="221" stroke="#d9877a" stroke-width="0.8"/>
+<rect x="790" y="200" width="40" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="810" y1="205" x2="810" y2="221" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="790" y="242" font-size="11" fill="#6b7280" text-anchor="middle">token 0</text>
+<rect x="830" y="200" width="40" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><line x1="850" y1="205" x2="850" y2="221" stroke="#d9877a" stroke-width="0.8"/>
+<rect x="870" y="200" width="40" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="890" y1="205" x2="890" y2="221" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="870" y="242" font-size="11" fill="#6b7280" text-anchor="middle">token 1</text>
+<rect x="910" y="200" width="40" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><line x1="930" y1="205" x2="930" y2="221" stroke="#d9877a" stroke-width="0.8"/>
+<rect x="950" y="200" width="40" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="970" y1="205" x2="970" y2="221" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="950" y="242" font-size="11" fill="#6b7280" text-anchor="middle">token 2</text>
+<rect x="990" y="200" width="40" height="26" rx="3" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/><line x1="1010" y1="205" x2="1010" y2="221" stroke="#d9877a" stroke-width="0.8"/>
+<rect x="1030" y="200" width="40" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="1050" y1="205" x2="1050" y2="221" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="1030" y="242" font-size="11" fill="#6b7280" text-anchor="middle">token 3</text>
+<text x="744" y="266" font-size="11" fill="#6b7280" text-anchor="start">每个 token 位里 4 个头挨着放,头 0、头 1 在每个</text>
+<text x="744" y="282" font-size="11" fill="#6b7280" text-anchor="start">token 位里各占一小截:一块拆成 4 段读,块越大越碎</text>
+<text x="744" y="332" font-size="13" fill="#111827" text-anchor="start" font-weight="700">NIXL、Mooncake 改成:头在外、token 在内</text>
+<rect x="750" y="346" width="80" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><line x1="770" y1="351" x2="770" y2="367" stroke="#5fa886" stroke-width="0.8"/><line x1="790" y1="351" x2="790" y2="367" stroke="#5fa886" stroke-width="0.8"/><line x1="810" y1="351" x2="810" y2="367" stroke="#5fa886" stroke-width="0.8"/>
+<text x="790" y="388" font-size="11" fill="#6b7280" text-anchor="middle">头0</text>
+<rect x="830" y="346" width="80" height="26" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><line x1="850" y1="351" x2="850" y2="367" stroke="#5fa886" stroke-width="0.8"/><line x1="870" y1="351" x2="870" y2="367" stroke="#5fa886" stroke-width="0.8"/><line x1="890" y1="351" x2="890" y2="367" stroke="#5fa886" stroke-width="0.8"/>
+<text x="870" y="388" font-size="11" fill="#6b7280" text-anchor="middle">头1</text>
+<rect x="910" y="346" width="80" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="930" y1="351" x2="930" y2="367" stroke="#b9b9b9" stroke-width="0.8"/><line x1="950" y1="351" x2="950" y2="367" stroke="#b9b9b9" stroke-width="0.8"/><line x1="970" y1="351" x2="970" y2="367" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="950" y="388" font-size="11" fill="#6b7280" text-anchor="middle">头2</text>
+<rect x="990" y="346" width="80" height="26" rx="3" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/><line x1="1010" y1="351" x2="1010" y2="367" stroke="#b9b9b9" stroke-width="0.8"/><line x1="1030" y1="351" x2="1030" y2="367" stroke="#b9b9b9" stroke-width="0.8"/><line x1="1050" y1="351" x2="1050" y2="367" stroke="#b9b9b9" stroke-width="0.8"/>
+<text x="1030" y="388" font-size="11" fill="#6b7280" text-anchor="middle">头3</text>
+<text x="744" y="412" font-size="11" fill="#6b7280" text-anchor="start">每个头的所有 token 连在一起,头 0、头 1</text>
+<text x="744" y="428" font-size="11" fill="#6b7280" text-anchor="start">就是这块的前一半,1 段读完</text>
+<rect x="730" y="470" width="360" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="744" y="494" font-size="14" fill="#111827" text-anchor="start" font-weight="700">旁注:MLA 模型不按头切</text>
+<rect x="750" y="512" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="787" y="531" font-size="11" fill="#111827" text-anchor="middle">P 卡 0</text>
+<rect x="834" y="512" width="74" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="871" y="531" font-size="11" fill="#111827" text-anchor="middle">P 卡 1</text>
+<text x="926" y="531" font-size="11" fill="#6b7280" text-anchor="start">每张卡存的是同一份</text>
+<text x="744" y="566" font-size="11" fill="#6b7280" text-anchor="start">D 的每张卡只找一张 P 卡把整块读来,</text>
+<text x="744" y="582" font-size="11" fill="#6b7280" text-anchor="start">TP 谁大谁小都一样;块内排法不用改,</text>
+<text x="744" y="598" font-size="11" fill="#6b7280" text-anchor="start">连接器对 MLA 不提布局要求</text>
+<text x="30" y="566" font-size="11" fill="#9ca3af" text-anchor="start">两边 TP 必须成整数倍,不成倍握手就失败。「读 1 段」指每层每块 1 段,整条请求的读取是这些段的集合。</text>
+</svg>

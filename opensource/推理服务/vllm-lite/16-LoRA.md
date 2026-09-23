@@ -64,7 +64,7 @@ vLLM 的取舍是格子少而规整:每格一样大,kernel 按槽号直接寻址
 
 ## 五、调参与观测
 
-这一页的参数全是启动配置,改了要重新拉起整个作业。请求级只有一项:OpenAI 接口的 `model` 字段填适配器名,离线接口传 `LoRARequest`,一条请求只能挂 1 个。运行时能改的是适配器集合本身:打开 `VLLM_ALLOW_RUNTIME_LORA_UPDATING` 后,`/v1/load_lora_adapter` 按 `lora_name`、`lora_path` 装,带 `load_inplace` 同名覆盖,`/v1/unload_lora_adapter` 按名字卸;槽数、秩上限、目标层都改不了,超了只能重启。接口的 HTTP 层细节见 19 章。
+这一页的参数全是启动配置,改了要重新拉起整个作业。请求级只有一项:OpenAI 接口的 `model` 字段填适配器名,离线接口传 `LoRARequest`,一条请求只能挂 1 个。运行时能改的是适配器集合本身:打开 `VLLM_ALLOW_RUNTIME_LORA_UPDATING` 后,`/v1/load_lora_adapter` 按 `lora_name`、`lora_path` 装,带 `load_inplace` 同名覆盖,`/v1/unload_lora_adapter` 按名字卸;槽数、秩上限、目标层都改不了,超了只能重启。
 
 | 参数 · 一句话中文说明 | 在哪调 | 默认 | 调了之后 | 怎么看 |
 |---|---|---|---|---|

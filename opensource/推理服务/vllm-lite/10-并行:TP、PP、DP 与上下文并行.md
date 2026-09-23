@@ -16,17 +16,19 @@
 
 最天然的直觉是按维度切,vLLM 也是这么做的。卡按一张网格编号,最内层是 TP,往外依次是预填充上下文并行、PP、DP;相邻编号的卡先组成 TP 组,所以同一台机器上的卡应该先给 TP。每一维一个进程组,各走各的通信。
 
-**TP:每次拼回来都先问专用实现,NCCL 兜底。** 权重按注意力头和 MLP 的列行切开,每层在注意力输出和 MLP 输出处各做 1 次 all-reduce。这一步的消息很小,所以 TP 组的 all-reduce 不直接交给 NCCL,而是按固定顺序问一串实现,第一个肯接的做:FlashInfer 的 all-reduce、vLLM 自写的 all-reduce、PyTorch 对称内存,最后才是 NCCL。前三个各有一个按卡型和卡数查表的消息上限,H100 8 卡时 FlashInfer 只接 0.5 MB 以内的,对称内存接到 64 MB。对称内存要 NVSwitch 的多播,自写的那一个超过 2 张卡就要求 NVLink 全连,PCIe 机器上直接关掉;给 PCIe 单机另有一条 FlashInfer 实现,要手动打开。启动日志会按问的顺序列出这一组里真正可用的实现。别的进程组只用 NCCL。KV 头按 TP 切,头数不够分时每张卡复制一份。
+**TP:每次拼回来都先问专用实现,NCCL 兜底。** 权重按注意力头和 MLP 的列行切开,每层在注意力输出和 MLP 输出处各做 1 次 all-reduce。这一步的消息很小,所以 TP 组的 all-reduce 不直接交给 NCCL,而是按固定顺序问一串实现,第一个肯接的做:FlashInfer 的 all-reduce、vLLM 自写的 all-reduce、PyTorch 对称内存,最后才是 NCCL。前三个各有一个按卡型和卡数查表的消息上限,H100 8 卡时 FlashInfer 只接 0.5 MB 以内的,对称内存接到 64 MB。对称内存要 NVSwitch 的多播,自写的那一个超过 2 张卡就要求 NVLink 全连,PCIe 机器上直接关掉;给 PCIe 单机另有一条 FlashInfer 实现,要手动打开。启动日志会按问的顺序列出这一组里真正可用的实现。别的进程组只用 NCCL。
 
 **PP:层分段接力,末段采样再广播回去。** 层按段均分,除不尽时多出的层从倒数第二段往前各加 1 层,末段不加,因为它还扛着输出层。激活点对点传给下一段。只有末段做采样,采出的 token 要广播回前面各段,这次广播用单独一个通信器、放在副流上发,不跟激活的点对点抢线。Model Runner V2 下,同一条请求相邻两次 decode 至少隔段数那么多步,于是在跑的请求自然分成段数份轮流上,并发够分成这么多份流水线才满;批队列深度见 07 章。
 
-**DP:稠密模型各跑各的,MoE 模型步调一致。** 每个副本一个 EngineCore(01 章)。稠密模型的副本在启动时就把自己当成单副本,副本之间不建任何通信;数据并行时另有一个协调进程,对稠密模型只做一件事,把各副本的排队数与 KV 占用汇总给 API 进程挑副本,打分方法在 01 章。MoE 模型的专家层按「数据并行度 × TP」张卡组成一个通信组(切法见 11 章),副本就必须一起走:
+**DP:稠密模型各跑各的,MoE 模型步调一致。** 每个副本一个 EngineCore(01 章)。稠密模型的副本在启动时就把自己当成单副本,副本之间不建任何通信;数据并行时另有一个协调进程,对稠密模型只做一件事,把各副本的排队数与 KV 占用汇总给 API 进程挑副本:打分取「排队加在跑」与「本 API 进程在途数 × API 进程数」中较大的那个,有排队时再按 KV 占用超过一半的程度加罚。MoE 模型的专家层按「数据并行度 × 预填充上下文并行度 × TP」张卡组成一个通信组(切法见 11 章),副本就必须一起走:
 
 ![MoE 模型开 4 个数据并行副本时一个请求波次的时间线:引擎全体暂停时,新请求发给 DP1,API 进程同时通知协调进程,协调进程向 DP0、DP2、DP3 广播开新波次;此后 4 个副本每一步都一起前向,有请求的副本跑真批,没请求的跑空转批;第 1 步和每第 16 步全组做一次「谁还有活」的同步,第 16 步时 DP1、DP2 还有活就继续,第 28 步起所有请求都已结束,但要空转到第 32 步的同步步才一起暂停,由 DP0 向协调进程报波次结束、波次号加 1;稠密模型不走这一套](/opensource/vllm-lite/10a-dp-wave-lockstep.svg)
 
 这张图里有三件事。一是**空转批**:没请求的副本跑一个只有 1 个 token 的假 decode 陪着;每一步前向之前,各副本先在 CPU 上交换一次本步 token 数,按最大值补齐 CUDA graph 的形状,保证大家走同一张图、进同一次集合通信。二是**波次**:全体在「运行」和「暂停」两个状态之间整体切换;运行时每隔固定步数做一次 all-reduce,问「谁还有活」,全员都没活才一起停下,这一次从运行到暂停算一个波次。三是**协调进程叫醒**:暂停时新请求只会落到一个副本,API 进程发请求的同时通知协调进程,由它广播「开新波次」叫醒其余副本。另有一个可选的节拍:所有副本只在同一批步上收新的 prefill,不让某一个副本单独做 prefill 把全体拖慢。
 
-**上下文并行:两种,各治一段。** 解码上下文并行(DCP)不加卡,复用 TP 组里的卡:原本复制的那几份 KV 改成按 token 位置轮流存,第 i 个 token 放在组内第「i 除以组大小的余数」号卡上,每张卡只存 1/c。decode 时各卡对自己那份 KV 算部分注意力,再按 log-sum-exp 合并。对 GQA 模型,组大小最多到「TP ÷ KV 头数」,正好把复制消掉;MLA 模型可以一直开到 TP。预填充上下文并行(PCP)要加卡:一条长 prompt 切成 2 倍组大小那么多块,第 i 张卡拿第 i 块和倒数第 i 块,因果注意力下前面的块算得少、后面的块算得多,这样配对各卡算量相当;decode 不切,各卡复制。PCP 算完的 KV 会在组内 all-gather,完整写进每张卡,KV 一个字节不省,省的是长 prompt 的 prefill 时间。
+**上下文并行:两种,各治一段。** 解码上下文并行(DCP)不加卡,复用 TP 组里的卡:原本复制的那几份 KV 改成按 token 位置轮流存,每张卡只存 1/c。decode 时各卡对自己那份 KV 算部分注意力,再按 log-sum-exp 合并。对 GQA 模型,组大小最多到「TP ÷ KV 头数」,正好把复制消掉;MLA 模型可以一直开到 TP。预填充上下文并行(PCP)要加卡:一条长 prompt 切成 2 倍组大小那么多块,第 i 张卡拿第 i 块和倒数第 i 块,因果注意力下前面的块算得少、后面的块算得多,这样配对各卡算量相当;decode 不切,各卡复制。PCP 算完的 KV 会在组内 all-gather,完整写进每张卡,KV 一个字节不省,省的是长 prompt 的 prefill 时间。
+
+![一台 8 卡机在 4 种切法下每张卡放什么:示意模型的 KV 只有 1 份;TP 8 时每张卡放每层 1/8 的权重,KV 却是 8 份一模一样的整份;TP 4 × DP 2 时前 4 张卡和后 4 张卡各是一个副本,各放每层 1/4 的权重,各自服务不同的请求,副本内 KV 4 份一样;TP 8 加 DCP 8 时权重和 TP 8 一样,KV 按 token 位置轮流存,卡 k 只存第 k 和第 k+8 个 token,不再复制;TP 2 × PP 4 时每 2 张卡一段,只放自己那 1/4 层的一半权重和那 1/4 层的 KV;左栏写每种切法每层走的通信:TP 每层 2 次 all-reduce,DCP 在注意力里再加 3 次组内通信,PP 段与段之间点对点传激活、末段采样后把 token 广播回前面各段](/opensource/vllm-lite/10b-eight-gpu-layouts.svg)
 
 **多机怎么起,负载怎么分。** 起法有两种。多进程:每台机器跑同一条命令,告诉它一共几台、自己第几台、主节点地址,非主节点只起 worker、不起 HTTP。Ray:在一台机器上一条命令拉起全部。数据并行跨机时负载均衡有三种模式:内部模式只有主节点有 API 进程,一个入口,按协调进程推来的负载挑副本;混合模式每台机器各有 API 进程,只往本机副本发,机器之间交给上游负载均衡器;外部模式每个副本一个独立端点,全交外部路由,只给 MoE 用,稠密模型直接起互不相干的独立实例就行。另有一种变体,由每台机器上一个监督进程替本机每个副本各起一个外部模式的端点。
 
@@ -71,7 +73,7 @@ vLLM 的取舍是把副本做成互相独立的引擎进程,稠密模型因此�
 | `--tensor-parallel-size` / `-tp` · TP 度 | 启动 | 1 | 调高:每卡权重与 KV 变少、并发升;每层 2 次 all-reduce,跨机后 TPOT 明显升;注意力头数须能整除;KV 头数少于它时 KV 复制 | 日志 `rank N in world size M is assigned as DP rank …, PP rank …, PCP rank …, TP rank …` |
 | `--pipeline-parallel-size` / `-pp` · 流水线段数 | 启动 | 1 | 大于 1:能装下更大的模型、能避开机间 TP;单条请求的 TPOT 变长,在跑请求不够分成段数份时有气泡;模型须实现流水线接口 | 日志 `Hidden layers were unevenly partitioned: [...]` |
 | `VLLM_PP_LAYER_PARTITION` · 每段几层,逗号分隔 | 环境变量 | 不设:均分,余数从倒数第二段往前各加 1 | 手写:个数不等于段数或总和不等于层数直接报错;把重的段调轻 | 报错 `does not match pp_size` 或 `does not match num_hidden_layers` |
-| `--data-parallel-size` / `-dp` · 数据并行副本数 | 启动 | 1 | 调高:吞吐按副本加;稠密模型副本互不通信;MoE 模型专家层组变成 DP × TP 张卡、副本步调一致;`--max-num-seqs` 按每个副本算 | `ps` 里 `VLLM::EngineCore_DP0`…与 `VLLM::DPCoordinator`;日志 `Started DP Coordinator process` |
+| `--data-parallel-size` / `-dp` · 数据并行副本数 | 启动 | 1 | 调高:吞吐按副本加;稠密模型副本互不通信;MoE 模型专家层组变成 DP × PCP × TP 张卡、副本步调一致;`--max-num-seqs` 按每个副本算 | `ps` 里 `VLLM::EngineCore_DP0`…与 `VLLM::DPCoordinator`;日志 `Started DP Coordinator process` |
 | `--data-parallel-size-local` / `-dpl` · 本机起几个副本 | 启动 | 不设:单机等于副本数;多进程跨机时按节点数推 | 设 0:本机只起 API 进程;跨机时每台按实际卡数填 | 各节点 `EngineCore_DP` 进程数 |
 | `--data-parallel-start-rank` / `-dpr` · 本机第一个副本的序号 | 启动 | 不设 | 非主节点设它;不带 `--headless` 时自动进混合模式 | 日志 `Inferred data_parallel_rank` |
 | `--data-parallel-hybrid-lb` / `-dph` · 混合负载均衡 | 启动 | 关 | 开:每台机器自己的 API 进程只发本机副本;必须给本机副本数,非主节点再给起始序号;不能配 `--headless`;本机只有 1 个副本时自动改成外部模式 | 每台机器都有 HTTP 端口 |
@@ -117,7 +119,7 @@ vLLM 的取舍是把副本做成互相独立的引擎进程,稠密模型因此�
 | 以为关了自写 all-reduce 就是纯 NCCL,结果和别的环境对不上 | `all-reduce backends` 列表 | 再设 `VLLM_ALLREDUCE_USE_FLASHINFER=0` 与 `VLLM_ALLREDUCE_USE_SYMM_MEM=0` |
 | 多机启动卡在建组 | NCCL 走的网卡、各节点地址端口是否一致 | `NCCL_DEBUG=TRACE` 看连接;指定网卡;调大 `--distributed-timeout-seconds` |
 | 启动报 `Configuration mismatch detected for engine` | 各节点命令行是否完全一致 | MoE 数据并行下所有副本的并行相关参数必须相同 |
-| MoE 部署里没请求的副本 GPU 也不闲 | 是不是空转批 | 设计如此;副本间长期不均先看 01 章的挑选,或减副本数 |
+| MoE 部署里没请求的副本 GPU 也不闲 | 是不是空转批 | 设计如此;副本间长期不均先看各副本的排队数与 KV 占用,或减副本数 |
 | MoE 部署 TPOT 周期性跳高 | 跳高时刻是否有副本在做长 prefill | 设 `--prefill-schedule-interval` 4–8;再配 02 章的单条 prefill 上限 |
 | 稠密模型给了 `--data-parallel-rank` 报错 | 报错 `Non-MoE models do not support external data parallel mode` | 稠密模型起独立实例,外面自己挂负载均衡 |
 | 开了 DCP 启动报 `exceeds the maximum supported value` | KV 头数 × DCP 是否超过 TP | GQA 模型按「TP ÷ KV 头数」设 |

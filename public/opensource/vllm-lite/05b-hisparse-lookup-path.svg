@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 628" width="1120" height="628" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="628" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">HiSparse 每一步取 KV:先查 GPU 上的两处,都没有才从主机拷一行</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">上半是一步 decode 里对每个 top-k 位置的查找;下半是一条 128K 请求三处的体量,条长按行数成比例。</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">绿 = GPU 上的常驻页,黄 = GPU 上的热区(按 LRU 换),紫 = 主机钉住内存里的全量,红 = 两处都没命中、走 PCIe 从主机拷,灰 = 这一步要读的行。</text>
+<rect x="24" y="98" width="1072" height="294" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="40" y="122" font-size="14" fill="#111827" text-anchor="start" font-weight="700">一步 decode 里的查找:一个融合 kernel 做完</text>
+<text x="40" y="140" font-size="11" fill="#6b7280" text-anchor="start">逐个位置判断,全程在 GPU 上,不回 CPU 做决定,能被 CUDA graph 抓住</text>
+<rect x="44" y="162" width="200" height="64" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<text x="58" y="186" font-size="14" fill="#111827" text-anchor="start" font-weight="700">top-k 个位置</text>
+<text x="58" y="204" font-size="11" fill="#6b7280" text-anchor="start">索引器为这一步挑出的</text>
+<text x="58" y="218" font-size="11" fill="#6b7280" text-anchor="start">历史位置,常见 k = 2048</text>
+<rect x="300" y="162" width="240" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="314" y="183" font-size="14" fill="#111827" text-anchor="start" font-weight="700">在常驻页上?</text>
+<text x="314" y="200" font-size="11" fill="#6b7280" text-anchor="start">还没放掉的 GPU 页</text>
+<line x1="540" y1="187.0" x2="638" y2="187.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="590.0" y="181.0" font-size="11" fill="#6b7280" text-anchor="middle">是</text>
+<rect x="640" y="162" width="300" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="654" y="183" font-size="13" fill="#111827" text-anchor="start" font-weight="700">直接读常驻页的那一行</text>
+<text x="654" y="200" font-size="11" fill="#6b7280" text-anchor="start">命中就到此为止,不查热区也不拷</text>
+<line x1="340" y1="212" x2="340" y2="234" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="350" y="228" font-size="11" fill="#6b7280" text-anchor="start">否</text>
+<rect x="300" y="236" width="240" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="314" y="257" font-size="14" fill="#111827" text-anchor="start" font-weight="700">在热区里?</text>
+<text x="314" y="274" font-size="11" fill="#6b7280" text-anchor="start">请求自己的一块固定大小热区</text>
+<line x1="540" y1="261.0" x2="638" y2="261.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="590.0" y="255.0" font-size="11" fill="#6b7280" text-anchor="middle">是</text>
+<rect x="640" y="236" width="300" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="654" y="257" font-size="13" fill="#111827" text-anchor="start" font-weight="700">读热区的那一行</text>
+<text x="654" y="274" font-size="11" fill="#6b7280" text-anchor="start">顺手更新 GPU 上的 LRU</text>
+<line x1="340" y1="286" x2="340" y2="308" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="350" y="302" font-size="11" fill="#6b7280" text-anchor="start">否</text>
+<rect x="300" y="310" width="240" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="314" y="331" font-size="14" fill="#111827" text-anchor="start" font-weight="700">都不在</text>
+<text x="314" y="348" font-size="11" fill="#6b7280" text-anchor="start">挑热区里最久没用的一行让出来</text>
+<line x1="540" y1="335.0" x2="638" y2="335.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="590.0" y="329.0" font-size="11" fill="#6b7280" text-anchor="middle"></text>
+<rect x="640" y="310" width="300" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="654" y="331" font-size="13" fill="#111827" text-anchor="start" font-weight="700">从主机钉住内存拷这一行进热区</text>
+<text x="654" y="348" font-size="11" fill="#6b7280" text-anchor="start">缺一行走一次 PCIe,缺得多就拖慢 TPOT</text>
+<line x1="244" y1="187" x2="298" y2="187" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="990" y="226" width="90" height="88" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1035.0" y="254" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">k 个</text>
+<text x="1035.0" y="272" font-size="11" fill="#6b7280" text-anchor="middle">GPU 物理行号</text>
+<text x="1035.0" y="288" font-size="11" fill="#6b7280" text-anchor="middle">交给稀疏</text>
+<text x="1035.0" y="302" font-size="11" fill="#6b7280" text-anchor="middle">注意力</text>
+<polyline points="940,187.0 964,187.0 964,244 988,244" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="940,261.0 964,261.0 964,270 988,270" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="940,335.0 964,335.0 964,296 988,296" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="24" y="412" width="1072" height="196" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="40" y="436" font-size="14" fill="#111827" text-anchor="start" font-weight="700">一条 128K 上下文的请求:三处各放多少行</text>
+<text x="40" y="454" font-size="11" fill="#6b7280" text-anchor="start">条长按行数成比例;不开推测解码、top-k 2048 时的默认值</text>
+<text x="44" y="487" font-size="14" fill="#111827" text-anchor="start" font-weight="700">主机钉住内存</text>
+<text x="44" y="504" font-size="11" fill="#6b7280" text-anchor="start">prefill 与 decode 写出时同步镜像</text>
+<rect x="250" y="472" width="820.0" height="32" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="660.0" y="493" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">全量 131072 行</text>
+<text x="44" y="531" font-size="14" fill="#111827" text-anchor="start" font-weight="700">GPU 热区</text>
+<text x="44" y="548" font-size="11" fill="#6b7280" text-anchor="start">(每步查询数 + 1)× top-k</text>
+<rect x="250" y="516" width="25.625" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="285.625" y="537" font-size="13" fill="#111827" text-anchor="start" font-weight="700">4096 行,全量的 1/32;每步 1 个查询时 = (1 + 1) × 2048</text>
+<text x="44" y="575" font-size="14" fill="#111827" text-anchor="start" font-weight="700">这一步要读的</text>
+<text x="44" y="592" font-size="11" fill="#6b7280" text-anchor="start">top-k 个位置</text>
+<rect x="250" y="560" width="12.8125" height="32" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="272.8125" y="581" font-size="13" fill="#111827" text-anchor="start" font-weight="700">2048 行,全量的 1/64;每一行落在常驻页、热区或主机</text>
+</svg>
