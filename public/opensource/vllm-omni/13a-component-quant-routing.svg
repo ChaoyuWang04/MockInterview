@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="530" viewBox="0 0 1120 530">
+<rect width="1120" height="530" fill="#ffffff"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",Arial,sans-serif;fill:#111827}.t{font-size:19px;font-weight:700}.s{font-size:13px;fill:#6b7280}.h{font-size:14px;font-weight:700}.n{font-size:11px;fill:#6b7280}</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<text x="28" y="34" class="t">组件路由：越具体的前缀，优先级越高</text>
+<text x="28" y="60" class="s">绿：选中量化方法  ·  红：显式排除  ·  灰：默认保持原精度；示例展示匹配规则，不是特定模型配方</text>
+<rect x="28" y="92" width="430" height="375" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="48" y="120" class="h">组件 / 层的嵌套范围</text>
+<rect x="48" y="143" width="390" height="196" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="68" y="169" class="h">transformer → FP8</text>
+<rect x="76" y="188" width="342" height="67" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="96" y="214" class="h">transformer.blocks.0 → null</text>
+<text x="96" y="237" class="n">更长前缀胜出，不再使用父范围的 FP8</text>
+<text x="77" y="290" class="h">transformer.blocks.1.attn</text>
+<text x="77" y="315" class="n">没有更长匹配，使用 transformer 的方法</text>
+<rect x="48" y="360" width="180" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="66" y="389" class="h">text_encoder</text>
+<text x="66" y="413" class="n">未命中 → default</text>
+<rect x="248" y="360" width="190" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="270" y="389" class="h">vae</text>
+<text x="270" y="413" class="n">未命中 → default</text>
+<rect x="625" y="147" width="445" height="87" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="647" y="178" class="h">明确排除的层</text>
+<text x="647" y="205" class="s">返回 None；不继续落入默认量化方法</text>
+<rect x="625" y="263" width="445" height="86" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="647" y="293" class="h">其余命中 transformer 的量化感知层</text>
+<text x="647" y="322" class="s">交给 FP8 配置选择该层的计算方法</text>
+<rect x="625" y="378" width="445" height="87" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="647" y="409" class="h">未匹配的组件</text>
+<text x="647" y="438" class="s">此例 default=None，保留 checkpoint 精度</text>
+<path d="M 418 220 H 523 V 190 H 623" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 438 299 H 623" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 438 400 H 524 V 421 H 623" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 228 433 V 447 H 524 V 421" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="28" y="504" class="s">范围选择只决定方法；已量化 checkpoint 的存储格式仍要单独校验，null 不能恢复丢失的精度。</text>
+</svg>

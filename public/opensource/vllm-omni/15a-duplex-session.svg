@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="655" viewBox="0 0 1120 655">
+<rect width="1120" height="655" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#9ca3af"/></marker></defs>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="28" y="34" font-size="19" font-weight="700" fill="#111827">播放历史跟着 ACK，连接接续跟着 session</text>
+<text x="28" y="59" font-size="13" fill="#6b7280">紫：engine 会话　绿：已确认历史　黄：待确认输出　红：失效输出　灰：连接</text>
+<rect x="28" y="84" width="1064" height="340" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="48" y="111" font-size="14" font-weight="700" fill="#111827">时间向下：音频发出后，仍要等客户端实际播放确认</text>
+<text x="61" y="145" font-size="14" font-weight="700" fill="#111827">客户端播放器</text>
+<text x="421" y="145" font-size="14" font-weight="700" fill="#111827">engine 会话 / epoch e</text>
+<text x="817" y="145" font-size="14" font-weight="700" fill="#111827">assistant 历史</text>
+<path d="M135 155V389M515 155V389M886 155V389" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<path d="M511 181H139" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="216" y="173" font-size="11" fill="#6b7280">音频 delta：可能仍在传输或播放队列中</text>
+<rect x="733" y="163" width="311" height="39" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="750" y="188" font-size="14" font-weight="700" fill="#111827">已生成回答：尚不能视为全部听过</text>
+<path d="M139 239H511M519 239H729" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="218" y="229" font-size="11" fill="#6b7280">playback.ack：播放器确认累计进度</text>
+<rect x="733" y="220" width="159" height="39" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="892" y="220" width="152" height="39" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="749" y="245" font-size="14" font-weight="700" fill="#111827">可提交的前缀</text>
+<text x="910" y="245" font-size="14" font-weight="700" fill="#111827">未确认尾部</text>
+<path d="M139 298H511" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="213" y="287" font-size="11" fill="#6b7280">用户插话 → VAD / overlap 决定 barge-in</text>
+<rect x="412" y="312" width="226" height="43" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="430" y="339" font-size="14" font-weight="700" fill="#111827">取消旧响应，推进 epoch</text>
+<rect x="733" y="312" width="159" height="43" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="892" y="312" width="152" height="43" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="749" y="339" font-size="14" font-weight="700" fill="#111827">保留确认边界</text>
+<text x="909" y="339" font-size="14" font-weight="700" fill="#111827">尾部被截断</text>
+<path d="M642 334H729" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="421" y="385" font-size="11" fill="#6b7280">旧 epoch 晚到的模型输出被过滤</text>
+<text x="733" y="385" font-size="11" fill="#6b7280">未对齐输出需完整播放，不能任意切字</text>
+<rect x="28" y="445" width="1064" height="181" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="48" y="472" font-size="14" font-weight="700" fill="#111827">连接中断是另一条状态线：engine 会话在宽限期内继续存在</text>
+<rect x="48" y="504" width="175" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="67" y="538" font-size="14" font-weight="700" fill="#111827">旧连接 detach</text>
+<rect x="325" y="496" width="297" height="73" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="345" y="524" font-size="14" font-weight="700" fill="#111827">同一 session，保留 engine lease</text>
+<text x="345" y="547" font-size="11" fill="#6b7280">frontend 日志继续记录可重放事件</text>
+<rect x="736" y="504" width="331" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="756" y="529" font-size="14" font-weight="700" fill="#111827">新连接：凭据 + 最后接收序号</text>
+<text x="756" y="549" font-size="11" fill="#6b7280">验证、轮换凭据、补事件、替换旧连接</text>
+<path d="M227 532H321M732 532H626" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="48" y="600" font-size="11" fill="#9ca3af">事件接收 ACK 释放重放日志；播放 ACK 更新历史，两者不能替代。方块长度仅示前缀与尾部关系，不代表时长比例。</text>
+</g></svg>
