@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 664" width="1120" height="664" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="664" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一层 MoE 在 4 卡专家并行下怎么走:路由 → 分发 → 专家计算 → 合并</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = token(字母是它出身的卡:a 在卡 0、b 在卡 1 …),绿 = 计算,黄 = 跨卡通信,红 = 热专家;虚线框 = 一张卡。</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">每卡放 2 个专家,每个 token 选 2 个(DeepSeek-V3 是 256 个里选 8 个)。路由是示意,E1 被故意做热。</text>
+<line x1="96" y1="122" x2="452" y2="122" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="96" y1="117" x2="96" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="452" y1="117" x2="452" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="274.0" y="112" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">准备:路由、量化、分发</text>
+<line x1="462" y1="122" x2="698" y2="122" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="462" y1="117" x2="462" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="698" y1="117" x2="698" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="580.0" y="112" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">专家计算:只算本卡专家</text>
+<line x1="708" y1="122" x2="1090" y2="122" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="708" y1="117" x2="708" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="1090" y1="117" x2="1090" y2="127" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="899.0" y="112" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">收尾:合并、加权求和</text>
+<text x="96" y="140" font-size="11" fill="#6b7280" text-anchor="start">prepare</text>
+<text x="462" y="140" font-size="11" fill="#6b7280" text-anchor="start">experts</text>
+<text x="708" y="140" font-size="11" fill="#6b7280" text-anchor="start">finalize</text>
+<rect x="20" y="192" width="1080" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="20" y="290" width="1080" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="20" y="388" width="1080" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="20" y="486" width="1080" height="92" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="310" y="150" width="142" height="430" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="381.0" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">分发 all-to-all ①</text>
+<rect x="708" y="150" width="142" height="430" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="779.0" y="172" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">合并 all-to-all ②</text>
+<line x1="304" y1="219.0" x2="458" y2="232.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="255.0" x2="458" y2="235.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="255.0" x2="458" y2="434.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="317.0" x2="458" y2="241.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="317.0" x2="458" y2="342.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="353.0" x2="458" y2="232.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="353.0" x2="458" y2="529.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="415.0" x2="458" y2="238.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="415.0" x2="458" y2="437.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="451.0" x2="458" y2="440.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="451.0" x2="458" y2="526.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="513.0" x2="458" y2="235.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="513.0" x2="458" y2="336.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="304" y1="549.0" x2="458" y2="535.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="232.0" x2="858" y2="219.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="235.0" x2="858" y2="255.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="434.0" x2="858" y2="255.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="241.0" x2="858" y2="317.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="342.0" x2="858" y2="317.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="232.0" x2="858" y2="353.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="529.0" x2="858" y2="353.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="238.0" x2="858" y2="415.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="437.0" x2="858" y2="415.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="440.0" x2="858" y2="451.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="526.0" x2="858" y2="451.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="235.0" x2="858" y2="513.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="336.0" x2="858" y2="513.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="702" y1="535.0" x2="858" y2="549.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="30" y="234" font-size="14" fill="#111827" text-anchor="start" font-weight="700">卡 0</text>
+<text x="30" y="252" font-size="11" fill="#6b7280" text-anchor="start">DP0</text>
+<rect x="96" y="206" width="64" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="128.0" y="234" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由</text>
+<text x="128.0" y="251" font-size="11" fill="#6b7280" text-anchor="middle">top-2</text>
+<rect x="172" y="206" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="223.68" font-size="13" fill="#111827" text-anchor="middle">a1</text>
+<text x="232" y="223" font-size="11" fill="#6b7280" text-anchor="start">E0 E1</text>
+<rect x="172" y="242" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="259.68" font-size="13" fill="#111827" text-anchor="middle">a2</text>
+<text x="232" y="259" font-size="11" fill="#6b7280" text-anchor="start">E1 E5</text>
+<rect x="462" y="206" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="225" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E0</text>
+<rect x="506" y="211" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">a1</text>
+<rect x="540" y="211" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="555.0" y="223.96" font-size="11" fill="#111827" text-anchor="middle">b2</text>
+<rect x="462" y="242" width="236" height="28" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="472" y="261" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E1</text>
+<rect x="506" y="247" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="259.96" font-size="11" fill="#111827" text-anchor="middle">a1</text>
+<rect x="540" y="247" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="555.0" y="259.96" font-size="11" fill="#111827" text-anchor="middle">a2</text>
+<rect x="574" y="247" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="589.0" y="259.96" font-size="11" fill="#111827" text-anchor="middle">b1</text>
+<rect x="608" y="247" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="623.0" y="259.96" font-size="11" fill="#111827" text-anchor="middle">c1</text>
+<rect x="642" y="247" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="657.0" y="259.96" font-size="11" fill="#111827" text-anchor="middle">d1</text>
+<text x="30" y="270" font-size="11" fill="#d9877a" text-anchor="start">算 7 份活</text>
+<rect x="862" y="206" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="223.32" font-size="12" fill="#111827" text-anchor="middle">a1 出</text>
+<rect x="862" y="242" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="259.32" font-size="12" fill="#111827" text-anchor="middle">a2 出</text>
+<text x="934" y="243" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">+</text>
+<rect x="950" y="206" width="140" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="962" y="228" font-size="13" fill="#111827" text-anchor="start" font-weight="700">共享专家</text>
+<text x="962" y="246" font-size="11" fill="#6b7280" text-anchor="start">本卡自己算,不过网</text>
+<text x="30" y="332" font-size="14" fill="#111827" text-anchor="start" font-weight="700">卡 1</text>
+<text x="30" y="350" font-size="11" fill="#6b7280" text-anchor="start">DP1</text>
+<rect x="96" y="304" width="64" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="128.0" y="332" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由</text>
+<text x="128.0" y="349" font-size="11" fill="#6b7280" text-anchor="middle">top-2</text>
+<rect x="172" y="304" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="321.68" font-size="13" fill="#111827" text-anchor="middle">b1</text>
+<text x="232" y="321" font-size="11" fill="#6b7280" text-anchor="start">E1 E2</text>
+<rect x="172" y="340" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="357.68" font-size="13" fill="#111827" text-anchor="middle">b2</text>
+<text x="232" y="357" font-size="11" fill="#6b7280" text-anchor="start">E0 E6</text>
+<rect x="462" y="304" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="323" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E2</text>
+<rect x="506" y="309" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="321.96" font-size="11" fill="#111827" text-anchor="middle">b1</text>
+<rect x="462" y="340" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="359" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E3</text>
+<rect x="506" y="345" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="357.96" font-size="11" fill="#111827" text-anchor="middle">d1</text>
+<text x="30" y="368" font-size="11" fill="#6b7280" text-anchor="start">算 2 份活</text>
+<rect x="862" y="304" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="321.32" font-size="12" fill="#111827" text-anchor="middle">b1 出</text>
+<rect x="862" y="340" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="357.32" font-size="12" fill="#111827" text-anchor="middle">b2 出</text>
+<text x="934" y="341" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">+</text>
+<rect x="950" y="304" width="140" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="962" y="326" font-size="13" fill="#111827" text-anchor="start" font-weight="700">共享专家</text>
+<text x="962" y="344" font-size="11" fill="#6b7280" text-anchor="start">本卡自己算,不过网</text>
+<text x="30" y="430" font-size="14" fill="#111827" text-anchor="start" font-weight="700">卡 2</text>
+<text x="30" y="448" font-size="11" fill="#6b7280" text-anchor="start">DP2</text>
+<rect x="96" y="402" width="64" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="128.0" y="430" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由</text>
+<text x="128.0" y="447" font-size="11" fill="#6b7280" text-anchor="middle">top-2</text>
+<rect x="172" y="402" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="419.68" font-size="13" fill="#111827" text-anchor="middle">c1</text>
+<text x="232" y="419" font-size="11" fill="#6b7280" text-anchor="start">E1 E4</text>
+<rect x="172" y="438" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="455.68" font-size="13" fill="#111827" text-anchor="middle">c2</text>
+<text x="232" y="455" font-size="11" fill="#6b7280" text-anchor="start">E5 E7</text>
+<rect x="462" y="402" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="421" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E4</text>
+<rect x="506" y="407" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="419.96" font-size="11" fill="#111827" text-anchor="middle">c1</text>
+<rect x="462" y="438" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="457" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E5</text>
+<rect x="506" y="443" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="455.96" font-size="11" fill="#111827" text-anchor="middle">a2</text>
+<rect x="540" y="443" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="555.0" y="455.96" font-size="11" fill="#111827" text-anchor="middle">c2</text>
+<text x="30" y="466" font-size="11" fill="#6b7280" text-anchor="start">算 3 份活</text>
+<rect x="862" y="402" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="419.32" font-size="12" fill="#111827" text-anchor="middle">c1 出</text>
+<rect x="862" y="438" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="455.32" font-size="12" fill="#111827" text-anchor="middle">c2 出</text>
+<text x="934" y="439" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">+</text>
+<rect x="950" y="402" width="140" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="962" y="424" font-size="13" fill="#111827" text-anchor="start" font-weight="700">共享专家</text>
+<text x="962" y="442" font-size="11" fill="#6b7280" text-anchor="start">本卡自己算,不过网</text>
+<text x="30" y="528" font-size="14" fill="#111827" text-anchor="start" font-weight="700">卡 3</text>
+<text x="30" y="546" font-size="11" fill="#6b7280" text-anchor="start">DP3</text>
+<rect x="96" y="500" width="64" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="128.0" y="528" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">路由</text>
+<text x="128.0" y="545" font-size="11" fill="#6b7280" text-anchor="middle">top-2</text>
+<rect x="172" y="500" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="517.68" font-size="13" fill="#111827" text-anchor="middle">d1</text>
+<text x="232" y="517" font-size="11" fill="#6b7280" text-anchor="start">E1 E3</text>
+<rect x="172" y="536" width="54" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="199.0" y="553.68" font-size="13" fill="#111827" text-anchor="middle">d2</text>
+<text x="232" y="553" font-size="11" fill="#6b7280" text-anchor="start">E6 E7</text>
+<rect x="462" y="500" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="519" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E6</text>
+<rect x="506" y="505" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="517.96" font-size="11" fill="#111827" text-anchor="middle">b2</text>
+<rect x="540" y="505" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="555.0" y="517.96" font-size="11" fill="#111827" text-anchor="middle">d2</text>
+<rect x="462" y="536" width="236" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="472" y="555" font-size="13" fill="#111827" text-anchor="start" font-weight="700">E7</text>
+<rect x="506" y="541" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="521.0" y="553.96" font-size="11" fill="#111827" text-anchor="middle">c2</text>
+<rect x="540" y="541" width="30" height="18" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="555.0" y="553.96" font-size="11" fill="#111827" text-anchor="middle">d2</text>
+<text x="30" y="564" font-size="11" fill="#6b7280" text-anchor="start">算 4 份活</text>
+<rect x="862" y="500" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="517.32" font-size="12" fill="#111827" text-anchor="middle">d1 出</text>
+<rect x="862" y="536" width="58" height="26" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/><text x="891.0" y="553.32" font-size="12" fill="#111827" text-anchor="middle">d2 出</text>
+<text x="934" y="537" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">+</text>
+<rect x="950" y="500" width="140" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="962" y="522" font-size="13" fill="#111827" text-anchor="start" font-weight="700">共享专家</text>
+<text x="962" y="540" font-size="11" fill="#6b7280" text-anchor="start">本卡自己算,不过网</text>
+<text x="30" y="608" font-size="11" fill="#9ca3af" text-anchor="start">卡 0 同时放着热专家 E1,这一层它要算 7 份活、卡 1 只有 2 份;两次 all-to-all 都是集合通信,整层要等卡 0 算完。EPLB 给 E1 在别的卡上多放一份副本。</text>
+<text x="30" y="626" font-size="11" fill="#9ca3af" text-anchor="start">同一张卡上的两个专家都被选中时只发一份(a1 → 卡 0)。默认后端不这样发:分发换成 all-gather,每张卡收下全部 8 个 token,合并换成 reduce-scatter。</text>
+<text x="30" y="644" font-size="11" fill="#9ca3af" text-anchor="start">共享专家不经过两次通信。DeepEP 两种模式、DeepEP v2、NIXL EP 这几个异步后端,在合并的通信还在网上时就开算共享专家,把 SM 空等的那段填上。</text>
+</svg>

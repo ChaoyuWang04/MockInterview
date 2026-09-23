@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">vLLM PD 分离:一条请求在代理、P 实例、D 实例之间怎么走,拉与推谁先动手</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">横向是时间先后,长短只示意。紫 = 代理发出或转发的 HTTP 请求,绿 = 这条请求在 GPU 上前向,黄 = KV 经 NIXL 过网,</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">红 = D 上的块已分好、请求停在门外不进批,灰 = P 上算完的块扣着等交出。红与灰的长度就是两边空占块的时间。</text>
+<text x="30" y="108" font-size="14" fill="#111827" text-anchor="start" font-weight="700">上:拉(默认的 NIXL 连接器)。代理串行发两次,D 读 P</text>
+<line x1="170" y1="163" x2="1090" y2="163" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="170" y1="229" x2="1090" y2="229" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="170" y1="295" x2="1090" y2="295" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="139" font-size="13" fill="#111827" text-anchor="start" font-weight="700">P 实例</text>
+<text x="30" y="154" font-size="11" fill="#6b7280" text-anchor="start">prefill</text>
+<text x="30" y="211" font-size="13" fill="#111827" text-anchor="start" font-weight="700">代理</text>
+<text x="30" y="271" font-size="13" fill="#111827" text-anchor="start" font-weight="700">D 实例</text>
+<text x="30" y="286" font-size="11" fill="#6b7280" text-anchor="start">decode</text>
+<rect x="170" y="192" width="170" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="255.0" y="210.96" font-size="11" fill="#111827" text-anchor="middle">发给 P:最多生成 1 个,非流式</text>
+<polyline points="190,192 190,141 199,141" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="200" y="126" width="250" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="325.0" y="144.96" font-size="11" fill="#111827" text-anchor="middle">prefill 整条 prompt,结束时块不还</text>
+<rect x="450" y="126" width="450" height="30" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="675.0" y="144.96" font-size="11" fill="#6b7280" text-anchor="middle">块扣着等 D 来读:租约 30 秒,D 每 5 秒续一次</text>
+<line x1="480" y1="156" x2="480" y2="192" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="470" y="192" width="200" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="570.0" y="210.96" font-size="11" fill="#111827" text-anchor="middle">拿到 P 的块号与地址,转发给 D</text>
+<polyline points="660,222 660,273 679,273" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="680" y="258" width="120" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="740.0" y="276.96" font-size="11" fill="#111827" text-anchor="middle">分好块,门外等</text>
+<rect x="800" y="258" width="90" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="845.0" y="276.96" font-size="11" fill="#111827" text-anchor="middle">NIXL 读</text>
+<line x1="845" y1="156" x2="845" y2="258" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="839" y="178" font-size="11" fill="#9ca3af" text-anchor="end">数据 P → D</text>
+<rect x="890" y="258" width="200" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="990.0" y="276.96" font-size="11" fill="#111827" text-anchor="middle">重算最后 1 个 token,采首 token</text>
+<line x1="895" y1="258" x2="895" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="901" y="178" font-size="11" fill="#9ca3af" text-anchor="start">读完通知到,P 才还块</text>
+<rect x="910" y="192" width="180" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="1000.0" y="210.96" font-size="11" fill="#111827" text-anchor="middle">把 D 的输出流给客户端</text>
+<line x1="30" y1="306" x2="1090" y2="306" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="332" font-size="14" fill="#111827" text-anchor="start" font-weight="700">下:推(NIXL 推连接器;Mooncake 连接器也是这个形状)。代理同时发两边,P 写 D</text>
+<line x1="170" y1="387" x2="1090" y2="387" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="170" y1="453" x2="1090" y2="453" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="170" y1="519" x2="1090" y2="519" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="30" y="363" font-size="13" fill="#111827" text-anchor="start" font-weight="700">P 实例</text>
+<text x="30" y="378" font-size="11" fill="#6b7280" text-anchor="start">prefill</text>
+<text x="30" y="435" font-size="13" fill="#111827" text-anchor="start" font-weight="700">代理</text>
+<text x="30" y="495" font-size="13" fill="#111827" text-anchor="start" font-weight="700">D 实例</text>
+<text x="30" y="510" font-size="11" fill="#6b7280" text-anchor="start">decode</text>
+<rect x="170" y="416" width="230" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="285.0" y="434.96" font-size="11" fill="#111827" text-anchor="middle">同时发给 P 和 D,带同一个请求号</text>
+<polyline points="190,416 190,365 199,365" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="200" y="350" width="250" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="325.0" y="368.96" font-size="11" fill="#111827" text-anchor="middle">prefill 整条 prompt</text>
+<polyline points="250,446 250,497 259,497" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="260" y="482" width="350" height="30" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="435.0" y="500.96" font-size="11" fill="#111827" text-anchor="middle">进门就分好块,把块号登记给 P,门外等</text>
+<line x1="430" y1="482" x2="430" y2="382" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="436" y="468" font-size="11" fill="#9ca3af" text-anchor="start">登记块号</text>
+<rect x="450" y="350" width="160" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="530.0" y="368.96" font-size="11" fill="#111827" text-anchor="middle">NIXL 写进 D 的块</text>
+<line x1="530" y1="380" x2="530" y2="482" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+<text x="536" y="402" font-size="11" fill="#9ca3af" text-anchor="start">数据 P → D</text>
+<text x="616" y="369.5" font-size="11" fill="#9ca3af" text-anchor="start">写完即还块,不用等 D 来读</text>
+<rect x="610" y="482" width="200" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="710.0" y="500.96" font-size="11" fill="#111827" text-anchor="middle">重算最后 1 个 token,采首 token</text>
+<rect x="620" y="416" width="200" height="30" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="720.0" y="434.96" font-size="11" fill="#111827" text-anchor="middle">把 D 的输出流给客户端</text>
+<text x="30" y="542" font-size="11" fill="#9ca3af" text-anchor="start">拉:D 的红条短、P 的灰条长,中间隔着一次「P 回代理、代理再发 D」;P 采的那 1 个 token 被代理丢掉。推:P 算完就写走,D 的块从 P 开算起就空占。</text>
+<text x="30" y="562" font-size="11" fill="#9ca3af" text-anchor="start">两种协议握手时互相拒绝,同一对 P、D 只能选一种。D 本地前缀缓存已命中的块不读也不写,图上按全不命中画。</text>
+<text x="30" y="582" font-size="11" fill="#9ca3af" text-anchor="start">D 的读或写完成后,消息要随下一次结果回到调度器,请求才回等待队列;开着异步调度时会再晚 1 步。</text>
+</svg>

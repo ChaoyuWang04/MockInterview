@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 656" width="1120" height="656" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="656" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一份量化 checkpoint 在三代卡上落到哪族 kernel</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">每格是那一层矩阵乘的真实样子:上条是权重进显存的位宽,下条是激活进张量核的位宽,条长按 4、8、16 bit 等比画。</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">紫 = 启动时的分派链;绿 = 按 checkpoint 设计的精度在低精度张量核上算;黄 = 卡上没有对口张量核,降级成只压权重。</text>
+<rect x="30" y="100" width="186" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="42" y="121" font-size="13" fill="#111827" text-anchor="start" font-weight="700">方法名</text>
+<text x="42" y="139" font-size="11" fill="#6b7280" text-anchor="start">checkpoint 自带或命令行给</text>
+<line x1="219" y1="125.0" x2="240" y2="125.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="243" y="100" width="186" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="255" y="121" font-size="13" fill="#111827" text-anchor="start" font-weight="700">配置类</text>
+<text x="255" y="139" font-size="11" fill="#6b7280" text-anchor="start">查算力下限与激活精度</text>
+<line x1="432" y1="125.0" x2="453" y2="125.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="456" y="100" width="186" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="468" y="121" font-size="13" fill="#111827" text-anchor="start" font-weight="700">每层一个量化方法</text>
+<text x="468" y="139" font-size="11" fill="#6b7280" text-anchor="start">建权重、整理、前向</text>
+<line x1="645" y1="125.0" x2="666" y2="125.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="669" y="100" width="186" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="681" y="121" font-size="13" fill="#111827" text-anchor="start" font-weight="700">按格式查 kernel 表</text>
+<text x="681" y="139" font-size="11" fill="#6b7280" text-anchor="start">每个平台一串先后</text>
+<line x1="858" y1="125.0" x2="879" y2="125.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="882" y="100" width="186" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="894" y="121" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第一个自报能跑的</text>
+<text x="894" y="139" font-size="11" fill="#6b7280" text-anchor="start">卡能跑,形状粒度能做</text>
+<text x="312" y="198" font-size="14" fill="#111827" text-anchor="start" font-weight="700">A100(SM80)</text>
+<text x="312" y="216" font-size="11" fill="#6b7280" text-anchor="start">没有 FP8、FP4 张量核</text>
+<text x="582" y="198" font-size="14" fill="#111827" text-anchor="start" font-weight="700">H100(SM90)</text>
+<text x="582" y="216" font-size="11" fill="#6b7280" text-anchor="start">有 FP8,没有 FP4 张量核</text>
+<text x="852" y="198" font-size="14" fill="#111827" text-anchor="start" font-weight="700">B200(SM100)</text>
+<text x="852" y="216" font-size="11" fill="#6b7280" text-anchor="start">FP8 与 FP4 张量核都有</text>
+<text x="30" y="198" font-size="14" fill="#111827" text-anchor="start" font-weight="700">checkpoint 格式</text>
+<text x="30" y="216" font-size="11" fill="#6b7280" text-anchor="start">缩放因子的粒度</text>
+<text x="30" y="254" font-size="14" fill="#111827" text-anchor="start" font-weight="700">FP8 块量化</text>
+<text x="30" y="276" font-size="11" fill="#6b7280" text-anchor="start">DeepSeek V3、Qwen3 FP8 一类</text>
+<text x="30" y="294" font-size="11" fill="#6b7280" text-anchor="start">权重每 128×128 一个缩放因子</text>
+<text x="30" y="312" font-size="11" fill="#6b7280" text-anchor="start">激活每 1×128 现算</text>
+<rect x="300" y="232" width="256" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="312" y="254" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Marlin</text>
+<text x="312" y="272" font-size="11" fill="#6b7280" text-anchor="start">只压权重,现场还原成 BF16</text>
+<text x="312" y="300" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="348" y="290" width="72" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="428" y="300" font-size="11" fill="#111827" text-anchor="start">8 bit</text>
+<text x="312" y="326" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="348" y="316" width="144" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="500" y="326" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<rect x="570" y="232" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="582" y="254" font-size="14" fill="#111827" text-anchor="start" font-weight="700">DeepGEMM</text>
+<text x="582" y="272" font-size="11" fill="#6b7280" text-anchor="start">小批时 FlashInfer</text>
+<text x="582" y="300" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="618" y="290" width="72" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="698" y="300" font-size="11" fill="#111827" text-anchor="start">8 bit</text>
+<text x="582" y="326" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="618" y="316" width="72" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="698" y="326" font-size="11" fill="#111827" text-anchor="start">8 bit</text>
+<rect x="840" y="232" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="852" y="254" font-size="14" fill="#111827" text-anchor="start" font-weight="700">DeepGEMM</text>
+<text x="852" y="272" font-size="11" fill="#6b7280" text-anchor="start">不可用时 CUTLASS 块量化</text>
+<text x="852" y="300" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="888" y="290" width="72" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="968" y="300" font-size="11" fill="#111827" text-anchor="start">8 bit</text>
+<text x="852" y="326" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="888" y="316" width="72" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="968" y="326" font-size="11" fill="#111827" text-anchor="start">8 bit</text>
+<text x="30" y="378" font-size="14" fill="#111827" text-anchor="start" font-weight="700">NVFP4</text>
+<text x="30" y="400" font-size="11" fill="#6b7280" text-anchor="start">ModelOpt、llm-compressor 导出</text>
+<text x="30" y="418" font-size="11" fill="#6b7280" text-anchor="start">每 16 个值一个 FP8 缩放因子</text>
+<text x="30" y="436" font-size="11" fill="#6b7280" text-anchor="start">外加每层一个 FP32 全局因子</text>
+<rect x="300" y="356" width="256" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="312" y="378" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Marlin</text>
+<text x="312" y="396" font-size="11" fill="#6b7280" text-anchor="start">只压权重</text>
+<text x="312" y="424" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="348" y="414" width="36" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="392" y="424" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="312" y="450" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="348" y="440" width="144" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="500" y="450" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<rect x="570" y="356" width="256" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="582" y="378" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Marlin</text>
+<text x="582" y="396" font-size="11" fill="#6b7280" text-anchor="start">FP4 张量核要到 Blackwell</text>
+<text x="582" y="424" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="618" y="414" width="36" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="662" y="424" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="582" y="450" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="618" y="440" width="144" height="12" rx="2" fill="#d4a24c" stroke="#d4a24c" stroke-width="1"/>
+<text x="770" y="450" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<rect x="840" y="356" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="852" y="378" font-size="14" fill="#111827" text-anchor="start" font-weight="700">FlashInfer CuTe-DSL</text>
+<text x="852" y="396" font-size="11" fill="#6b7280" text-anchor="start">其次 FlashInfer CUTLASS</text>
+<text x="852" y="424" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="888" y="414" width="36" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="932" y="424" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="852" y="450" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="888" y="440" width="36" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="932" y="450" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="30" y="502" font-size="14" fill="#111827" text-anchor="start" font-weight="700">INT4 权重</text>
+<text x="30" y="524" font-size="11" fill="#6b7280" text-anchor="start">GPTQ、AWQ</text>
+<text x="30" y="542" font-size="11" fill="#6b7280" text-anchor="start">每 128 个值一组缩放因子</text>
+<text x="30" y="560" font-size="11" fill="#6b7280" text-anchor="start">激活本来就留 BF16</text>
+<rect x="300" y="480" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="312" y="502" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Marlin</text>
+<text x="312" y="520" font-size="11" fill="#6b7280" text-anchor="start">设计上就只压权重</text>
+<text x="312" y="548" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="348" y="538" width="36" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="392" y="548" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="312" y="574" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="348" y="564" width="144" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="500" y="574" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<rect x="570" y="480" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="582" y="502" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Machete</text>
+<text x="582" y="520" font-size="11" fill="#6b7280" text-anchor="start">只认 SM90 一代</text>
+<text x="582" y="548" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="618" y="538" width="36" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="662" y="548" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="582" y="574" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="618" y="564" width="144" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="770" y="574" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<rect x="840" y="480" width="256" height="112" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="852" y="502" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Marlin</text>
+<text x="852" y="520" font-size="11" fill="#6b7280" text-anchor="start">Machete 不收 SM100</text>
+<text x="852" y="548" font-size="11" fill="#6b7280" text-anchor="start">权重</text>
+<rect x="888" y="538" width="36" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="932" y="548" font-size="11" fill="#111827" text-anchor="start">4 bit</text>
+<text x="852" y="574" font-size="11" fill="#6b7280" text-anchor="start">激活</text>
+<rect x="888" y="564" width="144" height="12" rx="2" fill="#5fa886" stroke="#5fa886" stroke-width="1"/>
+<text x="1040" y="574" font-size="11" fill="#111827" text-anchor="start">16 bit</text>
+<text x="30" y="618" font-size="11" fill="#9ca3af" text-anchor="start">假定 FlashInfer 与 DeepGEMM 都装着;H100 上块 FP8 小批走 FlashInfer、大批走 DeepGEMM,都不可用时退到 CUTLASS 块量化。</text>
+<text x="30" y="636" font-size="11" fill="#9ca3af" text-anchor="start">选中谁只在启动日志里打一行 info;专家层按格式另查一套表(11 章),KV 精度见正文第三节与 06 章。</text>
+</svg>
