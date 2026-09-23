@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { listReportTopics } from '@/lib/reports'
+import LibraryIndex from '@/components/LibraryIndex'
+import { reportViews } from '@/lib/library-views'
 
 export const dynamic = 'force-dynamic'
 
 export default function ReportsIndexPage() {
-  const topics = listReportTopics()
-  const total = topics.reduce((sum, topic) => sum + topic.reports.length, 0)
+  const views = reportViews()
+  const total = views.total
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-16">
@@ -28,39 +29,13 @@ export default function ReportsIndexPage() {
           reports/&lt;公司&gt;/，并在 reports/index.md 登记方向；完整流程见 docs/10-材料解读流程.md。
         </div>
       ) : (
-        topics.map((topic) => (
-          <section key={topic.title} className="mt-12">
-            <h2 className="mb-3 flex items-baseline gap-2 border-b border-gray-200 pb-1 text-lg font-bold">
-              {topic.title}
-              <span className="font-mono text-xs font-normal text-gray-400">
-                {topic.reports.length} 篇
-              </span>
-            </h2>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {topic.reports.map((report) => (
-                <Link
-                  key={`${report.company}/${report.slug}`}
-                  href={`/reports/${encodeURIComponent(report.company)}/${encodeURIComponent(report.slug)}`}
-                  className="block border border-gray-200 bg-white px-5 py-4 transition-colors hover:border-gray-400"
-                >
-                  <span className="flex items-start justify-between gap-3">
-                    <span className="font-semibold">{report.title}</span>
-                    <span
-                      title="主要归属方,即 reports/ 下的目录名"
-                      className="mt-0.5 shrink-0 border border-gray-300 bg-gray-50 px-1 font-mono text-[10px] font-normal text-gray-500"
-                    >
-                      {report.company}
-                    </span>
-                  </span>
-                  <span className="mt-2 flex items-center justify-between gap-4 font-mono text-xs text-gray-400">
-                    <span>{report.releaseDate} 首发</span>
-                    <span>阅读全文 →</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </section>
-        ))
+        <LibraryIndex
+          library="reports"
+          badgeTitle="主要归属方,即 reports/ 下的目录名"
+          byTopic={views.byTopic}
+          byTime={views.byTime}
+          initialRead={views.initialRead}
+        />
       )}
     </main>
   )

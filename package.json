@@ -16,6 +16,8 @@
     "readings:status": "node scripts/readings-status.mjs",
     "papers:scan": "node scripts/papers-scan.mjs",
     "papers:file": "node scripts/papers-file.mjs",
+    "papers:feed": "node scripts/papers-feed.mjs",
+    "papers:pull": "node scripts/papers-pull.mjs",
     "interview:index": "node scripts/interview-index.mjs",
     "interview:live": "INTERVIEW_LIVE=1 vitest run tests/interview-live.test.ts",
     "interview:profile": "node scripts/interview-profile.mjs",
