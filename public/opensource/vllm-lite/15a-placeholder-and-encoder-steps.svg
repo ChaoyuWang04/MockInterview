@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d9877a"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一条带 2 张图的请求:占位符在哪、两级缓存在哪、编码器在哪一步跑</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">黄 = 图的占位 token,灰 = 文本 token,绿 = 预处理缓存(键在 API 进程、值在 EngineCore),紫 = 编码器与编码缓存(worker 显存);</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">下半的细框 = 这一步排进前向的区间,红虚线 = 编码预算或缓存装不下时本步截到哪;上半的虚线框是进程边界。</text>
+<rect x="24" y="94" width="320" height="272" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="38" y="116" font-size="14" fill="#111827" text-anchor="start" font-weight="700">API 进程</text>
+<text x="38" y="134" font-size="11" fill="#6b7280" text-anchor="start">多模态处理在单独的单线程执行器里(01 章)</text>
+<rect x="368" y="94" width="340" height="272" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="382" y="116" font-size="14" fill="#111827" text-anchor="start" font-weight="700">EngineCore 进程</text>
+<text x="382" y="134" font-size="11" fill="#6b7280" text-anchor="start">经 ZMQ 收请求;命中的项只带哈希</text>
+<rect x="732" y="94" width="364" height="272" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="746" y="116" font-size="14" fill="#111827" text-anchor="start" font-weight="700">GPU worker 进程</text>
+<text x="746" y="134" font-size="11" fill="#6b7280" text-anchor="start">收本步要编的项与要删的哈希</text>
+<rect x="38" y="146" width="292" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="50" y="168" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 取媒体,按内容算哈希</text>
+<text x="50" y="187" font-size="11" fill="#6b7280" text-anchor="start">8 个线程下载解码;哈希混进模型名与处理参数</text>
+<rect x="38" y="214" width="292" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="50" y="236" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 查键表:这里只存键和大小</text>
+<text x="50" y="255" font-size="11" fill="#6b7280" text-anchor="start">命中:不跑处理器,只发哈希</text>
+<text x="50" y="271" font-size="11" fill="#6b7280" text-anchor="start">未命中:跑处理器,发像素张量</text>
+<rect x="38" y="298" width="292" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="50" y="320" font-size="14" fill="#111827" text-anchor="start" font-weight="700">③ 展开占位符</text>
+<text x="50" y="339" font-size="11" fill="#6b7280" text-anchor="start">图 A → 256 个,图 B → 1369 个占位 token</text>
+<line x1="184.0" y1="202" x2="184.0" y2="214" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="184.0" y1="286" x2="184.0" y2="298" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="382" y="146" width="312" height="72" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="394" y="168" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 值表:拿哈希补回张量</text>
+<text x="394" y="187" font-size="11" fill="#6b7280" text-anchor="start">与键表同容量、同顺序淘汰,默认 4 GiB</text>
+<text x="394" y="203" font-size="11" fill="#6b7280" text-anchor="start">补不回:请求报错,API 侧删键,客户端重发</text>
+<rect x="382" y="230" width="312" height="124" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<text x="394" y="252" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑤ 调度:两道并列的闸</text>
+<text x="394" y="271" font-size="11" fill="#6b7280" text-anchor="start">token 总额:本步排这条请求的哪一段</text>
+<text x="394" y="287" font-size="11" fill="#6b7280" text-anchor="start">编码预算:本步最多新编多少个嵌入</text>
+<text x="394" y="303" font-size="11" fill="#6b7280" text-anchor="start">编码缓存账:容量按嵌入个数记</text>
+<text x="394" y="319" font-size="11" fill="#6b7280" text-anchor="start">装不下 → 本步截到图之前</text>
+<text x="394" y="335" font-size="11" fill="#6b7280" text-anchor="start">引用清零 → 可回收,要地方时才删</text>
+<line x1="538.0" y1="218" x2="538.0" y2="230" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="330,326 356,326 356,182 382,182" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="746" y="146" width="336" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="758" y="168" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑥ 编码器:不在缓存里的项整项编</text>
+<text x="758" y="187" font-size="11" fill="#6b7280" text-anchor="start">哪怕本步只碰到这张图的一小段</text>
+<rect x="746" y="214" width="336" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="758" y="236" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑦ 编码缓存:按哈希存嵌入</text>
+<text x="758" y="255" font-size="11" fill="#6b7280" text-anchor="start">按本步区间切出要用的那几行</text>
+<text x="758" y="271" font-size="11" fill="#6b7280" text-anchor="start">收到删除名单才把显存还回去</text>
+<rect x="746" y="298" width="336" height="56" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1"/>
+<text x="758" y="320" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑧ 盖到占位位置上,decoder 前向</text>
+<text x="758" y="339" font-size="11" fill="#6b7280" text-anchor="start">文本位置照常查词表</text>
+<line x1="914.0" y1="202" x2="914.0" y2="214" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="914.0" y1="286" x2="914.0" y2="298" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="694,260 720,260 720,174 746,174" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="30" y="400" font-size="14" fill="#111827" text-anchor="start" font-weight="700">这条请求的 token 序列,假设它每一步分到 1024 个 token</text>
+<text x="30" y="441" font-size="13" fill="#111827" text-anchor="start" font-weight="700">token 序列</text>
+<rect x="150.0" y="422" width="47.36842105263159" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="197.3684210526316" y="422" width="121.26315789473685" height="28" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="258.0" y="440.32" font-size="12" fill="#111827" text-anchor="middle">图 A · 256</text>
+<rect x="318.63157894736844" y="422" width="28.42105263157896" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="347.0526315789474" y="422" width="648.4736842105262" height="28" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/><text x="671.2894736842105" y="440.32" font-size="12" fill="#111827" text-anchor="middle">图 B · 1369 个占位 token</text>
+<rect x="995.5263157894736" y="422" width="54.47368421052636" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="173.68421052631578" y="465" font-size="11" fill="#6b7280" text-anchor="middle">文本 100</text>
+<text x="332.8421052631579" y="465" font-size="11" fill="#6b7280" text-anchor="middle">文本 60</text>
+<text x="1022.7631578947369" y="465" font-size="11" fill="#6b7280" text-anchor="middle">文本 115</text>
+<text x="30" y="497" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第 1 步</text>
+<rect x="150.0" y="482" width="485.0526315789473" height="20" rx="4" fill="#ffffff" stroke="#111827" stroke-width="1"/>
+<text x="643.0526315789473" y="497" font-size="11" fill="#6b7280" text-anchor="start">[0, 1024)</text>
+<rect x="197.3684210526316" y="507" width="121.26315789473685" height="8" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<rect x="347.0526315789474" y="507" width="648.4736842105262" height="8" rx="2" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="150.0" y="534" font-size="11" fill="#6b7280" text-anchor="start">A、B 的占位区碰进窗口 → 编码器把两项整项编完(256 + 1369 个嵌入)写进编码缓存,本步只用到 B 的前 608 行</text>
+<text x="30" y="567" font-size="13" fill="#111827" text-anchor="start" font-weight="700">第 2 步</text>
+<rect x="635.0526315789473" y="552" width="414.9473684210527" height="20" rx="4" fill="#ffffff" stroke="#111827" stroke-width="1"/>
+<text x="627.0526315789473" y="567" font-size="11" fill="#6b7280" text-anchor="end">[1024, 1900)</text>
+<rect x="635.0526315789473" y="577" width="360.47368421052636" height="8" rx="2" fill="#ffffff" stroke="#8f8bd8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="150.0" y="604" font-size="11" fill="#6b7280" text-anchor="start">B 剩下的 761 行从编码缓存切出来用,编码器不跑;文本 115 个照常查词表</text>
+<text x="30" y="637" font-size="13" fill="#111827" text-anchor="start" font-weight="700">编不下时</text>
+<rect x="150.0" y="622" width="197.0526315789474" height="20" rx="4" fill="#ffffff" stroke="#d9877a" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="357.0526315789474" y="637" font-size="11" fill="#6b7280" text-anchor="start">预算或缓存装不下 B:本步只排到 B 之前的 416 个;不许切开的模型也截在这里</text>
+<text x="30" y="670" font-size="11" fill="#9ca3af" text-anchor="start">第 2 步之后 A、B 的占位区都已写进 KV:请求放掉引用,条目转入可回收队列但仍留在显存,别的请求带同一张图还能命中;</text>
+<text x="30" y="686" font-size="11" fill="#9ca3af" text-anchor="start">新条目要地方时才从最早可回收的删起,删除名单随下一份调度结果发到 ⑦,显存这时才还回去。每步 1024 个 token 是示意值。</text>
+</svg>

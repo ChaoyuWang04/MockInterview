@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一步里 logits 变成 token:定序的采样管线,掩码与批不变插在哪</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">Model Runner V2 的真实顺序。绿 = 每步必走,灰 = 批里有人用到才启动,紫 = 结构化输出,黄 = 批不变开关管的地方;</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">虚线框 = 进程边界。</text>
+<rect x="30" y="96" width="1060" height="132" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="44" y="118" font-size="14" fill="#111827" text-anchor="start" font-weight="700">EngineCore 进程 · CPU</text>
+<text x="44" y="136" font-size="11" fill="#6b7280" text-anchor="start">只有带格式约束的请求才走这一行</text>
+<rect x="50" y="150" width="290" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="60" y="171" font-size="14" fill="#111827" text-anchor="start" font-weight="700">请求到达:编译丢进线程池</text>
+<text x="60" y="189" font-size="11" fill="#6b7280" text-anchor="start">编完之前挂在等文法状态,不进批(02 章)</text>
+<text x="60" y="204" font-size="11" fill="#6b7280" text-anchor="start">xgrammar 的编译结果按内容缓存</text>
+<rect x="400" y="150" width="330" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="410" y="171" font-size="14" fill="#111827" text-anchor="start" font-weight="700">前向发出后:每条请求填一行位掩码</text>
+<text x="410" y="189" font-size="11" fill="#6b7280" text-anchor="start">32 个 token 压成 1 个整数,1 位 = 许不许</text>
+<text x="410" y="204" font-size="11" fill="#6b7280" text-anchor="start">超过 128 条且不开推测解码时并行填</text>
+<rect x="790" y="150" width="280" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="800" y="171" font-size="14" fill="#111827" text-anchor="start" font-weight="700">token 回来:状态机前进一格</text>
+<text x="800" y="189" font-size="11" fill="#6b7280" text-anchor="start">思考结束标记出现之前,掩码全放行</text>
+<line x1="340" y1="182" x2="400" y2="182" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="370.0" y="175" font-size="11" fill="#6b7280" text-anchor="middle">编完</text>
+<line x1="790" y1="182" x2="730" y2="182" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="760.0" y="175" font-size="11" fill="#6b7280" text-anchor="middle">下一步</text>
+<rect x="30" y="262" width="1060" height="400" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="44" y="284" font-size="14" fill="#111827" text-anchor="start" font-weight="700">GPU worker 进程 · 每步</text>
+<text x="44" y="302" font-size="11" fill="#6b7280" text-anchor="start">每一站对整批一次做完</text>
+<rect x="50" y="328" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="60" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">前向 + 输出层</text>
+<text x="60" y="367" font-size="11" fill="#6b7280" text-anchor="start">每行一个词表宽的分数</text>
+<text x="60" y="382" font-size="11" fill="#6b7280" text-anchor="start">模型的精度,常见 BF16</text>
+<rect x="226" y="328" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="236" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">① 文法掩码</text>
+<text x="236" y="367" font-size="11" fill="#6b7280" text-anchor="start">不许的位置写成负无穷</text>
+<text x="236" y="382" font-size="11" fill="#6b7280" text-anchor="start">只动带约束的行</text>
+<rect x="402" y="328" width="140" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="412" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">② 复制成 FP32</text>
+<text x="412" y="367" font-size="11" fill="#6b7280" text-anchor="start">有一条要加工,</text>
+<text x="412" y="382" font-size="11" fill="#6b7280" text-anchor="start">整批复制一份</text>
+<rect x="568" y="328" width="170" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="578" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">③ 白名单 · 偏置</text>
+<text x="578" y="367" font-size="11" fill="#6b7280" text-anchor="start">还管最少 token 数</text>
+<text x="578" y="382" font-size="11" fill="#6b7280" text-anchor="start">偏置是加法</text>
+<rect x="764" y="328" width="140" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="774" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">④ 惩罚</text>
+<text x="774" y="367" font-size="11" fill="#6b7280" text-anchor="start">重复是缩放,</text>
+<text x="774" y="382" font-size="11" fill="#6b7280" text-anchor="start">频率与存在是减分</text>
+<rect x="930" y="328" width="120" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="940" y="349" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑤ 禁词</text>
+<text x="940" y="367" font-size="11" fill="#6b7280" text-anchor="start">负无穷</text>
+<line x1="200" y1="359" x2="226" y2="359" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="376" y1="359" x2="402" y2="359" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="542" y1="359" x2="568" y2="359" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="738" y1="359" x2="764" y2="359" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="904" y1="359" x2="930" y2="359" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="50" y="498" width="140" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="60" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑥ 自定义处理器</text>
+<text x="60" y="537" font-size="11" fill="#6b7280" text-anchor="start">看到的是未缩放的分数</text>
+<text x="60" y="552" font-size="11" fill="#6b7280" text-anchor="start">不准抬回被掩掉的位置</text>
+<rect x="216" y="498" width="140" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="226" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑦ 思考预算强制</text>
+<text x="226" y="537" font-size="11" fill="#6b7280" text-anchor="start">用完只留思考结束标记</text>
+<text x="226" y="552" font-size="11" fill="#6b7280" text-anchor="start">排在所有改分之后</text>
+<rect x="382" y="498" width="90" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="392" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑧ 温度</text>
+<text x="392" y="537" font-size="11" fill="#6b7280" text-anchor="start">0 或 1 的行</text>
+<text x="392" y="552" font-size="11" fill="#6b7280" text-anchor="start">跳过</text>
+<rect x="498" y="498" width="95" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="508" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑨ min-p</text>
+<text x="508" y="537" font-size="11" fill="#6b7280" text-anchor="start">按最大概率</text>
+<text x="508" y="552" font-size="11" fill="#6b7280" text-anchor="start">的比例裁</text>
+<rect x="619" y="498" width="130" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="629" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑩ top-k / top-p</text>
+<text x="629" y="537" font-size="11" fill="#6b7280" text-anchor="start">裁候选集</text>
+<rect x="775" y="498" width="200" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="785" y="519" font-size="14" fill="#111827" text-anchor="start" font-weight="700">⑪ 加噪取最大</text>
+<text x="785" y="537" font-size="11" fill="#6b7280" text-anchor="start">噪声 = 哈希(种子, 位置, token)</text>
+<text x="785" y="552" font-size="11" fill="#6b7280" text-anchor="start">温度 0 的行直接取最大</text>
+<line x1="190" y1="529" x2="216" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="356" y1="529" x2="382" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="472" y1="529" x2="498" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="593" y1="529" x2="619" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="749" y1="529" x2="775" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="498" y="488" font-size="11" fill="#9ca3af" text-anchor="start">批里没有贪心与显式种子、又有人用 top-k/top-p 时,⑩⑪ 换成 FlashInfer 的融合采样</text>
+<polyline points="990.0,390 990.0,448 120.0,448 120.0,498" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="1001" y="507" width="76" height="44" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/><text x="1039.0" y="533.68" font-size="13" fill="#111827" text-anchor="middle">新 token</text>
+<line x1="975" y1="529" x2="1001" y2="529" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<polyline points="460,214 460,250 301.0,250 301.0,328" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="470" y="246" font-size="11" fill="#6b7280" text-anchor="start">随「开始采样」那次调用发给每个 worker</text>
+<polyline points="1077,529 1080,529 1080,182 1070,182" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="389.0" y1="394" x2="389.0" y2="412" stroke="#b9b9b9" stroke-width="1.4"/>
+<text x="385.0" y="426" font-size="11" fill="#9ca3af" text-anchor="start">默认的 logprob 从这里取:掩码之后、任何加工之前</text>
+<text x="402" y="318" font-size="11" fill="#9ca3af" text-anchor="start">灰色各站:批里没人用就不启动 kernel;全批都用不上时 ② 起整段跳过,直接到 ⑪</text>
+<rect x="50" y="582" width="480" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="60" y="603" font-size="14" fill="#111827" text-anchor="start" font-weight="700">批不变开关:让前向的分数不随同批有几行而变</text>
+<text x="60" y="621" font-size="11" fill="#6b7280" text-anchor="start">矩阵乘、注意力、RMSNorm、all-reduce 换成归约顺序只看形状的实现</text>
+<polyline points="50,610 40,610 40,359 50,359" fill="none" stroke="#d4a24c" stroke-width="1.4"/>
+<rect x="620" y="582" width="430" height="56" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="630" y="603" font-size="14" fill="#111827" text-anchor="start" font-weight="700">给了种子,抽样这一站就批不变</text>
+<text x="630" y="621" font-size="11" fill="#6b7280" text-anchor="start">噪声不看同批还有谁;走 FlashInfer 融合采样时不保证</text>
+<line x1="875.0" y1="560" x2="875.0" y2="582" stroke="#d4a24c" stroke-width="1.4"/>
+<text x="30" y="678" font-size="11" fill="#9ca3af" text-anchor="start">配了水印时由水印器接管 ⑪;V1 的顺序略有不同(禁词排在偏置与惩罚之前),抽样靠随机数发生器,带种子的请求逐条处理。</text>
+</svg>
