@@ -212,6 +212,7 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| GPT-Policy | Morphi Robot | 用商用 VLM 做通用 agent 框架,从示范、样例与交互反馈里上下文学习,不改参数就在新初始状态上产出可执行、可验证的机器人行为 |
 | StereoWorld | HKU | 相机条件的立体世界模型,只在 RGB 模态里同时学外观与双目几何 |
 | Solaris | NYU | 现有动作条件视频模型只有单智能体视角;这一套在 Minecraft 里做多人一致的多视角模拟 |
 | WoVR | CASIA | 不假设世界模型忠实,从模拟器、交互协议、对齐三层管制想象里的 VLA RL |
@@ -227,7 +228,6 @@
 | DreamGen | NVIDIA | 先合成视觉轨迹再反推动作的数据引擎 |
 | DINO-WM | NYU | 在冻结的 DINO 视觉特征上建世界模型,零样本规划不用重训策略 |
 | JEPA-Position-Paper | ICFO | Les Houches 讲义:用能量模型与潜变量搭出 H-JEPA,不是 OpenReview 立场文本身 |
-| GPT-Policy | Morphi Robot | 用商用 VLM 做通用 agent 框架,从示范、样例与交互反馈里上下文学习,不改参数就在新初始状态上产出可执行、可验证的机器人行为 |
 
 ## 自进化系统
 

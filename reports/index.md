@@ -327,6 +327,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
 | Real-Time-EXPO-FT | Stanford | VLA 推理延迟让观测过时:大 VLA 慢慢出动作块,轻量编辑策略按最新观测快速改动作,在此之上做 RL 微调 |
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
 | AI-Co-Mathematician | Google | 数学研究的 agentic 工作台(DeepMind) |
@@ -347,7 +348,6 @@
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
-| JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
 | DexTouch-WM | HKUST | 人手与灵巧手共用一套触觉阵列与动作表示,让人类触觉交互数据监督同一个动作条件世界模型,联合预测未来 RGB 与双手触觉 |
 
 ## 自进化系统
@@ -356,6 +356,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| SoL-Pi | NVIDIA | 在 harness 层递归扩展自动研究循环,筛出动作执行、上下文压缩、观测处理与委托阅读四个机制;EdgeBench 51 题上性能与 Pi 相当,token 流量降 44.7–49.0% |
 | AIDE2 | Weco | autoresearch 套 autoresearch,递归自我改进的首份实验证据;**原件是官方博客,`papers/` 下无 PDF** |
 | Reward-Free-Self-Evolution | Tencent | 部件:任务/课程。通过世界知识探索做无奖励的自发自进化 |
 | Dr-Zero | Meta | 部件:任务/课程。无训练数据的自进化搜索 agent(MSL) |
@@ -370,7 +371,6 @@
 | ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
 | Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
 | PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |
-| SoL-Pi | NVIDIA | 在 harness 层递归扩展自动研究循环,筛出动作执行、上下文压缩、观测处理与委托阅读四个机制;EdgeBench 51 题上性能与 Pi 相当,token 流量降 44.7–49.0% |
 | ScientistTwo | Google | 全自主多 agent 科研框架:建基线、提假设、跑实验与自动消融,再用模拟评审反驳闭环验证结论 |
 
 ## 可解释性与对齐
