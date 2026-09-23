@@ -74,6 +74,7 @@
 | Falcon-H1 | TII | Transformer-Mamba 混合头的开放权重家族;推理续作 H1R 见 arXiv 2601.02346 |
 | LFM2 | LiquidAI | 为端侧效率反推架构的开源小基模家族(arXiv 2511.23404) |
 | SmolLM3 | HuggingFace | 3B 长上下文多语推理,训练方法与配方全公开。**原件待核**(HF 博客抓取失败) |
+| Model-Growth-Scaling-Exponents | NYU | 架构能改预训练的缩放指数:以循环 Transformer 为锚,训练中加循环数的模型增长改变指数最多,边界算子也有较小提升 |
 
 ## 注意力与长上下文
 
@@ -157,6 +158,11 @@
 | DCLM | Stanford | 数据侧的 ImageNet 时刻:固定模型只比数据配方(arXiv 2406.11794,NeurIPS 2024) |
 | Nemotron-CLIMB | NVIDIA | 聚类迭代搜数据配方,用 512 个模型的网格反推预训练混合(arXiv 2504.13161) |
 | Nested-Learning | Google | 把「深度」重述为多尺度更新,连续学习的优化视角(arXiv 2512.24695,NeurIPS 2025) |
+| Score-Centering | TogetherAI | 训推不一致下 RL 失稳主要来自逐步累积的漂移:加一项可加的 score centering 修正抵消它,0.6B 到 30B 上单用即可比肩或超过重要性采样,还能与之叠加 |
+| Privileged-Info-OPSD | NUS | on-policy 自蒸馏里给教师看答案到底多加了什么:5,319 题六种推理视角的 AMPLE-Math 对照无参考蒸馏,发现大部分提升来自蒸馏本身,参考信息的额外收益有限且依赖学生 |
+| Repulsive-Self-Distillation | ETH | 特权信息同时改了教师「知道什么」与「怎么表现」:吸引式与排斥式自蒸馏引起相反的行为偏移,两者对比组合后偏移相消,只剩更贴近正确性的 token 级信号 |
+| IER-OPD | MBZUAI | 稀疏 on-policy 蒸馏选哪些 token:用信噪分解定义信息效率比 IER 衡量梯度估计的可靠性,与已有有用性分数组合后,0.1%–1% 的 token 预算即可匹配全量 OPD |
+| Value-Flattening | SJTU | PPO critic 的系统性失效:真实状态价值沿回答剧烈变化,critic 预测却几乎是平的;SP3O 每条回答只在几个相隔较远的状态上算价值损失来缓解 |
 
 ## Agent 训练与工具使用
 
@@ -181,6 +187,10 @@
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
+| RetireOPD | ZJU | 多轮 agent 的自蒸馏:先用环境奖励优化带技能的教师,再让学生 RL 加 OPD 联合训练,差距不再缩小且达到目标成功率就自行退掉教师 |
+| Skill2Env | NVIDIA | 把 3.4k 个公开 Agent Skills 转成 8k 个带程序化测试与行为 rubric 的终端环境,300 步 RL 让 Qwen-3.8 27B 在 Terminal-Bench 2.1 上涨 4.7 个点 |
+| ScienceIDE | Oxford | 让 agent 按专家定义的案例与验收标准把科学代码仓改造成可执行环境,用于 SFT、RL 与评测,并训出 PhAI-IDE 72B/9B/4B |
+| CodeMidas | Xiaomi | 只用源码本身造编码 RL 环境:agent 探索已实现功能、写行为规格与测试并反复验证,得到 3,185 个仓库的 5,545 个任务 |
 
 ## 推理服务与架构探索
 
@@ -255,6 +265,7 @@
 | Molmo2 | Ai2 | 开放权重 VLM:视频理解加指点接地的数据机器(CVPR 2026,arXiv 2601.10611) |
 | DINOv3 | Meta | 稠密特征与 42 亿图蒸馏;日常研读侧只收了 DINOv2(arXiv 2508.10104) |
 | SAM-3 | Meta | 按概念提示做分割与追踪;日常研读侧只收了 Segment Anything(arXiv 2511.16719) |
+| MiMo-V2.6 | Xiaomi | 全模态 MiMo-V2.6 系列的 RL 扩规模报告:每步 1,568 条样本、上下文到 1M 的异步训练,环境覆盖代码、通用、视觉与网安,冻结 MoE 路由并多层防奖励黑客 |
 
 ## 图像、视频与 3D 生成
 
@@ -335,6 +346,9 @@
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
+| Real-Time-EXPO-FT | Stanford | VLA 推理延迟让观测过时:大 VLA 慢慢出动作块,轻量编辑策略按最新观测快速改动作,在此之上做 RL 微调 |
+| JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
+| DexTouch-WM | HKUST | 人手与灵巧手共用一套触觉阵列与动作表示,让人类触觉交互数据监督同一个动作条件世界模型,联合预测未来 RGB 与双手触觉 |
 
 ## 自进化系统
 
@@ -356,6 +370,8 @@
 | ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
 | Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
 | PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |
+| SoL-Pi | NVIDIA | 在 harness 层递归扩展自动研究循环,筛出动作执行、上下文压缩、观测处理与委托阅读四个机制;EdgeBench 51 题上性能与 Pi 相当,token 流量降 44.7–49.0% |
+| ScientistTwo | Google | 全自主多 agent 科研框架:建基线、提假设、跑实验与自动消融,再用模拟评审反驳闭环验证结论 |
 
 ## 可解释性与对齐
 
@@ -387,3 +403,4 @@
 | WildBench | Ai2 | 考什么交给真实用户、怎么判交给一张 5 到 10 问的清单:1,024 题、用三个不同水平的基线合成 WB-Reward,与 Arena 人类 Elo 的头部 Pearson 0.984(依据 arXiv v2,19 页) |
 | SWE-bench | Princeton | 2,294 道真实 GitHub 缺陷:已合并且自带测试的 PR 同时给出题目、答案与验收标准;判分是 F2P 与 P2P 的与运算,当年最好的模型只解出 1.96%(依据 arXiv v3,52 页) |
 | Lessons-from-the-Trenches | EleutherAI | 可复现评测的方法学教训:打分口径怎么会错(arXiv 2405.14782) |
+| PosteriorBench | Caltech | 评生成式逆问题求解器要看整个后验而非单个样本:四个物理逆问题配高精度参考后验与五项分布指标 |

@@ -103,6 +103,7 @@
 | ToolLLM | Tsinghua | 1.6 万真实 API 上的工具调用数据与模型,配 DFSDT 搜索 |
 | ReAct | Princeton | 推理与行动交错:想一步、做一步、看结果再想;agent 提示范式的源头 |
 | TALM | Google | 工具增强语言模型的早期形态:文本接口调工具,自举扩数据 |
+| Coding-Harness-Design | UMass Amherst | 固定执行循环、逐个换规划、动作空间与上下文管理三个组件,在 SWE-Bench Verified 与 Terminal-Bench 2.1 上跑 176 组对照,拆开看编码 harness 的哪部分真有用 |
 
 ## 推理服务与架构探索
 
@@ -226,6 +227,7 @@
 | DreamGen | NVIDIA | 先合成视觉轨迹再反推动作的数据引擎 |
 | DINO-WM | NYU | 在冻结的 DINO 视觉特征上建世界模型,零样本规划不用重训策略 |
 | JEPA-Position-Paper | ICFO | Les Houches 讲义:用能量模型与潜变量搭出 H-JEPA,不是 OpenReview 立场文本身 |
+| GPT-Policy | Morphi Robot | 用商用 VLM 做通用 agent 框架,从示范、样例与交互反馈里上下文学习,不改参数就在新初始状态上产出可执行、可验证的机器人行为 |
 
 ## 自进化系统
 
@@ -242,6 +244,7 @@
 |---|---|---|
 | Scaling Monosemanticity | Anthropic | 稀疏自编码器在 Claude 3 Sonnet 上规模化,抽出可解释、可干预的单义特征 |
 | Refusal Direction | Independent | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
+| Reward-Hacking-Probes | Goodfire | 差值均值向量就能表示并检测前沿开源模型的奖励黑客,成本近乎为零,效果接近 LLM 监控器,还能在思维链上提前预警 |
 
 ## 深度学习基石
 
