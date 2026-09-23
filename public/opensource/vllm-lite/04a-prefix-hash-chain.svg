@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">三条请求共用一段系统提示词:哈希链在哪一块分叉,哪几块能直接复用</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = 已登记在哈希表里的块,绿 = 命中后直接复用,黄 = 没命中、要重新算,</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">红 = 表里其实有、却因规则被迫重算,灰 = 不满一块、没有键;箭头 = 前一块的键喂给后一块。块大小取默认 16 token。</text>
+<line x1="196" y1="106" x2="678" y2="106" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="196" y1="106" x2="196" y2="112" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="678" y1="106" x2="678" y2="112" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="437.0" y="100" font-size="11" fill="#6b7280" text-anchor="middle">三条请求共用的系统提示词,48 token</text>
+<line x1="694" y1="106" x2="1010" y2="106" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="694" y1="106" x2="694" y2="112" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="1010" y1="106" x2="1010" y2="112" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="852.0" y="100" font-size="11" fill="#6b7280" text-anchor="middle">问题部分,每条请求可能不同</text>
+<text x="30" y="144" font-size="14" fill="#111827" text-anchor="start" font-weight="700">请求 A</text>
+<text x="30" y="162" font-size="11" fill="#6b7280" text-anchor="start">先到,80 token</text>
+<text x="30" y="177" font-size="11" fill="#6b7280" text-anchor="start">已算完,满块全登记</text>
+<rect x="196" y="122" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="206" y="142" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 0 · 0–15</text>
+<text x="206" y="160" font-size="11" fill="#6b7280" text-anchor="start">h0 = H(种子, 本块)</text>
+<text x="206" y="175" font-size="11" fill="#6b7280" text-anchor="start">登记 → 物理块 7</text>
+<rect x="362" y="122" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="372" y="142" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 1 · 16–31</text>
+<text x="372" y="160" font-size="11" fill="#6b7280" text-anchor="start">h1 = H(h0, 本块)</text>
+<text x="372" y="175" font-size="11" fill="#6b7280" text-anchor="start">登记 → 物理块 2</text>
+<rect x="528" y="122" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="538" y="142" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 2 · 32–47</text>
+<text x="538" y="160" font-size="11" fill="#6b7280" text-anchor="start">h2 = H(h1, 本块)</text>
+<text x="538" y="175" font-size="11" fill="#6b7280" text-anchor="start">登记 → 物理块 9</text>
+<rect x="694" y="122" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="704" y="142" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 3 · 48–63</text>
+<text x="704" y="160" font-size="11" fill="#6b7280" text-anchor="start">h3 = H(h2, 本块)</text>
+<text x="704" y="175" font-size="11" fill="#6b7280" text-anchor="start">登记 → 物理块 4</text>
+<rect x="860" y="122" width="150" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="870" y="142" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 4 · 64–79</text>
+<text x="870" y="160" font-size="11" fill="#6b7280" text-anchor="start">h4 = H(h3, 本块)</text>
+<text x="870" y="175" font-size="11" fill="#6b7280" text-anchor="start">登记 → 物理块 11</text>
+<line x1="346" y1="153.0" x2="361" y2="153.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="512" y1="153.0" x2="527" y2="153.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="678" y1="153.0" x2="693" y2="153.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="844" y1="153.0" x2="859" y2="153.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="196" y="202" font-size="11" fill="#9ca3af" text-anchor="start">每块的键 = H(前一块的键, 本块 16 个 token, 额外键);额外键里有 LoRA 名、图片内容哈希,缓存盐只进块 0,但会顺着链传到每一块。</text>
+<text x="30" y="266" font-size="14" fill="#111827" text-anchor="start" font-weight="700">请求 B</text>
+<text x="30" y="284" font-size="11" fill="#6b7280" text-anchor="start">系统提示词相同</text>
+<text x="30" y="299" font-size="11" fill="#6b7280" text-anchor="start">70 token</text>
+<rect x="196" y="244" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="206" y="264" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 0 · 0–15</text>
+<text x="206" y="282" font-size="11" fill="#6b7280" text-anchor="start">h0 与 A 相同</text>
+<text x="206" y="297" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 7</text>
+<rect x="362" y="244" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="372" y="264" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 1 · 16–31</text>
+<text x="372" y="282" font-size="11" fill="#6b7280" text-anchor="start">h1 与 A 相同</text>
+<text x="372" y="297" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 2</text>
+<rect x="528" y="244" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="538" y="264" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 2 · 32–47</text>
+<text x="538" y="282" font-size="11" fill="#6b7280" text-anchor="start">h2 与 A 相同</text>
+<text x="538" y="297" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 9</text>
+<rect x="694" y="244" width="150" height="62" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="704" y="264" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 3 · 48–63</text>
+<text x="704" y="282" font-size="11" fill="#6b7280" text-anchor="start">h3′ 不等于 h3</text>
+<text x="704" y="297" font-size="11" fill="#6b7280" text-anchor="start">未命中,查找到此停</text>
+<rect x="860" y="244" width="60" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="890" y="271" font-size="11" fill="#6b7280" text-anchor="middle">64–69</text>
+<text x="890" y="287" font-size="11" fill="#6b7280" text-anchor="middle">无键</text>
+<line x1="346" y1="275.0" x2="361" y2="275.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="512" y1="275.0" x2="527" y2="275.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="678" y1="275.0" x2="693" y2="275.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="844" y1="275.0" x2="859" y2="275.0" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="3 3"/>
+<text x="196" y="324" font-size="11" fill="#9ca3af" text-anchor="start">从左往右逐块查表,第一次查不到就停:块 3 的键已经变了,后面每一块的键都带着它,token 再一样也查不到。</text>
+<text x="196" y="340" font-size="11" fill="#9ca3af" text-anchor="start">末尾 6 个 token 不满一块,没有键,既不查也不登记;等 decode 把这块写满才算出键。</text>
+<text x="30" y="404" font-size="14" fill="#111827" text-anchor="start" font-weight="700">请求 C</text>
+<text x="30" y="422" font-size="11" fill="#6b7280" text-anchor="start">与 A 的前 64 token</text>
+<text x="30" y="437" font-size="11" fill="#6b7280" text-anchor="start">完全相同</text>
+<rect x="196" y="382" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="206" y="402" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 0 · 0–15</text>
+<text x="206" y="420" font-size="11" fill="#6b7280" text-anchor="start">h0 与 A 相同</text>
+<text x="206" y="435" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 7</text>
+<rect x="362" y="382" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="372" y="402" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 1 · 16–31</text>
+<text x="372" y="420" font-size="11" fill="#6b7280" text-anchor="start">h1 与 A 相同</text>
+<text x="372" y="435" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 2</text>
+<rect x="528" y="382" width="150" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="538" y="402" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 2 · 32–47</text>
+<text x="538" y="420" font-size="11" fill="#6b7280" text-anchor="start">h2 与 A 相同</text>
+<text x="538" y="435" font-size="11" fill="#6b7280" text-anchor="start">命中 → 物理块 9</text>
+<rect x="694" y="382" width="150" height="62" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="704" y="402" font-size="13" fill="#111827" text-anchor="start" font-weight="700">块 3 · 48–63</text>
+<text x="704" y="420" font-size="11" fill="#6b7280" text-anchor="start">h3 在表里</text>
+<text x="704" y="435" font-size="11" fill="#6b7280" text-anchor="start">不能用,整块重算</text>
+<line x1="346" y1="413.0" x2="361" y2="413.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="512" y1="413.0" x2="527" y2="413.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="678" y1="413.0" x2="693" y2="413.0" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="196" y="462" font-size="11" fill="#9ca3af" text-anchor="start">最后 1 个 token 必须真算一次才有 logits,所以命中上限是 63;命中又只能落在块边界,63 向下取整成 48,整块 3 重算。</text>
+<text x="860" y="404" font-size="11" fill="#9ca3af" text-anchor="start">prompt 恰好是块大小</text>
+<text x="860" y="420" font-size="11" fill="#9ca3af" text-anchor="start">的整数倍时,最后</text>
+<text x="860" y="436" font-size="11" fill="#9ca3af" text-anchor="start">这一整块一定不命中</text>
+<text x="30" y="520" font-size="11" fill="#9ca3af" text-anchor="start">命中的块引用计数加 1;若它此刻在空闲队列里(引用为 0、还带着键),就从队列里摘出来,免得被分给别人。</text>
+<text x="30" y="538" font-size="11" fill="#9ca3af" text-anchor="start">三条请求都结束后,这些块回到空闲队列尾部、键保留,下一条同前缀的请求仍能命中;直到它们排到队首被重新分配,键才被抹掉。</text>
+</svg>
