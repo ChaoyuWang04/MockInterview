@@ -106,6 +106,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| Score-Centering | TogetherAI | 训推不一致下 RL 失稳主要来自逐步累积的漂移:加一项可加的 score centering 修正抵消它,0.6B 到 30B 上单用即可比肩或超过重要性采样,还能与之叠加 |
 | APEX-Agents-SkyRL-Recipe | Mercor | 397B 知识工作 Agent 的六步 RL recipe;**原件是官方博客,`papers/` 下无 PDF** |
 | SOAP-Muon-and-Beyond | NVIDIA | 优化器 scaling 对照,附开源实现 |
 | Behavior-Leverage-Imbalance | AntGroup | 多教师 OPD 的 top-K 丢掉决策坐标,导致过调用 |
@@ -158,7 +159,6 @@
 | DCLM | Stanford | 数据侧的 ImageNet 时刻:固定模型只比数据配方(arXiv 2406.11794,NeurIPS 2024) |
 | Nemotron-CLIMB | NVIDIA | 聚类迭代搜数据配方,用 512 个模型的网格反推预训练混合(arXiv 2504.13161) |
 | Nested-Learning | Google | 把「深度」重述为多尺度更新,连续学习的优化视角(arXiv 2512.24695,NeurIPS 2025) |
-| Score-Centering | TogetherAI | 训推不一致下 RL 失稳主要来自逐步累积的漂移:加一项可加的 score centering 修正抵消它,0.6B 到 30B 上单用即可比肩或超过重要性采样,还能与之叠加 |
 | Privileged-Info-OPSD | NUS | on-policy 自蒸馏里给教师看答案到底多加了什么:5,319 题六种推理视角的 AMPLE-Math 对照无参考蒸馏,发现大部分提升来自蒸馏本身,参考信息的额外收益有限且依赖学生 |
 | Repulsive-Self-Distillation | ETH | 特权信息同时改了教师「知道什么」与「怎么表现」:吸引式与排斥式自蒸馏引起相反的行为偏移,两者对比组合后偏移相消,只剩更贴近正确性的 token 级信号 |
 | IER-OPD | MBZUAI | 稀疏 on-policy 蒸馏选哪些 token:用信噪分解定义信息效率比 IER 衡量梯度估计的可靠性,与已有有用性分数组合后,0.1%–1% 的 token 预算即可匹配全量 OPD |
@@ -327,6 +327,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| Real-Time-EXPO-FT | Stanford | VLA 推理延迟让观测过时:大 VLA 慢慢出动作块,轻量编辑策略按最新观测快速改动作,在此之上做 RL 微调 |
 | Fugu | Sakana | 动态编排 agent 脚手架的编排器模型 |
 | AI-Co-Mathematician | Google | 数学研究的 agentic 工作台(DeepMind) |
 | HunyuanWorld-2.0 | Tencent | 重建、生成、模拟三合一的 3D 世界模型 |
@@ -346,7 +347,6 @@
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
-| Real-Time-EXPO-FT | Stanford | VLA 推理延迟让观测过时:大 VLA 慢慢出动作块,轻量编辑策略按最新观测快速改动作,在此之上做 RL 微调 |
 | JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
 | DexTouch-WM | HKUST | 人手与灵巧手共用一套触觉阵列与动作表示,让人类触觉交互数据监督同一个动作条件世界模型,联合预测未来 RGB 与双手触觉 |
 
