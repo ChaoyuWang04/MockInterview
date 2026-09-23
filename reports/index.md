@@ -245,6 +245,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| MiMo-V2.6 | Xiaomi | 全模态 MiMo-V2.6 系列的 RL 扩规模报告:每步 1,568 条样本、上下文到 1M 的异步训练,环境覆盖代码、通用、视觉与网安,冻结 MoE 路由并多层防奖励黑客 |
 | Thinking-with-Visual-Primitives | DeepSeek | 把坐标当思考的最小单位;**官方仓库已删除**,原件只剩本地件与社区镜像 |
 | GLM-5V-Turbo | Z.ai | 把感知放进决策回路,而不是当输入接口 |
 | Qwen3.5-Omni | Alibaba | Thinker/Talker 全模态,难点在流式与延迟 |
@@ -265,7 +266,6 @@
 | Molmo2 | Ai2 | 开放权重 VLM:视频理解加指点接地的数据机器(CVPR 2026,arXiv 2601.10611) |
 | DINOv3 | Meta | 稠密特征与 42 亿图蒸馏;日常研读侧只收了 DINOv2(arXiv 2508.10104) |
 | SAM-3 | Meta | 按概念提示做分割与追踪;日常研读侧只收了 Segment Anything(arXiv 2511.16719) |
-| MiMo-V2.6 | Xiaomi | 全模态 MiMo-V2.6 系列的 RL 扩规模报告:每步 1,568 条样本、上下文到 1M 的异步训练,环境覆盖代码、通用、视觉与网安,冻结 MoE 路由并多层防奖励黑客 |
 
 ## 图像、视频与 3D 生成
 
