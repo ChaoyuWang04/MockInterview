@@ -49,8 +49,17 @@ async function main() {
       console.log(`待下载    ${rel}  ← ${url}`)
       continue
     }
-    const res = await fetch(url)
-    const bytes = Buffer.from(await res.arrayBuffer())
+    // 单个请求限时,一个连接挂住不拖死整批;失败的记下来,下次再跑会重试
+    let res
+    let bytes
+    try {
+      res = await fetch(url, { signal: AbortSignal.timeout(90_000) })
+      bytes = Buffer.from(await res.arrayBuffer())
+    } catch (error) {
+      console.log(`下载失败  ${rel}  ← ${url}(${error.name === 'TimeoutError' ? '90 秒超时' : error.message})`)
+      failed++
+      continue
+    }
     if (!res.ok || bytes.subarray(0, 4).toString() !== '%PDF') {
       console.log(`下载失败  ${rel}  ← ${url}(HTTP ${res.status})`)
       failed++
