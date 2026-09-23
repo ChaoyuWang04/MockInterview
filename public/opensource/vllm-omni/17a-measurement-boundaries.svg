@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="610" viewBox="0 0 1120 610" role="img" aria-labelledby="title desc">
+<title id="title">同一次请求,不同计时边界</title><desc id="desc">示意时间轴:客户端等待跨越引擎完成,stage与传输可以重叠,GPU捕获只覆盖选定窗口。没有实测时长或比例。</desc>
+<rect width="1120" height="610" fill="white"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif" fill="#111827">
+<text x="32" y="36" font-size="19" font-weight="700">同一次请求,不同计时边界</text>
+<text x="32" y="61" font-size="13" fill="#6b7280">示意,非实测比例 · 绿:客户端 · 紫:引擎/阶段 · 黄:传输 · 灰:捕获窗口</text>
+<g stroke="#cbd2d9" stroke-dasharray="5 4"><path d="M190 104V488M500 104V488M870 104V488M1040 104V488"/></g>
+<g font-size="11" fill="#6b7280"><text x="164" y="93">发出请求</text><text x="472" y="93">首个音频 chunk</text><text x="828" y="93">final stage finished</text><text x="1010" y="93">收完响应</text></g>
+<g font-size="14" font-weight="700"><text x="32" y="148">客户端</text><text x="32" y="225">引擎请求</text><text x="32" y="302">上游 stage</text><text x="32" y="363">下游 stage</text><text x="32" y="424">阶段间传输</text><text x="32" y="485">GPU trace</text></g>
+<rect x="190" y="120" width="850" height="48" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="212" y="141" font-size="14" font-weight="700">TTFP 到首包;完整延迟继续到响应结束</text><text x="212" y="159" font-size="11">Speech benchmark 使用客户端接收时间;不等于播放完成</text>
+<rect x="230" y="194" width="640" height="49" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="250" y="216" font-size="14" font-weight="700">服务端请求起点 → 最终引擎输出完成</text><text x="250" y="233" font-size="11">Prometheus 埋点止于此;媒体编码、落盘或网络交付可能仍在继续</text>
+<rect x="260" y="275" width="420" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><text x="280" y="300" font-size="14" font-weight="700">生成并持续发出中间 chunk</text>
+<rect x="420" y="336" width="450" height="40" rx="6" fill="#ecebfb" stroke="#8f8bd8"/><text x="440" y="361" font-size="14" font-weight="700">消费早先 chunk,与上游重叠</text>
+<g fill="#fdf1dc" stroke="#d4a24c"><rect x="375" y="397" width="85" height="40" rx="6"/><rect x="565" y="397" width="85" height="40" rx="6"/><rect x="720" y="397" width="85" height="40" rx="6"/></g>
+<g font-size="11"><text x="391" y="421">一次传输</text><text x="581" y="421">一次传输</text><text x="736" y="421">一次传输</text></g>
+<rect x="350" y="456" width="390" height="42" rx="6" fill="#eeeeee" stroke="#b9b9b9"/><text x="370" y="482" font-size="14" font-weight="700">显式 start / stop 之间的 worker 活动</text>
+<path d="M190 519H1045" stroke="#9ca3af" stroke-width="1.4"/><path d="m1038 514 8 5-8 5" fill="none" stroke="#9ca3af" stroke-width="1.4"/><text x="975" y="541" font-size="11" fill="#6b7280">时间向右推进</text>
+<text x="32" y="567" font-size="14" font-weight="700">重叠区间不能相加成 E2E;先用客户端判断体验,再用 stage / transfer / trace 定位。</text>
+<text x="32" y="590" font-size="11" fill="#6b7280">位置只表达计时边界与可能的重叠关系,不承诺特定模型的调度顺序或耗时占比。</text>
+</g></svg>

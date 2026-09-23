@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7" fill="none" stroke="#9ca3af"/></marker></defs>
+<rect width="1120" height="620" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#111827">
+<text x="32" y="35" font-size="19" font-weight="bold">接入的单位是契约：找到类之后，还要让运行时正确调用它</text>
+<text x="32" y="60" font-size="13" fill="#6b7280">紫：选择与拓扑　绿：阶段实现　黄：模型数据 / 权重　灰：公共运行时；箭头表示选择、供给或转换</text>
+<rect x="32" y="87" width="1056" height="319" rx="8" fill="none" stroke="#b9b9b9" stroke-dasharray="5 4"/>
+<text x="48" y="112" font-size="14" font-weight="bold">Qwen3-Omni · 完整语音拓扑</text>
+<rect x="48" y="128" width="210" height="68" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="64" y="152" font-size="14" font-weight="bold">Pipeline Registry</text><text x="64" y="177" font-size="11" fill="#6b7280">选择完整链或 Thinker-only</text>
+<rect x="48" y="219" width="210" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="64" y="243" font-size="14" font-weight="bold">Model Registry</text><text x="64" y="266" font-size="11" fill="#6b7280">wrapper 按 stage 构造子模型</text>
+<rect x="48" y="310" width="210" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="64" y="336" font-size="14" font-weight="bold">checkpoint</text><text x="64" y="360" font-size="11" fill="#6b7280">按组件前缀分派权重</text>
+<rect x="304" y="128" width="752" height="49" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="325" y="149" font-size="14" font-weight="bold">公共运行时选择执行路径、调用当前阶段、负责跨段调度</text><text x="325" y="166" font-size="11" fill="#6b7280">模型 forward 不启动下游阶段</text>
+<path d="M258 153H304" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M258 248H280V165H304" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M424 177V219" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M680 177V219" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M936 177V219" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<g fill="#e3f4ec" stroke="#5fa886"><rect x="304" y="219" width="240" height="64" rx="6"/><rect x="560" y="219" width="240" height="64" rx="6"/><rect x="816" y="219" width="240" height="64" rx="6"/></g>
+<g font-size="14" font-weight="bold" text-anchor="middle"><text x="424" y="244">Thinker · AR</text><text x="680" y="244">Talker · AR</text><text x="936" y="244">Code2Wav · Generation</text></g>
+<g font-size="11" fill="#6b7280" text-anchor="middle"><text x="424" y="267">text + hidden states / embeddings</text><text x="680" y="267">codec</text><text x="936" y="267">waveform + sample rate</text></g>
+<g fill="#fdf1dc" stroke="#d4a24c"><rect x="304" y="319" width="240" height="38" rx="6"/><rect x="560" y="319" width="240" height="38" rx="6"/><rect x="816" y="319" width="240" height="38" rx="6"/></g>
+<g font-size="11" text-anchor="middle"><text x="424" y="343">Thinker 权重</text><text x="680" y="343">Talker 权重</text><text x="936" y="343">Code2Wav 权重</text></g>
+<path d="M258 348H282V373H936" fill="none" stroke="#9ca3af" stroke-width="1.4"/><path d="M424 373V357" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M424 319V283" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M680 373V357" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M680 319V283" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M936 373V357" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M936 319V283" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M544 251H560" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M800 251H816" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="510" y="305" font-size="11" fill="#6b7280">Processor</text><text x="766" y="305" font-size="11" fill="#6b7280">Processor</text>
+<text x="304" y="394" font-size="11" fill="#6b7280">转换由传输适配器实际调用；三段只装载各自子模型，不是三个完整模型副本</text>
+<rect x="32" y="426" width="1056" height="158" rx="8" fill="none" stroke="#b9b9b9" stroke-dasharray="5 4"/>
+<text x="48" y="451" font-size="14" font-weight="bold">QwenImage · 单阶段扩散对照</text>
+<rect x="48" y="468" width="242" height="61" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="64" y="492" font-size="14" font-weight="bold">Diffusion Model Registry</text><text x="64" y="514" font-size="11" fill="#6b7280">解析 QwenImage Pipeline 类</text>
+<rect x="344" y="468" width="264" height="61" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="360" y="492" font-size="14" font-weight="bold">自动生成单 stage 拓扑</text><text x="360" y="514" font-size="11" fill="#6b7280">无需手写段间 Processor</text>
+<rect x="662" y="468" width="394" height="61" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="678" y="492" font-size="14" font-weight="bold">QwenImage Pipeline</text><text x="678" y="514" font-size="11" fill="#6b7280">组件装载 + request batch / step execution 契约</text>
+<path d="M290 498H344" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/><path d="M608 498H662" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arrow)"/>
+<text x="48" y="560" font-size="11" fill="#6b7280">注册只负责发现；batch、step execution、Parallel、Cache、Offload 各自需要实现与验证</text>
+<text x="32" y="608" font-size="11" fill="#6b7280">图示为源码契约关系，方框大小不表示参数量、显存或耗时。</text>
+</g></svg>
