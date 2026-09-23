@@ -72,7 +72,7 @@ fi
 
 # 补原件与重启服务都放后台,不拖慢会话启动;结果写进 .git 下的日志
 if git diff --quiet "$old" "$new" -- 'readings/_alphaxiv-扫描记录.md'; then :; else
-  nohup node scripts/papers-pull.mjs --apply >"$REPO/.git/sync-latest-pull.log" 2>&1 &
+  NODE_USE_ENV_PROXY=1 nohup node scripts/papers-pull.mjs --apply >"$REPO/.git/sync-latest-pull.log" 2>&1 &
   say "后台补下载新原件,日志 .git/sync-latest-pull.log"
 fi
 if [ -n "$(git diff --name-only "$old" "$new" -- public | head -1)" ]; then
