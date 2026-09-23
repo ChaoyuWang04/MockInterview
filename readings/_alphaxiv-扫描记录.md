@@ -31,3 +31,4 @@
 | 2026-09-23 | 2609.20649 | DexTouch-WM: Learning Action-Conditioned Tactile World Models from Human Touch for Dexterous Robot Manipulation | The Hong Kong University of Science and Technology (Guangzhou)、Xspark AI、Peking University、University of Hong Kong | 34 | A · 名单内(HKUST) | reports/HKUST/DexTouch-WM |
 | 2026-09-23 | 2609.19101 | Monitoring and Discovering Reward Hacking with Internal Representations during LLM Evaluations | Goodfire | 32 | B · 名单外 | readings/可解释性与对齐/Reward-Hacking-Probes |
 | 2026-09-23 | 2609.19644 | ScientistTwo: Pioneering the Human Knowledge Frontier with Autonomous AI | Google Cloud AI Research、University of Waterloo | 30 | A · 名单内(Google) | reports/Google/ScientistTwo |
+| 2026-09-23 | 2609.24972 | RRSI: Regularized Recursive Self-Improvement of Agent Harnesses | Google Cloud AI Research、University of North Carolina at Chapel Hill、Stanford University、Washington University in St. Louis | 30 | A · 名单内(Google) | reports/Google/RRSI |

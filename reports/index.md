@@ -356,6 +356,8 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| RRSI | Google | 部件:harness。给 harness 递归自改进加正则:按轮退火的编辑预算、探索未走过的轨迹,再由 critic 筛掉针对特定基准的改动、pruner 删掉太小、太贵或已无用的改动;进化集最高 +14.1 分、5 个分布外基准最高 +4.7 分,策略 token 比无正则进化少 30% |
+| ScientistTwo | Google | 全自主多 agent 科研框架:建基线、提假设、跑实验与自动消融,再用模拟评审反驳闭环验证结论 |
 | SoL-Pi | NVIDIA | 在 harness 层递归扩展自动研究循环,筛出动作执行、上下文压缩、观测处理与委托阅读四个机制;EdgeBench 51 题上性能与 Pi 相当,token 流量降 44.7–49.0% |
 | AIDE2 | Weco | autoresearch 套 autoresearch,递归自我改进的首份实验证据;**原件是官方博客,`papers/` 下无 PDF** |
 | Reward-Free-Self-Evolution | Tencent | 部件:任务/课程。通过世界知识探索做无奖励的自发自进化 |
@@ -371,7 +373,6 @@
 | ADAS | UBC | 部件:harness。外层 agent 用代码搜索内层 agent 系统(Meta/Vector 合作) |
 | Self-Rewarding-LM | Meta | 部件:模型权重。模型兼任奖励模型,自生成数据再训练 |
 | PromptBreeder | Google | 部件:Prompt。DeepMind,自指涉的提示词进化搜索 |
-| ScientistTwo | Google | 全自主多 agent 科研框架:建基线、提假设、跑实验与自动消融,再用模拟评审反驳闭环验证结论 |
 
 ## 可解释性与对齐
 

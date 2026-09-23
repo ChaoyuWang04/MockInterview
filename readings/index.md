@@ -242,9 +242,9 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Reward-Hacking-Probes | Goodfire | 差值均值向量就能表示并检测前沿开源模型的奖励黑客,成本近乎为零,效果接近 LLM 监控器,还能在思维链上提前预警 |
 | Scaling Monosemanticity | Anthropic | 稀疏自编码器在 Claude 3 Sonnet 上规模化,抽出可解释、可干预的单义特征 |
 | Refusal Direction | Independent | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
-| Reward-Hacking-Probes | Goodfire | 差值均值向量就能表示并检测前沿开源模型的奖励黑客,成本近乎为零,效果接近 LLM 监控器,还能在思维链上提前预警 |
 
 ## 深度学习基石
 
