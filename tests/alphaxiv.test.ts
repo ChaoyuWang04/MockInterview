@@ -83,7 +83,7 @@ describe('papers:feed 挑选', () => {
     expect(rows.map((r: { id: string }) => r.id).sort()).toEqual(['cs-sub', 'edge', 'ok'])
   })
 
-  it('初判:已在库 > 名单内 > 待核,按票数从高到低', () => {
+  it('初判:已在库 > 名单内 > 名单外,按票数从高到低', () => {
     const rows = selectCandidates(
       [
         paper({ universal_paper_id: 'a', metrics: { public_total_votes: 31 } }),
@@ -98,9 +98,9 @@ describe('papers:feed 挑选', () => {
       base,
     )
     expect(rows.map((r: { id: string; verdict: string }) => [r.id, r.verdict])).toEqual([
-      ['b', '待核 · 名单外'],
+      ['b', 'B · 名单外'],
       ['c', 'D · 已在库'],
-      ['d', '待核 · 名单外'],
+      ['d', 'B · 名单外'],
       ['a', 'A · 名单内(NVIDIA)'],
     ])
     expect(rows[2].title).toBe('Pipe / in title')
@@ -132,8 +132,8 @@ describe('扫描记录与票数', () => {
         '| 达标日 | 编号 | 标题 | 机构 | 票数 | 判定 | 去向 |',
         '|---|---|---|---|---|---|---|',
         '| 2026-09-22 | 1 | A | NVIDIA | 127 | A · 名单内 | reports/NVIDIA/SoL-Pi |',
-        '| 2026-09-22 | 2 | B | X | 47 | B · 名单外过闸门三 | `readings/自进化系统/ScienceIDE` |',
-        '| 2026-09-22 | 3 | C | Y | 99 | C · 待拍板 | C · 待拍板 |',
+        '| 2026-09-22 | 2 | B | X | 47 | B · 名单外 | `readings/自进化系统/ScienceIDE` |',
+        '| 2026-09-22 | 3 | C | Y | 99 | 不收 | 不收:非计算机研究 |',
       ].join('\n'),
     )
     expect([...votesByArticle('reports', repo)]).toEqual([['NVIDIA/SoL-Pi', 127]])
@@ -219,7 +219,7 @@ describe('papers:pull', () => {
     expect(sourcePathOf('`readings/自进化系统/X`', repo)).toBe(
       path.join(repo, 'readings', '_src', '自进化系统', 'X.pdf'),
     )
-    expect(sourcePathOf('C · 待拍板', repo)).toBeNull()
+    expect(sourcePathOf('不收:非计算机研究', repo)).toBeNull()
     fs.mkdirSync(path.join(repo, 'papers', 'Xiaomi'), { recursive: true })
     fs.writeFileSync(path.join(repo, 'papers', 'Xiaomi', 'MiMo.pdf'), '%PDF')
     const row = (id: string, verdict: string, destination: string) => ({
@@ -230,7 +230,7 @@ describe('papers:pull', () => {
         row('1', 'A · 名单内', 'reports/NVIDIA/SoL-Pi'),
         row('2', 'A · 名单内', 'reports/Xiaomi/MiMo'),
         row('3', 'D · 已在库', 'reports/DeepSeek/DeepSeek-V4.1-Flash'),
-        row('4', 'C · 待拍板', 'C · 待拍板'),
+        row('4', '不收', '不收:无原件'),
       ],
       repo,
     )

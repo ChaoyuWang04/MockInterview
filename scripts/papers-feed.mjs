@@ -135,7 +135,7 @@ export function selectCandidates(papers, { today, threshold, days, recordIds, or
       ? 'D · 已在库'
       : matched
         ? `A · 名单内(${matched.dir})`
-        : '待核 · 名单外'
+        : 'B · 名单外'
     rows.push({
       date: today,
       id,
