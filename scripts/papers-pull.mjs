@@ -1,7 +1,7 @@
 // 把云端每日任务入库的原件补到本机(docs/10-材料解读流程.md 第二节「来源二」)
 //
 // PDF 原件不进 git,云端只推送解读与扫描记录。本脚本按 readings/_alphaxiv-扫描记录.md 的「去向」
-// 找出本机缺的原件,arXiv 编号直接下载;非 arXiv 的(alphaXiv 自有编号)只打印出来,手动取件。
+// 找出本机缺的原件下载:arXiv 编号走 arxiv.org,非 arXiv 的(alphaXiv 自有编号,如厂商报告)走 alphaXiv 托管的 PDF。
 //
 // 用法:
 //   npm run papers:pull            干跑,列出缺哪些
@@ -42,11 +42,9 @@ async function main() {
   let failed = 0
   for (const row of missing) {
     const rel = path.relative(REPO, row.file)
-    if (!ARXIV_ID.test(row.id)) {
-      console.log(`手动取件  ${rel}  ← https://www.alphaxiv.org/abs/${row.id}`)
-      continue
-    }
-    const url = `https://arxiv.org/pdf/${row.id}`
+    const url = ARXIV_ID.test(row.id)
+      ? `https://arxiv.org/pdf/${row.id}`
+      : `https://www.alphaxiv.org/abs/${row.id}.pdf`
     if (!apply) {
       console.log(`待下载    ${rel}  ← ${url}`)
       continue
