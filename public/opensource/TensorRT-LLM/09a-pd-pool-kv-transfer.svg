@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt09a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">默认同卡混跑，分池才把 KV 搬走</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = prefill 池。紫 = decode 池。虚线 = 默认同卡 IFB，不分池。实线 = 拆开后的请求与 KV 传输。</text>
+
+  <rect x="30" y="78" width="1060" height="118" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="48" y="106" font-size="14" fill="#111827" font-weight="700">默认：同一张卡上的 IFB</text>
+  <text x="48" y="128" font-size="11" fill="#6b7280">prefill 与 decode 进同一批、同一套并行。TTFT 与 TPOT 互相拖，两条阶段不能各自选切法。</text>
+  <rect x="48" y="144" width="200" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="148" y="167" font-size="12" fill="#111827" text-anchor="middle">新 prompt</text>
+  <rect x="288" y="144" width="280" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="428" y="167" font-size="12" fill="#111827" text-anchor="middle">同卡同批混算</text>
+  <rect x="608" y="144" width="200" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="708" y="167" font-size="12" fill="#111827" text-anchor="middle">KV 不搬</text>
+  <line x1="248" y1="162" x2="288" y2="162" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt09a)"/>
+  <line x1="568" y1="162" x2="608" y2="162" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt09a)"/>
+
+  <rect x="30" y="220" width="340" height="168" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="48" y="248" font-size="14" fill="#111827" font-weight="700">prefill 池</text>
+  <text x="48" y="272" font-size="11" fill="#6b7280">自己的卡、自己的并行。</text>
+  <text x="48" y="292" font-size="11" fill="#6b7280">只算 prompt，吐首 token。</text>
+  <text x="48" y="312" font-size="11" fill="#6b7280">块周转到传完确认就还。</text>
+  <text x="48" y="340" font-size="11" fill="#9ca3af">传输器未配则拒分阶段请求。</text>
+
+  <rect x="390" y="248" width="340" height="112" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="560" y="276" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">NIXL 搬块</text>
+  <text x="560" y="300" font-size="11" fill="#6b7280" text-anchor="middle">设备内存直传，可改布局</text>
+  <text x="560" y="320" font-size="11" fill="#6b7280" text-anchor="middle">本请求在传时，别人仍在算</text>
+  <text x="560" y="340" font-size="11" fill="#9ca3af" text-anchor="middle">两侧超时默认 60 秒</text>
+
+  <rect x="750" y="220" width="340" height="168" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="768" y="248" font-size="14" fill="#111827" font-weight="700">decode 池</text>
+  <text x="768" y="272" font-size="11" fill="#6b7280">另一套卡、可另一套并行。</text>
+  <text x="768" y="292" font-size="11" fill="#6b7280">用传来的 KV 接着生成。</text>
+  <text x="768" y="312" font-size="11" fill="#6b7280">Helix 只挂在这一侧。</text>
+  <text x="768" y="340" font-size="11" fill="#9ca3af">多实例要对上同一条请求号。</text>
+
+  <line x1="370" y1="304" x2="390" y2="304" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt09a)"/>
+  <line x1="730" y1="304" x2="750" y2="304" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt09a)"/>
+
+  <rect x="30" y="408" width="1060" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="48" y="436" font-size="14" fill="#111827" font-weight="700">编排进程</text>
+  <text x="48" y="460" font-size="12" fill="#6b7280">客户端打到编排口。先标成只做 context 发给 prefill 实例，拿回首 token 与上下文参数，再标成只做 generation 发给 decode 实例。</text>
+  <text x="48" y="480" font-size="11" fill="#9ca3af">多实例需要协调；协调器细节在 15 章。连接器是另一条插口，见 03 章。</text>
+</svg>

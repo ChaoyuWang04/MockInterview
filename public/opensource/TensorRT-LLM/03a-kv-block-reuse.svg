@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt03a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">GPU 块池填满后进搜索树,跨请求按前缀复用</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = GPU 块池(默认热路径),紫 = 填满后进搜索树并给后来请求复用,黄 = 主机卸载与连接器(默认关,不画箭头)</text>
+
+  <rect x="40" y="80" width="220" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="150" y="114" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">新请求的 token</text>
+  <text x="150" y="136" font-size="11" fill="#6b7280" text-anchor="middle">按块对齐去占格子</text>
+
+  <line x1="260" y1="124" x2="318" y2="124" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt03a)"/>
+
+  <rect x="320" y="80" width="780" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="336" y="104" font-size="13" fill="#6b7280">执行器里的 GPU 块池:一块固定装若干 token,多层 KV 打在同一块里</text>
+
+  <rect x="344" y="124" width="160" height="128" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="424" y="152" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">空闲块</text>
+  <text x="424" y="174" font-size="11" fill="#6b7280" text-anchor="middle">还没写过 KV</text>
+  <text x="424" y="194" font-size="11" fill="#6b7280" text-anchor="middle">需要时发给请求</text>
+  <text x="424" y="214" font-size="11" fill="#6b7280" text-anchor="middle">默认每块 32 token</text>
+
+  <rect x="528" y="124" width="160" height="128" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="608" y="152" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">正在写的块</text>
+  <text x="608" y="174" font-size="11" fill="#6b7280" text-anchor="middle">当前请求独占</text>
+  <text x="608" y="194" font-size="11" fill="#6b7280" text-anchor="middle">没填满不能共享</text>
+  <text x="608" y="214" font-size="11" fill="#6b7280" text-anchor="middle">尾块可能半满</text>
+
+  <rect x="712" y="124" width="160" height="128" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="792" y="152" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">已填满的块</text>
+  <text x="792" y="174" font-size="11" fill="#6b7280" text-anchor="middle">立刻挂进搜索树</text>
+  <text x="792" y="194" font-size="11" fill="#6b7280" text-anchor="middle">后来请求可命中</text>
+  <text x="792" y="214" font-size="11" fill="#6b7280" text-anchor="middle">多条请求可共指</text>
+
+  <rect x="896" y="124" width="180" height="128" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="986" y="152" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前缀搜索树</text>
+  <text x="986" y="174" font-size="11" fill="#6b7280" text-anchor="middle">按填满块的前缀查</text>
+  <text x="986" y="194" font-size="11" fill="#6b7280" text-anchor="middle">缺块时按优先级 LRU 踢</text>
+  <text x="986" y="214" font-size="11" fill="#6b7280" text-anchor="middle">默认只踢叶子</text>
+
+  <line x1="504" y1="188" x2="528" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt03a)"/>
+  <line x1="688" y1="188" x2="712" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt03a)"/>
+  <line x1="872" y1="188" x2="896" y2="188" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt03a)"/>
+
+  <rect x="40" y="320" width="500" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="290" y="356" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">后来那条请求查树</text>
+  <text x="290" y="380" font-size="11" fill="#6b7280" text-anchor="middle">前缀对上就少算、少占;对不上的尾巴再从空闲块里领新块</text>
+  <text x="290" y="400" font-size="11" fill="#6b7280" text-anchor="middle">复用默认开;调度器另有一份「按命中估预算」的开关,关了也不停块复用</text>
+
+  <line x1="986" y1="252" x2="986" y2="300" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="986" y1="300" x2="540" y2="300" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="540" y1="300" x2="540" y2="320" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt03a)"/>
+
+  <rect x="580" y="320" width="240" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-dasharray="5 4"/>
+  <text x="700" y="356" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">主机内存块</text>
+  <text x="700" y="378" font-size="11" fill="#6b7280" text-anchor="middle">默认不分配</text>
+  <text x="700" y="398" font-size="11" fill="#6b7280" text-anchor="middle">显式给字节数才卸</text>
+
+  <rect x="848" y="320" width="232" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-dasharray="5 4"/>
+  <text x="964" y="356" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">连接器插口</text>
+  <text x="964" y="378" font-size="11" fill="#6b7280" text-anchor="middle">默认没有实现</text>
+  <text x="964" y="398" font-size="11" fill="#6b7280" text-anchor="middle">挂上才读写外部</text>
+
+  <text x="560" y="460" font-size="11" fill="#9ca3af" text-anchor="middle">黄框默认关:主机卸载和连接器都不在热路径上,图上不画进出箭头</text>
+  <text x="560" y="488" font-size="11" fill="#9ca3af" text-anchor="middle">挂了连接器再给主机或磁盘字节数,启动会拒;不设就丢掉这两层,连接器自己去外部存</text>
+  <text x="560" y="528" font-size="11" fill="#9ca3af" text-anchor="middle">压缩是另一套配件,不改这块池怎么发、怎么进树</text>
+</svg>

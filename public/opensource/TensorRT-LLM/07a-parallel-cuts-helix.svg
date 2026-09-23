@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt07a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">四张卡怎么切：权重、层、请求、上下文；Helix 只在 decode 时分</text>
+  <text x="30" y="56" font-size="13" fill="#6b7280">绿 = 张量并行切权重，紫 = 流水线切层，黄 = 注意力数据并行切请求，灰 = 上下文并行切序列。虚线框是 Helix，默认不在热路径上。</text>
+
+  <text x="30" y="92" font-size="13" fill="#6b7280">同一批四张卡，四种空间切法（实线）</text>
+
+  <rect x="30" y="108" width="200" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="130" y="138" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 0 · 权重片 0</text>
+  <text x="130" y="160" font-size="11" fill="#6b7280" text-anchor="middle">同一批 token</text>
+  <text x="130" y="178" font-size="11" fill="#6b7280" text-anchor="middle">切完要拼回来</text>
+
+  <rect x="250" y="108" width="200" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="350" y="138" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 1 · 权重片 1</text>
+  <text x="350" y="160" font-size="11" fill="#6b7280" text-anchor="middle">同一批 token</text>
+  <text x="350" y="178" font-size="11" fill="#6b7280" text-anchor="middle">切完要拼回来</text>
+
+  <rect x="470" y="108" width="200" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="570" y="138" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 2 · 权重片 2</text>
+  <text x="570" y="160" font-size="11" fill="#6b7280" text-anchor="middle">同一批 token</text>
+  <text x="570" y="178" font-size="11" fill="#6b7280" text-anchor="middle">切完要拼回来</text>
+
+  <rect x="690" y="108" width="200" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="790" y="138" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 3 · 权重片 3</text>
+  <text x="790" y="160" font-size="11" fill="#6b7280" text-anchor="middle">同一批 token</text>
+  <text x="790" y="178" font-size="11" fill="#6b7280" text-anchor="middle">切完要拼回来</text>
+
+  <text x="920" y="148" font-size="12" fill="#6b7280">张量并行</text>
+  <text x="920" y="168" font-size="11" fill="#9ca3af">单卡装不下权重</text>
+
+  <rect x="30" y="216" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="130" y="246" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前几层</text>
+  <text x="130" y="268" font-size="11" fill="#6b7280" text-anchor="middle">激活交给下一段</text>
+
+  <rect x="250" y="216" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="350" y="246" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">中前层</text>
+  <text x="350" y="268" font-size="11" fill="#6b7280" text-anchor="middle">点对点接力</text>
+
+  <rect x="470" y="216" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="570" y="246" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">中后层</text>
+  <text x="570" y="268" font-size="11" fill="#6b7280" text-anchor="middle">点对点接力</text>
+
+  <rect x="690" y="216" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="790" y="246" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">后几层</text>
+  <text x="790" y="268" font-size="11" fill="#6b7280" text-anchor="middle">出 token</text>
+
+  <line x1="230" y1="252" x2="250" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt07a)"/>
+  <line x1="450" y1="252" x2="470" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt07a)"/>
+  <line x1="670" y1="252" x2="690" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt07a)"/>
+  <text x="920" y="248" font-size="12" fill="#6b7280">流水线并行</text>
+  <text x="920" y="268" font-size="11" fill="#9ca3af">层再切一段</text>
+
+  <rect x="30" y="308" width="200" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="130" y="338" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">请求 A</text>
+  <text x="130" y="360" font-size="11" fill="#6b7280" text-anchor="middle">权重复制、KV 自管</text>
+
+  <rect x="250" y="308" width="200" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="350" y="338" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">请求 B</text>
+  <text x="350" y="360" font-size="11" fill="#6b7280" text-anchor="middle">权重复制、KV 自管</text>
+
+  <rect x="470" y="308" width="200" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="570" y="338" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">请求 C</text>
+  <text x="570" y="360" font-size="11" fill="#6b7280" text-anchor="middle">权重复制、KV 自管</text>
+
+  <rect x="690" y="308" width="200" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="790" y="338" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">请求 D</text>
+  <text x="790" y="360" font-size="11" fill="#6b7280" text-anchor="middle">权重复制、KV 自管</text>
+
+  <text x="920" y="340" font-size="12" fill="#6b7280">注意力数据并行</text>
+  <text x="920" y="360" font-size="11" fill="#9ca3af">大 batch 切请求</text>
+
+  <rect x="30" y="400" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="130" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">序列段 0</text>
+  <text x="130" y="452" font-size="11" fill="#6b7280" text-anchor="middle">长上下文分算</text>
+
+  <rect x="250" y="400" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="350" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">序列段 1</text>
+  <text x="350" y="452" font-size="11" fill="#6b7280" text-anchor="middle">长上下文分算</text>
+
+  <rect x="470" y="400" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="570" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">序列段 2</text>
+  <text x="570" y="452" font-size="11" fill="#6b7280" text-anchor="middle">长上下文分算</text>
+
+  <rect x="690" y="400" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="790" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">序列段 3</text>
+  <text x="790" y="452" font-size="11" fill="#6b7280" text-anchor="middle">长上下文分算</text>
+
+  <text x="920" y="432" font-size="12" fill="#6b7280">上下文并行</text>
+  <text x="920" y="452" font-size="11" fill="#9ca3af">默认不是 Helix</text>
+
+  <rect x="30" y="500" width="1060" height="172" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="48" y="524" font-size="13" fill="#6b7280">Helix（虚线）：只给 PD 的 decode 侧；同一批卡先当注意力上下文并行，再当 FFN 张量并行。默认不起，图上没有实线指进来。</text>
+
+  <rect x="48" y="544" width="500" height="104" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="298" y="578" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">时刻 0 · 注意力</text>
+  <text x="298" y="602" font-size="11" fill="#6b7280" text-anchor="middle">各卡只算自己那份 KV</text>
+  <text x="298" y="622" font-size="11" fill="#6b7280" text-anchor="middle">偏结果再合并</text>
+
+  <rect x="572" y="544" width="500" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="822" y="578" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">时刻 1 · FFN</text>
+  <text x="822" y="602" font-size="11" fill="#6b7280" text-anchor="middle">同一批卡改当张量并行</text>
+  <text x="822" y="622" font-size="11" fill="#6b7280" text-anchor="middle">不另占一排注意力卡</text>
+</svg>

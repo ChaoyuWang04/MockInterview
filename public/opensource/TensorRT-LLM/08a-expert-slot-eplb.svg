@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt08a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">专家和槽位分开：热专家复制，路由表把编号改到槽</text>
+  <text x="30" y="56" font-size="13" fill="#6b7280">绿 = 本卡槽位上的专家计算，紫 = token 派发与收回，黄 = 被复制的热专家，灰 = 空闲或冷槽。虚线是负载均衡改路由表。</text>
+
+  <rect x="30" y="80" width="200" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="130" y="110" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">一批 token</text>
+  <text x="130" y="132" font-size="11" fill="#6b7280" text-anchor="middle">路由选出逻辑专家</text>
+
+  <rect x="280" y="80" width="280" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="420" y="110" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">路由表 · 专家 → 槽</text>
+  <text x="420" y="132" font-size="11" fill="#6b7280" text-anchor="middle">热专家 0 指向槽 0 与槽 6</text>
+
+  <rect x="620" y="80" width="220" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="730" y="110" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">负载均衡</text>
+  <text x="730" y="132" font-size="11" fill="#6b7280" text-anchor="middle">按统计改表，不改专家编号</text>
+
+  <line x1="230" y1="116" x2="280" y2="116" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt08a)"/>
+  <line x1="620" y1="116" x2="560" y2="116" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt08a)"/>
+
+  <text x="30" y="188" font-size="13" fill="#6b7280">四张卡、每卡三个槽；逻辑专家仍是 0–7，槽比专家多，热专家可占两槽</text>
+
+  <rect x="30" y="208" width="240" height="168" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="150" y="234" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 0</text>
+  <rect x="48" y="250" width="204" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="150" y="271" font-size="11" fill="#111827" text-anchor="middle">槽 0 · 专家 0（热副本）</text>
+  <rect x="48" y="290" width="204" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="150" y="311" font-size="11" fill="#111827" text-anchor="middle">槽 1 · 专家 1</text>
+  <rect x="48" y="330" width="204" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="150" y="351" font-size="11" fill="#6b7280" text-anchor="middle">槽 2 · 冷</text>
+
+  <rect x="290" y="208" width="240" height="168" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="410" y="234" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 1</text>
+  <rect x="308" y="250" width="204" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="410" y="271" font-size="11" fill="#111827" text-anchor="middle">槽 3 · 专家 2</text>
+  <rect x="308" y="290" width="204" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="410" y="311" font-size="11" fill="#111827" text-anchor="middle">槽 4 · 专家 3</text>
+  <rect x="308" y="330" width="204" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="410" y="351" font-size="11" fill="#6b7280" text-anchor="middle">槽 5 · 冷</text>
+
+  <rect x="550" y="208" width="240" height="168" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="670" y="234" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 2</text>
+  <rect x="568" y="250" width="204" height="32" rx="4" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="670" y="271" font-size="11" fill="#111827" text-anchor="middle">槽 6 · 专家 0（热副本）</text>
+  <rect x="568" y="290" width="204" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="670" y="311" font-size="11" fill="#111827" text-anchor="middle">槽 7 · 专家 4</text>
+  <rect x="568" y="330" width="204" height="32" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="670" y="351" font-size="11" fill="#6b7280" text-anchor="middle">槽 8 · 冷</text>
+
+  <rect x="810" y="208" width="270" height="168" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="945" y="234" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">卡 3</text>
+  <rect x="828" y="250" width="234" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="945" y="271" font-size="11" fill="#111827" text-anchor="middle">槽 9 · 专家 5</text>
+  <rect x="828" y="290" width="234" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="945" y="311" font-size="11" fill="#111827" text-anchor="middle">槽 10 · 专家 6</text>
+  <rect x="828" y="330" width="234" height="32" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="945" y="351" font-size="11" fill="#111827" text-anchor="middle">槽 11 · 专家 7</text>
+
+  <line x1="420" y1="152" x2="420" y2="208" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt08a)"/>
+  <line x1="420" y1="152" x2="150" y2="208" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="420" y1="152" x2="670" y2="208" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="420" y1="152" x2="945" y2="208" stroke="#9ca3af" stroke-width="1.4"/>
+
+  <rect x="30" y="400" width="1060" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="560" y="432" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">all-to-all：派到持有对应槽的卡，算完再收回</text>
+  <text x="560" y="456" font-size="11" fill="#6b7280" text-anchor="middle">形状每步都变；最慢那张卡上的专家算完，整步才结束</text>
+  <text x="560" y="474" font-size="11" fill="#6b7280" text-anchor="middle">专家 0 同时落在卡 0 与卡 2，热流量被摊开，不再单卡拖死</text>
+
+  <rect x="30" y="508" width="1060" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="560" y="542" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">没有负载均衡时：专家等于槽，热专家只在一张卡</text>
+  <text x="560" y="566" font-size="11" fill="#6b7280" text-anchor="middle">细粒度 MoE 上某几个专家突然变热，持有它们的卡把 SM 打满，别的卡在集合通信同步点陪等</text>
+</svg>

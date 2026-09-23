@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt16a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">第二条前端:导出成图、变换,再接到同一套执行器</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 接到生产执行器,紫 = 图变换站,黄 = 现成 Hugging Face 模型,灰 = 调试运行时或规划项。实线是图模式热路径,虚线是轻量调试运行时。</text>
+
+  <rect x="40" y="84" width="220" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="150" y="114" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">现成 PyTorch 模型</text>
+  <text x="150" y="136" font-size="11" fill="#6b7280" text-anchor="middle">不必手写模型类</text>
+
+  <line x1="260" y1="120" x2="318" y2="120" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="320" y="76" width="760" height="248" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="336" y="100" font-size="13" fill="#6b7280">图模式:工厂装架构 → 导出 → 按站变换 → 编译</text>
+
+  <rect x="340" y="118" width="160" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="420" y="148" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">工厂</text>
+  <text x="420" y="170" font-size="11" fill="#6b7280" text-anchor="middle">装架构,可先不装权重</text>
+
+  <line x1="500" y1="158" x2="538" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="540" y="118" width="160" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="620" y="148" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">导出成图</text>
+  <text x="620" y="170" font-size="11" fill="#6b7280" text-anchor="middle">捕获计算图</text>
+
+  <line x1="700" y1="158" x2="738" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="740" y="118" width="160" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="820" y="148" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">图变换</text>
+  <text x="820" y="170" font-size="11" fill="#6b7280" text-anchor="middle">切分、融、插缓存</text>
+
+  <line x1="820" y1="198" x2="820" y2="228" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="740" y="230" width="160" height="72" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="820" y="260" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">编译</text>
+  <text x="820" y="282" font-size="11" fill="#6b7280" text-anchor="middle">默认抓 CUDA Graph</text>
+
+  <line x1="820" y1="302" x2="820" y2="348" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="640" y="356" width="200" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="740" y="386" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">适配引擎</text>
+  <text x="740" y="408" font-size="11" fill="#6b7280" text-anchor="middle">把调度请求翻成图输入</text>
+
+  <line x1="840" y1="396" x2="888" y2="396" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt16a)"/>
+
+  <rect x="890" y="356" width="190" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="985" y="386" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">同一套执行器</text>
+  <text x="985" y="408" font-size="11" fill="#6b7280" text-anchor="middle">IFB 与 overlap 仍在这里</text>
+
+  <line x1="740" y1="266" x2="430" y2="266" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="430" y1="266" x2="430" y2="348" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt16a)"/>
+
+  <rect x="330" y="356" width="200" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="430" y="386" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">调试运行时</text>
+  <text x="430" y="408" font-size="11" fill="#6b7280" text-anchor="middle">朴素调度,不接生产循环</text>
+
+  <rect x="40" y="448" width="260" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="170" y="478" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">规划中</text>
+  <text x="170" y="500" font-size="11" fill="#6b7280" text-anchor="middle">LoRA 与加速草稿未当热路径</text>
+</svg>

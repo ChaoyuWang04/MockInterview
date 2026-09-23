@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 380" width="1120" height="380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt01b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="380" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">执行器循环默认把上一步 CPU 收尾藏进当前 GPU 前向后面</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = GPU 前向,紫 = CPU 调度与回包。默认开重叠;关掉之后两条时间条重新串行,那是下一章的开关。</text>
+
+  <text x="30" y="100" font-size="13" fill="#6b7280">不重叠</text>
+  <rect x="120" y="82" width="220" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="230" y="105" font-size="12" fill="#111827" text-anchor="middle">第 n 步调度</text>
+  <rect x="350" y="82" width="280" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="490" y="105" font-size="12" fill="#111827" text-anchor="middle">第 n 步 GPU 前向</text>
+  <rect x="640" y="82" width="200" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="740" y="105" font-size="12" fill="#111827" text-anchor="middle">第 n 步回包</text>
+  <rect x="850" y="82" width="220" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="960" y="105" font-size="12" fill="#111827" text-anchor="middle">第 n+1 步 GPU</text>
+  <text x="30" y="140" font-size="11" fill="#9ca3af">GPU 在回包时是空的</text>
+
+  <text x="30" y="200" font-size="13" fill="#6b7280">默认重叠</text>
+  <rect x="120" y="182" width="220" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="230" y="205" font-size="12" fill="#111827" text-anchor="middle">第 n 步调度</text>
+  <rect x="350" y="182" width="280" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="490" y="205" font-size="12" fill="#111827" text-anchor="middle">第 n 步 GPU 前向</text>
+  <rect x="350" y="230" width="200" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="450" y="253" font-size="12" fill="#111827" text-anchor="middle">第 n−1 步回包</text>
+  <rect x="640" y="182" width="280" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="780" y="205" font-size="12" fill="#111827" text-anchor="middle">第 n+1 步 GPU 前向</text>
+  <rect x="640" y="230" width="200" height="36" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="740" y="253" font-size="12" fill="#111827" text-anchor="middle">第 n 步回包</text>
+  <line x1="630" y1="200" x2="640" y2="200" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01b)"/>
+  <text x="30" y="290" font-size="11" fill="#9ca3af">GPU 连续满载;CPU 回包落在下一步前向的背后。流水线里多一截 decode,换的是吞吐。</text>
+  <text x="30" y="330" font-size="13" fill="#6b7280">切词不在这条时间条上:它发生在对外进程,请求进执行器循环之前。</text>
+  <text x="30" y="358" font-size="11" fill="#9ca3af">流水线并行时这条循环换成另一条,结构仍然是「当前前向、上一步回包」,不是单进程。</text>
+</svg>

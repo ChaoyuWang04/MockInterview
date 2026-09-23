@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt12a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">图和视频先过处理器与编码器,embedding 再融进 decoder</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 处理器(CPU)与编码器(GPU),紫 = 融进 decoder,白底虚线框 = 编码器输出缓存(模型要报名才用),虚线箭头 = 侧流预取(默认关)</text>
+
+  <rect x="40" y="88" width="200" height="108" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="140" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">带图的请求</text>
+  <text x="140" y="146" font-size="11" fill="#6b7280" text-anchor="middle">图/视频字节加文本</text>
+  <text x="140" y="166" font-size="11" fill="#6b7280" text-anchor="middle">占位 token 先占位置</text>
+
+  <line x1="240" y1="142" x2="292" y2="142" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt12a)"/>
+
+  <rect x="294" y="88" width="220" height="108" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="404" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">处理器</text>
+  <text x="404" y="146" font-size="11" fill="#6b7280" text-anchor="middle">解码、缩放、归一化</text>
+  <text x="404" y="166" font-size="11" fill="#6b7280" text-anchor="middle">CPU 上产出像素张量</text>
+
+  <line x1="514" y1="142" x2="566" y2="142" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt12a)"/>
+
+  <rect x="568" y="88" width="220" height="108" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="678" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">编码器</text>
+  <text x="678" y="146" font-size="11" fill="#6b7280" text-anchor="middle">塔把像素变成 embedding</text>
+  <text x="678" y="166" font-size="11" fill="#6b7280" text-anchor="middle">默认跟 decoder 抢同一步</text>
+
+  <line x1="788" y1="142" x2="840" y2="142" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt12a)"/>
+
+  <rect x="842" y="88" width="238" height="108" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="961" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">融进 decoder</text>
+  <text x="961" y="146" font-size="11" fill="#6b7280" text-anchor="middle">覆盖占位位置的行</text>
+  <text x="961" y="166" font-size="11" fill="#6b7280" text-anchor="middle">之后只跑语言模型</text>
+
+  <rect x="294" y="248" width="494" height="100" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="541" y="280" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">编码器输出缓存</text>
+  <text x="541" y="304" font-size="11" fill="#6b7280" text-anchor="middle">按图内容摘要查,命中就不跑塔</text>
+  <text x="541" y="324" font-size="11" fill="#6b7280" text-anchor="middle">默认划 128 MiB;模型没报名则这条缓存不生效</text>
+
+  <line x1="678" y1="196" x2="678" y2="248" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt12a)"/>
+
+  <rect x="40" y="400" width="1040" height="120" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="560" y="440" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">执行器循环里的文本 decode</text>
+  <text x="560" y="466" font-size="11" fill="#6b7280" text-anchor="middle">编码器没编完,这一步的 decode 一起等;图多、视频帧多时 TPOT 的尾巴先坏</text>
+  <text x="560" y="488" font-size="11" fill="#6b7280" text-anchor="middle">KV 复用要另把图像摘要写进块键,占位编号撞车时会认错图,那是 03 章的树,本页只写摘要怎么对不上</text>
+
+  <line x1="961" y1="196" x2="961" y2="400" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt12a)"/>
+
+  <line x1="678" y1="88" x2="678" y2="64" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="678" y1="64" x2="200" y2="64" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="200" y1="64" x2="200" y2="400" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt12a)"/>
+
+  <text x="560" y="556" font-size="11" fill="#9ca3af" text-anchor="middle">虚线箭头是侧流预取:在旁路上提前跑编码器,想跟当前步 decode 重叠;默认最大提前条数为 0,图上这条路默认不走</text>
+  <text x="560" y="580" font-size="11" fill="#9ca3af" text-anchor="middle">白底虚线框不是一条跳转,是可选的查表;混模态对象会绕过这份缓存</text>
+  <text x="560" y="604" font-size="11" fill="#9ca3af" text-anchor="middle">文档另写 CPU 预处理可与 GPU 编码重叠,那是处理器到编码器这一段,不是这条虚线</text>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt01a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">默认两条进程:对外切词,执行器里调度和前向</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 对外进程,绿 = 执行器进程,黄 = 可选后处理(默认不起),灰 = 客户端。实线是默认路径,虚线是加了后处理进程才走。</text>
+
+  <rect x="430" y="78" width="260" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="560" y="98" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">客户端</text>
+  <text x="560" y="116" font-size="11" fill="#6b7280" text-anchor="middle">HTTP 或 Python 入口</text>
+
+  <line x1="560" y1="126" x2="560" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+
+  <rect x="40" y="160" width="1040" height="168" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="56" y="182" font-size="13" fill="#6b7280">对外进程:切词在交出请求之前做完;代理和它同进程,不占一张卡</text>
+  <rect x="60" y="200" width="300" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="210" y="232" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">HTTP / 语言模型入口</text>
+  <text x="210" y="254" font-size="11" fill="#6b7280" text-anchor="middle">收请求、写响应</text>
+  <text x="210" y="272" font-size="11" fill="#6b7280" text-anchor="middle">默认在这里还原文字</text>
+  <rect x="400" y="200" width="300" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="550" y="232" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">切词</text>
+  <text x="550" y="254" font-size="11" fill="#6b7280" text-anchor="middle">字符串变成 token 编号</text>
+  <text x="550" y="272" font-size="11" fill="#6b7280" text-anchor="middle">超长 prompt 会堵住这个进程</text>
+  <rect x="740" y="200" width="300" height="100" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="890" y="232" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">代理</text>
+  <text x="890" y="254" font-size="11" fill="#6b7280" text-anchor="middle">本机消息队列</text>
+  <text x="890" y="272" font-size="11" fill="#6b7280" text-anchor="middle">单卡默认也走这里</text>
+
+  <line x1="210" y1="250" x2="400" y2="250" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+  <line x1="700" y1="250" x2="740" y2="250" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+  <line x1="890" y1="300" x2="890" y2="348" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+
+  <rect x="200" y="360" width="720" height="130" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="216" y="382" font-size="13" fill="#6b7280">执行器进程(每 rank 一个):调度和前向在同一条循环,不拆进程</text>
+  <rect x="230" y="400" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="330" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">调度</text>
+  <text x="330" y="450" font-size="11" fill="#6b7280" text-anchor="middle">这一步谁进批</text>
+  <rect x="460" y="400" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="560" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">准备缓存</text>
+  <text x="560" y="450" font-size="11" fill="#6b7280" text-anchor="middle">给进批的请求占块</text>
+  <rect x="690" y="400" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="790" y="430" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前向 + 采样</text>
+  <text x="790" y="450" font-size="11" fill="#6b7280" text-anchor="middle">GPU 出下一个 token</text>
+  <line x1="430" y1="435" x2="460" y2="435" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+  <line x1="660" y1="435" x2="690" y2="435" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt01a)"/>
+
+  <rect x="40" y="520" width="300" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-dasharray="5 4"/>
+  <text x="190" y="548" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">后处理进程</text>
+  <text x="190" y="568" font-size="11" fill="#6b7280" text-anchor="middle">默认 0 个,不在热路径上</text>
+  <text x="560" y="610" font-size="11" fill="#9ca3af" text-anchor="middle">黄框默认不在热路径上:只有显式加了后处理进程,还原文字才离开对外进程</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="trt06a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <text x="30" y="34" font-size="19" fill="#111827" font-weight="700">小批：草稿出一串候选，目标模型一次核对</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 出候选，紫 = 目标一次核对，黄 = 接受并白送，灰 = 高并发。实线是低并发热路径，虚线是批太大时把草稿长度压到 0 或门禁关掉。</text>
+
+  <rect x="40" y="84" width="1040" height="250" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="56" y="108" font-size="13" fill="#6b7280">低并发 decode：权重搬一遍很贵，多核几个位置几乎白送</text>
+
+  <rect x="70" y="128" width="220" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="180" y="158" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">出候选</text>
+  <text x="180" y="178" font-size="11" fill="#6b7280" text-anchor="middle">草稿头 / 自带层 / 查表</text>
+  <text x="180" y="196" font-size="11" fill="#6b7280" text-anchor="middle">默认一条链，定长</text>
+
+  <rect x="360" y="128" width="240" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="480" y="158" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">目标一次前向</text>
+  <text x="480" y="178" font-size="11" fill="#6b7280" text-anchor="middle">把整串候选摊进同一批</text>
+  <text x="480" y="196" font-size="11" fill="#6b7280" text-anchor="middle">只搬一遍目标权重</text>
+
+  <rect x="670" y="128" width="180" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="760" y="158" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">核对</text>
+  <text x="760" y="178" font-size="11" fill="#6b7280" text-anchor="middle">对上的收下</text>
+  <text x="760" y="196" font-size="11" fill="#6b7280" text-anchor="middle">错的截断</text>
+
+  <rect x="900" y="128" width="150" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="975" y="158" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">产出</text>
+  <text x="975" y="178" font-size="11" fill="#6b7280" text-anchor="middle">若干接受</text>
+  <text x="975" y="196" font-size="11" fill="#6b7280" text-anchor="middle">加一个白送</text>
+
+  <line x1="290" y1="172" x2="360" y2="172" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt06a)"/>
+  <line x1="600" y1="172" x2="670" y2="172" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt06a)"/>
+  <line x1="850" y1="172" x2="900" y2="172" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#trt06a)"/>
+
+  <text x="180" y="250" font-size="11" fill="#6b7280" text-anchor="middle">没挂推测配置 = 不出候选</text>
+  <text x="480" y="250" font-size="11" fill="#6b7280" text-anchor="middle">每条请求一份定长草稿</text>
+  <text x="760" y="250" font-size="11" fill="#6b7280" text-anchor="middle">默认精确匹配</text>
+  <text x="975" y="250" font-size="11" fill="#6b7280" text-anchor="middle">接受率低就更慢</text>
+
+  <rect x="40" y="360" width="1040" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="56" y="384" font-size="13" fill="#6b7280">高并发：decode 已经吃满算力，再挂草稿是多付一次前向</text>
+
+  <rect x="70" y="404" width="280" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="210" y="434" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">批变大</text>
+  <text x="210" y="456" font-size="11" fill="#6b7280" text-anchor="middle">每步要核的位置 = 并发 × 草稿长</text>
+
+  <rect x="430" y="404" width="280" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="570" y="434" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">草稿长度压到 0</text>
+  <text x="570" y="456" font-size="11" fill="#6b7280" text-anchor="middle">按并发表或上限关掉猜测</text>
+
+  <rect x="790" y="404" width="250" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="915" y="434" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">门禁永久关</text>
+  <text x="915" y="456" font-size="11" fill="#6b7280" text-anchor="middle">滚动接受率掉到阈值以下</text>
+
+  <line x1="350" y1="444" x2="430" y2="444" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt06a)"/>
+  <line x1="710" y1="444" x2="790" y2="444" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#trt06a)"/>
+
+  <text x="560" y="540" font-size="11" fill="#9ca3af" text-anchor="middle">虚线只连高并发那一行：不走进出候选，而是把草稿长度压到 0 或把门禁关掉</text>
+</svg>
