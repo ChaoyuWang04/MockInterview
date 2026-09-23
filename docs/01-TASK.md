@@ -13,12 +13,43 @@
 
 ## P6 · 开源解读与报告解读
 
-
-- [ ] 报告解读批次(2026-09-19 四路调查核定,已登记进 `reports/index.md`,含新建「可解释性与对齐」「检索与 RAG」「评测与 Benchmark」三个方向):**余 63 条 ⬜**,每条先取原件再按 10 手册第三节动笔。2026-09-19 批次 3–6 共发布 12 篇,**「可解释性与对齐」方向 ⬜ 已清零(✅9)**。**登记行里我自己写的一句话累计被原件证伪九处**——「ICLR 2024 oral」无据、「10 选项」以偏概全(实为 83% 的题 10 项)、「EMNLP 2024 WS」与「COLM 2024」两处会议标注原件里都没有、「部署模型也会漏报自己的意图」不是那篇主张、「为追求真实目标而假装对齐」不是 Alignment-Faking 的口径(它全程只用显现偏好)、把引用方立场文的「四条破坏路径」框架塞进被引的 OpenAI 那篇、CoT-Empowers-Serial-Problems 的目录键 `UCSD` 错(一作是 Stanford,已建 `papers/Stanford/` 与 `reports/Stanford/`)、它的 arXiv 编号我一度猜成 2405.13868(那是另一篇,正确是 2402.12875)、CoT-Unfaithful-Reasoning 的「多机构协作」错(单一署名 Alignment Science Team, Anthropic)——**剩余 ⬜ 行的一句话一律当待核假设,转引式索引行尤其危险**。**验收必做四件事,全是这几批真撞出来的**:①子 agent 报的取证细节自己重跑一遍——WildGuard 那篇给出「HF 文件级提交 `d262c1011`、2024-06-18T08:13:07Z」精确到秒,而该仓库 gated、commits 接口拒绝、revision 参数被忽略,证据不可复现,首发日退回 arXiv v1 的 2024-06-26,并在文中写明「真实首发日只会更早,当天当作下界用」;②**图要逐格读**(Google 那篇把三行漫画的第三行安到第一行、OpenAI 那篇把动作监控器写成「只覆盖紫色」);③**mermaid 标签里未加引号的括号会让整张图静默失败**,发布前数一次 `.mermaid-container` 带 `red-` 类的个数(口径已进 09 的「踩过的雷」);④理论文的**定理陈述页逐条撞**(Stanford 那篇把 Theorem 3.1/3.2 写成 p.9,实在 p.8,并把 Corollary 3.4 误称 Theorem)。另:`reports/Z.ai/IndexCache.md` 第 576 行有同类未加引号括号,在本轮范围外没动,**值得单独扫一遍全库 mermaid**;首发日口径 = 对象首次对外可用日(纯论文取 arXiv 首次公开日,有模型的看 HF 文件级提交并核对波次结构);下一批做「检索与 RAG」三条:`Qwen3-Embedding`(arXiv 2506.05176)、`BGE-M3`(arXiv 2402.03216)、`jina-embeddings-v4`(arXiv 2506.18902),做完该方向清零;标「原件待核」的 8 条(Gemini-3、Llama-4、Muse-Spark、MAI-Thinking-1、Grok-4.6、Qwen3.5、Qwen3.7、SmolLM3)取件前先换渠道核存在性与首发日
+- [ ] 报告解读批次(2026-09-19 四路调查核定,已登记进 `reports/index.md`,含新建「可解释性与对齐」「检索与 RAG」「评测与 Benchmark」三个方向):**余 63 条 ⬜**,每条先取原件再按 10 手册第三节动笔。2026-09-19 批次 3–6 共发布 12 篇。**登记行里我自己写的一句话累计被原件证伪九处**——「ICLR 2024 oral」无据、「10 选项」以偏概全(实为 83% 的题 10 项)、「EMNLP 2024 WS」与「COLM 2024」两处会议标注原件里都没有、「部署模型也会漏报自己的意图」不是那篇主张、「为追求真实目标而假装对齐」不是 Alignment-Faking 的口径(它全程只用显现偏好)、把引用方立场文的「四条破坏路径」框架塞进被引的 OpenAI 那篇、CoT-Empowers-Serial-Problems 的目录键 `UCSD` 错(一作是 Stanford,已建 `papers/Stanford/` 与 `reports/Stanford/`)、它的 arXiv 编号我一度猜成 2405.13868(那是另一篇,正确是 2402.12875)、CoT-Unfaithful-Reasoning 的「多机构协作」错(单一署名 Alignment Science Team, Anthropic)——**剩余 ⬜ 行的一句话一律当待核假设,转引式索引行尤其危险**。**验收必做四件事,全是这几批真撞出来的**:①子 agent 报的取证细节自己重跑一遍——WildGuard 那篇给出「HF 文件级提交 `d262c1011`、2024-06-18T08:13:07Z」精确到秒,而该仓库 gated、commits 接口拒绝、revision 参数被忽略,证据不可复现,首发日退回 arXiv v1 的 2024-06-26,并在文中写明「真实首发日只会更早,当天当作下界用」;②**图要逐格读**(Google 那篇把三行漫画的第三行安到第一行、OpenAI 那篇把动作监控器写成「只覆盖紫色」);③**mermaid 标签里未加引号的括号会让整张图静默失败**,发布前数一次 `.mermaid-container` 带 `red-` 类的个数(口径已进 09 的「踩过的雷」);④理论文的**定理陈述页逐条撞**(Stanford 那篇把 Theorem 3.1/3.2 写成 p.9,实在 p.8,并把 Corollary 3.4 误称 Theorem)。另:`reports/Z.ai/IndexCache.md` 第 576 行有同类未加引号括号,在本轮范围外没动,**值得单独扫一遍全库 mermaid**;首发日口径 = 对象首次对外可用日(纯论文取 arXiv 首次公开日,有模型的看 HF 文件级提交并核对波次结构);下一批做「检索与 RAG」三条:`Qwen3-Embedding`(arXiv 2506.05176)、`BGE-M3`(arXiv 2402.03216)、`jina-embeddings-v4`(arXiv 2506.18902),做完该方向清零;标「原件待核」的 8 条(Gemini-3、Llama-4、Muse-Spark、MAI-Thinking-1、Grok-4.6、Qwen3.5、Qwen3.7、SmolLM3)取件前先换渠道核存在性与首发日
 - [ ] 按 `06-开源解读流程.md` 完成 `vllm`:总览与 01–17 章全部成稿,2026-09-18 已把 01–10 章统一成 11 章那种多 Part 结构(底稿第七节末行有改造记录);**下一步逐章通读挑问题,从总览开始**——总览缺阅读顺序、术语表、相关链接、组件登记表,特性表标题写「十五个」实际十八行且行序是追加序,表后「详见列空着」是施工残留;另外底稿第九节 12/15 章的延迟区还没兑现、`99-代码索引.md` 缺 15 章一节;**下一批讲稿等用户发 18 的截图**;`os:check` 报的基准过期是预期噪音不用管(底稿第八节已拍板)
 - [ ] `sglang`:**总览与 01–18 章全部按 2026-09-20 的标准返工完成**,34 张手写 SVG,`npm test` 与 `scripts/svg-check.mjs` 全绿。**等用户通读验收**。两处留给下次的:底稿覆盖率核对表里 `mem_cache/hybrid_cache`(134 KB)与 `mem_cache/storage/umbp`(126 KB)标「待定」,不是平台移植也不是算子层,该归 03 还是 05 没定;08 章那条「默认 target-only 是否与标准拒绝采样等价」在底稿里标着待查,要把 kernel 的拒绝分支读完才能升回肯定句
+- [ ] `VeOmni`:2026-09-23 旧稿作废重做,基准 `019b1c0276`(main,最近 tag `v0.1.12`),快照 `/tmp/veomni-base`。序章过门,全书 15 章(原「新结构的接入」已拆散并入 02、03、06)。**01 章 `01-一次训练的形状.md` 已由主线程亲写成稿,等用户验收**;配图 `01a-two-halves-and-badges.svg`,新建 `99-代码索引.md`(00、01 两节),断言清单在底稿第八节。01 过门后从 02 起派章、每批 3 章
 - [ ] vLLM 四个未覆盖主题按三档融入规则补进已有章:01 章加「API 进程里还有什么」Part、06 章加「编译:分段图之外」Part、05 章 Part 5 后加「状态空间模型」Part、03 章显存见底那组加 `simple_kv_offload` 一节;第二档变体一半只补索引行(gemma4、eplb、ubatch wrapper 等);覆盖地图初稿与脚本在 `tmp/vllm-coverage/`(未入库),索引页 85 个短文件名要补完整路径
-- [ ] 克隆 06 库存里标「repo 未克隆」的项目到 `projects/<主题>/`,按主题分批,克隆后删掉该条标注
+- [ ] `torch.compile`(框架内核,按 06「大单体仓库按子系统拆」立项):源码在 `projects/框架内核/pytorch`,与 FSDP 共用基准 `217579124a`;快照 `/tmp/torchcompile-base`,底稿 `opensource/框架内核/torch-compile/_登记表.md`;序章已过门;01 章已验收;**02–04 章已成稿并过主线程验收,等用户逐章验收**;过门后派 05–07,每批 3 章,口径见底稿第六节。`os:check` 按 `projects/<主题>/<项目>` 定位仓库,子系统解读的基准与证据核对会被跳过(FSDP 同样),要补得让脚本从底稿读源码映射
+- [ ] 通信三项,按序:`nccl` → `DeepEP` → `nixl`(都在 `projects/通信/`)
+- [ ] 算子项目,按序:`FlashAttention`(参考项目,通用矩阵切法只在这里讲)→ `FlashInfer` → `DeepGEMM` → `FlashMLA` → `triton` → `Triton-distributed` → `TransformerEngine` 补 13 章量化核、14 章通信-GEMM 重叠核;全部按 06 的「算子项目的变体」写
+- [ ] `TensorRT-LLM` 总览补一段「和 vLLM 真正不一样的几处」
+- [ ] `TransformerEngine` 01–12 章第四段对照组返工:现为 Apex 与 FlashAttention,多格「不适用」,换成大厂大规模在用的对照或删成短列表
+- [ ] `ray`:只做 Ray Core(actor、placement group、对象存储)
+- [ ] `Dynamo`(`projects/推理服务/dynamo`)
+- [ ] `torchtitan`
+- [ ] Agent 应用层第一轮,按序:`LangGraph` → `MCP` → `OpenHands` → `mem0` → `LlamaIndex` → `E2B`
+- [ ] 知识库扩到非 AI 方向:先在 04 定新章节与文章边界;每个方向的原理文章先于该方向第一个开源解读成稿
+- [ ] 通用基础设施第一轮,每个方向先做一个代表,按序:`Linux 内核`(按子系统拆)→ `Redis` → `PostgreSQL`(按子系统拆)→ `etcd` → `Kubernetes`(按子系统拆)
+- [ ] AI 长尾,按序:`llm-compressor` → `SpecForge` → `speculators` → `checkpoint-engine` → `AReaL` → `ktransformers` → `diffusers` → `llama.cpp`
+- [ ] Agent 应用层第二轮,按序:`OpenAI Agents SDK` → `Codex CLI` → `OpenClaw` → `browser-use` → `Dify` → `GraphRAG` → `Temporal` → `DSPy` → `Langfuse` → `A2A`
+- [ ] TPU 与编译器,按序:`JAX` → `XLA` → `maxtext` → `LLVM / MLIR`(按子系统拆)→ `TVM`
+- [ ] 通用基础设施第二轮,按序:`RocksDB` → `Kafka` → `containerd` → `Envoy` → `gRPC` → `Nginx` → `Prometheus` → `Cilium`
+- [ ] 数据与存储,按序:`TiDB / TiKV` → `ClickHouse` → `DuckDB` → `Spark` → `Flink` → `Arrow` → `Ceph` → `3FS`
+- [ ] 其余硬件与系统,按序:`MLX` → `IREE` → `Firecracker` → `Terraform` → `systemd` → `NixOS / nixpkgs`
+- [ ] AMD 栈,按序:`HIP + clr` → `composable_kernel` → `RCCL`(后两个在 rocm-libraries / rocm-systems 聚合仓里,按子目录稀疏克隆)
+- [ ] 昇腾栈,按序:`torch_npu + op-plugin` → `CANN 算子库`(ops-transformer、catlass)→ `CANN GE` → `HCCL` → `vllm-ascend`;主仓在 gitcode,GitHub 是镜像
+- [ ] 图计算,按序:`PyG` → `NebulaGraph` → `Neo4j` → `DGL`
+- [ ] 区块链与加密货币,按序:`Bitcoin Core` → `go-ethereum` → `reth` → `rust-libp2p` → `Agave` → `Optimism` → `SP1`
+- [ ] 密码学与安全,按序:`OpenSSL` → `rustls` → `liboqs`
+- [ ] 语言与运行时,按序:`CPython`(按子系统拆)→ `Go 运行时` → `V8`(按子系统拆)→ `rustc`
+- [ ] 前端,按序:`React` → `Vue` → `Node.js` → `Next.js` → `Vite`
+- [ ] 后端与服务端框架,按序:`FastAPI + Starlette` → `Gin` → `axum + hyper` → `Django` → `Spring Boot`
+- [ ] 语言生态库,按序:`Tokio` → `NumPy` → `Abseil` → `Polars` → `uv + ruff`
+- [ ] 网络协议栈,按序:`quic-go` → `DPDK`
+- [ ] 搜索与向量检索,按序:`Lucene` → `Faiss` → `Milvus`
+- [ ] 音视频,按序:`FFmpeg`(按子系统拆)→ `LiveKit`
+- [ ] 形式化验证,按序:`Lean 4` → `TLA+`
+- [ ] 金融量化,按序:`Qlib` → `NautilusTrader` → `vn.py` → `Lean`
+- [ ] 开源解读主页加方向标题(AI 基础设施、编译器、云原生、数据库与存储等),只改 `lib/opensource.ts` 的分组顺序;**等另一位同事的前端改动完成后再做**
 
 ## 模拟面试系统(可用,剩余项不阻塞)
 

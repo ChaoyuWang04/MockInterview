@@ -24,12 +24,25 @@ function listDirs(dir: string): string[] {
     .sort((a, b) => a.localeCompare(b, 'zh-CN'))
 }
 
+/** 主页分组顺序:从上层服务到底层硬件;不在表里的主题按字母序排在最后 */
+export const OS_TOPIC_ORDER = ['推理服务', '分布式训练', 'RL训练框架', '多模态', '框架内核', '通信', 'Kernel与GPU编程']
+
+/** 组内顺序:多模态按「推理 → 训练 → RL」排;没列的主题与项目按字母序 */
+export const OS_PROJECT_ORDER: Record<string, string[]> = {
+  多模态: ['vllm-omni', 'sglang-omni', 'VeOmni', 'verl-omni'],
+}
+
+function byOrder(names: string[], order: string[] = []): string[] {
+  const rank = (n: string) => (order.includes(n) ? order.indexOf(n) : order.length)
+  return [...names].sort((a, b) => rank(a) - rank(b))
+}
+
 export function listOsTopics(root = opensourceRoot()): string[] {
-  return listDirs(root)
+  return byOrder(listDirs(root), OS_TOPIC_ORDER)
 }
 
 export function listOsProjects(topic: string, root = opensourceRoot()): string[] {
-  return listDirs(path.join(root, topic))
+  return byOrder(listDirs(path.join(root, topic)), OS_PROJECT_ORDER[topic])
 }
 
 /** 白名单校验:topic/project 必须真实存在于扫描结果中 */

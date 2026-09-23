@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import fs from 'node:fs'
 import path from 'node:path'
-import { getOsPages, isValidOsProject, listOsProjects, listOsTopics } from '../lib/opensource'
+import {
+  getOsPages,
+  isValidOsProject,
+  listOsProjects,
+  listOsTopics,
+  OS_PROJECT_ORDER,
+  OS_TOPIC_ORDER,
+} from '../lib/opensource'
 
 // 对仓库真实解读库的回归防护
 describe('真实解读库 opensource/', () => {
@@ -25,6 +32,15 @@ describe('真实解读库 opensource/', () => {
       .filter(({ t, p }) => getOsPages(t, p)[0]?.title !== '总览')
       .map(({ t, p }) => `${t}/${p}`)
     expect(bad).toEqual([])
+  })
+
+  it('主题按分组顺序排列,不在顺序表里的排在最后', () => {
+    const topics = listOsTopics()
+    const known = topics.filter((t) => OS_TOPIC_ORDER.includes(t))
+    expect(known).toEqual(OS_TOPIC_ORDER.filter((t) => topics.includes(t)))
+    expect(topics.slice(0, known.length)).toEqual(known)
+    const mm = listOsProjects('多模态')
+    expect(mm).toEqual(OS_PROJECT_ORDER['多模态'].filter((p) => mm.includes(p)))
   })
 
   it('白名单校验拒绝路径穿越', () => {
