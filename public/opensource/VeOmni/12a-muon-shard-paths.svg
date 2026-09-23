@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 820" width="1120" height="820" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/></marker></defs>
+  <rect x="0" y="0" width="1120" height="820" fill="#ffffff"/>
+  <text x="40" y="36" font-size="19" fill="#111827" font-weight="700">Muon 在分片下:每张卡手里是哪一块,正交化作用在哪一块上</text>
+  <text x="40" y="60" font-size="13" fill="#6b7280">正交化必须看到整块矩阵;有通信差别的三条路如下,第四条 local(没切的参数在本卡整块算)不画</text>
+  <text x="40" y="80" font-size="13" fill="#6b7280">黄 = 还没正交化的动量分片,绿 = Newton-Schulz 看到的整块矩阵及其结果,紫 = 通信;专家的例子沿用 05 章:16 卡、专家并行度 8、专家内 FSDP 度 2</text>
+  <rect x="30" y="98" width="1060" height="272" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="50" y="124" font-size="14" fill="#111827" font-weight="700">二维稠密参数 · FSDP 只沿第 0 维按行切(fsdp_gather_2d,owner 走 all-to-all)</text>
+  <text x="50" y="144" font-size="11" fill="#6b7280">以一个 4 张卡的分片组、同一批 4 个矩阵 W0–W3 为例:每张卡当其中一个矩阵的 owner,只正交化这一个</text>
+  <text x="100" y="166" font-size="11" fill="#6b7280">反向之后:每卡持有每个矩阵的 1/4 行</text>
+  <text x="485" y="166" font-size="11" fill="#6b7280">卡 i 收齐 Wi 的全部行块</text>
+  <text x="875" y="166" font-size="11" fill="#6b7280">每卡拿回自己那 1/4 行的结果</text>
+  <text x="50" y="198" font-size="11" fill="#111827">卡 0</text>
+  <rect x="100" y="178" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="125" y="197" font-size="11" fill="#111827" text-anchor="middle">W0·0</text>
+  <rect x="875" y="178" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="897" y="197" font-size="11" fill="#111827" text-anchor="middle">W0·0</text>
+  <rect x="158" y="178" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="183" y="197" font-size="11" fill="#111827" text-anchor="middle">W1·0</text>
+  <rect x="925" y="178" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="947" y="197" font-size="11" fill="#111827" text-anchor="middle">W1·0</text>
+  <rect x="216" y="178" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="241" y="197" font-size="11" fill="#111827" text-anchor="middle">W2·0</text>
+  <rect x="975" y="178" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="997" y="197" font-size="11" fill="#111827" text-anchor="middle">W2·0</text>
+  <rect x="274" y="178" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="299" y="197" font-size="11" fill="#111827" text-anchor="middle">W3·0</text>
+  <rect x="1025" y="178" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="1047" y="197" font-size="11" fill="#111827" text-anchor="middle">W3·0</text>
+  <rect x="485" y="178" width="230" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="600" y="197" font-size="11" fill="#111827" text-anchor="middle">W0 整块 → Newton-Schulz 一次</text>
+  <text x="50" y="238" font-size="11" fill="#111827">卡 1</text>
+  <rect x="100" y="218" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="125" y="237" font-size="11" fill="#111827" text-anchor="middle">W0·1</text>
+  <rect x="875" y="218" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="897" y="237" font-size="11" fill="#111827" text-anchor="middle">W0·1</text>
+  <rect x="158" y="218" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="183" y="237" font-size="11" fill="#111827" text-anchor="middle">W1·1</text>
+  <rect x="925" y="218" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="947" y="237" font-size="11" fill="#111827" text-anchor="middle">W1·1</text>
+  <rect x="216" y="218" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="241" y="237" font-size="11" fill="#111827" text-anchor="middle">W2·1</text>
+  <rect x="975" y="218" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="997" y="237" font-size="11" fill="#111827" text-anchor="middle">W2·1</text>
+  <rect x="274" y="218" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="299" y="237" font-size="11" fill="#111827" text-anchor="middle">W3·1</text>
+  <rect x="1025" y="218" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="1047" y="237" font-size="11" fill="#111827" text-anchor="middle">W3·1</text>
+  <rect x="485" y="218" width="230" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="600" y="237" font-size="11" fill="#111827" text-anchor="middle">W1 整块 → Newton-Schulz 一次</text>
+  <text x="50" y="278" font-size="11" fill="#111827">卡 2</text>
+  <rect x="100" y="258" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="125" y="277" font-size="11" fill="#111827" text-anchor="middle">W0·2</text>
+  <rect x="875" y="258" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="897" y="277" font-size="11" fill="#111827" text-anchor="middle">W0·2</text>
+  <rect x="158" y="258" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="183" y="277" font-size="11" fill="#111827" text-anchor="middle">W1·2</text>
+  <rect x="925" y="258" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="947" y="277" font-size="11" fill="#111827" text-anchor="middle">W1·2</text>
+  <rect x="216" y="258" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="241" y="277" font-size="11" fill="#111827" text-anchor="middle">W2·2</text>
+  <rect x="975" y="258" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="997" y="277" font-size="11" fill="#111827" text-anchor="middle">W2·2</text>
+  <rect x="274" y="258" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="299" y="277" font-size="11" fill="#111827" text-anchor="middle">W3·2</text>
+  <rect x="1025" y="258" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="1047" y="277" font-size="11" fill="#111827" text-anchor="middle">W3·2</text>
+  <rect x="485" y="258" width="230" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="600" y="277" font-size="11" fill="#111827" text-anchor="middle">W2 整块 → Newton-Schulz 一次</text>
+  <text x="50" y="318" font-size="11" fill="#111827">卡 3</text>
+  <rect x="100" y="298" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="125" y="317" font-size="11" fill="#111827" text-anchor="middle">W0·3</text>
+  <rect x="875" y="298" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="897" y="317" font-size="11" fill="#111827" text-anchor="middle">W0·3</text>
+  <rect x="158" y="298" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="183" y="317" font-size="11" fill="#111827" text-anchor="middle">W1·3</text>
+  <rect x="925" y="298" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="947" y="317" font-size="11" fill="#111827" text-anchor="middle">W1·3</text>
+  <rect x="216" y="298" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="241" y="317" font-size="11" fill="#111827" text-anchor="middle">W2·3</text>
+  <rect x="975" y="298" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="997" y="317" font-size="11" fill="#111827" text-anchor="middle">W2·3</text>
+  <rect x="274" y="298" width="50" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <text x="299" y="317" font-size="11" fill="#111827" text-anchor="middle">W3·3</text>
+  <rect x="1025" y="298" width="44" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="1047" y="317" font-size="11" fill="#111827" text-anchor="middle">W3·3</text>
+  <rect x="485" y="298" width="230" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="600" y="317" font-size="11" fill="#111827" text-anchor="middle">W3 整块 → Newton-Schulz 一次</text>
+  <rect x="345" y="214" width="120" height="78" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+  <text x="405" y="238" font-size="11" fill="#111827" text-anchor="middle">all-to-all</text>
+  <text x="405" y="256" font-size="11" fill="#111827" text-anchor="middle">第 j 列的行块</text>
+  <text x="405" y="274" font-size="11" fill="#111827" text-anchor="middle">都送给卡 j</text>
+  <rect x="735" y="214" width="120" height="78" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+  <text x="795" y="238" font-size="11" fill="#111827" text-anchor="middle">反向 all-to-all</text>
+  <text x="795" y="256" font-size="11" fill="#111827" text-anchor="middle">行块送回</text>
+  <text x="795" y="274" font-size="11" fill="#111827" text-anchor="middle">原来那张卡</text>
+  <line x1="326" y1="253" x2="343" y2="253" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="467" y1="253" x2="483" y2="253" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="717" y1="253" x2="733" y2="253" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="857" y1="253" x2="873" y2="253" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="50" y="352" font-size="11" fill="#9ca3af">布局不是「只沿第 0 维切、其余网格维都是复制」时回退:每张卡把每个矩阵都聚合成整块,各自重复正交化一遍</text>
+  <rect x="30" y="388" width="1060" height="190" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="50" y="414" font-size="14" fill="#111827" font-weight="700">三维专家张量 · 开了专家零通信:专家内 FSDP 沿第 0 维切(moe_local_3d)</text>
+  <text x="50" y="434" font-size="11" fill="#6b7280">本卡的 16 个专家(down 投影 [16, 2048, 768])按整专家分给卡 0 与卡 8,每卡 8 个完整专家</text>
+  <text x="50" y="473" font-size="11" fill="#111827">卡 0</text>
+  <rect x="100" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="118" y="472" font-size="11" fill="#111827" text-anchor="middle">E0</text>
+  <rect x="144" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="162" y="472" font-size="11" fill="#111827" text-anchor="middle">E1</text>
+  <rect x="188" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="206" y="472" font-size="11" fill="#111827" text-anchor="middle">E2</text>
+  <rect x="232" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="250" y="472" font-size="11" fill="#111827" text-anchor="middle">E3</text>
+  <rect x="276" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="294" y="472" font-size="11" fill="#111827" text-anchor="middle">E4</text>
+  <rect x="320" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="338" y="472" font-size="11" fill="#111827" text-anchor="middle">E5</text>
+  <rect x="364" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="382" y="472" font-size="11" fill="#111827" text-anchor="middle">E6</text>
+  <rect x="408" y="450" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="426" y="472" font-size="11" fill="#111827" text-anchor="middle">E7</text>
+  <text x="50" y="523" font-size="11" fill="#111827">卡 8</text>
+  <rect x="100" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="118" y="522" font-size="11" fill="#111827" text-anchor="middle">E8</text>
+  <rect x="144" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="162" y="522" font-size="11" fill="#111827" text-anchor="middle">E9</text>
+  <rect x="188" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="206" y="522" font-size="11" fill="#111827" text-anchor="middle">E10</text>
+  <rect x="232" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="250" y="522" font-size="11" fill="#111827" text-anchor="middle">E11</text>
+  <rect x="276" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="294" y="522" font-size="11" fill="#111827" text-anchor="middle">E12</text>
+  <rect x="320" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="338" y="522" font-size="11" fill="#111827" text-anchor="middle">E13</text>
+  <rect x="364" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="382" y="522" font-size="11" fill="#111827" text-anchor="middle">E14</text>
+  <rect x="408" y="500" width="36" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="426" y="522" font-size="11" fill="#111827" text-anchor="middle">E15</text>
+  <text x="100" y="562" font-size="11" fill="#9ca3af">每格是一个专家的 [2048, 768] 整矩阵;本卡 [8, 2048, 768]</text>
+  <text x="500" y="470" font-size="14" fill="#111827" font-weight="700">本卡对 8 个整块专家批量正交化,通信 0</text>
+  <text x="500" y="494" font-size="11" fill="#6b7280">条件:本卡专家数 16 能被专家内 FSDP 度 2 整除,且计划里的专家张量都沿第 0 维切</text>
+  <text x="500" y="514" font-size="11" fill="#6b7280">不满足:切分时打一行警告,专家回到下面的默认布局</text>
+  <text x="500" y="534" font-size="11" fill="#6b7280">这个开关在切分阶段把专家的 FSDP 分片维从 1 改成 0,优化器本身不用改</text>
+  <rect x="30" y="596" width="1060" height="206" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="50" y="622" font-size="14" fill="#111827" font-weight="700">三维专家张量 · 默认:专家内 FSDP 沿第 1 维切(moe_gather_3d)</text>
+  <text x="50" y="642" font-size="11" fill="#6b7280">卡 0 持有本卡 16 个专家各自的前 1024 行,卡 8 持有后 1024 行,每张卡手里都是半个矩阵</text>
+  <text x="100" y="664" font-size="11" fill="#6b7280">每卡 [16, 1024, 768]:16 个专家各一半行</text>
+  <text x="660" y="664" font-size="11" fill="#6b7280">两卡都持有 [16, 2048, 768]</text>
+  <text x="50" y="688" font-size="11" fill="#111827">卡 0</text>
+  <rect x="100" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="660" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="124" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="684" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="148" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="708" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="172" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="732" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="196" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="756" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="220" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="780" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="244" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="804" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="268" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="828" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="292" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="852" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="316" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="876" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="340" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="900" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="364" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="924" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="388" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="948" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="412" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="972" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="436" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="996" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="460" y="674" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="1020" y="674" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <text x="50" y="718" font-size="11" fill="#111827">卡 8</text>
+  <rect x="100" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="660" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="124" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="684" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="148" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="708" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="172" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="732" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="196" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="756" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="220" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="780" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="244" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="804" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="268" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="828" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="292" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="852" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="316" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="876" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="340" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="900" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="364" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="924" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="388" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="948" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="412" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="972" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="436" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="996" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="460" y="704" width="22" height="18" rx="3" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1.2"/>
+  <rect x="1020" y="704" width="22" height="18" rx="3" fill="#e3f4ec" stroke="#5fa886" stroke-width="1.2"/>
+  <rect x="500" y="670" width="140" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1.2"/>
+  <text x="570" y="690" font-size="11" fill="#111827" text-anchor="middle">all-gather</text>
+  <text x="570" y="708" font-size="11" fill="#111827" text-anchor="middle">专家内 FSDP 组 2 张卡</text>
+  <line x1="484" y1="698" x2="498" y2="698" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <line x1="642" y1="698" x2="658" y2="698" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ah)"/>
+  <text x="100" y="752" font-size="11" fill="#9ca3af">两张卡对同样 16 个专家各做一遍 Newton-Schulz,然后只把自己那一半行的更新加到本地分片上</text>
+  <text x="100" y="772" font-size="11" fill="#9ca3af">组里有几张卡,同一批专家就被正交化几遍;每卡每步要收下组内其余卡持有的那部分</text>
+</svg>

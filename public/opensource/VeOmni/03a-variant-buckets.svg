@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 616" width="1120" height="616" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="616" fill="#ffffff"/>
+  <text x="24" y="36" font-size="19" font-weight="700" fill="#111827">同一个算子名按变体分桶,桶里每个实现各带硬件要求</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">每行是一个空位的一次查表:空位自报(算子, 变体)→ 到对应的桶里按配置给的名字取 → 检查本机硬件。加粗描边是被取中的那个实现。</text>
+  <text x="24" y="80" font-size="13" fill="#6b7280">绿=NVIDIA GPU,黄=要求 SM90 这一代,紫=昇腾 NPU,灰=跨多种硬件都能跑,红=建模型前就报错</text>
+  <text x="24" y="112" font-size="14" font-weight="700" fill="#111827">生成的 modeling 里的空位</text>
+  <text x="300" y="112" font-size="14" font-weight="700" fill="#111827">注册表里这个桶挂着的实现</text>
+  <text x="800" y="112" font-size="14" font-weight="700" fill="#111827">配置给的名字</text>
+  <text x="940" y="112" font-size="14" font-weight="700" fill="#111827">结果</text>
+  <rect x="24" y="128" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="147" font-size="14" font-weight="700" fill="#111827">Qwen3 MoE · RMSNorm</text>
+  <text x="36" y="164" font-size="11" fill="#6b7280">(rms_norm, standard)</text>
+  <rect x="292" y="128" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="136" width="102" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="2.6"/>
+  <text x="314" y="155" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <rect x="416" y="136" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="426" y="155" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <line x1="782" y1="150" x2="794" y2="150" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="155" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <line x1="888" y1="150" x2="934" y2="150" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="155" font-size="11" fill="#111827">绑定标准公式的融合核</text>
+  <rect x="24" y="184" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="203" font-size="14" font-weight="700" fill="#111827">Qwen3.5 · RMSNorm</text>
+  <text x="36" y="220" font-size="11" fill="#6b7280">(rms_norm, qwen3_5)</text>
+  <rect x="292" y="184" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="192" width="141" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="2.6"/>
+  <text x="314" y="211" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <text x="404" y="210" font-size="11" fill="#6b7280">偏移 1</text>
+  <rect x="455" y="192" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="465" y="211" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <line x1="782" y1="206" x2="794" y2="206" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="211" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <line x1="888" y1="206" x2="934" y2="206" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="211" font-size="11" fill="#111827">绑定按 1+权重 算的那一份</text>
+  <rect x="24" y="240" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="259" font-size="14" font-weight="700" fill="#111827">DeepSeek-V4 · 无权重 RMSNorm</text>
+  <text x="36" y="276" font-size="11" fill="#6b7280">(rms_norm, unweighted)</text>
+  <rect x="292" y="240" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="248" width="102" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="2.6"/>
+  <text x="314" y="267" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <rect x="416" y="248" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="426" y="267" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <line x1="782" y1="262" x2="794" y2="262" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="267" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <line x1="888" y1="262" x2="934" y2="262" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="267" font-size="11" fill="#111827">绑定无权重的那一份</text>
+  <rect x="24" y="296" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="315" font-size="14" font-weight="700" fill="#111827">Qwen3 MoE · 专家计算</text>
+  <text x="36" y="332" font-size="11" fill="#6b7280">(moe_experts, standard)</text>
+  <rect x="292" y="296" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="304" width="111" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="2.6"/>
+  <text x="314" y="323" font-size="14" font-weight="700" fill="#111827">triton</text>
+  <text x="365" y="322" font-size="11" fill="#6b7280">SM70 起</text>
+  <rect x="425" y="304" width="107" height="28" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="435" y="323" font-size="14" font-weight="700" fill="#111827">quack</text>
+  <text x="482" y="322" font-size="11" fill="#6b7280">SM90 起</text>
+  <rect x="542" y="304" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="552" y="323" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <line x1="782" y1="318" x2="794" y2="318" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="315" font-size="14" font-weight="700" fill="#111827">triton</text>
+  <text x="800" y="332" font-size="11" fill="#9ca3af">由 fused_triton 去前缀</text>
+  <line x1="926" y1="318" x2="934" y2="318" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="323" font-size="11" fill="#111827">绑定 Triton 分组矩阵乘</text>
+  <rect x="24" y="352" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="371" font-size="14" font-weight="700" fill="#111827">GPT-OSS · 专家计算</text>
+  <text x="36" y="388" font-size="11" fill="#6b7280">(moe_experts, gpt_oss)</text>
+  <rect x="292" y="352" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="360" width="107" height="28" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="314" y="379" font-size="14" font-weight="700" fill="#111827">quack</text>
+  <text x="360" y="378" font-size="11" fill="#6b7280">SM90 起</text>
+  <rect x="421" y="360" width="95" height="28" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-dasharray="4 3"/>
+  <text x="431" y="379" font-size="14" font-weight="700" fill="#111827">没有 triton</text>
+  <line x1="782" y1="374" x2="794" y2="374" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="371" font-size="14" font-weight="700" fill="#111827">triton</text>
+  <text x="800" y="388" font-size="11" fill="#9ca3af">由 fused_triton 去前缀</text>
+  <line x1="926" y1="374" x2="934" y2="374" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="940" y="352" width="156" height="44" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="950" y="371" font-size="11" fill="#111827">桶里没有这个名字</text>
+  <text x="950" y="388" font-size="14" font-weight="700" fill="#111827">建模型前报错</text>
+  <rect x="24" y="408" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="427" font-size="14" font-weight="700" fill="#111827">因果语言模型的损失</text>
+  <text x="36" y="444" font-size="11" fill="#6b7280">(cross_entropy_loss, causal)</text>
+  <rect x="292" y="408" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="416" width="102" height="28" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="2.6"/>
+  <text x="314" y="435" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <rect x="416" y="416" width="94" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="426" y="435" font-size="14" font-weight="700" fill="#111827">chunk_loss</text>
+  <rect x="519" y="416" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="529" y="435" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <line x1="782" y1="430" x2="794" y2="430" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="435" font-size="14" font-weight="700" fill="#111827">liger_kernel</text>
+  <line x1="888" y1="430" x2="934" y2="430" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="435" font-size="11" fill="#111827">绑定融合 linear 加交叉熵</text>
+  <rect x="24" y="464" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="483" font-size="14" font-weight="700" fill="#111827">DeepSeek-V4 · mHC</text>
+  <text x="36" y="500" font-size="11" fill="#6b7280">(mhc, pre / post / head)</text>
+  <rect x="292" y="464" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="472" width="120" height="28" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="314" y="491" font-size="14" font-weight="700" fill="#111827">tilelang</text>
+  <text x="373" y="490" font-size="11" fill="#6b7280">SM90 起</text>
+  <text x="438" y="490" font-size="11" fill="#9ca3af">3 个桶各挂一份</text>
+  <line x1="782" y1="486" x2="794" y2="486" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="483" font-size="14" font-weight="700" fill="#111827">eager</text>
+  <text x="800" y="500" font-size="11" fill="#9ca3af">默认值</text>
+  <line x1="844" y1="486" x2="934" y2="486" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="944" y="491" font-size="11" fill="#111827">不查表,走 HF 原逻辑</text>
+  <rect x="24" y="520" width="252" height="44" rx="6" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="36" y="539" font-size="14" font-weight="700" fill="#111827">Qwen3.5 · 门控 delta 规则</text>
+  <text x="36" y="556" font-size="11" fill="#6b7280">(chunk_gated_delta_rule, standard)</text>
+  <rect x="292" y="520" width="488" height="44" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="304" y="528" width="40" height="28" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="314" y="547" font-size="14" font-weight="700" fill="#111827">fla</text>
+  <rect x="354" y="528" width="142" height="28" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="2.6"/>
+  <text x="364" y="547" font-size="14" font-weight="700" fill="#111827">flash_qla</text>
+  <text x="434" y="546" font-size="11" fill="#6b7280">只限 SM90</text>
+  <rect x="505" y="528" width="43" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="515" y="547" font-size="14" font-weight="700" fill="#111827">npu</text>
+  <rect x="558" y="528" width="105" height="28" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="568" y="547" font-size="14" font-weight="700" fill="#111827">npu_ascendc</text>
+  <line x1="782" y1="542" x2="794" y2="542" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="800" y="547" font-size="14" font-weight="700" fill="#111827">flash_qla</text>
+  <line x1="868" y1="542" x2="934" y2="542" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="940" y="520" width="156" height="44" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="950" y="539" font-size="11" fill="#111827">本机是 SM100:硬件不符</text>
+  <text x="950" y="556" font-size="14" font-weight="700" fill="#111827">建模型前报错</text>
+  <text x="24" y="600" font-size="11" fill="#9ca3af">专家的标准桶里另挂 2 个寒武纪 MLU 实现,图中未画。名字填 eager 时不查表,任何空位都能退回 HF 原逻辑。</text>
+</svg>

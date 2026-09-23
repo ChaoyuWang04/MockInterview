@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="560" fill="#ffffff"/>
+  <rect x="24" y="104" width="1072" height="176" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="82" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="116" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="150" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="184" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="218" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="252" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="286" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="320" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="82" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="116" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="150" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="184" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="218" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="252" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="286" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="320" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="82" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="116" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="150" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="184" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="218" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="252" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="286" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="320" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="82" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="116" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="150" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="184" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="218" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="252" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="286" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="320" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <line x1="362" y1="198" x2="440" y2="198" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="498" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="152" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="566" y="152" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="600" y="152" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="634" y="152" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="668" y="152" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="702" y="152" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="736" y="152" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="176" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="176" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="566" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="600" y="176" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="634" y="176" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="668" y="176" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="702" y="176" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="736" y="176" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="200" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="200" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="566" y="200" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="600" y="200" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="634" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="668" y="200" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="702" y="200" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="736" y="200" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="224" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="224" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="566" y="224" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="600" y="224" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="634" y="224" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="668" y="224" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="702" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="736" y="224" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="800" y="132" width="280" height="128" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <line x1="778" y1="198" x2="796" y2="198" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="24" y="300" width="1072" height="176" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="82" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="116" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="82" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="116" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="82" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="116" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="82" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="116" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <line x1="158" y1="394" x2="206" y2="394" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="222" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="256" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="290" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="324" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="222" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="256" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="290" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="324" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="222" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="256" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="290" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="324" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="222" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="256" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="290" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="324" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <line x1="362" y1="394" x2="440" y2="394" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="498" y="348" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="348" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="566" y="348" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="600" y="348" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="372" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="372" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="566" y="372" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="600" y="372" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="396" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="396" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="566" y="396" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="600" y="396" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="498" y="420" width="30" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <rect x="532" y="420" width="30" height="20" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <rect x="566" y="420" width="30" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <rect x="600" y="420" width="30" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <rect x="800" y="328" width="280" height="128" rx="6" fill="#ffffff" stroke="#cbd2d9" stroke-width="1"/>
+  <line x1="650" y1="394" x2="796" y2="394" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="24" y="36" font-size="19" fill="#111827" font-weight="700">Ulysses 在一层注意力前后各换一次切法</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">例:序列并行度 4,8 个 query 头、2 个 KV 头(每 4 个 query 头共用 1 个 KV 头)。每格 = 1/4 段序列 × 1 个头。</text>
+  <text x="24" y="80" font-size="13" fill="#6b7280">格子颜色 = 此刻在哪张卡上:绿=卡 0,紫=卡 1,黄=卡 2,灰=卡 3。注意力之外的归一化、MLP 与各投影始终是左列的形状,只有注意力内部是中列的形状。</text>
+  <text x="40" y="126" font-size="14" fill="#111827" font-weight="700">query</text>
+  <text x="96" y="126" font-size="11" fill="#6b7280">注意力之前:按序列切,每卡 1 段 × 8 头 = 8 格</text>
+  <text x="40" y="166" font-size="11" fill="#6b7280">段 0</text>
+  <text x="40" y="190" font-size="11" fill="#6b7280">段 1</text>
+  <text x="40" y="214" font-size="11" fill="#6b7280">段 2</text>
+  <text x="40" y="238" font-size="11" fill="#6b7280">段 3</text>
+  <text x="97.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q0</text>
+  <text x="131.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q1</text>
+  <text x="165.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q2</text>
+  <text x="199.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q3</text>
+  <text x="233.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q4</text>
+  <text x="267.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q5</text>
+  <text x="301.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q6</text>
+  <text x="335.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q7</text>
+  <text x="401" y="190" font-size="11" fill="#6b7280" text-anchor="middle">all-to-all</text>
+  <text x="456" y="126" font-size="11" fill="#6b7280">注意力之内:按头切,每卡 4 段 × 2 头 = 8 格</text>
+  <text x="456" y="166" font-size="11" fill="#6b7280">段 0</text>
+  <text x="456" y="190" font-size="11" fill="#6b7280">段 1</text>
+  <text x="456" y="214" font-size="11" fill="#6b7280">段 2</text>
+  <text x="456" y="238" font-size="11" fill="#6b7280">段 3</text>
+  <text x="513.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q0</text>
+  <text x="547.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q1</text>
+  <text x="581.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q2</text>
+  <text x="615.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q3</text>
+  <text x="649.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q4</text>
+  <text x="683.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q5</text>
+  <text x="717.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q6</text>
+  <text x="751.0" y="144" font-size="11" fill="#6b7280" text-anchor="middle">q7</text>
+  <text x="814" y="156" font-size="14" fill="#111827" font-weight="700">每卡看到整条序列</text>
+  <text x="814" y="178" font-size="11" fill="#6b7280">拿自己的 2 个 query 头照常调用</text>
+  <text x="814" y="196" font-size="11" fill="#6b7280">FlashAttention,内核本身不改;</text>
+  <text x="814" y="214" font-size="11" fill="#6b7280">输出同样是 4 段 × 2 头,再做一次</text>
+  <text x="814" y="232" font-size="11" fill="#6b7280">all-to-all 换回左列的形状,</text>
+  <text x="814" y="250" font-size="11" fill="#6b7280">交给输出投影</text>
+  <text x="40" y="322" font-size="14" fill="#111827" font-weight="700">key / value</text>
+  <text x="136" y="322" font-size="11" fill="#6b7280">每卡 1 段 × 2 头</text>
+  <text x="40" y="362" font-size="11" fill="#6b7280">段 0</text>
+  <text x="40" y="386" font-size="11" fill="#6b7280">段 1</text>
+  <text x="40" y="410" font-size="11" fill="#6b7280">段 2</text>
+  <text x="40" y="434" font-size="11" fill="#6b7280">段 3</text>
+  <text x="97.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv0</text>
+  <text x="131.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv1</text>
+  <text x="182" y="386" font-size="11" fill="#6b7280" text-anchor="middle">复制</text>
+  <text x="236" y="322" font-size="11" fill="#6b7280">KV 头数不足 4:每个复制 2 份,每卡 4 格</text>
+  <text x="237.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv0</text>
+  <text x="271.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv0</text>
+  <text x="305.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv1</text>
+  <text x="339.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv1</text>
+  <text x="401" y="386" font-size="11" fill="#6b7280" text-anchor="middle">all-to-all</text>
+  <text x="456" y="322" font-size="11" fill="#6b7280">每卡 4 段 × 1 头 = 4 格</text>
+  <text x="456" y="362" font-size="11" fill="#6b7280">段 0</text>
+  <text x="456" y="386" font-size="11" fill="#6b7280">段 1</text>
+  <text x="456" y="410" font-size="11" fill="#6b7280">段 2</text>
+  <text x="456" y="434" font-size="11" fill="#6b7280">段 3</text>
+  <text x="513.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv0</text>
+  <text x="547.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv0</text>
+  <text x="581.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv1</text>
+  <text x="615.0" y="340" font-size="11" fill="#6b7280" text-anchor="middle">kv1</text>
+  <text x="814" y="352" font-size="14" fill="#111827" font-weight="700">正好配上各自的 query 头</text>
+  <text x="814" y="374" font-size="11" fill="#6b7280">卡 0 的 q0、q1 与卡 1 的 q2、q3</text>
+  <text x="814" y="392" font-size="11" fill="#6b7280">都拿到 kv0;卡 2、卡 3 拿到 kv1。</text>
+  <text x="814" y="410" font-size="11" fill="#6b7280">KV 头数不小于并行度时不复制,</text>
+  <text x="814" y="428" font-size="11" fill="#6b7280">直接按头平分</text>
+  <text x="24" y="506" font-size="11" fill="#9ca3af">能不能开,就看这一步分不分得开:query 头数必须被并行度整除;KV 头数不小于并行度时要被它整除,小于时并行度要被 KV 头数整除。</text>
+  <text x="24" y="526" font-size="11" fill="#9ca3af">例:8 个 query 头配并行度 3 分不开;2 个 KV 头配并行度 4 复制后可以;6 个 KV 头配并行度 4 既不能平分也没法复制,开不了。</text>
+</svg>

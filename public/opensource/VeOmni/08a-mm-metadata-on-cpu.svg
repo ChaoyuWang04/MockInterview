@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 770" width="1120" height="770" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="770" fill="#ffffff"/>
+
+  <text x="24" y="36" font-size="19" fill="#111827" font-weight="700">一条多模态样本的元数据在哪里算</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">左列在 CPU 上依次执行,右列是 GPU 前向。绿 = 现在在 CPU 上一次算好的元数据;灰 = 样本本身(像素、token)的加工。</text>
+  <text x="24" y="80" font-size="13" fill="#6b7280">红(虚线框)= 原版在前向里从 GPU 张量现推的位置,每推一次主机都要等 GPU 做完前面的活;现在只在没走 collator 时兜底。</text>
+
+  <rect x="24" y="100" width="564" height="646" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="640" y="100" width="456" height="646" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+
+  <text x="44" y="126" font-size="14" fill="#111827" font-weight="700">CPU 上的数据加载</text>
+  <text x="44" y="144" font-size="11" fill="#6b7280">①–⑤ 逐条样本做,⑥ ⑦ 整批做;各在哪个进程里跑见 07 章</text>
+  <text x="660" y="126" font-size="14" fill="#111827" font-weight="700">GPU 上的前向</text>
+  <text x="660" y="144" font-size="11" fill="#6b7280">视觉塔、特征填回、语言模型</text>
+
+  <!-- CPU column -->
+  <rect x="44" y="160" width="520" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="60" y="181" font-size="14" fill="#111827" font-weight="700">① 预处理函数,按数据源名取</text>
+  <text x="60" y="199" font-size="11" fill="#6b7280">原始记录 → [角色, (模态, 内容) …],像素还没读,只留占位</text>
+
+  <rect x="44" y="226" width="520" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="60" y="247" font-size="14" fill="#111827" font-weight="700">② 读取与缩放</text>
+  <text x="60" y="265" font-size="11" fill="#6b7280">像素预算内等比缩放、按目标帧率抽帧、音轨重采样到 16 kHz</text>
+
+  <rect x="44" y="292" width="520" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="60" y="313" font-size="14" fill="#111827" font-weight="700">③ 处理器(从 checkpoint 目录自动加载)</text>
+  <text x="60" y="331" font-size="11" fill="#6b7280">像素块,加每张图、每段视频的 t × h × w 网格</text>
+
+  <rect x="44" y="358" width="520" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="60" y="379" font-size="14" fill="#111827" font-weight="700">④ 多模态对话模板</text>
+  <text x="60" y="397" font-size="11" fill="#6b7280">按网格算出的个数展开占位 token;只在助手回复上算 loss</text>
+
+  <rect x="44" y="424" width="520" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="60" y="445" font-size="14" fill="#111827" font-weight="700">⑤ 位置编号函数(模型借出)</text>
+  <text x="60" y="463" font-size="11" fill="#6b7280">逐条样本算三维 M-RoPE 位置,顺带算好图像、视频掩码</text>
+
+  <rect x="44" y="490" width="520" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="60" y="511" font-size="14" fill="#111827" font-weight="700">⑥ collator 打包、补齐</text>
+  <text x="60" y="529" font-size="11" fill="#6b7280">整批拼成一条;开序列并行时像素块补到并行度 × 4 的倍数(06 章)</text>
+
+  <rect x="44" y="556" width="520" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="60" y="577" font-size="14" fill="#111827" font-weight="700">⑦ 元数据函数(模型借出)</text>
+  <text x="60" y="595" font-size="11" fill="#6b7280">视觉塔每帧边界、最长段、网格列表;补齐的尾巴记成一张假图</text>
+
+  <line x1="304" y1="210" x2="304" y2="225" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="304" y1="276" x2="304" y2="291" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="304" y1="342" x2="304" y2="357" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="304" y1="408" x2="304" y2="423" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="304" y1="474" x2="304" y2="489" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="304" y1="540" x2="304" y2="555" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <text x="44" y="640" font-size="11" fill="#9ca3af">能接进视觉语言训练器的 9 个 Qwen 系模型族都借出了 ⑤ ⑦ 两个函数。</text>
+  <text x="44" y="658" font-size="11" fill="#9ca3af">音频塔的长度信息不在 ⑦ 里,仍由前向按特征长度推。</text>
+
+  <!-- bus to GPU -->
+  <line x1="564" y1="449" x2="612" y2="449" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="564" y1="581" x2="612" y2="581" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="564" y1="383" x2="612" y2="383" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="612" y1="383" x2="612" y2="690" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="612" y1="690" x2="659" y2="690" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- GPU column -->
+  <text x="660" y="250" font-size="11" fill="#9ca3af">①–④ 这一侧没有对应物</text>
+
+  <rect x="660" y="424" width="416" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="676" y="445" font-size="14" fill="#111827" font-weight="700">原版:前向里按网格推三维位置</text>
+  <text x="676" y="463" font-size="11" fill="#6b7280">掩码现比;开序列并行还得先全收集整条 token 序列</text>
+
+  <rect x="660" y="556" width="416" height="50" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="676" y="577" font-size="14" fill="#111827" font-weight="700">原版:视觉塔前向里现推边界</text>
+  <text x="676" y="595" font-size="11" fill="#6b7280">网格转成主机列表、每层求一次最长段,每次都等 GPU</text>
+
+  <rect x="660" y="662" width="416" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="676" y="684" font-size="14" fill="#111827" font-weight="700">视觉塔 → 特征按掩码填回 → 语言模型</text>
+  <text x="676" y="704" font-size="11" fill="#6b7280">直接读传来的边界、最长段与位置,不回头问 GPU</text>
+  <text x="660" y="736" font-size="11" fill="#9ca3af">左边的结果随批一次非阻塞拷贝;整数与列表留在主机当形状用</text>
+</svg>

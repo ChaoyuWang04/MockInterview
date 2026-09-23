@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" width="1120" height="660" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="660" fill="#ffffff"/>
+
+  <text x="24" y="36" font-size="19" font-weight="700" fill="#111827">扩散训练的两种走法:条件模型每步现算,还是先整份编码一遍存盘</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">灰色是冻结、只做前向的条件模型编码,紫色是每步都要重新随机的加噪,绿色是唯一训练的 DiT,黄色是数据与磁盘;虚线框是一个作业的一步</text>
+
+  <!-- 行一:在线训练 -->
+  <rect x="24" y="84" width="1072" height="168" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="40" y="108" font-size="14" font-weight="700" fill="#111827">在线训练 · 每一步都走完四格</text>
+
+  <rect x="40" y="128" width="150" height="104" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="56" y="152" font-size="14" font-weight="700" fill="#111827">原始样本</text>
+  <text x="56" y="176" font-size="11" fill="#6b7280">提示词文本</text>
+  <text x="56" y="194" font-size="11" fill="#6b7280">视频帧,按短边缩放</text>
+
+  <rect x="230" y="128" width="250" height="104" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="246" y="152" font-size="14" font-weight="700" fill="#111827">条件模型 · 编码</text>
+  <text x="246" y="176" font-size="11" fill="#6b7280">文本编码器 UMT5,bf16</text>
+  <text x="246" y="194" font-size="11" fill="#6b7280">VAE 编码器,fp32,吐出均值与对数方差</text>
+  <text x="246" y="212" font-size="11" fill="#6b7280">关梯度,整份放在每张卡上,不切分</text>
+
+  <rect x="520" y="128" width="250" height="104" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="536" y="152" font-size="14" font-weight="700" fill="#111827">条件模型 · 加噪</text>
+  <text x="536" y="176" font-size="11" fill="#6b7280">取均值,按 VAE 统计量归一化</text>
+  <text x="536" y="194" font-size="11" fill="#6b7280">抽噪声、时间步,按调度器插值</text>
+  <text x="536" y="212" font-size="11" fill="#6b7280">目标 = 噪声 − 潜变量</text>
+
+  <rect x="810" y="128" width="270" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="826" y="152" font-size="14" font-weight="700" fill="#111827">DiT 前向加反向</text>
+  <text x="826" y="176" font-size="11" fill="#6b7280">FSDP2 切分,唯一有梯度的部分</text>
+  <text x="826" y="194" font-size="11" fill="#6b7280">逐样本前向,样本内平均 MSE</text>
+  <text x="826" y="212" font-size="11" fill="#6b7280">再按样本平均,除以本步微批数</text>
+
+  <line x1="190" y1="180" x2="228" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="480" y1="180" x2="518" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="770" y1="180" x2="808" y2="180" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 行二:离线第一步 -->
+  <rect x="24" y="276" width="1072" height="148" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="40" y="300" font-size="14" font-weight="700" fill="#111827">离线第一步 · 只做编码的作业,整份数据跑 1 轮</text>
+
+  <rect x="40" y="316" width="150" height="92" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="56" y="340" font-size="14" font-weight="700" fill="#111827">原始样本</text>
+  <text x="56" y="364" font-size="11" fill="#6b7280">不打乱</text>
+  <text x="56" y="382" font-size="11" fill="#6b7280">补齐到全局批整数倍</text>
+
+  <rect x="230" y="316" width="250" height="92" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="246" y="340" font-size="14" font-weight="700" fill="#111827">条件模型 · 编码</text>
+  <text x="246" y="364" font-size="11" fill="#6b7280">同上,每个样本只编 1 次</text>
+  <text x="246" y="382" font-size="11" fill="#6b7280">补齐出来的重复样本不写盘</text>
+
+  <rect x="520" y="316" width="250" height="92" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="536" y="340" font-size="14" font-weight="700" fill="#111827">磁盘 · parquet</text>
+  <text x="536" y="364" font-size="11" fill="#6b7280">每个数据并行 rank 写自己的文件</text>
+  <text x="536" y="382" font-size="11" fill="#6b7280">每样本一行,每列是一个字段</text>
+  <text x="536" y="400" font-size="11" fill="#6b7280">列值是 CPU 张量的 pickle 字节</text>
+
+  <text x="826" y="352" font-size="11" fill="#9ca3af">这一格空着:不建 DiT、</text>
+  <text x="826" y="370" font-size="11" fill="#9ca3af">不建优化器、不存 checkpoint</text>
+
+  <line x1="190" y1="362" x2="228" y2="362" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="480" y1="362" x2="518" y2="362" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 磁盘到第二步的读回 -->
+  <path d="M645,408 L645,440 L115,440 L115,484" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="660" y="436" font-size="11" fill="#9ca3af">训练作业把这个目录当数据集读,读多少轮都不再编码</text>
+
+  <!-- 行三:离线第二步 -->
+  <rect x="24" y="452" width="1072" height="156" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="200" y="476" font-size="14" font-weight="700" fill="#111827">离线第二步 · 训练作业的每一步</text>
+
+  <rect x="40" y="486" width="150" height="104" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="56" y="532" font-size="14" font-weight="700" fill="#111827">读回</text>
+  <text x="56" y="556" font-size="11" fill="#6b7280">逐列反序列化</text>
+  <text x="56" y="574" font-size="11" fill="#6b7280">不再碰视频与文本</text>
+
+  <rect x="230" y="512" width="250" height="78" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-dasharray="3 3"/>
+  <text x="246" y="534" font-size="14" font-weight="700" fill="#111827">条件模型 · 只剩空壳</text>
+  <text x="246" y="556" font-size="11" fill="#6b7280">VAE 只建结构,拿归一化统计量</text>
+  <text x="246" y="574" font-size="11" fill="#6b7280">文本编码器算完负提示词就删</text>
+
+  <rect x="520" y="486" width="250" height="104" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="536" y="532" font-size="14" font-weight="700" fill="#111827">条件模型 · 加噪</text>
+  <text x="536" y="556" font-size="11" fill="#6b7280">同上,每步重新随机</text>
+  <text x="536" y="574" font-size="11" fill="#6b7280">10% 换成负提示词嵌入</text>
+
+  <rect x="810" y="486" width="270" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="826" y="532" font-size="14" font-weight="700" fill="#111827">DiT 前向加反向</text>
+  <text x="826" y="556" font-size="11" fill="#6b7280">同上;显存里只剩它</text>
+  <text x="826" y="574" font-size="11" fill="#6b7280">和它的优化器状态</text>
+
+  <line x1="190" y1="498" x2="518" y2="498" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="480" y1="560" x2="518" y2="560" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="770" y1="538" x2="808" y2="538" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <text x="24" y="636" font-size="11" fill="#9ca3af">以 Wan 为例。LTX-2.3 不支持在线编码,由自带的预处理脚本写出同一种每样本一行的 parquet;MiniMax-H3 与 Wan 一样走只做编码的作业。</text>
+</svg>

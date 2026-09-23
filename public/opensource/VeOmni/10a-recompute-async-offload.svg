@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" width="1120" height="500" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="500" fill="#ffffff"/>
+  <text x="24" y="36" font-size="19" fill="#111827" font-weight="700" text-anchor="start">一步里 4 层解码层的激活去向:重算扔掉层内中间结果,层输入异步搬到主机</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280" text-anchor="start">紫 = 计算流上的前向与反向;黄 = 拷贝流上的搬运与主机上的副本;绿 = 层输入留在卡上;红 = 露在关键路径上的回搬;灰 = 不保存、反向时重算的层内中间激活</text>
+  <text x="320" y="92" font-size="11" fill="#9ca3af" text-anchor="middle">前向:每层只存输入</text>
+  <text x="785" y="92" font-size="11" fill="#9ca3af" text-anchor="middle">反向:从最后一层往回,每层先重算</text>
+  <line x1="495" y1="84" x2="495" y2="392" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="24" y="130" font-size="14" fill="#111827" font-weight="700" text-anchor="start">计算流</text>
+  <rect x="161" y="104" width="78" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="200.0" y="131" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前向 L0</text>
+  <rect x="241" y="104" width="78" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="280.0" y="131" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前向 L1</text>
+  <rect x="321" y="104" width="78" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="360.0" y="131" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前向 L2</text>
+  <rect x="401" y="104" width="78" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="440.0" y="131" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">前向 L3</text>
+  <rect x="511" y="104" width="123" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="572.5" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">反向 L3</text>
+  <text x="572.5" y="140" font-size="11" fill="#6b7280" text-anchor="middle">先重算本层</text>
+  <rect x="686" y="104" width="123" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="747.5" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">反向 L2</text>
+  <text x="747.5" y="140" font-size="11" fill="#6b7280" text-anchor="middle">先重算本层</text>
+  <rect x="811" y="104" width="123" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="872.5" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">反向 L1</text>
+  <text x="872.5" y="140" font-size="11" fill="#6b7280" text-anchor="middle">先重算本层</text>
+  <rect x="936" y="104" width="123" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="997.5" y="124" font-size="14" fill="#111827" font-weight="700" text-anchor="middle">反向 L0</text>
+  <text x="997.5" y="140" font-size="11" fill="#6b7280" text-anchor="middle">先重算本层</text>
+  <rect x="636" y="104" width="48" height="44" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="660.0" y="131" font-size="11" fill="#6b7280" text-anchor="middle">空等</text>
+  <text x="24" y="182" font-size="14" fill="#111827" font-weight="700" text-anchor="start">拷贝流</text>
+  <text x="24" y="198" font-size="11" fill="#9ca3af" text-anchor="start">D2H 与 H2D 共用一条</text>
+  <rect x="162" y="164" width="66" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="195" y="181" font-size="11" fill="#6b7280" text-anchor="middle">D2H L0</text>
+  <rect x="242" y="164" width="66" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="275" y="181" font-size="11" fill="#6b7280" text-anchor="middle">D2H L1</text>
+  <rect x="322" y="164" width="66" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="355" y="181" font-size="11" fill="#6b7280" text-anchor="middle">D2H L2</text>
+  <rect x="636" y="164" width="48" height="26" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+  <text x="660" y="181" font-size="11" fill="#6b7280" text-anchor="middle">H2D L2</text>
+  <rect x="687" y="164" width="58" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="716" y="181" font-size="11" fill="#6b7280" text-anchor="middle">H2D L1</text>
+  <rect x="812" y="164" width="58" height="26" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="841" y="181" font-size="11" fill="#6b7280" text-anchor="middle">H2D L0</text>
+  <text x="240" y="214" font-size="11" fill="#9ca3af" text-anchor="middle">①</text>
+  <text x="440" y="214" font-size="11" fill="#9ca3af" text-anchor="middle">②</text>
+  <text x="660" y="214" font-size="11" fill="#9ca3af" text-anchor="middle">③</text>
+  <text x="24" y="228" font-size="14" fill="#111827" font-weight="700" text-anchor="start">各层输入在哪</text>
+  <text x="150" y="255" font-size="11" fill="#6b7280" text-anchor="end">L0 的输入</text>
+  <rect x="160" y="240" width="80" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="200.0" y="254" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <rect x="240" y="240" width="630" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="555.0" y="254" font-size="11" fill="#6b7280" text-anchor="middle">在主机上</text>
+  <rect x="870" y="240" width="190" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="965.0" y="254" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <text x="150" y="283" font-size="11" fill="#6b7280" text-anchor="end">L1 的输入</text>
+  <rect x="240" y="268" width="80" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="280.0" y="282" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <rect x="320" y="268" width="425" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="532.5" y="282" font-size="11" fill="#6b7280" text-anchor="middle">在主机上</text>
+  <rect x="745" y="268" width="190" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="840.0" y="282" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <text x="150" y="311" font-size="11" fill="#6b7280" text-anchor="end">L2 的输入</text>
+  <rect x="320" y="296" width="80" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="360.0" y="310" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <rect x="400" y="296" width="285" height="20" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="542.5" y="310" font-size="11" fill="#6b7280" text-anchor="middle">在主机上</text>
+  <rect x="685" y="296" width="125" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="747.5" y="310" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <text x="150" y="339" font-size="11" fill="#6b7280" text-anchor="end">L3 的输入</text>
+  <rect x="400" y="324" width="235" height="20" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="517.5" y="338" font-size="11" fill="#6b7280" text-anchor="middle">在卡上</text>
+  <text x="24" y="376" font-size="14" fill="#111827" font-weight="700" text-anchor="start">层内中间激活</text>
+  <rect x="163" y="360" width="74" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="200.0" y="375" font-size="11" fill="#6b7280" text-anchor="middle">算完即丢</text>
+  <rect x="243" y="360" width="74" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="280.0" y="375" font-size="11" fill="#6b7280" text-anchor="middle">算完即丢</text>
+  <rect x="323" y="360" width="74" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="360.0" y="375" font-size="11" fill="#6b7280" text-anchor="middle">算完即丢</text>
+  <rect x="403" y="360" width="74" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="440.0" y="375" font-size="11" fill="#6b7280" text-anchor="middle">算完即丢</text>
+  <rect x="513" y="360" width="119" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="572.5" y="375" font-size="11" fill="#6b7280" text-anchor="middle">重算出来,用完即丢</text>
+  <rect x="688" y="360" width="119" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="747.5" y="375" font-size="11" fill="#6b7280" text-anchor="middle">重算出来,用完即丢</text>
+  <rect x="813" y="360" width="119" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="872.5" y="375" font-size="11" fill="#6b7280" text-anchor="middle">重算出来,用完即丢</text>
+  <rect x="938" y="360" width="119" height="22" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="997.5" y="375" font-size="11" fill="#6b7280" text-anchor="middle">重算出来,用完即丢</text>
+  <text x="24" y="424" font-size="11" fill="#9ca3af" text-anchor="start">① 进入 L1 时,先在主机侧等 L0 的 D2H 跑完,再把卡上那个张量的存储换成空的;拷贝比一层计算慢时,前向就卡在这里</text>
+  <text x="24" y="446" font-size="11" fill="#9ca3af" text-anchor="start">② 最后一层 L3 的输入不搬:反向第一个就要用它,搬走再搬回只会白等</text>
+  <text x="24" y="468" font-size="11" fill="#9ca3af" text-anchor="start">③ 反向每搬回一层,就让拷贝流预取下一层;第一个要搬回的 L2 没有人替它预取,这段回搬露在计算流的关键路径上</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+
+  <text x="24" y="36" font-size="19" font-weight="700" fill="#111827">一个 DPO 作业的两半:训练器一份,模型运行时两个,工牌三张,拓扑只建一次</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">紫色是每个作业只有一份的东西,绿色是每个模型各有一份的东西,黄色是按名字登记的拓扑,灰色是不需要切换拓扑的操作</text>
+
+  <!-- 训练器 -->
+  <rect x="24" y="88" width="300" height="276" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="40" y="112" font-size="14" font-weight="700" fill="#111827">训练器 · 每个作业一份</text>
+  <text x="40" y="140" font-size="11" fill="#6b7280">进程组:启动时建一次</text>
+  <text x="40" y="162" font-size="11" fill="#6b7280">数据变换 → 数据集 → collator → dataloader</text>
+  <text x="40" y="184" font-size="11" fill="#6b7280">训练循环与梯度累积</text>
+  <text x="40" y="206" font-size="11" fill="#6b7280">回调:指标、checkpoint 时机、评估</text>
+  <text x="40" y="228" font-size="11" fill="#6b7280">数据游标、随机状态、步数</text>
+  <text x="40" y="250" font-size="11" fill="#6b7280">学习率调度器的总步数由它算出</text>
+  <rect x="40" y="304" width="120" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="100" y="329" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">工牌 base</text>
+  <text x="172" y="322" font-size="11" fill="#9ca3af">启动时登记</text>
+  <text x="172" y="338" font-size="11" fill="#9ca3af">作业默认那套</text>
+
+  <!-- 登记表 -->
+  <rect x="372" y="88" width="332" height="276" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="388" y="112" font-size="14" font-weight="700" fill="#111827">命名拓扑登记表</text>
+  <text x="388" y="130" font-size="11" fill="#6b7280">按名字查,每次现查;拓扑参数相同就复用</text>
+
+  <rect x="388" y="146" width="92" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="434" y="167" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">base</text>
+  <rect x="492" y="146" width="92" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="538" y="167" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">policy</text>
+  <rect x="596" y="146" width="92" height="32" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="642" y="167" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">reference</text>
+
+  <line x1="434" y1="178" x2="522" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="538" y1="178" x2="538" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="642" y1="178" x2="554" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="448" y="254" width="180" height="58" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="538" y="277" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">1 个拓扑对象</text>
+  <text x="538" y="297" font-size="11" fill="#6b7280" text-anchor="middle">网格与进程组只建这一次</text>
+  <text x="538" y="338" font-size="11" fill="#9ca3af" text-anchor="middle">3 个名字的拓扑参数完全相同,所以指向同一个对象</text>
+
+  <!-- 策略模型运行时 -->
+  <rect x="752" y="88" width="344" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="768" y="112" font-size="14" font-weight="700" fill="#111827">策略模型运行时</text>
+  <text x="768" y="136" font-size="11" fill="#6b7280">模型:生成的 modeling,切分并装载好的权重</text>
+  <text x="768" y="156" font-size="11" fill="#6b7280">优化器、学习率调度器、梯度裁剪</text>
+  <text x="768" y="176" font-size="11" fill="#6b7280">存 checkpoint 只存它</text>
+  <rect x="968" y="96" width="116" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="1026" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">工牌 policy</text>
+
+  <!-- 参考模型运行时 -->
+  <rect x="752" y="234" width="344" height="130" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="768" y="258" font-size="14" font-weight="700" fill="#111827">参考模型运行时</text>
+  <text x="768" y="282" font-size="11" fill="#6b7280">复制策略模型的配置,整份冻结</text>
+  <text x="768" y="302" font-size="11" fill="#6b7280">关掉 LoRA、混合精度、重计算、编译、卸载</text>
+  <text x="768" y="322" font-size="11" fill="#6b7280">只切分装载,不建优化器,不存 checkpoint</text>
+  <rect x="940" y="242" width="144" height="30" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="1012" y="262" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">工牌 reference</text>
+
+  <!-- 一步里的工牌切换 -->
+  <text x="24" y="410" font-size="14" font-weight="700" fill="#111827">DPO 的一步里,每个操作先亮谁的工牌</text>
+  <text x="24" y="428" font-size="11" fill="#9ca3af">前 4 格每个微批做一遍,累积完再做后 2 格;亮工牌只在这一个操作内有效,做完就恢复原来的拓扑</text>
+
+  <rect x="24" y="444" width="168" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="108" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">参考模型前向</text>
+  <text x="108" y="490" font-size="11" fill="#6b7280" text-anchor="middle">亮 reference,不求梯度</text>
+
+  <line x1="192" y1="475" x2="206" y2="475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="208" y="444" width="168" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="292" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">策略模型前向</text>
+  <text x="292" y="490" font-size="11" fill="#6b7280" text-anchor="middle">亮 policy</text>
+
+  <line x1="376" y1="475" x2="390" y2="475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="392" y="444" width="168" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="476" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">算 DPO loss</text>
+  <text x="476" y="490" font-size="11" fill="#6b7280" text-anchor="middle">不切换</text>
+
+  <line x1="560" y1="475" x2="574" y2="475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="576" y="444" width="168" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="660" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">策略模型反向</text>
+  <text x="660" y="490" font-size="11" fill="#6b7280" text-anchor="middle">亮 policy</text>
+
+  <line x1="744" y1="475" x2="758" y2="475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="760" y="444" width="160" height="62" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="840" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">梯度裁剪</text>
+  <text x="840" y="490" font-size="11" fill="#6b7280" text-anchor="middle">亮 policy</text>
+
+  <line x1="920" y1="475" x2="934" y2="475" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="936" y="444" width="160" height="62" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="1016" y="469" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">优化器一步</text>
+  <text x="1016" y="490" font-size="11" fill="#6b7280" text-anchor="middle">不切换</text>
+
+  <text x="24" y="540" font-size="11" fill="#9ca3af">单模型作业里训练器与模型运行时登记的都是 base 这一个名字,亮工牌等于什么都没做</text>
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" width="1120" height="720" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="720" fill="#ffffff"/>
+  <text x="24" y="36" font-size="19" font-weight="700" fill="#111827">一个步目录里,谁在什么时候写哪一格</text>
+  <text x="24" y="60" font-size="13" fill="#6b7280">绿 = 续训要读的树 · 紫 = 导出,续训不读 · 黄 = 完成标记 · 灰 = 作业根目录,每次作业只写一次 · 圆圈数字 = 同步保存且导出也到期时的写入顺序</text>
+
+  <rect x="24" y="80" width="1072" height="498" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="40" y="104" font-size="14" font-weight="700" fill="#111827">checkpoints/global_step_N/</text>
+  <text x="640" y="104" font-size="11" fill="#9ca3af">谁写</text>
+
+  <!-- model/ header -->
+  <rect x="70" y="118" width="1010" height="30" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="84" y="138" font-size="14" font-weight="700" fill="#111827">model/</text>
+  <text x="150" y="137" font-size="11" fill="#6b7280">这个模型的续训状态;多模块作业在这里按模块名再嵌一层</text>
+  <line x1="86" y1="148" x2="86" y2="288" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="86" y1="180" x2="100" y2="180" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="86" y1="234" x2="100" y2="234" stroke="#9ca3af" stroke-width="1.4"/>
+  <line x1="86" y1="288" x2="100" y2="288" stroke="#9ca3af" stroke-width="1.4"/>
+
+  <!-- 1 model extra_state -->
+  <circle cx="46" cy="180" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="184" font-size="11" text-anchor="middle" fill="#111827">1</text>
+  <rect x="100" y="158" width="980" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="114" y="177" font-size="14" font-weight="700" fill="#111827">extra_state/extra_state_rank_R.pt</text>
+  <text x="114" y="194" font-size="11" fill="#6b7280">学习率调度器 + 条件模型的噪声生成器</text>
+  <text x="640" y="177" font-size="14" font-weight="700" fill="#111827">每个 rank 各写一份</text>
+  <text x="640" y="194" font-size="11" fill="#6b7280">最先写,在两次 DCP 之前</text>
+
+  <!-- 2 ckpt -->
+  <circle cx="46" cy="234" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="238" font-size="11" text-anchor="middle" fill="#111827">2</text>
+  <rect x="100" y="212" width="980" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="114" y="231" font-size="14" font-weight="700" fill="#111827">ckpt/</text>
+  <text x="114" y="248" font-size="11" fill="#6b7280">权重的 DCP 分片;专家维临时补回成全局 E</text>
+  <text x="640" y="231" font-size="14" font-weight="700" fill="#111827">全体 rank,经 DCP</text>
+  <text x="640" y="248" font-size="11" fill="#6b7280">本目录的 .metadata 由 rank 0 最后落盘</text>
+
+  <!-- 3 optimizer -->
+  <circle cx="46" cy="288" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="292" font-size="11" text-anchor="middle" fill="#111827">3</text>
+  <rect x="100" y="266" width="980" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="114" y="285" font-size="14" font-weight="700" fill="#111827">optimizer/</text>
+  <text x="114" y="302" font-size="11" fill="#6b7280">优化器状态的 DCP 分片,和权重分开存</text>
+  <text x="640" y="285" font-size="14" font-weight="700" fill="#111827">全体 rank,经 DCP</text>
+  <text x="640" y="302" font-size="11" fill="#6b7280">同上;异步时 2 和 3 各走一条后台保存</text>
+
+  <text x="100" y="330" font-size="11" fill="#9ca3af">3 之后:清一次显存缓存,全体 barrier,再往下走</text>
+
+  <!-- 4 hf_ckpt -->
+  <circle cx="46" cy="362" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="366" font-size="11" text-anchor="middle" fill="#111827">4</text>
+  <rect x="70" y="340" width="1010" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+  <text x="84" y="359" font-size="14" font-weight="700" fill="#111827">hf_ckpt/</text>
+  <text x="84" y="376" font-size="11" fill="#6b7280">safetensors 分片 + 索引 + config 与分词器;LoRA 作业改写 lora_ckpt/</text>
+  <text x="640" y="359" font-size="14" font-weight="700" fill="#111827">各 rank 写自己那块,rank 0 拼成整文件</text>
+  <text x="640" y="376" font-size="11" fill="#6b7280">只在导出到期的步出现</text>
+
+  <!-- 5 loader -->
+  <circle cx="46" cy="416" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="420" font-size="11" text-anchor="middle" fill="#111827">5</text>
+  <rect x="70" y="394" width="1010" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="84" y="413" font-size="14" font-weight="700" fill="#111827">loader/rank_R.pt</text>
+  <text x="84" y="430" font-size="11" fill="#6b7280">数据游标,内容见 07 章</text>
+  <text x="640" y="413" font-size="14" font-weight="700" fill="#111827">rank R</text>
+  <text x="640" y="430" font-size="11" fill="#6b7280">模型那一半返回后就写,不等异步分片</text>
+
+  <!-- 6 job extra_state -->
+  <circle cx="46" cy="470" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="474" font-size="11" text-anchor="middle" fill="#111827">6</text>
+  <rect x="70" y="448" width="1010" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+  <text x="84" y="467" font-size="14" font-weight="700" fill="#111827">extra_state/rank_R.pt</text>
+  <text x="84" y="484" font-size="11" fill="#6b7280">步数、CPU 与设备随机状态、计量器</text>
+  <text x="640" y="467" font-size="14" font-weight="700" fill="#111827">rank R</text>
+  <text x="640" y="484" font-size="11" fill="#6b7280">和 5 同时;与 1 同名不同物</text>
+
+  <!-- 7 manifest -->
+  <circle cx="46" cy="524" r="11" fill="#ffffff" stroke="#9ca3af" stroke-width="1.4"/>
+  <text x="46" y="528" font-size="11" text-anchor="middle" fill="#111827">7</text>
+  <rect x="70" y="502" width="1010" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+  <text x="84" y="521" font-size="14" font-weight="700" fill="#111827">checkpoint_manifest.json</text>
+  <text x="84" y="538" font-size="11" fill="#6b7280">格式版本、步数、卡数;先写临时文件再改名</text>
+  <text x="640" y="521" font-size="14" font-weight="700" fill="#111827">rank 0,最后写</text>
+  <text x="640" y="538" font-size="11" fill="#6b7280">全体 rank 的 5、6 都落盘之后</text>
+
+  <text x="40" y="566" font-size="11" fill="#9ca3af">自动续训只挑两半标记都在的步:7 在,且 model/ 下每个 DCP 目录的 .metadata 在;异步保存时 7 可能先于 .metadata 落盘</text>
+
+  <!-- run root assets -->
+  <rect x="24" y="598" width="1072" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+  <text x="40" y="617" font-size="14" font-weight="700" fill="#111827">model_assets/(在 checkpoints/ 旁边)</text>
+  <text x="40" y="634" font-size="11" fill="#6b7280">config、生成配置、分词器或处理器</text>
+  <text x="640" y="617" font-size="14" font-weight="700" fill="#111827">rank 0</text>
+  <text x="640" y="634" font-size="11" fill="#6b7280">训练开始、读 checkpoint 之前写一次</text>
+
+  <text x="24" y="672" font-size="11" fill="#9ca3af">1–3 由模型的 checkpoint 管理器写,5–7 由作业级的游标回调写;两边互不等待,完整性靠两半标记各管各的。</text>
+  <text x="24" y="692" font-size="11" fill="#9ca3af">路径与写者出自基准 019b1c0276 的目录规则模块、DCP 存取器与两个回调。</text>
+</svg>
