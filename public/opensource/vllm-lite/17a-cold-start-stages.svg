@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">从模型名到能接请求:冷启动的 7 段,各种起法拿掉哪几段</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">以单机 8 卡、TP 8 为例。一行是一种起法,一列是冷启动的一段,格子里写这一段在每张卡上干什么;列宽不代表耗时。</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">绿 = 每张卡从头做,黄 = 只做一部分或多进程分摊,灰 = 这一段不做。</text>
+<line x1="346" y1="112" x2="1084" y2="112" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="346" y1="106" x2="346" y2="118" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="1084" y1="106" x2="1084" y2="118" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="715.0" y="104" font-size="11" fill="#9ca3af" text-anchor="middle">②–⑦ 在 8 个 worker 进程里各自并行走一遍,最慢的那张卡决定就绪时间</text>
+<text x="281.0" y="104" font-size="11" fill="#9ca3af" text-anchor="middle">同机串行</text>
+<line x1="222" y1="112" x2="340" y2="112" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="281.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">① 下载</text>
+<text x="281.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">HF 仓库到本地盘</text>
+<text x="405.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">② 读配置、找类</text>
+<text x="405.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">架构名查注册表</text>
+<text x="529.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">③ 建空模型</text>
+<text x="529.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">按精度在卡上建参数</text>
+<text x="653.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">④ 读 checkpoint</text>
+<text x="653.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">张量逐个过内存</text>
+<text x="777.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">⑤ 截本卡一片</text>
+<text x="777.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">拷进显存</text>
+<text x="901.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">⑥ 每层整理</text>
+<text x="901.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">排成 kernel 要的样子</text>
+<text x="1025.0" y="164" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">⑦ 剖析、编译、录图</text>
+<text x="1025.0" y="182" font-size="11" fill="#6b7280" text-anchor="middle">见 03、08 章</text>
+<text x="30" y="232" font-size="14" fill="#111827" text-anchor="start" font-weight="700">默认起法</text>
+<text x="30" y="250" font-size="11" fill="#6b7280" text-anchor="start">每次冷启动都从头来</text>
+<rect x="222" y="206" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="281.0" y="232" font-size="11" fill="#111827" text-anchor="middle">只一个进程下载</text>
+<text x="281.0" y="249" font-size="11" fill="#111827" text-anchor="middle">其余进程等文件锁</text>
+<rect x="346" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="405.0" y="232" font-size="11" fill="#111827" text-anchor="middle">查表后只导入</text>
+<text x="405.0" y="249" font-size="11" fill="#111827" text-anchor="middle">命中的那一个模块</text>
+<rect x="470" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="529.0" y="232" font-size="11" fill="#111827" text-anchor="middle">按模型精度</text>
+<text x="529.0" y="249" font-size="11" fill="#111827" text-anchor="middle">建好空参数</text>
+<rect x="594" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="653.0" y="232" font-size="11" fill="#111827" text-anchor="middle">按缺页把整份</text>
+<text x="653.0" y="249" font-size="11" fill="#111827" text-anchor="middle">checkpoint 过一遍</text>
+<rect x="718" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="777.0" y="232" font-size="11" fill="#111827" text-anchor="middle">每个参数自己</text>
+<text x="777.0" y="249" font-size="11" fill="#111827" text-anchor="middle">截走 1/8 再拷卡</text>
+<rect x="842" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="901.0" y="232" font-size="11" fill="#111827" text-anchor="middle">量化重排等</text>
+<text x="901.0" y="249" font-size="11" fill="#111827" text-anchor="middle">逐层做(13 章)</text>
+<rect x="966" y="206" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1025.0" y="241" font-size="11" fill="#111827" text-anchor="middle">照常做</text>
+<text x="30" y="302" font-size="14" fill="#111827" text-anchor="start" font-weight="700">网络盘自动预取</text>
+<text x="30" y="320" font-size="11" fill="#6b7280" text-anchor="start">NFS、Lustre 且装得进内存</text>
+<rect x="222" y="276" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="281.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="346" y="276" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="405.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="470" y="276" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="529.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="594" y="276" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="653.0" y="302" font-size="11" fill="#111827" text-anchor="middle">后台顺序预热 1/8</text>
+<text x="653.0" y="319" font-size="11" fill="#111827" text-anchor="middle">的文件进页缓存</text>
+<rect x="718" y="276" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="777.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="842" y="276" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="901.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="966" y="276" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1025.0" y="311" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<text x="30" y="372" font-size="14" fill="#111827" text-anchor="start" font-weight="700">预分片</text>
+<text x="30" y="390" font-size="11" fill="#6b7280" text-anchor="start">离线按 TP 8 存一份</text>
+<rect x="222" y="346" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="281.0" y="372" font-size="11" fill="#6b7280" text-anchor="middle">离线存好</text>
+<text x="281.0" y="389" font-size="11" fill="#6b7280" text-anchor="middle">不再下载</text>
+<rect x="346" y="346" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="405.0" y="381" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="470" y="346" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="529.0" y="381" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="594" y="346" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="653.0" y="372" font-size="11" fill="#111827" text-anchor="middle">每卡只读</text>
+<text x="653.0" y="389" font-size="11" fill="#111827" text-anchor="middle">自己那一份文件</text>
+<rect x="718" y="346" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="777.0" y="372" font-size="11" fill="#111827" text-anchor="middle">不用再截</text>
+<text x="777.0" y="389" font-size="11" fill="#111827" text-anchor="middle">整块拷进显存</text>
+<rect x="842" y="346" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="901.0" y="381" font-size="11" fill="#111827" text-anchor="middle">照常跑</text>
+<rect x="966" y="346" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1025.0" y="381" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<text x="30" y="442" font-size="14" fill="#111827" text-anchor="start" font-weight="700">权重缓存守护进程</text>
+<text x="30" y="460" font-size="11" fill="#6b7280" text-anchor="start">每卡一个,常驻显存</text>
+<rect x="222" y="416" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="281.0" y="451" font-size="11" fill="#6b7280" text-anchor="middle">不下载</text>
+<rect x="346" y="416" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="405.0" y="451" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<rect x="470" y="416" width="118" height="60" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="529.0" y="442" font-size="11" fill="#111827" text-anchor="middle">只在元设备上</text>
+<text x="529.0" y="459" font-size="11" fill="#111827" text-anchor="middle">建出形状</text>
+<rect x="594" y="416" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="653.0" y="451" font-size="11" fill="#6b7280" text-anchor="middle">不读盘</text>
+<rect x="718" y="416" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="777.0" y="442" font-size="11" fill="#6b7280" text-anchor="middle">经 CUDA IPC 映射</text>
+<text x="777.0" y="459" font-size="11" fill="#6b7280" text-anchor="middle">守护进程那一份</text>
+<rect x="842" y="416" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="901.0" y="442" font-size="11" fill="#6b7280" text-anchor="middle">守护进程</text>
+<text x="901.0" y="459" font-size="11" fill="#6b7280" text-anchor="middle">已经做完</text>
+<rect x="966" y="416" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="1025.0" y="451" font-size="11" fill="#6b7280" text-anchor="middle">同第一行</text>
+<text x="30" y="512" font-size="14" fill="#111827" text-anchor="start" font-weight="700">进程快照恢复</text>
+<text x="30" y="530" font-size="11" fill="#6b7280" text-anchor="start">实验性,只限单卡</text>
+<rect x="222" y="486" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="281.0" y="521" font-size="11" fill="#6b7280" text-anchor="middle">事先下好</text>
+<rect x="346" y="486" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="405.0" y="521" font-size="11" fill="#6b7280" text-anchor="middle">随进程恢复</text>
+<rect x="470" y="486" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="529.0" y="521" font-size="11" fill="#6b7280" text-anchor="middle">随进程恢复</text>
+<rect x="594" y="486" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="653.0" y="521" font-size="11" fill="#111827" text-anchor="middle">重读整份</text>
+<rect x="718" y="486" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="777.0" y="512" font-size="11" fill="#111827" text-anchor="middle">单卡不用截</text>
+<text x="777.0" y="529" font-size="11" fill="#111827" text-anchor="middle">整块拷进显存</text>
+<rect x="842" y="486" width="118" height="60" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="901.0" y="521" font-size="11" fill="#111827" text-anchor="middle">逐层再整理</text>
+<rect x="966" y="486" width="118" height="60" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1025.0" y="521" font-size="11" fill="#6b7280" text-anchor="middle">随进程恢复</text>
+<text x="30" y="570" font-size="11" fill="#9ca3af" text-anchor="start">④ 在默认起法里是每个进程都把全部张量过一遍,再由 ⑤ 各截 1/8;只有预分片让每张卡真的只读自己那份,混合专家模型另有按卡跳过非本卡专家的过滤(11 章)。</text>
+<text x="30" y="588" font-size="11" fill="#9ca3af" text-anchor="start">快照恢复前权重与 KV 已按 sleep 第 2 级让出,所以 ④–⑥ 要重走一遍;守护进程不在或指纹对不上时,默认悄悄退回第一行。参数名都在第五节。</text>
+</svg>
