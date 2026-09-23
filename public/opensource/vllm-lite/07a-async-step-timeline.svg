@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">异步调度:第 N+1 步的调度与输入准备藏进第 N 步的前向,采样出的 token 不经 CPU 直接喂给下一步</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">紫 = 调度一步,黄 = 准备输入并排进 GPU 流,绿 = GPU 前向加采样,灰 = 结果拷回 CPU 与调度器收结果,红虚框 = GPU 空等。</text>
+<text x="30" y="76" font-size="13" fill="#6b7280" text-anchor="start">上下两半用同一条时间轴、同样的每段耗时画,横向长度就是时长;各段长短是示意比例,不是实测。</text>
+<text x="30" y="112" font-size="14" fill="#111827" text-anchor="start" font-weight="700">上:异步调度关掉时,一步一步串着走</text>
+<text x="30" y="130" font-size="11" fill="#6b7280" text-anchor="start">CPU 收完第 N 步的结果才开始排第 N+1 步;这段时间 GPU 什么也不干。</text>
+<text x="30" y="163.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">CPU</text>
+<text x="30" y="178.0" font-size="11" fill="#6b7280" text-anchor="start">EngineCore 与 worker</text>
+<text x="30" y="218.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">GPU</text>
+<rect x="210" y="146" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="225.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="240" y="146" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="255.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="270" y="196" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="320.0" y="216.96" font-size="11" fill="#111827" text-anchor="middle">第 1 步</text>
+<rect x="370" y="146" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="382.5" y="166.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="395" y="146" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="410.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="425" y="146" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="440.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="370" y="196" width="85" height="34" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="412.5" y="217.0" font-size="11" fill="#6b7280" text-anchor="middle">空等</text>
+<rect x="455" y="196" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="505.0" y="216.96" font-size="11" fill="#111827" text-anchor="middle">第 2 步</text>
+<rect x="555" y="146" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="567.5" y="166.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="580" y="146" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="595.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="610" y="146" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="625.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="555" y="196" width="85" height="34" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="597.5" y="217.0" font-size="11" fill="#6b7280" text-anchor="middle">空等</text>
+<rect x="640" y="196" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="690.0" y="216.96" font-size="11" fill="#111827" text-anchor="middle">第 3 步</text>
+<rect x="740" y="146" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="752.5" y="166.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="765" y="146" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="780.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="795" y="146" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="810.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="740" y="196" width="85" height="34" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="782.5" y="217.0" font-size="11" fill="#6b7280" text-anchor="middle">空等</text>
+<rect x="825" y="196" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="875.0" y="216.96" font-size="11" fill="#111827" text-anchor="middle">第 4 步</text>
+<rect x="925" y="146" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="937.5" y="166.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="950" y="146" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="965.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="980" y="146" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="995.0" y="166.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="925" y="196" width="85" height="34" rx="4" fill="#fbe9e7" stroke="#d9877a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="967.5" y="217.0" font-size="11" fill="#6b7280" text-anchor="middle">空等</text>
+<text x="1020" y="167.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="1020" y="217.0" font-size="13" fill="#6b7280" text-anchor="start">…</text>
+<text x="210" y="248" font-size="11" fill="#9ca3af" text-anchor="start">这段时间里 GPU 只跑了 4 步;每两步之间空出一段「收结果 + 调度 + 准备」</text>
+<line x1="30" y1="268" x2="1090" y2="268" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="296" font-size="14" fill="#111827" text-anchor="start" font-weight="700">下:异步调度(默认),同一时刻最多 2 批在路上</text>
+<text x="30" y="314" font-size="11" fill="#6b7280" text-anchor="start">排第 N+1 步时不等第 N 步的结果;worker 把活排进 GPU 流就返回,不等 GPU 算完。</text>
+<text x="30" y="389.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">CPU</text>
+<text x="30" y="404.0" font-size="11" fill="#6b7280" text-anchor="start">EngineCore 与 worker</text>
+<text x="30" y="439.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">拷回</text>
+<text x="30" y="476.0" font-size="13" fill="#111827" text-anchor="start" font-weight="700">GPU</text>
+<rect x="270" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="320.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 1 步</text>
+<rect x="370" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="420.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 2 步</text>
+<rect x="470" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="520.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 3 步</text>
+<rect x="570" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="620.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 4 步</text>
+<rect x="670" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="720.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 5 步</text>
+<rect x="770" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="820.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 6 步</text>
+<rect x="870" y="454" width="100" height="34" rx="4" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="920.0" y="474.96" font-size="11" fill="#111827" text-anchor="middle">第 7 步</text>
+<rect x="210" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="225.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="240" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="255.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="270" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="285.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="300" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="315.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="370" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="378" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="390.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="403" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="418.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="433" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="448.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="470" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="478" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="490.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="503" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="518.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="533" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="548.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="570" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="578" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="590.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="603" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="618.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="633" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="648.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="670" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="678" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="690.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="703" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="718.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="733" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="748.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="770" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="778" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="790.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<rect x="803" y="372" width="30" height="34" rx="4" fill="#ecebfb" stroke="#8f8bd8" stroke-width="1"/>
+<text x="818.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">调度</text>
+<rect x="833" y="372" width="30" height="34" rx="4" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="848.0" y="392.96" font-size="11" fill="#111827" text-anchor="middle">准备</text>
+<rect x="870" y="424" width="8" height="20" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<rect x="878" y="372" width="25" height="34" rx="4" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="890.5" y="392.96" font-size="11" fill="#111827" text-anchor="middle">收</text>
+<line x1="285" y1="372" x2="285" y2="344" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="281" y="340" font-size="11" fill="#6b7280" text-anchor="start">② 排第 2 步时第 1 步还没采样:请求 r 只记「多了 1 个占位」,不知道它的值</text>
+<line x1="390" y1="372" x2="390" y2="358" stroke="#9ca3af" stroke-width="1.4"/>
+<text x="386" y="356" font-size="11" fill="#6b7280" text-anchor="start">③ 第 1 步结果拷回后,调度器用真值换掉占位、判结束;这时第 2 步已在 GPU 上</text>
+<polyline points="350,488 350,504 390,504 390,490" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="346" y="522" font-size="11" fill="#6b7280" text-anchor="start">① 第 1 步采样把 token 写进 r 在持久状态表里的那一行;第 2 步前向开头由 GPU 按本步顺序读出来当输入,不经 CPU</text>
+<text x="210" y="544" font-size="11" fill="#9ca3af" text-anchor="start">同样长的时间里 GPU 跑了 7 步,步与步之间没有空档;只要「收 + 调度 + 准备」比一步前向短,CPU 的时间全被藏住。</text>
+<line x1="30" y1="572" x2="1090" y2="572" stroke="#e5e7eb" stroke-width="1.4"/>
+<text x="30" y="596" font-size="11" fill="#9ca3af" text-anchor="start">迟到的输出:r 在第 N 步采出结束符时,第 N+1 步已经发出,那 1 个 token 照算,收结果时发现请求已结束就丢掉;</text>
+<text x="30" y="614" font-size="11" fill="#9ca3af" text-anchor="start">r 在两步之间被抢占时,在路上那一步的 token 回来照样记进请求,但不动已清零的计数,等它回来之后 r 才能重新排队。</text>
+</svg>

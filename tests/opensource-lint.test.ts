@@ -61,10 +61,10 @@ describe('开源解读页的硬约束', () => {
     expect(bad.map(label)).toEqual([])
   })
 
-  /** 反引号好查,裸写的一样是名字:--chunked-prefill-size、SGLANG_XXX、mem_fraction_static */
+  /** 反引号好查,裸写的一样是名字:--chunked-prefill-size、SGLANG_XXX、VLLM_XXX、mem_fraction_static */
   it('原理段(一到四)也不出现裸参数名', () => {
     // 前一个字符不能是标识符的一部分;中文标点、句读、行首都算边界
-    const BARE = /(?<![A-Za-z0-9_/.\-])(--[a-z][a-z0-9-]{4,}|SGLANG_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/g
+    const BARE = /(?<![A-Za-z0-9_/.\-])(--[a-z][a-z0-9-]{4,}|(?:SGLANG|VLLM)_[A-Z0-9_]{3,}|[a-z][a-z0-9]*(?:_[a-z0-9]+){1,})/g
     const bad = PAGES.flatMap((p) => {
       const hits = [...new Set([...principle(p.text).matchAll(BARE)].map((m) => m[1]))]
       return hits.map((h) => `${label(p)}: ${h}`)

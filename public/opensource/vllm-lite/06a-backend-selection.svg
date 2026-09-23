@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 736" width="1120" height="736" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker><marker id="ard" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b9b9b9"/></marker></defs>
+<rect x="0" y="0" width="1120" height="736" fill="#ffffff"/>
+<text x="30" y="34" font-size="19" fill="#111827" text-anchor="start" font-weight="700">同一套选择器,换一张卡或换一种 KV 精度,选中的注意力后端就换人</text>
+<text x="30" y="58" font-size="13" fill="#6b7280" text-anchor="start">每行是一种「模型 × 卡 × KV 精度」;方框按平台候选表的先后从左往右排,选择器逐个调用后端自带的准入校验,第一个通过的胜出。</text>
+<text x="30" y="78" font-size="13" fill="#6b7280" text-anchor="start">绿 = 选中,红 = 被准入校验刷掉(框下是原因),灰 = 排在选中者之后、根本没被试;黄 = 用户点名时走的另一条路。</text>
+<rect x="24" y="96" width="1072" height="250" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="40" y="120" font-size="14" fill="#111827" text-anchor="start" font-weight="700">普通注意力(MHA / GQA)的候选表</text>
+<text x="40" y="138" font-size="11" fill="#6b7280" text-anchor="start">Hopper 及更早、以及 SM120 是这一张;Blackwell 数据中心卡(SM100)把 FlashInfer 排到第 1 位</text>
+<text x="44" y="169" font-size="14" fill="#111827" text-anchor="start" font-weight="700">Qwen3 一类 GQA 模型</text>
+<text x="44" y="186" font-size="11" fill="#6b7280" text-anchor="start">H100 · BF16 KV</text>
+<rect x="262" y="154" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="341.0" y="177.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashAttention</text>
+<text x="266" y="206" font-size="11" fill="#6b7280" text-anchor="start">Hopper 上是第 3 代</text>
+<rect x="430" y="154" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="509.0" y="177.0" font-size="13" fill="#6b7280" text-anchor="middle">FlashInfer</text>
+<rect x="598" y="154" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="677.0" y="177.0" font-size="13" fill="#6b7280" text-anchor="middle">Triton</text>
+<rect x="766" y="154" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="177.0" font-size="13" fill="#6b7280" text-anchor="middle">FlexAttention</text>
+<rect x="934" y="154" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="177.0" font-size="13" fill="#6b7280" text-anchor="middle">TurboQuant</text>
+<text x="44" y="233" font-size="14" fill="#111827" text-anchor="start" font-weight="700">同一个模型</text>
+<text x="44" y="250" font-size="11" fill="#6b7280" text-anchor="start">A100 · FP8 KV</text>
+<rect x="262" y="218" width="158" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="341.0" y="241.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashAttention</text>
+<text x="266" y="270" font-size="11" fill="#6b7280" text-anchor="start">FP8 KV 要第 3 或第 4 代</text>
+<rect x="430" y="218" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="509.0" y="241.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashInfer</text>
+<text x="434" y="270" font-size="11" fill="#6b7280" text-anchor="start">收 FP8 KV</text>
+<rect x="598" y="218" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="677.0" y="241.0" font-size="13" fill="#6b7280" text-anchor="middle">Triton</text>
+<rect x="766" y="218" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="241.0" font-size="13" fill="#6b7280" text-anchor="middle">FlexAttention</text>
+<rect x="934" y="218" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="241.0" font-size="13" fill="#6b7280" text-anchor="middle">TurboQuant</text>
+<text x="44" y="297" font-size="14" fill="#111827" text-anchor="start" font-weight="700">带 attention sink 的模型</text>
+<text x="44" y="314" font-size="11" fill="#6b7280" text-anchor="start">A100 · BF16 KV · 如 gpt-oss</text>
+<rect x="262" y="282" width="158" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="341.0" y="305.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashAttention</text>
+<text x="266" y="334" font-size="11" fill="#6b7280" text-anchor="start">sink 要 SM90 及以上</text>
+<rect x="430" y="282" width="158" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="509.0" y="305.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashInfer</text>
+<text x="434" y="334" font-size="11" fill="#6b7280" text-anchor="start">这张卡上不收 sink</text>
+<rect x="598" y="282" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="677.0" y="305.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">Triton</text>
+<text x="602" y="334" font-size="11" fill="#6b7280" text-anchor="start">兜底,什么卡都收</text>
+<rect x="766" y="282" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="305.0" font-size="13" fill="#6b7280" text-anchor="middle">FlexAttention</text>
+<rect x="934" y="282" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="305.0" font-size="13" fill="#6b7280" text-anchor="middle">TurboQuant</text>
+<rect x="24" y="362" width="1072" height="250" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="40" y="386" font-size="14" fill="#111827" text-anchor="start" font-weight="700">MLA 的候选表(这里只管 decode 用的吸收路径,prefill 另选一个后端)</text>
+<text x="40" y="404" font-size="11" fill="#6b7280" text-anchor="start">每张卡代一张表;稀疏 MLA 的几个排在表尾,稠密层靠「稀疏与否必须一致」这一条把它们刷掉</text>
+<text x="44" y="435" font-size="14" fill="#111827" text-anchor="start" font-weight="700">DeepSeek V3 一类 MLA</text>
+<text x="44" y="452" font-size="11" fill="#6b7280" text-anchor="start">H100 · BF16 KV</text>
+<rect x="262" y="420" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="341.0" y="443.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashAttention MLA</text>
+<text x="266" y="472" font-size="11" fill="#6b7280" text-anchor="start">块大小仍是 16</text>
+<rect x="430" y="420" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="509.0" y="443.0" font-size="13" fill="#6b7280" text-anchor="middle">FlashMLA</text>
+<rect x="598" y="420" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="677.0" y="443.0" font-size="13" fill="#6b7280" text-anchor="middle">FlashInfer MLA</text>
+<rect x="766" y="420" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="443.0" font-size="13" fill="#6b7280" text-anchor="middle">Triton MLA</text>
+<rect x="934" y="420" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="443.0" font-size="13" fill="#6b7280" text-anchor="middle">另 3 个稀疏 MLA</text>
+<text x="44" y="499" font-size="14" fill="#111827" text-anchor="start" font-weight="700">同一个模型</text>
+<text x="44" y="516" font-size="11" fill="#6b7280" text-anchor="start">H100 · FP8 KV</text>
+<rect x="262" y="484" width="158" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a" stroke-width="1"/>
+<text x="341.0" y="507.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashAttention MLA</text>
+<text x="266" y="536" font-size="11" fill="#6b7280" text-anchor="start">不收 FP8 KV</text>
+<rect x="430" y="484" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="509.0" y="507.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashMLA</text>
+<text x="434" y="536" font-size="11" fill="#6b7280" text-anchor="start">块大小被改成 64</text>
+<rect x="598" y="484" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="677.0" y="507.0" font-size="13" fill="#6b7280" text-anchor="middle">FlashInfer MLA</text>
+<rect x="766" y="484" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="507.0" font-size="13" fill="#6b7280" text-anchor="middle">Triton MLA</text>
+<rect x="934" y="484" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="507.0" font-size="13" fill="#6b7280" text-anchor="middle">另 3 个稀疏 MLA</text>
+<text x="44" y="563" font-size="14" fill="#111827" text-anchor="start" font-weight="700">同一个模型</text>
+<text x="44" y="580" font-size="11" fill="#6b7280" text-anchor="start">B200 · BF16 KV</text>
+<rect x="262" y="548" width="158" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886" stroke-width="1"/>
+<text x="341.0" y="571.0" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">FlashInfer MLA</text>
+<text x="266" y="600" font-size="11" fill="#6b7280" text-anchor="start">块大小被改成 32</text>
+<rect x="430" y="548" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="509.0" y="571.0" font-size="13" fill="#6b7280" text-anchor="middle">TokenSpeed MLA</text>
+<rect x="598" y="548" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="677.0" y="571.0" font-size="13" fill="#6b7280" text-anchor="middle">CUTLASS MLA</text>
+<rect x="766" y="548" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="845.0" y="571.0" font-size="13" fill="#6b7280" text-anchor="middle">FlashAttention MLA</text>
+<rect x="934" y="548" width="158" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-width="1"/>
+<text x="1013.0" y="571.0" font-size="13" fill="#6b7280" text-anchor="middle">另 4 个</text>
+<rect x="24" y="628" width="1072" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c" stroke-width="1"/>
+<text x="40" y="649" font-size="14" fill="#111827" text-anchor="start" font-weight="700">用户点名了一个后端:不看上面的表,只校验被点名的那一个</text>
+<text x="40" y="667" font-size="11" fill="#6b7280" text-anchor="start">通过就用它;不通过就在启动时报错并列出原因,不会往下试别的候选。混合模型里一个全局点名要对所有层都成立。</text>
+<text x="30" y="702" font-size="11" fill="#9ca3af" text-anchor="start">被刷掉的候选连同原因只打在 debug 级日志里;info 级只有一行「选中了谁、通过校验的有哪几个」。</text>
+<text x="30" y="718" font-size="11" fill="#9ca3af" text-anchor="start">块大小由选中的后端声明它收哪几档来定(03 章);先后顺序与原因都取自基准代码,各行默认装齐了 FlashAttention 与 FlashInfer。</text>
+</svg>
