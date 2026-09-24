@@ -68,11 +68,6 @@ __pycache__/
 # Playwright MCP 本地抓取缓存（截图/快照/日志），不入库
 .playwright-mcp/
 
-# superpowers 技能产出的 spec/plan 不再入库。
-# 注意：初期那批已跟踪的历史存档不受本条影响（gitignore 不作用于已跟踪文件），
-# 它们仍被 docs/00-START.md 与 docs/09-日常维护.md 当设计档指着，别删。
-docs/superpowers/
-
 # 抓图与调试的临时产物,不入库
 tmp/
 

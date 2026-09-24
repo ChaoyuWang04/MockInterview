@@ -14,7 +14,6 @@ function activeMarkdownFiles(): string[] {
 
   const walk = (dir: string) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (entry.name === 'superpowers') continue
       const full = path.join(dir, entry.name)
       if (entry.isDirectory()) walk(full)
       else if (entry.name.endsWith('.md')) files.push(full)
