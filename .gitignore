@@ -75,3 +75,6 @@ docs/superpowers/
 
 # 抓图与调试的临时产物,不入库
 tmp/
+
+# 其他 agent 工具(WorkBuddy)的本地工作记忆,不入库
+.workbuddy-ai/
