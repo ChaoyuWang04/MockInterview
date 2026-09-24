@@ -27,9 +27,9 @@ describe('开源贡献台账', () => {
     expect(problems).toEqual([])
   })
 
-  it('台账不写私有实验仓的地址', () => {
+  it('台账不写本机路径与实验仓内部路径', () => {
     const leaks = ledgers.filter((name) =>
-      /-lab\b|1Project\/oss|\.lab\//.test(fs.readFileSync(path.join(contribRoot, name), 'utf8')),
+      /1Project\/oss|\/Users\/|\/home\/|\.lab\//.test(fs.readFileSync(path.join(contribRoot, name), 'utf8')),
     )
     expect(leaks).toEqual([])
   })

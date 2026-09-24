@@ -24,7 +24,7 @@
 ## 开源贡献
 
 - [ ] `pytorch`:两条文档类 issue 草稿已交维护者,待维护者发布后把编号回写 `contrib/pytorch.md`;标为 actionable 且要提 PR 时,再定巨型仓的接入方式
-- [ ] `sglang-omni` 选题:按 14 读 Roadmap 与相关 issue,出候选进 `contrib/sglang-omni.md`
+- [ ] `sglang-omni` 选题:按 14 读 Roadmap 与相关 issue,出候选进 `contrib/sglang-omni.md`;进入讨论与实验前先在 hlab 注册 `oss-sglang-omni`(运维线,画像的接入状态才算就绪)
 
 ## P6 · 开源解读与报告解读
 
