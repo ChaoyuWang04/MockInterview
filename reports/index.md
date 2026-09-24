@@ -75,6 +75,7 @@
 | Falcon-H1 | TII | Transformer-Mamba 混合头的开放权重家族;推理续作 H1R 见 arXiv 2601.02346 |
 | LFM2 | LiquidAI | 为端侧效率反推架构的开源小基模家族(arXiv 2511.23404) |
 | SmolLM3 | HuggingFace | 3B 长上下文多语推理,训练方法与配方全公开。**原件待核**(HF 博客抓取失败) |
+| Claude-Opus-5.5 | Anthropic | Claude Opus 5.5 的系统卡:RSP 与 FCF 风险评估、防护与智能体安全、对齐评估等上线前评测(230 页) |
 
 ## 注意力与长上下文
 
@@ -191,6 +192,8 @@
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
+| Self-Organizing-Agent-Teams | Stanford | 固定的一组 agent 从过往协作里学可复用的组织策略(角色、阶段、发言与信息流),只用 15 道数学题与 25 道研究生知识题学到的策略原样迁移到未见基准 |
+| Harness-Zero | Peking | harness 蒸馏:用优化过的 harness 指导一个 harnessing agent 在目标 harness 的动作空间里改写学生回答,微调后部署时去掉专用 harness |
 
 ## 推理服务与架构探索
 
@@ -305,6 +308,8 @@
 | Seedream-4.0 | ByteDance | 统一文生图与图像编辑的多模态生成(arXiv 2509.20427) |
 | Kling-Omni | Kuaishou | 统一多任务的视频生成框架(arXiv 2512.16776) |
 | Movie-Gen | Meta | 视频、图像、个性化与音频四件套媒体基模;Meta 生成线此前零收录(arXiv 2410.13720) |
+| Video-DeltaNet | Berkeley | 视频扩散的混合注意力:局部 Softmax 加逐帧更新的双向线性记忆,分阶段对齐教师接进预训练模型,在 MiniMax H3 上实例化 |
+| Geometric-AutoEncoder | HKUST | 几何原生自编码器 GAE:把几何基础模型的特征重参数化成紧凑潜空间,可同时解码外观、深度、相机与点图,再在上面做条件流生成 |
 
 ## 音频
 
@@ -349,6 +354,9 @@
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
+| WorldCrafter | Tencent | 视频世界模型的隐式 3D 感知记忆:按请求的相机视角把历史多视图观测压进固定数量的视角 token,不靠显式深度对应,单图或文本起步做分钟级流式探索 |
+| Workspace-Models | MIT | 训练时用 VLM 标出任务相关的当前与历史信息,蒸馏成轻量的 workspace token,部署时代替观测喂给策略,不再在环调用 VLM |
+| MotionJEPA | Oxford | JEPA 偏好慢特征导致时间维坍塌:加一个预测差分图像嵌入的正则 DISReg,不需要动作标签也不做像素重建 |
 
 ## 自进化系统
 
