@@ -155,6 +155,12 @@ PyTorch 的 caching allocator 会**检测到捕获正在进行**,把这期间的
 
 对策也就三条:调小最大捕获 batch(SGLang 的 `--cuda-graph-max-bs`)、减少档位数量、多图共享同一个池。显存总账怎么算见「显存管理与OOM」篇。
 
+### 两笔容易算错的账:分段录图与录图上限
+
+**分段录图不能让显存翻倍。** 一个形状被切成好几段图(第七节)时,每段都有要常驻的中间张量。SGLang 的做法是三种复用:同一形状的所有段共用一个图池;传进断点的张量已经归图池管时只持**弱引用**,不让 Python 引用拖长寿命(这招来自 vLLM);各档位共用一块最大尺寸的输出缓冲,按行切片。唯一必须强持有的是**跨断点传数据的那个张量**,因为下一段图录的是它的地址。这样 GLM-5.2 上 42 个形状、78 层 MoE 的图显存总共约 2.4 GB。
+
+**录图上限比档位个数更要紧。** 图显存是常驻的,eager 激活是临时的、峰值由最大那次前向决定。录一个形状,等于把它的临时工作集搬进常驻图池;但如果最高档低于实际会出现的最大前向,最大那次仍走 eager,峰值一点没少,还白付了常驻图的钱。prefill 的最大前向由分块大小(`chunked_prefill_size`)封顶,所以**录到分块大小**,最坏峰值才消失。SGLang 实测:gpt-oss-120b 的 prefill 激活峰值从 0.56 GB 降到约 0,总显存反而比不录图低 0.51 GB;GLM-5.2 低 1.10 GB,而且这块占用在录图时就确定,可以提前记进账。
+
 ## 六、Eager 与 CUDA Graph 的差异,以及推理里用在哪
 
 | 维度 | Eager 逐个下发 | CUDA Graph 重放 |
@@ -166,15 +172,49 @@ PyTorch 的 caching allocator 会**检测到捕获正在进行**,把这期间的
 | 首次开销 | 无 | warmup + capture + instantiate,每档一次 |
 | 调试 | 报错栈直指出错那行 | profiler 里只看到一个图节点,难定位 |
 | 典型翻车 | — | 换指针而非原地写 → 静默算旧数据 |
-| 适用阶段 | prefill、训练、形状多变 | **decode**、形状规整、kernel 碎 |
+| 适用阶段 | 长 prefill、训练、形状多变 | **decode**、短 prefill;形状能分档、kernel 碎 |
 
-**大模型推理里用在哪:只用在 decode。** 理由三条正好对上前面各节:decode 每步只产 1 个 token,单个 kernel 极小、数量极多,**launch 占比最高**(第一节);decode 的形状只由 batch 决定,**可以分档冻结**(第三节);而 prefill 的输入长度千变万化,分档要么档位爆炸要么 padding 浪费算力,通常直接不上图。
+**大模型推理里用在哪:decode 是主战场,prefill 过去不上、现在也能上。** decode 的理由三条正好对上前面各节:每步只产 1 个 token,单个 kernel 极小、数量极多,**launch 占比最高**(第一节);形状只由 batch 决定,**可以分档冻结**(第三节);attention 的变长信息能挪进设备端张量(第四节)。prefill 长期被认为不适合:输入长度千变万化,分档要么档位爆炸、要么 padding 浪费算力,所以早年的引擎通常直接不上图。**这个结论已经过时。** 多轮对话只追加几十个 token、分块预填充的最后一小块、推测解码的验证批,这些短 prefill 和 decode 一样被下发压住;2026 年起 SGLang 在 prefill 上默认录图,办法见第七节。
 
 **哪些操作最适合被纳入**:线性层(QKV 投影、MLP)、LayerNorm / RMSNorm、激活、RoPE、残差加——这些算子的形状**只由 batch 决定**,天然满足冻结要求。最难纳入的是 **attention**:它的行为依赖每条序列的实际长度和 block 表,必须由 backend 专门改造成"形状固定 + 元数据全走设备端张量"才能被捕获。现代引擎的图友好 backend 已经做到了这一点,所以实践中是**整个 decode step 一起捕获**,而不是只捕获一部分。
 
 和 `torch.compile` 的关系要分清:两者解决的是**不同层面**的问题——compile 优化的是 kernel 本身(融合、选核、去掉 Python 开销),CUDA Graph 优化的是**提交方式**。PyTorch 把两者串起来的开关是 `mode="reduce-overhead"`,它在编译产物之上自动套一层 CUDA Graph(实现叫 CUDAGraph Trees,对每个不同输入形状**重新录一张图**,并让所有图共用一个内存池)。细节见「TorchCompile」篇。
 
-## 七、面试考点串联
+## 七、prefill 怎么上图:分段、可断、补齐全图
+
+prefill 比 decode 难在两处。一是**两个维度同时在变**:batch 里的 token 总数在变,这些 token 分属几条请求也在变,而图要求两者都固定。二是**一个录不进去的算子会拖垮整张图**:有些 attention 后端要按实时长度在 CPU 上做规划,只要它在,整段前向都上不了图。目前有三条路,SGLang 三条都实现了,以它为例对比:
+
+| | 编译器分段(TC piecewise) | 可断图(Breakable CUDA Graph) | 补齐全图(full) |
+|---|---|---|---|
+| 怎么切 | torch.compile 先追踪整个前向,在注册切点切开,每段编译再录 | **不追踪**,录制中遇到标记函数就收段,eager 跑完再开新段 | 不切,整个前向一张图 |
+| 录不进的算子 | 留在切点之间 eager 跑 | 留在断点处 eager 跑 | 必须改造到能进图 |
+| 启动 | 慢,编译占准备时间的 78%–86% | 快 3.8–5.2 倍,只录一遍 | 无编译阶段,只录一遍 |
+| 每次重放 | 要过 Dynamo 的 guard 检查与分派 | 直接重放各段,断点处 eager | 一次提交,下发最少 |
+| 适用 | 编译器能读懂的模型 | 默认选择,编译器读不懂的也能录 | 实验性,要 attention 后端配合 |
+
+**可断图的关键是守住断点处的地址。** 下一段图录的是某个张量的地址,而 eager 函数每次返回新张量。做法是录制时把 eager 函数第一次的输出留作**固定地址的边界缓冲**,之后每次重放把新输出拷进去。它不追踪 eager 区里面,所以自定义 kernel 不用为编译器包装,切口也可以落在业务逻辑自然的边界上。Meta 与 SGLang 把它抽成了独立库 `breakable-cuda-graphs`,约束是 eager 函数把输出写进预分配的缓冲:
+
+```python
+from breakable_cuda_graphs import CUDAGraphSequence, breakable_graph, no_graph
+
+@no_graph                      # 这个函数不进图,每次重放都 eager 跑
+def plan_attention(meta):      # 例:要在 CPU 上按实时长度做规划
+    ...                        # 输出写进预分配好的 meta,不返回 CUDA 张量
+
+seq = CUDAGraphSequence()      # 装"图段 + eager 段"的序列,各段共用一个图池
+with breakable_graph(seq):     # 用法同 torch.cuda.graph
+    forward(static_input, meta, static_out)   # 走到 plan_attention 处自动断开
+static_input.copy_(new_input)  # 重放纪律不变:原地写回
+seq.replay()                   # 按顺序:图段 → eager → 图段 ...
+```
+
+**补齐全图要把两个维度分别钉死。** token 维照 decode 的办法分桶补齐;请求维给每张图预留固定数量的**请求槽位**,没用上的写成长度为 0 的哨兵,请求数超过槽位就回退 eager。两种补齐的代价很不对称:补齐的 token 是真实的行,要走完每个稠密 GEMM,补多少付多少;空槽位在按实际长度调度的变长 attention(FlashAttention 的 varlen)里几乎不产生计算。所以 token 档位要密,槽位可以宽。代价是每次重放前,要在图外按补齐后的 batch 重建 attention 元数据,只有支持这种准备方式的后端(FlashAttention、FlashInfer)能用。
+
+**分块预填充反而帮了上图的忙。** 它把单次 prefill 前向封顶在分块大小,档位有了上界;录到这个上界,最坏的激活峰值也跟着消失(第五节)。
+
+效果上,gpt-oss-120b(TP4、4×GB300)只测 prefill 时,编译器分段比 eager 快 1.45 倍,可断图 1.70 倍,全图 1.93 倍;而且输入长度从 64 到 2048 翻了 32 倍,延迟几乎不动,说明这个区间的 prefill 同样是下发瓶颈。分段的每个边界都要多一次图提交,外加中间那段 eager 的逐个下发,所以**段数越少越好**:能整图就整图,录不进的才断开,只捕获一层一层的小图就把省下的开销又还回去了。在 GLM-5.2 这类 attention 特殊的模型上,只有可断图录得了(1.60 倍)。
+
+## 八、面试考点串联
 
 | 高频问法 | 本文哪一节 |
 | --- | --- |
@@ -188,7 +228,11 @@ PyTorch 的 caching allocator 会**检测到捕获正在进行**,把这期间的
 | kvcache 一直在变,cudagraph 还能生效吗? | 四(能——变的是内容不是地址,这正是预分配的意义) |
 | 图里能有同步点吗? | 四(不能;`.item()` / host 分支会让捕获失败或静默录成常数) |
 | eager 和 cudagraph 有什么差异? | 六(八维对照表) |
-| 推理时哪个阶段、哪部分操作用 cudagraph? | 六(decode 阶段;线性层/norm/激活天然可捕获,attention 需 backend 配合) |
+| 推理时哪个阶段、哪部分操作用 cudagraph? | 六(decode 为主,短 prefill 也值得;线性层/norm/激活天然可捕获,attention 需 backend 配合) |
+| prefill 上图有没有可能?chunked prefill 呢? | 七(三条路;分块把 prefill 前向封顶,档位有界、录到分块大小峰值消失) |
+| 一次只捕获一层和捕获整步,差别在哪? | 七(每个边界多一次提交加中间 eager 下发,段越少越好) |
+| 补充题:分段 CUDA Graph 一定要靠编译器切吗?代价是什么? | 七(可断图边录边切,靠固定地址的边界缓冲衔接;代价是断点处仍 eager、每次多一次拷贝) |
+| 补充题:录图档位该录到多大?为什么录得更远显存反而更少? | 五(常驻图显存替掉临时激活峰值,前提是最高档覆盖最大前向) |
 | 推理为什么要 warmup?warmup 在干什么? | 二(触发 JIT/autotune/handle、稳定显存与时钟;不做会把一次性动作录进图) |
 | cudagraph 的存储能和常规显存池共用吗?为什么? | 五(不能;地址必须跨重放保持有效) |
 | 开了 cudagraph 为什么更容易 OOM? | 五(每档一张图 + 中间张量常驻 + 挤占 KV cache) |
@@ -206,3 +250,6 @@ PyTorch 的 caching allocator 会**检测到捕获正在进行**,把这期间的
 - PyTorch 文档 — CUDA semantics · CUDA Graphs(侧流 warmup、图私有池、`graph_pool_handle`)— https://docs.pytorch.org/docs/stable/notes/cuda.html
 - PyTorch 博客 — Accelerating PyTorch with CUDA Graphs — https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/
 - PyTorch 文档 — CUDAGraph Trees(`torch.compile` 的 reduce-overhead 模式如何按形状重录并共用内存池)— https://docs.pytorch.org/docs/main/user_guide/torch_compiler/torch.compiler_cudagraph_trees.html
+- LMSYS 博客 — Advanced CUDA Graph Techniques in SGLang(2026-08-17;可断图、prefill 全图、分段显存复用与录图上限,第五、七节数字出处)— https://www.lmsys.org/blog/2026-08-17-advanced-cuda-graph
+- meta-pytorch/breakable-cuda-graphs(可断图的独立库,`breakable_graph` / `@no_graph` / `CUDAGraphSequence`)— https://github.com/meta-pytorch/breakable-cuda-graphs
+- vLLM PR #9724 — cudagraph output with tensor weak reference(多图共享输出缓冲的弱引用技巧)— https://github.com/vllm-project/vllm/pull/9724

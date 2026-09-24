@@ -203,6 +203,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| SGLang-CUDA-Graph | Berkeley | 网页原件(LMSYS 博客 2026-08-17):不靠编译器的可断图让 prefill 默认上图,prefill 全图靠 token 分桶加零长度哨兵,图显存录到分块大小反而更省 |
 | DSpark | DeepSeek | 半自回归草稿 + 置信度调度验证,投机解码 |
 | Slicing-and-Dicing-MoE | Washington | MoE 配置的系统性搜索(158 页,含大量附录) |
 | DFlash | UCSD | 块扩散做并行草稿的投机解码,ICML 2026 |
