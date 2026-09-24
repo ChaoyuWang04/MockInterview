@@ -43,12 +43,19 @@ describe('活动文档', () => {
     expect(broken).toEqual([])
   })
 
-  it('两个 AI 入口保持一致并共同指向唯一维护手册', () => {
+  // AGENTS.md 是唯一真源;CLAUDE.md 只导入它,两份手工副本迟早漂移
+  it('CLAUDE.md 只导入 AGENTS.md,入口指向全景地图', () => {
     const agents = fs.readFileSync(path.join(projectRoot, 'AGENTS.md'), 'utf8')
     const claude = fs.readFileSync(path.join(projectRoot, 'CLAUDE.md'), 'utf8')
 
-    expect(agents).toBe(claude)
+    expect(claude.trim()).toBe('@AGENTS.md')
     expect(agents).toContain('docs/00-START.md')
+  })
+
+  it('Codex 与 Claude 读同一份 skill', () => {
+    const link = path.join(projectRoot, '.agents/skills')
+    expect(fs.lstatSync(link).isSymbolicLink()).toBe(true)
+    expect(fs.readlinkSync(link)).toBe('../.claude/skills')
   })
 
   it('入口统一为七个功能模块,运行设施不算模块', () => {
@@ -76,6 +83,8 @@ describe('活动文档', () => {
       '09-日常维护.md',
       '10-材料解读流程.md',
       '11-模拟面试系统.md',
+      '12-范式库维护.md',
+      '13-周会纪要.md',
     ]) {
       expect(start, `00-START 缺少 ${manual}`).toContain(manual)
     }

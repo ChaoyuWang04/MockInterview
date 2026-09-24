@@ -11,7 +11,7 @@ import { describe, expect, it } from 'vitest'
 const projectRoot = path.resolve(import.meta.dirname, '..')
 
 /** 五个内容目录都会被页面按 Markdown 渲染,星号泄漏对它们一视同仁 */
-const contentRoots = ['reports', 'readings', 'knowledge', 'opensource', 'questions', 'leetcode']
+const contentRoots = ['reports', 'readings', 'knowledge', 'opensource', 'questions', 'leetcode', 'paradigms', 'meetings']
 
 /** 与各 lib 的 isVisible 口径一致:`.` 或 `_` 开头的文件与目录不参与渲染 */
 function isVisible(name: string): boolean {
