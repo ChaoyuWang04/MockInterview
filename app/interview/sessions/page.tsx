@@ -1,7 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { listSessionSummaries, type SessionSummary } from '@/lib/interview/session'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '模拟面试' }
 
 /** 命中率条。和首页分类卡片同一套视觉,不另起风格。 */
 function HitBar({ hit, points }: { hit: number; points: number }) {

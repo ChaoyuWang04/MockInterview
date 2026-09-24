@@ -4,7 +4,7 @@ import 'highlight.js/styles/github.css'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '刷题系统',
+  title: { default: '刷题系统', template: '%s' },
   description: '本地大模型面试刷题系统',
 }
 

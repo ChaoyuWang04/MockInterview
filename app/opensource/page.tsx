@@ -1,7 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { countOsPages, listOsProjects, listOsTopics } from '@/lib/opensource'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '开源解读' }
 
 export default function OsIndexPage() {
   const topics = listOsTopics().map((t) => ({

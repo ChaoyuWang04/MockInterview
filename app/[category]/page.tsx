@@ -1,9 +1,15 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import QuestionView from '@/components/QuestionView'
 import { kbLinksFor } from '@/lib/knowledge'
 import { listCategories, loadCategory } from '@/lib/questions'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const { category: raw } = await params
+  return { title: decodeURIComponent(raw) }
+}
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category: raw } = await params

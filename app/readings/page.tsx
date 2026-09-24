@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import LibraryIndex from '@/components/LibraryIndex'
 import { readingViews } from '@/lib/library-views'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '日常研读' }
 
 export default function ReadingsIndexPage() {
   const views = readingViews()

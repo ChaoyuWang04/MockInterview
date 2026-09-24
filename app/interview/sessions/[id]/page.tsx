@@ -1,9 +1,17 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Markdown from '@/components/Markdown'
 import { readSession } from '@/lib/interview/session'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params
+  const found = readSession(decodeURIComponent(id))
+  const resume = found?.summary.简历?.trim()
+  return { title: resume && resume !== '—' ? resume : '模拟面试' }
+}
 
 /**
  * 把整篇拆成复盘和逐轮记录。

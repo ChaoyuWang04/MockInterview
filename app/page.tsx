@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import CategoryCard from '@/components/CategoryCard'
 import { countArticles, listKbTree } from '@/lib/knowledge'
@@ -9,6 +10,8 @@ import { countReadings } from '@/lib/readings'
 import { countReports } from '@/lib/reports'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '主页' }
 
 export default function Home() {
   const stats = getStats()

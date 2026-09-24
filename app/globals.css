@@ -116,6 +116,12 @@ body {
   padding: 0.5rem 0.75rem;
   vertical-align: top;
 }
+/* 调参表的首列是 a.b.c.d 形式的长参数名,浏览器把它当成一个断不开的长词,
+   于是首列的最小宽度被顶到四五百像素,正文列被挤成窄条、行高翻几倍,整表还溢出容器。
+   必须用 anywhere 而不是 break-word:只有前者参与最小内容宽度的计算,也就是只有它能让列缩回去 */
+.prose .markdown-table-scroll td {
+  overflow-wrap: anywhere;
+}
 /* 表格里的行内代码在浅色底上会糊,给它一个更实的底和边 */
 .prose .markdown-table-scroll code {
   background: #eef2f7;

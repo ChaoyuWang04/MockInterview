@@ -1,9 +1,21 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ArticleFloatNav from '@/components/ArticleFloatNav'
 import Markdown from '@/components/Markdown'
+import { originalPdfHref } from '@/lib/original-pdf'
 import { getReading } from '@/lib/readings'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ topic: string; paper: string }>
+}): Promise<Metadata> {
+  const { paper: rawSlug } = await params
+  return { title: decodeURIComponent(rawSlug) }
+}
 
 export default async function ReadingPage({
   params,
@@ -17,6 +29,7 @@ export default async function ReadingPage({
   const slug = decodeURIComponent(rawSlug)
   const reading = getReading(topic, slug)
   if (!reading) notFound()
+  const pdfHref = originalPdfHref({ lib: 'readings', topic, slug })
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
@@ -28,6 +41,19 @@ export default async function ReadingPage({
         <Link href="/" className="hover:text-gray-900">
           返回主页
         </Link>
+        {pdfHref ? (
+          <>
+            <span className="text-gray-300">|</span>
+            <a
+              href={pdfHref}
+              target="_blank"
+              rel="noreferrer"
+              className="font-mono text-[10px] tracking-widest text-gray-400 hover:text-gray-900"
+            >
+              原文
+            </a>
+          </>
+        ) : null}
         <span className="ml-auto font-mono text-xs tracking-widest text-gray-400">
           {reading.topic}
           {reading.org ? ` · ${reading.org}` : ''}
@@ -39,6 +65,7 @@ export default async function ReadingPage({
           <Markdown>{reading.content}</Markdown>
         </div>
       </article>
+      <ArticleFloatNav />
     </main>
   )
 }

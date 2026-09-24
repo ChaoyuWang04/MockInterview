@@ -1,9 +1,21 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import ArticleFloatNav from '@/components/ArticleFloatNav'
 import Markdown from '@/components/Markdown'
+import { originalPdfHref } from '@/lib/original-pdf'
 import { getReport } from '@/lib/reports'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ company: string; report: string }>
+}): Promise<Metadata> {
+  const { report } = await params
+  return { title: report }
+}
 
 export default async function ReportPage({
   params,
@@ -13,6 +25,7 @@ export default async function ReportPage({
   const { company, report: slug } = await params
   const report = getReport(company, slug)
   if (!report) notFound()
+  const pdfHref = originalPdfHref({ lib: 'reports', company, slug })
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">
@@ -24,6 +37,19 @@ export default async function ReportPage({
         <Link href="/" className="hover:text-gray-900">
           返回主页
         </Link>
+        {pdfHref ? (
+          <>
+            <span className="text-gray-300">|</span>
+            <a
+              href={pdfHref}
+              target="_blank"
+              rel="noreferrer"
+              className="font-mono text-[10px] tracking-widest text-gray-400 hover:text-gray-900"
+            >
+              原文
+            </a>
+          </>
+        ) : null}
         <span className="ml-auto font-mono text-xs tracking-widest text-gray-400">
           {report.topic ? `${report.topic} · ` : ''}
           {report.company}
@@ -35,6 +61,7 @@ export default async function ReportPage({
           <Markdown>{report.content}</Markdown>
         </div>
       </article>
+      <ArticleFloatNav />
     </main>
   )
 }

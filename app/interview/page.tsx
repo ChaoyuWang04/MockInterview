@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import InterviewSession from '@/components/interview/InterviewSession'
 import type { ResumeOption } from '@/components/interview/InterviewSession'
@@ -6,6 +7,8 @@ import { listResumes, loadProfile } from '@/lib/interview/resume'
 import { listSessions } from '@/lib/interview/session'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '模拟面试' }
 
 export default function InterviewPage() {
   const resumes = listResumes()

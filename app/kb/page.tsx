@@ -1,7 +1,10 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { articleHref, countArticles, flattenArticles, listKbTree, type KbFolder } from '@/lib/knowledge'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '知识库' }
 
 function ArticleGrid({ folder }: { folder: KbFolder }) {
   if (folder.articles.length === 0) return null

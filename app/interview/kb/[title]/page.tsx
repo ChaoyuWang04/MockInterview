@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import InterviewSession from '@/components/interview/InterviewSession'
@@ -6,6 +7,11 @@ import { buildCorpus } from '@/lib/interview/corpus'
 import { articleHref, findArticle } from '@/lib/knowledge'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: Promise<{ title: string }> }): Promise<Metadata> {
+  const { title: raw } = await params
+  return { title: decodeURIComponent(raw) }
+}
 
 /**
  * 单篇过题。

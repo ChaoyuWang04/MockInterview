@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Markdown from '@/components/Markdown'
@@ -6,6 +7,12 @@ import { buildCorpus } from '@/lib/interview/corpus'
 import { listCategories, loadCategory } from '@/lib/questions'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
+  const { slug } = await params
+  const last = decodeURIComponent(slug[slug.length - 1] ?? '')
+  return { title: stripOrder(last.replace(/\.md$/, '')) || '知识库' }
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params

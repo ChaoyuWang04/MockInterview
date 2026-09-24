@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Hot100List from '@/components/Hot100List'
 import { getAllNotes, listAllProblems, listHighFreq } from '@/lib/leetcode'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = { title: '立扣' }
 
 export default function LeetcodePage() {
   const groups = listAllProblems()
