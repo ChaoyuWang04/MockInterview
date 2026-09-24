@@ -17,6 +17,11 @@
 - [ ] 下次周会按 13 出第一份纪要;攒满 3 份后决定 `meetings/` 与 `paradigms/` 要不要网页入口
 - [ ] 手册去案例化,每次一份:把具体失误、决策过程、「实做后修正」的经过提炼成一句原则或删掉;06、10 最长,先做
 
+## 开源贡献
+
+- [ ] `sglang-omni` 接入收尾:维护者给私有实验仓设置 `CLAUDE_CODE_OAUTH_TOKEN` 后,在演练 PR 上各打一次 `review:code`、`review:pr` 验收两个评审,再清掉演练分支与 worktree;hlab 注册 `oss-sglang-omni`(运维线,按 homelab-control 守则)
+- [ ] `sglang-omni` 选题:按 14 读 Roadmap 与相关 issue,出候选进 `contrib/sglang-omni.md`
+
 ## P6 · 开源解读与报告解读
 
 - [ ] 报告解读批次:`reports/index.md` 已登记的 **余 63 条 ⬜**,每条先取原件再按 10 手册第三节动笔,验收按第七节。下一批做「检索与 RAG」三条:`Qwen3-Embedding`(arXiv 2506.05176)、`BGE-M3`(arXiv 2402.03216)、`jina-embeddings-v4`(arXiv 2506.18902),做完该方向清零;标「原件待核」的 8 条(Gemini-3、Llama-4、Muse-Spark、MAI-Thinking-1、Grok-4.6、Qwen3.5、Qwen3.7、SmolLM3)取件前先换渠道核存在性与首发日

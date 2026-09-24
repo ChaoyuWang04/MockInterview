@@ -35,6 +35,7 @@ Markdown 即数据,没有数据库。运行服务是基础设施,不算功能模
 | 论文或报告 PDF、arXiv 链接、官方博客、网页文章、model card、视频或播客字幕 | [10](docs/10-材料解读流程.md) | `reports/` 或 `readings/` |
 | 开源周会(ASR 转录 + 截图)、项目 release notes | [13](docs/13-周会纪要.md) | `meetings/<项目>/` |
 | GitHub 仓库链接 | [06](docs/06-开源解读流程.md) | `opensource/`,源码进 `projects/` |
+| 上游 issue 或 Roadmap 链接、「给某项目提个 PR」、贡献的后续 | [14](docs/14-开源贡献.md) | `contrib/<项目>.md`;代码在 `~/1Project/oss/<项目>` |
 | skill、Claude 或 Codex 官方新用法、agent 协作方法 | [12](docs/12-范式库维护.md) | `paradigms/`,并改写受影响的手册与 skill |
 | 面试题截图或转述 | [02](docs/02-题库导入流程.md) | `questions/`,同步知识库 |
 | 「写一篇 X 的原理」 | [04](docs/04-知识库地图.md) 定边界,[05](docs/05-知识库写作契约.md) 定写法 | `knowledge/` |
@@ -92,4 +93,5 @@ Markdown 即数据,没有数据库。运行服务是基础设施,不算功能模
 - `projects/` 只收知名开源项目的官方仓库(个人练习仓、小众项目不收),必须保持上游最新:用 `npm run projects:sync`(只快进);不要在里面写笔记或改代码,笔记写进 `opensource/` 的解读;有本地改动或本地提交的仓库脚本不碰,报给用户,确认可丢就加 `-- --discard-local`
 - 全库正文的数量、区间、时延、容量用阿拉伯数字(200–5000 token、50–500 毫秒、2 GB)
 - 仓库是公开的:会议里的非公开信息、他人的个人信息不落库
+- 他人项目里的对外展示面(issue、评论、PR、回复,以及公开 fork 的推送)一律由维护者本人检查、改措辞后发布;agent 只准备草稿与命令
 - 验证要求按 `docs/09-日常维护.md` 的变更类型矩阵执行

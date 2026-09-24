@@ -85,6 +85,7 @@ describe('活动文档', () => {
       '11-模拟面试系统.md',
       '12-范式库维护.md',
       '13-周会纪要.md',
+      '14-开源贡献.md',
     ]) {
       expect(start, `00-START 缺少 ${manual}`).toContain(manual)
     }
