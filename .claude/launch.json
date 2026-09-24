@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3001
+    },
+    {
+      "name": "site-prod",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "site", "start", "-p", "3002"],
+      "port": 3002
     }
   ]
 }
