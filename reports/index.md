@@ -257,6 +257,7 @@
 | Thinking-with-Visual-Primitives | DeepSeek | 把坐标当思考的最小单位;**官方仓库已删除**,原件只剩本地件与社区镜像 |
 | GLM-5V-Turbo | Z.ai | 把感知放进决策回路,而不是当输入接口 |
 | Qwen3.5-Omni | Alibaba | Thinker/Talker 全模态,难点在流式与延迟 |
+| MiniCPM-o-4.5 | OpenBMB | 9B 全双工全模态:1 秒一块的时分复用序列,每块预测听或说,主干只写字、0.3B 解码器发声(arXiv 2604.27393) |
 | Kimi-K2.5 | Moonshot | 视觉与文本联合优化,加上 Agent Swarm 的并行编排 |
 | ERNIE-5.0 | Baidu | 2.4T 原生全模态,统一理解与生成;ERNIE 5.1 是纯文本版、无独立报告 |
 | LongCat-Flash-Omni | Meituan | 560B 全模态,实时音视频交互 |
