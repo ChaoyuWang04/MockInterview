@@ -1,0 +1,203 @@
+{
+    "sections": {
+        "about": "About",
+        "selectedProjects": "Selected Projects",
+        "checkOutLatestWork": "Check out my latest work",
+        "research": "Research",
+        "viewFullPublications": "View the full list of my publications on",
+        "skills": "Skills",
+        "education": "Education",
+        "workExperience": "Work Experience",
+        "awards": "Awards & Honors",
+        "academicServices": "Academic Services",
+        "news": {
+            "title": "Latest News"
+        },
+        "publications": {
+            "title": "Publications"
+        },
+        "invitedTalks": {
+            "title": "Invited Talks"
+        },
+        "teaching": {
+            "title": "Teaching",
+            "reviewerConferencesLabel": "Conference Reviewer:",
+            "reviewerJournalsLabel": "Journal Reviewer:",
+            "teachingLabel": "Teaching Assistant:"
+        },
+        "contact": "Contact",
+        "getInTouch": "Get in Touch",
+        "contactDescription": "Want to chat? Feel free to reach out",
+        "via": "via",
+        "email": "email",
+        "or": "or",
+        "zoom": "Zoom",
+        "askQuestions": "Ask questions",
+        "exploreCollaboration": "Explore collaboration opportunities",
+        "playVideo": "Play video",
+        "contactMediaWallLabel": "Contact media wall",
+        "coffeeChat": "15-minute coffee chat",
+        "schedule": "Schedule"
+    },
+    "showAll": "Show All",
+    "navbar": {
+        "items": [
+            {
+                "href": "/",
+                "icon": "home",
+                "label": "Home"
+            },
+            {
+                "href": "/blog",
+                "icon": "notebook",
+                "label": "Blog"
+            },
+            {
+                "href": "/resume.pdf",
+                "icon": "fileuser",
+                "label": "CV"
+            }
+        ],
+        "theme": "Theme",
+        "language": "Language"
+    },
+    "blog": {
+        "title": "Blog",
+        "titleWithName": "{name}'s Blog",
+        "readMore": "Read more",
+        "authorLabel": "by",
+        "readingTime": "{minutes} min read",
+        "toc": {
+            "title": "Table of Contents",
+            "toggle": "Toggle table of contents",
+            "close": "Close table of contents",
+            "empty": "No table of contents available"
+        }
+    },
+    "footer": {
+        "navigation": {
+            "about": "About",
+            "projects": "Projects",
+            "education": "Education"
+        },
+        "sections": {
+            "quickNavigation": "Quick Navigation",
+            "connect": "Connect",
+            "resources": "Resources",
+            "discover": "Discover",
+            "contact": "Contact"
+        },
+        "resources": [
+            {
+                "name": "Blog",
+                "url": "/blog"
+            },
+            {
+                "name": "Download CV",
+                "url": "/resume.pdf"
+            }
+        ],
+        "discover": [
+            {
+                "name": "MAL.LAB",
+                "url": "https://www.google.com/search?q=MAL.LAB&oq=MAL.LAB&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIICAEQABgKGB4yCAgCEAAYChgeMggIAxAAGAoYHjIGCAQQABgeMgYIBRAAGB4yCAgGEAAYChgeMgYIBxAAGB4yBggIEAAYHtIBCDE3NTBqMGoxqAIAsAIA&sourceid=chrome&ie=UTF-8"
+            }
+        ],
+        "contact": {
+            "support": "Support"
+        },
+        "legal": {
+            "allRightsReserved": "All rights reserved",
+            "privacyPolicy": "Privacy Policy",
+            "termsDisclaimer": "Terms & Disclaimer"
+        },
+        "bottom": {
+            "lastUpdated": "Last updated",
+            "madeWith": "Made with",
+            "modifiedFrom": "Build with"
+        }
+    },
+    "privacyPolicy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Last updated",
+        "sections": {
+            "informationWeCollect": {
+                "title": "Information We Collect",
+                "description": "This website uses Google Analytics 4 (GA4) to collect anonymous usage statistics. The data collected includes:",
+                "items": [
+                    "Pages visited and time spent on pages",
+                    "Device and browser information",
+                    "General geographic location (country/city level)",
+                    "Traffic sources and referral information"
+                ],
+                "note": "No personally identifiable information is collected through GA4."
+            },
+            "howWeUseInformation": {
+                "title": "How We Use Information",
+                "description": "The anonymous data collected through GA4 is used solely to:",
+                "items": [
+                    "Understand website traffic and user behavior",
+                    "Improve website performance and user experience",
+                    "Analyze content popularity and engagement"
+                ]
+            },
+            "dataSharing": {
+                "title": "Data Sharing",
+                "description": "We do not sell, trade, or otherwise transfer your data to third parties. Anonymous analytics data is processed by Google Analytics in accordance with Google's privacy policy."
+            },
+            "cookies": {
+                "title": "Cookies",
+                "description": "This website uses cookies through Google Analytics to track user interactions. You can disable cookies in your browser settings if you prefer not to be tracked."
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "If you have any questions about this Privacy Policy, please contact me through the contact information provided on the main website."
+            }
+        }
+    },
+    "termsOfService": {
+        "title": "Terms & Disclaimer",
+        "lastUpdated": "Last updated",
+        "sections": {
+            "termsOfService": {
+                "title": "Terms of Service",
+                "description": "By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement."
+            },
+            "useLicense": {
+                "title": "Use License",
+                "description": "Permission is granted to temporarily download one copy of the materials on this website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:",
+                "items": [
+                    "Modify or copy the materials",
+                    "Use the materials for any commercial purpose or for any public display",
+                    "Attempt to reverse engineer any software contained on the website",
+                    "Remove any copyright or other proprietary notations from the materials"
+                ]
+            },
+            "disclaimer": {
+                "title": "Disclaimer",
+                "description": "The materials on this website are provided on an 'as is' basis. I make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights."
+            },
+            "limitations": {
+                "title": "Limitations",
+                "description": "In no event shall I or my suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website, even if I or an authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you."
+            },
+            "accuracyOfMaterials": {
+                "title": "Accuracy of Materials",
+                "description": "The materials appearing on this website could include technical, typographical, or photographic errors. I do not warrant that any of the materials on this website are accurate, complete, or current. I may make changes to the materials contained on this website at any time without notice. However, I do not make any commitment to update the materials.",
+                "note": "The content on this website is primarily in English. Other languages are mostly translated with the assistance of language models. Please exercise discretion when reading translated content."
+            },
+            "links": {
+                "title": "Links",
+                "description": "I have not reviewed all of the sites linked to this website and am not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by me of the site. Use of any such linked website is at the user's own risk."
+            },
+            "modifications": {
+                "title": "Modifications",
+                "description": "I may revise these terms of service for this website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service."
+            },
+            "contact": {
+                "title": "Contact",
+                "description": "If you have any questions about these Terms & Disclaimer, please contact me through the contact information provided on the main website."
+            }
+        }
+    }
+}

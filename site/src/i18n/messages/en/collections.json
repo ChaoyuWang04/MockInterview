@@ -1,0 +1,323 @@
+{
+  "news": {
+    "items": [
+      {
+        "date": "2026.2",
+        "title": "[Launchpad S1](https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1) successfully held in Shanghai",
+        "content": "🚀 Co-organized Launchpad S1 with MAL.LAB — a product launch and go-to-market event in Minhang, Shanghai. Brought together founders and builders, sponsored by DeepTech. From idea to execution in two months."
+      },
+      {
+        "date": "2025.6",
+        "title": "Graduated from Northwestern University",
+        "content": "🎓 Completed M.S. in Engineering Science & Applied Mathematics at Northwestern University."
+      },
+      {
+        "date": "2024.6",
+        "title": "Graduated from UC San Diego",
+        "content": "🎓 Completed B.S. in Applied Mathematics at UC San Diego."
+      }
+    ]
+  },
+  "projects": {
+    "items": [
+      {
+        "title": "Syncopate_Async_AgenticRL",
+        "href": "https://github.com/ChaoyuWang04/Syncopate_Async_AgenticRL",
+        "dates": "Jun 2026 – Present",
+        "active": true,
+        "description": "Head-to-head study of synchronous vs fully-async agentic RL training on verl, featuring multi-turn tool-calling GRPO, long-tail rollout profiling, and staleness/partial-rollout ablations. Quantifies when asynchronous training pays off — and at what scale the crossover arrives.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Syncopate_Async_AgenticRL",
+            "icon": "github"
+          }
+        ],
+        "image": "/Syncopate.jpg",
+        "video": ""
+      },
+      {
+        "title": "Darkroom_VeRL-Omni",
+        "href": "https://github.com/ChaoyuWang04/Darkroom_VeRL-Omni",
+        "dates": "Jun 2026 – Present",
+        "active": true,
+        "description": "Diffusion RL post-training on verl: Flow-GRPO on Qwen-Image where rollouts are denoising trajectories, evidence-based upstream reconnaissance, and a CPU OCR reward replacing the VLM judge with 6.9× headroom — the full generate-then-grade loop validated on one RTX 5090.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Darkroom_VeRL-Omni",
+            "icon": "github"
+          }
+        ],
+        "image": "/Darkroom.jpg",
+        "video": ""
+      },
+      {
+        "title": "Switchboard_MoE-DeepEP",
+        "href": "https://github.com/ChaoyuWang04/Switchboard_MoE-DeepEP",
+        "dates": "May – Jun 2026",
+        "active": true,
+        "description": "Hand-built MoE expert parallelism: routing-skew capture from DeepSeek-V2-Lite, fused grouped-GEMM Triton kernels (1.28×), 2-all2all dispatch/combine, and overlap ablations on 2×H100 — proving by counter-example why DeepEP exists.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Switchboard_MoE-DeepEP",
+            "icon": "github"
+          }
+        ],
+        "image": "/Switchboard.jpg",
+        "video": ""
+      },
+      {
+        "title": "Halftone_QuantizedKVCache",
+        "href": "https://github.com/ChaoyuWang04/Halftone_QuantizedKVCache",
+        "dates": "May 2026",
+        "active": true,
+        "description": "Data-driven INT8 KV-cache quantization: SQNR-guided granularity, near-lossless PPL (+0.2%), 0.50× memory, and a fused Triton int8 decode-attention kernel at 1.56× — with the gap to the 2× ceiling fully explained.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Halftone_QuantizedKVCache",
+            "icon": "github"
+          }
+        ],
+        "image": "/Halftone.jpg",
+        "video": ""
+      },
+      {
+        "title": "Laminar_GPU-Bubble-Lab",
+        "href": "https://github.com/ChaoyuWang04/Laminar_GPU-Bubble-Lab",
+        "dates": "Jun 2026",
+        "active": true,
+        "description": "Profile-first CUDA microbenchmark lab for killing GPU pipeline bubbles: multi-stream overlap (1.69×), CUDA Graphs vs torch.compile, and speculative-decoding overlap (1.44×) — every mechanism Nsight-verified on sm_120.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Laminar_GPU-Bubble-Lab",
+            "icon": "github"
+          }
+        ],
+        "image": "/Laminar.jpg",
+        "video": ""
+      },
+      {
+        "title": "AdCampaignAgent-SFT",
+        "href": "https://github.com/ChaoyuWang04/AdCampaignAgent-SFT",
+        "dates": "Jan 2026 – Present",
+        "active": true,
+        "description": "Rule-based synthetic SFT dataset for mobile game UA agents, featuring tool-calling, multi-turn reasoning chains, and ROAS/Retention safety baselines. Fine-tuned Qwen3-0.6B with LoRA, achieving 86%+ end-to-end task completion.",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/AdCampaignAgent-SFT",
+            "icon": "github"
+          },
+          {
+            "type": "HuggingFace",
+            "href": "https://huggingface.co/datasets/SamWang0405/AdCampaignAgent-SFT",
+            "icon": "huggingface"
+          }
+        ],
+        "image": "/AdCampaignAgent_SFT.png",
+        "video": ""
+      },
+      {
+        "title": "Launchpad S1 @ Shanghai",
+        "href": "https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1",
+        "dates": "Jan 2026",
+        "active": true,
+        "description": "As Founder of MAL.LAB, I organized Launchpad S1 a 72-hour GTM sprint held in Shanghai Minhang. The event brought together 200+ participants, 30+ teams, and 20+ ecosystem sponsors, resulting in 30+ live product launches, ~200 pieces of launch collateral, and 50,000+ impressions on Xiaohongshu. Guests included investors, corporate partners, and media.",
+        "links": [
+          {
+            "type": "Wechat",
+            "href": "https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1",
+            "icon": "wechat"
+          }
+        ],
+        "image": "/launchpads1.jpg",
+        "video": ""
+      }
+    ]
+  },
+  "publications": {
+    "items": [
+      {
+        "title": "Dissecting Conditional Injection in Diffusion Transformers for Compositional 3D Scene Generation",
+        "href": "https://arxiv.org/pdf/2605.17887",
+        "dates": "In Preparation · Targeting ICLR 2027",
+        "active": true,
+        "description": "A mechanistic study of how diffusion transformers consume auxiliary conditions in compositional 3D scene generation.",
+        "technologies": [
+          "3D Gen",
+          "DiT"
+        ],
+        "authors": "**Authors:** Ching-Yuen Huang, **Chaoyu Wang**",
+        "links": [
+          {
+            "type": "arXiv",
+            "href": "https://arxiv.org/pdf/2605.17887",
+            "icon": "paper"
+          }
+        ],
+        "image": "/oasis-bypass-mechanism.png",
+        "video": ""
+      }
+    ]
+  },
+  "education": {
+    "items": [
+      {
+        "school": "Northwestern University",
+        "href": "https://www.northwestern.edu/",
+        "degree": "M.S. in Engineering Science & Applied Mathematics",
+        "logoUrl": "/icon/northwestern.png",
+        "start": "2024",
+        "end": "2025"
+      },
+      {
+        "school": "UC San Diego",
+        "href": "https://ucsd.edu/",
+        "degree": "B.S. in Applied Mathematics",
+        "logoUrl": "/icon/ucsd.png",
+        "start": "2022",
+        "end": "2024"
+      }
+    ]
+  },
+  "work": {
+    "items": [
+      {
+        "company": "SGLang",
+        "logoUrl": "/icon/sglang.png",
+        "title": "Open-Source Contributor",
+        "href": "https://github.com/sgl-project/sglang",
+        "start": "July 2026",
+        "description": "Contributor to SGLang, the high-performance open-source LLM inference and serving engine."
+      },
+      {
+        "company": "vLLM",
+        "logoUrl": "/icon/vllm.png",
+        "title": "Open-Source Contributor",
+        "href": "https://github.com/vllm-project/vllm",
+        "start": "July 2026",
+        "description": "Contributor to vLLM, the leading open-source LLM inference and serving engine."
+      },
+      {
+        "company": "MAL.LAB",
+        "href": "https://chaoyuwang.vercel.app/",
+        "badges": [],
+        "title": "Founder",
+        "logoUrl": "/icon/mallab.png",
+        "start": "Jan 2026",
+        "end": "Present",
+        "description": "Hosting Launchpad Series events worldwide — Season 1 successfully held in Shanghai, February 2026."
+      }
+    ]
+  },
+  "awards": {
+    "items": []
+  },
+  "invitedTalks": {
+    "items": []
+  },
+  "teaching": {
+    "items": []
+  },
+  "skills": [
+    "Python",
+    "PyTorch",
+    "JavaScript",
+    "SQL",
+    "SFT",
+    "LoRA / PEFT",
+    "GRPO",
+    "RAG",
+    "Contrastive Learning",
+    "Dense Retrieval",
+    "Reranking",
+    "Synthetic Data Construction",
+    "FastAPI",
+    "Next.js",
+    "React",
+    "PostgreSQL",
+    "Milvus",
+    "Elasticsearch",
+    "Docker"
+  ],
+  "reviewerConferences": [],
+  "reviewerJournals": [],
+  "social": {
+    "GitHub": {
+      "name": "GitHub",
+      "url": "https://github.com/ChaoyuWang04",
+      "icon": "github",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "GoogleScholar": {
+      "name": "Google Scholar",
+      "url": "https://github.com/ChaoyuWang04",
+      "icon": "googlescholar",
+      "navbar": false,
+      "content": false,
+      "footer": false
+    },
+    "orcid": {
+      "name": "ORCID",
+      "url": "https://orcid.org/0009-0009-1243-2875",
+      "icon": "orcid",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "LinkedIn": {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/samwang04/",
+      "icon": "linkedin",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "X": {
+      "name": "X",
+      "url": "https://x.com/SamuelWang997",
+      "icon": "x",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "Zhihu": {
+      "name": "Zhihu",
+      "url": "https://www.zhihu.com/people/lethe-67-62",
+      "icon": "zhihu",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "Xiaohongshu": {
+      "name": "Xiaohongshu",
+      "url": "https://www.xiaohongshu.com/user/profile/58e4dbc982ec39470e251614",
+      "icon": "xiaohongshu",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "wechat": {
+      "name": "WeChat",
+      "url": "/wechat-qrcode.jpg",
+      "icon": "wechat",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "email": {
+      "name": "Email",
+      "url": "mailto:samuelwang997@gmail.com",
+      "icon": "email",
+      "navbar": false,
+      "content": true,
+      "footer": false
+    }
+  }
+}

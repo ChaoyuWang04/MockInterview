@@ -1,0 +1,150 @@
+baseURL: "/blog/"
+languageCode: "en-us"
+title: "Chaoyu Wang Blog"
+copyright: "© Chaoyu Wang"
+theme: "PaperMod"
+publishDir: "../public/blog"
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+mainsections: ["posts", "papermod"]
+
+pagination:
+  disableAliases: false
+  pagerSize: 3
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+outputFormats:
+  llms:
+    mediaType: "text/plain"
+    baseName: "llms"
+    isPlainText: true
+    notAlternative: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+    - llms
+
+params:
+  env: production
+  description: "Research notes, essays, and technical writing by Chaoyu Wang."
+  author: "Chaoyu Wang"
+  defaultTheme: auto
+  disableThemeToggle: false
+  disableScrollToTop: false
+  ShowReadingTime: true
+  ShowShareButtons: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: true
+  TocOpen: true
+  mainSections:
+    - posts
+  images: ["images/papermod-cover.png"]
+  homeInfoParams:
+    Title: "Research Notes"
+    Content: >
+      Long-form notes on machine learning, research, and building systems.
+
+      - Writing on agentic RL, post-training, tooling, and research workflows.
+
+      - Built with Hugo PaperMod and integrated into the main portfolio as a subsite.
+  socialIcons:
+    - name: email
+      title: Email
+      url: "mailto:samuelwang997@gmail.com"
+    - name: github
+      title: GitHub
+      url: "https://github.com/ChaoyuWang04"
+    - name: linkedin
+      title: LinkedIn
+      url: "https://www.linkedin.com/in/samwang04/"
+    - name: x
+      title: X / Twitter
+      url: "https://x.com/SamuelWang997"
+    - name: xiaohongshu
+      title: 小红书
+      url: "https://www.xiaohongshu.com/user/profile/58e4dbc982ec39470e251614"
+    - name: zhihu
+      title: 知乎
+      url: "https://www.zhihu.com/people/lethe-67-62"
+    - name: wechat
+      title: 微信
+      url: "/wechat-qrcode.jpg"
+  label:
+    text: "Chaoyu Wang"
+  assets:
+    disableHLJS: true
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys:
+      - title
+      - permalink
+      - summary
+      - content
+
+menu:
+  main:
+    - identifier: home
+      name: Home
+      url: "https://chaoyuwang.vercel.app/"
+      weight: 5
+    - identifier: posts
+      name: Blog
+      url: /posts/
+      weight: 10
+    - identifier: archives
+      name: Archive
+      url: /archives/
+      weight: 20
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 30
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 40
+    - identifier: cv
+      name: CV
+      url: "https://chaoyuwang.vercel.app/resume.pdf"
+      weight: 50
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+services:
+  instagram:
+    disableInlineCSS: true
+  x:
+    disableInlineCSS: true

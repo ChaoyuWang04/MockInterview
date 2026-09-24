@@ -1,0 +1,203 @@
+{
+    "sections": {
+        "about": "关于",
+        "selectedProjects": "精选项目",
+        "checkOutLatestWork": "查看我最近的项目",
+        "research": "研究",
+        "viewFullPublications": "查看我的完整论文列表，请访问",
+        "skills": "技能",
+        "education": "教育背景",
+        "workExperience": "工作经历",
+        "awards": "奖项与荣誉",
+        "academicServices": "学术服务",
+        "news": {
+            "title": "最新动态"
+        },
+        "publications": {
+            "title": "论文发表"
+        },
+        "invitedTalks": {
+            "title": "受邀报告"
+        },
+        "teaching": {
+            "title": "教学",
+            "reviewerConferencesLabel": "会议审稿人：",
+            "reviewerJournalsLabel": "期刊审稿人：",
+            "teachingLabel": "助教："
+        },
+        "contact": "联系",
+        "getInTouch": "欢迎联系",
+        "contactDescription": "想交流一下？欢迎随时联系我",
+        "via": "通过",
+        "email": "电子邮件",
+        "or": "或",
+        "zoom": "Zoom",
+        "askQuestions": "提问咨询",
+        "exploreCollaboration": "探讨合作机会",
+        "playVideo": "播放视频",
+        "contactMediaWallLabel": "联系区媒体墙",
+        "coffeeChat": "15 分钟咖啡聊天",
+        "schedule": "预约"
+    },
+    "showAll": "显示全部",
+    "navbar": {
+        "items": [
+            {
+                "href": "/",
+                "icon": "home",
+                "label": "首页"
+            },
+            {
+                "href": "/blog",
+                "icon": "notebook",
+                "label": "博客"
+            },
+            {
+                "href": "/resume.pdf",
+                "icon": "fileuser",
+                "label": "简历"
+            }
+        ],
+        "theme": "主题",
+        "language": "语言"
+    },
+    "blog": {
+        "title": "博客",
+        "titleWithName": "{name}的博客",
+        "readMore": "阅读更多",
+        "authorLabel": "作者",
+        "readingTime": "阅读约 {minutes} 分钟",
+        "toc": {
+            "title": "目录",
+            "toggle": "切换目录",
+            "close": "关闭目录",
+            "empty": "暂无目录"
+        }
+    },
+    "footer": {
+        "navigation": {
+            "about": "关于",
+            "projects": "项目",
+            "education": "教育"
+        },
+        "sections": {
+            "quickNavigation": "快速导航",
+            "connect": "联系",
+            "resources": "资源",
+            "discover": "发现",
+            "contact": "联系"
+        },
+        "resources": [
+            {
+                "name": "博客",
+                "url": "/blog"
+            },
+            {
+                "name": "下载简历",
+                "url": "/resume.pdf"
+            }
+        ],
+        "discover": [
+            {
+                "name": "MAL.LAB",
+                "url": "https://www.google.com/search?q=MAL.LAB&oq=MAL.LAB&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIICAEQABgKGB4yCAgCEAAYChgeMggIAxAAGAoYHjIGCAQQABgeMgYIBRAAGB4yCAgGEAAYChgeMgYIBxAAGB4yBggIEAAYHtIBCDE3NTBqMGoxqAIAsAIA&sourceid=chrome&ie=UTF-8"
+            }
+        ],
+        "contact": {
+            "support": "支持"
+        },
+        "legal": {
+            "allRightsReserved": "版权所有",
+            "privacyPolicy": "隐私政策",
+            "termsDisclaimer": "条款与免责声明"
+        },
+        "bottom": {
+            "lastUpdated": "最后更新",
+            "madeWith": "采用",
+            "modifiedFrom": "构建基于"
+        }
+    },
+    "privacyPolicy": {
+        "title": "隐私政策",
+        "lastUpdated": "最后更新",
+        "sections": {
+            "informationWeCollect": {
+                "title": "我们收集的信息",
+                "description": "本网站使用 Google Analytics 4（GA4）收集匿名使用统计数据。所收集的数据包括：",
+                "items": [
+                    "访问的页面以及在页面上的停留时间",
+                    "设备和浏览器信息",
+                    "大致地理位置（国家/城市层级）",
+                    "流量来源和引荐信息"
+                ],
+                "note": "GA4 不会收集任何可识别个人身份的信息。"
+            },
+            "howWeUseInformation": {
+                "title": "我们如何使用这些信息",
+                "description": "通过 GA4 收集的匿名数据仅用于：",
+                "items": [
+                    "了解网站流量和用户行为",
+                    "改进网站性能和用户体验",
+                    "分析内容受欢迎程度和互动情况"
+                ]
+            },
+            "dataSharing": {
+                "title": "数据共享",
+                "description": "我们不会向第三方出售、交易或以其他方式转移您的数据。匿名分析数据由 Google Analytics 根据 Google 的隐私政策进行处理。"
+            },
+            "cookies": {
+                "title": "Cookie",
+                "description": "本网站通过 Google Analytics 使用 Cookie 跟踪用户交互。如果您不希望被跟踪，可以在浏览器设置中禁用 Cookie。"
+            },
+            "contact": {
+                "title": "联系",
+                "description": "如果您对本隐私政策有任何疑问，请通过主网站上提供的联系信息与我联系。"
+            }
+        }
+    },
+    "termsOfService": {
+        "title": "条款与免责声明",
+        "lastUpdated": "最后更新",
+        "sections": {
+            "termsOfService": {
+                "title": "服务条款",
+                "description": "访问和使用本网站即表示您接受并同意受本协议条款和规定的约束。"
+            },
+            "useLicense": {
+                "title": "使用许可",
+                "description": "允许您临时下载本网站材料的一份副本，仅供个人、非商业性的临时浏览之用。这是授予使用许可，而非转让所有权；在该许可下，您不得：",
+                "items": [
+                    "修改或复制这些材料",
+                    "将这些材料用于任何商业目的或任何公开展示",
+                    "尝试对网站中包含的任何软件进行逆向工程",
+                    "删除材料中的任何版权或其他专有标识"
+                ]
+            },
+            "disclaimer": {
+                "title": "免责声明",
+                "description": "本网站上的材料均按“现状”提供。本人不作任何明示或暗示的保证，并特此否认和排除所有其他保证，包括但不限于对适销性、特定用途适用性，或知识产权不侵权及其他权利不受侵害的默示保证或条件。"
+            },
+            "limitations": {
+                "title": "责任限制",
+                "description": "在任何情况下，对于因使用或无法使用本网站材料而产生的任何损害（包括但不限于数据或利润损失，或业务中断造成的损害），本人或本人的供应方均不承担责任，即使本人或授权代表已被口头或书面告知可能发生此类损害。由于某些司法辖区不允许对默示保证作出限制，或不允许限制对间接或附带损害的责任，因此上述限制可能不适用于您。"
+            },
+            "accuracyOfMaterials": {
+                "title": "材料准确性",
+                "description": "本网站所展示的材料可能包含技术性、排版或图片方面的错误。本人不保证本网站上的任何材料均准确、完整或为最新版本。本人可在任何时候对本网站所含材料作出变更，恕不另行通知；但本人不承担更新这些材料的义务。",
+                "note": "本网站内容主要以英文撰写。其他语言内容大多借助语言模型翻译，请在阅读译文时自行甄别。"
+            },
+            "links": {
+                "title": "链接",
+                "description": "本人未审查所有链接至本网站的网站内容，也不对任何此类链接网站的内容负责。包含任何链接并不意味着本人对该网站表示认可。使用任何此类链接网站所产生的风险由用户自行承担。"
+            },
+            "modifications": {
+                "title": "修改",
+                "description": "本人可在任何时候修改本网站的服务条款，恕不另行通知。使用本网站即表示您同意受届时有效版本服务条款的约束。"
+            },
+            "contact": {
+                "title": "联系",
+                "description": "如果您对本条款与免责声明有任何疑问，请通过主网站上提供的联系信息与我联系。"
+            }
+        }
+    }
+}

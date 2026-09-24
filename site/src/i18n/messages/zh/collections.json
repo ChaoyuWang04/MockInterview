@@ -1,0 +1,340 @@
+{
+  "news": {
+    "items": [
+      {
+        "date": "2026.3",
+        "title": "开始在 UC Berkeley 构建我的 PhD 申请作品集",
+        "content": "📚 目前常驻湾区，每天在 UC Berkeley 的图书馆自学，并积极参与研究社区交流。目标申请 CS PhD（2027 秋季入学），研究方向聚焦 LLM。"
+      },
+      {
+        "date": "2026.2",
+        "title": "[Launchpad S1](https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1) 在上海成功举办",
+        "content": "🚀 与 MAL.LAB 共同组织了 Launchpad S1，这是在上海闵行举办的一场产品发布与市场启动活动。活动汇聚了创始人与建设者，并由 DeepTech 提供赞助。从想法到落地执行仅用了两个月。"
+      },
+      {
+        "date": "2025.9",
+        "title": "加入 GuruGame HK，担任 ML Engineer Intern",
+        "content": "🎮 开始构建广告投放智能体，涵盖 SFT 微调、tool-calling 与 RAG 流程，并在 HuggingFace 发布了 [AdCampaignAgent-SFT](https://github.com/ChaoyuWang04/AdCampaignAgent-SFT) 数据集。"
+      },
+      {
+        "date": "2025.6",
+        "title": "毕业于 Northwestern University",
+        "content": "🎓 完成 Northwestern University 工程科学与应用数学硕士学位。"
+      },
+      {
+        "date": "2025.4",
+        "title": "加入华泰证券，担任 Software Dev Intern",
+        "content": "📈 基于 2,000 余份金融文档构建了 RAG 问答系统，并在 DeepSeek-R1-7B 上应用 GRPO 对齐，将幻觉率从 8.0% 降至 1.2%。"
+      },
+      {
+        "date": "2024.6",
+        "title": "毕业于 UC San Diego",
+        "content": "🎓 完成 UC San Diego 应用数学学士学位。"
+      }
+    ]
+  },
+  "projects": {
+    "items": [
+      {
+        "title": "Syncopate_Async_AgenticRL",
+        "href": "https://github.com/ChaoyuWang04/Syncopate_Async_AgenticRL",
+        "dates": "2026 年 6 月 – 至今",
+        "active": true,
+        "description": "verl 上同步 colocate 与 fully-async 智能体 RL 训练的同任务对照研究：多轮工具调用 GRPO、长尾 rollout 画像、staleness 与 partial-rollout 消融，定量回答异步化何时划算、拐点在什么规模到来。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Syncopate_Async_AgenticRL",
+            "icon": "github"
+          }
+        ],
+        "image": "/Syncopate.jpg",
+        "video": ""
+      },
+      {
+        "title": "Darkroom_VeRL-Omni",
+        "href": "https://github.com/ChaoyuWang04/Darkroom_VeRL-Omni",
+        "dates": "2026 年 6 月 – 至今",
+        "active": true,
+        "description": "基于 verl 的 diffusion 模型 RL 后训练：Qwen-Image 上的 Flow-GRPO，rollout 是连续潜空间中的去噪轨迹；证据驱动的上游侦察 + 用本地 CPU OCR 奖励替换占卡的 VLM 判官（6.9 倍余量），生成→打分闭环已在单张 RTX 5090 上端到端验证。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Darkroom_VeRL-Omni",
+            "icon": "github"
+          }
+        ],
+        "image": "/Darkroom.jpg",
+        "video": ""
+      },
+      {
+        "title": "Switchboard_MoE-DeepEP",
+        "href": "https://github.com/ChaoyuWang04/Switchboard_MoE-DeepEP",
+        "dates": "2026 年 5 月 – 6 月",
+        "active": true,
+        "description": "从零手写 MoE 专家并行：DeepSeek-V2-Lite 真实路由倾斜采集、融合 grouped-GEMM Triton kernel（1.28×）、两次 all-to-all 的 dispatch/combine 与 2×H100 上的重叠消融——用反证法证明 DeepEP 为何存在。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Switchboard_MoE-DeepEP",
+            "icon": "github"
+          }
+        ],
+        "image": "/Switchboard.jpg",
+        "video": ""
+      },
+      {
+        "title": "Halftone_QuantizedKVCache",
+        "href": "https://github.com/ChaoyuWang04/Halftone_QuantizedKVCache",
+        "dates": "2026 年 5 月",
+        "active": true,
+        "description": "数据驱动的 INT8 KV cache 量化：SQNR 选量化粒度、PPL 近乎无损（+0.2%）、显存减半，融合 Triton int8 decode attention 实测 1.56×——与 2× 理论上界的差距被完整归因。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Halftone_QuantizedKVCache",
+            "icon": "github"
+          }
+        ],
+        "image": "/Halftone.jpg",
+        "video": ""
+      },
+      {
+        "title": "Laminar_GPU-Bubble-Lab",
+        "href": "https://github.com/ChaoyuWang04/Laminar_GPU-Bubble-Lab",
+        "dates": "2026 年 6 月",
+        "active": true,
+        "description": "profile 优先的 CUDA 微基准实验室，逐个消灭 GPU 执行气泡：多 stream 重叠（1.69×）、CUDA Graph vs torch.compile 阶梯、投机解码 overlap（1.44×）——所有机制均在 sm_120 上经 Nsight 逐帧验证。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/Laminar_GPU-Bubble-Lab",
+            "icon": "github"
+          }
+        ],
+        "image": "/Laminar.jpg",
+        "video": ""
+      },
+      {
+        "title": "AdCampaignAgent-SFT",
+        "href": "https://github.com/ChaoyuWang04/AdCampaignAgent-SFT",
+        "dates": "2026 年 1 月 – 至今",
+        "active": true,
+        "description": "面向移动游戏 UA 智能体的基于规则合成 SFT 数据集，涵盖 tool-calling、多轮推理链以及 ROAS/Retention 安全基线。使用 LoRA 对 Qwen3-0.6B 进行微调，实现了 86% 以上的端到端任务完成率。",
+        "links": [
+          {
+            "type": "Github",
+            "href": "https://github.com/ChaoyuWang04/AdCampaignAgent-SFT",
+            "icon": "github"
+          },
+          {
+            "type": "HuggingFace",
+            "href": "https://huggingface.co/datasets/SamWang0405/AdCampaignAgent-SFT",
+            "icon": "huggingface"
+          }
+        ],
+        "image": "/AdCampaignAgent_SFT.png",
+        "video": ""
+      },
+      {
+        "title": "Launchpad S1 @ Shanghai",
+        "href": "https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1",
+        "dates": "2026 年 1 月",
+        "active": true,
+        "description": "作为 MAL.LAB 的 Founder，我组织了在上海闵行举办的 72 小时 GTM 冲刺活动 Launchpad S1。活动汇聚了 200 余位参与者、30 余支团队和 20 余家生态赞助方，最终促成 30 余个产品现场发布、约 200 份发布物料产出，并在小红书获得 50,000 余次曝光。嘉宾包括投资人、企业合作伙伴与媒体。",
+        "links": [
+          {
+            "type": "Wechat",
+            "href": "https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1",
+            "icon": "wechat"
+          }
+        ],
+        "image": "/launchpads1.jpg",
+        "video": ""
+      }
+    ]
+  },
+  "publications": {
+    "items": [
+      {
+        "title": "解剖组合式 3D 场景生成扩散 Transformer 中的条件注入机制",
+        "href": "https://arxiv.org/pdf/2605.17887",
+        "dates": "撰写中 · 目标 ICLR 2027",
+        "active": true,
+        "description": "关于扩散 Transformer 在组合式 3D 场景生成中如何消化辅助条件的机制研究。",
+        "technologies": [
+          "3D Gen",
+          "DiT"
+        ],
+        "authors": "**作者：** Ching-Yuen Huang, **Chaoyu Wang**",
+        "links": [
+          {
+            "type": "arXiv",
+            "href": "https://arxiv.org/pdf/2605.17887",
+            "icon": "paper"
+          }
+        ],
+        "image": "/oasis-bypass-mechanism.png",
+        "video": ""
+      }
+    ]
+  },
+  "education": {
+    "items": [
+      {
+        "school": "Northwestern University",
+        "href": "https://www.northwestern.edu/",
+        "degree": "工程科学与应用数学硕士",
+        "logoUrl": "/icon/northwestern.png",
+        "start": "2024",
+        "end": "2025"
+      },
+      {
+        "school": "UC San Diego",
+        "href": "https://ucsd.edu/",
+        "degree": "应用数学学士",
+        "logoUrl": "/icon/ucsd.png",
+        "start": "2022",
+        "end": "2024"
+      }
+    ]
+  },
+  "work": {
+    "items": [
+      {
+        "company": "SGLang",
+        "logoUrl": "/icon/sglang.png",
+        "title": "开源贡献者",
+        "href": "https://github.com/sgl-project/sglang",
+        "start": "2026 年 7 月",
+        "description": "高性能开源 LLM 推理与服务引擎 SGLang 的贡献者。",
+        "end": "至今"
+      },
+      {
+        "company": "vLLM",
+        "logoUrl": "/icon/vllm.png",
+        "title": "开源贡献者",
+        "href": "https://github.com/vllm-project/vllm",
+        "start": "2026 年 7 月",
+        "description": "业界主流开源 LLM 推理与服务引擎 vLLM 的贡献者。",
+        "end": "至今"
+      },
+      {
+        "company": "MAL.LAB",
+        "href": "https://chaoyuwang.vercel.app/",
+        "badges": [],
+        "title": "创始人",
+        "logoUrl": "/icon/mallab.png",
+        "start": "2026 年 1 月",
+        "end": "至今",
+        "description": "在全球范围内发起并组织 Launchpad 系列活动，其中第一季已于 2026 年 2 月在上海成功举办。"
+      }
+    ]
+  },
+  "awards": {
+    "items": []
+  },
+  "invitedTalks": {
+    "items": []
+  },
+  "teaching": {
+    "items": []
+  },
+  "skills": [
+    "Python",
+    "PyTorch",
+    "JavaScript",
+    "SQL",
+    "SFT",
+    "LoRA / PEFT",
+    "GRPO",
+    "RAG",
+    "Contrastive Learning",
+    "Dense Retrieval",
+    "Reranking",
+    "Synthetic Data Construction",
+    "FastAPI",
+    "Next.js",
+    "React",
+    "PostgreSQL",
+    "Milvus",
+    "Elasticsearch",
+    "Docker"
+  ],
+  "reviewerConferences": [],
+  "reviewerJournals": [],
+  "social": {
+    "GitHub": {
+      "name": "GitHub",
+      "url": "https://chaoyuwang04.github.io/",
+      "icon": "github",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "GoogleScholar": {
+      "name": "Google Scholar",
+      "url": "https://github.com/ChaoyuWang04",
+      "icon": "googlescholar",
+      "navbar": false,
+      "content": false,
+      "footer": false
+    },
+    "orcid": {
+      "name": "ORCID",
+      "url": "https://orcid.org/0009-0009-1243-2875",
+      "icon": "orcid",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "LinkedIn": {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/samwang04/",
+      "icon": "linkedin",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "X": {
+      "name": "X",
+      "url": "https://x.com/SamuelWang997",
+      "icon": "x",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "Zhihu": {
+      "name": "知乎",
+      "url": "https://www.zhihu.com/people/lethe-67-62",
+      "icon": "zhihu",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "Xiaohongshu": {
+      "name": "小红书",
+      "url": "https://www.xiaohongshu.com/user/profile/58e4dbc982ec39470e251614",
+      "icon": "xiaohongshu",
+      "navbar": false,
+      "content": false,
+      "footer": true
+    },
+    "wechat": {
+      "name": "微信",
+      "url": "/wechat-qrcode.jpg",
+      "icon": "wechat",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "email": {
+      "name": "电子邮件",
+      "url": "mailto:samuelwang997@gmail.com",
+      "icon": "email",
+      "navbar": false,
+      "content": true,
+      "footer": false
+    }
+  }
+}

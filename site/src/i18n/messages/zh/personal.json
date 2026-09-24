@@ -1,0 +1,19 @@
+{
+    "name": {
+        "full": "Chaoyu Wang",
+        "given": "Chaoyu",
+        "family": "Wang",
+        "initials": "CW"
+    },
+    "subtitle": "王超宇",
+    "headline": "AI Researcher\n LLM Alignment × Systems",
+    "welcome": "欢迎来到我的主页！",
+    "ogImageUrl": "chaoyuwang04.github.io",
+    "bioMarkdown": "你好，我是 Chaoyu 👋，[MAL.LAB](https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1) 创始人，也是一名独立机器学习研究者，关注如何构建更强大、更可靠，并且真正有益于人类的 AI 系统。\n\n我在 ![Northwestern Logo](/icon/northwestern.png) [Northwestern University](https://www.northwestern.edu/) 获得了应用数学硕士学位，也在 ![UCSD Logo](/icon/ucsd.png) [UC San Diego](https://ucsd.edu/) 获得了应用数学学士学位，这两段经历都让我心怀感激。在 Northwestern 期间，我有幸受到 [Zhaoran Wang 教授](https://zhaoranwang.github.io/) 的指导；在 UCSD 期间，则受到 [Ioana Dumitriu 教授](https://math.ucsd.edu/people/profiles/ioana-dumitriu) 的指导。两位导师都深刻影响了我理解研究的方式。我的过往工作主要涵盖 LLM 微调与对齐、检索增强生成，以及合成数据构建。\n\n更多背景信息可参见我的 [CV](/resume.pdf)。\n\n🔬 **研究兴趣：** Agentic Reinforcement Learning、Long-Horizon Decision-Making & Credit Assignment、Self-Evolving Agents & Environments、Scalable Agent Data Synthesis、Efficient Training & Inference Systems。",
+    "seekingMarkdown": "**我正在申请 2027 年秋季入学的 CS PhD 项目，同时也在积极寻找长期的 Research Assistant 职位。**\n\n比起一个职位，我更看重真正合适的匹配——一个愿意慢慢打磨想法的实验室、一位希望长期做出有意义成果的合作者，或是一位真心投入、帮助学生学会独立思考的导师。我相信这样的匹配必须是双向的。\n\n我可以完全 onsite 工作六个月或更长时间，并且我会认真对待这份承诺——好的研究需要时间，我不是来走过场的。\n\n如果以上内容让你有共鸣，欢迎联系我：[email](mailto:samuelwang997@gmail.com) · [calendly](https://calendly.com/chaoyuwang/30min)",
+    "location": {
+        "name": "Berkeley, CA",
+        "mapUrl": "https://www.google.com/maps/place/Berkeley,+CA"
+    },
+    "blogTagline": "关于研究、构建事物，以及思考真正重要之事的随笔。"
+}

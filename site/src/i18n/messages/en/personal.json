@@ -1,0 +1,19 @@
+{
+    "name": {
+        "full": "Chaoyu Wang",
+        "given": "Chaoyu",
+        "family": "Wang",
+        "initials": "CW"
+    },
+    "subtitle": "王超宇",
+    "headline": "AI Researcher\n LLM Alignment × Systems",
+    "welcome": "Welcome to my homepage!",
+    "ogImageUrl": "chaoyuwang04.github.io",
+    "bioMarkdown": "Hi, I'm Chaoyu 👋, Founder at [MAL.LAB](https://mp.weixin.qq.com/s/Z8blxU7i6LuY2KxZQAIQlw?scene=1) and independent ML researcher — interested in building AI systems that are more capable, more reliable, and genuinely beneficial to humanity.\n\nI received an M.S. from ![Northwestern Logo](/icon/northwestern.png) [Northwestern University](https://www.northwestern.edu/) and a B.S. from ![UCSD Logo](/icon/ucsd.png) [UC San Diego](https://ucsd.edu/), both in Applied Mathematics — two places I am deeply grateful for. I was fortunate to be mentored by Prof. [Zhaoran Wang](https://zhaoranwang.github.io/) at Northwestern and Prof. [Ioana Dumitriu](https://math.ucsd.edu/people/profiles/ioana-dumitriu) at UCSD, both of whom shaped how I think about research. My previous work spans LLM fine-tuning and alignment, retrieval-augmented generation, and synthetic data construction.\n\nYou can find more about my background in my [CV](/resume.pdf).\n\n🔬 **Interests:** Agentic Reinforcement Learning, Long-Horizon Decision-Making & Credit Assignment, Self-Evolving Agents & Environments, Scalable Agent Data Synthesis, Efficient Training & Inference Systems.",
+    "seekingMarkdown": "**I am applying to CS PhD programs for Fall 2027, and actively looking for long-term Research Assistant positions in the meantime.**\n\nMore than a position, I am looking for the right fit — a lab that takes its time with ideas, a collaborator who wants to build something meaningful over the long run, or a mentor genuinely invested in helping someone learn to think independently. I believe this kind of match has to go both ways.\n\nI am available to work fully onsite for six months or more, and I take that commitment seriously — good research takes time, and I am not looking to pass through.\n\nIf any of this resonates, I would love to talk: [email](mailto:samuelwang997@gmail.com) · [calendly](https://calendly.com/chaoyuwang/30min)",
+    "location": {
+        "name": "Berkeley, CA",
+        "mapUrl": "https://www.google.com/maps/place/Berkeley,+CA"
+    },
+    "blogTagline": "Notes on research, building things, and figuring out what matters."
+}

@@ -1,0 +1,85 @@
+baseURL: "/blog/"
+languageCode: "en-us"
+title: "Chaoyu Wang Blog"
+theme: "PaperMod"
+publishDir: "../public/blog"
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+
+pagination:
+  pagerSize: 10
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  env: production
+  description: "Research notes, essays, and technical writing by Chaoyu Wang."
+  author: "Chaoyu Wang"
+  defaultTheme: auto
+  disableThemeToggle: false
+  disableScrollToTop: false
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowToc: true
+  TocOpen: true
+  mainSections:
+    - posts
+  homeInfoParams:
+    Title: "Research Notes"
+    Content: "Long-form notes on machine learning, research, and building systems."
+  label:
+    text: "Chaoyu Wang"
+  assets:
+    disableHLJS: true
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys:
+      - title
+      - permalink
+      - summary
+      - content
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 10
+    - identifier: archives
+      name: Archive
+      url: /archives/
+      weight: 20
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 30
+    - identifier: tags
+      name: Tags
+      url: /tags/
+      weight: 40
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false

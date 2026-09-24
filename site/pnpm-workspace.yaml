@@ -1,0 +1,11 @@
+overrides:
+  jws: 4.0.1
+  js-yaml: 3.14.2
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+ignoredBuiltDependencies:
+  - '@vercel/speed-insights'
