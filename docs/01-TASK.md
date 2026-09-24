@@ -13,7 +13,7 @@
 
 ## 对外展示
 
-- [ ] `site/` 部署切换:维护者在 Vercel 把项目改接 `Orrery`,Root Directory 设 `site`,Ignored Build Step 设 `git diff --quiet HEAD^ HEAD -- .` → 线上验证通过后 archive `Chaoyu-Personal-Web`,本机旧副本 `~/Documents/Chaoyu-Personal-Web`、`~/1Project/PHD/personal_web2` 移进废纸篓,5090home 那份改名 `.retired`
+- [ ] 旧主页收尾(等维护者同意):archive `ChaoyuWang04/Chaoyu-Personal-Web`,本机旧副本 `~/Documents/Chaoyu-Personal-Web`、`~/1Project/PHD/personal_web2` 移进废纸篓,5090home 那份改名 `.retired`
 - [ ] 主页与对外展示面重构:风格是 Claude 式的艺术气息融合星空与 Outer Wilds 的气质,要有个人特色,不再只是学术模板;PR 做成完整展示面(每个 PR 解决了什么、背后的思考),不再压缩成一句 contributor;重做博客系统承载思考与结论;接入小红书、X 发布;按新品味重评 `site/docs/new-project-playbook.md`;`site/content/blog/en/bp-deduction.mdx` 里指向 `chaoyuwang04.github.io` 的旧文章链接已失效,给它找新归宿
 - [ ] 5090home 副本里未公开的 `materials/`(简历 markdown、GitHub 个人页 README)要不要进公开仓库,等维护者定
 
