@@ -80,6 +80,7 @@
 | Evolution-Strategies | OpenAI | 黑盒进化策略当 RL 的替代:不用反传,极易并行 |
 | RL2 | Berkeley | 把 RL 算法本身学进 RNN 的隐状态,元学习式的快速适应 |
 | Knowledge-Distillation | Google | 知识蒸馏原始论文:用教师的软标签带温度去教学生 |
+| KLPO | Independent | 无 critic、单 rollout 的异步离策略 agentic RL:回归训练端与采样端的对数比来拟合局部策略镜像下降条件,不用乘性重要性权重 |
 
 ## Agent 训练与工具使用
 
@@ -104,6 +105,7 @@
 | ToolLLM | Tsinghua | 1.6 万真实 API 上的工具调用数据与模型,配 DFSDT 搜索 |
 | ReAct | Princeton | 推理与行动交错:想一步、做一步、看结果再想;agent 提示范式的源头 |
 | TALM | Google | 工具增强语言模型的早期形态:文本接口调工具,自举扩数据 |
+| Jev-Mem | UT Dallas | 借 System-One/System-Two 分工做 agent 记忆:轻量控制器负责记忆分类、路由、检索预算与停止,大模型只在复杂推理与答案合成时出场 |
 
 ## 推理服务与架构探索
 

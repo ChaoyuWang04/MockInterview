@@ -75,6 +75,7 @@
 | Falcon-H1 | TII | Transformer-Mamba 混合头的开放权重家族;推理续作 H1R 见 arXiv 2601.02346 |
 | LFM2 | LiquidAI | 为端侧效率反推架构的开源小基模家族(arXiv 2511.23404) |
 | SmolLM3 | HuggingFace | 3B 长上下文多语推理,训练方法与配方全公开。**原件待核**(HF 博客抓取失败) |
+| Claude-Opus-5.5 | Anthropic | Claude Opus 5.5 的系统卡:RSP 与 FCF 风险评估、防护与智能体安全、对齐评估等上线前评测(230 页) |
 | PuRo-2B | Tsinghua | RTX 5090 上 FP8 从零预训练 2B 模型,不到 6.9K 美元逼近 Qwen2.5-1.5B,并拟合训练成本缩放定律(arXiv 2608.27370) |
 
 ## 注意力与长上下文
@@ -172,6 +173,7 @@
 | 报告 | 公司 | 一句话 |
 |---|---|---|
 | Skill2Env | NVIDIA | 把 3.4k 个公开 Agent Skills 转成 8k 个带程序化测试与行为 rubric 的终端环境,300 步 RL 让 Qwen-3.8 27B 在 Terminal-Bench 2.1 上涨 4.7 个点 |
+| Self-Organizing-Agent-Teams | Stanford | 固定的一组 agent 从过往协作里学可复用的组织策略(角色、阶段、发言与信息流),只用 15 道数学题与 25 道研究生知识题学到的策略原样迁移到未见基准 |
 | CodeMidas | Xiaomi | 只用源码本身造编码 RL 环境:agent 探索已实现功能、写行为规格与测试并反复验证,得到 3,185 个仓库的 5,545 个任务 |
 | RetireOPD | ZJU | 多轮 agent 的自蒸馏:先用环境奖励优化带技能的教师,再让学生 RL 加 OPD 联合训练,差距不再缩小且达到目标成功率就自行退掉教师 |
 | ScienceIDE | Oxford | 让 agent 按专家定义的案例与验收标准把科学代码仓改造成可执行环境,用于 SFT、RL 与评测,并训出 PhAI-IDE 72B/9B/4B |
@@ -194,6 +196,7 @@
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
+| Harness-Zero | Peking | harness 蒸馏:用优化过的 harness 指导一个 harnessing agent 在目标 harness 的动作空间里改写学生回答,微调后部署时去掉专用 harness |
 | DSec | DeepSeek | 支撑 Agent 训练的生产级沙箱平台:统一接口管理多类沙箱,每天约 300 万个、每秒创建 5000 个以上(arXiv 2609.22978) |
 
 ## 推理服务与架构探索
@@ -310,6 +313,8 @@
 | Seedream-4.0 | ByteDance | 统一文生图与图像编辑的多模态生成(arXiv 2509.20427) |
 | Kling-Omni | Kuaishou | 统一多任务的视频生成框架(arXiv 2512.16776) |
 | Movie-Gen | Meta | 视频、图像、个性化与音频四件套媒体基模;Meta 生成线此前零收录(arXiv 2410.13720) |
+| Video-DeltaNet | Berkeley | 视频扩散的混合注意力:局部 Softmax 加逐帧更新的双向线性记忆,分阶段对齐教师接进预训练模型,在 MiniMax H3 上实例化 |
+| Geometric-AutoEncoder | HKUST | 几何原生自编码器 GAE:把几何基础模型的特征重参数化成紧凑潜空间,可同时解码外观、深度、相机与点图,再在上面做条件流生成 |
 
 ## 音频
 
@@ -333,6 +338,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| WorldCrafter | Tencent | 视频世界模型的隐式 3D 感知记忆:按请求的相机视角把历史多视图观测压进固定数量的视角 token,不靠显式深度对应,单图或文本起步做分钟级流式探索 |
 | DexTouch-WM | HKUST | 人手与灵巧手共用一套触觉阵列与动作表示,让人类触觉交互数据监督同一个动作条件世界模型,联合预测未来 RGB 与双手触觉 |
 | JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
 | Real-Time-EXPO-FT | Stanford | VLA 推理延迟让观测过时:大 VLA 慢慢出动作块,轻量编辑策略按最新观测快速改动作,在此之上做 RL 微调 |
@@ -355,6 +361,8 @@
 | Cosmos | NVIDIA | Physical AI 的世界基础模型平台 |
 | Genie | Google | 无动作标注的纯视频里,学出可交互的潜动作 |
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
+| Workspace-Models | MIT | 训练时用 VLM 标出任务相关的当前与历史信息,蒸馏成轻量的 workspace token,部署时代替观测喂给策略,不再在环调用 VLM |
+| MotionJEPA | Oxford | JEPA 偏好慢特征导致时间维坍塌:加一个预测差分图像嵌入的正则 DISReg,不需要动作标签也不做像素重建 |
 
 ## 自进化系统
 
