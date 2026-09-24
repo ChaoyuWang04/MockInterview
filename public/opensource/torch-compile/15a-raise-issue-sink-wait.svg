@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <rect x="0" y="0" width="1120" height="600" fill="#ffffff"/>
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111827">通信进了图之后:发出往前推、等待往后推,中间塞进无关的计算;小通信再合成一个桶</text>
+  <text x="24" y="58" font-size="13" fill="#6b7280">绿 = 计算 kernel;红 = 通信在通信流上跑;黄 = 发出与等待两个图节点;灰 = 计算流空等;方块长度是示意,不是实测</text>
+
+  <!-- 面板一:重排前 -->
+  <rect x="24" y="78" width="1072" height="152" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="104" font-size="14" font-weight="700" fill="#111827">重排前:抓图时等待紧跟在发出后面,计算流在这里空等</text>
+  <text x="44" y="142" font-size="11" fill="#6b7280">计算流</text>
+  <text x="44" y="188" font-size="11" fill="#6b7280">通信流</text>
+  <rect x="160" y="120" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="220" y="143" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">A 产出 g1</text>
+  <rect x="284" y="120" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="344" y="143" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">B 与 g1 无关</text>
+  <rect x="408" y="120" width="40" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="428" y="142" font-size="11" fill="#6b7280" text-anchor="middle">发出</text>
+  <rect x="452" y="120" width="40" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="472" y="142" font-size="11" fill="#6b7280" text-anchor="middle">等待</text>
+  <rect x="496" y="120" width="172" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="582" y="142" font-size="11" fill="#6b7280" text-anchor="middle">g1 没到,计算流空等</text>
+  <rect x="672" y="120" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="732" y="143" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">C 与 g1 无关</text>
+  <rect x="796" y="120" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="856" y="143" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">D 读 g1</text>
+  <text x="928" y="142" font-size="11" fill="#9ca3af">这一步结束</text>
+  <rect x="452" y="166" width="216" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="560" y="189" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-reduce g1</text>
+
+  <!-- 面板二:重排后 -->
+  <rect x="24" y="242" width="1072" height="196" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="268" font-size="14" font-weight="700" fill="#111827">重排后(默认开):逐个相邻交换,碰到依赖、别的通信或峰值显存上涨就停</text>
+  <text x="44" y="306" font-size="11" fill="#6b7280">计算流</text>
+  <text x="44" y="352" font-size="11" fill="#6b7280">通信流</text>
+  <rect x="160" y="284" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="220" y="307" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">A 产出 g1</text>
+  <rect x="284" y="284" width="40" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="304" y="306" font-size="11" fill="#6b7280" text-anchor="middle">发出</text>
+  <rect x="328" y="284" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="388" y="307" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">B 与 g1 无关</text>
+  <rect x="452" y="284" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="512" y="307" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">C 与 g1 无关</text>
+  <rect x="576" y="284" width="40" height="36" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="596" y="306" font-size="11" fill="#6b7280" text-anchor="middle">等待</text>
+  <rect x="620" y="284" width="120" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="680" y="307" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">D 读 g1</text>
+  <rect x="744" y="284" width="172" height="36" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="830" y="306" font-size="11" fill="#9ca3af" text-anchor="middle">原来空等的一段省掉了</text>
+  <text x="928" y="306" font-size="11" fill="#9ca3af">这一步结束</text>
+  <rect x="328" y="330" width="216" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="436" y="353" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">all-reduce g1</text>
+  <text x="44" y="396" font-size="11" fill="#9ca3af">发出只能提到 A 之后:A 产出它的输入;等待只能推到 D 之前:D 是它的使用者。通信做完得早,等待几乎不花时间。</text>
+  <text x="44" y="418" font-size="11" fill="#9ca3af">两个通信之间从不互换先后:各卡必须按同一顺序发出同一个通信组上的通信,顺序一乱就会互相等死。</text>
+
+  <!-- 面板三:分桶 -->
+  <rect x="24" y="450" width="1072" height="134" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="476" font-size="14" font-weight="700" fill="#111827">再分桶(默认关):同组、同类、同数据类型且相邻的小通信,拼成一块只发一次</text>
+  <text x="44" y="510" font-size="11" fill="#6b7280">分桶前</text>
+  <text x="44" y="552" font-size="11" fill="#6b7280">分桶后</text>
+  <rect x="160" y="490" width="100" height="32" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="210" y="511" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">g2</text>
+  <rect x="264" y="490" width="100" height="32" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="314" y="511" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">g3</text>
+  <text x="384" y="510" font-size="11" fill="#9ca3af">两次通信,各付一遍固定的启动开销</text>
+  <rect x="160" y="532" width="56" height="32" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="188" y="552" font-size="11" fill="#6b7280" text-anchor="middle">拼接</text>
+  <rect x="220" y="532" width="144" height="32" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="292" y="553" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">g2 + g3 一次</text>
+  <text x="384" y="552" font-size="11" fill="#9ca3af">多一次拷贝 kernel 和一块拼接缓冲;拆回原来的形状只是视图</text>
+</svg>

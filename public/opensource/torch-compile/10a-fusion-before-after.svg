@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 490" width="1120" height="490" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="490" fill="#ffffff"/>
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111827">融合前后的显存读写:纵向合并让中间结果不落显存,横向合并共享一次读</text>
+  <text x="24" y="58" font-size="13" fill="#6b7280">绿 = kernel;红 = 一次整张量大小的显存读或写;灰虚线 = 融合后省掉的读写;箭头 = 中间结果写回显存、又被下一个 kernel 读回</text>
+  <rect x="24" y="78" width="524" height="362" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="572" y="78" width="524" height="362" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="106" font-size="14" font-weight="700" fill="#111827">融合前:4 个 kernel,各自读写显存</text>
+  <text x="592" y="106" font-size="14" font-weight="700" fill="#111827">融合后:1 个 kernel</text>
+  <text x="104" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">kernel</text>
+  <text x="256" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">读</text>
+  <text x="408" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">写</text>
+  <text x="682" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">kernel</text>
+  <text x="864" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">读</text>
+  <text x="1016" y="134" font-size="11" fill="#9ca3af" text-anchor="middle">写</text>
+  <line x1="400" y1="184" x2="266" y2="199" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="400" y1="240" x2="266" y2="255" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="400" y1="296" x2="266" y2="311" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="44" y="144" width="120" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="104" y="169" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">add</text>
+  <rect x="196" y="144" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="256" y="168" font-size="11" fill="#6b7280" text-anchor="middle">读 x</text>
+  <rect x="348" y="144" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="408" y="168" font-size="11" fill="#6b7280" text-anchor="middle">写 y1</text>
+  <rect x="44" y="200" width="120" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="104" y="225" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">relu</text>
+  <rect x="196" y="200" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="256" y="224" font-size="11" fill="#6b7280" text-anchor="middle">读 y1</text>
+  <rect x="348" y="200" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="408" y="224" font-size="11" fill="#6b7280" text-anchor="middle">写 y2</text>
+  <rect x="44" y="256" width="120" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="104" y="281" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">mul</text>
+  <rect x="196" y="256" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="256" y="280" font-size="11" fill="#6b7280" text-anchor="middle">读 y2</text>
+  <rect x="348" y="256" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="408" y="280" font-size="11" fill="#6b7280" text-anchor="middle">写 y3</text>
+  <rect x="44" y="312" width="120" height="40" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="104" y="337" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">sum</text>
+  <rect x="196" y="312" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="256" y="336" font-size="11" fill="#6b7280" text-anchor="middle">读 x</text>
+  <rect x="348" y="312" width="30" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="363" y="336" font-size="11" fill="#6b7280" text-anchor="middle">s</text>
+  <text x="386" y="336" font-size="11" fill="#9ca3af" text-anchor="start">写 s,只有 x 的 1/K</text>
+  <rect x="592" y="144" width="180" height="208" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="682" y="226" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">一个 kernel</text>
+  <text x="682" y="250" font-size="11" fill="#6b7280" text-anchor="middle">add → relu → mul</text>
+  <text x="682" y="270" font-size="11" fill="#6b7280" text-anchor="middle">同一趟循环里顺带做 sum</text>
+  <rect x="804" y="144" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="864" y="168" font-size="11" fill="#6b7280" text-anchor="middle">读 x</text>
+  <rect x="956" y="144" width="120" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="1016" y="168" font-size="11" fill="#6b7280" text-anchor="middle">写 y3</text>
+  <rect x="956" y="200" width="30" height="40" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="971" y="224" font-size="11" fill="#6b7280" text-anchor="middle">s</text>
+  <text x="994" y="224" font-size="11" fill="#9ca3af" text-anchor="start">写 s</text>
+  <rect x="804" y="256" width="272" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-dasharray="5 4"/>
+  <text x="940" y="280" font-size="11" fill="#6b7280" text-anchor="middle">y1、y2 留在寄存器,省 4 格(纵向合并)</text>
+  <rect x="804" y="312" width="272" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9" stroke-dasharray="5 4"/>
+  <text x="940" y="336" font-size="11" fill="#6b7280" text-anchor="middle">x 只读一次,省 1 格(横向合并)</text>
+  <text x="44" y="388" font-size="11" fill="#6b7280" text-anchor="start">整张量大小的读写:7 格</text>
+  <rect x="44" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="74" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="104" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="134" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="164" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="194" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="224" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="592" y="388" font-size="11" fill="#6b7280" text-anchor="start">整张量大小的读写:2 格</text>
+  <rect x="592" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <rect x="622" y="400" width="24" height="24" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="24" y="470" font-size="11" fill="#9ca3af" text-anchor="start">一格 = 一次整张量大小的显存读或写;s 是按行求和的结果,大小只有 x 的 1/K,画成窄格,不计入格数</text>
+</svg>

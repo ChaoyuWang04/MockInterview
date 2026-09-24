@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">编译期抓出前反向联合图,运行期用几层包装把 eager 的行为还原回去</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">紫 = 编译期只做一次的步骤,绿 = 交给 Inductor 的图,黄 = 每次调用都跑的包装,灰 = eager 的 autograd 机制,红 = Compiled Autograd</text>
+
+  <!-- 第一行:编译期 -->
+  <text x="30" y="90" font-size="14" font-weight="700" fill="#111827">编译期:第一次调用时做一次</text>
+
+  <rect x="30" y="102" width="170" height="130" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="42" y="128" font-size="14" font-weight="700" fill="#111827">Dynamo 交来的图</text>
+  <text x="42" y="152" font-size="11" fill="#6b7280">torch 函数级</text>
+  <text x="42" y="170" font-size="11" fill="#6b7280">输入是假张量</text>
+  <text x="42" y="188" font-size="11" fill="#6b7280">只有前向</text>
+
+  <line x1="200" y1="167" x2="220" y2="167" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="222" y="102" width="222" height="130" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="234" y="128" font-size="14" font-weight="700" fill="#111827">第 1 遍:只看不录</text>
+  <text x="234" y="152" font-size="11" fill="#6b7280">函数化后把前向跑一遍,记下:</text>
+  <text x="234" y="170" font-size="11" fill="#6b7280">哪些输入被改、改的是值还是形状</text>
+  <text x="234" y="188" font-size="11" fill="#6b7280">哪些输出是别名、哪些是子类</text>
+  <text x="234" y="206" font-size="11" fill="#6b7280">没有要梯度的 → 只编推理图</text>
+
+  <line x1="444" y1="167" x2="464" y2="167" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="466" y="102" width="306" height="130" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="478" y="128" font-size="14" font-weight="700" fill="#111827">第 2 遍:录联合图</text>
+  <text x="478" y="152" font-size="11" fill="#6b7280">输入:原输入,加上每个要梯度的输出的 tangent</text>
+  <text x="478" y="170" font-size="11" fill="#6b7280">先跑前向,再调一次求梯度接口,引擎发出的</text>
+  <text x="478" y="188" font-size="11" fill="#6b7280">每个 ATen 算子都录下,标上属于前向或反向</text>
+  <text x="478" y="206" font-size="11" fill="#6b7280">原地修改改成返回新值,子类拆成普通张量</text>
+  <text x="478" y="224" font-size="11" fill="#6b7280">结尾断言:图里一个原地算子都没有</text>
+
+  <line x1="772" y1="167" x2="792" y2="167" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="794" y="102" width="112" height="130" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="806" y="128" font-size="14" font-weight="700" fill="#111827">切分</text>
+  <text x="806" y="152" font-size="11" fill="#6b7280">存哪些激活</text>
+  <text x="806" y="170" font-size="11" fill="#6b7280">反向重算哪些</text>
+  <text x="806" y="188" font-size="11" fill="#6b7280">(08 章)</text>
+
+  <line x1="906" y1="140" x2="926" y2="131" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="906" y1="194" x2="926" y2="203" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="928" y="102" width="162" height="58" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="940" y="126" font-size="14" font-weight="700" fill="#111827">前向图</text>
+  <text x="940" y="146" font-size="11" fill="#6b7280">当场交给 Inductor</text>
+  <rect x="928" y="174" width="162" height="58" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="940" y="198" font-size="14" font-weight="700" fill="#111827">反向图</text>
+  <text x="940" y="218" font-size="11" fill="#6b7280">默认首次反向才编(01 章)</text>
+
+  <!-- 第二行:运行期前向 -->
+  <text x="30" y="270" font-size="14" font-weight="700" fill="#111827">运行期:每次前向</text>
+
+  <rect x="30" y="282" width="180" height="118" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="42" y="308" font-size="14" font-weight="700" fill="#111827">整理参数</text>
+  <text x="42" y="332" font-size="11" fill="#6b7280">同一张量传了两次:去重</text>
+  <text x="42" y="350" font-size="11" fill="#6b7280">两个输入互为视图且被改:</text>
+  <text x="42" y="368" font-size="11" fill="#6b7280">合并成一个共同的底座</text>
+
+  <line x1="210" y1="341" x2="230" y2="341" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="232" y="282" width="490" height="118" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="244" y="302" font-size="11" fill="#6b7280">autograd.Function 的 forward:整个编译区域在 autograd 图里只是 1 个节点</text>
+  <rect x="244" y="314" width="130" height="74" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="256" y="338" font-size="14" font-weight="700" fill="#111827">拆子类</text>
+  <text x="256" y="360" font-size="11" fill="#6b7280">DTensor → 本地分片</text>
+  <text x="256" y="376" font-size="11" fill="#6b7280">和元数据</text>
+  <line x1="374" y1="351" x2="392" y2="351" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="394" y="314" width="176" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="406" y="338" font-size="14" font-weight="700" fill="#111827">编译好的前向</text>
+  <text x="406" y="360" font-size="11" fill="#6b7280">多返回被改输入的新值</text>
+  <text x="406" y="376" font-size="11" fill="#6b7280">和别名输出的底座</text>
+  <line x1="570" y1="351" x2="588" y2="351" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="590" y="314" width="120" height="74" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="602" y="338" font-size="14" font-weight="700" fill="#111827">装回子类</text>
+  <text x="602" y="360" font-size="11" fill="#6b7280">存下反向要用</text>
+  <text x="602" y="376" font-size="11" fill="#6b7280">的张量</text>
+
+  <line x1="722" y1="341" x2="742" y2="341" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="744" y="282" width="346" height="118" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="756" y="308" font-size="14" font-weight="700" fill="#111827">尾声</text>
+  <text x="756" y="332" font-size="11" fill="#6b7280">被改的输入:按新值原地写回(不要梯度的缓冲</text>
+  <text x="756" y="350" font-size="11" fill="#6b7280">在 Inductor 下直接留在图里写)</text>
+  <text x="756" y="368" font-size="11" fill="#6b7280">只改了形状步长的输入:按新值改回元数据</text>
+  <text x="756" y="386" font-size="11" fill="#6b7280">别名输出:从真输入或底座按视图链重放一遍</text>
+
+  <!-- 第三行:运行期反向 -->
+  <text x="30" y="438" font-size="14" font-weight="700" fill="#111827">运行期:反向,默认仍由 eager 的 autograd 引擎驱动</text>
+
+  <rect x="30" y="450" width="180" height="118" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="42" y="476" font-size="14" font-weight="700" fill="#111827">loss.backward()</text>
+  <text x="42" y="500" font-size="11" fill="#6b7280">引擎按依赖逐个节点调用</text>
+  <text x="42" y="518" font-size="11" fill="#6b7280">断图之间的 eager 算子</text>
+  <text x="42" y="536" font-size="11" fill="#6b7280">也是一个个节点</text>
+
+  <line x1="210" y1="509" x2="230" y2="509" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="232" y="450" width="490" height="118" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="244" y="470" font-size="11" fill="#6b7280">同一个节点的 backward</text>
+  <rect x="244" y="482" width="176" height="74" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="256" y="506" font-size="14" font-weight="700" fill="#111827">对齐梯度</text>
+  <text x="256" y="528" font-size="11" fill="#6b7280">步长和编译时猜的不同:拷</text>
+  <text x="256" y="544" font-size="11" fill="#6b7280">DTensor 放置不同:重分布</text>
+  <line x1="420" y1="519" x2="438" y2="519" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="440" y="482" width="130" height="74" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="452" y="506" font-size="14" font-weight="700" fill="#111827">编译好的反向</text>
+  <text x="452" y="528" font-size="11" fill="#6b7280">不支持再求</text>
+  <text x="452" y="544" font-size="11" fill="#6b7280">二阶导</text>
+  <line x1="570" y1="519" x2="588" y2="519" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="590" y="482" width="120" height="74" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="602" y="506" font-size="14" font-weight="700" fill="#111827">装回子类</text>
+  <text x="602" y="528" font-size="11" fill="#6b7280">梯度交还引擎</text>
+
+  <line x1="722" y1="509" x2="742" y2="509" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="744" y="450" width="346" height="118" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="756" y="476" font-size="14" font-weight="700" fill="#111827">编译区域之外</text>
+  <text x="756" y="500" font-size="11" fill="#6b7280">梯度累加进参数、DDP 与 FSDP 挂的 hook</text>
+  <text x="756" y="518" font-size="11" fill="#6b7280">都在节点外由引擎调用,hook 要等整个区域</text>
+  <text x="756" y="536" font-size="11" fill="#6b7280">的反向跑完才轮到</text>
+
+  <!-- 第四行:Compiled Autograd -->
+  <rect x="30" y="592" width="1060" height="88" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="42" y="618" font-size="14" font-weight="700" fill="#111827">另一条路 Compiled Autograd:在反向真正开始时,把上面第三行整行换成一张图</text>
+  <text x="42" y="642" font-size="11" fill="#6b7280">C++ 先遍历整张 autograd 图,给每个节点算缓存键;未命中就在假张量上把整张图抓成 FX 图:各编译区域的反向图原样拷进来,</text>
+  <text x="42" y="660" font-size="11" fill="#6b7280">hook 与梯度累加变成图里的节点并挪回 eager 里的时机,整张图再交给 torch.compile 编一遍。只在编译函数的调用期间生效</text>
+</svg>

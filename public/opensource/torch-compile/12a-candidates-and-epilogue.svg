@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 572" width="1120" height="572" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="572" fill="#ffffff"/>
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111827">y = ReLU(x·W + b),bf16:默认模式直接调库,调优模式先实测、尾巴留到调度时再定</text>
+  <text x="24" y="58" font-size="13" fill="#6b7280">灰 = 外部库调用;紫 = Triton 矩阵乘模板;绿 = 逐元素 kernel;红 = 中间结果 h 落显存一次;黄 = 编译与计时步骤</text>
+
+  <rect x="24" y="78" width="1072" height="118" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="104" font-size="14" font-weight="700" fill="#111827">默认模式:只有一个候选,不计时</text>
+  <rect x="44" y="120" width="260" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="174" y="144" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">cuBLAS:x·W + b</text>
+  <text x="174" y="164" font-size="11" fill="#6b7280" text-anchor="middle">偏置随矩阵乘一起算</text>
+  <line x1="308" y1="148" x2="336" y2="148" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="340" y="120" width="200" height="56" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="440" y="144" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">h 写回显存</text>
+  <text x="440" y="164" font-size="11" fill="#6b7280" text-anchor="middle">再被下一个 kernel 读回</text>
+  <line x1="544" y1="148" x2="572" y2="148" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="576" y="120" width="220" height="56" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="686" y="144" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">逐元素 kernel:ReLU</text>
+  <text x="686" y="164" font-size="11" fill="#6b7280" text-anchor="middle">读 h,写 y</text>
+  <text x="828" y="142" font-size="11" fill="#9ca3af">2 个 kernel,h 往返显存一次</text>
+  <text x="828" y="160" font-size="11" fill="#9ca3af">外部调用接不了尾巴(10 章)</text>
+
+  <rect x="24" y="214" width="1072" height="334" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="44" y="240" font-size="14" font-weight="700" fill="#111827">调优模式:同一个矩阵乘生成多种实现,实测挑最快,尾巴按实测决定融不融</text>
+
+  <text x="44" y="270" font-size="14" font-weight="700" fill="#111827">① 生成候选</text>
+  <text x="392" y="270" font-size="14" font-weight="700" fill="#111827">② 并行编译,逐个计时</text>
+  <text x="740" y="270" font-size="14" font-weight="700" fill="#111827">③ 调度时决定尾巴</text>
+
+  <rect x="44" y="284" width="296" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="192" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">cuBLAS:带偏置矩阵乘</text>
+  <text x="192" y="320" font-size="11" fill="#6b7280" text-anchor="middle">外部库调用</text>
+  <rect x="44" y="338" width="296" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="192" y="357" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Triton 模板 · 配置 1</text>
+  <text x="192" y="374" font-size="11" fill="#6b7280" text-anchor="middle">块 32×32×16,1 级流水,2 warp;偏置在模板内加</text>
+  <rect x="44" y="392" width="296" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="192" y="411" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Triton 模板 · 配置 2 … 21</text>
+  <text x="192" y="428" font-size="11" fill="#6b7280" text-anchor="middle">按 M、N、K 缩小、去重后通常更少</text>
+  <text x="44" y="460" font-size="11" fill="#9ca3af">K 比 M、N 都大 32 倍以上时,另加切 K 的候选</text>
+  <text x="44" y="478" font-size="11" fill="#9ca3af">CUTLASS、CuTe DSL 等默认不在名单里</text>
+  <text x="44" y="496" font-size="11" fill="#9ca3af">SM 少于 68 的卡上没有模板,只剩 cuBLAS</text>
+
+  <line x1="344" y1="306" x2="386" y2="306" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="392" y="284" width="316" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="550" y="303" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">线程池并行编译全部模板</text>
+  <text x="550" y="320" font-size="11" fill="#6b7280" text-anchor="middle">编译失败或超时的候选剔除</text>
+  <rect x="392" y="338" width="316" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="550" y="357" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">同形状同步长的随机张量,逐个计时</text>
+  <text x="550" y="374" font-size="11" fill="#6b7280" text-anchor="middle">默认在编译进程里;有 CUTLASS 候选时换子进程</text>
+  <text x="396" y="409" font-size="11" fill="#6b7280">cuBLAS</text>
+  <rect x="496" y="398" width="120" height="16" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="396" y="433" font-size="11" fill="#6b7280">Triton 配置 7</text>
+  <rect x="496" y="422" width="130" height="16" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="396" y="457" font-size="11" fill="#6b7280">Triton 配置 2</text>
+  <rect x="496" y="446" width="165" height="16" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="396" y="481" font-size="11" fill="#6b7280">Triton 配置 15</text>
+  <rect x="496" y="470" width="200" height="16" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="396" y="508" font-size="11" fill="#9ca3af">条长 = 单独跑的耗时,短者在前;数值为示意</text>
+
+  <line x1="712" y1="306" x2="734" y2="306" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="740" y="284" width="336" height="60" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="908" y="304" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">A:最快的 Triton 模板 + ReLU</text>
+  <text x="908" y="321" font-size="11" fill="#6b7280" text-anchor="middle">ReLU 在寄存器里做,h 不落显存</text>
+  <text x="908" y="337" font-size="11" fill="#6b7280" text-anchor="middle">融合后编译、实测一次,得耗时 A</text>
+  <text x="740" y="372" font-size="14" font-weight="700" fill="#111827">B:全场最快的候选 + 单独的 ReLU</text>
+  <rect x="740" y="382" width="100" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="790" y="404" font-size="11" fill="#6b7280" text-anchor="middle">cuBLAS</text>
+  <rect x="852" y="382" width="100" height="36" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="902" y="404" font-size="11" fill="#6b7280" text-anchor="middle">h 往返显存</text>
+  <rect x="964" y="382" width="112" height="36" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="1020" y="404" font-size="11" fill="#6b7280" text-anchor="middle">ReLU kernel</text>
+  <text x="740" y="438" font-size="11" fill="#6b7280">耗时 B = 两个 kernel 单独计时之和</text>
+  <text x="740" y="468" font-size="14" font-weight="700" fill="#111827">耗时 A 小于 B 就选 A,否则选 B</text>
+  <text x="740" y="490" font-size="11" fill="#9ca3af">只拿单独跑最快的那个模板去试;</text>
+  <text x="740" y="507" font-size="11" fill="#9ca3af">它单独跑就不快于 B 时,连试都不试</text>
+  <text x="740" y="524" font-size="11" fill="#9ca3af">两个尾巴计时开关都在第五节</text>
+</svg>

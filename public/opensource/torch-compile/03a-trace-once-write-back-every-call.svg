@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d9877a"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+
+  <text x="40" y="34" font-size="19" font-weight="700" fill="#111827">抓图只跑 1 次、不碰真对象;副作用每次调用在图后写回</text>
+  <text x="40" y="58" font-size="13" fill="#6b7280">灰 = 用户代码,黄 = 编译图,紫 = 抓图期的副作用表,绿 = 每次调用都执行的改写后字节码,红 = 函数外的真对象</text>
+
+  <!-- 列标题 -->
+  <text x="40" y="92" font-size="14" font-weight="700" fill="#111827">用户函数 f(x, buf, m)</text>
+  <text x="400" y="92" font-size="14" font-weight="700" fill="#111827">抓图期:只执行 1 次</text>
+  <text x="790" y="92" font-size="14" font-weight="700" fill="#111827">每次调用:执行 N 次</text>
+
+  <!-- A 列:用户代码 -->
+  <rect x="40" y="104" width="290" height="276" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="60" y="120" width="250" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="185" y="142" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">y = x * 2</text>
+  <text x="185" y="160" font-size="11" fill="#6b7280" text-anchor="middle">张量运算</text>
+  <rect x="60" y="182" width="250" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="185" y="204" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">buf.append(y)</text>
+  <text x="185" y="222" font-size="11" fill="#6b7280" text-anchor="middle">改函数外传进来的列表</text>
+  <rect x="60" y="244" width="250" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="185" y="266" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">m.steps = m.steps + 1</text>
+  <text x="185" y="284" font-size="11" fill="#6b7280" text-anchor="middle">改模块属性</text>
+  <rect x="60" y="306" width="250" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="185" y="328" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">return y + 1</text>
+  <text x="185" y="346" font-size="11" fill="#6b7280" text-anchor="middle">张量运算</text>
+
+  <!-- B 列:抓图期 -->
+  <rect x="400" y="104" width="320" height="276" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="420" y="120" width="280" height="66" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="560" y="146" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">FX 图</text>
+  <text x="560" y="168" font-size="11" fill="#6b7280" text-anchor="middle">mul(x, 2) → add(y, 1),交给后端编译</text>
+  <rect x="420" y="204" width="280" height="160" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="560" y="228" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">副作用表:只记最终状态</text>
+  <text x="436" y="256" font-size="11" fill="#6b7280">buf → 追踪对象里的条目 = 原有项 + y</text>
+  <text x="436" y="276" font-size="11" fill="#6b7280">m.steps → 新值 = 旧值 + 1</text>
+  <text x="436" y="296" font-size="11" fill="#6b7280">追加 10 次,也只记最后的整张清单</text>
+  <text x="436" y="316" font-size="11" fill="#6b7280">新建又没流出函数的对象:抓完即清掉</text>
+  <text x="436" y="344" font-size="11" fill="#9ca3af">真 buf、真 m 在这期间一次都不改</text>
+
+  <!-- A → B -->
+  <line x1="310" y1="145" x2="418" y2="148" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="310" y1="331" x2="418" y2="170" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="310" y1="207" x2="418" y2="252" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="310" y1="269" x2="418" y2="272" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- C 列:每次调用 -->
+  <rect x="790" y="104" width="290" height="276" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <rect x="810" y="116" width="250" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="935" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">① 调用编译图</text>
+  <text x="935" y="156" font-size="11" fill="#6b7280" text-anchor="middle">拿到全部张量输出</text>
+  <rect x="810" y="180" width="250" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="935" y="202" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">② 重建逃逸的新对象</text>
+  <text x="935" y="220" font-size="11" fill="#6b7280" text-anchor="middle">函数里新建、又流出去的</text>
+  <rect x="810" y="244" width="250" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="935" y="266" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">③ 还原返回值</text>
+  <text x="935" y="284" font-size="11" fill="#6b7280" text-anchor="middle">有来源取原对象,张量取图输出</text>
+  <rect x="810" y="308" width="250" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="935" y="330" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">④ 写回最终状态</text>
+  <text x="935" y="348" font-size="11" fill="#6b7280" text-anchor="middle">buf[:] = 新清单;m.steps = 新值</text>
+  <line x1="935" y1="168" x2="935" y2="178" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="935" y1="232" x2="935" y2="242" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="935" y1="296" x2="935" y2="306" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- B → C -->
+  <line x1="700" y1="153" x2="808" y2="142" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="700" y1="330" x2="808" y2="334" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 真对象 -->
+  <rect x="400" y="430" width="680" height="56" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="740" y="454" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">函数外的真对象:列表 buf、模块 m</text>
+  <text x="740" y="474" font-size="11" fill="#6b7280" text-anchor="middle">调用结束时的样子与 eager 跑完这一次完全相同</text>
+  <line x1="560" y1="364" x2="560" y2="428" stroke="#9ca3af" stroke-width="1.4" stroke-dasharray="4 4"/>
+  <text x="570" y="404" font-size="11" fill="#9ca3af">抓图期间不碰</text>
+  <line x1="935" y1="380" x2="935" y2="428" stroke="#d9877a" stroke-width="1.4" marker-end="url(#arr-red)"/>
+  <text x="945" y="408" font-size="11" fill="#9ca3af">每次调用写一次</text>
+
+  <text x="40" y="520" font-size="11" fill="#9ca3af">限长队列这类依赖中间顺序的修改记不成最终状态,在调用处断图;所有写回集中在最后,免得干扰前面的还原</text>
+</svg>

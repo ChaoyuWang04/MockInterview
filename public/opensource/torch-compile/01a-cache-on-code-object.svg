@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 510" width="1120" height="510" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d9877a"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="510" fill="#ffffff"/>
+
+  <text x="40" y="34" font-size="19" font-weight="700" fill="#111827">一个函数的编译缓存:挂在 code object 上的一串条目</text>
+  <text x="40" y="58" font-size="13" fill="#6b7280">紫 = guard 检查,黄 = 编译产物,绿 = 反向产物,灰 = 函数调用与 eager 执行,红 = 未命中时的编译</text>
+
+  <!-- 调用 -->
+  <rect x="40" y="112" width="150" height="66" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="115" y="140" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">调用 f(x)</text>
+  <text x="115" y="162" font-size="11" fill="#6b7280" text-anchor="middle">帧执行前被截下</text>
+  <line x1="190" y1="145" x2="238" y2="145" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 缓存容器 -->
+  <rect x="220" y="94" width="560" height="286" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="240" y="113" font-size="11" fill="#9ca3af">f 的 code object 上的缓存:同一函数的所有调用共用,命中的条目挪到最前</text>
+
+  <!-- 条目 1 -->
+  <rect x="240" y="126" width="170" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="325" y="152" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">guard 检查</text>
+  <text x="325" y="174" font-size="11" fill="#6b7280" text-anchor="middle">条目 1 · 最近命中</text>
+  <rect x="430" y="126" width="330" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="595" y="152" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">改写后的字节码</text>
+  <text x="595" y="174" font-size="11" fill="#6b7280" text-anchor="middle">调编译好的图 → 重放副作用 → 返回</text>
+  <line x1="410" y1="158" x2="428" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 条目 2 -->
+  <line x1="325" y1="190" x2="325" y2="208" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="335" y="203" font-size="11" fill="#9ca3af">不过就查下一条</text>
+  <rect x="240" y="210" width="170" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="325" y="236" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">guard 检查</text>
+  <text x="325" y="258" font-size="11" fill="#6b7280" text-anchor="middle">条目 2</text>
+  <rect x="430" y="210" width="330" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="595" y="236" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">改写后的字节码</text>
+  <text x="595" y="258" font-size="11" fill="#6b7280" text-anchor="middle">同上,对应另一组成立条件</text>
+  <line x1="410" y1="242" x2="428" y2="242" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 条目 8 -->
+  <line x1="325" y1="274" x2="325" y2="292" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="335" y="287" font-size="11" fill="#9ca3af">中间还有条目 3–7</text>
+  <rect x="240" y="294" width="170" height="64" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="325" y="320" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">guard 检查</text>
+  <text x="325" y="342" font-size="11" fill="#6b7280" text-anchor="middle">条目 8 · 默认上限</text>
+  <rect x="430" y="294" width="330" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="595" y="320" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">改写后的字节码</text>
+  <text x="595" y="342" font-size="11" fill="#6b7280" text-anchor="middle">同上</text>
+  <line x1="410" y1="326" x2="428" y2="326" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 编译好的图 -->
+  <line x1="760" y1="158" x2="818" y2="158" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="820" y="126" width="260" height="100" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="950" y="154" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">编译好的图</text>
+  <text x="950" y="178" font-size="11" fill="#6b7280" text-anchor="middle">前向 kernel:首次调用时编好</text>
+  <text x="950" y="198" font-size="11" fill="#6b7280" text-anchor="middle">由 AOTAutograd 包着,接上反向</text>
+  <line x1="950" y1="226" x2="950" y2="244" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="820" y="246" width="260" height="76" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="950" y="274" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">反向 kernel</text>
+  <text x="950" y="298" font-size="11" fill="#6b7280" text-anchor="middle">默认等第一次反向时才编</text>
+
+  <!-- 全部未命中 -->
+  <line x1="325" y1="358" x2="325" y2="408" stroke="#d9877a" stroke-width="1.4" marker-end="url(#arr-red)"/>
+  <polyline points="325,392 635,392 635,408" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="440" y="404" font-size="11" fill="#9ca3af">全部不过</text>
+
+  <rect x="240" y="410" width="250" height="68" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="365" y="436" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">未满 8 条:重新编译</text>
+  <text x="365" y="458" font-size="11" fill="#6b7280" text-anchor="middle">抓图编出新条目,插到最前</text>
+
+  <rect x="510" y="410" width="250" height="68" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="635" y="436" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">已满 8 条:不再编译</text>
+  <text x="635" y="458" font-size="11" fill="#6b7280" text-anchor="middle">这次走 eager,已有条目照用</text>
+
+  <polyline points="240,444 205,444 205,172 238,172" fill="none" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
+</svg>

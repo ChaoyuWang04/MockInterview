@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" width="1120" height="640" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="640" fill="#ffffff"/>
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111827">一次冷启动的五段,和每段后面那层缓存:横条盖住哪几段,命中时就省掉哪几段</text>
+  <text x="24" y="58" font-size="13" fill="#6b7280">灰 = 冷启动依次经过的段;红 = 这段没有缓存层;绿 = 按这段输入的哈希查的磁盘缓存;紫 = 预编译</text>
+  <text x="24" y="78" font-size="13" fill="#6b7280">目录都在缓存根目录下,默认是系统临时目录里的 torchinductor_&lt;用户名&gt;</text>
+
+  <rect x="40" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="140" y="120" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">① Dynamo 抓图</text>
+  <text x="140" y="140" font-size="11" fill="#6b7280" text-anchor="middle">逐条模拟字节码</text>
+  <text x="140" y="156" font-size="11" fill="#6b7280" text-anchor="middle">出 FX 图与 guard</text>
+  <line x1="242" y1="132" x2="248" y2="132" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="250" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="350" y="120" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">② AOTAutograd</text>
+  <text x="350" y="140" font-size="11" fill="#6b7280" text-anchor="middle">联合图、函数化</text>
+  <text x="350" y="156" font-size="11" fill="#6b7280" text-anchor="middle">前反向切分</text>
+  <line x1="452" y1="132" x2="458" y2="132" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="460" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="560" y="120" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">③ Inductor</text>
+  <text x="560" y="140" font-size="11" fill="#6b7280" text-anchor="middle">lowering、调度、生成代码</text>
+  <text x="560" y="156" font-size="11" fill="#6b7280" text-anchor="middle">调优模式下矩阵乘在这里实测</text>
+  <line x1="662" y1="132" x2="668" y2="132" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="670" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="770" y="120" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">④ Triton 编译</text>
+  <text x="770" y="140" font-size="11" fill="#6b7280" text-anchor="middle">kernel 源码编成二进制</text>
+  <text x="770" y="156" font-size="11" fill="#6b7280" text-anchor="middle">交给子进程池并行</text>
+  <line x1="872" y1="132" x2="878" y2="132" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <rect x="880" y="96" width="200" height="72" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="980" y="120" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">⑤ 块大小实测</text>
+  <text x="980" y="140" font-size="11" fill="#6b7280" text-anchor="middle">逐元素与归约 kernel</text>
+  <text x="980" y="156" font-size="11" fill="#6b7280" text-anchor="middle">第一次调用时挑配置</text>
+
+  <rect x="40" y="190" width="200" height="330" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="140" y="214" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">这一段没有缓存层</text>
+  <text x="56" y="240" font-size="11" fill="#6b7280">产物是改写后的字节码</text>
+  <text x="56" y="256" font-size="11" fill="#6b7280">和一棵 guard 树,指着进程里</text>
+  <text x="56" y="272" font-size="11" fill="#6b7280">活的函数、模块和全局变量,</text>
+  <text x="56" y="288" font-size="11" fill="#6b7280">换一个进程就对不上</text>
+  <text x="56" y="316" font-size="11" fill="#6b7280">每次启动都重抓一遍,</text>
+  <text x="56" y="332" font-size="11" fill="#6b7280">热启动也躲不掉</text>
+  <text x="56" y="360" font-size="11" fill="#6b7280">跨进程只留一样东西:</text>
+  <text x="56" y="376" font-size="11" fill="#6b7280">哪些维是动态的(06 章)</text>
+  <text x="56" y="404" font-size="11" fill="#6b7280">caching_precompile 能把</text>
+  <text x="56" y="420" font-size="11" fill="#6b7280">这一段也存进 dynamo/,</text>
+  <text x="56" y="436" font-size="11" fill="#6b7280">实验功能,默认关</text>
+
+  <rect x="670" y="190" width="200" height="94" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="770" y="214" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Triton kernel 缓存</text>
+  <text x="686" y="236" font-size="11" fill="#6b7280">triton/&lt;卡号&gt;/</text>
+  <text x="686" y="254" font-size="11" fill="#6b7280">键由 Triton 自己算</text>
+  <text x="686" y="272" font-size="11" fill="#6b7280">开源默认也打包进 FX 条目</text>
+
+  <rect x="880" y="190" width="200" height="94" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="980" y="214" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">调优缓存</text>
+  <text x="896" y="236" font-size="11" fill="#6b7280">kernel 源码旁的 .best_config</text>
+  <text x="896" y="254" font-size="11" fill="#6b7280">键:源码哈希 + torch 哈希</text>
+  <text x="896" y="272" font-size="11" fill="#6b7280">候选列表一变就作废</text>
+
+  <rect x="460" y="298" width="410" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="476" y="322" font-size="14" font-weight="700" fill="#111827">FX 图缓存 fxgraph/&lt;键&gt;/&lt;条目&gt;</text>
+  <text x="476" y="344" font-size="11" fill="#6b7280">键:交给 Inductor 的图、输入元信息(含卡号)、常量取值、</text>
+  <text x="476" y="360" font-size="11" fill="#6b7280">整棵 torch 源码的哈希、GPU 型号与 CUDA、Triton 版本、配置</text>
+  <text x="476" y="376" font-size="11" fill="#6b7280">存:生成的 Python 源码与 kernel 二进制;一个键下可有多条,</text>
+  <text x="476" y="392" font-size="11" fill="#6b7280">按符号维条件逐条判;矩阵乘实测结果另存 cache/&lt;机器指纹&gt;</text>
+
+  <rect x="250" y="416" width="620" height="104" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="266" y="440" font-size="14" font-weight="700" fill="#111827">AOTAutograd 缓存 aotautograd/&lt;键&gt;/</text>
+  <text x="266" y="462" font-size="11" fill="#6b7280">键:Dynamo 交来的图与输入元信息、求导开关与 autocast 状态、AOTAutograd 配置,</text>
+  <text x="266" y="478" font-size="11" fill="#6b7280">再加上 FX 图缓存键的全部组成</text>
+  <text x="266" y="496" font-size="11" fill="#6b7280">存:前反向两张图在 FX 图缓存里的键,加重建运行时包装用的元数据;</text>
+  <text x="266" y="512" font-size="11" fill="#6b7280">回头去 FX 图缓存取不到,这一层也算未命中;FX 图缓存关着时整层绕过</text>
+
+  <rect x="40" y="534" width="1040" height="62" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="56" y="558" font-size="14" font-weight="700" fill="#111827">预编译:五段全部提前做完,打成一个文件   torch.compile(fn, fullgraph=True).aot_compile(示例输入)</text>
+  <text x="56" y="580" font-size="11" fill="#6b7280">加载后直接跑,抓图也省掉;代价是不许断图、形状默认按示例特化、默认丢掉全局变量与按身份的 guard、Python、torch、CUDA、Triton 版本与 GPU 型号必须一致</text>
+
+  <text x="24" y="618" font-size="11" fill="#9ca3af">命中之后仍要付的:抓图、算键(要哈希整张图与常量)、读盘加载、复核符号维条件</text>
+</svg>

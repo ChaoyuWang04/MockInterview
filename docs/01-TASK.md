@@ -23,6 +23,7 @@
 
 ## 开源贡献
 
+- [ ] `pytorch`:两条文档类 issue 草稿已交维护者,待维护者发布后把编号回写 `contrib/pytorch.md`;标为 actionable 且要提 PR 时,再定巨型仓的接入方式
 - [ ] `sglang-omni` 选题:按 14 读 Roadmap 与相关 issue,出候选进 `contrib/sglang-omni.md`
 
 ## P6 · 开源解读与报告解读
@@ -33,7 +34,7 @@
 - [ ] `sglang`:**总览与 01–18 章全部按 2026-09-20 的标准返工完成**,34 张手写 SVG,`npm test` 与 `scripts/svg-check.mjs` 全绿。**等用户通读验收**。两处留给下次的:底稿覆盖率核对表里 `mem_cache/hybrid_cache`(134 KB)与 `mem_cache/storage/umbp`(126 KB)标「待定」,不是平台移植也不是算子层,该归 03 还是 05 没定;08 章那条「默认 target-only 是否与标准拒绝采样等价」在底稿里标着待查,要把 kernel 的拒绝分支读完才能升回肯定句
 - [ ] `sglang/02` 第四段与 `TensorRT-LLM/02` 对照表把 vLLM 的异步调度写成「实验性开关、默认关」,vLLM `94f4170df3` 上已默认开(`vllm/config/vllm.py` 异步调度默认分支);由各自那条线复核后改;另 `sglang/05` 对 vLLM 下放的描述(「CPU 层跟着进程走、跨实例得换通路」「从不等」「文件系统满了才换下去」)在该基准上也不成立,见 `vllm-lite/05` 第四段;`TensorRT-LLM/06` 写「查表和独立草稿模型默认不支持重叠调度」,其基准 `59f5c47f2e` 上独立草稿已归一体模式、支持重叠,只有 NGram 这类会关;`sglang/08` 留的「vLLM 贪心草稿被拒后从哪重采」已核清(从目标分布扣掉被拒 token 再采,见 `vllm-lite/09`);`sglang/11` 说 vLLM 有「16 个注册名」(实为 17)、「网关先发 P 再发 D」(只对默认的拉成立);`sglang/10` 说 vLLM 单副本开专家并行「仍走 all-gather 加 reduce-scatter」(实际不走 all-to-all,一次 all-reduce);`TensorRT-LLM/08` 说 vLLM 的均衡「是把热专家迁到轻载卡」(vLLM 也用冗余槽复制热专家);`sglang/13` 说 vLLM「每步用 100 微秒超时取编译结果」(已改为非阻塞检查);`sglang/14` 说 vLLM「默认切开占位区、每块只编本块」(实为整项编完、后续块取缓存)与「视频剪枝率是请求级」(实为启动配置);`sglang/15` 说 vLLM「每条请求一个线程组」(实为按适配器槽位排序后每个适配器一段);`TensorRT-LLM/11` 对照表里 vLLM 一列「默认一套,另有实验路径」「可一次采多个再适配掩码」不准(默认 V2,「多个」只指推测解码时每条填 1+K 行);`sglang/16` 说 vLLM「只有原生与 Transformers 后备两条路」(还有 `terratorch`);`sglang/17` 页头说「参照项目 vLLM 的解读里没有对应的一章」(已有 `vllm-lite/18`)
 - [ ] vLLM 四个未覆盖主题按三档融入规则补进已有章:01 章加「API 进程里还有什么」Part、06 章加「编译:分段图之外」Part、05 章 Part 5 后加「状态空间模型」Part、03 章显存见底那组加 `simple_kv_offload` 一节;第二档变体一半只补索引行(gemma4、eplb、ubatch wrapper 等);覆盖地图初稿与脚本在 `tmp/vllm-coverage/`(未入库),索引页 85 个短文件名要补完整路径
-- [ ] `torch.compile`(框架内核,按 06「大单体仓库按子系统拆」立项):源码在 `projects/框架内核/pytorch`,与 FSDP 共用基准 `217579124a`;快照 `/tmp/torchcompile-base`,底稿 `opensource/框架内核/torch-compile/_登记表.md`;序章已过门;01 章已验收;**02–04 章已成稿并过主线程验收,等用户逐章验收**;过门后派 05–07,每批 3 章,口径见底稿第六节。`os:check` 按 `projects/<主题>/<项目>` 定位仓库,子系统解读的基准与证据核对会被跳过(FSDP 同样),要补得让脚本从底稿读源码映射
+- [ ] `scripts/os-check.mjs` 支持按子系统拆的解读:从底稿读「源码在哪个仓库、哪几个目录」的映射;目前 `torch-compile`、`FSDP` 的基准与证据核对被跳过,队列里 Linux 内核、LLVM/MLIR、CPython、V8、FFmpeg 也会走这条路
 - [ ] 通信三项,按序:`nccl` → `DeepEP` → `nixl`(都在 `projects/通信/`)
 - [ ] 算子项目,按序:`FlashAttention`(参考项目,通用矩阵切法只在这里讲)→ `FlashInfer` → `DeepGEMM` → `FlashMLA` → `triton` → `Triton-distributed` → `TransformerEngine` 补 13 章量化核、14 章通信-GEMM 重叠核;全部按 06 的「算子项目的变体」写
 - [ ] `TensorRT-LLM` 总览补一段「和 vLLM 真正不一样的几处」

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" width="1120" height="650" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="650" fill="#ffffff"/>
+
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">一个维度的一生:先按数字编,晃过一次换成符号,比较留下条件</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">绿 = 写死的具体数字,灰 = 每段代码的尺寸记录,紫 = 用符号表示的维(左下框里是无依据的),黄 = 最后装上的条件,红 = 条件不成立或判不了</text>
+
+  <!-- 上排连线 -->
+  <line x1="226" y1="170" x2="246" y2="170" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="444" y1="170" x2="464" y2="170" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="662" y1="170" x2="682" y2="170" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="880" y1="170" x2="900" y2="170" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <!-- ⑤ 到 ⑥ -->
+  <line x1="1000" y1="300" x2="1000" y2="352" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <!-- ⑥ 到 ⑦ -->
+  <line x1="890" y1="470" x2="890" y2="502" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- ① 第 1 次调用 -->
+  <rect x="30" y="92" width="196" height="156" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="128" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">① 第 1 次调用</text>
+  <text x="128" y="138" font-size="11" fill="#6b7280" text-anchor="middle">x 的形状 [8, 64]</text>
+  <text x="128" y="162" font-size="11" fill="#6b7280" text-anchor="middle">按具体形状抓图、编译</text>
+  <text x="128" y="186" font-size="11" fill="#6b7280" text-anchor="middle">记下尺寸:x → [8, 64]</text>
+  <text x="128" y="210" font-size="11" fill="#6b7280" text-anchor="middle">张量检查:size = [8, 64]</text>
+  <text x="128" y="232" font-size="11" fill="#9ca3af" text-anchor="middle">两维都写死</text>
+
+  <!-- ② 第 2 次调用 -->
+  <rect x="248" y="92" width="196" height="156" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="346" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">② 第 2 次调用</text>
+  <text x="346" y="138" font-size="11" fill="#6b7280" text-anchor="middle">x 的形状 [16, 64]</text>
+  <text x="346" y="162" font-size="11" fill="#6b7280" text-anchor="middle">张量检查不过,重编</text>
+  <text x="346" y="186" font-size="11" fill="#6b7280" text-anchor="middle">size mismatch at index 0.</text>
+  <text x="346" y="204" font-size="11" fill="#6b7280" text-anchor="middle">expected 8, actual 16</text>
+  <text x="346" y="232" font-size="11" fill="#9ca3af" text-anchor="middle">重编日志里的原因</text>
+
+  <!-- ③ 记录合并 -->
+  <rect x="466" y="92" width="196" height="156" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="564" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">③ 尺寸记录合并</text>
+  <text x="564" y="138" font-size="11" fill="#6b7280" text-anchor="middle">[8, 64] 并上 [16, 64]</text>
+  <text x="564" y="162" font-size="11" fill="#6b7280" text-anchor="middle">→ [?, 64]</text>
+  <text x="564" y="186" font-size="11" fill="#6b7280" text-anchor="middle">两次不同的维记成 ?</text>
+  <text x="564" y="210" font-size="11" fill="#6b7280" text-anchor="middle">没变的维照旧写死</text>
+  <text x="564" y="232" font-size="11" fill="#9ca3af" text-anchor="middle">键:文件、首行号、函数名</text>
+
+  <!-- ④ 换成符号 -->
+  <rect x="684" y="92" width="196" height="156" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="782" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">④ 重编:第 0 维换符号</text>
+  <text x="782" y="138" font-size="11" fill="#6b7280" text-anchor="middle">x 的形状 [s0, 64]</text>
+  <text x="782" y="162" font-size="11" fill="#6b7280" text-anchor="middle">s0 的提示值 = 16</text>
+  <text x="782" y="186" font-size="11" fill="#6b7280" text-anchor="middle">s0 的范围 = [2, ∞)</text>
+  <text x="782" y="210" font-size="11" fill="#6b7280" text-anchor="middle">0 和 1 不在范围里</text>
+  <text x="782" y="232" font-size="11" fill="#9ca3af" text-anchor="middle">记在符号形状环境里</text>
+
+  <!-- ⑤ 抓图中的比较 -->
+  <rect x="902" y="92" width="196" height="208" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="1000" y="116" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">⑤ 抓图中对 s0 的比较</text>
+  <text x="1000" y="140" font-size="11" fill="#6b7280" text-anchor="middle">if x.size(0) &gt; 1024:</text>
+  <text x="1000" y="158" font-size="11" fill="#6b7280" text-anchor="middle">范围推不出真假</text>
+  <text x="1000" y="176" font-size="11" fill="#6b7280" text-anchor="middle">按提示值 16 判为假</text>
+  <text x="1000" y="194" font-size="11" fill="#6b7280" text-anchor="middle">记下条件 s0 ≤ 1024</text>
+  <line x1="918" y1="208" x2="1082" y2="208" stroke="#cbd2d9" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="1000" y="228" font-size="11" fill="#6b7280" text-anchor="middle">if x.size(0) != 0:</text>
+  <text x="1000" y="246" font-size="11" fill="#6b7280" text-anchor="middle">由范围 s0 ≥ 2 直接得真</text>
+  <text x="1000" y="264" font-size="11" fill="#6b7280" text-anchor="middle">不记条件</text>
+  <text x="1000" y="288" font-size="11" fill="#9ca3af" text-anchor="middle">两种都只走一支,图里没有分支</text>
+
+  <!-- ⑥ 条件 -->
+  <rect x="684" y="354" width="414" height="116" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="891" y="378" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">⑥ 编完装上的条件</text>
+  <text x="704" y="402" font-size="11" fill="#6b7280">张量检查:size = [None, 64],第 0 维跳过不比</text>
+  <text x="704" y="424" font-size="11" fill="#6b7280">形状条件:2 ≤ x.size(0),x.size(0) ≤ 1024</text>
+  <text x="704" y="446" font-size="11" fill="#6b7280">形状条件拼成一个 Python 函数,挂在根上最后跑(04 章)</text>
+
+  <!-- ⑦ 之后的调用 -->
+  <rect x="466" y="504" width="196" height="104" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="564" y="528" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">来了 [512, 64]</text>
+  <text x="564" y="552" font-size="11" fill="#6b7280" text-anchor="middle">条件全过</text>
+  <text x="564" y="574" font-size="11" fill="#6b7280" text-anchor="middle">直接用这份符号化结果</text>
+  <text x="564" y="596" font-size="11" fill="#9ca3af" text-anchor="middle">2 到 1024 之间都命中</text>
+
+  <rect x="684" y="504" width="196" height="104" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="782" y="528" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">来了 [1, 64]</text>
+  <text x="782" y="552" font-size="11" fill="#6b7280" text-anchor="middle">不满足 2 ≤ x.size(0)</text>
+  <text x="782" y="574" font-size="11" fill="#6b7280" text-anchor="middle">重编,这一维按常量 1 编</text>
+  <text x="782" y="596" font-size="11" fill="#9ca3af" text-anchor="middle">0 与 1 的特化</text>
+
+  <rect x="902" y="504" width="196" height="104" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="1000" y="528" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">来了 [3000, 64]</text>
+  <text x="1000" y="552" font-size="11" fill="#6b7280" text-anchor="middle">不满足 x.size(0) ≤ 1024</text>
+  <text x="1000" y="574" font-size="11" fill="#6b7280" text-anchor="middle">重编,这次按提示值 3000</text>
+  <text x="1000" y="596" font-size="11" fill="#9ca3af" text-anchor="middle">记下的条件变成 s0 &gt; 1024</text>
+
+  <!-- 对照:无依据符号 -->
+  <rect x="30" y="354" width="414" height="254" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="50" y="380" font-size="14" font-weight="700" fill="#111827">对照:取决于数据的大小没有提示值</text>
+  <rect x="50" y="396" width="374" height="84" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="66" y="420" font-size="11" fill="#6b7280">n = mask.sum().item()(打开标量捕获之后)</text>
+  <text x="66" y="442" font-size="11" fill="#6b7280">n 换成无依据符号 u0:没有提示值</text>
+  <text x="66" y="464" font-size="11" fill="#6b7280">能进图,能参与算术,能作为参数传给算子</text>
+  <line x1="237" y1="480" x2="237" y2="500" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <rect x="50" y="502" width="374" height="84" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="66" y="526" font-size="11" fill="#6b7280">if n &gt; 0:范围与已知事实都推不出真假</text>
+  <text x="66" y="548" font-size="11" fill="#6b7280">又没有值可以代入 → 在这里断图</text>
+  <text x="66" y="570" font-size="11" fill="#6b7280">整图模式下直接报数据依赖的错</text>
+  <text x="50" y="602" font-size="11" fill="#9ca3af">用运行期断言事先告诉它 u0 &gt; 0,这一句才判得出</text>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" width="1120" height="700" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="700" fill="#ffffff"/>
+  <text x="40" y="34" font-size="19" fill="#111827" font-weight="700">逐条模拟字节码:符号栈、FX 图和前提同步长出来</text>
+  <text x="40" y="58" font-size="13" fill="#6b7280">紫 = 张量的追踪对象(里面是假张量),灰 = 普通 Python 值与尚未包装的惰性占位,黄 = FX 图节点,红 = 记下的前提(guard),绿 = 被内联的 g 的帧</text>
+  <text x="40" y="80" font-size="11" fill="#9ca3af">示例:f(x, n) 先算 y = x * 2,n &gt; 0 时 y = g(y),最后返回 y;g(t) 返回 t.relu();这次调用传入 8×16 的张量和 3</text>
+  <text x="40" y="114" font-size="14" fill="#111827" font-weight="700">字节码(一次一条)</text>
+  <text x="330" y="114" font-size="14" fill="#111827" font-weight="700">符号栈(执行完这一条之后)</text>
+  <text x="690" y="114" font-size="14" fill="#111827" font-weight="700">FX 图</text>
+  <text x="890" y="114" font-size="14" fill="#111827" font-weight="700">记下的前提与当场的决定</text>
+  <rect x="32" y="438" width="634" height="116" rx="8" fill="#e3f4ec" stroke="#5fa886"/>
+  <line x1="780" y1="213" x2="780" y2="498" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="780" y1="521" x2="780" y2="610" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <text x="40" y="150" font-size="12" fill="#111827">LOAD_FAST x</text>
+  <rect x="330" y="136" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="150" font-size="11" fill="#111827">x · 惰性占位</text>
+  <text x="890" y="150" font-size="11" fill="#6b7280">只压一个惰性占位,用到时才包装</text>
+  <text x="40" y="178" font-size="12" fill="#111827">LOAD_CONST 2</text>
+  <rect x="330" y="164" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="178" font-size="11" fill="#111827">x · 惰性占位</text>
+  <rect x="412" y="164" width="20" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="419" y="178" font-size="11" fill="#111827">2</text>
+  <text x="40" y="206" font-size="12" fill="#111827">BINARY_OP *</text>
+  <rect x="330" y="192" width="102" height="20" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="337" y="206" font-size="11" fill="#111827">mul · 假张量 8×16</text>
+  <rect x="690" y="191" width="180" height="22" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="780" y="206" font-size="11" fill="#111827" text-anchor="middle">占位 x;mul = x * 2</text>
+  <rect x="890" y="192" width="153" height="20" rx="5" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="897" y="206" font-size="11" fill="#111827">前提:x 的类型、形状、设备…</text>
+  <text x="40" y="234" font-size="12" fill="#111827">STORE_FAST y</text>
+  <text x="330" y="234" font-size="11" fill="#9ca3af">栈空;局部变量 y 指向 mul</text>
+  <text x="40" y="262" font-size="12" fill="#111827">LOAD_FAST n</text>
+  <rect x="330" y="248" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="262" font-size="11" fill="#111827">n · 惰性占位</text>
+  <text x="40" y="290" font-size="12" fill="#111827">LOAD_CONST 0</text>
+  <rect x="330" y="276" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="290" font-size="11" fill="#111827">n · 惰性占位</text>
+  <rect x="412" y="276" width="20" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="419" y="290" font-size="11" fill="#111827">0</text>
+  <text x="40" y="318" font-size="12" fill="#111827">COMPARE_OP &gt;</text>
+  <rect x="330" y="304" width="39" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="318" font-size="11" fill="#111827">True</text>
+  <rect x="890" y="304" width="80" height="20" rx="5" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="897" y="318" font-size="11" fill="#111827">前提:n 等于 3</text>
+  <text x="976" y="318" font-size="11" fill="#6b7280">3 &gt; 0 当场算掉</text>
+  <text x="40" y="346" font-size="12" fill="#111827">POP_JUMP_IF_FALSE</text>
+  <text x="330" y="346" font-size="11" fill="#9ca3af">栈空</text>
+  <text x="890" y="346" font-size="11" fill="#6b7280">条件已知为真:不跳,图里没有分支</text>
+  <text x="40" y="374" font-size="12" fill="#111827">LOAD_GLOBAL g</text>
+  <rect x="330" y="360" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="374" font-size="11" fill="#111827">g · 惰性占位</text>
+  <text x="40" y="402" font-size="12" fill="#111827">LOAD_FAST y</text>
+  <rect x="330" y="388" width="76" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="402" font-size="11" fill="#111827">g · 惰性占位</text>
+  <rect x="412" y="388" width="102" height="20" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="419" y="402" font-size="11" fill="#111827">mul · 假张量 8×16</text>
+  <text x="40" y="430" font-size="12" fill="#111827">CALL 1</text>
+  <text x="330" y="430" font-size="11" fill="#9ca3af">外层暂停,开一个内联解释器跑 g,往同一张图里记</text>
+  <rect x="890" y="416" width="103" height="20" rx="5" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="897" y="430" font-size="11" fill="#111827">前提:g 的代码没换</text>
+  <text x="64" y="458" font-size="12" fill="#111827">LOAD_FAST t</text>
+  <rect x="330" y="444" width="102" height="20" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="337" y="458" font-size="11" fill="#111827">mul · 假张量 8×16</text>
+  <text x="64" y="486" font-size="12" fill="#111827">LOAD_ATTR relu</text>
+  <rect x="330" y="472" width="88" height="20" rx="5" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="337" y="486" font-size="11" fill="#111827">mul.relu · 方法</text>
+  <text x="64" y="514" font-size="12" fill="#111827">CALL 0</text>
+  <rect x="330" y="500" width="108" height="20" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="337" y="514" font-size="11" fill="#111827">relu · 假张量 8×16</text>
+  <rect x="690" y="499" width="180" height="22" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="780" y="514" font-size="11" fill="#111827" text-anchor="middle">relu = mul.relu()</text>
+  <text x="890" y="514" font-size="11" fill="#6b7280">形状由假张量推出,不真算</text>
+  <text x="64" y="542" font-size="12" fill="#111827">RETURN_VALUE</text>
+  <text x="330" y="542" font-size="11" fill="#9ca3af">g 的返回值 relu 交回外层栈</text>
+  <text x="40" y="570" font-size="12" fill="#111827">STORE_FAST y</text>
+  <text x="330" y="570" font-size="11" fill="#9ca3af">栈空;y 改指向 relu</text>
+  <text x="40" y="598" font-size="12" fill="#111827">LOAD_FAST y</text>
+  <rect x="330" y="584" width="108" height="20" rx="5" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="337" y="598" font-size="11" fill="#111827">relu · 假张量 8×16</text>
+  <text x="40" y="626" font-size="12" fill="#111827">RETURN_VALUE</text>
+  <text x="330" y="626" font-size="11" fill="#9ca3af">栈顶 relu 成为图的输出</text>
+  <rect x="690" y="611" width="180" height="22" rx="5" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="780" y="626" font-size="11" fill="#111827" text-anchor="middle">输出 relu</text>
+  <text x="890" y="626" font-size="11" fill="#6b7280">图交给后端,生成新字节码</text>
+  <text x="306" y="546" font-size="11" fill="#5fa886" text-anchor="end">g 的帧</text>
+  <text x="40" y="662" font-size="11" fill="#9ca3af">整个过程 x 的数据一次也没读过,每个节点的形状、dtype、设备都由假张量推出。n 的比较当场算掉,只留下前提;图里既没有 n,也没有 if。</text>
+  <text x="40" y="682" font-size="11" fill="#9ca3af">指令名按 Python 3.12 书写并省略了调用前压栈的空位,各版本略有不同。整数晃动后会换成符号(06 章),前提怎么查见 04 章。</text>
+</svg>

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" width="1120" height="650" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="650" fill="#ffffff"/>
+
+  <text x="30" y="34" font-size="19" font-weight="700" fill="#111827">softmax 加一步采样:先拆成原语,再降成下标函数,只在必须处落成缓冲,采样回退成 ATen kernel</text>
+  <text x="30" y="58" font-size="13" fill="#6b7280">灰 = Dynamo 交来的算子,紫 = 分解与模式替换之后的原语,绿 = 循环级节点(给下标算值,不占显存),黄 = 落成的缓冲,红 = 回退的外部 kernel</text>
+
+  <text x="30" y="92" font-size="14" font-weight="700" fill="#111827">① Dynamo 交来的图</text>
+  <text x="290" y="92" font-size="14" font-weight="700" fill="#111827">② 录联合图时按分解表展开</text>
+  <text x="550" y="92" font-size="14" font-weight="700" fill="#111827">③ post-grad 模式替换</text>
+  <text x="810" y="92" font-size="14" font-weight="700" fill="#111827">④ 降级成循环级节点</text>
+
+  <!-- 行 A:除以温度 -->
+  <rect x="30" y="105" width="240" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="42" y="129" font-size="14" font-weight="700" fill="#111827">div</text>
+  <text x="42" y="149" font-size="11" fill="#6b7280">logits 除以温度 T</text>
+
+  <rect x="290" y="105" width="240" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="302" y="129" font-size="14" font-weight="700" fill="#111827">div</text>
+  <text x="302" y="149" font-size="11" fill="#6b7280">本身就是原语,不再拆</text>
+
+  <rect x="550" y="105" width="240" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="562" y="129" font-size="14" font-weight="700" fill="#111827">div</text>
+  <text x="562" y="149" font-size="11" fill="#6b7280">没有模式碰它</text>
+
+  <rect x="810" y="105" width="280" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="822" y="129" font-size="14" font-weight="700" fill="#111827">p0:逐元素</text>
+  <text x="822" y="149" font-size="11" fill="#6b7280">p0[i,j] = logits[i,j] / T</text>
+  <text x="822" y="165" font-size="11" fill="#6b7280">两处使用都很便宜,不落地,各自内联</text>
+
+  <!-- 行 B:softmax -->
+  <rect x="30" y="205" width="240" height="270" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="42" y="229" font-size="14" font-weight="700" fill="#111827">softmax(dim=-1)</text>
+  <text x="42" y="249" font-size="11" fill="#6b7280">一个 ATen 算子</text>
+
+  <rect x="290" y="205" width="240" height="270" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="302" y="229" font-size="14" font-weight="700" fill="#111827">5 个原语</text>
+  <text x="302" y="249" font-size="11" fill="#6b7280">amax、sub、exp、sum、div</text>
+  <text x="302" y="265" font-size="11" fill="#6b7280">先减去行最大值再取指数,</text>
+  <text x="302" y="281" font-size="11" fill="#6b7280">按行求和后相除</text>
+  <text x="302" y="305" font-size="11" fill="#9ca3af">softmax 在分解表里,</text>
+  <text x="302" y="321" font-size="11" fill="#9ca3af">录图时直接录下这 5 个</text>
+
+  <rect x="550" y="205" width="240" height="270" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="562" y="229" font-size="14" font-weight="700" fill="#111827">在线 softmax 原语</text>
+  <text x="562" y="249" font-size="11" fill="#6b7280">amax 与 sum 两次归约</text>
+  <text x="562" y="265" font-size="11" fill="#6b7280">换成一次归约同时出 max 与 sum</text>
+  <text x="562" y="281" font-size="11" fill="#6b7280">sub、exp、div 保留</text>
+  <text x="562" y="305" font-size="11" fill="#9ca3af">只在 GPU 且后端是 Triton 时替换</text>
+
+  <rect x="810" y="205" width="280" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="822" y="229" font-size="14" font-weight="700" fill="#111827">buf0 = max[i],buf1 = sum[i]</text>
+  <text x="822" y="249" font-size="11" fill="#6b7280">在线归约,循环体里内联 p0</text>
+  <text x="822" y="265" font-size="11" fill="#6b7280">归约结果一律立即落成缓冲</text>
+
+  <rect x="810" y="295" width="280" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="822" y="319" font-size="14" font-weight="700" fill="#111827">p1:逐元素</text>
+  <text x="822" y="339" font-size="11" fill="#6b7280">exp(p0[i,j] − max[i]) / sum[i]</text>
+  <text x="822" y="355" font-size="11" fill="#6b7280">p0 在这里再内联一遍:重算,不存</text>
+  <text x="822" y="371" font-size="11" fill="#6b7280">max、sum 从 buf0、buf1 按行读</text>
+
+  <rect x="810" y="405" width="280" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="822" y="429" font-size="14" font-weight="700" fill="#111827">buf2 = probs</text>
+  <text x="822" y="449" font-size="11" fill="#6b7280">下一个算子是外部 kernel,</text>
+  <text x="822" y="465" font-size="11" fill="#6b7280">它的输入必须是实体缓冲</text>
+
+  <!-- 行 C:采样 -->
+  <rect x="30" y="495" width="240" height="75" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="42" y="519" font-size="14" font-weight="700" fill="#111827">multinomial</text>
+  <text x="42" y="539" font-size="11" fill="#6b7280">按概率采样</text>
+
+  <rect x="290" y="495" width="240" height="75" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="302" y="519" font-size="14" font-weight="700" fill="#111827">multinomial</text>
+  <text x="302" y="539" font-size="11" fill="#6b7280">分解表里没有它,原样保留</text>
+
+  <rect x="550" y="495" width="240" height="75" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="562" y="519" font-size="14" font-weight="700" fill="#111827">multinomial</text>
+  <text x="562" y="539" font-size="11" fill="#6b7280">没有模式碰它</text>
+
+  <rect x="810" y="495" width="280" height="75" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="822" y="519" font-size="14" font-weight="700" fill="#111827">buf3:回退节点</text>
+  <text x="822" y="539" font-size="11" fill="#6b7280">在显式回退清单上,调 ATen 的 eager kernel</text>
+  <text x="822" y="555" font-size="11" fill="#6b7280">调度器不把它和任何节点合并</text>
+
+  <!-- 列间箭头 -->
+  <line x1="270" y1="145" x2="288" y2="145" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="530" y1="145" x2="548" y2="145" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="790" y1="145" x2="808" y2="145" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="270" y1="340" x2="288" y2="340" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="530" y1="340" x2="548" y2="340" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="790" y1="340" x2="808" y2="340" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="270" y1="532" x2="288" y2="532" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="530" y1="532" x2="548" y2="532" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="790" y1="532" x2="808" y2="532" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- 第 4 列内部的依赖 -->
+  <line x1="950" y1="185" x2="950" y2="203" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="950" y1="275" x2="950" y2="293" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="950" y1="385" x2="950" y2="403" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="950" y1="475" x2="950" y2="493" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <text x="30" y="604" font-size="11" fill="#9ca3af">整段只有 buf0–buf3 这 4 块缓冲占显存;p0、p1 只是函数,由第 10 章合进读写这些缓冲的 kernel。</text>
+  <text x="30" y="622" font-size="11" fill="#9ca3af">词表维度小于 8 时不走在线归约,归约直接展开成逐元素;关掉在线 softmax 时 ③ 保持 ② 的 5 个原语,GPU 上 exp 在求和与相除里各算一遍。</text>
+</svg>

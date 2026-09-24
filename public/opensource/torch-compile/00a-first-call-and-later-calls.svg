@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 460" width="1120" height="460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d9877a"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1120" height="460" fill="#ffffff"/>
+
+  <text x="40" y="34" font-size="19" font-weight="700" fill="#111827">一个函数的两种调用:首次编译,之后只查 guard</text>
+  <text x="40" y="58" font-size="13" fill="#6b7280">紫 = Dynamo 抓图与 guard,绿 = AOTAutograd,黄 = Inductor,灰 = 运行时与缓存,红 = 回退路径</text>
+
+  <!-- 第一行:首次调用 -->
+  <text x="40" y="94" font-size="11" fill="#9ca3af">首次调用:走完整条编译链,产物挂到函数的 code object 上</text>
+
+  <rect x="40" y="108" width="188" height="92" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="134" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">帧拦截</text>
+  <text x="134" y="162" font-size="11" fill="#6b7280" text-anchor="middle">函数的 Python 帧执行前</text>
+  <text x="134" y="180" font-size="11" fill="#6b7280" text-anchor="middle">被截下来,不改用户代码</text>
+
+  <rect x="252" y="108" width="188" height="92" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="346" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">字节码符号执行</text>
+  <text x="346" y="162" font-size="11" fill="#6b7280" text-anchor="middle">逐条模拟字节码,记下张量操作</text>
+  <text x="346" y="180" font-size="11" fill="#6b7280" text-anchor="middle">假张量只传形状,不真算</text>
+
+  <rect x="464" y="108" width="188" height="92" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+  <text x="558" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">AOTAutograd</text>
+  <text x="558" y="162" font-size="11" fill="#6b7280" text-anchor="middle">前反向合成一张联合图</text>
+  <text x="558" y="180" font-size="11" fill="#6b7280" text-anchor="middle">去掉原地修改后切成两张</text>
+
+  <rect x="676" y="108" width="188" height="92" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+  <text x="770" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Inductor</text>
+  <text x="770" y="162" font-size="11" fill="#6b7280" text-anchor="middle">分解成原语,降到循环级 IR</text>
+  <text x="770" y="180" font-size="11" fill="#6b7280" text-anchor="middle">融合成 Triton 或模板 kernel</text>
+
+  <rect x="888" y="108" width="192" height="92" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="984" y="138" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">挂到 code object 上</text>
+  <text x="984" y="162" font-size="11" fill="#6b7280" text-anchor="middle">编译产物连同 guard 一起</text>
+  <text x="984" y="180" font-size="11" fill="#6b7280" text-anchor="middle">同时写进磁盘缓存</text>
+
+  <line x1="228" y1="154" x2="250" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="440" y1="154" x2="462" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="652" y1="154" x2="674" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="864" y1="154" x2="886" y2="154" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- graph break -->
+  <line x1="346" y1="200" x2="346" y2="220" stroke="#d9877a" stroke-width="1.4" marker-end="url(#arr-red)"/>
+  <rect x="252" y="222" width="400" height="46" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="268" y="241" font-size="14" font-weight="700" fill="#111827">遇到不支持的调用:graph break</text>
+  <text x="268" y="259" font-size="11" fill="#6b7280">前半段先成图,这一句交给 eager,后半段当作新函数继续抓</text>
+
+  <!-- 第二行:之后的调用 -->
+  <text x="40" y="322" font-size="11" fill="#9ca3af">之后的调用:先查 guard,命中就不再编译</text>
+
+  <rect x="40" y="334" width="188" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="134" y="362" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">同一函数再次调用</text>
+  <text x="134" y="386" font-size="11" fill="#6b7280" text-anchor="middle">帧照样先被截下</text>
+
+  <rect x="252" y="334" width="188" height="80" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+  <text x="346" y="362" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">guard 检查</text>
+  <text x="346" y="384" font-size="11" fill="#6b7280" text-anchor="middle">在 C++ 里逐条比对输入</text>
+  <text x="346" y="400" font-size="11" fill="#6b7280" text-anchor="middle">类型、形状、全局开关</text>
+
+  <rect x="464" y="334" width="188" height="80" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+  <text x="558" y="362" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">命中:直接跑产物</text>
+  <text x="558" y="384" font-size="11" fill="#6b7280" text-anchor="middle">不再抓图、不再编译</text>
+  <text x="558" y="400" font-size="11" fill="#6b7280" text-anchor="middle">开了 CUDA graph 就整段回放</text>
+
+  <rect x="676" y="334" width="188" height="80" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+  <text x="770" y="362" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">没命中:重新编译</text>
+  <text x="770" y="384" font-size="11" fill="#6b7280" text-anchor="middle">回到上面那条慢路径</text>
+  <text x="770" y="400" font-size="11" fill="#6b7280" text-anchor="middle">满 8 份后新条件的调用走 eager</text>
+
+  <line x1="228" y1="374" x2="250" y2="374" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="440" y1="374" x2="462" y2="374" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#arr)"/>
+  <polyline points="346,414 346,436 770,436 770,416" fill="none" stroke="#d9877a" stroke-width="1.4" marker-end="url(#arr-red)"/>
+
+  <!-- 重编译回到首行 -->
+  <polyline points="770,334 770,292 134,292 134,202" fill="none" stroke="#d9877a" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
+  <text x="700" y="286" font-size="11" fill="#9ca3af" text-anchor="end">重编译从头走一遍</text>
+</svg>
