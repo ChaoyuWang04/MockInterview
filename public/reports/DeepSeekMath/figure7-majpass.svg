@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">RL 抬的是多数投票，不是「会不会做」的上限</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = Pass@K（SFT 与 RL 几乎重叠）；黄 = Maj@K-SFT；绿 = Maj@K-RL。温度 0.7。K 从 1 到 64。</text>
+<text x="280" y="86" font-size="13" fill="#111827" font-weight="700">GSM8K</text>
+<line x1="80" y1="100" x2="80" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="80" y1="300" x2="520" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<polyline points="80,210 160,150 260,118 380,100 520,92" fill="none" stroke="#9ca3af" stroke-width="2.2"/>
+<polyline points="80,208 160,152 260,120 380,102 520,94" fill="none" stroke="#b9b9b9" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="80,210 160,188 260,170 380,156 520,148" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="80,168 160,150 260,138 380,128 520,122" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="80" y="316" font-size="11" fill="#9ca3af">K=1</text>
+<text x="500" y="316" font-size="11" fill="#9ca3af">K=64</text>
+<text x="820" y="86" font-size="13" fill="#111827" font-weight="700">MATH</text>
+<line x1="620" y1="100" x2="620" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="620" y1="300" x2="1060" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<polyline points="620,240 720,180 830,140 940,112 1060,96" fill="none" stroke="#9ca3af" stroke-width="2.2"/>
+<polyline points="620,242 720,182 830,142 940,114 1060,98" fill="none" stroke="#b9b9b9" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="620,240 720,220 830,206 940,196 1060,188" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="620,228 720,200 830,178 940,162 1060,152" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="620" y="316" font-size="11" fill="#9ca3af">K=1</text>
+<text x="1040" y="316" font-size="11" fill="#9ca3af">K=64</text>
+<text x="30" y="360" font-size="13" fill="#6b7280">据 PDF p.21 Figure 7 重画。Pass@K 两条几乎重合；Maj@K 绿线全程在黄线上方。论文结论：RL 把正确答案从 TopK 顶上来，没有扩展能力边界。</text>
+<text x="30" y="384" font-size="13" fill="#6b7280">这是 7B、两个数学基准、K 最大 64 的观察，不是「RL 永远不能扩展能力」的普遍结论。</text>
+</svg>

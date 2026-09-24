@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">Figure 6：半激活从头训，六个基准仍全部高于 GShard</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">灰 = GShard；绿 = DeepSeekMoE 半激活（1 共享 + 63 路由里只激活 3 个）。总专家参数相同，激活专家参数只有一半。</text>
+<line x1="70" y1="345.0" x2="1090" y2="345.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="349.0" font-size="11" fill="#9ca3af" text-anchor="end">20</text>
+<line x1="70" y1="270.0" x2="1090" y2="270.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="274.0" font-size="11" fill="#9ca3af" text-anchor="end">40</text>
+<line x1="70" y1="195.0" x2="1090" y2="195.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="199.0" font-size="11" fill="#9ca3af" text-anchor="end">60</text>
+<line x1="70" y1="120.0" x2="1090" y2="120.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="124.0" font-size="11" fill="#9ca3af" text-anchor="end">80</text>
+<line x1="70" y1="120" x2="70" y2="420" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="70" y1="420" x2="1090" y2="420" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="115.0" y="225.0" width="36" height="195.0" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="159.0" y="219.375" width="36" height="200.625" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="155.0" y="442" font-size="12" fill="#111827" text-anchor="middle">HellaSwag</text>
+<rect x="285.0" y="140.625" width="36" height="279.375" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="329.0" y="136.875" width="36" height="283.125" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="325.0" y="442" font-size="12" fill="#111827" text-anchor="middle">PIQA</text>
+<rect x="455.0" y="240.0" width="36" height="180.0" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="499.0" y="228.75" width="36" height="191.25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="495.0" y="442" font-size="12" fill="#111827" text-anchor="middle">ARC-easy</text>
+<rect x="625.0" y="300.0" width="36" height="120.0" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="669.0" y="286.875" width="36" height="133.125" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="665.0" y="442" font-size="12" fill="#111827" text-anchor="middle">ARC-challenge</text>
+<rect x="795.0" y="382.5" width="36" height="37.5" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="839.0" y="360.0" width="36" height="60.0" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="835.0" y="442" font-size="12" fill="#111827" text-anchor="middle">TriviaQA</text>
+<rect x="965.0" y="401.25" width="36" height="18.75" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="1009.0" y="390.0" width="36" height="30.0" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="1005.0" y="442" font-size="12" fill="#111827" text-anchor="middle">NaturalQuestions</text>
+<rect x="70" y="78" width="16" height="16" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="92" y="91" font-size="12" fill="#111827" text-anchor="start">GShard</text>
+<rect x="180" y="78" width="16" height="16" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="202" y="91" font-size="12" fill="#111827" text-anchor="start">DeepSeekMoE 半激活</text>
+<text x="30" y="480" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 14 Figure 6 重画，柱高按原图读取。六个基准半激活全部高于 GShard，TriviaQA 的柱差最大。</text>
+<text x="30" y="504" font-size="13" fill="#6b7280" text-anchor="start">论文原话：激活专家里有效参数的比例，比 GShard 高得多。145B 档的 142B 半激活是同一句话的放大版。</text>
+</svg>

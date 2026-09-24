@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">Figure 4：盖住头部路由专家，细切加共享伤得更重</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">紫 = DeepSeekMoE 2B；灰 = GShard ×1.5。零点两边 Pile 损失同为 1.808，起点齐。纵轴是 Pile 损失（越高越差）。</text>
+<line x1="80" y1="372.5" x2="1060" y2="372.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="376.5" font-size="11" fill="#9ca3af" text-anchor="end">2</text>
+<line x1="80" y1="302.5" x2="1060" y2="302.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="306.5" font-size="11" fill="#9ca3af" text-anchor="end">4</text>
+<line x1="80" y1="232.5" x2="1060" y2="232.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="236.5" font-size="11" fill="#9ca3af" text-anchor="end">6</text>
+<line x1="80" y1="162.5" x2="1060" y2="162.5" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="166.5" font-size="11" fill="#9ca3af" text-anchor="end">8</text>
+<line x1="80" y1="110" x2="80" y2="390" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="80" y1="390" x2="1060" y2="390" stroke="#9ca3af" stroke-width="1.4"/>
+<polyline points="120.0,379.1 345.0,250.0 570.0,180.0 795.0,176.5 1020.0,176.5" fill="none" stroke="#b9b9b9" stroke-width="2.2"/>
+<polyline points="120.0,379.1 345.0,180.0 570.0,152.0 795.0,138.0 1020.0,131.0" fill="none" stroke="#8f8bd8" stroke-width="2.2"/>
+<circle cx="120.0" cy="379.1" r="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<circle cx="345.0" cy="250.0" r="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<circle cx="570.0" cy="180.0" r="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<circle cx="795.0" cy="176.5" r="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<circle cx="1020.0" cy="176.5" r="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<circle cx="120.0" cy="379.1" r="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="345.0" cy="180.0" r="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="570.0" cy="152.0" r="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="795.0" cy="138.0" r="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="1020.0" cy="131.0" r="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="120.0" y="412" font-size="12" fill="#111827" text-anchor="middle">0</text>
+<text x="345.0" y="412" font-size="12" fill="#111827" text-anchor="middle">1/16</text>
+<text x="570.0" y="412" font-size="12" fill="#111827" text-anchor="middle">2/16</text>
+<text x="795.0" y="412" font-size="12" fill="#111827" text-anchor="middle">3/16</text>
+<text x="1020.0" y="412" font-size="12" fill="#111827" text-anchor="middle">4/16</text>
+<text x="570.0" y="434" font-size="12" fill="#6b7280" text-anchor="middle">盖住的头部路由专家比例</text>
+<rect x="860" y="78" width="16" height="16" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="882" y="91" font-size="12" fill="#111827" text-anchor="start">DeepSeekMoE</text>
+<rect x="1000" y="78" width="16" height="16" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="1022" y="91" font-size="12" fill="#111827" text-anchor="start">GShard ×1.5</text>
+<text x="30" y="460" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 13 Figure 4 重画。盖住 1/16 之后，DeepSeekMoE 跳到约 7.5，GShard ×1.5 约 5.5；到 4/16 前者近 9，后者仍在 8 以下。</text>
+<text x="30" y="484" font-size="13" fill="#6b7280" text-anchor="start">论文判断：细切加共享的路由专家更不可替代、冗余更低。两边其实都依赖头部，差别是相对的。</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">同一道题造两条 SFT：一条短答，一条带脚手架的 R1 答</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 系统提示词（训练时才有，RL 之后要撤掉）；灰 = 问题；绿 = 回答。下面的题是结构示意，不是 150 万条里的原文。</text>
+
+<rect x="40" y="78" width="500" height="320" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="290" y="106" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">样本 A · 问题 + 原始回答</text>
+<rect x="60" y="124" width="460" height="56" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="80" y="148" font-size="13" fill="#111827">问题</text>
+<text x="80" y="168" font-size="12" fill="#374151">17 × 19 等于多少？</text>
+<rect x="60" y="196" width="460" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="80" y="220" font-size="13" fill="#111827">原始回答</text>
+<text x="80" y="242" font-size="12" fill="#374151">17 × 20 = 340，再减 17，得 323。</text>
+<text x="80" y="264" font-size="12" fill="#374151">没有反思，也没有系统提示词。</text>
+<text x="290" y="318" font-size="12" fill="#6b7280" text-anchor="middle">目标：格式干净、篇幅短</text>
+<text x="290" y="340" font-size="12" fill="#6b7280" text-anchor="middle">报告说 R1 原样太长、格式差</text>
+
+<rect x="580" y="78" width="500" height="320" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="830" y="106" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">样本 B · 系统提示 + 问题 + R1 回答</text>
+<rect x="600" y="124" width="460" height="72" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="620" y="148" font-size="13" fill="#111827">系统提示词</text>
+<text x="620" y="170" font-size="12" fill="#374151">先逐步验证，发现错误就改，再给最终答案。</text>
+<rect x="600" y="208" width="460" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="620" y="236" font-size="13" fill="#111827">同一道题：17 × 19 等于多少？</text>
+<rect x="600" y="264" width="460" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="620" y="288" font-size="13" fill="#111827">R1 回答</text>
+<text x="620" y="310" font-size="12" fill="#374151">先算 17 × 20 = 340。再减多算的 17。</text>
+<text x="620" y="332" font-size="12" fill="#374151">核对：323 ÷ 17 = 19。答案 323。</text>
+<text x="830" y="372" font-size="12" fill="#6b7280" text-anchor="middle">目标：准确率 + 反思 / 验证</text>
+
+<text x="30" y="428" font-size="13" fill="#6b7280">据 PDF p.28–29 重画。系统提示词原文没有公开，黄块只表示「有一段引导反思的指令」。</text>
+<text x="30" y="452" font-size="13" fill="#6b7280">下一步 RL 用高温采样融合两种模式，学会之后不再依赖黄块。见下一张四步图。</text>
+</svg>

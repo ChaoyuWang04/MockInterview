@@ -2,7 +2,7 @@
 
 <!-- release-date: 2025-12-01 -->
 
-> 本文依据 DeepSeek-AI 发布的 **DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models**，即 arXiv:2512.02556v1、封面日期 2025-12-02、共 23 页的版本。截至 2026-09-05 核验，arXiv 上仍只有 v1，官方 Hugging Face 仓库 `deepseek-ai/DeepSeek-V3.2` 里的 `assets/paper.pdf` 也是同一篇，本地原件无需更换。下文括号中的 `PDF p. N` 指这份 23 页原文的文件页码。文中会把「报告明确写了什么」「我们如何理解它」和「外部资料补充」分开标注。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-V3.2.pdf`，即 **DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models**，arXiv:2512.02556v1、2025-12-02 提交，共 23 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前的最小地图
 
@@ -73,18 +73,7 @@ DeepSeek-V3.2 相对上一版 DeepSeek-V3.1-Terminus，**唯一的架构改动�
 
 ## 全景：只改了一个地方，却带动了三件事
 
-```mermaid
-flowchart TB
-    A[DeepSeek-V3.1-Terminus 基座<br/>上下文已扩到 128K] --> B[密集预热<br/>只训索引器 / 2.1B Token]
-    B --> C[稀疏训练<br/>主模型 + 索引器 / 943.7B Token]
-    C --> D[DeepSeek-V3.2 Base]
-    D --> E[专家蒸馏<br/>六个领域 + 写作 + 通用问答]
-    E --> F[混合 RL<br/>推理 / Agent / 人类对齐同一阶段]
-    F --> G[DeepSeek-V3.2]
-    F --> H[DeepSeek-V3.2-Speciale<br/>只用推理数据 + 放松长度惩罚]
-```
-
-这是根据 PDF p. 3–6 的正文重画的流程示意图，不是报告原图，也不表示各阶段的实际耗时。
+![只改注意力，却带动预热、稀疏训练和混合 RL](/reports/DeepSeek-V3.2/figure-pipeline.svg)
 
 有两点需要先说清楚：
 
@@ -99,23 +88,11 @@ DSA 的原型只有两个部分：**闪电索引器（lightning indexer）** 和
 
 分工很直白：索引器负责给每个历史位置打分，选择机制负责按分数取 Top-k，主注意力只在选中的那些条目上运行。
 
-```mermaid
-flowchart LR
-    H[输入隐藏状态 h_t] --> IDX[闪电索引器<br/>少数头 / FP8 / ReLU]
-    H --> Q[主注意力 Query<br/>全部 Query 头]
-    H --> KV[MLA 潜向量<br/>全部历史 KV 条目]
-    IDX --> S[对每个历史位置 s 打分]
-    S --> TOPK[Top-k 选择器<br/>k = 2048]
-    KV --> TOPK
-    TOPK --> SEL[选中的 2048 条 KV]
-    Q --> ATTN[多查询注意力<br/>核心注意力]
-    SEL --> ATTN
-    ATTN --> U[输出隐藏状态 u_t]
-```
-
-这是根据 PDF p. 4 的 Figure 2 重画的机制示意图。原图还画出了 RoPE 施加位置和各路投影的拼接关系；这里只保留数据流的主干，用于说明「谁决定看哪里、谁负责真的看」。
+![便宜的索引器决定看哪里，昂贵的主注意力只精读 2048 条](/reports/DeepSeek-V3.2/figure2-dsa.svg)
 
 ### 闪电索引器：为什么它可以又粗又快
+
+![每个历史位置都打分，但一次比较只有少数几个小头](/reports/DeepSeek-V3.2/figure-indexer.svg)
 
 索引器要算的是当前 Query Token $\mathbf h_t$ 与前面某个 Token $\mathbf h_s$ 之间的**索引分数** $I_{t,s}$。分数越高，越可能被选中。公式是：
 
@@ -130,9 +107,7 @@ $$
 - $\mathbf k^I_s$ 由历史 Token $\mathbf h_s$ 算出来；
 - $\operatorname{ReLU}$ 把负数截成 0。
 
-用人话讲：模型派出 $H^I$ 个「小侦察兵」，每个从自己的角度判断第 $s$ 段历史值不值得看；判断为负的直接归零；当前 Token 再决定更相信哪个侦察兵，最后加权求和。
-
-关键是它便宜在哪。报告给了两个理由：**头数很少**，以及**可以用 FP8 实现**；并说明选 ReLU 而不是别的激活函数是「出于吞吐考虑」。（PDF p. 3）
+报告没画进格子里的两点：**可以用 FP8 实现**；选 ReLU 而不是别的激活函数是「出于吞吐考虑」。（PDF p. 3）
 
 这里必须诚实：**报告没有公开 $H^I$ 的具体数值，也没有公开索引器的向量维度 $d^I$。** 所以我们没办法从报告本身算出它与主注意力的常数比。
 
@@ -443,15 +418,9 @@ flowchart TB
 
 ### 冷启动：先用提示词把两种能力拼在一起
 
-手头有两类数据：非 Agent 的推理数据，和不带推理的 Agent 数据。怎么把它们缝成一种能力？
+手头有两类数据：非 Agent 的推理数据，和不带推理的 Agent 数据。怎么把它们缝成一种能力？报告的判断是：模型已经有足够的指令跟随能力，所以直接用系统提示词就能把工具执行嵌进推理过程。（PDF p. 9）
 
-报告的判断是：模型已经有足够的指令跟随能力，所以直接用**精心设计的系统提示词**就能把工具执行嵌进推理过程。（PDF p. 9）
-
-附录给了三个模板（PDF p. 21，Table 6–8）：
-
-- **Table 6**：推理数据的系统提示词，要求先推理再给答案，推理过程放在 `<think></think>` 标签里；
-- **Table 7**：不带推理的 Agent 数据提示词，系统提示词里包含工具描述和工具调用格式；
-- **Table 8**：关键的一个——要求模型**在 `<think></think>` 内部**多次调用 Python 工具，最多 20 次代码执行，并明确要求「尽量用代码执行代替语言推理」「最终解答里不要再调工具」。
+![同一道题、三种模板：只有第三种把工具塞进 think](/reports/DeepSeek-V3.2/figure-coldstart-templates.svg)
 
 报告对这一步的评价相当诚实：**这种「推理中带工具调用」的模式还不够稳健，模型只是偶尔能生成想要的轨迹**——但这就够了，因为它给后续的 RL 提供了起点。（PDF p. 10）
 
@@ -727,11 +696,10 @@ Keep Routing 对齐激活的参数，Keep Sampling Mask 对齐动作空间，Off
 
 ## 资料与阅读边界
 
-- **原始依据**：本地 `papers/DeepSeek/DeepSeek-V3.2.pdf`，即 [arXiv:2512.02556v1](https://arxiv.org/abs/2512.02556)，共 23 页。截至 2026-09-05 核验，arXiv 仍只有 v1，没有修订版。
+- **原始依据**：本地 `papers/DeepSeek/DeepSeek-V3.2.pdf`，即 [arXiv:2512.02556v1](https://arxiv.org/abs/2512.02556)，共 23 页。本文只依据这份 v1 原件。
 - **官方发布说明**：[DeepSeek-V3.2 Release](https://api-docs.deepseek.com/news/news251201/)，2025-12-01 同时上线 App、Web 与 API，并开源权重。本文的 `release-date` 取这一天。
-- **官方权重**：[deepseek-ai/DeepSeek-V3.2](https://huggingface.co/deepseek-ai/DeepSeek-V3.2)，仓库中的 `assets/paper.pdf` 与本地原件是同一篇报告。
-- **报告自己给出的实现链接**：[DeepSeek-V3.2-Exp inference](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp/tree/main/inference)（PDF p. 3 脚注），用于消除 DSA 的实现歧义；[DeepSeek-Math-V2](https://github.com/deepseek-ai/DeepSeek-Math-V2)（PDF p. 14 脚注），包含 IMO 2025 与 CMO 2025 题目及推理代码。
+- **官方权重**：[deepseek-ai/DeepSeek-V3.2](https://huggingface.co/deepseek-ai/DeepSeek-V3.2)。
+- **报告自己给出的实现链接**：[DeepSeek-V3.2-Exp inference](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp/tree/main/inference)（PDF p. 3 脚注）；[DeepSeek-Math-V2](https://github.com/deepseek-ai/DeepSeek-Math-V2)（PDF p. 14 脚注）。
 - **外部补充**：[DeepSeek-V3.2-Exp 发布说明](https://api-docs.deepseek.com/news/news250929/)，2025-09-29 发布，官方称 API 价格下调 50% 以上。这是定价信息，不是本报告的测量结果。
-- **本文没有做的事**：没有把 MLA、DeepSeekMoE、无辅助损失负载均衡、MTP、FP8 训练和并行调度的机制重讲一遍——本报告完全没有涉及它们，相关内容分别属于 DeepSeek-V2 篇和 DeepSeek-V3 篇；也没有把 V4 的压缩稀疏注意力倒灌进来。
+- MLA、DeepSeekMoE 见 DeepSeek-V2 一篇；无辅助损失、MTP、FP8 与并行见 DeepSeek-V3 一篇。不要把 V4 的压缩稀疏注意力倒灌进来。
 - **读图说明**：Figure 3 的具体数值（0.66 / 0.19 / 2.15 / 0.25 美元，以及两条曲线的交叉点位置）是我们从图上读出的估计值，报告正文没有提供数值表。
-- **自画图说明**：本文四张 Mermaid 图中，第二张根据 Figure 2（PDF p. 4）重画，第三张根据 Figure 4（PDF p. 9）重画，第一张和第四张按正文流程自绘、报告没有对应原图。四张都是机制示意，不含任何实测时间或性能数据。

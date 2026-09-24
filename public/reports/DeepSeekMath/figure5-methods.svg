@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">三个旋钮拆开看：在线采样、连续有正负的系数、过程监督</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = RFT；黄 = Online RFT；紫 = GRPO+OS；绿 = GRPO+PS。模型是 DeepSeekMath-Instruct 1.3B，不是 7B。</text>
+<text x="280" y="86" font-size="13" fill="#111827" font-weight="700">GSM8K</text>
+<line x1="80" y1="100" x2="80" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="80" y1="300" x2="520" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<polyline points="80,270 180,250 300,230 420,214 520,210" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="80,268 180,240 300,214 420,196 520,178" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="80,250 180,226 300,190 420,166 520,150" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="80,236 180,210 300,170 420,140 520,118" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="80" y="316" font-size="11" fill="#9ca3af">0 步</text>
+<text x="500" y="316" font-size="11" fill="#9ca3af">约 8000 步</text>
+<text x="70" y="110" font-size="11" fill="#9ca3af" text-anchor="end">高</text>
+<text x="70" y="296" font-size="11" fill="#9ca3af" text-anchor="end">低</text>
+<text x="820" y="86" font-size="13" fill="#111827" font-weight="700">MATH</text>
+<line x1="620" y1="100" x2="620" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="620" y1="300" x2="1060" y2="300" stroke="#9ca3af" stroke-width="1.2"/>
+<polyline points="620,260 730,248 840,236 950,228 1060,224" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="620,250 730,230 840,210 950,198 1060,186" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="620,236 730,220 840,200 950,188 1060,176" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="620,210 730,190 840,168 950,150 1060,132" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="620" y="316" font-size="11" fill="#9ca3af">0 步</text>
+<text x="1040" y="316" font-size="11" fill="#9ca3af">约 8000 步</text>
+<text x="30" y="360" font-size="13" fill="#6b7280">据 PDF p.19 Figure 5 重画，示意精度。论文没有数值表，也没有多种子。绿线最高；黄线明显压过灰线。</text>
+<text x="30" y="384" font-size="13" fill="#6b7280">Online RFT 不惩罚错误回答，对所有正确回答用同样力度；GRPO 按奖励值大小做差异化强化和惩罚。</text>
+</svg>

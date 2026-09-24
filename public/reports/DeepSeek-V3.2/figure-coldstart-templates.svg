@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">同一道题、三种模板：只有第三种把工具塞进 think</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 系统提示；灰 = 用户题（三列相同）；绿 = think；紫 = 工具轮。附录示例模板，不是训练集里抽出来的真实轨迹。</text>
+
+<rect x="40" y="70" width="1040" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="60" y="95" font-size="13" fill="#111827">用户题（三列共用）：Given a linked list, swap every two adjacent nodes and return its head …</text>
+
+<rect x="40" y="128" width="330" height="310" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="205" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Table 6 · 纯推理</text>
+<rect x="56" y="168" width="298" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="70" y="190" font-size="12" fill="#111827">系统：先推理再答</text>
+<text x="70" y="210" font-size="12" fill="#374151">过程放进 think 标签</text>
+<text x="70" y="228" font-size="12" fill="#374151">没有工具</text>
+<rect x="56" y="250" width="298" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="70" y="274" font-size="12" fill="#111827">&lt;think&gt; … &lt;/think&gt;</text>
+<text x="70" y="296" font-size="12" fill="#374151">只有语言推理</text>
+<text x="70" y="318" font-size="12" fill="#374151">里面没有 toolcall</text>
+<rect x="56" y="350" width="298" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="70" y="375" font-size="12" fill="#111827">[FINAL ANSWER]</text>
+<text x="205" y="418" font-size="12" fill="#6b7280" text-anchor="middle">原料之一：会想，不会调工具</text>
+
+<rect x="390" y="128" width="330" height="310" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="555" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Table 7 · 纯 Agent</text>
+<rect x="406" y="168" width="298" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="420" y="190" font-size="12" fill="#111827">系统：工具描述 + 调用格式</text>
+<text x="420" y="210" font-size="12" fill="#374151">{TOOL-DESCRIPTIONS}</text>
+<text x="420" y="228" font-size="12" fill="#374151">{TOOLCALL-FORMAT} · 无 think</text>
+<rect x="406" y="250" width="298" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="420" y="274" font-size="12" fill="#111827">[MULTI-TURN TOOLCALL]</text>
+<text x="420" y="296" font-size="12" fill="#374151">多轮调 Python</text>
+<text x="420" y="318" font-size="12" fill="#374151">不在 think 里</text>
+<rect x="406" y="350" width="298" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="420" y="375" font-size="12" fill="#111827">[FINAL ANSWER]</text>
+<text x="555" y="418" font-size="12" fill="#6b7280" text-anchor="middle">原料之二：会调工具，不带推理标签</text>
+
+<rect x="740" y="128" width="340" height="310" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="910" y="154" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Table 8 · 拼在一起</text>
+<rect x="756" y="168" width="308" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="770" y="190" font-size="12" fill="#111827">系统：think 内可调工具</text>
+<text x="770" y="210" font-size="12" fill="#374151">最多 20 次；尽量用代码代替语言</text>
+<text x="770" y="228" font-size="12" fill="#374151">最终解答里不要再调工具</text>
+<rect x="756" y="250" width="308" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="770" y="270" font-size="12" fill="#111827">&lt;think&gt;</text>
+<rect x="770" y="278" width="280" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="910" y="297" font-size="11" fill="#111827" text-anchor="middle">思考 ↔ 工具，多轮，仍在 think 里</text>
+<text x="770" y="326" font-size="12" fill="#111827">&lt;/think&gt;</text>
+<rect x="756" y="350" width="308" height="40" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="770" y="375" font-size="12" fill="#111827">[FINAL ANSWER] · 不再调工具</text>
+<text x="910" y="418" font-size="12" fill="#6b7280" text-anchor="middle">冷启动要的样子：绿框包住紫轮</text>
+
+<text x="30" y="470" font-size="13" fill="#6b7280">据 PDF p.21 Table 6–8 重画。回答栏用附录自己的占位符，没有编一段模型输出。</text>
+<text x="30" y="494" font-size="13" fill="#6b7280">报告说这种「推理中带工具」还不稳健，只是偶尔能生成——但给了后续 RL 一个非零起点（PDF p.10）。</text>
+<text x="30" y="518" font-size="13" fill="#6b7280">冷启动不需要做对，只需要做出来过。</text>
+</svg>

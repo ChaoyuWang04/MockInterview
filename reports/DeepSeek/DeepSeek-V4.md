@@ -2,7 +2,7 @@
 
 <!-- release-date: 2026-04-24 -->
 
-> 本文依据 DeepSeek-AI 发布的 **DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence**，即 arXiv:2606.19348v1、2026-04-26 的预览版。页码均指 PDF 本身的页码。文中会明确区分「报告写了什么」和「我们从中得到什么启发」。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-V4.pdf`，即 **DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence**，arXiv:2606.19348v1、2026-04-26 提交，共 58 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前先搭一张最小地图
 
@@ -42,23 +42,7 @@ DeepSeek-V4 不是靠「把上下文长度参数改成 1M」得到的一百万 T
 
 ## 先看全景：V4 到底改了哪几层
 
-```mermaid
-flowchart TB
-    A[超过 32T Token 的预训练数据] --> B[DeepSeek-V4 基座]
-    B --> C[混合注意力<br/>CSA + HCA + SWA]
-    B --> D[混合专家<br/>每个 Token 只激活少数专家]
-    B --> E[mHC<br/>多路受控残差]
-    B --> F[多 Token 预测]
-    G[Muon + AdamW<br/>两类优化器] --> B
-    C --> H[一百万 Token 原生上下文]
-    I[融合算子 / 确定性 Kernel] --> B
-    J[上下文并行<br/>细粒度重计算] --> B
-    B --> K[多个领域专家]
-    K --> L[领域强化学习]
-    L --> M[多教师在线策略蒸馏]
-    M --> N[V4-Flash / V4-Pro<br/>三档推理强度]
-    O[FP4 量化训练 / 可恢复生成 / Agent 沙箱] --> M
-```
+![一百万 Token：局部、相关历史、全局轮廓分三条通道](/reports/DeepSeek-V4/figure-pipeline.svg)
 
 两种规模是：
 
@@ -652,6 +636,8 @@ V4 的语料在 V3 基础上继续构建，总规模超过 32T Token，包含数
 - 按来源更合理地 pack 文档，减少截断；
 - 使用 sample-level attention mask，避免 packing 后不同样本互相偷看。
 
+![V4 预训练：打包仍在，但样本之间加了掩码](/reports/DeepSeek-V4/figure-packing-mask.svg)
+
 这里「超过 32T」不是数据质量的充分证明。报告没有公开各来源占比、去重阈值、质量模型、合成数据比例或污染检查细节。我们能确定的是方向，不能从总 Token 数反推出质量。
 
 ### 模型配置放在一起看
@@ -1148,7 +1134,7 @@ CSA/HCA 负责少看但别瞎看，SWA 负责别丢眼前细节；mHC 让残差�
 
 ## 资料与阅读边界
 
-- 原始依据：本地 `papers/DeepSeek/DeepSeek-V4.pdf`，DeepSeek-V4 预览版 Technical Report，arXiv:2606.19348v1。
+- 原始依据：本地 `papers/DeepSeek/DeepSeek-V4.pdf`，**DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence**，arXiv:2606.19348v1，58 页。本文只依据这份 v1 原件。
 - 官方发布说明：[DeepSeek-V4 Release](https://api-docs.deepseek.com/news/news260424/)。
 - 报告给出的注意力实现：[DeepSeek-V4-Pro inference](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/tree/main/inference)。阅读源码时应以具体 commit 为准；本文没有把源码中未写入报告的细节冒充论文结论。
 - 报告给出的 MegaMoE 实现：[DeepGEMM PR #304](https://github.com/deepseek-ai/DeepGEMM/pull/304)。

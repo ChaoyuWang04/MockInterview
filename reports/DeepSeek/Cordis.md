@@ -2,7 +2,7 @@
 
 <!-- release-date: 2026-08-26 -->
 
-> 本文依据 Shi、Zhang、Cui 的 **A Programming Paradigm for Spatiotemporal Composability**，即 arXiv:2608.25512v1（2026-08-26 提交）。页码均指本地 PDF 本身（Typst 0.15.1，92 页，CreationDate 2026-08-26）。GitHub `cordiverse/paper` 写明 preprint under active revision，arXiv 始终提供最新版；本稿核对时官方仍为 v1，与本地文件大小一致（2,284,543 字节）。文中分开三层：**论文写了什么**、**我们如何解释**、**外部补充**。这是一篇编程语言与系统论文，实现名叫 Cordis；不要把它读成基模技术报告。
+> 本文依据本地 `papers/DeepSeek/Cordis.pdf`，即 **A Programming Paradigm for Spatiotemporal Composability**，arXiv:2608.25512v1、2026-08-26 提交，共 92 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。这是一篇编程语言与系统论文，实现名叫 Cordis，不要把它读成基模技术报告。
 
 ## 阅读前先搭一张最小地图
 

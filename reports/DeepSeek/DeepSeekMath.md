@@ -2,7 +2,7 @@
 
 <!-- release-date: 2024-02-05 -->
 
-> 本文依据 DeepSeek-AI 与清华大学、北京大学合作发布的 **DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models**，即 arXiv:2402.03300v3、封面页边标注日期 2024-04-27、共 30 页的版本。下文括号里的 `PDF p.N` 都指这份 30 页原件的文件页码。截至 2026-09-05 核验，arXiv 上的最新版本仍是 v3，与本地原件一致，无需替换。文中会明确区分三件事：论文写了什么、本文如何解释它、哪些是外部资料补充。
+> 本文依据本地 `papers/DeepSeek/DeepSeekMath.pdf`，即 **DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models**，arXiv:2402.03300v3、2024-04-27 提交的修订版，共 30 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 这篇论文在本站的位置比较特殊。仓库里已经有三篇文章都在讲「在 GRPO 的哪一步动刀」——DeepSeek-R1 篇讲它怎么把一个基座训成推理模型，DAPO 篇讲它的四项工程改动，GSPO 篇讲把重要性比抬到序列级——但源头一直缺席。**GRPO 就是在这篇论文里被提出来的。** 本文补的是这个源头，不重复下游三篇已经讲过的东西。
 
@@ -39,19 +39,7 @@
 
 ## 这篇论文的两条线
 
-```mermaid
-flowchart TB
-    CC[Common Crawl<br/>去重后 40B HTML 页面] --> Corpus[DeepSeekMath 语料<br/>120B Token]
-    Coder[DeepSeek-Coder-Base-v1.5 7B] --> Base[DeepSeekMath-Base 7B<br/>持续预训练 500B Token]
-    Corpus --> Base
-    Base --> Inst[DeepSeekMath-Instruct 7B<br/>SFT 776K 条]
-    Inst --> RL[DeepSeekMath-RL 7B<br/>GRPO]
-    Base --> RMod[奖励模型]
-    RMod --> RL
-    RL --> Uni[统一梯度视角<br/>把 SFT/RFT/DPO/PPO/GRPO 放进同一个式子]
-```
-
-这是根据 PDF p.5、p.8、p.10、p.15 的正文重画的机制示意图，不含时间轴或实测数据。左半边是数据与模型，右下角那一块是论文最后一节的分析工作，不产出模型。
+![两条线：捞语料训 7B，再用 GRPO 做 RL](/reports/DeepSeekMath/figure-pipeline.svg)
 
 一个容易被忽略的事实：**DeepSeekMath 不是从零训练的。** 它从 DeepSeek-Coder-Base-v1.5 7B 出发，继续训练 500B Token（PDF p.8）。为什么选一个代码模型当起点，论文专门做了消融，后面会讲。
 
@@ -79,17 +67,7 @@ flowchart TB
 
 所以它做成了一个闭环，跑四轮。
 
-```mermaid
-flowchart LR
-    S[数学种子语料<br/>第一轮用 OpenWebMath] --> T[训练 fastText 分类器]
-    T --> R[从去重后的 40B 页面里<br/>按分数召回排名靠前的]
-    R --> C[数学语料]
-    R --> D[按域名统计命中率<br/>超过 10% 判为数学站点]
-    D --> A[人工标注这些站点下的<br/>数学 URL 路径]
-    A --> S
-```
-
-这是根据 PDF p.5 的 Figure 2 与同页正文重画的机制示意图，节点顺序与原图一致，不含时间或数量。
+![分类器和种子互相喂养，跑四轮才停](/reports/DeepSeekMath/figure2-pipeline.svg)
 
 逐步拆开看：
 
@@ -146,9 +124,11 @@ flowchart LR
 
 **第二，MathPile 那一行是个警告。** 它在八项里有七项比「完全不做数学训练」还差，CMATH 从 12.3% 掉到 1.2%，Gaokao 选择题从 17.9% 掉到 2.8%。这不是小幅波动，是崩塌。论文对这个现象的解释很含蓄——现有语料以英文为主，对中文数学推理帮助有限甚至有害（PDF p.7）。**本文的补充解释是**：MathPile 超过 85% 是 arXiv 论文，一个 1.3B 模型吃 150B Token 的 arXiv 排版语言，很可能被带偏了输出分布。论文没有做这个归因，所以只能当猜测。
 
-**第三，也是最重要的：规模大不等于质量高。** 这一点论文单独用 Figure 3 证明了（PDF p.7）——在只训到 50B Token 时（这已经是 Proof-Pile-2 完整跑一个 epoch 的量），DeepSeekMath 语料训出的模型就已经超过 Proof-Pile-2。所以领先不是靠「更多数据多训几轮」堆出来的，**平均单位 Token 的质量本身就更高**。
+**第三，也是最重要的：规模大不等于质量高。**
 
-Figure 3 还画出了另一件事：基线语料因为太小，训练中被重复了很多轮，曲线很快走平；DeepSeekMath 语料的曲线一直在爬（PDF p.7）。
+![同样训 150B Token：领先不是因为语料更大、多训了几轮](/reports/DeepSeekMath/figure3-corpus.svg)
+
+50B Token 已经是 Proof-Pile-2 完整跑一个 epoch 的量。领先不是靠「更多数据多训几轮」堆出来的（PDF p.7，Figure 3）。终点数字见上表 Table 1。论文没有给这张图的数值表。
 
 ### DeepSeekMath-Base 7B 的实际配方
 
@@ -296,17 +276,7 @@ GRPO 的思路一句话说完：**advantage 需要一个基线，而这个基线
 
 对同一道题 $q$，一次采样 $G$ 个回答 $\{o_1,\dots,o_G\}$，用奖励模型打出 $G$ 个分数。**这一组分数的平均值，就是这道题的基线。** 高于平均的回答该被鼓励，低于平均的该被抑制。
 
-```mermaid
-flowchart TB
-    Q[同一道题 q] --> A[PPO：采 1 个回答]
-    Q --> B[GRPO：一次采 G 个回答]
-    A --> A1[价值模型逐 Token 预测<br/>这里本该得几分]
-    A1 --> A2[实际回报减预测值<br/>经 GAE 得到 advantage]
-    B --> B1[G 个分数求均值和标准差]
-    B1 --> B2[每个分数减组均值再除以标准差<br/>就是 advantage]
-```
-
-这是根据 PDF p.13 的 Figure 4 与同页正文重画的机制示意图。原图还画了参考模型和奖励模型，这里只保留两条路线在 advantage 来源上的差别，不含实测数据。
+![PPO 用一个一样大的价值模型估基线；GRPO 用同组回答的平均分](/reports/DeepSeekMath/figure4-grpo.svg)
 
 论文还给了一个更深的理由，很容易被略过：**组内相对比较的方式，和奖励模型本身的训练方式是对齐的**（PDF p.13）。奖励模型通常就是在「同一道题的多个回答两两比较」这样的数据上训出来的。既然它天生擅长相对判断，那么用它做组内相对评分，比用它的绝对分数去回归一个价值函数更贴合它的能力。
 
@@ -404,24 +374,16 @@ $$
 
 对策是 Algorithm 1（PDF p.14）里的外层循环：
 
-```mermaid
-flowchart TB
-    A[外层迭代开始] --> B[参考模型 ← 当前策略]
-    B --> C[内层 M 步：采样 G 个回答、打分、<br/>算 advantage、更新策略]
-    C --> D{内层跑满 M 步?}
-    D -->|否| C
-    D -->|是| E[用策略的采样结果构造新训练集<br/>续训奖励模型，混入 10% 历史数据]
-    E --> A
-```
-
-这是根据 PDF p.14 的 Algorithm 1 与 p.15 的 4.1.4 节重画的机制示意图，不含时间或步数。
+![外层迭代：策略变强之后，奖励模型也要跟着更新](/reports/DeepSeekMath/figure-algorithm1.svg)
 
 两个细节值得单独记：
 
 - **重放机制里混入 10% 历史数据**（PDF p.15），目的是防止奖励模型只记住新分布、忘掉旧的判断标准；
 - **每轮外层迭代都把参考模型重置为当前策略**（Algorithm 1 第 3 行）。这意味着 KL 约束的锚点在往前移——不是死死拴在最初的 SFT 模型上，而是每轮重新定义「不要偏离太远」的起点。
 
-论文实测跑了两轮迭代，结论是迭代 RL 显著提升性能，**尤其是第一次迭代**（Figure 6，PDF p.20）。图上 GSM8K 的 iteration-0 在 85–87 之间震荡后收尾，iteration-1 抬到 87–88，iteration-2 接近 89；MATH 的 iteration-0 收在约 49，iteration-1 与 iteration-2 都落在 51–52。（这些是本文按图读出的近似值，论文正文与附录都没有给对应的数值表。）
+![迭代 RL：第一轮抬得最多，后面变慢](/reports/DeepSeekMath/figure6-iterative.svg)
+
+论文实测跑了两轮迭代，结论是迭代 RL 显著提升性能，**尤其是第一次迭代**（PDF p.20，Figure 6）。
 
 ### RL 的实际配置，以及一个关键的边界
 
@@ -572,13 +534,15 @@ $$
 
 ### 从这张表读出的三件事
 
+![三个旋钮拆开看：在线采样、连续有正负的系数、过程监督](/reports/DeepSeekMath/figure5-methods.svg)
+
 **第一，梯度系数的取值范围决定了方法的表达能力。** SFT 只有 $\{1\}$，RFT 只有 $\{0,1\}$，DPO 落在 $(0,1)$ 但靠式 13 的正负两个分支来区分推高和压低，PPO 和 GRPO 则是连续实数、**系数本身就可以为负**。
 
-论文明确点出了 GRPO 和 Online RFT 的关键差别（PDF p.20）：**Online RFT 不惩罚错误回答，并且对所有正确回答一律用同样的力度强化。** GRPO 则按奖励值大小做差异化的强化和惩罚。Figure 5（PDF p.19）显示 GRPO 确实超过 Online RFT。
+论文明确点出了 GRPO 和 Online RFT 的关键差别（PDF p.20）：**Online RFT 不惩罚错误回答，并且对所有正确回答一律用同样的力度强化。** GRPO 则按奖励值大小做差异化的强化和惩罚。
 
-**第二，在线还是离线，是另一个独立的轴。** Figure 5（PDF p.19，模型是 DeepSeekMath-Instruct 1.3B）显示 Online RFT 明显超过 RFT。论文的解释很自然（PDF p.20）：训练早期策略和 SFT 模型还很像，两者采样差别不大；到后期策略已经跑远了，实时采样的优势才显现出来。
+**第二，在线还是离线，是另一个独立的轴。** 论文的解释（PDF p.20）：训练早期策略和 SFT 模型还很像，两者采样差别不大；到后期策略已经跑远了，实时采样的优势才显现出来。
 
-**第三，监督粒度也是一个轴。** Figure 5 里 GRPO+PS（过程监督）超过 GRPO+OS（结果监督），论文的结论是更细粒度、步骤感知的梯度系数确实有好处（PDF p.20）。
+**第三，监督粒度也是一个轴。** 论文的结论是更细粒度、步骤感知的梯度系数确实有好处（PDF p.20）。
 
 **所以这个视角真正的价值是**：它把「用哪个方法」这个二选一问题，拆成了三个可以分别调的旋钮——数据在线还是离线、奖励用规则还是模型、梯度系数是二值还是连续有正负。论文自己的总结是：在这个范式下，所有这些方法都可以被理解为直接的或简化的 RL 技术（PDF p.21）。
 
@@ -588,10 +552,12 @@ $$
 
 这一小节只有一页，但它是这篇论文影响最深远的观察之一。
 
-论文的做法很简单：比较 DeepSeekMath-Instruct 7B（SFT 模型）和 DeepSeekMath-RL 7B（RL 之后）在两个指标上的差别（Figure 7，PDF p.21，温度 0.7）：
+论文的做法很简单：比较 DeepSeekMath-Instruct 7B（SFT 模型）和 DeepSeekMath-RL 7B（RL 之后）在两个指标上的差别（PDF p.21，温度 0.7）：
 
 - **Pass@K**：采样 $K$ 次，只要有一次答对就算对。它衡量的是**模型能力的上限**——这道题它到底会不会。
 - **Maj@K**：采样 $K$ 次后多数投票，看投票结果对不对。它衡量的是**模型分布的可靠性**——正确答案是不是它最常给出的那个。
+
+![RL 抬的是多数投票，不是「会不会做」的上限](/reports/DeepSeekMath/figure7-majpass.svg)
 
 结果是（PDF p.21）：
 
@@ -695,13 +661,9 @@ Pass@K 和 Maj@K 一起看，才发现 RL 动的是分布而不是能力。只�
 
 ## 资料与阅读边界
 
-- 原始依据：本地 `papers/DeepSeek/DeepSeekMath.pdf`，即 arXiv:2402.03300v3，封面页边日期 2024-04-27，共 30 页。封面正式标题为 *DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models*，署名 DeepSeek-AI、清华大学、北京大学。
-- 版本核验：[arXiv 论文页](https://arxiv.org/abs/2402.03300)。提交历史为 v1（2024-02-05）、v2（2024-02-06）、v3（2024-04-27）。截至 2026-09-05 核验，最新版本仍是 v3，与本地原件一致，**不需要替换 PDF**。
-- `release-date` 依据：本文的主对象是 **DeepSeekMath 7B 这个真实发布过权重的模型**（论文以它命名，GRPO 是在训练它的过程中被提出来的），因此按流程取模型首次对外开放的日期。三个权重仓库 [deepseek-math-7b-base](https://huggingface.co/deepseek-ai/deepseek-math-7b-base)、[deepseek-math-7b-instruct](https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct)、[deepseek-math-7b-rl](https://huggingface.co/deepseek-ai/deepseek-math-7b-rl) 在 HuggingFace 上的创建时间均为 2024-02-05（UTC），是已知最早的官方渠道。官方代码仓库 [deepseek-ai/DeepSeek-Math](https://github.com/deepseek-ai/DeepSeek-Math) 的首个 commit 是 2024-02-06，晚一天。arXiv v1 的提交时间同样是 2024-02-05，所以即使按「技术首次官方公开日」这条备用口径，取值也是同一天，两种读法不冲突。
-- 跨篇参考：GRPO 在推理模型训练中的完整应用与能力涌现，见本站 **DeepSeek-R1 篇**；裁剪上界解耦、动态采样、Token 级损失与超长奖励整形，见本站 **DAPO 篇**；把重要性比抬到序列级，见本站 **GSPO 篇**。这三处本文只标出原始 GRPO 的形态，不展开变体机制。
-- PPO 的原始来源：[Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347)。本站不单独收录 PPO，本文只讲它的价值模型为什么在长文本场景成为负担。
-- KL 估计式的来源：论文式 4 引自 [Approximating KL Divergence](http://joschu.net/blog/kl-approx.html)（John Schulman，2020）。这是外部补充，不是本论文的原创结论。
-- 种子语料的来源：[OpenWebMath](https://arxiv.org/abs/2310.06786)。对比语料 [MathPile](https://arxiv.org/abs/2312.17120) 与 [Proof-Pile-2 / Llemma](https://arxiv.org/abs/2310.10631)。
-- 分类器实现：论文脚注给出的是 [fastText](https://fasttext.cc)。
-- 起点模型：[DeepSeek-Coder](https://arxiv.org/abs/2401.14196)，论文正文写作 DeepSeek-Coder-Base-v1.5 7B。
-- 过程奖励做法的参考：论文的奖励模型训练集构造引自 [Math-Shepherd](https://arxiv.org/abs/2312.08935)。本文没有把该论文的细节冒充成 DeepSeekMath 的实现。
+- 原始依据：本地 `papers/DeepSeek/DeepSeekMath.pdf`，**DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models**，arXiv:2402.03300v3，2024-04-27 提交，30 页。文中页码均指该 PDF。封面署 DeepSeek-AI、清华大学、北京大学。
+- 论文页：<https://arxiv.org/abs/2402.03300>。本文只依据这份 v3 原件。
+- `release-date` 取 **2024-02-05**：主对象是 DeepSeekMath 7B 这个发布过权重的模型。三个权重仓库 `deepseek-math-7b-base` / `instruct` / `rl` 在 Hugging Face 上的创建时间均为 2024-02-05（UTC）；官方代码仓首 commit 是 2024-02-06；arXiv v1 同在 2024-02-05。
+- 跨篇只指路，不构成本篇论据：DeepSeek-R1 一篇（GRPO 在推理模型上的应用）、DAPO 一篇、GSPO 一篇。本文只标出原始 GRPO 的形态。
+- PPO 原始来源：<https://arxiv.org/abs/1707.06347>。KL 估计式引自 John Schulman 2020 的 [Approximating KL Divergence](http://joschu.net/blog/kl-approx.html)，是外部补充。
+- 种子与对照语料：OpenWebMath（arXiv:2310.06786）、MathPile（arXiv:2312.17120）、Proof-Pile-2 / Llemma（arXiv:2310.10631）。分类器实现见 [fastText](https://fasttext.cc)。起点模型 DeepSeek-Coder（arXiv:2401.14196）。过程奖励训练集构造引自 Math-Shepherd（arXiv:2312.08935），本文没有把它的细节冒充成本论文的实现。

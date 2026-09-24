@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">从矛盾到系统：全文一条链</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">这是本文归纳，不对应论文里任何一张图。数字见下方脚注。</text>
+<rect x="40" y="80" width="320" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="56" y="108" font-size="14" fill="#111827" text-anchor="start" font-weight="700">矛盾</text>
+<text x="56" y="130" font-size="12" fill="#374151" text-anchor="start">没有查表原语，只能用多层重建静态模式</text>
+<rect x="400" y="80" width="320" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="416" y="108" font-size="14" fill="#111827" text-anchor="start" font-weight="700">新轴</text>
+<text x="416" y="130" font-size="12" fill="#374151" text-anchor="start">条件记忆：按输入决定读哪些参数</text>
+<rect x="760" y="80" width="320" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="776" y="108" font-size="14" fill="#111827" text-anchor="start" font-weight="700">检索</text>
+<text x="776" y="130" font-size="12" fill="#374151" text-anchor="start">tokenizer 压缩 + 多头哈希，O(1) 取回</text>
+<rect x="40" y="180" width="320" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="56" y="208" font-size="14" fill="#111827" text-anchor="start" font-weight="700">融合</text>
+<text x="56" y="230" font-size="12" fill="#374151" text-anchor="start">标量门 + 短卷积，多分支各自表态</text>
+<rect x="400" y="180" width="320" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="416" y="208" font-size="14" fill="#111827" text-anchor="start" font-weight="700">分配律</text>
+<text x="416" y="230" font-size="12" fill="#374151" text-anchor="start">同参同算力，约 20%–25% 给记忆最优</text>
+<rect x="760" y="180" width="320" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="776" y="208" font-size="14" fill="#111827" text-anchor="start" font-weight="700">27B 对照</text>
+<text x="776" y="230" font-size="12" fill="#374151" text-anchor="start">知识涨；推理与代码涨得更多</text>
+<rect x="40" y="280" width="320" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="56" y="308" font-size="14" fill="#111827" text-anchor="start" font-weight="700">机制</text>
+<text x="56" y="330" font-size="12" fill="#374151" text-anchor="start">浅层表示相当于基线更深层</text>
+<rect x="400" y="280" width="320" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="416" y="308" font-size="14" fill="#111827" text-anchor="start" font-weight="700">长上下文</text>
+<text x="416" y="330" font-size="12" fill="#374151" text-anchor="start">多查询检索 84.2 → 97.0</text>
+<rect x="760" y="280" width="320" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="776" y="308" font-size="14" fill="#111827" text-anchor="start" font-weight="700">系统</text>
+<text x="776" y="330" font-size="12" fill="#374151" text-anchor="start">地址只由输入定，可预取；100B 表吞吐损失 ≤ 2.8%</text>
+<text x="30" y="390" font-size="13" fill="#6b7280" text-anchor="start">缺口：哈希细节、碰撞率、训练侧通信、缓存层级均未公开。</text>
+<text x="30" y="414" font-size="13" fill="#6b7280" text-anchor="start">数字：ρ≈75%–80%（PDF p.8）；多查询大海捞针 84.2→97.0（PDF p.11）；吞吐损失峰值 2.8%（PDF p.18）。</text>
+<text x="30" y="438" font-size="13" fill="#6b7280" text-anchor="start">黄 = 问题或未公开；紫 = 方法；绿 = 机制步骤；灰 = 实验结果。</text>
+<text x="30" y="462" font-size="13" fill="#6b7280" text-anchor="start">箭头省略：矛盾 → 新轴 → 检索/融合 → 分配律 → 对照与系统。</text>
+</svg>

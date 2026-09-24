@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 380" width="1120" height="380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="sft-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="380" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">专家模型是数据生成器，不是最终的 V3</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 带系统提示的脚手架；绿 = 最终留下的 SFT。领域可以是代码、数学或通用推理。</text>
+
+<rect x="40" y="90" width="230" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="155" y="124" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">1 训专家</text>
+<text x="155" y="146" font-size="12" fill="#374151" text-anchor="middle">该领域 SFT + RL</text>
+<text x="155" y="164" font-size="12" fill="#374151" text-anchor="middle">只负责造数据</text>
+
+<rect x="310" y="90" width="230" height="88" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="425" y="124" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2 两条样本</text>
+<text x="425" y="146" font-size="12" fill="#374151" text-anchor="middle">短答 / 带提示的 R1 答</text>
+<text x="425" y="164" font-size="12" fill="#374151" text-anchor="middle">同一道题各一条</text>
+
+<rect x="580" y="90" width="230" height="88" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="695" y="124" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">3 高温 RL</text>
+<text x="695" y="146" font-size="12" fill="#374151" text-anchor="middle">融合两种模式</text>
+<text x="695" y="164" font-size="12" fill="#374151" text-anchor="middle">数百步后可撤提示</text>
+
+<rect x="850" y="90" width="230" height="88" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="965" y="124" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">4 拒绝采样</text>
+<text x="965" y="146" font-size="12" fill="#374151" text-anchor="middle">筛高质量 SFT</text>
+<text x="965" y="164" font-size="12" fill="#374151" text-anchor="middle">拿去训最终模型</text>
+
+<line x1="270" y1="134" x2="302" y2="134" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#sft-ar)"/>
+<line x1="540" y1="134" x2="572" y2="134" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#sft-ar)"/>
+<line x1="810" y1="134" x2="842" y2="134" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#sft-ar)"/>
+
+<text x="30" y="230" font-size="13" fill="#6b7280">据 PDF p.28–29 重画。关键是第 3 步：提示词只是临时脚手架，RL 把「反思—验证」内化成默认行为。</text>
+<text x="30" y="254" font-size="13" fill="#6b7280">非推理数据（写作、角色扮演、简单问答）不走这四步：用 DeepSeek-V2.5 生成，再人工核验（PDF p.29）。</text>
+<text x="30" y="278" font-size="13" fill="#6b7280">SFT 一共 150 万条，覆盖多个领域；报告没有公开各领域条数，也没有公开系统提示词原文。</text>
+<text x="30" y="314" font-size="13" fill="#6b7280">R1 自己怎么训，见 DeepSeek-R1 一篇。这里只画 V3 报告写到的蒸馏流程。</text>
+<text x="30" y="338" font-size="13" fill="#6b7280">可迁移的是路径：先用显式提示激发目标行为，再用 RL 固化，最后去掉提示。</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">Figure 3：两招都干活，知识题上最明显</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">灰 = GShard；黄 = 只加共享隔离；紫 = 再切一刀；绿 = 最细切（DeepSeekMoE）。纵轴按该项最好成绩归一化。总参和激活参对齐。</text>
+<line x1="70" y1="387.1" x2="1090" y2="387.1" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="391.14285714285717" font-size="11" fill="#9ca3af" text-anchor="end">0.6</text>
+<line x1="70" y1="301.4" x2="1090" y2="301.4" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="305.4285714285714" font-size="11" fill="#9ca3af" text-anchor="end">0.8</text>
+<line x1="70" y1="215.7" x2="1090" y2="215.7" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="219.7142857142857" font-size="11" fill="#9ca3af" text-anchor="end">1.0</text>
+<line x1="70" y1="130.0" x2="1090" y2="130.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="62" y="134.0" font-size="11" fill="#9ca3af" text-anchor="end">1.2</text>
+<line x1="70" y1="130" x2="70" y2="430" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="70" y1="430" x2="1090" y2="430" stroke="#9ca3af" stroke-width="1.4"/>
+<rect x="93.0" y="249.99999999999997" width="28" height="180.00000000000003" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="125.0" y="232.85714285714286" width="28" height="197.14285714285714" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="157.0" y="224.28571428571428" width="28" height="205.71428571428572" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="189.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="155.0" y="452" font-size="12" fill="#111827" text-anchor="middle">HellaSwag</text>
+<rect x="263.0" y="224.28571428571428" width="28" height="205.71428571428572" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="295.0" y="226.42857142857144" width="28" height="203.57142857142856" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="327.0" y="228.57142857142858" width="28" height="201.42857142857142" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="359.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="325.0" y="452" font-size="12" fill="#111827" text-anchor="middle">PIQA</text>
+<rect x="433.0" y="262.85714285714283" width="28" height="167.14285714285717" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="465.0" y="228.57142857142858" width="28" height="201.42857142857142" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="497.0" y="217.85714285714283" width="28" height="212.14285714285717" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="529.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="495.0" y="452" font-size="12" fill="#111827" text-anchor="middle">ARC-easy</text>
+<rect x="603.0" y="249.99999999999997" width="28" height="180.00000000000003" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="635.0" y="254.28571428571425" width="28" height="175.71428571428575" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="667.0" y="249.99999999999997" width="28" height="180.00000000000003" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="699.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="665.0" y="452" font-size="12" fill="#111827" text-anchor="middle">ARC-challenge</text>
+<rect x="773.0" y="382.8571428571429" width="28" height="47.14285714285711" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="805.0" y="280.0" width="28" height="150.0" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="837.0" y="245.71428571428567" width="28" height="184.28571428571433" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="869.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="835.0" y="452" font-size="12" fill="#111827" text-anchor="middle">TriviaQA</text>
+<rect x="943.0" y="404.2857142857143" width="28" height="25.714285714285722" rx="3" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="975.0" y="305.71428571428567" width="28" height="124.28571428571433" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="1007.0" y="267.1428571428571" width="28" height="162.8571428571429" rx="3" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="1039.0" y="215.7142857142857" width="28" height="214.2857142857143" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="1005.0" y="452" font-size="12" fill="#111827" text-anchor="middle">NaturalQuestions</text>
+<text x="30" y="500" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 12 Figure 3 重画，柱高按原图读取。HellaSwag / PIQA 四档已经接近；ARC 上细切开始拉开。</text>
+<text x="30" y="524" font-size="13" fill="#6b7280" text-anchor="start">TriviaQA、NaturalQuestions 上 GShard 掉到约 0.6，最细切到 1.0。共享隔离先抬知识题，粒度再细继续涨。</text>
+<text x="30" y="548" font-size="13" fill="#9ca3af" text-anchor="start">这是消融，还不是特化的直接证据。直接证据是后面三台手术（Figure 4–6）。</text>
+</svg>

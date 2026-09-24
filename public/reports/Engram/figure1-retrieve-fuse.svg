@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">检索是哈希查表，融合才看当前隐状态</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">黄 = 只由输入 Token 决定、可预取；绿 = 用当前隐状态做门。地址不依赖隐状态，所以能提前搬表。</text>
+<rect x="40" y="80" width="520" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="580" y="80" width="500" height="230" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="300" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">检索</text>
+<text x="830" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">融合</text>
+<rect x="80" y="130" width="180" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="170" y="160" font-size="13" fill="#111827" text-anchor="middle">2-gram 哈希</text>
+<rect x="300" y="130" width="180" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="390" y="160" font-size="13" fill="#111827" text-anchor="middle">3-gram 哈希</text>
+<rect x="80" y="200" width="400" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="280" y="230" font-size="13" fill="#111827" text-anchor="middle">多头取向量，拼成 e_t</text>
+<rect x="640" y="130" width="380" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="830" y="160" font-size="13" fill="#111827" text-anchor="middle">h_t 当 Query</text>
+<rect x="640" y="200" width="380" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="830" y="230" font-size="13" fill="#111827" text-anchor="middle">Sigmoid 门 α_t 再卷积</text>
+<text x="30" y="340" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p.3 Figure 1 右侧与 §2.2–2.3 重画。论文例句是 Only Alexander the Great could tame the horse Bucephalus。</text>
+<text x="30" y="364" font-size="13" fill="#6b7280" text-anchor="start">门在固定搭配说完的那一刻打开（Great），热力图见 Figure 7。哈希常数和碰撞率论文没给。</text>
+<text x="30" y="388" font-size="13" fill="#6b7280" text-anchor="start">每阶 8 个哈希头；27B 只用 2-gram 与 3-gram。</text>
+</svg>

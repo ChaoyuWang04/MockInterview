@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">Figure 5：少激活几个小专家，仍能打平 GShard 的完整 top-2</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">紫 = DeepSeekMoE 2B 的 Pile 损失；灰虚线 = GShard 完整 top-2（约 1.867）。激活 4 个路由专家时落到这条线上。</text>
+<line x1="80" y1="362.0" x2="1060" y2="362.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="366.0" font-size="11" fill="#9ca3af" text-anchor="end">1.80</text>
+<line x1="80" y1="292.0" x2="1060" y2="292.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="295.9999999999999" font-size="11" fill="#9ca3af" text-anchor="end">1.85</text>
+<line x1="80" y1="222.0" x2="1060" y2="222.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="226.0000000000001" font-size="11" fill="#9ca3af" text-anchor="end">1.90</text>
+<line x1="80" y1="152.0" x2="1060" y2="152.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="156.00000000000006" font-size="11" fill="#9ca3af" text-anchor="end">1.95</text>
+<line x1="80" y1="110" x2="80" y2="390" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="80" y1="390" x2="1060" y2="390" stroke="#9ca3af" stroke-width="1.4"/>
+<line x1="80" y1="268.2" x2="1060" y2="268.2" stroke="#b9b9b9" stroke-width="1.8" stroke-dasharray="6 5"/>
+<polyline points="140.0,145.0 355.0,268.2 570.0,320.0 785.0,341.0 1000.0,350.8" fill="none" stroke="#8f8bd8" stroke-width="2.2"/>
+<circle cx="140.0" cy="145.0" r="4.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="355.0" cy="268.2" r="4.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="570.0" cy="320.0" r="4.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="785.0" cy="341.0" r="4.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="1000.0" cy="350.8" r="4.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="140.0" y="412" font-size="13" fill="#111827" text-anchor="middle">3</text>
+<text x="355.0" y="412" font-size="13" fill="#111827" text-anchor="middle">4</text>
+<text x="570.0" y="412" font-size="13" fill="#111827" text-anchor="middle">5</text>
+<text x="785.0" y="412" font-size="13" fill="#111827" text-anchor="middle">6</text>
+<text x="1000.0" y="412" font-size="13" fill="#111827" text-anchor="middle">7</text>
+<text x="570.0" y="434" font-size="12" fill="#6b7280" text-anchor="middle">激活的路由专家数</text>
+<line x1="785.0" y1="329.0" x2="785.0" y2="305.0" stroke="#9ca3af" stroke-width="1"/>
+<text x="785.0" y="299.0000000000001" font-size="11" fill="#9ca3af" text-anchor="middle">相同激活专家参数</text>
+<text x="1050" y="260.20000000000005" font-size="11" fill="#9ca3af" text-anchor="end">GShard top-2</text>
+<text x="30" y="460" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 14 Figure 5 重画。激活 4 个路由专家已落到 GShard 完整 top-2 的损失线上；激活 7 个到 1.808。</text>
+<text x="30" y="484" font-size="13" fill="#6b7280" text-anchor="start">这是「组合用上了」的实验：不必把全部小专家都打开，也能打过旧切法的完整 top-2。</text>
+</svg>

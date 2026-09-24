@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 320" width="1120" height="320" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="320" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">V4 预训练：打包仍在，但样本之间加了掩码</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">相对 V3 预训练「能偷看」，V4 改成 sample-level attention mask。红虚线 = 互不可见。示意，不是语料原文。</text>
+<rect x="40" y="90" width="320" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="200" y="122" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">样本 / 文档 1</text>
+<text x="200" y="146" font-size="12" fill="#374151" text-anchor="middle">数学、代码或长文档</text>
+<rect x="400" y="90" width="320" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="560" y="122" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">样本 / 文档 2</text>
+<text x="560" y="146" font-size="12" fill="#374151" text-anchor="middle">按来源 pack，减少截断</text>
+<rect x="760" y="90" width="320" height="80" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="920" y="122" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">样本 / 文档 3</text>
+<text x="920" y="146" font-size="12" fill="#374151" text-anchor="middle">超过 32T Token 里的一条</text>
+<line x1="360" y1="90" x2="360" y2="170" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="720" y1="90" x2="720" y2="170" stroke="#dc2626" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="30" y="210" font-size="13" fill="#6b7280">据 PDF p.24 重画。V3 预训练故意不掩码（PDF p.22）；V4 预训练改成掩码，避免 packing 后互相偷看。</text>
+<text x="30" y="234" font-size="13" fill="#6b7280">报告没有公开各来源占比。FIM 与 token splitting 沿用 V3，格式见 DeepSeek-V3 一篇。</text>
+<text x="30" y="270" font-size="13" fill="#6b7280">同一选项翻了面：V3 把「能看见邻文档」留给预训练，V4 连预训练也不让看。</text>
+</svg>

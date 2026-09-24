@@ -2,7 +2,7 @@
 
 <!-- release-date: 2025-01-20 -->
 
-> 本文依据 DeepSeek-AI 团队发布的 **DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning**，即 arXiv:2501.12948v2、2026-01-04 修订的 86 页版本。下文括号中的 `PDF p.x` 直接指这份 86 页原文的文件页码。网上很多解读仍使用 2025 年的 v1 数字；本文只采用本地 v2 原件，并把报告事实、我们的解释和外部资料补充分开。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-R1.pdf`，即 **DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning**，arXiv:2501.12948v2、2026-01-04 提交的修订版，共 86 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 先把最少的背景搭起来
 
@@ -41,29 +41,7 @@ DeepSeek-R1 是产品化版本。它没有坚持「纯 RL」到底，而是使�
 
 ## 先看全景：R1 不是一段训练，而是一条来回筛选的链
 
-```mermaid
-flowchart TB
-    Base[DeepSeek-V3-Base<br/>671B 总参数 / 每 Token 激活 37B] --> ZeroRL[直接做 GRPO<br/>不先做 SFT]
-    ZeroRL --> Zero[DeepSeek-R1-Zero<br/>会长推理，但难读且会混语]
-    Zero --> ColdData[筛选正确轨迹<br/>人类改写 + V3 扩写 + 人类复核]
-    ColdData --> ColdSFT[第一次 SFT<br/>数千条冷启动长 CoT]
-    Base --> ColdSFT
-    ColdSFT --> Dev1[DeepSeek-R1 Dev1]
-    Dev1 --> RL1[第一阶段 RL<br/>规则奖励 + 语言一致性奖励]
-    RL1 --> Dev2[DeepSeek-R1 Dev2]
-    Dev2 --> Reject[多次采样 + 验证 + 拒绝采样]
-    Reject --> Data800[约 800K SFT 数据<br/>推理 + 非推理]
-    V3Data[DeepSeek-V3 非推理 SFT 数据<br/>加软件工程数据] --> Data800
-    Data800 --> SFT2[第二次 SFT]
-    SFT2 --> Dev3[DeepSeek-R1 Dev3]
-    Dev3 --> RL2[第二阶段 RL<br/>规则奖励 + 偏好 RM + 安全 RM]
-    RL2 --> R1[DeepSeek-R1]
-    Data800 --> Distill[使用同一批数据<br/>只做 SFT 蒸馏]
-    Student[Qwen / Llama 学生模型] --> Distill
-    Distill --> Small[六个 R1-Distill 模型]
-```
-
-这是根据报告 Figure 2 重画的**机制示意图**，不是实测训练时间线。Dev1、Dev2、Dev3 是中间 checkpoint；箭头表示数据或模型的先后关系。（PDF p.6、26–27、60–62）
+![R1-Zero 是纯 RL 实验；R1 是两次 SFT 加两次 RL](/reports/DeepSeek-R1/figure-pipeline.svg)
 
 这张图先回答一个最容易误解的问题：**R1-Zero 是纯 RL 实验，R1 不是。**
 
@@ -851,10 +829,8 @@ R1-Zero 证明了另一件更精确的事：**人类不必逐步写出每条推�
 
 ## 资料与阅读边界
 
-- 原始依据：本地 `papers/DeepSeek/DeepSeek-R1.pdf`，arXiv:2501.12948v2，2026-01-04，86 页。
-- 外部官方版本核验：[arXiv 版本页](https://arxiv.org/abs/2501.12948)。v1 提交于 2025-01-22，本文使用 v2。
+- 原始依据：本地 `papers/DeepSeek/DeepSeek-R1.pdf`，arXiv:2501.12948v2，2026-01-04，86 页。本文只依据这份 v2 原件。
 - 外部官方补充：[DeepSeek-R1 GitHub](https://github.com/deepseek-ai/DeepSeek-R1)。用于核对开放模型清单、使用建议和许可证；仓库 README 不是本文数字的主证据。
 - 外部官方补充：[DeepSeek-R1 Hugging Face 模型卡](https://huggingface.co/deepseek-ai/DeepSeek-R1)。用于核对权重、配置和 tokenizer；部署状态可能随时间变化。
-- 架构背景：[DeepSeek-V3 GitHub](https://github.com/deepseek-ai/DeepSeek-V3)。R1 继承 V3 架构，本文没有把仓库中超出 R1 报告的实现写成报告结论。
-- 算法背景：[DeepSeekMath / GRPO 原论文](https://arxiv.org/abs/2402.03300)。这是 GRPO 的原始来源，R1 报告只给出面向本次训练的简化说明。
+- 架构背景见 DeepSeek-V3 一篇。算法背景见 DeepSeekMath 一篇。
 - 正式发表信息：[Nature 论文页](https://doi.org/10.1038/s41586-025-09422-z)。Nature 版本与 86 页 arXiv v2 的篇幅和附录边界应分别对待。

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 460" width="1120" height="460" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="460" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">八平面两层胖树：GPU i 永远走平面 i</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">每一色一块独立的叶子-脊网。跨平面没有直连，必须在节点内转发。这是打折的多平面，不是理想多端口网卡。</text>
+<rect x="50" y="80" width="250" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="175" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">平面 0</text>
+<rect x="105" y="125" width="140" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="175" y="148" font-size="12" fill="#111827" text-anchor="middle">脊交换机</text>
+<rect x="70" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="115" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="190" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="235" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="105" y="225" width="140" height="36" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="175" y="248" font-size="12" fill="#111827" text-anchor="middle">GPU 0 + NIC 0</text>
+<rect x="320" y="80" width="250" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="445" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">平面 1</text>
+<rect x="375" y="125" width="140" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="445" y="148" font-size="12" fill="#111827" text-anchor="middle">脊交换机</text>
+<rect x="340" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="385" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="460" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="505" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="375" y="225" width="140" height="36" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="445" y="248" font-size="12" fill="#111827" text-anchor="middle">GPU 1 + NIC 1</text>
+<rect x="590" y="80" width="250" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="715" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">平面 2</text>
+<rect x="645" y="125" width="140" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="715" y="148" font-size="12" fill="#111827" text-anchor="middle">脊交换机</text>
+<rect x="610" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="655" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="730" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="775" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="645" y="225" width="140" height="36" rx="4" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="715" y="248" font-size="12" fill="#111827" text-anchor="middle">GPU 2 + NIC 2</text>
+<rect x="860" y="80" width="250" height="200" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="985" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">平面 3</text>
+<rect x="915" y="125" width="140" height="36" rx="4" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="985" y="148" font-size="12" fill="#111827" text-anchor="middle">脊交换机</text>
+<rect x="880" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="925" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="1000" y="175" width="90" height="36" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="1045" y="198" font-size="12" fill="#111827" text-anchor="middle">叶</text>
+<rect x="915" y="225" width="140" height="36" rx="4" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="985" y="248" font-size="12" fill="#111827" text-anchor="middle">GPU 3 + NIC 3</text>
+<text x="30" y="310" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p.8–9 Figure 3 重画，只画 4/8 个平面。8 张网卡 = 8 张互不直连的网；理论上两层接到 16384 卡，政策下只部署两千出头。</text>
+<text x="30" y="334" font-size="13" fill="#6b7280" text-anchor="start">理想 Figure 4：一张网卡多个端口、一个 QP 洒到多平面，乱序到达要网卡原生支持。CX7 做不到，训 V3 的网是「并没有完全实现设想」。</text>
+<text x="30" y="358" font-size="13" fill="#6b7280" text-anchor="start">每端点成本和两层胖树一样（约 4.39 k$），规模却够到三层才能碰到的上万卡；三层每端点约 7.5 k$。</text>
+<text x="30" y="394" font-size="13" fill="#6b7280" text-anchor="start">NCCL 的 PXN 能靠 NVLink 做跨平面转发，所以训练数字和单平面多轨几乎打平。</text>
+</svg>

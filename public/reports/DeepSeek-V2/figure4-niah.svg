@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+<marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">128K Needle：整体能取到，不是格子格子无损</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">绿 = 满分；黄 = 偏低。横轴上下文长度，纵轴针在文档里的深度。只在 32K 上续训，却在 128K 上评。</text>
+<text x="72" y="108" font-size="11" fill="#9ca3af" text-anchor="end">0%</text>
+<rect x="80" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="400" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="90" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="136" font-size="11" fill="#9ca3af" text-anchor="end">18%</text>
+<rect x="80" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="400" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="118" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="164" font-size="11" fill="#9ca3af" text-anchor="end">27%</text>
+<rect x="80" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="146" width="76" height="25" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="400" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="146" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="192" font-size="11" fill="#9ca3af" text-anchor="end">36%</text>
+<rect x="80" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="174" width="76" height="25" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="400" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="174" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="220" font-size="11" fill="#9ca3af" text-anchor="end">45%</text>
+<rect x="80" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="202" width="76" height="25" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="400" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="202" width="76" height="25" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="880" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="202" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="248" font-size="11" fill="#9ca3af" text-anchor="end">64%</text>
+<rect x="80" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="230" width="76" height="25" rx="3" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="400" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="230" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="276" font-size="11" fill="#9ca3af" text-anchor="end">73%</text>
+<rect x="80" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="400" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="258" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="72" y="304" font-size="11" fill="#9ca3af" text-anchor="end">91%</text>
+<rect x="80" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="160" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="240" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="320" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="400" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="480" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="560" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="640" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="720" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="800" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="880" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="960" y="286" width="76" height="25" rx="3" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="118.0" y="332" font-size="11" fill="#111827" text-anchor="middle">1K</text>
+<text x="198.0" y="332" font-size="11" fill="#111827" text-anchor="middle">12K</text>
+<text x="278.0" y="332" font-size="11" fill="#111827" text-anchor="middle">24K</text>
+<text x="358.0" y="332" font-size="11" fill="#111827" text-anchor="middle">35K</text>
+<text x="438.0" y="332" font-size="11" fill="#111827" text-anchor="middle">47K</text>
+<text x="518.0" y="332" font-size="11" fill="#111827" text-anchor="middle">58K</text>
+<text x="598.0" y="332" font-size="11" fill="#111827" text-anchor="middle">70K</text>
+<text x="678.0" y="332" font-size="11" fill="#111827" text-anchor="middle">82K</text>
+<text x="758.0" y="332" font-size="11" fill="#111827" text-anchor="middle">93K</text>
+<text x="838.0" y="332" font-size="11" fill="#111827" text-anchor="middle">104K</text>
+<text x="918.0" y="332" font-size="11" fill="#111827" text-anchor="middle">116K</text>
+<text x="998.0" y="332" font-size="11" fill="#111827" text-anchor="middle">128K</text>
+<text x="30" y="360" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 13 Figure 4 重画，黄格位置按解读正文读图：约 35K、深度 27%–45% 与 64% 附近，以及 104K、深度 45%。</text>
+<text x="30" y="384" font-size="13" fill="#6b7280" text-anchor="start">报告原文是 performs well。准确说法是 128K 以内整体检索能力保持良好，不是无损。</text>
+<text x="30" y="408" font-size="13" fill="#6b7280" text-anchor="start">YaRN 只改解耦的 k_R（64 维位置通道），内容潜向量不动。</text>
+</svg>

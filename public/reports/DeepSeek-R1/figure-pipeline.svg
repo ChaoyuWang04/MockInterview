@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">R1-Zero 是纯 RL 实验；R1 是两次 SFT 加两次 RL</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 实验室路径；绿 = 产品路径；紫 = 蒸馏。基座都是 DeepSeek-V3-Base。</text>
+<rect x="40" y="80" width="280" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="180" y="110" font-size="13" fill="#111827" text-anchor="middle">V3-Base 671B / 37B</text>
+<rect x="40" y="160" width="280" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="180" y="188" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">R1-Zero</text>
+<text x="180" y="210" font-size="12" fill="#374151" text-anchor="middle">直接 GRPO，不先 SFT</text>
+<rect x="400" y="160" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="500" y="188" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">冷启动 SFT</text>
+<text x="500" y="210" font-size="12" fill="#374151" text-anchor="middle">数千条长 CoT</text>
+<rect x="640" y="160" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="740" y="188" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第一段 RL</text>
+<text x="740" y="210" font-size="12" fill="#374151" text-anchor="middle">规则 + 语言一致性</text>
+<rect x="880" y="160" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="980" y="188" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">拒绝采样</text>
+<text x="980" y="210" font-size="12" fill="#374151" text-anchor="middle">约 800K SFT 数据</text>
+<rect x="400" y="280" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="500" y="308" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第二次 SFT</text>
+<text x="500" y="330" font-size="12" fill="#374151" text-anchor="middle">推理 + 非推理</text>
+<rect x="640" y="280" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="740" y="308" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">第二段 RL</text>
+<text x="740" y="330" font-size="12" fill="#374151" text-anchor="middle">规则 + 偏好 + 安全</text>
+<rect x="880" y="280" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="980" y="308" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">DeepSeek-R1</text>
+<text x="980" y="330" font-size="12" fill="#374151" text-anchor="middle">产品模型</text>
+<rect x="40" y="280" width="280" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="180" y="308" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">R1-Distill</text>
+<text x="180" y="330" font-size="12" fill="#374151" text-anchor="middle">同一批数据只做 SFT</text>
+<text x="30" y="400" font-size="13" fill="#6b7280">据 PDF p.6、p.26–27、p.60–62 与 Figure 2 重画。Dev1/2/3 是中间 checkpoint，图上省略。</text>
+<text x="30" y="424" font-size="13" fill="#6b7280">黄线证明结果奖励能长出推理；绿线才是可用模型。蒸馏给 1.5B–70B 学生。</text>
+<text x="30" y="448" font-size="13" fill="#6b7280">GRPO 的出处见 DeepSeekMath 一篇，本文不重讲公式。</text>
+</svg>

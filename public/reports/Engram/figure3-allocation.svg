@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">稀疏预算怎么分：纯 MoE 和纯 Engram 都不是底</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">横轴 ρ = 非激活预算分给 MoE 的比例。ρ=1 纯 MoE；往左把专家换成查表槽。两档算力都是 U 形。</text>
+<line x1="80" y1="90" x2="80" y2="310" stroke="#9ca3af" stroke-width="1.4"/><line x1="80" y1="310" x2="1060" y2="310" stroke="#9ca3af" stroke-width="1.4"/><polyline points="120.0,107.4 480.0,223.2 660.0,263.7 795.0,292.6 840.0,304.2 885.0,298.4 1020.0,223.2" fill="none" stroke="#8f8bd8" stroke-width="2.2"/>
+<polyline points="120.0,124.7 480.0,240.5 660.0,275.3 795.0,298.4 840.0,304.2 885.0,298.4 1020.0,223.2" fill="none" stroke="#5fa886" stroke-width="2.2"/>
+<circle cx="120.0" cy="107.4" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="480.0" cy="223.2" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="660.0" cy="263.7" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="795.0" cy="292.6" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="840.0" cy="304.2" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="885.0" cy="298.4" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="1020.0" cy="223.2" r="3.5" fill="#ecebfb" stroke="#8f8bd8"/>
+<circle cx="120.0" cy="124.7" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="480.0" cy="240.5" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="660.0" cy="275.3" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="795.0" cy="298.4" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="840.0" cy="304.2" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="885.0" cy="298.4" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<circle cx="1020.0" cy="223.2" r="3.5" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="120.0" y="332" font-size="11" fill="#9ca3af" text-anchor="middle">0% 纯 Engram</text>
+<text x="840.0" y="332" font-size="11" fill="#111827" text-anchor="middle">约 75%–80%</text>
+<text x="1020.0" y="332" font-size="11" fill="#9ca3af" text-anchor="middle">100% 纯 MoE</text>
+<text x="1050" y="104" font-size="11" fill="#9ca3af" text-anchor="end">验证损失</text>
+<text x="900" y="80" font-size="12" fill="#6b7280" text-anchor="end">紫 2e20　绿 6e20 FLOPs</text>
+<text x="30" y="360" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p.7 Figure 3 左侧重画，柱/点为示意精度。论文拟合谷在 ρ≈75%–80%（约 20%–25% 预算给 Engram）；散点最低约在 85%。</text>
+<text x="30" y="384" font-size="13" fill="#6b7280" text-anchor="start">两端失败原因不同：全给 MoE 还在用深度重建静态表；全给 Engram 则丢掉条件计算。记忆替代不了计算。</text>
+<text x="30" y="408" font-size="13" fill="#6b7280" text-anchor="start">这是锁死总参和每 Token FLOPs 的对照，不是「加了模块所以变好」。</text>
+</svg>

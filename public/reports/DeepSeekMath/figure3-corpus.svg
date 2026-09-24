@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">同样训 150B Token：领先不是因为语料更大、多训了几轮</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = MathPile；黄 = OpenWebMath；紫 = Proof-Pile-2；绿 = DeepSeekMath 语料。虚线约 50B，是 Proof-Pile-2 跑完一个 epoch 的量。</text>
+<!-- GSM8K -->
+<text x="160" y="86" font-size="13" fill="#111827" font-weight="700">GSM8K</text>
+<line x1="70" y1="100" x2="70" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="70" y1="250" x2="330" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="156" y1="100" x2="156" y2="250" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="70,236 156,228 330,224" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="70,210 156,196 330,188" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="70,204 156,186 330,172" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="70,200 156,160 330,112" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="70" y="266" font-size="11" fill="#9ca3af">0</text>
+<text x="320" y="266" font-size="11" fill="#9ca3af">150B</text>
+<!-- MATH -->
+<text x="470" y="86" font-size="13" fill="#111827" font-weight="700">MATH</text>
+<line x1="380" y1="100" x2="380" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="380" y1="250" x2="640" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="466" y1="100" x2="466" y2="250" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="380,236 466,232 640,228" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="380,214 466,200 640,190" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="380,208 466,192 640,178" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="380,206 466,176 640,148" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="380" y="266" font-size="11" fill="#9ca3af">0</text>
+<text x="630" y="266" font-size="11" fill="#9ca3af">150B</text>
+<!-- CMATH -->
+<text x="780" y="86" font-size="13" fill="#111827" font-weight="700">CMATH</text>
+<line x1="690" y1="100" x2="690" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="690" y1="250" x2="950" y2="250" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="776" y1="100" x2="776" y2="250" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="690,214 776,244 950,246" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="690,210 776,196 950,186" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="690,206 776,188 950,174" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="690,200 776,150 950,92" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="690" y="266" font-size="11" fill="#9ca3af">0</text>
+<text x="940" y="266" font-size="11" fill="#9ca3af">150B</text>
+<!-- BBH -->
+<text x="160" y="300" font-size="13" fill="#111827" font-weight="700">BBH</text>
+<line x1="70" y1="314" x2="70" y2="454" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="70" y1="454" x2="330" y2="454" stroke="#9ca3af" stroke-width="1.2"/>
+<line x1="156" y1="314" x2="156" y2="454" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+<polyline points="70,420 156,410 330,404" fill="none" stroke="#b9b9b9" stroke-width="2"/>
+<polyline points="70,400 156,382 330,372" fill="none" stroke="#d4a24c" stroke-width="2"/>
+<polyline points="70,396 156,376 330,366" fill="none" stroke="#8f8bd8" stroke-width="2"/>
+<polyline points="70,392 156,360 330,328" fill="none" stroke="#5fa886" stroke-width="2.4"/>
+<text x="70" y="470" font-size="11" fill="#9ca3af">0</text>
+<text x="320" y="470" font-size="11" fill="#9ca3af">150B</text>
+<text x="30" y="498" font-size="13" fill="#6b7280">据 PDF p.7 Figure 3 重画，终点对齐 Table 1（PDF p.6）。灰线在 CMATH 上掉到「完全不训数学」以下；绿线四处都还在爬。</text>
+</svg>

@@ -2,7 +2,7 @@
 
 <!-- release-date: 2025-10-20 -->
 
-> 本文依据 DeepSeek-AI 发布的 **DeepSeek-OCR: Contexts Optical Compression**，即 arXiv:2510.18234v1、2025-10-21 提交、共 22 页的版本。截至 2026-09-06 核验，arXiv 上仍只有 v1；官方仓库 `deepseek-ai/DeepSeek-OCR` 根目录的 `DeepSeek_OCR_paper.pdf` 逐行比对后与 arXiv 版正文完全一致，只差左侧那条 arXiv 编号水印，本地原件无需更换。下文括号中的 `PDF p. N` 指这份 22 页原文的文件页码。文中会把「报告明确写了什么」「我们如何理解它」和「外部资料补充」分开标注。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-OCR.pdf`，即 **DeepSeek-OCR: Contexts Optical Compression**，arXiv:2510.18234v1、2025-10-21 提交，共 22 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前的最小词汇表
 

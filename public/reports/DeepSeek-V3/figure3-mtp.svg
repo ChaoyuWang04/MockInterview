@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" width="1120" height="520" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="mtp-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="mtp-ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="520" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">MTP 接在主干最后一层的输出上，不插进中间层</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = 主干 Transformer × L；黄 = 与主干共享的 embedding / 输出头；绿 = MTP 自己的投影和一层 Transformer。V3 取 D=1。</text>
+
+<rect x="50" y="78" width="420" height="360" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="260" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">主干：下一个 Token</text>
+<rect x="90" y="122" width="340" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="260" y="149" font-size="13" fill="#111827" text-anchor="middle">共享输出头 OutHead</text>
+<rect x="90" y="186" width="340" height="88" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="260" y="222" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Transformer × L</text>
+<text x="260" y="246" font-size="12" fill="#374151" text-anchor="middle">主模型全部层，输出 h_i^0</text>
+<rect x="90" y="350" width="340" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="260" y="377" font-size="13" fill="#111827" text-anchor="middle">共享 embedding Emb</text>
+<text x="260" y="418" font-size="12" fill="#6b7280" text-anchor="middle">输入 t_1 t_2 t_3 t_4</text>
+
+<rect x="560" y="78" width="520" height="360" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="820" y="104" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">MTP 模块 1：再下一个 Token</text>
+<rect x="600" y="122" width="440" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="820" y="149" font-size="13" fill="#111827" text-anchor="middle">同一份 OutHead → P(t_{i+2})</text>
+<rect x="600" y="186" width="440" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="820" y="217" font-size="13" fill="#111827" text-anchor="middle">TRM_1 · 只有一层 Transformer，不是 × L</text>
+<rect x="600" y="258" width="440" height="52" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="820" y="289" font-size="13" fill="#111827" text-anchor="middle">拼接 RMSNorm(h_i^0) 与 RMSNorm(Emb(t_{i+1}))，M_1 压回 d 维</text>
+<rect x="600" y="350" width="440" height="44" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="820" y="377" font-size="13" fill="#111827" text-anchor="middle">同一份 Emb · 再吃真实的 t_{i+1}</text>
+<text x="820" y="418" font-size="12" fill="#6b7280" text-anchor="middle">额外输入是真值 Token，不是主干猜出来的</text>
+
+<line x1="430" y1="230" x2="592" y2="284" stroke="#5fa886" stroke-width="2.2" marker-end="url(#mtp-ag)"/>
+<text x="470" y="248" font-size="12" fill="#5fa886" font-weight="700">接在这里</text>
+
+<line x1="430" y1="144" x2="592" y2="144" stroke="#d4a24c" stroke-width="1.4" stroke-dasharray="5 4"/>
+<line x1="430" y1="372" x2="592" y2="372" stroke="#d4a24c" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="511" y="136" font-size="11" fill="#d4a24c" text-anchor="middle">共享</text>
+<text x="511" y="364" font-size="11" fill="#d4a24c" text-anchor="middle">共享</text>
+
+<text x="30" y="470" font-size="13" fill="#6b7280">据 PDF p.10 Figure 3 重画。原图用 D=2 示意串行链；V3 训练取 D=1，推理时可整块丢掉绿的，主干独立工作。</text>
+<text x="30" y="494" font-size="13" fill="#6b7280">不是并排多个头：MTP 看到的是主干输出加真实的下一步 embedding，条件概率链是完整的。</text>
+</svg>

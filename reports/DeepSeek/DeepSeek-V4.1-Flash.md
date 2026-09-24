@@ -2,9 +2,9 @@
 
 <!-- release-date: 2026-09-10 -->
 
-> 本文依据 DeepSeek-AI 发布的 **DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression**，即本地 `papers/DeepSeek/DeepSeek-V4.1-Flash.pdf`，共 51 页。官方件见 https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf 。页码均指这份 PDF。全文把三件事分开标注：**报告明确写了什么**、**我们如何解释或验算它**、**哪些是外部资料补充**。凡标着「我们的验算」「我们的推断」「读图估计」的内容，都不是报告的结论。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-V4.1-Flash.pdf`，即 **DeepSeek-V4.1-Flash: Pushing the Limits of KV Cache Compression**，共 51 页。官方件见 https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf 。页码均指这份 PDF。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
-本篇只写 **DeepSeek-V4.1-Flash** 这一具名 checkpoint。前作 [DeepSeek-V4](/reports/DeepSeek/DeepSeek-V4) 是对照，不是本报告发明 CSA、HCA 或 mHC 的地方；那些机制若出现，只说明 V4.1-Flash 改了什么、省了什么。
+本篇只写 **DeepSeek-V4.1-Flash** 这一具名 checkpoint。前作 DeepSeek-V4 一篇是对照，不是本报告发明 CSA、HCA 或 mHC 的地方；那些机制若出现，只说明 V4.1-Flash 改了什么、省了什么。
 
 ## 阅读前先搭一张最小地图
 

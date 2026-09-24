@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">一个 H800 节点：8 卡全互联，再每人一张 IB</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">紫 = GPU；黄 = NVLink Switch（节点内）；绿 = CX7 IB 网卡（节点间）。带宽差大约 4:1。</text>
+<rect x="80" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="130" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 0</text>
+<rect x="200" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="250" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 1</text>
+<rect x="320" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="370" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 2</text>
+<rect x="440" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="490" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 3</text>
+<rect x="560" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="610" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 4</text>
+<rect x="680" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="730" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 5</text>
+<rect x="800" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="850" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 6</text>
+<rect x="920" y="100" width="100" height="56" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="970" y="133" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">GPU 7</text>
+<rect x="80" y="180" width="940" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="550" y="205" font-size="13" fill="#111827" text-anchor="middle">4 颗 NVLink Switch 全互联　标称 400 GB/s，单向按 200，实测约 160</text>
+<rect x="80" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="130" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="200" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="250" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="320" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="370" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="440" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="490" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="560" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="610" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="680" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="730" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="800" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="850" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<rect x="920" y="250" width="100" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="970" y="277" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">CX7</text>
+<text x="30" y="330" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p.7 Figure 2 重画。论文写 400 / 200 / 160 GB/s 与 IB 50 / 40 GB/s；「400 是双向峰值」是我们按这组数字对齐后的读法。</text>
+<text x="30" y="354" font-size="13" fill="#6b7280" text-anchor="start">scale-up 对 scale-out 论文直接说大约 4:1。后文节点受限路由，就是把这个比例写进 Top-K。</text>
+<text x="30" y="378" font-size="13" fill="#6b7280" text-anchor="start">存储另走一张 400G RoCE，不和训练网抢。CPU 两颗，图上从略。</text>
+</svg>

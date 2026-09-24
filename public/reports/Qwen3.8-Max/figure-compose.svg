@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 400" width="1120" height="400" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="qc8c-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="400" fill="#ffffff"/>
+<rect x="40" y="80" width="320" height="96" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="400" y="80" width="320" height="96" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="760" y="80" width="320" height="96" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="40" y="230" width="700" height="96" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="780" y="230" width="300" height="96" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<path d="M200 176 V204 H390" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M560 176 V204" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M920 176 V204 H730" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M390 204 H730" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M560 204 V230" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#qc8c-ar)"/>
+<path d="M740 278 H780" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#qc8c-ar)"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="32" font-size="19" font-weight="700" fill="#111827">一道训练题由三轴拼成环境，打分走侧边接口，不是第四轴</text>
+<text x="32" y="54" font-size="13" fill="#6b7280">灰＝Task / Workspace / Harness　绿＝这一道环境　紫＝统一奖励接口（不是组合维）</text>
+<text x="368" y="136" font-size="18" fill="#6b7280">×</text>
+<text x="728" y="136" font-size="18" fill="#6b7280">×</text>
+<text x="200" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Task · 任务</text>
+<text x="200" y="140" font-size="11" fill="#6b7280" text-anchor="middle">单任务 → 多任务 → 跨天</text>
+<text x="200" y="160" font-size="11" fill="#6b7280" text-anchor="middle">时间跨度本身是难度</text>
+<text x="560" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Workspace · 工作区</text>
+<text x="560" y="140" font-size="11" fill="#6b7280" text-anchor="middle">多文件 → 层级 → 异构目录</text>
+<text x="560" y="160" font-size="11" fill="#6b7280" text-anchor="middle">隔夜之后文件还在，才成题</text>
+<text x="920" y="114" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">Harness · 脚手架</text>
+<text x="920" y="140" font-size="11" fill="#6b7280" text-anchor="middle">类别 / 版本 / 技能</text>
+<text x="920" y="160" font-size="11" fill="#6b7280" text-anchor="middle">Claude Code · Hermes · 同类</text>
+<text x="390" y="266" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">这一道环境</text>
+<text x="390" y="292" font-size="11" fill="#6b7280" text-anchor="middle">磁盘 + 工具 + 模拟钟 + issue 板</text>
+<text x="390" y="312" font-size="11" fill="#6b7280" text-anchor="middle">模型在这里走轨迹，状态不在一整周的上下文里</text>
+<text x="930" y="266" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">统一奖励接口</text>
+<text x="930" y="292" font-size="11" fill="#6b7280" text-anchor="middle">执行 / 量表 / 检查 Agent</text>
+<text x="930" y="312" font-size="11" fill="#6b7280" text-anchor="middle">训练侧看到可比较的信号</text>
+<text x="32" y="360" font-size="13" fill="#6b7280">据原文 Work 小节重画，不是博客原图。紫块侧接绿块：打分出口不是第四轴。</text>
+<text x="32" y="384" font-size="13" fill="#6b7280">3.7 把 Verifier 当轴；3.8 正文没这样写。Verifier 退出轴、收进紫块，是我们的读法。</text>
+</g>
+</svg>

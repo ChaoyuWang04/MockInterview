@@ -2,11 +2,7 @@
 
 <!-- release-date: 2026-01-12 -->
 
-> 本文依据本地原件 `papers/DeepSeek/Engram.pdf`，即 **Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models**，arXiv:2601.07372**v2**，2026-07-12 提交，共 35 页（正文与参考文献 32 页，附录 3 页）。封面署名两家机构：北京大学与 DeepSeek-AI，作者 21 人，首位 Xin Cheng 与次位 Rui Tian 并列共同一作，末位 Wenfeng Liang（PDF p.1）。**本文原先依据 v1（2026-01-12，33 页），现已换成 v2 并逐页重核。**
->
-> 拿着 v1 的读者请注意三件事。**第一，所有实验数字一个都没变**：本文逐页比对了两版正文（p.1–p.20）里出现的每一个数值，集合完全相同，Table 1/2/4/5/6 与 Figure 3/4/5/6/7/8 的内容和编号也都没动，v2 没有重测任何一项。**第二，页码变了，而且不是整体平移。** 正文里有十来处半页到一页的局部位移（例如 §2.4 尾段与 mHC 说明后移到 p.6、Figure 3 后移到 p.7、§4.2 后移到 p.11、§6.4 的结果后移到 p.18），参考文献因新增条目多了两页，附录三节则统一后移两页（Table 5 由 p.31 到 p.33，Figure 8 由 p.32 到 p.34，Table 6 由 p.33 到 p.35）。**本文的每一处页码都已按 v2 重新核对**，逐条位移表在文末。**第三，v2 真正新增的是内容而非数据**：相关工作多了一整节「High-Cardinality Categorical Embeddings」，把 Engram 接到推荐系统的高基数类别嵌入这条线上；作者名单从 14 人扩到 21 人；另有若干引用被修正。逐条清单在文末「资料与阅读边界」。
->
-> 页码均指 PDF 自身页码。本文会把三件事分开写：**论文明确写了什么**、**我们如何理解它**（凡属推算、换算或从图上读数，都会写明）、**外部资料补充**（会给出链接并标注）。
+> 本文依据本地 `papers/DeepSeek/Engram.pdf`，即 **Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models**，arXiv:2601.07372v2、2026-07-12 提交的修订版，共 35 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前先认几个词
 
@@ -29,7 +25,7 @@
 
 - **Engram**：一个可以插进 Transformer 中间某几层的模块。它按当前位置的后缀 N-gram 做哈希查表，取出一条静态向量，再由当前隐状态决定这条向量以多大比例汇入残差流。「engram」在神经科学里指记忆在大脑中留下的物理痕迹。
 
-本站的 [DeepSeek-V4 解读](/reports/DeepSeek/DeepSeek-V4) 依据 V4 自己那份报告，而那份报告的架构部分并没有出现 Engram，所以本篇是 Engram 这项技术在本站的唯一出处。文中会几次用到 mHC 与 DeepSeekMoE 的骨干细节，那两块分别看 [mHC 解读](/reports/DeepSeek/mHC) 与 [DeepSeek-V3 解读](/reports/DeepSeek/DeepSeek-V3)，本文不重复展开。
+V4 那份报告的架构部分没有出现 Engram，所以本篇是这项技术在本站的唯一出处。骨干细节见 DeepSeekMoE 一篇和 mHC 一篇，本文不重复。
 
 ## 一句话先说清
 
@@ -114,47 +110,13 @@ Engram 想说的事，可以压缩成一句反问：
 
 ## 全景：一次 Engram 前向到底发生了什么
 
-先看整体位置。Engram 不是替换某一层，而是**插在选定几层的最前面**，输出以残差方式加回主干，然后才走原本的注意力和 MoE（PDF p.5）。词表嵌入和输出端的 un-embedding 完全不动（PDF p.3，Figure 1 图注）。
+![30 层骨干：Engram 只贴在第 2 层和第 15 层最前面](/reports/Engram/figure1-block.svg)
 
-```mermaid
-flowchart TB
-    IN[输入 Token 序列] --> VE[词表嵌入]
-    VE --> B1[普通 Transformer Block]
-    B1 --> EG[带 Engram 的 Block]
-    EG --> B2[普通 Transformer Block]
-    B2 --> OUT[后续各层直到输出]
+不是替换某一层。词表和输出头完全不动（PDF p.3 Figure 1）。
 
-    subgraph EGDETAIL[带 Engram 的 Block 内部]
-        direction TB
-        H0[进入本层的隐状态] --> E[Engram 模块]
-        E --> ADD[残差相加]
-        H0 --> ADD
-        ADD --> ATT[Attention]
-        ATT --> MOE[MoE]
-    end
+再看模块内部。论文把它拆成**检索**与**融合**两个阶段（PDF p.3）。检索只由输入 Token 决定，所以可以预取；融合才用当前隐状态当 Query 做门。
 
-    EG -.展开.-> EGDETAIL
-```
-
-这张图根据论文 Figure 1 与 Figure 2 重画（PDF p.3、p.5），画的是**机制顺序**，不代表各部分的耗时比例。图中「带 Engram 的 Block」在 27B 实验里出现两次，位置是第 2 层和第 15 层（PDF p.10）。
-
-再看模块内部。论文把它拆成**检索**与**融合**两个阶段（PDF p.3）：
-
-```mermaid
-flowchart TB
-    TOK[当前位置的后缀 N-gram<br/>如 the Great 与 Alexander the Great] --> COMP[Tokenizer 压缩<br/>把同义碎片映射成同一个规范 ID]
-    COMP --> HASH[多头哈希<br/>每个 N-gram 阶用 K 个不同哈希头]
-    HASH --> TAB[从各自的嵌入表取出向量]
-    TAB --> CAT[拼接成一条记忆向量 e_t]
-    CAT --> KV[线性投影成 Key 与 Value]
-    HID[当前隐状态 h_t 作为 Query] --> GATE[归一化后点积再过 Sigmoid<br/>得到 0 到 1 的标量门 α_t]
-    KV --> GATE
-    GATE --> SCALE[门控后的值向量]
-    SCALE --> CONV[深度可分离因果卷积加残差]
-    CONV --> OUTY[输出 Y 加回主干]
-```
-
-这张图根据论文 §2.2、§2.3 与 Figure 1 右侧重画（PDF p.3、p.4），是机制示意，不含任何实测数据。
+![检索是哈希查表，融合才看当前隐状态](/reports/Engram/figure1-retrieve-fuse.svg)
 
 ### 拿一个句子走一遍
 
@@ -227,7 +189,7 @@ $\Vert$ 表示拼接，外层下标跑遍 $n = 2, \ldots, N$，内层跑遍 $k =
 
 这里还藏着一个和门控的配合：门控之所以有存在的必要，一部分原因正是哈希碰撞——论文在 §2.3 把「哈希碰撞或一词多义带来的噪声」明确列为门控要解决的问题（PDF p.4）。所以多头哈希和上下文感知门控是同一个问题的两道防线，一道降低碰撞概率，一道在碰撞真的发生时把它挡在主干之外。
 
-**没有公开的部分。** 哈希函数的具体常数、每张表的实际 $M_{n,k}$、实测碰撞率，论文都没有给。$K = 8$ 这个取值也没有消融。**这是本文能确认的一处缺口**，不是论文没写清楚，而是它确实没有做。想补这一块的读者可以往后跳到「它和已有的『大 embedding』路线差在哪」里 v2 新增的那一小节——论文在那里点出了推荐系统里专门研究碰撞管理与容量分配的一批工作（PDF p.20）。
+**没有公开的部分。** 哈希函数的具体常数、每张表的实际 $M_{n,k}$、实测碰撞率，论文都没有给。$K = 8$ 这个取值也没有消融。**这是本文能确认的一处缺口**，不是论文没写清楚，而是它确实没有做。相关工作里高基数类别嵌入那一节，点出了推荐系统里专门研究碰撞管理与容量分配的一批工作（PDF p.20）。
 
 **规模换算。** 附录 A 给出 Engram-27B 的「Engram Vocab Size」是 2262400，「Engram Dim」是 1280，Engram 层在第 2 和第 15 层（PDF p.33）。**本文的换算是**：$2262400 \times 1280 \times 2 \approx 5.79 \times 10^9$，与正文说的 5.7B 记忆参数吻合；Engram-40B 的 $7239680 \times 1280 \times 2 \approx 1.85 \times 10^{10}$，与 18.5B 吻合（PDF p.9）。所以那一行「Vocab Size」应当理解为**单个 Engram 模块里所有哈希表的总槽位数**，每个槽位存 $d_{\text{mem}}$ 宽的向量。这个口径论文没有明说，是本文从数字对上的。
 
@@ -277,7 +239,7 @@ $\tilde{\mathbf{V}}$ 是整条序列的门控后值向量。论文给的理由�
 
 ## 融合阶段之三：装进多分支残差流
 
-**背景。** 论文的默认骨干不是标准的单条残差流，而是把残差流扩成 $M$ 条并行分支的多分支结构，分支之间由可学习的连接权重调制。实验里用的是 **mHC**（Manifold-Constrained Hyper-Connections，流形约束超连接），$M = 4$（PDF p.5、p.6）。mHC 本身是 DeepSeek 另一篇工作（arXiv:2512.24880，见 PDF p.31 参考文献），本站有专篇 [mHC 解读](/reports/DeepSeek/mHC)，[DeepSeek-V4 解读](/reports/DeepSeek/DeepSeek-V4) 的核心设计二也讲过一轮。读这一节只需要记住一件事：残差流不止一条，而是 $M$ 条并排。
+**背景。** 论文的默认骨干不是标准的单条残差流，而是把残差流扩成 $M$ 条并行分支的多分支结构，分支之间由可学习的连接权重调制。实验里用的是 **mHC**（Manifold-Constrained Hyper-Connections，流形约束超连接），$M = 4$（PDF p.5、p.6）。mHC 本身是 DeepSeek 另一篇工作（arXiv:2512.24880，见 PDF p.31 参考文献），本站 mHC 一篇和 DeepSeek-V4 一篇的核心设计二也讲过。读这一节只需要记住一件事：残差流不止一条，而是 $M$ 条并排。
 
 **问题。** Engram 本身与拓扑无关，但要接到 4 条分支上，就有个选择：每条分支各配一整套记忆表和投影，还是共用？各配一套太贵，共用又会让 4 条分支收到完全相同的注入，浪费了多分支的表达力。
 
@@ -325,6 +287,8 @@ $\rho = 1$ 就是纯 MoE。$\rho < 1$ 意味着砍掉一些路由专家，把省
 |---|---|---|---|
 | $2 \times 10^{20}$ FLOPs | ≈ 5.7B | 568M | 106 |
 | $6 \times 10^{20}$ FLOPs | ≈ 9.9B | 993M | 99 |
+
+![稀疏预算怎么分：纯 MoE 和纯 Engram 都不是底](/reports/Engram/figure3-allocation.svg)
 
 **结果。** 两档都是 U 形（PDF p.8；Figure 3 在 p.7，看左半张）：
 
@@ -385,7 +349,7 @@ U 形的两端各自失败，原因不同，论文写得很清楚（PDF p.8）�
 | 专家（共享 + 路由，top-$k$） | — | 2 + 72（top-6） | 2 + 55（top-6） | 2 + 55（top-6） |
 | Engram 参数 | — | — | 5.7B | 18.5B |
 
-骨干配置在四者之间完全一致：30 层，hidden 2560，注意力用 MLA（32 头），FFN 经 mHC 连接、扩展率 4，优化器 Muon，序列长度 4096，批大小 1280，训练 50000 步，基础学习率 4e-4，负载均衡用无辅助损失方案（PDF p.10、p.33）。MLA 的出处见 [DeepSeek-V2 解读](/reports/DeepSeek/DeepSeek-V2)，DeepSeekMoE 与无辅助损失均衡见 [DeepSeek-V3 解读](/reports/DeepSeek/DeepSeek-V3)。
+骨干配置在四者之间完全一致：30 层，hidden 2560，注意力用 MLA（32 头），FFN 经 mHC 连接、扩展率 4，优化器 Muon，序列长度 4096，批大小 1280，训练 50000 步，基础学习率 4e-4，负载均衡用无辅助损失方案（PDF p.10、p.33）。MLA 见 DeepSeek-V2 一篇，DeepSeekMoE 与无辅助损失均衡见 DeepSeek-V3 一篇。
 
 Engram 自己的配置（PDF p.10、p.33）：插在第 2 和第 15 层，N-gram 取 $\{2,3\}$，8 个哈希头，$d_{\text{mem}} = 1280$，$\rho = 74.3\%$；**嵌入参数单独用 Adam，学习率放大 5 倍，权重衰减设为 0；卷积参数零初始化**，以便训练一开始严格保持恒等映射。
 
@@ -425,7 +389,7 @@ Engram 自己的配置（PDF p.10、p.33）：插在第 2 和第 15 层，N-gram
 
 第三，**Engram-40B 没有全面压过 Engram-27B**。HumanEval 40.8 → 38.4，MBPP 48.2 → 46.2，MATH 30.7 → 30.6，C3 63.6 → 61.8（PDF p.9）。论文的解释是训练不足，依据是「Engram-40B 与基线的训练损失差距在训练末期仍在扩大」（PDF p.11）。**这是作者的观察与推测，不是被实验证明的结论**——要证明它，需要继续训下去。
 
-**一处需要提醒的不一致。** 摘要（PDF p.1）和引言（PDF p.2）都写「MMLU +3.4」，而 §4.2 正文（PDF p.11）和 Table 1（PDF p.9）给的都是 +3.0。**本文的核对是**：+3.4 对应的其实是 MMLU-Redux（60.6 → 64.0）。这多半是摘要与引言一起串行，不影响任何结论，但引用这篇论文的数字时应以表格为准。**v2 没有修掉这处不一致**，两版一字未改。
+**一处需要提醒的不一致。** 摘要（PDF p.1）和引言（PDF p.2）都写「MMLU +3.4」，而 §4.2 正文（PDF p.11）和 Table 1（PDF p.9）给的都是 +3.0。**本文的核对是**：+3.4 对应的其实是 MMLU-Redux（60.6 → 64.0）。这多半是摘要与引言一起串行，不影响任何结论，但引用这篇论文的数字时应以表格为准。
 
 **还有一件论文没做的事。** 全部对照都在 base 模型上完成，没有 SFT 或 RL 之后的结果。Engram 这种「静态模式记忆」在对齐训练后是被强化还是被覆盖，论文没有回答。
 
@@ -507,7 +471,7 @@ $k$ 取 5，用来滤掉低相似度噪声（PDF p.15）。$a_j$ 可以读作「
 - **46k 步**（预训练损失 1.63）：与训满的 MoE-27B **预训练损失相同**，是干净的 iso-loss 设定；
 - **50k 步**（预训练损失 1.62）：与基线同算力，是常规的 iso-FLOPs 设定。
 
-三者走**完全相同**的上下文扩展流程：YaRN，32768 上下文，5000 步，30B token 高质量长文本；超参 $s = 10$、$\alpha = 1$、$\beta = 32$、缩放因子 $f = 0.707$（PDF p.12）。扩展策略沿用 DeepSeek-V3 那一套（PDF p.12），细节见 [DeepSeek-V3 解读](/reports/DeepSeek/DeepSeek-V3)。
+三者走**完全相同**的上下文扩展流程：YaRN，32768 上下文，5000 步，30B token 高质量长文本；超参 $s = 10$、$\alpha = 1$、$\beta = 32$、缩放因子 $f = 0.707$（PDF p.12）。扩展策略沿用 DeepSeek-V3 那一套（PDF p.12），细节见 DeepSeek-V3 一篇。
 
 **两个评测集也值得先解释一句。** RULER 是合成长文本任务集，论文用了 14 个子集，归成 8 类：单针、多键、多值、多查询四种大海捞针，加上多跳变量追踪、常见词提取、高频词提取和问答（PDF p.12）。LongPPL 则不是普通困惑度——论文引用的那篇工作，标题直接就叫「长上下文语言建模的困惑度错在哪里」（PDF p.24 参考文献）；**论文正文没有解释它具体怎么改的**，只给了引用，所以本文也不替它展开。读者只需要知道：这里的 Perplexity 一列不是标准 PPL，跨论文比较这个数字没有意义。
 
@@ -543,7 +507,7 @@ $k$ 取 5，用来滤掉低相似度噪声（PDF p.15）。$a_j$ 可以读作「
 
 **系统侧只想要晚。** Engram 越靠后，前面可用来遮挡 PCIe 传输的计算窗口就越长，越不容易让 GPU 停下来等数据（PDF p.6）。
 
-**一处措辞值得记下来。** §2.3 末尾那句交代插入位置的话，v2 改过。v1 说的是位置「**由**系统级延迟约束**决定**」，v2 改成位置「经过优化，**在建模效果与系统级延迟约束之间取平衡**」（PDF p.5）。改动只有半句，方向却很清楚：作者把「位置是系统说了算」纠正成了「位置是两方共同的解」。这正是本节要讲的拉扯，也说明 v1 那句话确实容易让人误读成单方约束。
+§2.3 把插入位置写成：经过优化，**在建模效果与系统级延迟约束之间取平衡**（PDF p.5）。位置不是系统单方说了算。
 
 **实验怎么定的。** 骨干换成一个 12 层、3B 总参、0.56B 激活的小 MoE，训练 100B token；基线验证损失 1.808。把固定 1.6B 的 Engram 预算合并成**单个**模块，从第 1 层扫到第 12 层（PDF p.15、p.16）。
 
@@ -637,7 +601,7 @@ $k$ 取 5，用来滤掉低相似度噪声（PDF p.15）。$a_j$ 可以读作「
 
 **设置**（PDF p.17、p.18）：
 
-- 推理框架基于 nano-vLLM，论文称它是工业级 vLLM 引擎的精简原型；vLLM 的论文见 [PagedAttention 解读](/reports/Berkeley/PagedAttention)；
+- 推理框架基于 nano-vLLM，论文称它是工业级 vLLM 引擎的精简原型；vLLM 见 PagedAttention 一篇；
 - 骨干故意选**稠密**模型（Dense-4B 与 Dense-8B），为的是避开 MoE 专家并行的通信干扰，拿到干净的延迟基线；
 - 往第 2 个 Transformer block 里插一个 **100B 参数**的 Engram 层，整张表常驻主机 DRAM；
 - 硬件 NVIDIA H800，负载 512 条序列，长度服从 `Uniform(100, 1024)`。
@@ -679,8 +643,6 @@ Engram 不是第一个想到「用大表换算力」的工作。论文在 §7 �
 | 参数化记忆层 | PKM、PEER、Selfmem、Memory+、UltraMem | 大规模稀疏 KV 存储，由隐状态寻址 |
 | 非参数化记忆 | REALM、RETRO、CoG、PlugLM | 外部可编辑知识库，不进参数 |
 
-上表中「高基数类别嵌入」「把 N-gram 结构接进 Transformer」两行，以及超大词表嵌入里的 STEM 与 L3、非参数化记忆里的 CoG，都是 **v2 才补进来的邻居**；v1 的相关工作没有它们。
-
 论文自己总结了两条差异（PDF p.19）：
 
 **第一条是评测协议。** 已有工作大多把 N-gram 嵌入当作外挂增强，没有在严格公平的协议下验证效率。论文点名说 OverEncoding 在稀疏 MoE 骨干上「即使在非等参数设定下也拿不到有意义的改善」（PDF p.19）。Engram 的做法是把条件记忆当成一等建模原语，放进 Sparsity Allocation 框架里，和严格 iso-parameter、iso-FLOPs 的 MoE 基线比。
@@ -689,9 +651,9 @@ Engram 不是第一个想到「用大表换算力」的工作。论文在 §7 �
 
 **本文的判断**：第二条是这篇论文真正独特的地方。第一条更像是「把别人做过的事做严谨」，价值很大但方法上不新；而「把模块位置当成一个同时受建模与延迟约束的变量」，是一个能推广到很多设计里的思路。
 
-### v2 新补的一节：同样的问题，推荐系统早就做过一遍
+### 同样的问题，推荐系统早就做过一遍
 
-v2 在相关工作里加了一整节新的，标题叫「High-Cardinality Categorical Embeddings」（高基数类别嵌入），v1 里完全没有（PDF p.20）。这一节值得单独讲，因为它把 Engram 的技术谱系接到了一个和 NLP 平行、但走得更远的领域。
+相关工作里有一节「High-Cardinality Categorical Embeddings」（高基数类别嵌入，PDF p.20）。它把 Engram 接到一条和 NLP 平行、但走得更远的线上。
 
 **问题是同一个。** 大规模推荐系统要为几百个类别特征学嵌入，每个特征的取值空间可能有几百万到几十亿个 ID（PDF p.20）。这和 Engram 面对的局面一模一样：键空间大到不可能给每个键分配一行，访问分布又极度倾斜——少数热门 ID 占掉绝大多数请求。
 
@@ -706,11 +668,11 @@ v2 在相关工作里加了一整节新的，标题叫「High-Cardinality Catego
 
 **论文自己划的界。** 它说 Engram 与这条线共享的是「在高度倾斜的访问分布下表示一个极大离散键空间」这个挑战，**不同之处有两点**：键是由**有序文本 N-gram** 构造的，而不是无序的类别 ID；注入点在 **Transformer 的中间层**并且经过上下文感知门控，而不是在输入侧拼接（PDF p.20）。
 
-**这一节为什么重要。** 它把本文前面几节里那些看着像「DeepSeek 的巧思」的设计，重新定位成了**一个跨领域的共同问题**。最直接的证据在论文自己身上：§2.2 讲多头哈希时引的 Tito Svenstrup 等人 2017，在这一节里被再引了一次，与推荐系统的 compositional embeddings 并列（PDF p.4、p.20）。也就是说，**Engram 的哈希这一层本来就是从那条线借来的**，v2 只是把这件事挑明了。
+**这一节为什么重要。** 它把本文前面几节里那些看着像「DeepSeek 的巧思」的设计，重新定位成了**一个跨领域的共同问题**。最直接的证据在论文自己身上：§2.2 讲多头哈希时引的 Tito Svenstrup 等人 2017，在这一节里被再引了一次，与推荐系统的 compositional embeddings 并列（PDF p.4、p.20）。也就是说，**Engram 的哈希这一层本来就是从那条线借来的**，相关工作把这件事挑明了。
 
 **那 Engram 新在哪。** 按论文自己划的界，新的是把这套表示搬进**语言模型的中间层**，并让**上下文门控**决定取回来的东西要不要用（PDF p.20）。**本文的补充理解**：门控之所以在 NLP 这边变得必要，是因为键的性质不同——一个商品 ID 不会一词多义，而 `the Great` 会；同一条 N-gram 在不同句子里可能指完全不同的东西，所以必须有人在注入前问一句「这次算不算数」。
 
-**对读者的直接用处。** 如果你要动手实现类似的东西，**别只读这一篇论文**。Engram 没公开的那几样——哈希函数的具体常数、每张子表怎么划分容量、实测碰撞率——恰好就是这一节列出的那批工作在研究的东西（频率感知哈希与碰撞管理、按频率或重要性分配容量、量化与张量分解压缩，PDF p.20）。**本文的判断**：这是 v2 给读者最实在的一条新增指路，它把「论文没写的部分该去哪儿找」直接指了出来。至于那些工作各自的结论如何，本文没有逐篇核对，只转述论文的归类。
+**对读者的直接用处。** 如果你要动手实现类似的东西，**别只读这一篇论文**。Engram 没公开的那几样——哈希函数的具体常数、每张子表怎么划分容量、实测碰撞率——恰好就是这一节列出的那批工作在研究的东西（频率感知哈希与碰撞管理、按频率或重要性分配容量、量化与张量分解压缩，PDF p.20）。**本文的判断**：相关工作这一节把「论文没写的部分该去哪儿找」直接指了出来。至于那些工作各自的结论如何，本文没有逐篇核对，只转述论文的归类。
 
 ### 还有一条线索藏在相关工作里
 
@@ -846,23 +808,7 @@ U 形分配律的真正意义，是它把「MoE 还是记忆」这个二选一�
 
 ## 用一张图重新串起全文
 
-```mermaid
-flowchart TB
-    A[矛盾：Transformer 没有查表原语<br/>只能用多层计算重建静态模式] --> B[新稀疏轴：条件记忆<br/>按输入决定读哪些参数]
-    B --> C[检索：tokenizer 压缩 + 多头哈希<br/>常数时间取回静态向量]
-    B --> D[融合：标量门控 + 短卷积<br/>+ 多分支各自表态]
-    C --> E[分配律：同参数同算力下<br/>非激活预算约五分之一到四分之一给记忆最优]
-    D --> E
-    E --> F[27B 对照：知识涨<br/>推理与代码涨得更多]
-    F --> G[机制：LogitLens 与 CKA 显示<br/>浅层等价于基线的更深层]
-    F --> H[长上下文：注意力被腾出<br/>多查询检索 84.2 到 97.0]
-    C --> I[系统：地址只由输入决定<br/>可提前预取并与计算重叠]
-    I --> J[100B 表放主机内存<br/>吞吐损失最高不到三个百分点]
-    G --> K[缺口：哈希细节、碰撞率<br/>训练侧通信、缓存层级均未公开]
-    J --> K
-```
-
-这张图是本文对全文逻辑的归纳，不对应论文中的任何一张图。图中的定性表述对应下列精确数字：分配比 $\rho \approx 75\%$–$80\%$（PDF p.8）、多查询大海捞针 84.2 → 97.0（PDF p.11）、吞吐损失峰值 2.8%（PDF p.18）。
+![从矛盾到系统：全文一条链](/reports/Engram/figure-chain.svg)
 
 ## 关键词回看
 
@@ -874,7 +820,7 @@ flowchart TB
 - **Context-aware gating（上下文感知门控）**：隐状态当 Query、记忆当 Key/Value，归一化点积过 Sigmoid 得到标量门 $\alpha_t$；记忆与语境矛盾时趋近 0（PDF p.4）。
 - **Effective depth（有效深度）**：LogitLens 的逐层 KL 与 CKA 的对角线上移共同支持的结论——Engram 的浅层表示相当于基线的更深层，例如第 5 层约等于第 12 层（PDF p.15）。
 - **软对齐指标 $a_j$**：把 CKA 相似度矩阵 $S \in [0,1]^{L\times L}$ 压成一条可读曲线的办法。取与 Engram 第 $j$ 层最相似的 top-5 个 MoE 层，按相似度求加权质心，得到「相当于第几层」的实数读数（PDF p.15）。
-- **High-cardinality categorical embeddings（高基数类别嵌入）**：推荐系统里为百万到十亿量级的类别 ID 学嵌入的那条研究线。v2 新增的相关工作一节把 Engram 接到了这里——同样是巨大离散键空间加极度倾斜的访问分布，区别在于 Engram 的键来自有序文本 N-gram，且注入在 Transformer 中间层（PDF p.20）。
+- **High-cardinality categorical embeddings（高基数类别嵌入）**：推荐系统里为百万到十亿量级的类别 ID 学嵌入的那条研究线。相关工作把 Engram 接到了这里——同样是巨大离散键空间加极度倾斜的访问分布，区别在于 Engram 的键来自有序文本 N-gram，且注入在 Transformer 中间层（PDF p.20）。
 - **Iso-loss 设定**：比架构时对齐**基座预训练损失**而不是训练步数。Engram-27B（46k）与 MoE-27B（50k）的预训练损失都是 1.63（PDF p.11）。
 - **Deterministic addressing（确定性寻址）**：检索下标只由输入 Token 序列决定，与隐状态无关，因此能在执行到那一层之前算出来并预取（PDF p.6）。
 - **Zipf 分布与多级缓存**：少数 N-gram 占绝大多数访问，因此高频放 HBM/DRAM、长尾放 SSD。**这是构想，论文未实现也未实测**（PDF p.6）。
@@ -916,33 +862,10 @@ flowchart TB
 
 ## 资料与阅读边界
 
-- 原始依据：本地 `papers/DeepSeek/Engram.pdf`，**Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models**，arXiv:2601.07372**v2**，2026-07-12 提交，35 页。文中所有页码均指该 PDF 自身页码。
-- 论文页：[arXiv:2601.07372](https://arxiv.org/abs/2601.07372)。官方提交历史为 v1（2026-01-12，33 页）与 v2（2026-07-12，35 页）。**本文早先依据 v1 写成，现已换成 v2 原件并逐页重核**，下面是完整的两版差异清单。
-
-  **没有变的（已逐项核对）：**
-
-  - **全部实验数字。** 正文 p.1–p.20 出现的所有数值，两版取出来是同一个集合，无一增删或改动。Table 1（含 Engram-40B 一列）、Table 2、Table 4、Table 5、Table 6 与 Figure 3/4/5/6/7/8 的内容完全一致，v2 **没有重测任何一项**；
-  - **图表编号。** Figure 1–8、Table 1–6 编号全部照旧，没有任何位移；
-  - **正文结构。** §1 到 §8 的编号与标题、§2.1–§2.5、§3.1–§3.2、§4.1–§4.2、§5.1–§5.2、§6.1–§6.5 与 §6.1.1/§6.1.2 全部不变；附录仍是 A/B/C 三节；
-  - **摘要的那处不一致。** 摘要与引言仍写 MMLU +3.4，而 Table 1 与 §4.2 是 +3.0，v2 没有修。
-
-  **变了的：**
-
-  - **页数 33 → 35。** 参考文献新增 22 条、删除 1 条，因此多占了两页（v1 到 p.30 结束，v2 到 p.32），附录三节随之统一后移两页。正文侧的位移是局部的：§2.3 末尾那句残差整合从 p.4 挪到 p.5，§2.4 的 FP8 融合与 mHC $M=4$ 从 p.5 挪到 p.6，Figure 3 从 p.6 挪到 p.7，§4.2 从 p.10 挪到 p.11，§5.1 从 p.11 挪到 p.12，§6.1.1 从 p.13 挪到 p.14，§6.3 从 p.16 挪到 p.17，§6.4 的 Results 从 p.17 挪到 p.18，相关工作的「第 0 层」论述从 p.19 挪到 p.20，「知识存储机制」与结论从 p.20 挪到 p.21；Table 5 p.31 → p.33，Figure 8 p.32 → p.34，Table 6 p.33 → p.35。**本文的每一处 `PDF p.N` 都按 v2 重新核对过。**
-  - **相关工作新增一整节「High-Cardinality Categorical Embeddings」**（PDF p.20），把 Engram 与推荐系统的高基数类别嵌入并置。这是 v2 唯一的实质性内容新增，本文单开一节讲了它。
-  - **相关工作还补了若干邻居**：超大词表嵌入一类加入 STEM 与 L3；新增 N-Grammer 与 Feng 等 2023（语音识别里的 N-gram）；非参数化记忆加入 CoG。
-  - **作者从 14 人扩到 21 人**，并首次标注共同一作（Xin Cheng 与 Rui Tian 带 `*`，脚注「Equal contribution」）。新增七位：Rui Tian、Chengqi Deng、Shangyan Zhou、Chenggang Zhao、Zhengyan Zhang、Yixuan Wei、M.Y Xu。通讯邮箱也加入了 tianr22。
-  - **一处措辞修订**：§2.3 末尾关于插入位置的表述，从「由系统级延迟约束决定」改成「在建模效果与系统级延迟约束之间取平衡」（PDF p.5）。
-  - **引用清理**：Kimi-K2 的标签从 `Team et al., 2025` 改成 `Kimi, 2025`；Muon 的第二处引用从 `Team et al., 2025` 改成 `Liu et al., 2025b`（即 Muon-is-Scalable 那篇，本站有 [专篇解读](/reports/Moonshot/Muon-is-Scalable-for-LLM-Training)）；MLA 的引用从 `DeepSeek-AI et al., 2024` 改成 `DeepSeek-AI, 2024`，对应的参考文献条目把上百人的作者名单折叠成了「DeepSeek-AI.」；v1 里的 Kimi Linear 参考条目在 v2 中被删除。
-  - **v2 自己引入的小瑕疵**：新增的 CoG 引用写作 `(Cao et al.; Lan et al., 2023)`，其中 Cao 那条**没有年份**，对应的参考文献条目也缺年份。另外 v2 这份 PDF 的文档信息字典是坏的——`pdfinfo` 读它会报 `Unterminated string` 并且取不到 Title/Author，而 v1 那份是完整的。两处都不影响任何技术结论，但用脚本抽取元数据的人会踩到。
-  - Figure 4 图注里的 `=Engram's shallow layers` 这个多余等号、Table 4 图注里的 `infernece` 拼写，**两版都在**，v2 没有顺手修掉。
-- `release-date` 取 **2026-01-12**。理由：Engram 是一项技术方案，**没有任何对外开放的具名模型或权重**，官方仓库只提供论文与演示代码，因此按 `docs/10-材料解读流程.md` 第一节取「该技术首次官方公开日」。已核查的官方渠道中，最早的官方公开事件有两个，同在这一天：官方仓库 [deepseek-ai/Engram](https://github.com/deepseek-ai/Engram) 的首个提交 `init`（2026-01-12 09:11:09 UTC，外部核对：[commits API](https://api.github.com/repos/deepseek-ai/Engram/commits)），以及 arXiv v1 提交（2026-01-12 09:54:49 UTC）。**为什么不是其它候选日**：2026-07-12 是 v2 修订，按流程「首发日是不变事件，后续论文上传或修订不得回写」；2026-01-14 是仓库最后一次推送（合并一个拼写修正 PR），晚于首发；仓库 `createdAt` 为 2026-01-12 05:26:50 UTC，按流程仓库创建时间不作为首发日证据，但它与首发同日，不改变结论；部分媒体写的 2026-01-13 是转载日，非官方事件。
-- 外部补充（**均为核验用途，不构成论文内容**）：
-  - arXiv 官方页与提交历史：<https://arxiv.org/abs/2601.07372>；
-  - 官方仓库：<https://github.com/deepseek-ai/Engram>——README 说明所提供代码是「演示版本，用于展示数据流」，**未发布模型权重**；
-  - 仓库元数据与提交时间：<https://api.github.com/repos/deepseek-ai/Engram> 与 <https://api.github.com/repos/deepseek-ai/Engram/commits>；
-  - mHC 论文编号 arXiv:2512.24880，取自本 PDF 参考文献（PDF p.31），未另行核对原文；
-  - nano-vLLM 仓库地址取自本 PDF 脚注（PDF p.17）：<https://github.com/GeeeekExplorer/nano-vllm>。
-- **本模块只依据 PDF。** 仓库里存在 `projects/模型架构/Engram/`（官方 repo 的本地副本），按 `docs/10-材料解读流程.md` 的规定，本文**没有**用它的源码现状补写论文内容；上面关于「只有演示代码、没有权重」的说法来自 GitHub 页面的公开描述，已标为外部补充。
-- 本仓库内部交叉引用：mHC 见 [mHC 解读](/reports/DeepSeek/mHC) 与 [DeepSeek-V4 解读](/reports/DeepSeek/DeepSeek-V4) 的核心设计二；MLA 见 [DeepSeek-V2 解读](/reports/DeepSeek/DeepSeek-V2)；DeepSeekMoE、无辅助损失负载均衡与 YaRN 上下文扩展见 [DeepSeek-V3 解读](/reports/DeepSeek/DeepSeek-V3)；Muon 见 [Muon-is-Scalable 解读](/reports/Moonshot/Muon-is-Scalable-for-LLM-Training)；vLLM 见 [PagedAttention 解读](/reports/Berkeley/PagedAttention)。需要说明的是，**V4 那份报告的架构部分并没有出现 Engram**，所以本篇是 Engram 在本站的唯一出处，两篇之间不存在需要对齐的说法。这些交叉引用只用于给读者指路，不构成本篇的论据。
-- 文中所有标为「本文换算」「本文的换算」「本文从图上读到」「本文注意到」「本文的观察」「本文的解读」「本文的判断」「本文的猜测」的内容，都是对论文数据的二次处理，不是论文原文结论；论文原文结论一律带 PDF 页码。
+- 原始依据：本地 `papers/DeepSeek/Engram.pdf`，**Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models**，arXiv:2601.07372v2，2026-07-12 提交，35 页。文中页码均指该 PDF。封面署北京大学与 DeepSeek-AI，作者 21 人，Xin Cheng 与 Rui Tian 共同一作（PDF p.1）。
+- 论文页：<https://arxiv.org/abs/2601.07372>。本文只依据这份 v2 原件。
+- `release-date` 取 **2026-01-12**：Engram 没有对外开放的具名模型或权重，按流程取该技术首次官方公开日。当天两个官方事件：仓库 [deepseek-ai/Engram](https://github.com/deepseek-ai/Engram) 首提交 `init`（2026-01-12 09:11:09 UTC），以及 arXiv v1。后续 v2 修订不回写首发日。
+- 外部补充（核验用，不构成论文内容）：官方仓库 README 写明代码是演示数据流、**未发布模型权重**；mHC 编号 arXiv:2512.24880 取自本 PDF 参考文献（PDF p.31）；nano-vLLM 地址取自本 PDF 脚注（PDF p.17）。
+- **本模块只依据 PDF。** 仓库副本在 `projects/模型架构/Engram/`，本文没有用它的源码现状补写论文内容。
+- 交叉引用只指路，不构成本篇论据：mHC 一篇、DeepSeek-V2 一篇（MLA）、DeepSeek-V3 一篇（DeepSeekMoE、无辅助损失、YaRN）、Muon-is-Scalable 一篇、PagedAttention 一篇。V4 报告的架构部分没有 Engram。
+- 文中标为「本文换算」「本文从图上读到」「本文注意到」「本文的观察」「本文的解读」「本文的判断」「本文的猜测」的内容，都是二次处理，不是论文原文结论；论文原文结论一律带 PDF 页码。

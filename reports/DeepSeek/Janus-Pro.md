@@ -2,9 +2,7 @@
 
 <!-- release-date: 2025-01-27 -->
 
-> 本文依据 DeepSeek-AI 的 **Janus-Pro: Unified Multimodal Understanding and Generation with Data and Model Scaling**，即 arXiv:2501.17811v1（2025-01-29 提交）。经逐页比对，官方仓库 `deepseek-ai/Janus` 里的 `janus_pro_tech_report.pdf`（最后一次改动是 2025-01-28 的 fix typos）与该 arXiv 版本正文逐字相同、分页一致，因此本地件已经是最新官方版本。
->
-> 全文页码指 PDF 自身页码（本报告 PDF 页码与印刷页码一致）。文中会区分三件事：报告写了什么、我们如何解释、哪些是外部补充。
+> 本文依据本地 `papers/DeepSeek/Janus-Pro.pdf`，即 **Janus-Pro: Unified Multimodal Understanding and Generation with Data and Model Scaling**，arXiv:2501.17811v1、2025-01-29 提交。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 先说清这条线上的几个词
 

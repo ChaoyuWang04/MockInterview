@@ -2,7 +2,7 @@
 
 <!-- release-date: 2026-04-30 -->
 
-> 本文依据 DeepSeek-AI 与北京大学、清华大学合作的技术报告 **Thinking with Visual Primitives**，本地原件为 `papers/DeepSeek/Thinking-with-Visual-Primitives.pdf`，共 25 页。这份工作没有 arXiv 编号，2026-04-30 通过 DeepSeek 官方 GitHub 仓库发布；该仓库随后被删除，正文末尾的资料一节说明了核对过程。页码均指 PDF 自身页码。文中会明确区分「报告写了什么」「我们从中推算出什么」和「外部补充」。
+> 本文依据本地 `papers/DeepSeek/Thinking-with-Visual-Primitives.pdf`，即 **Thinking with Visual Primitives**，共 25 页。这份工作没有 arXiv 编号。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 从三个模型做不好的小任务说起
 

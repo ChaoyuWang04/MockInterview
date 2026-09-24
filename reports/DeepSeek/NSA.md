@@ -2,7 +2,7 @@
 
 <!-- release-date: 2025-02-16 -->
 
-> 本文依据 DeepSeek-AI 等发布的 **Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention**，即 arXiv:2502.11089v2、2025-02-27 修订版，共 25 页（正文与参考文献 20 页，附录 5 页）。封面署名三家机构：DeepSeek-AI、北京大学多媒体信息处理重点实验室 / PKU-Anker LLM Lab、华盛顿大学；第一作者 Jingyang Yuan 的贡献产生于在 DeepSeek-AI 实习期间（PDF p.1 脚注）。动笔前已核对 arXiv 官方页与官方 API：该论文只有 v1（2025-02-16）与 v2（2025-02-27）两个版本，**本地 PDF 就是最新的 v2**，不存在更新修订。页码均指 PDF 本身的页码。本文会把三件事分开写：**报告明确写了什么**、**我们如何理解它**（凡属推算、换算或图上读数都会写明）、**外部资料补充**（会给出链接并标注）。
+> 本文依据本地 `papers/DeepSeek/NSA.pdf`，即 **Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention**，arXiv:2502.11089v2、2025-02-27 提交的修订版，共 25 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前先搭一张最小地图
 

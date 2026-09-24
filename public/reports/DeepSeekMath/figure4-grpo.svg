@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">PPO 用一个一样大的价值模型估基线；GRPO 用同组回答的平均分</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = PPO 多出来、又贵又难训准的价值模型；绿 = GRPO 直接测出来的组内基线。两边都有策略、奖励模型和参考模型。</text>
+<rect x="40" y="80" width="500" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="580" y="80" width="500" height="280" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="290" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">PPO：采 1 个回答</text>
+<text x="830" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">GRPO：一次采 G 个回答</text>
+<rect x="90" y="130" width="180" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="180" y="157" font-size="13" fill="#111827" text-anchor="middle">策略模型</text>
+<rect x="310" y="130" width="180" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="400" y="157" font-size="13" fill="#111827" text-anchor="middle">奖励模型</text>
+<rect x="90" y="200" width="400" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="290" y="230" font-size="13" fill="#111827" text-anchor="middle">价值模型：逐 Token 预测「这里该得几分」</text>
+<rect x="90" y="274" width="400" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="290" y="304" font-size="13" fill="#111827" text-anchor="middle">实际回报减预测值，经 GAE 得 advantage</text>
+<rect x="630" y="130" width="180" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="720" y="157" font-size="13" fill="#111827" text-anchor="middle">策略模型</text>
+<rect x="850" y="130" width="180" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="940" y="157" font-size="13" fill="#111827" text-anchor="middle">奖励模型</text>
+<rect x="630" y="200" width="400" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="830" y="230" font-size="13" fill="#111827" text-anchor="middle">G 个分数的均值和标准差 = 这道题的基线</text>
+<rect x="630" y="274" width="400" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="830" y="304" font-size="13" fill="#111827" text-anchor="middle">每个分数减组均值再除以标准差 = advantage</text>
+<text x="30" y="390" font-size="13" fill="#6b7280">据 PDF p.13 Figure 4 重画，只保留 advantage 来源的差别。价值模型通常和策略一样大；长回答往往只在最后一个 Token 拿到分数。</text>
+</svg>

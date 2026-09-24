@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 540" width="1120" height="540" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="qc8r-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="540" fill="#ffffff"/>
+<rect x="40" y="80" width="1040" height="44" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="40" y="148" width="220" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="300" y="148" width="220" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="560" y="148" width="220" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="860" y="148" width="220" height="64" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="40" y="300" width="500" height="150" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="580" y="300" width="500" height="150" rx="8" fill="#ffffff" stroke="#8f8bd8" stroke-dasharray="5 4"/>
+<rect x="60" y="336" width="460" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="600" y="336" width="140" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-dasharray="5 4"/>
+<rect x="760" y="336" width="140" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-dasharray="5 4"/>
+<rect x="920" y="336" width="140" height="48" rx="6" fill="#ecebfb" stroke="#8f8bd8" stroke-dasharray="5 4"/>
+<path d="M260 180 H300" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M520 180 H560" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M780 180 H820" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M840 180 H860" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M150 212 V228" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M410 212 V228" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M670 212 V228" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M970 212 V228" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M150 228 H970" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M560 228 V268" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M290 268 H830" fill="none" stroke="#9ca3af" stroke-width="1.4"/>
+<path d="M290 268 V300" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#qc8r-ar)"/>
+<path d="M830 268 V300" fill="none" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#qc8r-ar)"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<text x="32" y="32" font-size="19" font-weight="700" fill="#111827">跨天发生在工作区上；逐步打分是虚线，不是博客原文</text>
+<text x="32" y="54" font-size="13" fill="#6b7280">绿＝工作区还在　黄＝这一 round 的生成　实线紫＝终点结算　虚线框＝实现未公开的逐步分</text>
+<text x="560" y="108" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">工作区磁盘 · 跨 round 还在</text>
+<text x="150" y="174" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">round 1</text>
+<text x="150" y="196" font-size="11" fill="#6b7280" text-anchor="middle">生成 + 调工具</text>
+<text x="410" y="174" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">round 2</text>
+<text x="410" y="196" font-size="11" fill="#6b7280" text-anchor="middle">生成 + 调工具</text>
+<text x="670" y="174" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">round 3</text>
+<text x="670" y="196" font-size="11" fill="#6b7280" text-anchor="middle">生成 + 调工具</text>
+<text x="970" y="174" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">round k</text>
+<text x="970" y="196" font-size="11" fill="#6b7280" text-anchor="middle">生成 + 调工具</text>
+<text x="830" y="184" font-size="13" fill="#9ca3af" text-anchor="middle">…</text>
+<text x="290" y="322" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">终点一个 R · 博客撑得住</text>
+<text x="830" y="322" font-size="14" font-weight="700" fill="#111827" text-anchor="middle">逐步 Rₖ · 实现未公开</text>
+<text x="290" y="366" font-size="13" fill="#111827" text-anchor="middle">统一奖励 → 一个标量 R</text>
+<text x="670" y="366" font-size="13" fill="#111827" text-anchor="middle">R₁</text>
+<text x="830" y="366" font-size="13" fill="#111827" text-anchor="middle">R₂</text>
+<text x="990" y="366" font-size="13" fill="#111827" text-anchor="middle">Rₖ</text>
+<text x="290" y="412" font-size="11" fill="#6b7280" text-anchor="middle">若 GRPO 只用这个 R，本段 token 同一个 A</text>
+<text x="290" y="432" font-size="11" fill="#6b7280" text-anchor="middle">中间分再细，加总后仍是一个数</text>
+<text x="830" y="412" font-size="11" fill="#6b7280" text-anchor="middle">中间产物每 round 可打一次，更细</text>
+<text x="830" y="432" font-size="11" fill="#6b7280" text-anchor="middle">接到哪些 token、算不算 A，博客没写</text>
+<text x="32" y="480" font-size="13" fill="#6b7280">黄块缺口是环境事件，不是墙钟。同一题另采 G 条是组采样，不要画进这条时间线。Advantage 是优化器，环境给不出。</text>
+<text x="32" y="504" font-size="13" fill="#6b7280">虚线更细，不自动对准一周目标，也不能单靠环境宣称训完。均衡器吃的是许多道题，不是这一条里的 round。</text>
+</g>
+</svg>

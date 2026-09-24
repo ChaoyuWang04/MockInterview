@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="en-ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="en-ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">30 层骨干：Engram 只贴在第 2 层和第 15 层最前面</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = 不动或普通层；绿 = Engram；紫 = 该层原来的 Attention 与 MoE。27B 是 30 层，第 1 层是稠密 FFN。</text>
+
+<rect x="40" y="72" width="420" height="430" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="250" y="98" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">整模</text>
+<rect x="70" y="112" width="360" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="250" y="135" font-size="13" fill="#111827" text-anchor="middle">词表嵌入 · 不动</text>
+<rect x="70" y="156" width="360" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="250" y="179" font-size="13" fill="#111827" text-anchor="middle">第 1 层 · 稠密 FFN，无 Engram</text>
+<rect x="70" y="200" width="360" height="70" rx="6" fill="#ffffff" stroke="#5fa886"/>
+<rect x="82" y="210" width="110" height="50" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="137" y="240" font-size="12" fill="#111827" text-anchor="middle">Engram</text>
+<rect x="202" y="210" width="216" height="50" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="310" y="240" font-size="12" fill="#111827" text-anchor="middle">第 2 层 Attn + MoE</text>
+<text x="250" y="288" font-size="12" fill="#9ca3af" text-anchor="middle">第 3–14 层 · 普通 Block × 12</text>
+<rect x="70" y="300" width="360" height="70" rx="6" fill="#ffffff" stroke="#5fa886"/>
+<rect x="82" y="310" width="110" height="50" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="137" y="340" font-size="12" fill="#111827" text-anchor="middle">Engram</text>
+<rect x="202" y="310" width="216" height="50" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="310" y="340" font-size="12" fill="#111827" text-anchor="middle">第 15 层 Attn + MoE</text>
+<text x="250" y="388" font-size="12" fill="#9ca3af" text-anchor="middle">第 16–30 层 · 普通 Block × 15</text>
+<rect x="70" y="400" width="360" height="36" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="250" y="423" font-size="13" fill="#111827" text-anchor="middle">输出头 · 不动</text>
+<text x="250" y="478" font-size="12" fill="#6b7280" text-anchor="middle">其余 28 层没有查表模块</text>
+
+<line x1="460" y1="235" x2="548" y2="200" stroke="#5fa886" stroke-width="1.8" marker-end="url(#en-ag)"/>
+<text x="490" y="188" font-size="11" fill="#5fa886">放大第 2 层</text>
+
+<rect x="560" y="72" width="520" height="430" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="820" y="98" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">带 Engram 的 Block 内部</text>
+<rect x="600" y="118" width="440" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="820" y="145" font-size="13" fill="#111827" text-anchor="middle">进入本层的隐状态 h</text>
+<rect x="600" y="178" width="440" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="820" y="206" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">Engram：后缀 N-gram 查表 + 门控</text>
+<text x="820" y="228" font-size="12" fill="#374151" text-anchor="middle">输出残差加回 h，不替换后面两步</text>
+<rect x="600" y="264" width="440" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="820" y="291" font-size="13" fill="#111827" text-anchor="middle">Attention（MLA）</text>
+<rect x="600" y="322" width="440" height="44" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="820" y="349" font-size="13" fill="#111827" text-anchor="middle">MoE（细切 + 共享）</text>
+<rect x="600" y="382" width="440" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="820" y="409" font-size="13" fill="#111827" text-anchor="middle">离开本层</text>
+<text x="820" y="458" font-size="12" fill="#6b7280" text-anchor="middle">第 15 层内部顺序相同。检索与融合见下一张。</text>
+
+<text x="30" y="530" font-size="13" fill="#6b7280">据 PDF p.3 Figure 1、p.5、p.10、p.33 重画。小规模扫描最优是第 2 与第 6 层；27B 用第 2 与第 15 层，没有在 27B 上重扫。</text>
+<text x="30" y="554" font-size="13" fill="#6b7280">不是第 0 层词表，也不是换掉 Attn/MoE。位置是建模效果与系统延迟之间的折中。</text>
+</svg>

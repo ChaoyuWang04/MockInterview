@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+<marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">和 DeepSeek 67B 比：单位训练更便宜，生成缓存更小，吞吐更高</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">灰 = DeepSeek 67B；绿 = DeepSeek-V2。三档都是部署口径，不是纯架构数字。</text>
+<text x="40" y="98" font-size="14" fill="#111827" text-anchor="start" font-weight="700">训练</text>
+<text x="40" y="118" font-size="11" fill="#6b7280" text-anchor="start">每 1T Token 的 H800 GPU 小时</text>
+<rect x="280" y="90" width="700" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="300" y="109" font-size="12" fill="#111827" text-anchor="start">67B  300.6K</text>
+<rect x="280" y="130" width="402" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="300" y="149" font-size="12" fill="#111827" text-anchor="start">V2   172.8K（省 42.5%）</text>
+<text x="40" y="208" font-size="14" fill="#111827" text-anchor="start" font-weight="700">KV Cache</text>
+<text x="40" y="228" font-size="11" fill="#6b7280" text-anchor="start">生成时每 Token 的缓存（量级）</text>
+<rect x="280" y="200" width="700" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="300" y="219" font-size="12" fill="#111827" text-anchor="start">67B  约 380 KB</text>
+<rect x="280" y="240" width="80" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="300" y="259" font-size="12" fill="#111827" text-anchor="start">V2   约 25 KB（少 93.3%）</text>
+<text x="40" y="318" font-size="14" fill="#111827" text-anchor="start" font-weight="700">吞吐</text>
+<text x="40" y="338" font-size="11" fill="#6b7280" text-anchor="start">单 8 卡节点最大生成 Token/秒</text>
+<rect x="280" y="310" width="122" height="28" rx="4" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="300" y="329" font-size="12" fill="#111827" text-anchor="start">67B  基线</text>
+<rect x="280" y="350" width="700" height="28" rx="4" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="300" y="369" font-size="12" fill="#111827" text-anchor="start">V2   超过 50K Token/秒（5.76 倍）</text>
+<text x="30" y="430" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 1 Figure 1(b) 与 p. 16 重画。42.5% 是单位 Token 成本；V2 训了 8.1T，总 GPU 小时其实更高。93.3% 和 5.76 倍都叠了 FP8 权重 + 6 bit KV 量化。</text>
+<text x="30" y="454" font-size="13" fill="#6b7280" text-anchor="start">吞吐是每秒总 Token，不是单条延迟。报告没有给延迟。</text>
+</svg>

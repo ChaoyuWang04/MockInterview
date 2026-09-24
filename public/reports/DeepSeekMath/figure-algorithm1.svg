@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 340" width="1120" height="340" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="340" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">外层迭代：策略变强之后，奖励模型也要跟着更新</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 参考模型锚点前移；绿 = 内层 GRPO 更新策略；紫 = 用新样本续训奖励模型，混入 10% 历史数据。</text>
+<rect x="40" y="90" width="240" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="160" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">参考模型 ← 当前策略</text>
+<text x="160" y="140" font-size="12" fill="#374151" text-anchor="middle">KL 约束的锚点往前移</text>
+<rect x="360" y="90" width="360" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="540" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">内层 M 步 GRPO</text>
+<text x="540" y="140" font-size="12" fill="#374151" text-anchor="middle">每题采 G 个回答、打分、更新策略</text>
+<rect x="800" y="90" width="280" height="70" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="940" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">续训奖励模型</text>
+<text x="940" y="140" font-size="12" fill="#374151" text-anchor="middle">新采样 + 10% 历史数据</text>
+<line x1="280" y1="125" x2="352" y2="125" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="720" y1="125" x2="792" y2="125" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="30" y="210" font-size="13" fill="#6b7280">据 PDF p.14 Algorithm 1 与 p.15 §4.1.4 重画。跑满内层后再更新奖励模型，然后进入下一轮外层。</text>
+<text x="30" y="234" font-size="13" fill="#6b7280">KL 不是死死拴在最初的 SFT 模型上。混入历史数据是为了防止奖励模型只记住新分布。</text>
+<text x="30" y="270" font-size="13" fill="#6b7280">实测两轮，见下一张 Figure 6。</text>
+</svg>

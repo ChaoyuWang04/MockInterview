@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 580" width="1120" height="580" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+<marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="580" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">MLA：省的是要存下来的东西，不是头的个数</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">灰 = 未缓存 / 弱方案；紫 = 每头一份完整 KV；黄 = 压缩后的 KV 潜向量；绿 = 解耦的共享位置键。</text>
+<rect x="16" y="70" width="352" height="360" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="384" y="70" width="352" height="360" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="752" y="70" width="352" height="360" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="192" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(a) MHA</text>
+<text x="192" y="114" font-size="11" fill="#6b7280" text-anchor="middle">每头一份完整 K、V</text>
+<text x="560" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(b) GQA / MQA</text>
+<text x="560" y="114" font-size="11" fill="#6b7280" text-anchor="middle">多头共用一份 KV，省了但掉分</text>
+<text x="928" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(c) MLA</text>
+<text x="928" y="114" font-size="11" fill="#6b7280" text-anchor="middle">潜向量 + 窄位置通道</text>
+<rect x="70" y="140" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="159" font-size="11" fill="#111827" text-anchor="middle">头 1  完整 K、V</text>
+<rect x="70" y="176" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="195" font-size="11" fill="#111827" text-anchor="middle">头 2  完整 K、V</text>
+<rect x="70" y="212" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="231" font-size="11" fill="#111827" text-anchor="middle">头 3  完整 K、V</text>
+<rect x="70" y="248" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="267" font-size="11" fill="#111827" text-anchor="middle">头 4  完整 K、V</text>
+<rect x="70" y="284" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="303" font-size="11" fill="#111827" text-anchor="middle">头 5  完整 K、V</text>
+<rect x="70" y="320" width="240" height="28" rx="4" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="190" y="339" font-size="11" fill="#111827" text-anchor="middle">头 6  完整 K、V</text>
+<text x="192" y="370" font-size="12" fill="#9ca3af" text-anchor="middle">缓存 2 n_h d_h l</text>
+<rect x="460" y="170" width="200" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="560" y="190" font-size="12" fill="#111827" text-anchor="middle">组 1 共用 KV</text>
+<rect x="460" y="232" width="200" height="48" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="560" y="252" font-size="12" fill="#111827" text-anchor="middle">组 2 共用 KV</text>
+<rect x="460" y="294" width="200" height="36" rx="4" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="560" y="317" font-size="11" fill="#9ca3af" text-anchor="middle">其余头挂上来</text>
+<text x="560" y="370" font-size="12" fill="#9ca3af" text-anchor="middle">缓存 2 n_g d_h l</text>
+<rect x="802" y="155" width="252" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="928" y="180" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">c_KV  潜向量</text>
+<text x="928" y="202" font-size="11" fill="#6b7280" text-anchor="middle">512 维，要缓存</text>
+<rect x="802" y="245" width="252" height="54" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="928" y="267" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">k_R  共享位置键</text>
+<text x="928" y="287" font-size="11" fill="#6b7280" text-anchor="middle">64 维，要缓存</text>
+<rect x="802" y="318" width="252" height="54" rx="4" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="928" y="340" font-size="13" fill="#111827" text-anchor="middle">内容 K、V</text>
+<text x="928" y="358" font-size="11" fill="#9ca3af" text-anchor="middle">推理时吸收，不缓存</text>
+<text x="928" y="400" font-size="12" fill="#9ca3af" text-anchor="middle">缓存 (d_c + d_h^R) l</text>
+<text x="30" y="460" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 5 Figure 2 与 p. 9 Table 1 重画。V2 取 d_c = 4 d_h、d_h^R = d_h / 2，缓存量相当于 2.25 组 GQA。</text>
+<text x="30" y="484" font-size="13" fill="#6b7280" text-anchor="start">附录里 7B 对照：MQA / GQA 省缓存会掉分（MMLU 37.9 / 41.2 对 MHA 45.2）。MLA 是跳出这条直线：缓存更小，能力不砍头。</text>
+<text x="30" y="508" font-size="13" fill="#6b7280" text-anchor="start">查询潜向量 c_Q 不进缓存，压它是为了训练激活显存。93.3% 还叠了 6 bit 量化，见后文口径。</text>
+<text x="30" y="548" font-size="13" fill="#9ca3af" text-anchor="start">升维矩阵 W_UK、W_UV 推理时被吸收，图上不画。</text>
+</svg>

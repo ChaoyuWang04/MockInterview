@@ -2,7 +2,7 @@
 
 <!-- release-date: 2026-06-27 -->
 
-> 本文依据 DeepSeek-AI 与北京大学的 **DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation**，即 arXiv:2607.05147v1（2026-07-06），共 33 页。截至核验 arXiv 只有 v1。页码均指这份 PDF。全文把三件事分开标注：**报告明确写了什么**、**我们如何解释或验算它**、**哪些是外部资料补充**。
+> 本文依据本地 `papers/DeepSeek/DSpark.pdf`，即 **DSpark: Confidence-Scheduled Speculative Decoding with Semi-Autoregressive Generation**，arXiv:2607.05147v1、2026-07-06 提交，共 33 页。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 ## 阅读前先搭一张最小地图
 

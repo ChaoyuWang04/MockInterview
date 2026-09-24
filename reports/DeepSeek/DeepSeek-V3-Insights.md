@@ -2,7 +2,7 @@
 
 <!-- release-date: 2025-05-14 -->
 
-> 本文依据 DeepSeek-AI 的 **Insights into DeepSeek-V3: Scaling Challenges and Reflections on Hardware for AI Architectures**，即 arXiv:2505.09343v2（2025-12-23），共 15 页。ISCA 2025。截至核验 arXiv 最新是 v2。页码均指这份 PDF。全文把三件事分开标注：**报告明确写了什么**、**我们如何解释或验算它**、**哪些是外部资料补充**。
+> 本文依据本地 `papers/DeepSeek/DeepSeek-V3-Insights.pdf`，即 **Insights into DeepSeek-V3: Scaling Challenges and Reflections on Hardware for AI Architectures**，arXiv:2505.09343v2、2025-12-23 提交的修订版，共 15 页。封面印 ISCA 2025。页码均指 PDF 自身的页码。文中会区分三件事：**报告明确写了什么**、**我们怎么解释它**、**哪些是外部资料或本文推算**。
 
 这篇论文自己把边界划得很清楚：它**不打算把 DeepSeek-V3 的架构和算法再讲一遍**，那些已经写在技术报告里。（PDF p.2）它要回答的是另一件事：
 
@@ -24,6 +24,10 @@ H800 和 H100 同属 Hopper。论文写明，为了满足监管，它砍了两�
 
 > **节点内的路变窄了，就把模型改成不太走这条路；节点间的路还在，就把专家、量化和集群拓扑都按这条路来长。**
 
+![H800 把 NVLink 砍到 400 GB/s 之后，训练避开 TP、节点受限路由、MLA 压 KV、八平面两层树都是在补这一刀。](/reports/DeepSeek-V3-Insights/figure-h800-cut.svg)
+
+MLA、细切 MoE、FP8 的算法见 DeepSeek-V2、DeepSeekMoE、DeepSeek-V3 各篇。本篇只问：这些选择有多少是在给 400 GB/s 擦屁股。
+
 ## 这篇论文站在哪张地图上
 
 论文给自己定了三个目标（PDF p.2）：
@@ -41,24 +45,6 @@ H800 和 H100 同属 Hopper。论文写明，为了满足监管，它砍了两�
 | §4 | scale-up、并行、专家选择 | 训练避开 TP、节点受限路由、20 个 SM |
 | §5 | scale-out 多平面网络 | 八平面两层 Fat-Tree 和实测 |
 | §6 | 对未来硬件的讨论 | 摘要收成三点，正文展开成六块 |
-
-```mermaid
-flowchart TB
-    H["2048 张 H800<br/>NVLink 900 砍到 400 GB/s"] --> M["节点内带宽不够"]
-    H --> N["节点间用 8 张 400G IB 补"]
-    M --> A["MLA：KV 压到约 70 KB/token"]
-    M --> T["训练避开张量并行"]
-    N --> E["MoE + 节点受限路由<br/>一份 IB 流量节点内转发"]
-    N --> P["八平面两层 Fat-Tree<br/>用两层网络撑到上万卡的成本"]
-    H --> F["FP8：迁就 Hopper Tensor Core"]
-    A --> W["下一代硬件愿望清单"]
-    T --> W
-    E --> W
-    P --> W
-    F --> W
-```
-
-这张图按论文第 1 到第 6 节的因果重画（PDF p.2–13），是**机制示意**，不是集群接线图。
 
 ## 几个会反复出现的名字
 
@@ -90,11 +76,9 @@ DeepSeek-V3 在这块被砍过的 H800 上，做了四件互相咬合的事：
 
 ## 约束从哪来：2048 张被砍过的 H800
 
-论文把节点画在 Figure 2 里（PDF p.7）。我们按图重述，不下载原图：
+论文把节点画在 Figure 2 里（PDF p.7）。
 
-- 一个节点 8 张 H800 SXM，下面用 4 颗 NVLink Switch 全互联。
-- 每张 GPU 经 PCIe Switch 接一张 CX7 IB 网卡，八张卡八张网卡。
-- 两颗 CPU；其中一颗还挂一张存储网卡。
+![一个 H800 节点 8 卡经 NVLink Switch 全互联，每卡一张 CX7；节点内对节点间大约 4:1。](/reports/DeepSeek-V3-Insights/figure2-node.svg)
 
 论文给的关键带宽数字要分开读，否则 400、200、160 会对不上（PDF p.7）：
 
@@ -348,18 +332,13 @@ LogFMT 的本意是：同样 8 位，精度比 FP8 高，适合传输中的激�
 
 如果 8 个目标专家落在 8 个不同节点上，IB 上就要付 $8t$（$t$ 是发一个 Token 过 IB 的时间）。但同一节点上的专家可以只走一次 IB，再经 NVLink 转发，IB 流量按节点去重。目标落在 $M$ 个节点上，IB 代价就是 $Mt$（$M<8$）。（PDF p.7）
 
-IB 流量只取决于 $M$，不取决于专家个数。于是他们给 Top-K 加上 **节点受限路由（Node-Limited Routing）**：256 个路由专家分成 8 组、每组 32 个，一组放在一个节点上；算法保证每个 Token 最多被送到 **4 个节点**。（PDF p.7）
+IB 流量只取决于 $M$，不取决于专家个数。于是他们给 Top-K 加上 **节点受限路由（Node-Limited Routing）**（PDF p.7）：
 
-```mermaid
-flowchart LR
-    Tok["一个 Token 要找 8 个专家"] --> Bad["最坏：8 个节点各中一个<br/>IB 付 8t"]
-    Tok --> Good["节点受限：最多 4 个节点<br/>IB 付 4t"]
-    Good --> Fwd["节点内用 NVLink 转发<br/>一份 IB 流量喂多个专家"]
-```
+![最坏 8 个节点付 8t；限制最多 4 个节点后付 4t，同节点专家走 NVLink 转发。](/reports/DeepSeek-V3-Insights/figure-node-limited.svg)
 
-这张图按 §4.3 的文字重画（PDF p.7），是**机制示意**。
+256 个路由专家分成 8 组、每组 32 个，一组一个节点；算法保证每个 Token 最多送到 **4 个节点**。M=4 是 4:1 写进搜索空间，不是搜出来的最优。
 
-V3 技术报告里同一约束写成「NVLink 约是 IB 的 3.2 倍，4 个节点理论上能喂约 13 个专家」。本篇改用 4:1，并且把因果说得更硬： **IB 的钱只按节点数付，所以算法必须先限制节点数，再在节点内用便宜的 NVLink 把专家铺开。** 换一块 NVLink 没被砍的卡，$M=4$ 这个超参就该重算。这是我们的迁移读法。
+V3 技术报告里同一约束写成「NVLink 约是 IB 的 3.2 倍，4 个节点理论上能喂约 13 个专家」。本篇改用 4:1，因果更硬：**IB 的钱只按节点数付，所以先限制节点数，再在节点内用便宜的 NVLink 把专家铺开。** 换一块 NVLink 没被砍的卡，$M=4$ 就该重算。这是我们的迁移读法。
 
 ### 20 个 SM 在做网卡该做的事
 
@@ -406,15 +385,11 @@ V3 技术报告里同一约束写成「NVLink 约是 IB 的 3.2 倍，4 个节�
 
 ### 他们实际部署的是什么
 
-训练 V3 时，scale-out 用的是 **多平面胖树（Multi-Plane Fat-Tree，MPFT）**，画在 Figure 3（PDF p.8–9）：
+训练 V3 时，scale-out 用的是 **多平面胖树（Multi-Plane Fat-Tree，MPFT）**，画在 Figure 3（PDF p.8–9）。
 
-- 每个节点 8 GPU + 8 IB 网卡，**每一对 GPU–NIC 属于一个独立的网络平面**。
-- 另有一张 400 Gbps RoCE 网卡走存储平面，访问 3FS。
-- 交换机是 64 口 400G IB。
-- 这种两层拓扑理论上能接到 **16384 张 GPU**，同时保住两层网络的成本和延迟。
-- 因为政策和监管，最终只部署了两千出头。（PDF p.9）
+![八个平面互不直连：GPU i 永远走平面 i，跨平面必须节点内转发。](/reports/DeepSeek-V3-Insights/figure3-mpft.svg)
 
-「平面」可以先当成「一张独立的叶子-脊网络」。8 张网卡等于 8 张互相不直接相连的网。GPU 0 永远走平面 0，GPU 1 永远走平面 1。跨平面要通信，必须在节点内借另一张网卡，再经 PCIe 或 NVLink 转发——图注写明了这一点。（PDF p.8）
+交换机 64 口 400G IB。两层拓扑理论上接 **16384 张 GPU**，政策下只部署了两千出头。（PDF p.9）「平面」就是一张独立的叶子-脊网。跨平面要通信，必须在节点内借另一张网卡再转发——图注写明了这一点。（PDF p.8）
 
 ### 理想形态他们并没有买到
 

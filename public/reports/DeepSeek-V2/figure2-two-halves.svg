@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 420" width="1120" height="420" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+<marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="420" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">DeepSeek-V2 改了 Transformer 的两半：注意力换 MLA，前馈换 DeepSeekMoE</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">黄 = MLA（省推理显存）；绿 = DeepSeekMoE（省训练算力）。其余沿用 DeepSeek 67B。</text>
+<rect x="80" y="90" width="420" height="260" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<rect x="620" y="90" width="420" height="260" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+<text x="290" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">标准 Block</text>
+<text x="830" y="118" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">DeepSeek-V2 的 Block</text>
+<rect x="140" y="145" width="280" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="280" y="173" font-size="13" fill="#111827" text-anchor="middle">RMSNorm</text>
+<rect x="140" y="205" width="280" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="280" y="235" font-size="13" fill="#111827" text-anchor="middle">注意力（MHA / GQA）</text>
+<rect x="140" y="271" width="280" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="280" y="301" font-size="13" fill="#111827" text-anchor="middle">前馈网络（稠密 FFN）</text>
+<rect x="680" y="145" width="280" height="44" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="820" y="173" font-size="13" fill="#111827" text-anchor="middle">RMSNorm</text>
+<rect x="680" y="205" width="280" height="50" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="820" y="235" font-size="13" fill="#111827" text-anchor="middle">MLA 低秩联合压缩 KV</text>
+<rect x="680" y="271" width="280" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="820" y="301" font-size="13" fill="#111827" text-anchor="middle">DeepSeekMoE 细切 + 共享</text>
+<text x="30" y="390" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p. 5 Figure 2 重画，只画两个部件换了什么。MLA 缓存了什么、MoE 怎么切，见后面两张。</text>
+</svg>

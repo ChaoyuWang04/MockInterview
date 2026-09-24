@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 480" width="1120" height="480" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="480" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" text-anchor="start" font-weight="700">H800 的腰被砍了：节点内变窄，模型就少走这条路</text>
+<text x="30" y="54" font-size="13" fill="#6b7280" text-anchor="start">红 = 被监管砍掉的节点内 NVLink；黄 = 用节点间 IB 补上的路；绿 = 因此写进模型的选择。</text>
+<rect x="40" y="80" width="320" height="70" rx="6" fill="#fbe9e7" stroke="#d9877a"/>
+<text x="200" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">NVLink 900 → 400 GB/s</text>
+<text x="200" y="128" font-size="12" fill="#6b7280" text-anchor="middle">节点内「腰」砍半</text>
+<rect x="400" y="80" width="320" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="560" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">每节点 8×400G IB</text>
+<text x="560" y="128" font-size="12" fill="#6b7280" text-anchor="middle">把赌注押到 scale-out</text>
+<rect x="760" y="80" width="320" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="920" y="108" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">2048 张 H800</text>
+<text x="920" y="128" font-size="12" fill="#6b7280" text-anchor="middle">不是卡少，是卡被改过</text>
+<rect x="40" y="200" width="250" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="165.0" y="236" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">训练避开 TP</text>
+<text x="165.0" y="258" font-size="11" fill="#6b7280" text-anchor="middle">每层 all-reduce 太吃 NVLink</text>
+<rect x="310" y="200" width="250" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="435.0" y="236" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">节点受限路由 M=4</text>
+<text x="435.0" y="258" font-size="11" fill="#6b7280" text-anchor="middle">IB 只按节点数付钱</text>
+<rect x="580" y="200" width="250" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="705.0" y="236" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">MLA 压 KV</text>
+<text x="705.0" y="258" font-size="11" fill="#6b7280" text-anchor="middle">先在源头少用显存</text>
+<rect x="850" y="200" width="230" height="90" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="965.0" y="236" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">八平面两层树</text>
+<text x="965.0" y="258" font-size="11" fill="#6b7280" text-anchor="middle">两层成本够上万卡规模</text>
+<text x="30" y="330" font-size="13" fill="#6b7280" text-anchor="start">据 PDF p.2、p.7–9 的因果重画，不是接线图。换一块 NVLink 没被砍的卡，M=4 和「训练不用 TP」都该重算。</text>
+<text x="30" y="354" font-size="13" fill="#6b7280" text-anchor="start">MLA、细切 MoE、FP8 的算法本身见 DeepSeek-V2 / DeepSeekMoE / DeepSeek-V3 各篇。本篇只问：这些选择有多少是在给 400 GB/s 擦屁股。</text>
+<text x="30" y="390" font-size="13" fill="#6b7280" text-anchor="start">论文给下一代硬件的三点：更精确的低精度计算单元、scale-up 与 scale-out 合一、低延迟通信结构。</text>
+<text x="30" y="430" font-size="13" fill="#9ca3af" text-anchor="start">FP8 迁就 Hopper Tensor Core 的 13 位累加，也是同一条「硬件缺陷写成模型选择」。</text>
+</svg>

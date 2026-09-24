@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 380" width="1120" height="380" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="380" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">便宜的索引器决定看哪里，昂贵的主注意力只精读 2048 条</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">黄 = 闪电索引器（少数头 / FP8 / ReLU）；绿 = Top-k 与主注意力。KV 仍是 MLA 潜向量。</text>
+<rect x="40" y="90" width="200" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="140" y="118" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">隐藏状态 h_t</text>
+<text x="140" y="140" font-size="12" fill="#374151" text-anchor="middle">当前 Token</text>
+<rect x="320" y="90" width="240" height="70" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="440" y="118" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">闪电索引器</text>
+<text x="440" y="140" font-size="12" fill="#374151" text-anchor="middle">给每个历史位置打分</text>
+<rect x="640" y="90" width="200" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="740" y="118" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">Top-k = 2048</text>
+<text x="740" y="140" font-size="12" fill="#374151" text-anchor="middle">选出要精读的 KV</text>
+<rect x="320" y="200" width="240" height="70" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="440" y="228" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">MLA 全部历史 KV</text>
+<text x="440" y="250" font-size="12" fill="#374151" text-anchor="middle">潜向量，不还原</text>
+<rect x="640" y="200" width="440" height="70" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<text x="860" y="228" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">主注意力只算选中的 2048 条</text>
+<text x="860" y="250" font-size="12" fill="#374151" text-anchor="middle">Query 走全部头，输出 u_t</text>
+<line x1="240" y1="125" x2="312" y2="125" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="560" y1="125" x2="632" y2="125" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="740" y1="160" x2="740" y2="192" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<text x="30" y="320" font-size="13" fill="#6b7280">据 PDF p.4 Figure 2 重画。原图还有 RoPE 位置；这里只保留「谁决定看哪里、谁负责真的看」。</text>
+<text x="30" y="344" font-size="13" fill="#6b7280">MLA 机制见 DeepSeek-V2 一篇。本篇只画挂在 MLA 上的稀疏选择。</text>
+</svg>

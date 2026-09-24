@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="1120" height="620" font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', Arial, sans-serif">
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/></marker>
+<marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5fa886"/></marker>
+<marker id="ap" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8f8bd8"/></marker>
+</defs>
+<rect x="0" y="0" width="1120" height="620" fill="#ffffff"/>
+<text x="30" y="32" font-size="19" fill="#111827" font-weight="700">DeepSeekMoE：切细再留共享，总参和每次激活计算量不变</text>
+<text x="30" y="54" font-size="13" fill="#6b7280">灰 = 未激活的路由专家；紫 = 本次激活的路由专家；绿 = 共享专家（每个 Token 都走）。块越宽表示专家越大。</text>
+
+<rect x="16" y="70" width="352" height="378" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="384" y="70" width="352" height="378" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<rect x="752" y="70" width="352" height="378" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+
+<text x="192" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(a) 常规 top-2</text>
+<text x="192" y="114" font-size="11" fill="#6b7280" text-anchor="middle">GShard 是这一幅；Switch 是 top-1</text>
+<text x="560" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(b) + 细粒度切分</text>
+<text x="560" y="114" font-size="11" fill="#6b7280" text-anchor="middle">N 个切成 2N 个更小的，K：2 变成 4</text>
+<text x="928" y="94" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">(c) + 共享专家隔离</text>
+<text x="928" y="114" font-size="11" fill="#6b7280" text-anchor="middle">完整 DeepSeekMoE，路由 K 收到 3</text>
+
+<rect x="132" y="128" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<rect x="500" y="128" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<rect x="868" y="128" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<text x="192" y="147" font-size="11" fill="#6b7280" text-anchor="middle">Output Hidden</text>
+<text x="560" y="147" font-size="11" fill="#6b7280" text-anchor="middle">Output Hidden</text>
+<text x="928" y="147" font-size="11" fill="#6b7280" text-anchor="middle">Output Hidden</text>
+
+<rect x="36" y="188" width="92" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="146" y="188" width="92" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="256" y="188" width="92" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="82" y="218" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">1</text>
+<text x="192" y="218" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">2</text>
+<text x="302" y="218" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">N</text>
+
+<rect x="396" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="448" y="188" width="44" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="500" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="552" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="604" y="188" width="44" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="656" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<text x="418" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">1</text>
+<text x="470" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2</text>
+<text x="522" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">3</text>
+<text x="574" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">4</text>
+<text x="626" y="218" font-size="16" fill="#111827" text-anchor="middle" font-weight="700">…</text>
+<text x="678" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2N</text>
+
+<rect x="764" y="188" width="44" height="50" rx="6" fill="#e3f4ec" stroke="#5fa886"/>
+<rect x="816" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="868" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="920" y="188" width="44" height="50" rx="6" fill="#ecebfb" stroke="#8f8bd8"/>
+<rect x="972" y="188" width="44" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<rect x="1024" y="188" width="44" height="50" rx="6" fill="#eeeeee" stroke="#b9b9b9"/>
+<text x="786" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">1</text>
+<text x="838" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2</text>
+<text x="890" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">3</text>
+<text x="942" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">4</text>
+<text x="994" y="218" font-size="16" fill="#111827" text-anchor="middle" font-weight="700">…</text>
+<text x="1046" y="218" font-size="13" fill="#111827" text-anchor="middle" font-weight="700">2N</text>
+
+<rect x="122" y="292" width="140" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="490" y="292" width="140" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<rect x="858" y="292" width="140" height="40" rx="6" fill="#fdf1dc" stroke="#d4a24c"/>
+<text x="192" y="317" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Router  K=2</text>
+<text x="560" y="317" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Router  K=4</text>
+<text x="928" y="317" font-size="14" fill="#111827" text-anchor="middle" font-weight="700">Router  K=3</text>
+
+<rect x="132" y="388" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<rect x="500" y="388" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<rect x="868" y="388" width="120" height="28" rx="6" fill="#ffffff" stroke="#b9b9b9"/>
+<text x="192" y="407" font-size="11" fill="#6b7280" text-anchor="middle">Input Hidden</text>
+<text x="560" y="407" font-size="11" fill="#6b7280" text-anchor="middle">Input Hidden</text>
+<text x="928" y="407" font-size="11" fill="#6b7280" text-anchor="middle">Input Hidden</text>
+<text x="192" y="438" font-size="11" fill="#9ca3af" text-anchor="middle">每个专家 = 原来的 FFN</text>
+<text x="560" y="438" font-size="11" fill="#9ca3af" text-anchor="middle">中间维变成原来的 1/m</text>
+<text x="928" y="438" font-size="11" fill="#9ca3af" text-anchor="middle">绿块绕过路由器，每个 Token 必经</text>
+
+<line x1="192" y1="388" x2="192" y2="334" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="192" y1="292" x2="82" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="192" y1="292" x2="302" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="82" y1="188" x2="162" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="302" y1="188" x2="222" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+
+<line x1="560" y1="388" x2="560" y2="334" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="560" y1="292" x2="418" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="560" y1="292" x2="522" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="560" y1="292" x2="574" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="560" y1="292" x2="678" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="418" y1="188" x2="520" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="522" y1="188" x2="545" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="574" y1="188" x2="575" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="678" y1="188" x2="600" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+
+<line x1="928" y1="388" x2="928" y2="334" stroke="#9ca3af" stroke-width="1.4" marker-end="url(#ar)"/>
+<line x1="928" y1="292" x2="838" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="928" y1="292" x2="890" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="928" y1="292" x2="942" y2="240" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="868" y1="402" x2="786" y2="240" stroke="#5fa886" stroke-width="1.6" marker-end="url(#ag)"/>
+<line x1="786" y1="188" x2="888" y2="158" stroke="#5fa886" stroke-width="1.6" marker-end="url(#ag)"/>
+<line x1="838" y1="188" x2="908" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="890" y1="188" x2="928" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+<line x1="942" y1="188" x2="948" y2="158" stroke="#8f8bd8" stroke-width="1.4" marker-end="url(#ap)"/>
+
+<rect x="16" y="462" width="1088" height="142" rx="8" fill="#ffffff" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+<text x="36" y="488" font-size="14" fill="#111827" font-weight="700">和 Switch / GShard 不一样的地方</text>
+<text x="36" y="514" font-size="13" fill="#6b7280">Switch Transformer：专家和原来 FFN 一样大，每个 Token 只进 1 个（top-1）。</text>
+<text x="36" y="536" font-size="13" fill="#6b7280">GShard：同样大的专家，每个 Token 进 2 个，就是左幅 (a)。</text>
+<text x="36" y="558" font-size="13" fill="#6b7280">DeepSeekMoE：先把专家切细（中幅），再隔离共享专家（右幅绿块）；路由少激活同样个数。</text>
+<text x="36" y="580" font-size="13" fill="#6b7280">三幅的专家总参数、每次激活的计算量保持不变（PDF p. 5 Figure 2 图注）。</text>
+</svg>
