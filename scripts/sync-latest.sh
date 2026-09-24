@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 本机会话启动时自动同步云端每日解读(docs/10-材料解读流程.md 第二节「来源二」末段)
 #
-# 由 Claude Code 与 Codex 的 SessionStart 钩子调用,也可以手动跑。输出是给 agent 的简报。
+# 由 Claude Code 与 Codex 的 SessionStart 钩子、Hermes 的 pre_llm_call 钩子(只在会话第一轮)调用,也可以手动跑。输出是给 agent 的简报。
 # 只做快进合并:本机有未推送的提交、或未提交的改动与云端改了同一文件时,git 自己会拒绝,
 # 这里只报告、不 rebase、不 stash、不动任何东西。几个会话同时启动时只有一个在同步。
 # 开头另报内容目录里没提交的文件,提醒「一批一推」(AGENTS.md 协作规则)。
