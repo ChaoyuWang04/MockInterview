@@ -19,8 +19,8 @@
 
 ## 开源贡献
 
-- [ ] `sglang-omni` 接入收尾:维护者给私有实验仓设置 `CLAUDE_CODE_OAUTH_TOKEN` 后,在演练 PR 上各打一次 `review:code`、`review:pr` 验收两个评审,再清掉演练分支与 worktree;hlab 注册 `oss-sglang-omni`(运维线,按 homelab-control 守则)
 - [ ] `sglang-omni` 选题:按 14 读 Roadmap 与相关 issue,出候选进 `contrib/sglang-omni.md`
+- [ ] `sglang-omni` 接入收尾:维护者给私有实验仓设置 `CLAUDE_CODE_OAUTH_TOKEN` 后,在演练 PR 上各打一次 `review:code`、`review:pr` 验收两个评审,再清掉演练分支与 worktree
 
 ## P6 · 开源解读与报告解读
 
