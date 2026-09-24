@@ -3,6 +3,9 @@
 // 只采集,不判断,**不移动任何文件**。产出一份扫描报告,人核实并改「去向」列后,
 // 交给 scripts/papers-file.mjs 归档。
 //
+// **文件名的年份前缀就是入库决定**:`2025-OneRec Technical Report.pdf` 这样以年份开头的
+// 是维护者主动下载、要收的;没有前缀的一律不收,也不读内容。
+//
 // 用法:
 //   npm run papers:scan                 扫 ~/Desktop 顶层
 //   npm run papers:scan -- --dir <路径>  一次性处理某个目录(递归)
@@ -14,13 +17,12 @@ import path from 'node:path'
 
 const REPO = process.cwd()
 const READABLE = /\.(pdf|srt|vtt|txt|md)$/i
+const YEAR_PREFIX = /^(19|20)\d{2}[-_ ]+/
 
 const TIER = {
-  A: 'A · 建议进报告解读',
-  B: 'B · 建议进日常研读',
-  C: 'C · ⚠️ 闸门三未过,请逐条拍板',
-  D: 'D · 已在库或已判定,跳过',
-  E: 'E · 非文献,默认不收,原地不动',
+  A: 'A · 待入库(带年份前缀),核实后定去向',
+  B: 'B · 已在库或已判定,跳过',
+  C: 'C · 无年份前缀,不收,原地不动',
 }
 
 function parseArgs(argv) {
@@ -48,7 +50,7 @@ function listCandidates(dir, recursive) {
       const full = path.join(current, entry.name)
       if (entry.isDirectory()) {
         if (recursive && depth < 4) walk(full, depth + 1)
-      } else if (READABLE.test(entry.name)) out.push(full)
+      } else if (YEAR_PREFIX.test(entry.name) || READABLE.test(entry.name)) out.push(full)
     }
   }
   walk(dir, 0)
@@ -81,29 +83,7 @@ function extract(file) {
   return { pages: 0, metaTitle: '', head, broken: false }
 }
 
-/** 像不像一份可解读的材料。拿不准的一律进 E 让人看,不自作主张丢掉 */
-function looksLikeMaterial(file, { head, broken }) {
-  if (broken) return { ok: false, why: '文件读不出页数,可能损坏或不是 PDF' }
-  const text = head.toLowerCase()
-  const hits = []
-  if (/\babstract\b|\b摘\s*要\b/.test(text)) hits.push('有摘要')
-  if (/arxiv[:\s]*\d{4}\.\d{4,5}/i.test(head)) hits.push('有 arXiv 编号')
-  if (/\buniversity\b|\binstitute\b|\blaborator/.test(text)) hits.push('有机构署名')
-  if (/\bwe (propose|present|introduce|show)\b/.test(text)) hits.push('有论文式表述')
-  if (/^\d{4}-/.test(path.basename(file))) hits.push('文件名带年份前缀')
-  if (hits.length === 0) {
-    return {
-      ok: false,
-      why: isTranscript(file)
-        ? '转录文本,非文献,默认不收——要收请直接点名'
-        : '非文献:首页没有摘要、机构或 arXiv 迹象',
-    }
-  }
-  return { ok: true, why: hits.join('、') }
-}
-
-/** 认出转录文本只为把「为什么不收」写准。**扫描器只提名文献**;
- *  网页、字幕、视频这些载体能进库,但要由维护者点名,不由扫描自动提议 */
+/** 综述与转录文本只影响写法(手册第四节、「三种原件形态」),不影响收不收,在依据里提一句 */
 function isSurvey(file, head) {
   return /\bsurvey\b|\breview\b|综述/i.test(path.basename(file)) ||
     /\b(this|our|a comprehensive) survey\b/i.test(head)
@@ -128,8 +108,8 @@ function detect(head) {
 function slugFrom(file) {
   return path
     .basename(file)
-    .replace(READABLE, '')
-    .replace(/^(19|20)\d{2}[-_ ]+/, '')
+    .replace(/\.[^.]+$/, '')
+    .replace(YEAR_PREFIX, '')
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -158,40 +138,32 @@ function readKnown() {
   return known
 }
 
-function classify(file, info, known) {
-  // 先查去重再判形态:已经收过的东西不该被重新判一遍
-  // (Ultra-Scale-Playbook 的本地打印件首页没有摘要,先判形态就会被误扔进 E)
+function classify(file, known) {
+  // 没有年份前缀的不是要收的材料,不读内容、不去重
+  if (!YEAR_PREFIX.test(path.basename(file))) return { tier: 'C', reason: '无年份前缀', target: '跳过' }
+
   const slug = slugFrom(file)
   const key = norm(slug)
   const hit = known.get(key)
-  if (hit) return { tier: 'D', reason: `已在${hit}`, target: '跳过' }
+  if (hit) return { tier: 'B', reason: `已在${hit}`, target: '跳过' }
   // 本地文件名常带语言或版本后缀(ultrascale-playbook-**zh**),精确比对会漏
   for (const [other, where] of known) {
     if (other.length < 8 || key.length < 8) continue
     if (!other.startsWith(key) && !key.startsWith(other)) continue
-    return { tier: 'D', reason: `疑似已在${where}(对上「${other}」,请确认)`, target: '跳过' }
+    return { tier: 'B', reason: `疑似已在${where}(对上「${other}」,请确认)`, target: '跳过' }
   }
 
-  const material = looksLikeMaterial(file, info)
-  if (!material.ok) return { tier: 'E', reason: material.why, target: '跳过' }
-
+  const info = READABLE.test(file) ? extract(file) : { head: '', broken: false }
+  const notes = []
+  if (!READABLE.test(file)) notes.push(`${path.extname(file) || '无扩展名'} 文件,内容需人工看`)
+  else if (info.broken) notes.push('读不出页数,可能损坏,核实时先确认原件完整')
   const { arxiv, repo } = detect(info.head)
-  const gates = []
-  if (repo) gates.push(`有仓库 ${repo}`)
-  if (arxiv) gates.push(`arXiv ${arxiv}`)
-  // 综述免闸门三:新领域的综述往往出自小机构,拿机构与顶会卡它会把整个方向挡在外面
-  if (isSurvey(file, info.head)) {
-    return { tier: 'B', reason: `综述,免闸门三;写法见手册第四节${gates.length ? ';' + gates.join('、') : ''}`, target: '待定' }
-  }
-  // 闸门三的机构与顶会两条脚本判不了,留给核实那一步
-  if (gates.length === 0) {
-    return {
-      tier: 'C',
-      reason: '首页没找到开源仓库,机构与顶会录用需人工核实',
-      target: '待定',
-    }
-  }
-  return { tier: 'B', reason: `${gates.join('、')};归属与重要程度待核实`, target: '待定' }
+  if (arxiv) notes.push(`arXiv ${arxiv}`)
+  if (repo) notes.push(`有仓库 ${repo}`)
+  if (isSurvey(file, info.head)) notes.push('综述,写法见手册第四节')
+  if (isTranscript(file)) notes.push('转录文本,事实锚是短引原话')
+  notes.push('机构与方向待核实')
+  return { tier: 'A', reason: notes.join(';'), target: '待定' }
 }
 
 function report(rows, args) {
@@ -201,10 +173,10 @@ function report(rows, args) {
     '',
     `扫描范围:\`${args.dir}\`${args.recursive ? '(递归)' : '(仅顶层)'}`,
     '',
-    '**这份报告是临时产物,不入库。** 脚本只采集不判断:A/B 是建议,不是判决。',
+    '**这份报告是临时产物,不入库。** 脚本只采集不判断。',
     '',
-    '**扫描只提名文献。** 网页、博客、字幕、录音转写这些载体照样能进库(手册「三种原件形态」),',
-    '但要由你点名,不由扫描自动提议——所以它们都在 E 档,附上认出来的类型,方便你挑。',
+    '**年份前缀就是入库决定。** 以年份开头的文件都要收,核实只决定进哪个库、哪个方向;',
+    '没有前缀的一律不收,原地不动。',
     '核实后改「去向」列,再跑 `npm run papers:file -- <本文件>` 归档。去向的写法:',
     '',
     '| 去向的写法 | 含义 |',
@@ -245,8 +217,7 @@ function main() {
   const known = readKnown()
   const files = listCandidates(args.dir, args.recursive)
   const rows = files.map((file) => {
-    const info = extract(file)
-    return { file, slug: slugFrom(file), ...classify(file, info, known) }
+    return { file, slug: slugFrom(file), ...classify(file, known) }
   })
 
   const out = args.out ?? path.join(REPO, `_扫描报告-${new Date().toISOString().slice(0, 10)}.md`)

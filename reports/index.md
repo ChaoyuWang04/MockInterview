@@ -75,6 +75,7 @@
 | Falcon-H1 | TII | Transformer-Mamba 混合头的开放权重家族;推理续作 H1R 见 arXiv 2601.02346 |
 | LFM2 | LiquidAI | 为端侧效率反推架构的开源小基模家族(arXiv 2511.23404) |
 | SmolLM3 | HuggingFace | 3B 长上下文多语推理,训练方法与配方全公开。**原件待核**(HF 博客抓取失败) |
+| PuRo-2B | Tsinghua | RTX 5090 上 FP8 从零预训练 2B 模型,不到 6.9K 美元逼近 Qwen2.5-1.5B,并拟合训练成本缩放定律(arXiv 2608.27370) |
 
 ## 注意力与长上下文
 
@@ -101,6 +102,8 @@
 | Hybrid-Architectures-for-LM | Meta | 线性与全注意力混合配比的系统性消融,41 页(FAIR 与 KAIST,arXiv 2510.04800) |
 | LongCat-Sparse-Attention | Meituan | 跨层索引的流式感知块稀疏注意力;同线还有 ZigZag(arXiv 2608.01662) |
 | RePo | Sakana | 上下文重定位:用检索替代 KV 复用(ICML 2026,arXiv 2512.14391) |
+| Sparse-Transformer | OpenAI | 把注意力矩阵分解成步长与局部两种稀疏模式,复杂度从 O(n²) 降到 O(n√n),一套架构统一建模文本、图像与音频(arXiv 1904.10509) |
+| YOCO | Microsoft | decoder-decoder 架构:自解码器只缓存一份 KV、交叉解码器复用,预填充可提前退出,长上下文显存与延迟降几个数量级(arXiv 2405.05254,NeurIPS 2024) |
 
 ## 训练方法与强化学习
 
@@ -191,6 +194,7 @@
 | Toolformer | Meta | 模型自学何时调 API 的自监督方法 |
 | WebGPT | OpenAI | 浏览器辅助问答,人类反馈训练的早期 web agent |
 | Fara-1.5 | Microsoft | 电脑操作 agent 的可扩展学习环境与小模型数据配方;前作 Fara-7B 见 arXiv 2511.19663 |
+| DSec | DeepSeek | 支撑 Agent 训练的生产级沙箱平台:统一接口管理多类沙箱,每天约 300 万个、每秒创建 5000 个以上(arXiv 2609.22978) |
 
 ## 推理服务与架构探索
 
@@ -219,6 +223,7 @@
 | EAGLE-3 | SafeAILab | 用训练期测试把草稿模型从特征拟合换成多层特征(arXiv 2503.01840) |
 | XGrammar | CMU | 约束解码的上下文无关文法执行开销吃掉整条延迟(arXiv 2411.15100,MLSys 2025) |
 | KTransformers | Tsinghua | CPU 与 GPU 混合推理 MoE,把内存当一层慢显存用(SOSP 2025) |
+| Hyper-Connections | ByteDance | 把残差连接扩成多条带可学习权重的并行流,化解梯度消失与表示坍缩的跷跷板;DeepSeek mHC 的前作(arXiv 2409.19606,ICLR 2025) |
 
 ## 分布式训练与并行
 
@@ -322,6 +327,7 @@
 | AudioLM | Google | 用语言模型方法生成音频 |
 | Voxtral | Mistral | 开源多语语音-文本统一基模;Mistral 音频线零收录(arXiv 2507.13264) |
 | MiMo-Audio | Xiaomi | 音频语言模型的 few-shot 学习能力(arXiv 2512.23808) |
+| MOSS-Transcribe-Diarize | OpenMOSS | 端到端多模态大模型一次完成带说话人与时间戳的转写,128k 上下文覆盖约 90 分钟音频(arXiv 2601.01554) |
 
 ## 世界模型与 Agent
 
@@ -387,6 +393,7 @@
 | Gemma-Scope | Google | 把「训一整套全层全切面 SAE」这件贵到别人做不起的事做完再开源:2B 与 9B 每层每切面、27B 只有选中的三层,权重超过 2,000 个 SAE,连评测口径与宽度梯子一起交出去;不裁决架构之争,也不给任务级结果(依据 arXiv v2,26 页) |
 | WildGuard | Ai2 | 7B 的三任务审核器(提问恶意意图 / 回复风险 / 拒答判定):86,759 条训练配方逐桶可回算、5,299 条由三人独立标注的考卷;对抗性提问 85.5 对最佳开源 74.5,拒答判定 88.6 仍低于 GPT-4 的 92.4(依据 arXiv v3,38 页) |
 | CoT-Empowers-Serial-Problems | Stanford | 给 CoT 的能力增益称重量:常数深度加立刻舍入的 Transformer 连 O(log n) 步思维链也只能算 AC0(定点数那档是 TC0),而 T 步思维链配 Θ(log n) 嵌入就能算任意规模 T 的电路;唯一的严格分离要假设 TC0 ⊊ NC1,且构造里的思维链是 0/1 门真值、人类读不懂(依据 arXiv v4,38 页) |
+| Patchscopes | Google | 把隐藏表示打补丁进另一次前向,让模型自己用自然语言解释它;logit lens 等旧方法都是特例(arXiv 2401.06102,ICML 2024) |
 
 ## 检索与 RAG
 
@@ -395,6 +402,12 @@
 | Qwen3-Embedding | Alibaba | 用基模造 embedding 与 reranker 的全流程配方(arXiv 2506.05176) |
 | BGE-M3 | BAAI | 多语、多粒度、多功能的自蒸馏嵌入(ACL 2024 Findings,arXiv 2402.03216) |
 | jina-embeddings-v4 | Jina | 单模型统一图文多语检索与多向量重排(ACL 2025,arXiv 2506.18902) |
+
+## 推荐系统
+
+| 报告 | 公司 | 一句话 |
+|---|---|---|
+| OneRec | Kuaishou | 端到端生成式推荐取代多级级联:算力提升 10×,训练与推理 MFU 23.7% 与 28.8%,承接快手 25% 的 QPS(arXiv 2506.13695) |
 
 ## 评测与 Benchmark
 
