@@ -4,6 +4,7 @@
 # 由 Claude Code 与 Codex 的 SessionStart 钩子调用,也可以手动跑。输出是给 agent 的简报。
 # 只做快进合并:本机有未推送的提交、或未提交的改动与云端改了同一文件时,git 自己会拒绝,
 # 这里只报告、不 rebase、不 stash、不动任何东西。几个会话同时启动时只有一个在同步。
+# 开头另报内容目录里没提交的文件,提醒「一批一推」(AGENTS.md 协作规则)。
 set -u
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
@@ -25,6 +26,23 @@ branch="$(git symbolic-ref --short -q HEAD)"
 if [ "$branch" != "main" ]; then
   say "当前在 ${branch:-游离 HEAD},不是 main,跳过"
   exit 0
+fi
+
+# 未收尾提醒:内容目录里改了没提交的文件。只报告,不替任何一条线提交(AGENTS.md「一批一推」)
+CONTENT_DIRS="reports readings opensource knowledge questions leetcode meetings contrib public"
+# -z 输出:路径不加引号,空格与中文原样;重命名条目后面多跟一个原路径,跳过它
+# shellcheck disable=SC2086
+pending="$(git status --porcelain -z -uall -- $CONTENT_DIRS 2>/dev/null | perl -0ne '
+  chomp; if ($skip) { $skip = 0; next }
+  my ($st, $f) = (substr($_, 0, 2), substr($_, 3)); $skip = 1 if $st =~ /[RC]/;
+  $n++; $d{(split m{/}, $f)[0]}++;
+  my @s = stat $f; $m = $s[9] if @s && (!defined $m || $s[9] < $m);
+  END { exit unless $n; print "$n\t", join("、", map { "$_ $d{$_}" } sort keys %d), "\t", (defined $m ? int((time - $m) / 86400) : "") }')"
+if [ -n "$pending" ]; then
+  IFS="$(printf '\t')" read -r n per_dir oldest <<EOF_P
+$pending
+EOF_P
+  say "未收尾:内容目录有 $n 个文件改了没提交($per_dir)${oldest:+,最早的改于 $oldest 天前}。属于本线的先整批提交并推送;是别的线的就留给那条线"
 fi
 
 # macOS 没有 timeout;用 perl 的 alarm 给 fetch 限时,断网时不拖住会话启动
