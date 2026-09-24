@@ -1,8 +1,10 @@
 {
-  "name": "interviewprep",
+  "name": "orrery",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "site:dev": "pnpm --dir site dev",
+    "site:build": "pnpm --dir site build",
     "dev": "next dev --turbopack -p 3001",
     "build": "NEXT_DIST_DIR=.next-check next build --turbopack",
     "build:release": "next build --turbopack",

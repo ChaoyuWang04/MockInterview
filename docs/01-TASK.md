@@ -11,6 +11,12 @@
 
 ---
 
+## 对外展示
+
+- [ ] `site/` 导入与部署切换,按序:维护者本人执行导入 → Hugo 构建脚本支持 macOS、`site/src/data/site.ts` 的站点地址改为 `https://chaoyuwang.vercel.app`、删掉无引用的 `monitorsysua`、`promptgen` 四张图 → 维护者在 Vercel 把项目改接 `Orrery`,Root Directory 设 `site`,Ignored Build Step 设 `git diff --quiet HEAD^ HEAD -- .` → 线上验证通过后 archive `Chaoyu-Personal-Web`,本机旧副本 `~/Documents/Chaoyu-Personal-Web`、`~/1Project/PHD/personal_web2` 移进废纸篓,5090home 那份改名 `.retired`
+- [ ] 主页与对外展示面重构:风格是 Claude 式的艺术气息融合星空与 Outer Wilds 的气质,要有个人特色,不再只是学术模板;PR 做成完整展示面(每个 PR 解决了什么、背后的思考),不再压缩成一句 contributor;重做博客系统承载思考与结论;接入小红书、X 发布;按新品味重评 `site/docs/new-project-playbook.md`
+- [ ] 5090home 副本里未公开的 `materials/`(简历 markdown、GitHub 个人页 README)要不要进公开仓库,等维护者定
+
 ## 范式库与周会
 
 - [ ] 首轮官方范式收集:Claude Code 与 Codex 的官方文档与博客,按 12 收进 `paradigms/`,并对 `AGENTS.md`、`docs/`、`.claude/skills/` 做一次影响扫描

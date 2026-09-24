@@ -17,6 +17,7 @@ const eslintConfig = [
     // 阅读材料,不是本项目代码;不排掉它 npm run lint 会被 3 万条噪音淹没。
     ignores: [
       "node_modules/**",
+      "site/**",
       ".next/**",
       ".next-prod/**",
       ".next-check/**",
