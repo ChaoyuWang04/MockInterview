@@ -322,6 +322,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| GPT-Live | OpenAI | 网页原件(OpenAI 工程博客 2026-08-03):全双工语音的实时系统,媒体快路径与异步委托分离、有状态推理热切换、WARP 一个包建连、影子流量测试 |
 | Step-Audio-R1.5 | StepFun | 听觉领域的思维链推理 |
 | StepAudio-2.5 | StepFun | 一个骨干带 ASR/TTS/Realtime 三种特化 |
 | Step-Audio-2 | StepFun | 带检索增强的音频理解与对话 |
