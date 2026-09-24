@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 const contribRoot = path.resolve(import.meta.dirname, '..', 'contrib')
 const HEADER = '| 选题 | 上游 issue | 状态 | PR | 结论 |'
-const STATES = new Set(['候选', '已认领', '进行中', '待发布', '已提交', '已合入', '已关闭'])
+const STATES = new Set(['候选', '进行中', '待发布', '已提交', '已合入', '已关闭'])
 
 describe('开源贡献台账', () => {
   const ledgers = fs.readdirSync(contribRoot).filter((name) => name.endsWith('.md'))
