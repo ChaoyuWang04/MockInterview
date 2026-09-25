@@ -42,3 +42,11 @@
 | 2026-09-24 | 2609.24974 | Harness-Zero: Harness Distillation via Agent-as-Harness | Peking University、Google、Hong Kong University of Science and Technology | 31 | A · 名单内(Peking) | reports/Peking/Harness-Zero |
 | 2026-09-24 | 2609.kl-regularized-policy-optimization-agentic-rl | KL-Regularized Policy Optimization for Critic-Free Agentic Reinforcement Learning | (alphaXiv 未标) | 31 | B · 名单外 | readings/训练方法与强化学习/KLPO |
 | 2026-09-24 | 2609.24981 | GAE: Learning a Geometry-Native Latent Space for 3D-Consistent World Generation | Hong Kong University of Science and Technology、Tencent、University of Hong Kong、University of Texas at Austin | 30 | A · 名单内(HKUST) | reports/HKUST/Geometric-AutoEncoder |
+| 2026-09-25 | 2609.22978 | DeepSeek Elastic Compute (DSec): A Sandbox Infrastructure for Effective Agentic Training at Scale | Deepseek、Tsinghua University | 45 | D · 已在库 | reports/DeepSeek/DSec |
+| 2026-09-25 | 2609.26368 | HySparse2: Hybrid Sparse Attention with Two-Level KV Sharing | Xiaomi | 40 | A · 名单内(Xiaomi) | reports/Xiaomi/HySparse2 |
+| 2026-09-25 | 2609.28399 | Memory Attention | (alphaXiv 未标) | 38 | B · 名单外 | readings/注意力与长上下文/Memory-Attention |
+| 2026-09-25 | 2609.24352 | Few-Shot Demonstrations Elicit the Use of In-Context World Representations in LLMs | University of Tokyo、Harvard University、Prior Computers | 38 | B · 名单外 | readings/可解释性与对齐/Few-Shot-World-Representations |
+| 2026-09-25 | 2609.ai-agents-discover-reverse-transcriptases | Autonomous AI Agents Discover Reverse Transcriptases with Tandem Repeat Arrays | Anthropic | 34 | A · 名单内(Anthropic) | reports/Anthropic/ART-Discovery |
+| 2026-09-25 | 2609.26550 | JEV-as-a-Judge: Accept When Confident, Escalate When Unsure | Carnegie Mellon University | 34 | A · 名单内(CMU) | reports/CMU/JEV-as-a-Judge |
+| 2026-09-25 | 2609.26457 | Recursive self-improvement of AI research agents | Weco AI | 30 | D · 已在库 | reports/Weco/AIDE2 |
+| 2026-09-25 | 2609.24919 | PixelDiT2: Representation-Grounded Pixel Diffusion Transformers | NVIDIA、University of Rochester | 30 | A · 名单内(NVIDIA) | reports/NVIDIA/PixelDiT2 |

@@ -82,6 +82,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| HySparse2 | Xiaomi | 面向长程 agent 的混合稀疏注意力:外层 KV Bridging 让交叉解码器的全注意力层复用自解码器全注意力层的 KV,内层沿用 HySparse 的 KV Reuse 并改成 token 级稀疏(arXiv 2609.26368) |
 | MiniMax-Sparse-Attention | MiniMax | MSA:GQA 之上的块稀疏,在未压缩 KV 上做选择;MiniMax-M3 的注意力底座 |
 | Mixture-of-Depths-Attention | ByteDance | 让 Query 额外看前层同位置的 depth KV,缓解深层信号稀释(Seed) |
 | IndexCache | Z.ai | 每四个稀疏注意力层复用同一个 indexer,1M 上下文每 token FLOPs 降 2.9×;GLM-5.2 的 IndexShare 出处,GLM-5 报告未覆盖 |
@@ -317,6 +318,7 @@
 | Movie-Gen | Meta | 视频、图像、个性化与音频四件套媒体基模;Meta 生成线此前零收录(arXiv 2410.13720) |
 | Video-DeltaNet | Berkeley | 视频扩散的混合注意力:局部 Softmax 加逐帧更新的双向线性记忆,分阶段对齐教师接进预训练模型,在 MiniMax H3 上实例化 |
 | Geometric-AutoEncoder | HKUST | 几何原生自编码器 GAE:把几何基础模型的特征重参数化成紧凑潜空间,可同时解码外观、深度、相机与点图,再在上面做条件流生成 |
+| PixelDiT2 | NVIDIA | 端到端像素空间扩散:冻结的视觉基础模型逐 patch 给表示引导,不引入自编码器;ImageNet 256×256 上 600 epoch FID 1.46(arXiv 2609.24919) |
 
 ## 音频
 
@@ -366,6 +368,7 @@
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
 | Workspace-Models | MIT | 训练时用 VLM 标出任务相关的当前与历史信息,蒸馏成轻量的 workspace token,部署时代替观测喂给策略,不再在环调用 VLM |
 | MotionJEPA | Oxford | JEPA 偏好慢特征导致时间维坍塌:加一个预测差分图像嵌入的正则 DISReg,不需要动作标签也不做像素重建 |
+| ART-Discovery | Anthropic | 自主运行的 Claude Code 实例在 19 亿个蛋白簇里普查逆转录酶位点,找出带约 200 nt 重复阵列的新家族 ART(alphaXiv 自有编号,非 arXiv) |
 
 ## 自进化系统
 
@@ -430,3 +433,4 @@
 | WildBench | Ai2 | 考什么交给真实用户、怎么判交给一张 5 到 10 问的清单:1,024 题、用三个不同水平的基线合成 WB-Reward,与 Arena 人类 Elo 的头部 Pearson 0.984(依据 arXiv v2,19 页) |
 | SWE-bench | Princeton | 2,294 道真实 GitHub 缺陷:已合并且自带测试的 PR 同时给出题目、答案与验收标准;判分是 F2P 与 P2P 的与运算,当年最好的模型只解出 1.96%(依据 arXiv v3,52 页) |
 | Lessons-from-the-Trenches | EleutherAI | 可复现评测的方法学教训:打分口径怎么会错(arXiv 2405.14782) |
+| JEV-as-a-Judge | CMU | 只出判决的评审模型做便宜的第一道:置信的判决直接接受、不确定的上交强评审,冻结级联保住 99% 的准确率(arXiv 2609.26550) |

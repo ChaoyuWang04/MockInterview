@@ -20,6 +20,7 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Memory-Attention | Independent | 用按 token 编号查表的记忆加上上下文 key 代替 value 投影,推理时记忆表可卸载到 CPU 或 SSD(arXiv 2609.28399) |
 | Topological Trouble With Transformers | GoogleDeepMind | Transformer 用扩张的上下文历史编码结构,这套表示在拓扑上存在固有困难 |
 | Attention-Sink-Survey | Tsinghua | **综述**:attention sink 怎么被利用、怎么被解释、怎么被消除,三支各自的代表工作 |
 | Latent-Space-Survey | NUS | **综述**:潜空间的基础、演化、机制、能力与展望 |
@@ -244,6 +245,7 @@
 
 | 材料 | 机构 | 一句话 |
 |---|---|---|
+| Few-Shot-World-Representations | University of Tokyo | 少样本示范让 LLM 更会用上下文里学到的图结构世界表示:线性探针显示示范移动了表示的位置并提高其预测作用(arXiv 2609.24352) |
 | Reward-Hacking-Probes | Goodfire | 差值均值向量就能表示并检测前沿开源模型的奖励黑客,成本近乎为零,效果接近 LLM 监控器,还能在思维链上提前预警 |
 | Scaling Monosemanticity | Anthropic | 稀疏自编码器在 Claude 3 Sonnet 上规模化,抽出可解释、可干预的单义特征 |
 | Refusal Direction | Independent | 拒答行为由残差流里的单一方向中介;删掉该方向就能定向解除拒答,加回去能诱发拒答 |
