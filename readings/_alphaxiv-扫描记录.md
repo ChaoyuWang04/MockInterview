@@ -50,3 +50,4 @@
 | 2026-09-25 | 2609.26550 | JEV-as-a-Judge: Accept When Confident, Escalate When Unsure | Carnegie Mellon University | 34 | A · 名单内(CMU) | reports/CMU/JEV-as-a-Judge |
 | 2026-09-25 | 2609.26457 | Recursive self-improvement of AI research agents | Weco AI | 30 | D · 已在库 | reports/Weco/AIDE2 |
 | 2026-09-25 | 2609.24919 | PixelDiT2: Representation-Grounded Pixel Diffusion Transformers | NVIDIA、University of Rochester | 30 | A · 名单内(NVIDIA) | reports/NVIDIA/PixelDiT2 |
+| 2026-09-26 | 2609.24170 | An Unexpected Robot Policy: Early Evaluations of GPT-6 Astra on RoboDojo and Beyond | RoboProbe、RoboDojo、University of Hong Kong、Tsinghua University | 31 | B · 名单外 | readings/世界模型与 Agent/LLM-as-Policy |

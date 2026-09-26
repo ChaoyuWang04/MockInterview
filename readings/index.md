@@ -231,6 +231,7 @@
 | DreamGen | NVIDIA | 先合成视觉轨迹再反推动作的数据引擎 |
 | DINO-WM | NYU | 在冻结的 DINO 视觉特征上建世界模型,零样本规划不用重训策略 |
 | JEPA-Position-Paper | ICFO | Les Houches 讲义:用能量模型与潜变量搭出 H-JEPA,不是 OpenReview 立场文本身 |
+| LLM-as-Policy | RoboProbe | 不经微调、不接预训练动作策略,让 LLM 直接给出末端执行器目标:GPT-6 Astra 在 RoboDojo 42 个任务上平均成功率 22.48%,排在全部 40 个公开策略之上,但精细与动态控制仍弱(arXiv 2609.24170) |
 
 ## 自进化系统
 
