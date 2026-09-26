@@ -343,6 +343,7 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| ART-Discovery | Anthropic | 自主运行的 Claude Code 实例在 19 亿个蛋白簇里普查逆转录酶位点,找出带约 200 nt 重复阵列的新家族 ART(alphaXiv 自有编号,非 arXiv) |
 | WorldCrafter | Tencent | 视频世界模型的隐式 3D 感知记忆:按请求的相机视角把历史多视图观测压进固定数量的视角 token,不靠显式深度对应,单图或文本起步做分钟级流式探索 |
 | DexTouch-WM | HKUST | 人手与灵巧手共用一套触觉阵列与动作表示,让人类触觉交互数据监督同一个动作条件世界模型,联合预测未来 RGB 与双手触觉 |
 | JEPA-Anything | CUHK | 正交预测分解把 JEPA 的潜目标拆成互补因子分路学习再合并,同一套框架跑视觉、生物、临床、控制、分子动力学、物理场与天气七个领域 |
@@ -368,7 +369,6 @@
 | DreamerV3 | Google | 一套超参掌握多样控制任务(DeepMind,Nature) |
 | Workspace-Models | MIT | 训练时用 VLM 标出任务相关的当前与历史信息,蒸馏成轻量的 workspace token,部署时代替观测喂给策略,不再在环调用 VLM |
 | MotionJEPA | Oxford | JEPA 偏好慢特征导致时间维坍塌:加一个预测差分图像嵌入的正则 DISReg,不需要动作标签也不做像素重建 |
-| ART-Discovery | Anthropic | 自主运行的 Claude Code 实例在 19 亿个蛋白簇里普查逆转录酶位点,找出带约 200 nt 重复阵列的新家族 ART(alphaXiv 自有编号,非 arXiv) |
 
 ## 自进化系统
 
@@ -428,9 +428,9 @@
 
 | 报告 | 公司 | 一句话 |
 |---|---|---|
+| JEV-as-a-Judge | CMU | 只出判决的评审模型做便宜的第一道:置信的判决直接接受、不确定的上交强评审,冻结级联保住 99% 的准确率(arXiv 2609.26550) |
 | PosteriorBench | Caltech | 评生成式逆问题求解器要看整个后验而非单个样本:四个物理逆问题配高精度参考后验与五项分布指标 |
 | MMLU-Pro | TIGER-Lab | 把 MMLU 失效拆成地板太高、不考推理、数据有噪声三处分别修:干扰项扩到 10 个(83% 的题)、too-easy 靠 8 个小模型投票滤掉 42.23%,12,032 题 14 学科(依据 arXiv v6,24 页) |
 | WildBench | Ai2 | 考什么交给真实用户、怎么判交给一张 5 到 10 问的清单:1,024 题、用三个不同水平的基线合成 WB-Reward,与 Arena 人类 Elo 的头部 Pearson 0.984(依据 arXiv v2,19 页) |
 | SWE-bench | Princeton | 2,294 道真实 GitHub 缺陷:已合并且自带测试的 PR 同时给出题目、答案与验收标准;判分是 F2P 与 P2P 的与运算,当年最好的模型只解出 1.96%(依据 arXiv v3,52 页) |
 | Lessons-from-the-Trenches | EleutherAI | 可复现评测的方法学教训:打分口径怎么会错(arXiv 2405.14782) |
-| JEV-as-a-Judge | CMU | 只出判决的评审模型做便宜的第一道:置信的判决直接接受、不确定的上交强评审,冻结级联保住 99% 的准确率(arXiv 2609.26550) |
